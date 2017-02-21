@@ -6,12 +6,14 @@ Angular 2 ( 2.x )
 ExpressJS ( 4.x )
 Webpack ( angular-cli )
 
-Step to Start:
+Install / Development
+--------------------
+1)git clone https://github.com/foryougautam/angular2-cli-express-starter.git
 
-1) npm install
+2) npm install
 
-2) npm start
+3) npm start
 
-3) Open browser and navigate to http://localhost:3000 for launching angular 2 app
+4) Open browser and navigate to http://localhost:3000 for launching angular 2 app
 
-4) For express api use http://localhost:3000/api
+5) For express api use http://localhost:3000/api
