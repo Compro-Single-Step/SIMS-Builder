@@ -1,6 +1,10 @@
-# MeanApp
+# Angular 2 Express starter
 
 This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.32.3.
+
+Angular 2 ( 2.x )
+ExpressJS ( 4.x )
+Webpack ( angular-cli )
 
 Step to Start:
 
