@@ -9,6 +9,9 @@ Webpack ( angular-cli )
 Step to Start:
 
 1) npm install
+
 2) npm start
+
 3) Open browser and navigate to http://localhost:3000 for launching angular 2 app
+
 4) For express api use http://localhost:3000/api
