@@ -1,4 +1,4 @@
-# Angular 2 Express starter
+# SIMS Builder
 
 This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.32.3.
 
@@ -8,7 +8,7 @@ Webpack ( angular-cli )
 
 Install / Development
 ---------------------
-1) git clone https://github.com/Compro-Single-Step/Single-Step-Builder.git
+1) git clone https://github.com/Compro-Single-Step/SIMS-Builder.git
 
 2) npm install
 
