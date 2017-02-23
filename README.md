@@ -14,6 +14,6 @@ Install / Development
 
 3) npm start
 
-4) Open browser and navigate to http://localhost:3000 for launching angular 2 app
+4) open browser and navigate to http://localhost:3000 for launching angular 2 app
 
-5) For express api use http://localhost:3000/api
+5) for express api use http://localhost:3000/api
