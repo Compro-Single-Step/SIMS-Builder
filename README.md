@@ -8,7 +8,7 @@ Webpack ( angular-cli )
 
 Install / Development
 ---------------------
-1) git clone https://github.com/Compro-Single-Step/Single-Step-Builder.git
+1) git clone https://github.com/Compro-Single-Step/SIMS-Builder.git
 
 2) npm install
 
