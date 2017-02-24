@@ -37,6 +37,6 @@ export class node{
 export class UIConfig {
   views: Array<node>
   constructor(){
-    this.views =  [new node()];
+    this.views =  [];
   }
 }
