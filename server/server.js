@@ -3,6 +3,7 @@ const path = require('path');
 const http = require('http');
 const bodyParser = require('body-parser');
 const db = require('./config/db');
+const config = require('./config/config');
 
 // Get our API routes
 const api = require('./routes/api');
@@ -27,7 +28,7 @@ app.get('*', (req, res) => {
 /**
  * Get port from environment and store in Express.
  */
-const port = process.env.PORT || '3000';
+const port = config.port;
 app.set('port', port);
 
 /**
