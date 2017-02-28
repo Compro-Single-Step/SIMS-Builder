@@ -13,7 +13,8 @@ import { ScenarioDocsComponent } from './scenario-docs/scenario-docs.component';
 import { TaskFileStoreComponent } from './task-file-store/task-file-store.component';
 import { InputFactoryService } from './shared/input-factory.service';
 
-import { TextBoxComponentComponent } from './shared/text-box-component/text-box-component.component';
+import { TextBoxComponent } from './shared/text-box-component/text-box.component';
+import { GroupComponent } from './shared/group/group.component';
 
 
 
@@ -26,10 +27,10 @@ import { TextBoxComponentComponent } from './shared/text-box-component/text-box-
         path: '',
         component: StepBuilderComponent
       }
-    ]) 
+    ])
   ],
-  declarations: [StepBuilderComponent, StepInputAreaComponent, BalooReferenceComponent, ViewNavigatorComponent, ViewInputAreaComponent, MethodViewerComponent, ScenarioFilesViewerComponent, ScenarioDocsComponent, TaskFileStoreComponent, TextBoxComponentComponent],
+  declarations: [StepBuilderComponent, StepInputAreaComponent, BalooReferenceComponent, ViewNavigatorComponent, ViewInputAreaComponent, MethodViewerComponent, ScenarioFilesViewerComponent, ScenarioDocsComponent, TaskFileStoreComponent, TextBoxComponent, GroupComponent],
   providers: [InputFactoryService],
-  entryComponents: [ TextBoxComponentComponent ]
+  entryComponents: [ TextBoxComponent, GroupComponent ]
 })
 export class StepBuilderModule { }

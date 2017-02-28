@@ -1,0 +1,98 @@
+.widget {
+  position: relative;
+  margin-bottom: 30px;
+  padding: 15px 20px;
+  background: #aaa;
+  border-radius: 0.2rem; }
+  .widget > header {
+    margin: -15px -20px;
+    padding: 15px 20px; }
+    .widget > header h1, .widget > header h2, .widget > header h3, .widget > header h4, .widget > header h5, .widget > header h6 {
+      margin: 0; }
+    .widget > header + .widget-body,
+    .widget > header + .widget-body.no-padding {
+      margin-top: 15px; }
+  .widget > .widget-body.no-padding {
+    margin: -15px -20px; }
+    .widget > .widget-body.no-padding + footer {
+      margin-top: 15px; }
+  .widget > footer {
+    margin: 0 -20px -15px;
+    padding: 15px 20px; }
+  .widget:hover .widget-controls-hover {
+    opacity: 1; }
+  .widget .loader {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0; }
+    .widget .loader .spinner {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      margin-top: -10px;
+      font-size: 20px;
+      text-align: center; }
+  .widget .widget-top-overflow,
+  .widget .widget-middle-overflow {
+    position: relative;
+    margin: 0 -20px; }
+    .widget .widget-top-overflow > img,
+    .widget .widget-middle-overflow > img {
+      max-width: 100%; }
+  .widget .widget-top-overflow {
+    margin-top: -15px;
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+    overflow: hidden; }
+    .widget .widget-top-overflow > img {
+      border-top-left-radius: 0.25rem;
+      border-top-right-radius: 0.25rem; }
+    .widget .widget-top-overflow > .btn-toolbar {
+      position: absolute;
+      top: 0;
+      right: 0;
+      z-index: 1;
+      margin-right: 20px; }
+      @media (min-width: 768px) {
+        .widget .widget-top-overflow > .btn-toolbar {
+          top: auto;
+          bottom: 0; } }
+  .widget .widget-table-overflow {
+    margin: 0 -20px -15px; }
+    .widget .widget-table-overflow th:first-child,
+    .widget .widget-table-overflow td:first-child {
+      padding-left: 20px; }
+    .widget .widget-table-overflow th:last-child,
+    .widget .widget-table-overflow td:last-child {
+      padding-right: 20px; }
+
+.widget-controls {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  padding: 14px;
+  font-size: 0.875rem; }
+  .widget-controls.left {
+    left: 0;
+    right: auto; }
+  .widget-controls.widget-controls-hover {
+    opacity: 0;
+    transition: opacity 0.15s; }
+  .widget-controls > a {
+    padding: 1px 4px;
+    border-radius: 4px;
+    color: rgba(0, 0, 0, 0.4);
+    transition: color 0.15s ease-in-out; }
+    .widget-controls > a:hover {
+      color: rgba(0, 0, 0, 0.1);
+      text-decoration: none; }
+    .widget-controls > a > .glyphicon {
+      vertical-align: 0;
+      font-size: 12px; }
+    .widget-controls > a > .fa {
+      vertical-align: 1px; }
+  .widget-controls > .btn-group {
+    vertical-align: baseline; }

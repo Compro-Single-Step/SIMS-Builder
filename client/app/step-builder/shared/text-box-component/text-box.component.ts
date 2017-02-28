@@ -4,10 +4,10 @@ import { node } from '../UIConfig.model';
 
 @Component({
   selector: 'app-text-box-component',
-  templateUrl: './text-box-component.component.html',
-  styleUrls: ['./text-box-component.component.css']
+  templateUrl: './text-box.component.html',
+  styleUrls: ['./text-box.component.css']
 })
-export class TextBoxComponentComponent implements OnInit {
+export class TextBoxComponent implements OnInit {
   data: node;
   constructor() {
     this.data = new node();

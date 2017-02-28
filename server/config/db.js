@@ -8,9 +8,10 @@ const dbOptions = {
     },
     server: {
         poolsize: 5
-    },
-    user: 'test',
-    pass: 'test'
+    }
+    // ,
+    // user: 'test',
+    // pass: 'test'
 }
 
 mongoose.connect(uri, dbOptions).then(
@@ -23,13 +24,13 @@ mongoose.connect(uri, dbOptions).then(
 
 const db = mongoose.connection;
 
-db.on('connected', function () {  
+db.on('connected', function () {
     console.log('Mongoose default connection open');
-}); 
+});
 
 // When the connection is disconnected
-db.on('disconnected', function () {  
-    console.log('Mongoose default connection disconnected'); 
+db.on('disconnected', function () {
+    console.log('Mongoose default connection disconnected');
 });
 
 exports.db = db;

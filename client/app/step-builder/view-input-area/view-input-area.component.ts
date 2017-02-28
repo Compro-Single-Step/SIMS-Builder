@@ -15,7 +15,7 @@ export class ViewInputAreaComponent implements OnInit {
     console.log("ak91: inside view input area before appending - " + JSON.stringify(this.viewConfig));
     //Initializing dynamic components based on the ui config json.
     for(let item of this.viewConfig.items){
-      this.factoryRef.createComp(this.compContainer, this.viewConfig.items[0].items[0]);
+      this.factoryRef.createComp(this.compContainer, item);
     }
   }
 }
