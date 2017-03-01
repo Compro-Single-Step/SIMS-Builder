@@ -32,7 +32,7 @@ export class StepBuilderComponent implements OnInit {
             {
               "id": "1.1",
               "label": "Ribbon",
-              "itemRenderer": "Pane",
+              "itemRenderer": "Panel",
               "itemType": "child",
               "tags": [
                 {
@@ -65,7 +65,7 @@ export class StepBuilderComponent implements OnInit {
             {
               "id": "1.2",
               "label": "Workbook",
-              "itemRenderer": "Pane",
+              "itemRenderer": "Panel",
               "itemType": "child",
               "tags": [
                 {
@@ -181,7 +181,7 @@ export class StepBuilderComponent implements OnInit {
             {
               "id": "1.3",
               "label": "Taskbar",
-              "itemRenderer": "Pane",
+              "itemRenderer": "Panel",
               "itemType": "child",
               "tags": [
                 {
@@ -232,7 +232,7 @@ export class StepBuilderComponent implements OnInit {
             {
               "id": "2.1",
               "label": "Workbook",
-              "itemRenderer": "Pane",
+              "itemRenderer": "Panel",
               "itemType": "child",
               "tags": [
                 {
@@ -303,7 +303,7 @@ export class StepBuilderComponent implements OnInit {
             {
               "id": "3.1",
               "label": "Workbook",
-              "itemRenderer": "Pane",
+              "itemRenderer": "Panel",
               "itemType": "child",
               "tags": [
                 {

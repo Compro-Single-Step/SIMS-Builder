@@ -8,7 +8,7 @@ export class InputFactoryService {
   constructor(private componentFactoryResolver: ComponentFactoryResolver) { }
 
   public createComp (vCref: ViewContainerRef, modelInput){
-     let factory = this.componentFactoryResolver.resolveComponentFactory(GroupComponent);
+     let factory = this.componentFactoryResolver.resolveComponentFactory(this.DynamicCompMap(modelInput.itemRenderer));
 
     // vCref is needed cause of that injector..
     let injector = ReflectiveInjector.fromResolvedProviders([], vCref.parentInjector);
@@ -27,4 +27,10 @@ export class InputFactoryService {
     return comp;
   }
 
+  private DynamicCompMap(type){
+    return {
+      "Panel": GroupComponent,
+      "TextBox": TextBoxComponent
+    }[type] || TextBoxComponent;
+  }
 }
