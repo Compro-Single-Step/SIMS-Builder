@@ -1,5 +1,5 @@
 <p>
   step-input-area works!
 </p>
-<app-view-navigator [views]="stepConfig.views.length"></app-view-navigator>
-<app-view-input-area *ngFor="let view of stepConfig.views" [viewConfig]="view"></app-view-input-area>
+<app-view-navigator [views]="stepConfig.views.length" [selectedView]="getSelectedView()"></app-view-navigator>
+<app-view-input-area *ngFor="let view of stepConfig.views; let viewIndex=index;" [viewConfig]="view" [hidden]="getSelectedView()!=(viewIndex+1)"></app-view-input-area>

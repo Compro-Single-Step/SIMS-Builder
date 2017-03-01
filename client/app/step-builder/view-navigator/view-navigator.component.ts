@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, Input } from '@angular/core';
+import { Component, OnInit, OnChanges, Input, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-view-navigator',
@@ -8,7 +8,8 @@ import { Component, OnInit, OnChanges, Input } from '@angular/core';
 export class ViewNavigatorComponent implements OnInit, OnChanges {
 
   @Input() views: number;
-
+  @Input() selectedView: number;
+  @Output() viewClicked: EventEmitter<Object> = new EventEmitter();
   constructor() { }
 
   ngOnInit() {
