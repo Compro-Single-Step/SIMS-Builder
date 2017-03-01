@@ -1,6 +1,8 @@
 import { Injectable, ViewContainerRef, ReflectiveInjector, ComponentFactoryResolver, ComponentRef } from '@angular/core';
 import { TextBoxComponent } from './text-box-component/text-box.component';
 import { GroupComponent } from './group/group.component';
+import { SelectComponent } from './select/select.component';
+
 
 @Injectable()
 export class InputFactoryService {
@@ -17,7 +19,7 @@ export class InputFactoryService {
     let comp = factory.create(injector);
 
     // add inputs first !! otherwise component/template crashes ..
-    comp.instance.data = modelInput;
+    comp.instance["data"] = modelInput;
     console.log("ak91: inside service" + modelInput);
     console.log(modelInput);
 
@@ -30,7 +32,8 @@ export class InputFactoryService {
   private DynamicCompMap(type){
     return {
       "Panel": GroupComponent,
-      "TextBox": TextBoxComponent
+      "TextBox": TextBoxComponent,
+      "Dropdown": SelectComponent
     }[type] || TextBoxComponent;
   }
 }

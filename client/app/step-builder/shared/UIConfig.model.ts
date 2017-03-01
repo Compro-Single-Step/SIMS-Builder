@@ -1,7 +1,7 @@
 import { TextBox } from './text-box-component/text-box.model';
 
 export class node{
-  id?: string;  
+  id?: string;
   label?: string;
   itemType?: string;
   tags?: Array<Object>;
@@ -13,7 +13,7 @@ export class node{
   dependents?: Array<Object>;
   items?: Array<Object>;
   itemRenderer?: string;
-  rendererProperties?: Object;
+  rendererProperties?: any;
   modelReference?: string;
 
   constructor(){

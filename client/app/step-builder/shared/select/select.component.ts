@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import {node } from '../UIConfig.model';
 
 @Component({
   selector: 'app-select',
@@ -6,26 +7,12 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./select.component.scss']
 })
 export class SelectComponent implements OnInit {
-  @Input() data: item;
-  constructor() { }
-
-  ngOnInit() {
-
+  data: node;
+  constructor() {
+    this.data = new node();
   }
 
-}
-class item {
-  id: string;
-  label: string;
-  desc: {
-    basic: string,
-    detailed? : string
-  };
-  itemRenderer: string;
-  itemType: string;
-  mandatory: boolean;
-  rendererProperties: {
-    dataType: string
-  };
-  modelReference: string;
+  ngOnInit() {
+  }
+
 }

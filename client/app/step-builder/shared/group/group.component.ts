@@ -8,7 +8,7 @@ declare var jQuery: any;
   styleUrls: ['./group.component.scss']
 })
 export class GroupComponent implements OnInit {
-  @Input() data: node;
+  data: node;
   @ViewChild('inputElementsContainer', {read: ViewContainerRef}) inputElementsContainer;
   $el: any;
   private factoryRef: InputFactoryService;
@@ -16,9 +16,13 @@ export class GroupComponent implements OnInit {
    this.factoryRef = injector.get(InputFactoryService);
    this.$el = jQuery(el.nativeElement);
    jQuery.fn.widgster.Constructor.DEFAULTS.bodySelector = '.widget-body';
+   this.data = new node();
   }
 
   ngOnInit() {
    this.$el.find('.widget').widgster();
+   for(let item of this.data.items){
+     this.factoryRef.createComp(this.inputElementsContainer, item);
+   }
   }
 }
