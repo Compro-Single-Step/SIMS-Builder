@@ -17,6 +17,7 @@ import { TextBoxComponent } from './shared/text-box-component/text-box.component
 import { GroupComponent } from './shared/group/group.component';
 import { LabelComponent } from './shared/label/label.component';
 import { TagComponent } from './shared/tag/tag.component';
+import { SelectComponent } from './shared/select/select.component';
 
 
 
@@ -31,7 +32,7 @@ import { TagComponent } from './shared/tag/tag.component';
       }
     ])
   ],
-  declarations: [StepBuilderComponent, StepInputAreaComponent, BalooReferenceComponent, ViewNavigatorComponent, ViewInputAreaComponent, MethodViewerComponent, ScenarioFilesViewerComponent, ScenarioDocsComponent, TaskFileStoreComponent, TextBoxComponent, GroupComponent, LabelComponent, TagComponent],
+  declarations: [StepBuilderComponent, StepInputAreaComponent, BalooReferenceComponent, ViewNavigatorComponent, ViewInputAreaComponent, MethodViewerComponent, ScenarioFilesViewerComponent, ScenarioDocsComponent, TaskFileStoreComponent, TextBoxComponent, GroupComponent, LabelComponent, TagComponent, SelectComponent],
   providers: [InputFactoryService],
   entryComponents: [ TextBoxComponent, GroupComponent ]
 })
