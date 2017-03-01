@@ -34,6 +34,6 @@ import { SelectComponent } from './shared/select/select.component';
   ],
   declarations: [StepBuilderComponent, StepInputAreaComponent, BalooReferenceComponent, ViewNavigatorComponent, ViewInputAreaComponent, MethodViewerComponent, ScenarioFilesViewerComponent, ScenarioDocsComponent, TaskFileStoreComponent, TextBoxComponent, GroupComponent, LabelComponent, TagComponent, SelectComponent],
   providers: [InputFactoryService],
-  entryComponents: [ TextBoxComponent, GroupComponent ]
+  entryComponents: [ TextBoxComponent, GroupComponent, SelectComponent ]
 })
 export class StepBuilderModule { }
