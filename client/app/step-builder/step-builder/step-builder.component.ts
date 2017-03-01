@@ -255,6 +255,9 @@ export class StepBuilderComponent implements OnInit {
                   "itemRenderer": "Dropdown",
                   "itemType": "leaf",
                   "mandatory": true,
+                  "rendererProperties": {
+                    "itemList": ["Inventory", "Donations", "Cost"]
+                  },
                   "dependents": [
                     {
                       "id": "3.1.2",
