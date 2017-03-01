@@ -21,6 +21,7 @@ import { LabelComponent } from './shared/label/label.component';
 import { TagComponent } from './shared/tag/tag.component';
 import { SelectComponent } from './shared/select/select.component';
 import { TabComponent } from './shared/tab/tab.component';
+import { ButtonComponent } from './shared/button/button.component';
 
 
 
@@ -36,8 +37,8 @@ import { TabComponent } from './shared/tab/tab.component';
     ]),
     TabsModule.forRoot()
   ],
-  declarations: [StepBuilderComponent, StepInputAreaComponent, BalooReferenceComponent, ViewNavigatorComponent, ViewInputAreaComponent, MethodViewerComponent, ScenarioFilesViewerComponent, ScenarioDocsComponent, TaskFileStoreComponent, TextBoxComponent, GroupComponent, LabelComponent, TagComponent, SelectComponent, TabComponent],
+  declarations: [StepBuilderComponent, StepInputAreaComponent, BalooReferenceComponent, ViewNavigatorComponent, ViewInputAreaComponent, MethodViewerComponent, ScenarioFilesViewerComponent, ScenarioDocsComponent, TaskFileStoreComponent, TextBoxComponent, GroupComponent, LabelComponent, TagComponent, SelectComponent, TabComponent, ButtonComponent],
   providers: [InputFactoryService],
-  entryComponents: [ TextBoxComponent, GroupComponent, SelectComponent, TabComponent ]
+  entryComponents: [ TextBoxComponent, GroupComponent, SelectComponent, TabComponent, ButtonComponent ]
 })
 export class StepBuilderModule { }

@@ -3,6 +3,7 @@ import { TextBoxComponent } from './text-box-component/text-box.component';
 import { GroupComponent } from './group/group.component';
 import { SelectComponent } from './select/select.component';
 import { TabComponent } from './tab/tab.component';
+import { ButtonComponent } from './button/button.component';
 
 
 @Injectable()
@@ -35,7 +36,8 @@ export class InputFactoryService {
       "Panel": GroupComponent,
       "TextBox": TextBoxComponent,
       "Dropdown": SelectComponent,
-      "TabGroup": TabComponent
+      "TabGroup": TabComponent,
+      "Button": ButtonComponent
     }[type] || TextBoxComponent;
   }
 }
