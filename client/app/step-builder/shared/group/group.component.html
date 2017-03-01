@@ -1,7 +1,8 @@
 <section class="widget">
   <header>
     <div class="component-label">
-      <span class="fw-semi-bold">{{data.label}}</span>&nbsp;<span class="tag tag-default tagFontNormal component_hint"></span>
+      <app-label [text]="data.label" [type]="'PanelHeading'"></app-label>
+      <app-tag *ngFor="let tag of data.tags" [data]="tag"></app-tag>
        <span class="glyphicon glyphicon-info-sign document_title" data-toggle="popover" data-trigger = "manual" title='Document Title<a class="close");">&times;</a>' data-placement="right" data-content="Document Name which is shown in the central top area in the Ribbon is to be mentioned here." ></span>
     </div>
     <div class="widget-controls">
@@ -15,6 +16,6 @@
     <!-- <div *ngFor="let item of data.items">
       <input type="text" name="" />
     </div> -->
-    <input type="text">
+    <div #inputElementsContainer></div>
   </div>
 </section>

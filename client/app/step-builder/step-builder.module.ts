@@ -15,6 +15,8 @@ import { InputFactoryService } from './shared/input-factory.service';
 
 import { TextBoxComponent } from './shared/text-box-component/text-box.component';
 import { GroupComponent } from './shared/group/group.component';
+import { LabelComponent } from './shared/label/label.component';
+import { TagComponent } from './shared/tag/tag.component';
 
 
 
@@ -29,7 +31,7 @@ import { GroupComponent } from './shared/group/group.component';
       }
     ])
   ],
-  declarations: [StepBuilderComponent, StepInputAreaComponent, BalooReferenceComponent, ViewNavigatorComponent, ViewInputAreaComponent, MethodViewerComponent, ScenarioFilesViewerComponent, ScenarioDocsComponent, TaskFileStoreComponent, TextBoxComponent, GroupComponent],
+  declarations: [StepBuilderComponent, StepInputAreaComponent, BalooReferenceComponent, ViewNavigatorComponent, ViewInputAreaComponent, MethodViewerComponent, ScenarioFilesViewerComponent, ScenarioDocsComponent, TaskFileStoreComponent, TextBoxComponent, GroupComponent, LabelComponent, TagComponent],
   providers: [InputFactoryService],
   entryComponents: [ TextBoxComponent, GroupComponent ]
 })

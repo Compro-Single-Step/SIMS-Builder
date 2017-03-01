@@ -1,4 +1,5 @@
-import { Component, OnInit, ElementRef, Input } from '@angular/core';
+import { Component, OnInit, ElementRef, Input, ViewContainerRef, ViewChild, Injector } from '@angular/core';
+import { InputFactoryService } from '../input-factory.service'
 declare var jQuery: any;
 @Component({
   selector: 'app-group',
@@ -6,10 +7,12 @@ declare var jQuery: any;
   styleUrls: ['./group.component.scss']
 })
 export class GroupComponent implements OnInit {
-
 @Input() data: GroupCompData;
+@ViewChild('inputElementsContainer', {read: ViewContainerRef}) inputElementsContainer;
  $el: any;
- constructor(el: ElementRef) {
+ private factoryRef: InputFactoryService;
+ constructor(el: ElementRef, vcref: ViewContainerRef, injector: Injector) {
+   this.factoryRef = injector.get(InputFactoryService);
    this.$el = jQuery(el.nativeElement);
    jQuery.fn.widgster.Constructor.DEFAULTS.bodySelector = '.widget-body';
  }
