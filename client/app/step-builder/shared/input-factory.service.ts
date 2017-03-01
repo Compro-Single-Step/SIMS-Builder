@@ -2,6 +2,7 @@ import { Injectable, ViewContainerRef, ReflectiveInjector, ComponentFactoryResol
 import { TextBoxComponent } from './text-box-component/text-box.component';
 import { GroupComponent } from './group/group.component';
 import { SelectComponent } from './select/select.component';
+import { TabComponent } from './tab/tab.component';
 
 
 @Injectable()
@@ -33,7 +34,8 @@ export class InputFactoryService {
     return {
       "Panel": GroupComponent,
       "TextBox": TextBoxComponent,
-      "Dropdown": SelectComponent
+      "Dropdown": SelectComponent,
+      "TabGroup": TabComponent
     }[type] || TextBoxComponent;
   }
 }
