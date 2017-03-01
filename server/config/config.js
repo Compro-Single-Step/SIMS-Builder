@@ -1,9 +1,12 @@
 const path = require('path');
-const rootPath = path.normalize(__dirname + '/../..');
+const serverRootPath = path.normalize(__dirname + '/..');
 const env = process.env.NODE_ENV || 'local';
 
 const config = {
     local: {
+        app: {
+            name: 'Single-Step'
+        },
         port: process.env.port || 3000,
         db: {
             url: 'mongodb://localhost:27017/testDB',
@@ -12,13 +15,16 @@ const config = {
                     native_parser: true
                 },
                 server: {
-                    poolsize: 5
+                    poolsize: 10
                 }
             }
         },
-        root: rootPath
+        root: serverRootPath
     },
     development: {
+        app: {
+            name: 'Single-Step'
+        },
         port: process.env.port || 3000,
         db: {
             url: 'mongodb://localhost:27017/testDB',
@@ -27,13 +33,33 @@ const config = {
                     native_parser: true
                 },
                 server: {
-                    poolsize: 5
+                    poolsize: 20
                 },
                 user: 'test',
                 pass: 'test'
             }
         },
-        root: rootPath
+        root: serverRootPath
+    },
+    production: {
+        app: {
+            name: 'Single-Step'
+        },
+        port: process.env.port || 3000,
+        db: {
+            url: 'mongodb://localhost:27017/testDB',
+            dbOptions: {
+                db: {
+                    native_parser: true
+                },
+                server: {
+                    poolsize: 20
+                },
+                user: 'test',
+                pass: 'test'
+            }
+        },
+        root: serverRootPath
     }
 };
 
