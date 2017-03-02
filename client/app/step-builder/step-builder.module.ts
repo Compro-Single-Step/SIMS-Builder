@@ -1,9 +1,10 @@
+// Importing Angular Libraries
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import {RouterModule, Routes} from "@angular/router";
+import { RouterModule, Routes } from "@angular/router";
 
-//Importing the core components for step builder module.
+//Importing the core components for step builder module and Services.
 import { StepBuilderComponent } from './step-builder/step-builder.component';
 import { StepInputAreaComponent } from './step-input-area/step-input-area.component';
 import { BalooReferenceComponent } from './baloo-reference/baloo-reference.component';
@@ -15,6 +16,7 @@ import { ScenarioDocsComponent } from './scenario-docs/scenario-docs.component';
 import { TaskFileStoreComponent } from './task-file-store/task-file-store.component';
 import { InputFactoryService } from './shared/input-factory.service';
 
+// Imports from External Libraries
 import { TabsModule } from 'ng2-bootstrap';
 
 //Importing the components available for dynamic insertion.

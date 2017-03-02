@@ -7,7 +7,6 @@ import { UIConfig } from '../shared/UIConfig.model';
   styleUrls: ['./step-builder.component.css']
 })
 export class StepBuilderComponent implements OnInit {
-
   uiConfig: UIConfig;
 
   constructor() {
@@ -16,8 +15,8 @@ export class StepBuilderComponent implements OnInit {
 
   ngOnInit() {}
 
-  fetchConfig() {
-    //TODO
+  fetchConfig(): void {
+    //TODO: get this UI from the server using a service.
     this.uiConfig = {
       "views": [
         {

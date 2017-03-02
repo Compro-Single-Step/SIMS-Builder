@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import {UIConfig} from '../shared/UIConfig.model';
+import { UIConfig } from '../shared/UIConfig.model';
 
 @Component({
   selector: 'app-step-input-area',
@@ -7,16 +7,13 @@ import {UIConfig} from '../shared/UIConfig.model';
   styleUrls: ['./step-input-area.component.css']
 })
 export class StepInputAreaComponent implements OnInit {
-  private selectedView: number = 1;
-  //TODO: type of stepConfig is to be defined as per model.
+  private selectedView: number;
+  //TODO: Type of stepConfig is to be defined as per model.
   @Input() stepConfig : UIConfig;
   constructor() {
+    this.selectedView = 1;
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
-  getSelectedView() {
-    return this.selectedView;
-  }
 }
