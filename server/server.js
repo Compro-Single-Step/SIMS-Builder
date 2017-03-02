@@ -2,8 +2,10 @@ const express = require('express');
 const path = require('path');
 const http = require('http');
 const bodyParser = require('body-parser');
+const router = require('./routes');
 const db = require('./config/db');
 const config = require('./config/config');
+
 
 // Get our API routes
 const api = require('./routes/api');
@@ -18,7 +20,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, '/../dist/client')));
 
 // Set our api routes
-app.use('/api', api);
+
+//app.use('/api', api);
+app.use('/api', router());
 
 // Catch all other routes and return the index file
 app.get('*', (req, res) => {

@@ -5,5 +5,9 @@ const router = express.Router();
 router.get('/', (req, res) => {
   res.send('api works');
 });
+router.post('/authenticate', (req, res) => {
+  console.log(res);
+});
+
 
 module.exports = router;

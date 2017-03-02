@@ -2,8 +2,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpModule } from '@angular/http';
+
+
 import { AppComponent } from './app.component';
-import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -12,8 +13,13 @@ import { AppRoutingModule } from './app-routing.module';
   imports: [
     BrowserModule,
     FormsModule,
+<<<<<<< Updated upstream
+    HttpModule
+=======
+    ReactiveFormsModule,
     HttpModule,
     AppRoutingModule
+>>>>>>> Stashed changes
   ],
   providers: [],
   bootstrap: [AppComponent]
