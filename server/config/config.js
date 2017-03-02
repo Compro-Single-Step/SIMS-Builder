@@ -1,6 +1,6 @@
 const path = require('path');
 const serverRootPath = path.normalize(__dirname + '/..');
-const env = process.env.NODE_ENV || 'local';
+const env = process.env.NODE_ENV || 'development';
 
 const config = {
     local: {
@@ -27,7 +27,7 @@ const config = {
         },
         port: process.env.port || 3000,
         db: {
-            url: 'mongodb://localhost:27017/testDB',
+            url: 'ds113650.mlab.com:13650/sims-task-bullder',
             dbOptions: {
                 db: {
                     native_parser: true
@@ -35,8 +35,8 @@ const config = {
                 server: {
                     poolsize: 20
                 },
-                user: 'test',
-                pass: 'test'
+                user: 'task_builder',
+                pass: 'task_builder'
             }
         },
         root: serverRootPath
