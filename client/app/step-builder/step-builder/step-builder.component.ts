@@ -14,10 +14,7 @@ export class StepBuilderComponent implements OnInit {
     this.uiConfig = new UIConfig();
   }
 
-  ngOnInit() {
-    console.log("ak91: ngoninit");
-    console.log("ak91: " + JSON.stringify(this.uiConfig));
-  }
+  ngOnInit() {}
 
   fetchConfig() {
     //TODO

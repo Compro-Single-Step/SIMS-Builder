@@ -12,7 +12,6 @@ export class ViewInputAreaComponent implements OnInit {
   constructor(private factoryRef: InputFactoryService, vcref: ViewContainerRef) { }
 
   ngOnInit() {
-    console.log("ak91: inside view input area before appending - " + JSON.stringify(this.viewConfig));
     //Initializing dynamic components based on the ui config json.
     for(let item of this.viewConfig.items){
       this.factoryRef.createComp(this.compContainer, item);

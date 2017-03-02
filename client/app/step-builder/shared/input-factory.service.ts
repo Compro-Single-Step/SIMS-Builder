@@ -22,9 +22,7 @@ export class InputFactoryService {
 
     // add inputs first !! otherwise component/template crashes ..
     comp.instance["data"] = modelInput;
-    console.log("ak91: inside service" + modelInput);
-    console.log(modelInput);
-
+    
     // all inputs set? add it to the DOM ..
     vCref.insert(comp.hostView);
     comp.changeDetectorRef.detectChanges();

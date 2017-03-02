@@ -13,7 +13,5 @@ export class TextBoxComponent implements OnInit {
     this.data = new node();
    }
 
-  ngOnInit() {
-    console.log("ak91: inside textbox " + JSON.stringify(this.data));
-  }
+  ngOnInit() {}
 }

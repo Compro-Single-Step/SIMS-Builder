@@ -12,12 +12,8 @@ export class ViewNavigatorComponent implements OnInit, OnChanges {
   @Output() viewClicked: EventEmitter<Object> = new EventEmitter();
   constructor() { }
 
-  ngOnInit() {
-    console.log("ak91: inside view navigator - " + this.views);
-  }
+  ngOnInit() {}
 
-  ngOnChanges(){
-    console.log("ak91: inside view navigator - " + this.views);
-  }
+  ngOnChanges() {}
 
 }
