@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {node} from '../UIConfig.model';
+import { node } from '../UIConfig.model';
 
 @Component({
   selector: 'app-button',
