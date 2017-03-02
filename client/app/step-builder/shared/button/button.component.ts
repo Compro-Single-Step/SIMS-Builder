@@ -8,11 +8,13 @@ import {node} from '../UIConfig.model';
 })
 export class ButtonComponent implements OnInit {
   data: node;
+  type: string;
   constructor() {
     this.data = new node();
   }
 
   ngOnInit() {
+    this.type = this.data.rendererProperties.type || 'default';
   }
 
 }
