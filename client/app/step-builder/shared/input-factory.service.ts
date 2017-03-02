@@ -1,5 +1,5 @@
 import { Injectable, ViewContainerRef, ReflectiveInjector, ComponentFactoryResolver, ComponentRef } from '@angular/core';
-import { TextBoxComponent } from './text-box-component/text-box.component';
+import { TextBoxComponent } from './text-box/text-box.component';
 import { GroupComponent } from './group/group.component';
 import { SelectComponent } from './select/select.component';
 import { TabComponent } from './tab/tab.component';

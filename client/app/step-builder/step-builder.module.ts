@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {RouterModule, Routes} from "@angular/router";
+
+//Importing the core components for step builder module.
 import { StepBuilderComponent } from './step-builder/step-builder.component';
 import { StepInputAreaComponent } from './step-input-area/step-input-area.component';
 import { BalooReferenceComponent } from './baloo-reference/baloo-reference.component';
@@ -15,7 +17,8 @@ import { InputFactoryService } from './shared/input-factory.service';
 
 import { TabsModule } from 'ng2-bootstrap';
 
-import { TextBoxComponent } from './shared/text-box-component/text-box.component';
+//Importing the components available for dynamic insertion.
+import { TextBoxComponent } from './shared/text-box/text-box.component';
 import { GroupComponent } from './shared/group/group.component';
 import { LabelComponent } from './shared/label/label.component';
 import { TagComponent } from './shared/tag/tag.component';

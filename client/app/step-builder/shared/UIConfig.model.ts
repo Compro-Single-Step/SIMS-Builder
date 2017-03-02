@@ -1,5 +1,3 @@
-import { TextBox } from './text-box-component/text-box.model';
-
 export class node{
   id?: string;
   label?: string;
