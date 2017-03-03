@@ -3,23 +3,26 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
-import { ROUTES } from './app-routing.module';
+import { routing } from './app-routing.module';
 
-//import { AuthGuard } from './_guards/index';
+import { AuthGuard } from './_guards/index';
 import { AuthService, UserService } from './_services/index';
 import { LoginComponent } from './login/index';
+import { HomeComponent } from './home/index';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HomeComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
-    ROUTES
+    routing
   ],
-  providers: [AuthService, UserService],
+  providers: [AuthService, UserService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

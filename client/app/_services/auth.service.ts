@@ -13,12 +13,12 @@ export class AuthService {
   }
 
   login(username: string, password: string): Observable<boolean> {
-      console.log(JSON.stringify({ username: username, password: password }));
+      //console.log(JSON.stringify({ username: username, password: password }));
           return this.http.post('/api/login', { username: username, password: password })
             .map((response: Response) => {
                 // login successful if there's a jwt token in the response
                 let token = response.json() && response.json().token;
-                console.log('Token'+token);
+                //console.log('Token'+token);
                 if (token) {
                     // set token property
                     this.token = token;
@@ -39,6 +39,7 @@ export class AuthService {
   logout(): void {
         // clear this token from user machine from local storage to log user out
         this.token = null;
+        debugger;
         localStorage.removeItem('currentUser');
     }
 }
