@@ -5,9 +5,8 @@ import {LoginComponent} from './login/login.component';
 import {HomeComponent} from './home/home.component';
 
 const app_routes: Routes = [
-    { path: '', component: AppComponent},
     { path: 'login', component: LoginComponent},
-    { path: 'login/dashboard', component: HomeComponent}
+    { path: 'dashboard', component: HomeComponent}
 ];
 
 export const routing = RouterModule.forRoot(app_routes);
