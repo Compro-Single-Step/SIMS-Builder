@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { TextBox } from './text-box.model';
 import { node } from '../UIConfig.model';
 
 @Component({
