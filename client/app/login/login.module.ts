@@ -2,18 +2,18 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { Login } from './login.component';
+import { LoginComponent } from './login.component';
+import { AuthService, UserService } from '../_services/index';
 
-import { AuthService } from './auth.service';
 
 
 export const routes = [
-  { path: '', component: Login, pathMatch: 'full' }
+  { path: '', component: LoginComponent, pathMatch: 'full' }
 ];
 
 @NgModule({
   declarations: [
-    Login
+    LoginComponent
   ],
   imports: [
     CommonModule,
@@ -21,7 +21,7 @@ export const routes = [
     RouterModule.forChild([
       {
         path: '',
-        component: Login
+        component: LoginComponent
       }
     ]),
   ],

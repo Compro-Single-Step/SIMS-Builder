@@ -3,7 +3,11 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
-import { AppRoutingModule } from './app-routing.module';
+import { ROUTES } from './app-routing.module';
+
+//import { AuthGuard } from './_guards/index';
+import { AuthService, UserService } from './_services/index';
+import { LoginComponent } from './login/index';
 
 @NgModule({
   declarations: [
@@ -13,9 +17,9 @@ import { AppRoutingModule } from './app-routing.module';
     BrowserModule,
     FormsModule,
     HttpModule,
-    AppRoutingModule
+    ROUTES
   ],
-  providers: [],
+  providers: [AuthService, UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
