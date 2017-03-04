@@ -39,7 +39,7 @@ export class AuthService {
   logout(): void {
         // clear this token from user machine from local storage to log user out
         this.token = null;
-        debugger;
+       
         localStorage.removeItem('currentUser');
     }
 }
