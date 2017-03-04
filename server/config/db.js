@@ -1,26 +1,12 @@
 const mongoose = require("mongoose");
+const config = require('./config');
 
-//mongoose.connect('mongodb://test:test@localhost:27017/testDB');
-const uri = "mongodb://localhost:27017/testDB";
-const dbOptions = {
-    db: {
-        native_parser: true
-    },
-    server: {
-        poolsize: 5
-    }
-    // ,
-    // user: 'test',
-    // pass: 'test'
+try {
+    mongoose.connect(config.db.url, config.db.dbOptions);    
 }
-
-mongoose.connect(uri, dbOptions).then(
-    (success) => {
-        console.log("Connection established.");
-    },
-    (error) => {
-        console.log(error);
-    });
+catch(error) {
+    console.log(error);
+}
 
 const db = mongoose.connection;
 
