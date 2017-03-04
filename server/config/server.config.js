@@ -1,5 +1,5 @@
 var server = {
-    SECRET: 'SECRET_COMES_HERE',
+    SECRET: 'SIMBUILDER_SECRET',
     TOKEN: {
     	EXPIRATION_TIME: 60 * 60 // in seconds.
     }
