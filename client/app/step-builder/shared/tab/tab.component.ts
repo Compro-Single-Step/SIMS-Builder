@@ -7,9 +7,9 @@ import { node } from '../UIConfig.model';
   styleUrls: ['./tab.component.scss']
 })
 export class TabComponent implements OnInit {
-  data: node;
+  compConfig: node;
   constructor() {
-    this.data = new node();
+    this.compConfig = new node();
   }
 
   ngOnInit() {

@@ -1,2 +1,2 @@
-<app-view-navigator [views]="stepConfig.views.length" [selectedView]="selectedView"></app-view-navigator>
+<app-view-navigator [viewCount]="stepConfig.views.length" [selectedViewNumber]="selectedView"></app-view-navigator>
 <app-view-input-area *ngFor="let view of stepConfig.views; let viewIndex=index;" [viewConfig]="view" [hidden]="selectedView!=(viewIndex+1)"></app-view-input-area>

@@ -7,9 +7,9 @@ import { node } from '../UIConfig.model';
   styleUrls: ['./text-box.component.css']
 })
 export class TextBoxComponent implements OnInit {
-  data: node;
+  compConfig: node;
   constructor() {
-    this.data = new node();
+    this.compConfig = new node();
    }
 
   ngOnInit() {}

@@ -7,9 +7,9 @@ import {node } from '../UIConfig.model';
   styleUrls: ['./select.component.scss']
 })
 export class SelectComponent implements OnInit {
-  data: node;
+  compConfig: node;
   constructor() {
-    this.data = new node();
+    this.compConfig = new node();
   }
 
   ngOnInit() {

@@ -7,8 +7,8 @@ import { Component, OnInit, OnChanges, Input, EventEmitter, Output } from '@angu
 })
 export class ViewNavigatorComponent implements OnInit, OnChanges {
 
-  @Input() views: number;
-  @Input() selectedView: number;
+  @Input() viewCount: number;
+  @Input() selectedViewNumber: number;
   @Output() viewClicked: EventEmitter<Object> = new EventEmitter();
   constructor() { }
 
