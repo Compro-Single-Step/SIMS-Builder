@@ -61,7 +61,9 @@ module.exports = function (req, res, next) {
 	else {
 		passport.authenticate('username', function (err, user) {
 			console.log(err);
-			if (err) return res.status(401).send();
+			if (err){
+				return res.send({err: err});
+			} 
 			else {
 				req.logIn(user, {session: false}, next);
 			}
