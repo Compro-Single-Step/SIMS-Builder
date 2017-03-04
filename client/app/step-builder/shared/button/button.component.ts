@@ -7,14 +7,14 @@ import { node } from '../UIConfig.model';
   styleUrls: ['./button.component.scss']
 })
 export class ButtonComponent implements OnInit {
-  data: node;
+  compConfig: node;
   type: string;
   constructor() {
-    this.data = new node();
+    this.compConfig = new node();
   }
 
   ngOnInit() {
-    this.type = this.data.rendererProperties.type || 'default';
+    this.type = this.compConfig.rendererProperties.type || 'default';
   }
 
 }
