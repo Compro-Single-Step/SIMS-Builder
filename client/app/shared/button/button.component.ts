@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BaseComponent } from '../base.component';
-import { node } from '../UIConfig.model';
+import { itemSchema } from '../UIConfig.model';
 
 
 @Component({
