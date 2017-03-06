@@ -1,6 +1,6 @@
 import { Injectable, ViewContainerRef, ReflectiveInjector, ComponentFactoryResolver, ComponentRef } from '@angular/core';
 import { TextBoxComponent } from './text-box/text-box.component';
-import { GroupComponent } from './group/group.component';
+import { PanelComponent } from './panel/panel.component';
 import { SelectComponent } from './select/select.component';
 import { TabComponent } from './tab/tab.component';
 import { ButtonComponent } from './button/button.component';
@@ -32,7 +32,7 @@ export class InputFactoryService {
   // Map that Maps itemRenderer property with the Component CLass
   private DynamicCompMap(type){
     return {
-      "Panel": GroupComponent,
+      "Panel": PanelComponent,
       "TextBox": TextBoxComponent,
       "Dropdown": SelectComponent,
       "TabGroup": TabComponent,
