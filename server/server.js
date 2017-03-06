@@ -23,8 +23,30 @@ app.use('/api', api);
 app.use('/assignment', assignment);
 
 // Catch all other routes and return the index file
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '/../dist/client/index.html'));
+app.get('*', (req, res, next) => {
+  
+  console.log(req.url);
+  if(req.url == '/favicon.ico') {
+    res.sendFile(path.join(__dirname, '/../dist/client/index.html'));
+  }
+  else if(req.user === undefined) {
+    res.redirect('/login');
+  }
+  else if(req.user && req.url == '/login') {
+    res.redirect('/dashboard');
+  }
+  else {
+    next();
+  }
+});
+
+app.get('/login', (req, res) => {
+  res.redirect('/login');
+});
+
+
+app.get('/dashboard', (req, res) => {
+  res.redirect('/dashboard');
 });
 
 /**
