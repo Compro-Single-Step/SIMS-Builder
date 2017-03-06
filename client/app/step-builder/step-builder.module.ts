@@ -14,21 +14,8 @@ import { MethodViewerComponent } from './method-viewer/method-viewer.component';
 import { ScenarioFilesViewerComponent } from './scenario-files-viewer/scenario-files-viewer.component';
 import { ScenarioDocsComponent } from './scenario-docs/scenario-docs.component';
 import { TaskFileStoreComponent } from './task-file-store/task-file-store.component';
-import { InputFactoryService } from './shared/input-factory.service';
 
-// Imports from External Libraries
-import { TabsModule } from 'ng2-bootstrap';
-
-//Importing the components available for dynamic insertion.
-import { TextBoxComponent } from './shared/text-box/text-box.component';
-import { GroupComponent } from './shared/group/group.component';
-import { LabelComponent } from './shared/label/label.component';
-import { TagComponent } from './shared/tag/tag.component';
-import { SelectComponent } from './shared/select/select.component';
-import { TabComponent } from './shared/tab/tab.component';
-import { ButtonComponent } from './shared/button/button.component';
-
-
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
@@ -40,10 +27,8 @@ import { ButtonComponent } from './shared/button/button.component';
         component: StepBuilderComponent
       }
     ]),
-    TabsModule.forRoot()
+    SharedModule
   ],
-  declarations: [StepBuilderComponent, StepInputAreaComponent, BalooReferenceComponent, ViewNavigatorComponent, ViewInputAreaComponent, MethodViewerComponent, ScenarioFilesViewerComponent, ScenarioDocsComponent, TaskFileStoreComponent, TextBoxComponent, GroupComponent, LabelComponent, TagComponent, SelectComponent, TabComponent, ButtonComponent],
-  providers: [InputFactoryService],
-  entryComponents: [ TextBoxComponent, GroupComponent, SelectComponent, TabComponent, ButtonComponent ]
+  declarations: [StepBuilderComponent, StepInputAreaComponent, BalooReferenceComponent, ViewNavigatorComponent, ViewInputAreaComponent, MethodViewerComponent, ScenarioFilesViewerComponent, ScenarioDocsComponent, TaskFileStoreComponent]
 })
 export class StepBuilderModule { }

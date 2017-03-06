@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { UIConfig } from '../shared/UIConfig.model';
+import { UIConfig } from '../../shared/UIConfig.model';
 
 @Component({
   selector: 'app-step-input-area',

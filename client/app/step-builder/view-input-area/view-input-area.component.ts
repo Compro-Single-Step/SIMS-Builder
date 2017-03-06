@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ViewContainerRef, ViewChild } from '@angular/core';
-import { InputFactoryService } from '../shared/input-factory.service';
-import { UIConfig } from '../shared/UIConfig.model';
+import { InputFactoryService } from '../../shared/input-factory.service';
+import { UIConfig } from '../../shared/UIConfig.model';
 
 @Component({
   selector: 'app-view-input-area',
