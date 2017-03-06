@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { BaseComponent } from '../base.component';
-import { node } from '../UIConfig.model';
+import { itemSchema } from '../UIConfig.model';
 
 @Component({
   selector: 'app-text-box-component',
@@ -8,7 +8,7 @@ import { node } from '../UIConfig.model';
   styleUrls: ['./text-box.component.css']
 })
 export class TextBoxComponent extends BaseComponent implements OnInit {
-  labelConfig: node = new node();
+  labelConfig: itemSchema = new itemSchema();
 
   ngOnInit() {
     this.labelConfig.rendererProperties.text = this.compConfig.label;

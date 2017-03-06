@@ -1,4 +1,4 @@
-export class node{
+export class itemSchema{
   id?: string;
   label?: string;
   itemType?: string;
@@ -9,7 +9,7 @@ export class node{
   dim?: string;
   mandatory?: boolean;
   dependents?: Array<Object>;
-  items?: Array<node>;
+  items?: Array<itemSchema>;
   itemRenderer?: string;
   rendererProperties?: any;
   modelReference?: string;
@@ -33,7 +33,7 @@ export class node{
 }
 
 export class UIConfig {
-  views: Array<node>
+  views: Array<itemSchema>
   constructor(){
     this.views =  [];
   }

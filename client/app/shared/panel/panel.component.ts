@@ -1,7 +1,7 @@
 import { Component, OnInit, ElementRef, Input, ViewContainerRef, ViewChild, Injector } from '@angular/core';
 import { BaseComponent } from '../base.component';
 import { InputFactoryService } from '../input-factory.service';
-import { node } from '../UIConfig.model';
+import { itemSchema } from '../UIConfig.model';
 declare var jQuery: any;
 
 @Component({
@@ -12,7 +12,7 @@ declare var jQuery: any;
 export class PanelComponent extends BaseComponent implements OnInit {
   @ViewChild('inputElementsContainer', { read: ViewContainerRef }) inputElementsContainer;
   $el: any;
-  labelConfig: node = new node();
+  labelConfig: itemSchema = new itemSchema();
   private factoryRef: InputFactoryService;
 
   constructor(el: ElementRef, vcref: ViewContainerRef, injector: Injector) {

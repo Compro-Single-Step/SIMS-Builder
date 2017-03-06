@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BaseComponent } from '../base.component';
-import { node } from '../UIConfig.model';
+import { itemSchema } from '../UIConfig.model';
 
 @Component({
   selector: 'app-tab',
@@ -8,7 +8,7 @@ import { node } from '../UIConfig.model';
   styleUrls: ['./tab.component.scss']
 })
 export class TabComponent extends BaseComponent implements OnInit {
-  labelConfig: node = new node();
+  labelConfig: itemSchema = new itemSchema();
 
   ngOnInit() {
     this.labelConfig.rendererProperties.text = this.compConfig.label;

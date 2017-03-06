@@ -1,10 +1,10 @@
-import { node } from './UIConfig.model';
+import { itemSchema } from './UIConfig.model';
 import { Input } from '@angular/core';
 
 export class BaseComponent {
-    @Input() compConfig: node;
+    @Input() compConfig: itemSchema;
 
     constructor() {
-        this.compConfig = new node();
+        this.compConfig = new itemSchema();
     }
 }
