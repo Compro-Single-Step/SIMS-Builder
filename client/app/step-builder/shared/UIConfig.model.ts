@@ -4,12 +4,12 @@ export class node{
   itemType?: string;
   tags?: Array<Object>;
   desc?: Object;
-  disabled?: string;
+  disabled?: boolean;
   pos?: string;
   dim?: string;
-  mandatory?: string;
+  mandatory?: boolean;
   dependents?: Array<Object>;
-  items?: Array<Object>;
+  items?: Array<node>;
   itemRenderer?: string;
   rendererProperties?: any;
   modelReference?: string;
@@ -20,10 +20,10 @@ export class node{
     this.itemType = "";
     this.tags = [{}];
     this.desc = {};
-    this.disabled = "";
+    this.disabled = false;
     this.pos = "";
     this.dim = "";
-    this.mandatory = "";
+    this.mandatory = true;
     this.dependents = [{}];
     this.items = [{}];
     this.itemRenderer = "";
