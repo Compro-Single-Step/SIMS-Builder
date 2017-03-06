@@ -1,4 +1,4 @@
-<div><app-label [text]="compConfig.label" [type]="'ElementHeading'"></app-label></div>
+<div><app-label [compConfig]="labelConfig"></app-label></div>
 <select name="" id="SheetInAction" name="SheetInAction" class="form-control">
   <option value={{item}} *ngFor="let item of compConfig.rendererProperties.itemList">{{item}}</option>
 </select>
