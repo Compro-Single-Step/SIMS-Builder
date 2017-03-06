@@ -1,17 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+import { BaseComponent } from '../base.component';
 import { node } from '../UIConfig.model';
+
 
 @Component({
   selector: 'app-button',
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.scss']
 })
-export class ButtonComponent implements OnInit {
-  compConfig: node;
+export class ButtonComponent extends BaseComponent implements OnInit {
   type: string;
-  constructor() {
-    this.compConfig = new node();
-  }
 
   ngOnInit() {
     this.type = this.compConfig.rendererProperties.type || 'default';
