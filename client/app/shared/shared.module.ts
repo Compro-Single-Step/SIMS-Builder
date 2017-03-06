@@ -6,7 +6,7 @@ import { TabsModule } from 'ng2-bootstrap';
 
 //Importing the components available for dynamic insertion.
 import { TextBoxComponent } from './text-box/text-box.component';
-import { GroupComponent } from './group/group.component';
+import { PanelComponent } from './panel/panel.component';
 import { LabelComponent } from './label/label.component';
 import { TagComponent } from './tag/tag.component';
 import { SelectComponent } from './select/select.component';
@@ -20,8 +20,8 @@ import { InputFactoryService } from './input-factory.service';
     CommonModule,
     TabsModule.forRoot()
   ],
-  declarations: [TextBoxComponent, GroupComponent, LabelComponent, TagComponent, SelectComponent, TabComponent, ButtonComponent],
-  entryComponents: [TextBoxComponent, GroupComponent, SelectComponent, TabComponent, ButtonComponent],
+  declarations: [TextBoxComponent, PanelComponent, LabelComponent, TagComponent, SelectComponent, TabComponent, ButtonComponent],
+  entryComponents: [TextBoxComponent, PanelComponent, SelectComponent, TabComponent, ButtonComponent],
   providers: [InputFactoryService]
 })
 export class SharedModule { }

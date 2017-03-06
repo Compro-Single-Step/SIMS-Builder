@@ -5,11 +5,11 @@ import { node } from '../UIConfig.model';
 declare var jQuery: any;
 
 @Component({
-  selector: 'app-group',
-  templateUrl: './group.component.html',
-  styleUrls: ['./group.component.scss']
+  selector: 'app-panel',
+  templateUrl: './panel.component.html',
+  styleUrls: ['./panel.component.scss']
 })
-export class GroupComponent extends BaseComponent implements OnInit {
+export class PanelComponent extends BaseComponent implements OnInit {
   @ViewChild('inputElementsContainer', { read: ViewContainerRef }) inputElementsContainer;
   $el: any;
   labelConfig: node = new node();
