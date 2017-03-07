@@ -7,4 +7,8 @@ export class BaseComponent {
     constructor() {
         this.compConfig = new itemSchema();
     }
+
+    setData(inputConfig){
+        this.compConfig = inputConfig;
+    }
 }
