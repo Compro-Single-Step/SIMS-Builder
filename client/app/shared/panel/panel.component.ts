@@ -1,5 +1,5 @@
 import { Component, OnInit, ElementRef, ViewContainerRef, ViewChild, Injector } from '@angular/core';
-import { BaseComponent } from '../base.component';
+import { ElementContainerComponent } from '../element-container.component';
 import { InputFactoryService } from '../input-factory.service';
 import { itemSchema } from '../UIConfig.model';
 declare var jQuery: any;
@@ -9,7 +9,7 @@ declare var jQuery: any;
   templateUrl: './panel.component.html',
   styleUrls: ['./panel.component.scss']
 })
-export class PanelComponent extends BaseComponent implements OnInit {
+export class PanelComponent extends ElementContainerComponent implements OnInit {
   @ViewChild('inputElementsContainer', { read: ViewContainerRef }) inputElementsContainer;
   $el: any;
   labelConfig: itemSchema = new itemSchema();
@@ -26,8 +26,6 @@ export class PanelComponent extends BaseComponent implements OnInit {
     this.labelConfig.rendererProperties.text = this.compConfig.label;
     this.labelConfig.rendererProperties.type = 'PanelHeading';
     this.$el.find('.widget').widgster();
-    for (let item of this.compConfig.items) {
-      this.factoryRef.createComp(this.inputElementsContainer, item);
-    }
+    this.AddChildElements(this.factoryRef, this.inputElementsContainer, this.compConfig.items);
   }
 }
