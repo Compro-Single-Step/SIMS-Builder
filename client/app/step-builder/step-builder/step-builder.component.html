@@ -1,2 +1,38 @@
-<button (click)="fetchConfig()">Click Me!</button>
-<app-step-input-area [stepConfig]="uiConfig"></app-step-input-area>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <div class="row">
+        <h4><strong>STEP 1</strong>&nbsp;Move the range G5:H6 to the range D5:E6</h4>
+      </div>
+      <div class="row">
+        <span class="tag tagFontNormal tag-primary"><span>Task ID:&nbsp;</span> SKL16.XL.04.01.03.T1  </span>&nbsp;<span class="tag tagFontNormal tag-primary"><span >Skill:&nbsp;</span> Move Cell Contents</span> &nbsp; <span class="tag tagFontNormal tag-primary"><span>Template:&nbsp;</span> Move Cell Range </span>
+      </div>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav navbar-right">
+        <li><button class="btn btn-inverse">Close</button></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <button (click)="fetchConfig()" class="btn btn-default btn-block">Fetch UI</button>
+    </div>
+  </div>
+  <div class="row">
+    <app-step-input-area [stepConfig]="uiConfig"></app-step-input-area>
+  </div>
+</div>
+<div class="row" id="footer">
+  <div class="col-md-12">
+    <button class="btn btn-primary">Preview Step</button>
+    <button class="btn btn-primary">Save</button>
+    <button class="btn btn-primary pull-right">Next</button>
+    <button class="btn btn-primary pull-right" >Previous</button>
+  </div>
+</div>
