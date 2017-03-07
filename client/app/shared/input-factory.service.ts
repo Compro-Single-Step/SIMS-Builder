@@ -31,7 +31,7 @@ export class InputFactoryService {
     let comp = component.create(injector);
 
     // add Data to the instance of the Component.
-    comp.instance["compConfig"] = itemConfig;
+    comp.instance["setData"](itemConfig);
 
     // add the newly created component to the DOM ..
     vCref.insert(comp.hostView);
@@ -42,6 +42,7 @@ export class InputFactoryService {
   }
 
   // Map that Maps itemRenderer property with the Component CLass
+  //TODO: The default returned textbox component has to be removed and error handling has to be implemented.
   private DynamicCompMap(type){
     return {
       "Panel": PanelComponent,
