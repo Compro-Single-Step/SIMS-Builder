@@ -25,6 +25,7 @@
     "body-parser": "^1.16.1",
     "bootstrap": "^3.3.7",
     "core-js": "^2.4.1",
+    "dropzone": "^4.3.0",
     "express": "^4.14.1",
     "jquery": "^3.1.1",
     "mongoose": "^4.8.4",
