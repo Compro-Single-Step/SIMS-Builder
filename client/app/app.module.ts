@@ -1,3 +1,5 @@
+import 'jquery';
+import 'widgster';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -22,8 +24,9 @@ import { HomeComponent } from './home/home.component';
     FormsModule,
     HttpModule,
     routing
+
   ],
   providers: [AuthService, UserService, AuthGuard],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

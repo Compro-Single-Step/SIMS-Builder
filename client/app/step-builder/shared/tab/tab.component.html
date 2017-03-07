@@ -1,0 +1,8 @@
+<app-label [text]="data.label" [type]="'ElementHeading'"></app-label>
+<span class="glyphicon glyphicon-info-sign" data-toggle="popover" data-trigger = "manual" title='WORKBOOK IMAGE RESOURCES <a class="close");">&times;</a>' data-placement="right" data-content="This section requires 4 separate images to be uploaded. These images will be used to render a worksheet in SIMS. Details on how to get these images  can be accessed from here (Hyperlink pointing to the Image creation process spec).Images for any number of sheets can be uploaded by pressing the (+) button shown in the right." ></span>
+<tabset>
+  <tab *ngFor="let tab of data.items">
+    <template tabHeading>{{tab.label}}</template>
+    Tab 1 content
+  </tab>
+</tabset>

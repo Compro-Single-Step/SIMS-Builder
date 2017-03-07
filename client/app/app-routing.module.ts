@@ -1,3 +1,4 @@
+
 import { Routes, RouterModule } from '@angular/router';
 
 import { LoginComponent } from './login/login.component';
@@ -8,6 +9,8 @@ const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
     
     { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
+  
+    { path: 'stepbuilder',   loadChildren: './step-builder/step-builder.module#StepBuilderModule' },
 
     { path: '', component: HomeComponent, canActivate: [AuthGuard] },
 
@@ -16,3 +19,4 @@ const appRoutes: Routes = [
 ];
 
 export const routing = RouterModule.forRoot(appRoutes);
+
