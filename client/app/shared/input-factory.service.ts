@@ -12,10 +12,10 @@ export class InputFactoryService {
 
   constructor(private componentFactoryResolver: ComponentFactoryResolver) { }
 
-  public createComp (vCref: ViewContainerRef, itemConfig){
+  public createComp (vcref: ViewContainerRef, itemConfig){
 
     /**
-     * [resolveComponentFactory - We create a factory out of the component we want to create]
+     * [resolveComponentFactory - Get the factory object to create the component]
      * @param  [Component Class Name]
      * @return {[ComponentFactory]}
      */
@@ -23,8 +23,8 @@ export class InputFactoryService {
 
     // ReflectiveInjector: A ReflectiveDependency injection container used for instantiating objects and resolving dependencies.
     // Creates an injector from previously resolved providers..
-    // vCref is needed cause of that injector..
-    let injector = ReflectiveInjector.fromResolvedProviders([], vCref.parentInjector);
+    // vcref is needed cause of that injector..
+    let injector = ReflectiveInjector.fromResolvedProviders([], vcref.parentInjector);
 
     // create component without adding it directly to the DOM
     // Creates a new component and returns the ComponentRef
@@ -34,7 +34,7 @@ export class InputFactoryService {
     comp.instance["setData"](itemConfig);
 
     // add the newly created component to the DOM ..
-    vCref.insert(comp.hostView);
+    vcref.insert(comp.hostView);
 
     // Run the Lifecycle hooks of the newly added Component
     comp.changeDetectorRef.detectChanges();
