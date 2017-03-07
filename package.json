@@ -30,6 +30,7 @@
     "bootstrap": "4.0.0-alpha.5",
     "bootstrap-select": "1.11.2",
     "core-js": "^2.4.1",
+    "dropzone": "^4.3.0",
     "express": "^4.14.1",
     "font-awesome": "4.7.0",
     "glyphicons-halflings": "1.9.0",

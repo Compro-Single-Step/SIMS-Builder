@@ -302,7 +302,8 @@ module.exports = {
       jQuery: 'jquery',
       $: 'jquery',
       jquery: 'jquery',
-      'window.jQuery': 'jquery'
+      'window.jQuery': 'jquery',
+      Dropzone: 'dropzone'
     })
   ],
   "node": {

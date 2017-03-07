@@ -14,14 +14,16 @@ import { TabComponent } from './tab/tab.component';
 import { ButtonComponent } from './button/button.component';
 
 import { InputFactoryService } from './input-factory.service';
+import { DropzoneComponent } from './dropzone/dropzone.component';
+import { WrapperComponent } from './wrapper/wrapper.component';
 
 @NgModule({
   imports: [
     CommonModule,
     TabsModule.forRoot()
   ],
-  declarations: [TextBoxComponent, PanelComponent, LabelComponent, TagComponent, SelectComponent, TabComponent, ButtonComponent],
-  entryComponents: [TextBoxComponent, PanelComponent, SelectComponent, TabComponent, ButtonComponent],
+  declarations: [TextBoxComponent, PanelComponent, LabelComponent, TagComponent, SelectComponent, TabComponent, ButtonComponent, DropzoneComponent, WrapperComponent],
+  entryComponents: [TextBoxComponent, PanelComponent, SelectComponent, TabComponent, ButtonComponent, DropzoneComponent],
   providers: [InputFactoryService]
 })
 export class SharedModule { }

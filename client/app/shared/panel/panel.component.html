@@ -3,7 +3,6 @@
     <div>
       <app-label [compConfig]="labelConfig"></app-label>
       <app-tag *ngFor="let tag of compConfig.tags" [compConfig]="tag"></app-tag>
-       <span class="glyphicon glyphicon-info-sign document_title" data-toggle="popover" data-trigger = "manual" title='Document Title<a class="close");">&times;</a>' data-placement="right" data-content="Document Name which is shown in the central top area in the Ribbon is to be mentioned here." ></span>
     </div>
     <div class="widget-controls">
     	<a class="add_inputs plus_sign" title="Add Parameters" role="button" *ngIf="compConfig.rendererProperties.optionalItems"><i class="fa fa-plus" aria-hidden="true"></i></a>

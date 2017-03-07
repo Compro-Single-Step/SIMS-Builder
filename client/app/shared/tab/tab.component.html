@@ -3,6 +3,6 @@
 <tabset>
   <tab *ngFor="let tab of compConfig.items">
     <template tabHeading>{{tab.label}}</template>
-    Tab 1 content
+    <app-wrapper [compConfig] = "tab"></app-wrapper>
   </tab>
 </tabset>

@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, Input, ViewContainerRef, ViewChild, Injector } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewContainerRef, ViewChild, Injector } from '@angular/core';
 import { BaseComponent } from '../base.component';
 import { InputFactoryService } from '../input-factory.service';
 import { itemSchema } from '../UIConfig.model';
