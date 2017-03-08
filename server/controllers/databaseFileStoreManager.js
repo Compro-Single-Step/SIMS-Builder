@@ -22,3 +22,25 @@ module.exports.getSkillXML = function(templateId, callback1) {
         }
     });
 };
+
+module.exports.getIOMap = function(templateId, callback1) {
+    
+    let absolutePath; 
+    dal.getIOMapPath(templateId, (data, error) => {
+        if(!error && data.success) {
+            absolutePath = fal.getAbsoluteFilePath(data[0].io_map_path);
+            callback1(absolutePath);
+        }
+    });
+};
+
+module.exports.getSkillModel = function(templateId, callback1) {
+    
+    let absolutePath; 
+    dal.getSkillModelPath(templateId, (data, error) => {
+        if(!error && data.success) {
+            absolutePath = fal.getAbsoluteFilePath(data[0].io_map_path);
+            callback1(absolutePath);
+        }
+    });
+};

@@ -9,6 +9,14 @@ module.exports.getSkillXMLPath = function(templateId, callback) {
     getFilePath(templateId, callback);
 };
 
+module.exports.getIOMapPath = function(templateId, callback) {
+    getFilePath(templateId, callback);
+};
+
+module.exports.getSkillModelPath = function(templateId, callback) {
+    getFilePath(templateId, callback);
+};
+
 function getFilePath(templateId, callback) {
     skillConfigRepoModel.getFilesPathArray({"template_id": templateId}, {"_id": false}, (error, data) => {
         if(!error && data !== null) {

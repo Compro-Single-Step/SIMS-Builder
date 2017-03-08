@@ -20,4 +20,18 @@ router.get('/skillxml/:templateId', (req, res) => {
     });
 });
 
+router.get('/iomap/:templateId', (req, res) => {
+    databaseFileStoreManager.getIOMap(req.params.templateId, (path) => {
+        console.log(path);
+        res.download(path);
+    });
+});
+
+router.get('/skillmodel/:templateId', (req, res) => {
+    databaseFileStoreManager.getSkillModel(req.params.templateId, (path) => {
+        console.log(path);
+        res.download(path);
+    });
+});
+
 module.exports = router;
