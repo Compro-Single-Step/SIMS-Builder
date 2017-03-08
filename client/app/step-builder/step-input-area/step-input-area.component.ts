@@ -16,4 +16,7 @@ export class StepInputAreaComponent implements OnInit {
 
   ngOnInit() {}
 
+  setSelectedView($event) {
+    this.selectedView = $event.viewNumber;
+  }
 }
