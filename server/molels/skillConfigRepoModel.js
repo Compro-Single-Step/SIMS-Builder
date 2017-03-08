@@ -9,7 +9,7 @@ const skillConfigRepoSchema = new mongoose.Schema({
 }, {collection: 'skill_config_repo'});
 
 skillConfigRepoSchema.statics = {
-    getConfigPath: function(query, map, callback) {
+    getFilesPathArray: function(query, map, callback) {
         this.find(query, map, callback);
     }
 };

@@ -2,10 +2,18 @@
 const skillConfigRepoModel = require('../molels/skillConfigRepoModel').skill_config_repo;
 
 module.exports.getUIConfigPath = function(templateId, callback) {
-    skillConfigRepoModel.getConfigPath({"template_id": templateId}, {"ui_config_path": true, "_id": false}, (error, data) => {
+    getFilePath(templateId, callback);
+};
+
+module.exports.getSkillXMLPath = function(templateId, callback) {
+    getFilePath(templateId, callback);
+};
+
+function getFilePath(templateId, callback) {
+    skillConfigRepoModel.getFilesPathArray({"template_id": templateId}, {"_id": false}, (error, data) => {
         if(!error && data !== null) {
             data.success = true;
         }
         callback(data, error);
     });
-};
+}
