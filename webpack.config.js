@@ -41,7 +41,8 @@ module.exports = {
       "./client\\polyfills.ts"
     ],
     "styles": [
-      "./client\\styles.css"
+      "./client\\styles.css",
+      "./client\\app\\scss\\application.scss"
     ]
   },
   "output": {
@@ -77,7 +78,8 @@ module.exports = {
       },
       {
         "exclude": [
-          path.join(process.cwd(), "client\\styles.css")
+          path.join(process.cwd(), "client\\styles.css"),
+          path.join(process.cwd(), "client\\app\\scss\\application.scss")
         ],
         "test": /\.css$/,
         "loaders": [
@@ -88,7 +90,8 @@ module.exports = {
       },
       {
         "exclude": [
-          path.join(process.cwd(), "client\\styles.css")
+          path.join(process.cwd(), "client\\styles.css"),
+          path.join(process.cwd(), "client\\app\\scss\\application.scss")
         ],
         "test": /\.scss$|\.sass$/,
         "loaders": [
@@ -100,7 +103,8 @@ module.exports = {
       },
       {
         "exclude": [
-          path.join(process.cwd(), "client\\styles.css")
+          path.join(process.cwd(), "client\\styles.css"),
+          path.join(process.cwd(), "client\\app\\scss\\application.scss")
         ],
         "test": /\.less$/,
         "loaders": [
@@ -110,9 +114,17 @@ module.exports = {
           "less-loader"
         ]
       },
+      { 
+        "exclude": [
+          /\/node_modules\//
+        ],
+        test: /\.(woff2?|ttf|eot|svg)$/, 
+        loaders: ['url-loader?limit=10000&name=[name].[ext]']
+      },
       {
         "exclude": [
-          path.join(process.cwd(), "client\\styles.css")
+          path.join(process.cwd(), "client\\styles.css"),
+          path.join(process.cwd(), "client\\app\\scss\\application.scss")
         ],
         "test": /\.styl$/,
         "loaders": [
@@ -124,7 +136,8 @@ module.exports = {
       },
       {
         "include": [
-          path.join(process.cwd(), "client\\styles.css")
+          path.join(process.cwd(), "client\\styles.css"),
+          path.join(process.cwd(), "client\\app\\scss\\application.scss")
         ],
         "test": /\.css$/,
         "loaders": ExtractTextPlugin.extract({
@@ -138,14 +151,16 @@ module.exports = {
       },
       {
         "include": [
-          path.join(process.cwd(), "client\\styles.css")
+          path.join(process.cwd(), "client\\styles.css"),
+          path.join(process.cwd(), "client\\app\\scss\\application.scss")
         ],
         "test": /\.scss$|\.sass$/,
         "loaders": ExtractTextPlugin.extract({
   "use": [
-    "css-loader?{\"sourceMap\":false,\"importLoaders\":1}",
-    "postcss-loader",
-    "sass-loader"
+    "exports-loader?module.exports.toString()",
+          "css-loader?{\"sourceMap\":false,\"importLoaders\":1}",
+          "postcss-loader",
+          "sass-loader"
   ],
   "fallback": "style-loader",
   "publicPath": ""
@@ -153,7 +168,8 @@ module.exports = {
       },
       {
         "include": [
-          path.join(process.cwd(), "client\\styles.css")
+          path.join(process.cwd(), "client\\styles.css"),
+          path.join(process.cwd(), "client\\app\\scss\\application.scss")
         ],
         "test": /\.less$/,
         "loaders": ExtractTextPlugin.extract({
@@ -168,7 +184,8 @@ module.exports = {
       },
       {
         "include": [
-          path.join(process.cwd(), "client\\styles.css")
+          path.join(process.cwd(), "client\\styles.css"),
+          path.join(process.cwd(), "client\\app\\scss\\application.scss")
         ],
         "test": /\.styl$/,
         "loaders": ExtractTextPlugin.extract({
@@ -193,6 +210,10 @@ module.exports = {
   "plugins": [
     new NoEmitOnErrorsPlugin(),
     new CopyWebpackPlugin([{ from: 'server', to: '../server'}]),
+    new CopyWebpackPlugin([{
+        from: 'client/assets',
+        to: 'assets'
+      }]),
     new HtmlWebpackPlugin({
       "template": "./client\\index.html",
       "filename": "./index.html",
