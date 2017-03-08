@@ -8,12 +8,22 @@ import { Component, OnInit, OnChanges, Input, EventEmitter, Output } from '@angu
 export class ViewNavigatorComponent implements OnInit, OnChanges {
 
   @Input() viewCount: number;
-  @Input() selectedViewNumber: number;
+  @Input() selectedViewNumber: number = 1;
   @Output() viewClicked: EventEmitter<Object> = new EventEmitter();
+  viewCountArr: Array<number>;
+
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
-  ngOnChanges() {}
+  ngOnChanges(changes) {
+    if (changes.viewCount) {
+      this.viewCountArr = Array(this.viewCount).map((x, i) => i);
+    }
+  }
 
+  setSelectedView(viewNumber: number) {
+    this.viewClicked.emit({viewNumber: viewNumber});
+  }
 }
