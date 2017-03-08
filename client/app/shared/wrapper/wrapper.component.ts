@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewContainerRef, Injector, ViewChild } from '@angular/core';
-import { BaseComponent } from '../base.component';
+import { ElementContainerComponent } from '../element-container.component';
 import { InputFactoryService } from '../input-factory.service';
 
 @Component({
@@ -7,7 +7,7 @@ import { InputFactoryService } from '../input-factory.service';
   templateUrl: './wrapper.component.html',
   styleUrls: ['./wrapper.component.scss']
 })
-export class WrapperComponent extends BaseComponent implements OnInit {
+export class WrapperComponent extends ElementContainerComponent implements OnInit {
   @ViewChild('wrapper', { read: ViewContainerRef }) wrapperContainer;
   private factoryRef: InputFactoryService;
   constructor(vcref: ViewContainerRef, injector: Injector) {
@@ -16,9 +16,6 @@ export class WrapperComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    for (let item of this.compConfig.items) {
-      this.factoryRef.createComp(this.wrapperContainer, item);
-    }
+    this.AddChildElements(this.factoryRef, this.wrapperContainer, this.compConfig.items);
   }
-
 }
