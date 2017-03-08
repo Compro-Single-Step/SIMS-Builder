@@ -4,7 +4,7 @@ import { UIConfig } from '../../shared/UIConfig.model';
 @Component({
   selector: 'app-step-builder',
   templateUrl: './step-builder.component.html',
-  styleUrls: ['./step-builder.component.css']
+  styleUrls: ['./step-builder.component.scss']
 })
 export class StepBuilderComponent implements OnInit {
   uiConfig: UIConfig;
@@ -409,10 +409,6 @@ export class StepBuilderComponent implements OnInit {
         }
       ]
     }
-    var self = this;
-    setTimeout(function () {
-      console.log(self.uiConfig);
-    }, 5000);
   }
 
 }
