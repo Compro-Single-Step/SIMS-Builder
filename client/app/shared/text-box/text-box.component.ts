@@ -5,7 +5,7 @@ import { itemSchema } from '../UIConfig.model';
 @Component({
   selector: 'app-text-box-component',
   templateUrl: './text-box.component.html',
-  styleUrls: ['./text-box.component.css']
+  styleUrls: ['./text-box.component.scss']
 })
 export class TextBoxComponent extends BaseComponent implements OnInit {
   labelConfig: itemSchema = new itemSchema();

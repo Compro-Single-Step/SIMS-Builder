@@ -3,7 +3,7 @@ import { Component, OnInit, OnChanges, Input, EventEmitter, Output } from '@angu
 @Component({
   selector: 'app-view-navigator',
   templateUrl: './view-navigator.component.html',
-  styleUrls: ['./view-navigator.component.css']
+  styleUrls: ['./view-navigator.component.scss']
 })
 export class ViewNavigatorComponent implements OnInit, OnChanges {
 

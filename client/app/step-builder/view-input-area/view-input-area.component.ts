@@ -5,7 +5,7 @@ import { UIConfig } from '../../shared/UIConfig.model';
 @Component({
   selector: 'app-view-input-area',
   templateUrl: './view-input-area.component.html',
-  styleUrls: ['./view-input-area.component.css']
+  styleUrls: ['./view-input-area.component.scss']
 })
 export class ViewInputAreaComponent implements OnInit {
   @ViewChild('inputCompContainer', {read: ViewContainerRef}) compContainer;
