@@ -33,14 +33,14 @@ export class DropzoneComponent extends BaseComponent implements OnInit {
       dictDefaultMessage: this.compConfig.rendererProperties.placeHolder,
       init: function () {
         this.on("addedfile", function (file) { //To be Changed from 'addedfile' to 'success' when file starts getting stored on server;
-          self.getDetails();
+          self.updateDependencies();
         })
       }
     });
   }
 
 
-  getDetails() {
+  updateDependencies() {
     var dependants = this.uiConfigJSON.dependants;
     for (let i = 0; i < dependants.length; i++) {
       let dependantModelReference = dependants[i].modelReference;
