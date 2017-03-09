@@ -5,7 +5,7 @@
       <app-tag *ngFor="let tag of compConfig.tags" [compConfig]="tag"></app-tag>
     </div>
     <div class="widget-controls">
-    	<a class="add_inputs plus_sign" title="Add Parameters" role="button" *ngIf="compConfig.rendererProperties.optionalItems"><i class="fa fa-plus" aria-hidden="true"></i></a>
+    	<a title="Add Parameters" role="button" *ngIf="compConfig.rendererProperties.optionalItems"><i class="fa fa-plus" aria-hidden="true"></i></a>
       <a data-widgster="expand" title="Expand" href="#"><i class="glyphicon glyphicon-chevron-up"></i></a>
       <a data-widgster="collapse" title="Collapse" href="#"><i class="glyphicon glyphicon-chevron-down"></i></a>
     </div>
