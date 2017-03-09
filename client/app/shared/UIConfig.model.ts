@@ -8,11 +8,12 @@ export class itemSchema{
   pos?: string;
   dim?: string;
   mandatory?: boolean;
-  dependents?: Array<Object>;
+  dependants?: Array<Object>;
   items?: Array<itemSchema>;
   itemRenderer?: string;
   rendererProperties?: any;
   modelReference?: string;
+  val?: string;
 
   constructor(){
     this.id = "";
@@ -24,11 +25,12 @@ export class itemSchema{
     this.pos = "";
     this.dim = "";
     this.mandatory = true;
-    this.dependents = [{}];
+    this.dependants = [{}];
     this.items = [{}];
     this.itemRenderer = "";
     this.rendererProperties = {};
     this.modelReference = "";
+    this.val = "";
   }
 }
 
