@@ -7,26 +7,46 @@ const databaseFileStoreManager = require('../controllers/databaseFileStoreManage
 router.get('/uiconfig/:templateId', (req, res) => {
     let templateId = req.params.templateId;
     let data = {};
-    skillEngineController.getUIConfig(req.params.templateId, data, (path) => {
-        res.download(path);
+    skillEngineController.getUIConfig(req.params.templateId, data, (error, data) => {
+        if(!error) {
+            res.json(JSON.parse(data));
+        }
+        else {
+            res.json(error);
+        }
     });
 });
 
 router.get('/skillxml/:templateId', (req, res) => {
-    databaseFileStoreManager.getSkillXML(req.params.templateId, (path) => {
-        res.download(path);
+    databaseFileStoreManager.getSkillXML(req.params.templateId, (error, data) => {
+        if(!error) {
+            res.json(data);
+        }
+        else {
+            res.json(error);
+        }
     });
 });
 
 router.get('/iomap/:templateId', (req, res) => {
-    databaseFileStoreManager.getIOMap(req.params.templateId, (path) => {
-        res.download(path);
+    databaseFileStoreManager.getIOMap(req.params.templateId, (error, data) => {
+        if(!error) {
+            res.json(JSON.parse(data));
+        }
+        else {
+            res.json(error);
+        }
     });
 });
 
 router.get('/skillmodel/:templateId', (req, res) => {
-    databaseFileStoreManager.getSkillModel(req.params.templateId, (path) => {
-        res.download(path);
+    databaseFileStoreManager.getSkillModel(req.params.templateId, (error, data) => {
+        if(!error) {
+            res.json(JSON.parse(data));
+        }
+        else {
+            res.json(error);
+        }
     });
 });
 
