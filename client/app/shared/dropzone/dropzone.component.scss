@@ -1,0 +1,6 @@
+@import "../../../../node_modules/bootstrap/scss/variables";
+
+.dropzone {
+  border: $border-width*2 dashed $pre-border-color;
+  margin: $spacer;
+}
