@@ -10,13 +10,6 @@ export class StepBuilderComponent implements OnInit {
   uiConfig: UIConfig;
 
   constructor() {
-    this.uiConfig = new UIConfig();
-  }
-
-  ngOnInit() {}
-
-  fetchConfig(): void {
-    //TODO: get this UI from the server using a service.
     this.uiConfig = {
       "views": [
         {
@@ -410,5 +403,7 @@ export class StepBuilderComponent implements OnInit {
       ]
     }
   }
+
+  ngOnInit() {}
 
 }
