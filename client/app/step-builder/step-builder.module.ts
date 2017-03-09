@@ -17,6 +17,9 @@ import { TaskFileStoreComponent } from './task-file-store/task-file-store.compon
 
 import { SharedModule } from '../shared/shared.module';
 
+//Importing Services
+import { SkillManagerService } from './step-input-area/skill-manager.service';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -29,6 +32,7 @@ import { SharedModule } from '../shared/shared.module';
     ]),
     SharedModule
   ],
-  declarations: [StepBuilderComponent, StepInputAreaComponent, BalooReferenceComponent, ViewNavigatorComponent, ViewInputAreaComponent, MethodViewerComponent, ScenarioFilesViewerComponent, ScenarioDocsComponent, TaskFileStoreComponent]
+  declarations: [StepBuilderComponent, StepInputAreaComponent, BalooReferenceComponent, ViewNavigatorComponent, ViewInputAreaComponent, MethodViewerComponent, ScenarioFilesViewerComponent, ScenarioDocsComponent, TaskFileStoreComponent],
+  providers: [SkillManagerService]
 })
 export class StepBuilderModule { }
