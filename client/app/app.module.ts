@@ -4,8 +4,12 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { AppRoutingModule } from './app-routing.module';
 
+
+import { AppRoutingModule } from './app-routing.module';
+import { AppConfig } from './app.config';
+import { AuthGuard } from './auth-guard.service'
+import { AuthService } from './auth.service'
 import { AppComponent } from './app.component';
 
 @NgModule({
@@ -18,7 +22,7 @@ import { AppComponent } from './app.component';
     HttpModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [AppConfig, AuthGuard, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
