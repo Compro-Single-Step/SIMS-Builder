@@ -1,5 +1,5 @@
-const dfsmController = require('./dfsmController');
+const dbFileStoreController = require('./dbFileStoreController');
 
 module.exports.getUIConfig = function(templateId, data, callback) {
-    return dfsmController.getUIConfig(templateId, callback);
+    return dbFileStoreController.getUIConfig(templateId, callback);
 };

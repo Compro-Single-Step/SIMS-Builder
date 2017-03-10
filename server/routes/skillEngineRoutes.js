@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const skillEngineController = require('../controllers/skillEngineController');
-const dfsmController = require('../controllers/dfsmController');
+const dbFileStoreController = require('../controllers/dbFileStoreController');
 
 router.get('/uiconfig/:templateId', (req, res) => {
     let templateId = req.params.templateId;
@@ -17,7 +17,7 @@ router.get('/uiconfig/:templateId', (req, res) => {
 });
 /*
 router.get('/skillxml/:templateId', (req, res) => {
-    dfsmController.getSkillXML(req.params.templateId, (error, data) => {
+    dbFileStoreController.getSkillXML(req.params.templateId, (error, data) => {
         if(!error) {
             res.json(data);
         }
@@ -28,7 +28,7 @@ router.get('/skillxml/:templateId', (req, res) => {
 });
 
 router.get('/iomap/:templateId', (req, res) => {
-    dfsmController.getIOMap(req.params.templateId, (error, data) => {
+    dbFileStoreController.getIOMap(req.params.templateId, (error, data) => {
         if(!error) {
             res.json(JSON.parse(data));
         }
@@ -39,7 +39,7 @@ router.get('/iomap/:templateId', (req, res) => {
 });
 
 router.get('/skillmodel/:templateId', (req, res) => {
-    dfsmController.getSkillModel(req.params.templateId, (error, data) => {
+    dbFileStoreController.getSkillModel(req.params.templateId, (error, data) => {
         if(!error) {
             res.json(JSON.parse(data));
         }
@@ -50,7 +50,7 @@ router.get('/skillmodel/:templateId', (req, res) => {
 });
 
 router.get('/stepui/:taskId/:stateIndex', (req, res) => {
-    dfsmController.getStepUIState(req.params.taskId, req.params.stateIndex, (data, error) => {
+    dbFileStoreController.getStepUIState(req.params.taskId, req.params.stateIndex, (data, error) => {
         if(!error) {
             res.json(data);
         }
