@@ -7,6 +7,7 @@ const config = require('./config/config');
 
 // Get our API routes
 const api = require('./routes/api');
+const skillEngine = require('./routes/skillEngineRoutes');
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.use(express.static(path.join(__dirname, '/../dist/client')));
 
 // Set our api routes
 app.use('/api', api);
+app.use('/skill', skillEngine);
 
 // Catch all other routes and return the index file
 app.get('*', (req, res) => {
