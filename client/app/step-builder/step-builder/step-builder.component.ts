@@ -122,7 +122,7 @@ export class StepBuilderComponent implements OnInit {
                             "dataType": "img"
                           },
                           "pos": "x,y",
-                          "dim": "h,w",
+                          "dim": "200px,200px",
                           "modelReference": "View1.GridImage"
                         },
                         {
@@ -134,7 +134,7 @@ export class StepBuilderComponent implements OnInit {
                             "dataType": "img"
                           },
                           "pos": "x,y",
-                          "dim": "h,w",
+                          "dim": "200px,200px",
                           "modelReference": "View1.RowImage"
                         },
                         {
@@ -146,7 +146,7 @@ export class StepBuilderComponent implements OnInit {
                             "dataType": "img"
                           },
                           "pos": "x,y",
-                          "dim": "h,w",
+                          "dim": "200px,200px",
                           "modelReference": "View1.ColumnImage"
                         },
                         {
@@ -158,7 +158,7 @@ export class StepBuilderComponent implements OnInit {
                             "dataType": "img"
                           },
                           "pos": "x,y",
-                          "dim": "h,w",
+                          "dim": "200px,200px",
                           "modelReference": "View1.CellImage"
                         }
                       ]
@@ -353,7 +353,7 @@ export class StepBuilderComponent implements OnInit {
                             "dataType": "img"
                           },
                           "pos": "x,y",
-                          "dim": "h,w",
+                          "dim": "200px,200px",
                           "modelReference": "View3.GridImage"
                         },
                         {
@@ -365,7 +365,7 @@ export class StepBuilderComponent implements OnInit {
                             "dataType": "img"
                           },
                           "pos": "x,y",
-                          "dim": "h,w",
+                          "dim": "200px,200px",
                           "modelReference": "View3.RowImage"
                         },
                         {
@@ -377,7 +377,7 @@ export class StepBuilderComponent implements OnInit {
                             "dataType": "img"
                           },
                           "pos": "x,y",
-                          "dim": "h,w",
+                          "dim": "200px,200px",
                           "modelReference": "View3.ColumnImage"
                         },
                         {
@@ -389,7 +389,7 @@ export class StepBuilderComponent implements OnInit {
                             "dataType": "img"
                           },
                           "pos": "x,y",
-                          "dim": "h,w",
+                          "dim": "200px,200px",
                           "modelReference": "View3.CellImage"
                         }
                       ]
