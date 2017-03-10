@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const skillEngineController = require('../controllers/skillEngineController');
-const dbFileStoreController = require('../controllers/dbFileStoreController');
+//const dbFileStoreController = require('../controllers/dbFileStoreController');
 
 router.get('/uiconfig/:templateId', (req, res) => {
     let templateId = req.params.templateId;
