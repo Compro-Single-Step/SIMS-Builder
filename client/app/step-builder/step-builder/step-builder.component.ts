@@ -122,7 +122,7 @@ export class StepBuilderComponent implements OnInit {
                         "dataType": "img"
                       },
                       "pos": "x,y",
-                      "dim": "h,w",
+                      "dim": "200px,200px",
                       "val": "views.1.sheets.1.gridImage"
                     },
                     {
@@ -134,7 +134,7 @@ export class StepBuilderComponent implements OnInit {
                         "dataType": "img"
                       },
                       "pos": "x,y",
-                      "dim": "h,w",
+                      "dim": "200px,200px",
                       "val": "views.1.sheets.1.rowImage"
                     },
                     {
@@ -146,7 +146,7 @@ export class StepBuilderComponent implements OnInit {
                         "dataType": "img"
                       },
                       "pos": "x,y",
-                      "dim": "h,w",
+                      "dim": "200px,200px",
                       "val": "views.1.sheets.1.columnImage"
                     },
                     {
@@ -158,7 +158,7 @@ export class StepBuilderComponent implements OnInit {
                         "dataType": "img"
                       },
                       "pos": "x,y",
-                      "dim": "h,w",
+                      "dim": "200px,200px",
                       "val": "views.1.sheets.1.cellImage"
                     }
                   ]
@@ -357,7 +357,7 @@ export class StepBuilderComponent implements OnInit {
                         "dataType": "img"
                       },
                       "pos": "x,y",
-                      "dim": "h,w",
+                      "dim": "200px,200px",
                       "val": "views.3.sheets.1.gridImage"
                     },
                     {
@@ -369,7 +369,7 @@ export class StepBuilderComponent implements OnInit {
                         "dataType": "img"
                       },
                       "pos": "x,y",
-                      "dim": "h,w",
+                      "dim": "200px,200px",
                       "val": "views.3.sheets.1.rowImage"
                     },
                     {
@@ -381,7 +381,7 @@ export class StepBuilderComponent implements OnInit {
                         "dataType": "img"
                       },
                       "pos": "x,y",
-                      "dim": "h,w",
+                      "dim": "200px,200px",
                       "val": "views.3.sheets.1.columnImage"
                     },
                     {
@@ -393,7 +393,7 @@ export class StepBuilderComponent implements OnInit {
                         "dataType": "img"
                       },
                       "pos": "x,y",
-                      "dim": "h,w",
+                      "dim": "200px,200px",
                       "val": "views.3.sheets.1.cellImage"
                     }
                   ]
