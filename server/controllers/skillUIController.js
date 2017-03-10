@@ -1,6 +1,5 @@
-const dataMgr = require('./databaseFileStoreManager');
-
+const dfsmController = require('./dfsmController');
 
 module.exports.getUIConfig = function(templateId, data, callback) {
-    return dataMgr.getUIConfig(templateId, callback);
+    return dfsmController.getUIConfig(templateId, callback);
 };

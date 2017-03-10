@@ -1,5 +1,5 @@
-const dal = require('./databaseAccessLayerController');
-const fal = require('./fileAccessLayerController');
+const dal = require('./dalController');
+const fal = require('./falController');
 
 module.exports.getUIConfig = function(templateId, callback) {
     dal.getUIConfigPath(templateId, (filePath, error) => {
