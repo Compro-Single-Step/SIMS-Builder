@@ -1,2 +1,2 @@
 <app-label [compConfig]="labelConfig" *ngIf="compConfig.label"></app-label>
-<form #dropzone class="dropzone"></form>
+<div #dropzone class="dropzone" [ngStyle]="{'height':height,'width':width}"></div>
