@@ -3,7 +3,6 @@ const router = express.Router();
 const skillEngineController = require('../controllers/skillEngineController');
 const databaseFileStoreManager = require('../controllers/databaseFileStoreManager');
 
-/* GET api listing. */
 router.get('/uiconfig/:templateId', (req, res) => {
     let templateId = req.params.templateId;
     let data = {};
@@ -16,7 +15,7 @@ router.get('/uiconfig/:templateId', (req, res) => {
         }
     });
 });
-
+/*
 router.get('/skillxml/:templateId', (req, res) => {
     databaseFileStoreManager.getSkillXML(req.params.templateId, (error, data) => {
         if(!error) {
@@ -59,6 +58,6 @@ router.get('/stepui/:taskId/:stateIndex', (req, res) => {
             res.json(error);
         }
     });
-});
+});*/
 
 module.exports = router;
