@@ -34,7 +34,6 @@ export class Layout {
   }
 
   toggleSidebarListener(state): void {
-    debugger;
     let toggleNavigation = state === 'static'
       ? this.toggleNavigationState
       : this.toggleNavigationCollapseState;
@@ -167,7 +166,6 @@ export class Layout {
     }
 
     let $el = jQuery(this.el.nativeElement);
-    debugger
     this.$sidebar = $el.find('[sidebar]');
 
     $el.find('a[href="#"]').on('click', (e) => {

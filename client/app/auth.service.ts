@@ -30,11 +30,10 @@ export class AuthService {
 //    });
   }
     private extractData(res: Response) {
-        debugger;
-    let body = res.json();
-    this.isLoggedIn = true;
-    return body || { };
-}
+      let body = res.json();
+      this.isLoggedIn = true;
+      return body || { };
+    }
 
   logout(): void {
     this.isLoggedIn = false;
