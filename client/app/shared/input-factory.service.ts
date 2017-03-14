@@ -51,6 +51,6 @@ export class InputFactoryService {
       "TabGroup": TabComponent,
       "Button": ButtonComponent,
       "Dropzone": DropzoneComponent
-    }[type] || TextBoxComponent;
+    }[type];
   }
 }
