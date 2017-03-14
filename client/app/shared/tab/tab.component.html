@@ -3,7 +3,7 @@
   <span class="glyphicon glyphicon-info-sign"></span>
 </div>
 <tabset>
-  <tab *ngFor="let tab of compConfig.items">
+  <tab *ngFor="let tab of compConfig.items" customClass="customClass">
     <template tabHeading>{{tab.label}}</template>
     <app-wrapper [compConfig] = "tab"></app-wrapper>
   </tab>

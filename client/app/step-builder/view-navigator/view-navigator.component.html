@@ -1,5 +1,5 @@
 <ul class="nav-justified mb-sm nav nav-pills progressbar">
-  <li *ngFor="let view of viewCountArr; let viewIndex = index; let lastIndex = last;" [ngClass]="{'active': selectedViewNumber==viewIndex+1}" class="nav-item">
+  <li *ngFor="let view of viewCountArr; let viewIndex = index; let lastIndex = last;" [ngClass]="{'active': selectedViewNumber == (viewIndex+1), 'visited': ((viewIndex+1) < selectedViewNumber) }" class="nav-item">
     <span class="stepNumber"  (click)="setSelectedView(viewIndex+1)">{{viewIndex+1}}</span>
     <span class="separator" *ngIf="!lastIndex"></span>
   </li>

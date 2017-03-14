@@ -1,3 +1,5 @@
+import 'jquery';
+import 'jquery-slimscroll';
 // Importing Angular Libraries
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
