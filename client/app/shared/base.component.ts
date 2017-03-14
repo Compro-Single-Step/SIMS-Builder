@@ -11,4 +11,8 @@ export class BaseComponent {
     setData(inputConfig){
         this.compConfig = inputConfig;
     }
+
+    getVariableRef(varString){
+        return eval(varString);
+    }
 }

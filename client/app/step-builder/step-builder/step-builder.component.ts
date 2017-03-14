@@ -9,8 +9,15 @@ declare var jQuery;
 export class StepBuilderComponent implements OnInit {
   uiConfig: UIConfig;
   $el: any;
+
   constructor(el: ElementRef) {
     this.$el = jQuery(el.nativeElement);
+    this.uiConfig = new UIConfig();
+  }
+
+  ngOnInit() {
+    jQuery(window).on('sn:resize', this.initScroll.bind(this));
+    this.initScroll();
     this.uiConfig = {
       "views": [
         {
@@ -48,7 +55,7 @@ export class StepBuilderComponent implements OnInit {
                   "rendererProperties": {
                     "dataType": "string"
                   },
-                  "val": "views.1.documentTitle"
+                      "val": "views[1].documentTitle"
                 }
               ]
             },
@@ -83,16 +90,16 @@ export class StepBuilderComponent implements OnInit {
                   },
                   "dependants": [
                     {
-                      "modelReference": "views.1.sheets",
-                      "rule": "getSheetNameAndSheetCountFromInitDocJSON"
+                          "modelReference": "views.1.sheets",
+                          "rule": "getSheetNameAndSheetCountFromInitDocJSON"
                     },
                     {
-                      "modelReference": "views.2.sheetInAction",
-                      "rule": "addSheetNamesToDropdown"
+                          "modelReference": "views.2.sheetInAction",
+                          "rule": "addSheetNamesToDropdown"
                     }
                   ],
                   "mandatory": true,
-                  "val": "views.1.documentData"
+                      "val": "views[1].documentData"
                 },
                 {
                   "id": "1.2.2",
@@ -110,21 +117,21 @@ export class StepBuilderComponent implements OnInit {
                   "items": [
                     {
                       "id": "1.2.2.1",
-                      "label": "views.1.sheets.1.name",
-                      "itemRenderer": "TabPage",
-                      "itemType": "",
-                      "items": [
-                        {
-                          "id": "GridImage",
-                          "itemRenderer": "Dropzone",
-                          "itemType": "leaf",
-                          "rendererProperties": {
-                            "placeHolder": "Drop Grid Image",
-                            "dataType": "img"
-                          },
-                          "pos": "x,y",
-                          "dim": "200px,200px",
-                          "val": "views.1.sheets.1.gridImage"
+                          "label": "views[1].sheets[1].name",
+                          "itemRenderer": "TabPage",
+                          "itemType": "",
+                          "items": [
+                            {
+                              "id": "GridImage",
+                              "itemRenderer": "Dropzone",
+                              "itemType": "leaf",
+                              "rendererProperties": {
+                                "placeHolder": "Drop Grid Image",
+                                "dataType": "img"
+                              },
+                              "pos": "x,y",
+                              "dim": "h,w",
+                              "val": "views[1].sheets[1].gridImage"
                         },
                         {
                           "id": "RowImage",
@@ -135,8 +142,8 @@ export class StepBuilderComponent implements OnInit {
                             "dataType": "img"
                           },
                           "pos": "x,y",
-                          "dim": "200px,200px",
-                          "val": "views.1.sheets.1.rowImage"
+                          "dim": "h,w",
+                              "val": "views[1].sheets[1].rowImage"
                         },
                         {
                           "id": "ColumnImage",
@@ -147,8 +154,8 @@ export class StepBuilderComponent implements OnInit {
                             "dataType": "img"
                           },
                           "pos": "x,y",
-                          "dim": "200px,200px",
-                          "val": "views.1.sheets.1.columnImage"
+                          "dim": "h,w",
+                              "val": "views[1].sheets[1].columnImage"
                         },
                         {
                           "id": "CellImage",
@@ -159,8 +166,8 @@ export class StepBuilderComponent implements OnInit {
                             "dataType": "img"
                           },
                           "pos": "x,y",
-                          "dim": "200px,200px",
-                          "val": "views.1.sheets.1.cellImage"
+                          "dim": "h,w",
+                              "val": "views[1].sheets[1].cellImage"
                         }
                       ]
                     }
@@ -198,7 +205,7 @@ export class StepBuilderComponent implements OnInit {
                     "placeHolder": "Drop image here to upload"
                   },
                   "mandatory": false,
-                  "val": "views.1.taskbarPreviewImage"
+                      "val": "views[1].taskbarPreviewImage"
                 }
               ]
             },
@@ -245,20 +252,13 @@ export class StepBuilderComponent implements OnInit {
                   "itemRenderer": "Dropdown",
                   "itemType": "leaf",
                   "mandatory": true,
-                  "rendererProperties": {
-                    "itemList": [
-                      "Inventory",
-                      "Donations",
-                      "Cost"
-                    ]
-                  },
                   "dependants": [
                     {
-                      "modelReference": "views.3.sheets[0].name",
+                          "modelReference": "3.1.2",
                       "rule": ""
                     }
                   ],
-                  "val": "views.2.sheetInAction"
+                      "val": "views[2].sheetInAction"
                 },
                 {
                   "id": "2.1.2",
@@ -273,7 +273,7 @@ export class StepBuilderComponent implements OnInit {
                   "rendererProperties": {
                     "dataType": "string"
                   },
-                  "val": "views.2.sourceRange"
+                      "val": "views[2].sourceRange"
                 },
                 {
                   "id": "2.1.3",
@@ -285,7 +285,7 @@ export class StepBuilderComponent implements OnInit {
                   "itemRenderer": "TextBox",
                   "itemType": "leaf",
                   "mandatory": true,
-                  "val": "views.2.destinationRange"
+                      "val": "views[2].destinationRange"
                 }
               ]
             }
@@ -327,7 +327,7 @@ export class StepBuilderComponent implements OnInit {
                     "placeHolder": "Drop JSON file here to upload"
                   },
                   "mandatory": true,
-                  "val": "views.3.workbookData"
+                      "val": "views[3].workbookData"
                 },
                 {
                   "id": "3.1.2",
@@ -345,7 +345,7 @@ export class StepBuilderComponent implements OnInit {
                   "items": [
                     {
                       "id": "3.1.2.1",
-                      "label": "views.3.sheets.1.name",
+                          "label": "views[3].sheets[1].name",
                       "itemRenderer": "TabPage",
                       "itemType": "",
                       "items": [
@@ -358,8 +358,8 @@ export class StepBuilderComponent implements OnInit {
                             "dataType": "img"
                           },
                           "pos": "x,y",
-                          "dim": "200px,200px",
-                          "val": "views.3.sheets.1.gridImage"
+                          "dim": "h,w",
+                              "val": "views[3].sheets[1].gridImage"
                         },
                         {
                           "id": "RowImage",
@@ -370,8 +370,8 @@ export class StepBuilderComponent implements OnInit {
                             "dataType": "img"
                           },
                           "pos": "x,y",
-                          "dim": "200px,200px",
-                          "val": "views.3.sheets.1.rowImage"
+                          "dim": "h,w",
+                              "val": "views[3].sheets[1].rowImage"
                         },
                         {
                           "id": "ColumnImage",
@@ -382,8 +382,8 @@ export class StepBuilderComponent implements OnInit {
                             "dataType": "img"
                           },
                           "pos": "x,y",
-                          "dim": "200px,200px",
-                          "val": "views.3.sheets.1.columnImage"
+                          "dim": "h,w",
+                              "val": "views[3].sheets[1].columnImage"
                         },
                         {
                           "id": "CellImage",
@@ -394,8 +394,8 @@ export class StepBuilderComponent implements OnInit {
                             "dataType": "img"
                           },
                           "pos": "x,y",
-                          "dim": "200px,200px",
-                          "val": "views.3.sheets.1.cellImage"
+                          "dim": "h,w",
+                              "val": "views[3].sheets[1].cellImage"
                         }
                       ]
                     }
@@ -408,21 +408,23 @@ export class StepBuilderComponent implements OnInit {
       ]
     }
   }
-  ngOnInit() {
-    jQuery(window).on('sn:resize', this.initScroll.bind(this));
-    this.initScroll();
-  }
+
   initScroll(): void {
-      let $primaryContent = this.$el.find('#body');
-      if (this.$el.find('.slimScrollDiv').length !== 0) {
-        $primaryContent.slimscroll({
-          destroy: true
-        });
-      }
+    let $primaryContent = this.$el.find('#body');
+    if (this.$el.find('.slimScrollDiv').length !== 0) {
       $primaryContent.slimscroll({
-        height: '100%',
-        size: '6px',
-        alwaysVisible: false
+        destroy: true
       });
     }
+    $primaryContent.slimscroll({
+      height: '100%',
+      size: '6px',
+      alwaysVisible: false
+    });
+  }
+    
+  fetchConfig(): void {
+    //TODO: get this UI from the server using a service.
+  }
+
 }
