@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { BaseComponent } from '../base.component';
-import { itemSchema } from '../UIConfig.model';
+import { itemSchema, itemDataModel } from '../UIConfig.model';
 
 @Component({
   selector: 'app-text-box-component',
@@ -9,9 +9,20 @@ import { itemSchema } from '../UIConfig.model';
 })
 export class TextBoxComponent extends BaseComponent implements OnInit {
   labelConfig: itemSchema = new itemSchema();
+  itemDataModel;
+  modelRef;
 
   ngOnInit() {
+    debugger;
+    this.itemDataModel = itemDataModel;
+    if (this.compConfig.val) {
+      this.modelRef = this.getVariableRef("this.itemDataModel." + this.compConfig.val);
+    }
     this.labelConfig.rendererProperties.text = this.compConfig.label;
     this.labelConfig.rendererProperties.type = 'ElementHeading';
+    var self = this;
+    setInterval(function () {
+      console.log("ak91: inside text box " + JSON.stringify(self.itemDataModel));
+    }, 6000);
   }
 }

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 // Imports from External Libraries
 import { TabsModule } from 'ng2-bootstrap';
@@ -20,7 +21,8 @@ import { WrapperComponent } from './wrapper/wrapper.component';
 @NgModule({
   imports: [
     CommonModule,
-    TabsModule.forRoot()
+    TabsModule.forRoot(),
+    FormsModule
   ],
   declarations: [TextBoxComponent, PanelComponent, LabelComponent, TagComponent, SelectComponent, TabComponent, ButtonComponent, DropzoneComponent, WrapperComponent],
   entryComponents: [TextBoxComponent, PanelComponent, SelectComponent, TabComponent, ButtonComponent, DropzoneComponent],
