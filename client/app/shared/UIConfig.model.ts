@@ -74,7 +74,7 @@ export var itemDataModel = {
       }
     },
     "2": {
-      "sheetInAction": "",
+      "sheetInAction": [],
       "sourceRange": "",
       "destinationRange": ""
     },
