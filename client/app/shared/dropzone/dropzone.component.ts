@@ -32,11 +32,10 @@ export class DropzoneComponent extends BaseComponent implements OnInit {
       this.width = `${this.compConfig.dim.split(',')[1]}`;
     } else {
       this.height = `200px`;
-      this.width = `97%`;
+      this.width = `100%`;
     }
     let dropzone = new Dropzone(this.dropzoneContainer.nativeElement, {
       url: "/api/file",
-      dictDefaultMessage: this.compConfig.rendererProperties.placeHolder,
       init: function () {
         this.on("addedfile", function (file) { //To be Changed from 'addedfile' to 'success' when file starts getting stored on server;
           self.updateDependencies();
