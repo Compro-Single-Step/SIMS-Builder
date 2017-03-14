@@ -5,7 +5,7 @@ export class SkillManagerService {
   stepData: any;
   constructor() {
     //Temporary Variable To Store Model Reference - To be replaced with Obtained Model Reference
-    this.stepData = { "views": { "1": { "documentTitle": "", "documentData": { "name": "", "path": "" }, "sheets": [{ "name": "", "path": "", "gridImage": { "name": "img.png" }, "rowImage": { "name": "" }, "columnImage": { "name": "" }, "cellImage": { "name": "" } }], "taskbarPreviewImage": { "name": "", "path": "" } }, "2": { "sheetInAction": "", "sourceRange": "", "destinationRange": "" }, "3": { "workbookData": { "name": "", "path": "" }, "sheets": [{ "name": "", "path": "", "gridImage": { "name": "" }, "rowImage": { "name": "" }, "columnImage": { "name": "" }, "cellImage": { "name": "" } }] } } };
+    this.stepData = { "views": { "1": { "documentTitle": "", "documentData": { "name": "", "path": "" }, "sheets": [{ "name": "", "path": "", "gridImage": { "name": "img.png" }, "rowImage": { "name": "" }, "columnImage": { "name": "" }, "cellImage": { "name": "" } }], "taskbarPreviewImage": { "name": "", "path": "" } }, "2": { "sheetInAction": [], "sourceRange": "", "destinationRange": "" }, "3": { "workbookData": { "name": "", "path": "" }, "sheets": [{ "name": "", "path": "", "gridImage": { "name": "" }, "rowImage": { "name": "" }, "columnImage": { "name": "" }, "cellImage": { "name": "" } }] } } };
   }
 
   getSheetNameAndSheetCountFromInitDocJSON(initDocJSON, modelReference) {
@@ -26,7 +26,7 @@ export class SkillManagerService {
     for (let sheetNum = 0; sheetNum < initDocJSON.sheetCount; sheetNum++) {
       dependantSheetArrayInModel[sheetNum].name = initDocJSON.sheets[sheetNum].name;
     }
-    console.log('Updated - Model : ', this.stepData);
+    console.log('Model Updated with Dependency 1: ', this.stepData);
   }
 
   getNestedObject(inputObject, propertyAccessorPath) {
@@ -39,7 +39,15 @@ export class SkillManagerService {
   }
 
   addSheetNamesToDropdown(initDocJSON, modelReference) {
-    console.log('addSheetNamesToDropdown Function');
+    //Extract the Array of Sheets in 'Sheet in Action' Dropdown
+    var dependantSheetArrayInModel = this.getNestedObject(this.stepData, modelReference);
+
+    //Add Sheet Names to Array From Init Doc JSON
+    for (let sheetNum = 0; sheetNum < initDocJSON.sheetCount; sheetNum++) {
+      dependantSheetArrayInModel.push(initDocJSON.sheets[sheetNum].name);
+    }
+
+    console.log('Model Updated with Dependency 2: ', this.stepData);
   }
 
 }
