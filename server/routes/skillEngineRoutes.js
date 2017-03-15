@@ -15,6 +15,21 @@ router.get('/uiconfig/:templateId', (req, res) => {
         }
     });
 });
+
+router.get('/stepXML/:taskId/:stepIndex/:templateId', (req, res) => {
+    let templateId = req.params.templateId;
+    let taskId = req.params.taskId;
+    let stepIndex = req.params.stepIndex;
+
+    skillEngineController.generateStepXML(taskId, stepIndex, templateId, (error, data) => {
+        if(!error) {
+            res.end(data);
+        }
+        else {
+            res.send(error);
+        }
+    });
+});
 /*
 router.get('/skillxml/:templateId', (req, res) => {
     dbFileStoreController.getSkillXML(req.params.templateId, (error, data) => {

@@ -45,8 +45,8 @@ module.exports.getSkillModel = function(templateId, callback) {
     });
 };
 
-module.exports.getStepUIState = function(taskId, stateIndex, callback) {
-    dal.getStepUIState(taskId, stateIndex, (data, error) => {
+module.exports.getStepUIState = function(taskId, stepIndex, callback) {
+    dal.getStepUIState(taskId, stepIndex, (data, error) => {
         callback(data, error);
     });
 };

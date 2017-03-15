@@ -55,7 +55,7 @@
 								<comp id="2" validation-set="set1"/>
 							</validate>							
 							<validate followup="2" operator="any">
-								<comp id="3" validation-set="" multiple-occurence="true" based-on="finalAttrSet" dependency-set="set2_"/>
+								<comp id="3" validation-set="" multiple-occurence="true" based-on="finalAttrSet" dependency-set="set1asds_"/>
 							</validate>
 						</event>
 					</events>
