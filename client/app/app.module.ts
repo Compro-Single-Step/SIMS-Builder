@@ -10,13 +10,13 @@ import { routing } from './app-routing.module';
 import { AuthGuard } from './_guards/auth.guard';
 import { AuthService } from './_services/auth.service';
 import { LoginComponent } from './login/login.component';
-import { HomeComponent } from './home/home.component';
+import { TasksearchComponent } from './tasksearch/tasksearch.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
-    LoginComponent
+    LoginComponent,
+    TasksearchComponent
   ],
   imports: [
     BrowserModule,
