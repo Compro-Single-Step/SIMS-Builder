@@ -117,7 +117,7 @@ export class StepBuilderComponent implements OnInit {
                   "items": [
                     {
                       "id": "1.2.2.1",
-                          "label": "views[1].sheets[1].name",
+                          "label": "Sheet 1",
                           "itemRenderer": "TabPage",
                           "itemType": "",
                           "items": [
@@ -130,7 +130,7 @@ export class StepBuilderComponent implements OnInit {
                                 "dataType": "img"
                               },
                               "pos": "x,y",
-                              "dim": "h,w",
+                              "dim": "200px,200px",
                               "val": "views[1].sheets[1].gridImage"
                         },
                         {
@@ -142,7 +142,7 @@ export class StepBuilderComponent implements OnInit {
                             "dataType": "img"
                           },
                           "pos": "x,y",
-                          "dim": "h,w",
+                          "dim": "200px,200px",
                               "val": "views[1].sheets[1].rowImage"
                         },
                         {
@@ -154,7 +154,7 @@ export class StepBuilderComponent implements OnInit {
                             "dataType": "img"
                           },
                           "pos": "x,y",
-                          "dim": "h,w",
+                          "dim": "200px,200px",
                               "val": "views[1].sheets[1].columnImage"
                         },
                         {
@@ -166,7 +166,7 @@ export class StepBuilderComponent implements OnInit {
                             "dataType": "img"
                           },
                           "pos": "x,y",
-                          "dim": "h,w",
+                          "dim": "200px,200px",
                               "val": "views[1].sheets[1].cellImage"
                         }
                       ]
@@ -345,7 +345,7 @@ export class StepBuilderComponent implements OnInit {
                   "items": [
                     {
                       "id": "3.1.2.1",
-                          "label": "views[3].sheets[1].name",
+                          "label": "Sheet 1",
                       "itemRenderer": "TabPage",
                       "itemType": "",
                       "items": [
@@ -358,7 +358,7 @@ export class StepBuilderComponent implements OnInit {
                             "dataType": "img"
                           },
                           "pos": "x,y",
-                          "dim": "h,w",
+                          "dim": "200px,200px",
                               "val": "views[3].sheets[1].gridImage"
                         },
                         {
@@ -370,7 +370,7 @@ export class StepBuilderComponent implements OnInit {
                             "dataType": "img"
                           },
                           "pos": "x,y",
-                          "dim": "h,w",
+                          "dim": "200px,200px",
                               "val": "views[3].sheets[1].rowImage"
                         },
                         {
@@ -382,7 +382,7 @@ export class StepBuilderComponent implements OnInit {
                             "dataType": "img"
                           },
                           "pos": "x,y",
-                          "dim": "h,w",
+                          "dim": "200px,200px",
                               "val": "views[3].sheets[1].columnImage"
                         },
                         {
@@ -394,7 +394,7 @@ export class StepBuilderComponent implements OnInit {
                             "dataType": "img"
                           },
                           "pos": "x,y",
-                          "dim": "h,w",
+                          "dim": "200px,200px",
                               "val": "views[3].sheets[1].cellImage"
                         }
                       ]

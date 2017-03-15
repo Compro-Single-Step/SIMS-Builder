@@ -17,7 +17,6 @@ export class DropzoneComponent extends BaseComponent implements OnInit {
   height: string;
   constructor(private elementRef: ElementRef, private skillManager: SkillManagerService) {
     super();
-    
   }
   ngOnInit() {
     var self = this;
