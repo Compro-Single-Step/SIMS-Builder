@@ -422,9 +422,4 @@ export class StepBuilderComponent implements OnInit {
       alwaysVisible: false
     });
   }
-    
-  fetchConfig(): void {
-    //TODO: get this UI from the server using a service.
-  }
-
 }
