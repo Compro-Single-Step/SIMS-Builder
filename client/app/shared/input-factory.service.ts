@@ -42,7 +42,7 @@ export class InputFactoryService {
   }
 
   // Map that Maps itemRenderer property with the Component CLass
-  //TODO: The default returned textbox component has to be removed and error handling has to be implemented.
+  //TODO: Error handling.
   private DynamicCompMap(type){
     return {
       "Panel": PanelComponent,

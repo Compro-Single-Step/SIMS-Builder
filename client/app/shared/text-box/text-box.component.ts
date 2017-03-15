@@ -20,9 +20,5 @@ export class TextBoxComponent extends BaseComponent implements OnInit {
     }
     this.labelConfig.rendererProperties.text = this.compConfig.label;
     this.labelConfig.rendererProperties.type = 'ElementHeading';
-    var self = this;
-    setInterval(function () {
-      console.log("ak91: inside text box " + JSON.stringify(self.itemDataModel));
-    }, 6000);
   }
 }

@@ -3,8 +3,7 @@ import { itemDataModel } from '../../shared/UIConfig.model'
 
 @Injectable()
 export class SkillManagerService {
-  constructor() {
-  }
+  constructor() { }
 
   getSheetNameAndSheetCountFromInitDocJSON(initDocJSON, modelReference) {
 
@@ -16,7 +15,6 @@ export class SkillManagerService {
       while (sheetCountDiff > 0) {
         dependantSheetArrayInModel.push(JSON.parse(JSON.stringify(dependantSheetArrayInModel[(dependantSheetArrayInModel.length - 1)])));
         sheetCountDiff--;
-
       }
     }
 
@@ -24,7 +22,6 @@ export class SkillManagerService {
     for (let sheetNum = 0; sheetNum < initDocJSON.sheetCount; sheetNum++) {
       dependantSheetArrayInModel[sheetNum].name = initDocJSON.sheets[sheetNum].name;
     }
-    console.log('Model Updated with Dependency 1: ', itemDataModel);
   }
 
   getNestedObject(inputObject, propertyAccessorPath) {
@@ -44,8 +41,6 @@ export class SkillManagerService {
     for (let sheetNum = 0; sheetNum < initDocJSON.sheetCount; sheetNum++) {
       dependantSheetArrayInModel.push(initDocJSON.sheets[sheetNum].name);
     }
-
-    console.log('Model Updated with Dependency 2: ', itemDataModel);
   }
 
 }

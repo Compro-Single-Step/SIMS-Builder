@@ -15,7 +15,6 @@ export class DropzoneComponent extends BaseComponent implements OnInit {
   labelConfig: itemSchema = new itemSchema();
   constructor(private elementRef: ElementRef, private skillManager: SkillManagerService) {
     super();
-    
   }
   ngOnInit() {
     var self = this;

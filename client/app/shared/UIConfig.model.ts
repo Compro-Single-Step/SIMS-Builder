@@ -44,7 +44,7 @@ export var itemDataModel = {
   "views": {
     "1": {
       "documentTitle": {
-        "value": "ashish"
+        "value": "xls04_Garden - Excel"
       },
       "documentData": {
         "name": "",
@@ -104,7 +104,3 @@ export var itemDataModel = {
     }
   }
 };
-
-setTimeout(function () {
-  console.log("ak91: " + JSON.stringify(itemDataModel));
-}, 5000);
