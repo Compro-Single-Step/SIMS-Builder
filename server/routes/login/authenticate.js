@@ -5,11 +5,9 @@ var validator = require('validator');
 
 passport.use('username', new LocalStrategy(
 	function (username, password, done) {
-		console.log(username);
 		User.findOne({ username: username }, function (err, user) {
 			if (err) { return done(err); }
 			if (!user) return done('Incorrect username');
-			console.log("@@@@"+ username + password );
 			user.validPassword(password)
 			.then(function (result) {
 				if (result) return done(null, user);
@@ -43,10 +41,8 @@ module.exports = function (req, res, next) {
 		The body-field named username can contain both email and a username,
 	
 	 */
-	console.log("************************** " + req.body.username);
 	
 	if (!req.body.password || !req.body.username) {
-		console.log('Hi');
 		return res.status(422).send();
 	}
 
@@ -60,7 +56,6 @@ module.exports = function (req, res, next) {
 	}
 	else {
 		passport.authenticate('username', function (err, user) {
-			console.log(err);
 			if (err){
 				return res.send({err: err});
 			} 
