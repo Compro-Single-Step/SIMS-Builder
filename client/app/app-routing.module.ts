@@ -10,7 +10,7 @@ const appRoutes: Routes = [
     
     { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   
-    { path: 'stepbuilder',   loadChildren: './step-builder/step-builder.module#StepBuilderModule' },
+    { path: 'stepbuilder',   loadChildren: './step-builder/step-builder.module#StepBuilderModule', canActivate: [AuthGuard] },
 
     { path: '', component: HomeComponent, canActivate: [AuthGuard] },
 
