@@ -9,7 +9,6 @@ import { routing } from './app-routing.module';
 
 import { AuthGuard } from './_guards/auth.guard';
 import { AuthService } from './_services/auth.service';
-import { UserService } from './_services/user.service';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 
@@ -26,7 +25,7 @@ import { HomeComponent } from './home/home.component';
     routing
 
   ],
-  providers: [AuthService, UserService, AuthGuard],
+  providers: [AuthService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
