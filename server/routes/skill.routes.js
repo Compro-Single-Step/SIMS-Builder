@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const skillController = require('../controllers/skill.controller');
-const dbFilestoreMgr = require('../modules/skill/dbFilestoreMgr');
+//const dbFilestoreMgr = require('../modules/skill/dbFilestoreMgr');
 
 router.get('/uiconfig/:templateId', (req, res) => {
     let templateId = req.params.templateId;
@@ -59,10 +59,10 @@ router.get('/stepui/:taskId/:stepIndex', (req, res) => {
         }
     });
 });
-
-router.get('/taskstep/:taskId/:stepIndex', (req, res) => {
-    let data = {"model":{"views":{"1":{"documentTitle":"","documentData":{"name":"","path":""},"sheets":{"1":{"name":"","path":"","gridImage":{"name":"img.png"},"rowImage":{"name":""},"columnImage":{"name":""},"cellImage":{"name":""}}},"taskbarPreviewImage":{"name":"","path":""}},"2":{"sheetInAction":"","sourceRange":"","destinationRange":""},"3":{"workbookData":{"name":"","path":""},"sheets":{"1":{"name":"","path":"","gridImage":{"name":""},"rowImage":{"name":""},"columnImage":{"name":""},"cellImage":{"name":""}}}}}}}
-    dbFilestoreMgr.saveStepUIState(req.params.taskId, req.params.stepIndex, data, (error, data) => {
+*/
+router.post('/taskstep/:taskId/:stepIndex', (req, res) => {
+    let data = req.body.data;
+    skillController.saveStepUIState(req.params.taskId, req.params.stepIndex, data, (error, data) => {
         if(!error) {
             res.json(data);
         }
@@ -71,5 +71,5 @@ router.get('/taskstep/:taskId/:stepIndex', (req, res) => {
         }
     });
 });
-*/
+
 module.exports = router;
