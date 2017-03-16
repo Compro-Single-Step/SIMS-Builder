@@ -4,7 +4,7 @@ var loginRouter = require('./login/login.route');
 var skillRoutes = require('./skill.routes');
 
 module.exports = function () {
+	router.use('/skill', skillRoutes);
 	router.use('/login', loginRouter());
-	router.use('/skill', skillRoutes());
 	return router;
 };

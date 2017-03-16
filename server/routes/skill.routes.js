@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const skillEngineController = require('../controllers/skillEngineController');
+const skillController = require('../controllers/skill.controller');
 //const dbFileStoreController = require('../controllers/dbFileStoreController');
 
 router.get('/uiconfig/:templateId', (req, res) => {
     let templateId = req.params.templateId;
     let data = {};
-    skillEngineController.getUIConfig(req.params.templateId, data, (error, data) => {
+    skillController.getUIConfig(req.params.templateId, data, (error, data) => {
         if(!error) {
             res.json(JSON.parse(data));
         }

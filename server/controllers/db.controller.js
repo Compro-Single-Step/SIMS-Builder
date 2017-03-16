@@ -17,9 +17,9 @@ module.exports.getSkillModelPath = function(templateId, callback) {
     getFilePath(templateId, 'data_model_path', callback);
 };
 
-module.exports.getStepUIState = function(taskId, stateIndex, callback) {
+module.exports.getStepUIState = function(taskId, stepIndex, callback) {
     let condition = {"task_id": taskId};
-    let jsonKey = "task_data.step_" + stateIndex;
+    let jsonKey = "task_data.step_" + stepIndex;
     let map = {"_id": false};
     map[jsonKey] = true;
 
