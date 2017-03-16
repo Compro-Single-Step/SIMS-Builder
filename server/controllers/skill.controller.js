@@ -6,7 +6,5 @@ module.exports.getUIConfig = function(templateId, data, callback) {
 };
 
 module.exports.saveStepUIState = function(taskId, stepIndex, stepUIData, callback) {
-    dbFilestoreMgr.saveStepUIState(taskId, stepIndex, stepUIData, (data, error) => {
-        callback(data, error);
-    });
+    dbFilestoreMgr.saveStepUIState(taskId, stepIndex, stepUIData, callback);
 };
