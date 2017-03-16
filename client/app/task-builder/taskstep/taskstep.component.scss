@@ -1,0 +1,35 @@
+@import "../../../../node_modules/bootstrap/scss/variables";
+@import "../../scss/variables";
+
+#stepList { 
+  padding-top: 25px;
+    padding-left: 25px;
+    padding-bottom: 5px; 
+  background-color: $white;
+  margin-bottom: 10px;
+  color: $black;// set variable $black
+  &:hover {
+    background-color: $pre-bg;// set variable  $pre-bg
+    cursor: pointer;
+  }
+}
+.fileIcon{
+  margin-top: -4px;
+}
+.arrow{
+  margin-top: 4%;
+}
+.redText{
+  color: red;
+}
+.greenText{
+  color: green;
+}
+.testSymbol{
+  font-size: 30px;
+}
+.right_arrow{
+  font-size: 25px;
+  margin-top: 35%;
+}
+
