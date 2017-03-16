@@ -8,7 +8,7 @@ import { UIConfig } from '../../shared/UIConfig.model';
 })
 export class StepInputAreaComponent implements OnInit {
   private selectedView: number;
-  @Input() stepConfig : UIConfig;
+  @Input() stepConfig: UIConfig;
   constructor() {
     this.selectedView = 1;
   }

@@ -21,6 +21,7 @@ import { SharedModule } from '../shared/shared.module';
 
 //Importing Services
 import { SkillManagerService } from './step-input-area/skill-manager.service';
+import { BuilderDataService } from './shared/builder-data.service';
 
 @NgModule({
   imports: [
@@ -35,6 +36,6 @@ import { SkillManagerService } from './step-input-area/skill-manager.service';
     SharedModule
   ],
   declarations: [StepBuilderComponent, StepInputAreaComponent, BalooReferenceComponent, ViewNavigatorComponent, ViewInputAreaComponent, MethodViewerComponent, ScenarioFilesViewerComponent, ScenarioDocsComponent, TaskFileStoreComponent],
-  providers: [SkillManagerService]
+  providers: [SkillManagerService, BuilderDataService]
 })
 export class StepBuilderModule { }
