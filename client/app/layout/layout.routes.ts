@@ -8,7 +8,9 @@ const routes: Routes = [
 			{ path: 'homepage', loadChildren: '../homePage/homePage.module#HomePageModule'},
 	    { path: 'taskbuilder/:id', loadChildren: '../task-builder/task-builder.module#TaskBuilderModule'}
 	  ]
-	}
+	},
+	{ path: 'stepbuilder',   loadChildren: '../step-builder/step-builder.module#StepBuilderModule'},
+
 ];
 
 export const ROUTES = RouterModule.forChild(routes);

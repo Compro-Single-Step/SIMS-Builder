@@ -222,9 +222,7 @@ export class Layout implements OnInit, AfterViewInit{
     });
   }
   ngAfterViewInit(): void{
-    debugger;
     this.url = this.router.url;
-    console.log(this.url);
     if(this.url == "/app/homepage")
     this.showSearchForm = true;
     else
