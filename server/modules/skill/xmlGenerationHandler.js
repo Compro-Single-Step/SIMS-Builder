@@ -5,7 +5,7 @@ const xmlGenerator = require("./xmlGenerator/Step.js");
 
 function identifySkill(templateId){
     return {
-        "movecellcontent":"MoveCell_Skill"
+        "movecellcontent":"/xl/moveCellContent/moveCellContent"
     }[templateId];
 }
 
@@ -20,7 +20,7 @@ module.exports.generateStepXML = function(taskId, stepIndex, templateId, callbac
                     let IOMap = JSON.parse(IOMapJson);
 
                     var identifiedSkill = identifySkill(templateId);
-                    var skillRef = require("./"+identifiedSkill);
+                    var skillRef = require("../../libs/skills" + identifiedSkill);
             
                     stepUIState = stepUIState[0]._doc.task_data['step_' + stepIndex];
                     attrValueMap = translator.translateMap(IOMap, stepUIState, skillRef);
@@ -46,7 +46,7 @@ module.exports.generateStepXML = function(taskId, stepIndex, templateId, callbac
             callback(error, stepUIState);
         }
     });
-    
+
 
 
 //     Promise.all([
