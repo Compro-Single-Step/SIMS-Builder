@@ -9,6 +9,9 @@ const taskStepUISchema = new Schema({
 taskStepUISchema.statics = {
     getStepUI: function(condition, map, callback) {
         this.find(condition, map, callback);
+    },
+    updateStepUIData: function(updateCriteria, updateData, options, callback) {
+        this.collection.update(updateCriteria, updateData, options, callback);
     }
 };
 

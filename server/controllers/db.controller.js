@@ -1,5 +1,5 @@
-const skillConfigRepoModel = require('../models/skillConfigRepoModel').skill_config_repo;
-const taskStepUIModel = require('../models/taskStepUIModel').taskStepUIModel;
+const skillConfigRepoModel = require('../models/skillConfigRepo.model').skill_config_repo;
+const taskStepUIModel = require('../models/taskStepUI.model').taskStepUIModel;
 
 module.exports.getUIConfigPath = function(templateId, callback) {
     getFilePath(templateId, 'ui_config_path', callback);
@@ -17,14 +17,26 @@ module.exports.getSkillModelPath = function(templateId, callback) {
     getFilePath(templateId, 'data_model_path', callback);
 };
 
-module.exports.getStepUIState = function(taskId, stateIndex, callback) {
+module.exports.getStepUIState = function(taskId, stepIndex, callback) {
     let condition = {"task_id": taskId};
-    let jsonKey = "task_data.step_" + stateIndex;
+    let jsonKey = "task_data.step_" + stepIndex;
     let map = {"_id": false};
     map[jsonKey] = true;
 
     taskStepUIModel.getStepUI(condition, map, (error, data) => {
         callback(data, error);
+    });
+};
+
+module.exports.saveStepUIState = function(taskId, stepIndex, stepUIData, callback) {
+    let updateCriteria = {"task_id": taskId};
+    let jsonKey = "task_data.step_" + stepIndex;
+    let updateData = { $set: {}};
+    updateData.$set[jsonKey] = stepUIData;
+    let options = { upsert: true };
+
+    taskStepUIModel.updateStepUIData(updateCriteria, updateData, options, (error, success) => {
+        callback(error, success);
     });
 };
 
