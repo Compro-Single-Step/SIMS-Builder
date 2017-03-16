@@ -1,6 +1,6 @@
 const path = require('path');
 const serverRootPath = path.normalize(__dirname + '/..');
-const env = process.env.NODE_ENV || 'development';
+const env = process.env.NODE_ENV || 'local';
 
 const config = {
     local: {
@@ -9,7 +9,7 @@ const config = {
         },
         port: process.env.port || 3000,
         db: {
-            url: 'mongodb://localhost:27017/testDB',
+            url: 'mongodb://localhost:27017/test',
             dbOptions: {
                 db: {
                     native_parser: true
