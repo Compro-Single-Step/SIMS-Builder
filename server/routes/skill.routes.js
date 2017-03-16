@@ -72,4 +72,19 @@ router.post('/taskstep/:taskId/:stepIndex', (req, res) => {
     });
 });
 
+router.get('/generatexml/:templateId/:taskid/:stepidx', (req, res) => {
+    let templateId = req.params.templateId;
+    let taskId = req.params.taskid;
+    let stepIdx = req.params.stepidx;
+    
+    skillController.generateXML(templateId, taskId, stepIdx, (error, data) => {
+        if (!error) {
+            res.json(JSON.parse(data));
+        } else {
+            console.log("error occurred");
+            res.json(error);
+        }
+    });
+});
+
 module.exports = router;

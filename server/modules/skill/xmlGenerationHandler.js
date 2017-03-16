@@ -14,7 +14,7 @@ module.exports.generateStepXML = function(taskId, stepIndex, templateId, callbac
     dbFilestoreMgr.getStepUIState(taskId, stepIndex, (stepUIState, error) => {
         if(!error){
             dbFilestoreMgr.getIOMap(templateId, (error, IOMapJson) => {
-                if(!error){
+                if(!error) {
 
                     //IO Translator
                     let IOMap = JSON.parse(IOMapJson);
@@ -27,7 +27,7 @@ module.exports.generateStepXML = function(taskId, stepIndex, templateId, callbac
 
                     //XML GENERATION
                     dbFilestoreMgr.getSkillXML(templateId, (error, skillTemplate) => {
-                        if(!error){
+                        if(!error) {
                             let newStep = new xmlGenerator(skillTemplate, attrValueMap);
                             let OutputXML = newStep.stepGenerator();
                             callback(error, OutputXML);
@@ -37,12 +37,12 @@ module.exports.generateStepXML = function(taskId, stepIndex, templateId, callbac
                         }
                     });
                 }
-                else{
+                else {
                     callback(error, IOMapJson);
                 }
             });
         }
-        else{
+        else {
             callback(error, stepUIState);
         }
     });
