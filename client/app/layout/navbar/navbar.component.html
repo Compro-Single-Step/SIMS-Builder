@@ -46,8 +46,8 @@
                      uses Sing's ajax-load plugin for async content loading. See #load-notifications-btn -->
        
       </li>
-      <li class="nav-item dropdown">
-        <a href class="nav-link dropdown-toggle" data-toggle="dropdown">
+      <li class="nav-item dropdown hello">
+        <a href class="nav-link dropdown-toggle" (click)="toggledropdown()" data-toggle="dropdown">
           <i class="fa fa-cog fa-lg"></i>
         </a>
         <ul class="dropdown-menu dropdown-menu-right">
@@ -57,7 +57,7 @@
         </ul>
       </li>
     </ul>
-    <form class="navbar-form float-xs-right searchForm" style="display:none;" role="search" #f="ngForm" (ngSubmit)="onDashboardSearch(f)">
+    <form class="navbar-form float-xs-right searchForm" *ngIf="showSearchform" role="search" #f="ngForm" (ngSubmit)="onDashboardSearch(f)">
       <div class="form-group">
         <div class="input-group input-group-no-border">
           <span class="input-group-addon">

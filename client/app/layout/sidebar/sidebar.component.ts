@@ -6,7 +6,7 @@ declare var jQuery: any;
 
 @Component({
   selector: '[sidebar]',
-  templateUrl: './sidebar.template.html'
+  templateUrl: './sidebar.component.html'
 })
 
 export class Sidebar implements OnInit {

@@ -23,7 +23,7 @@ export class Login {
     this.authService.login(creds).subscribe((res) => {this.extractData = res;
       if(this.extractData.success == true){
         this.authService.isLoggedIn = true;
-         let redirect = this.authService.redirectUrl ? this.authService.redirectUrl : '/app/taskbuilder';
+         let redirect = this.authService.redirectUrl ? this.authService.redirectUrl : '/app/homepage';
         // Redirect the user
         this.router.navigate([redirect]);
       }

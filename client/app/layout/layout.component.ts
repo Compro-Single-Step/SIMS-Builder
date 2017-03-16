@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, ElementRef } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit, AfterViewInit, ElementRef, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppConfig } from '../app.config';
 
@@ -7,22 +7,25 @@ declare var Hammer: any;
 
 @Component({
   selector: 'layout',
-  templateUrl: './layout.template.html',
+  templateUrl: './layout.component.html',
   host: {
     '[class.nav-static]' : 'config.state["nav-static"]',
     '[class.chat-sidebar-opened]' : 'chatOpened',
     '[class.app]' : 'true',
     id: 'app'
   },
-  styles:['.fixed_navbar{position:fixed;}']
+  styles:['.fixed_navbar{position:fixed;} .searchForm{margin-top:2px;}']
 })
-export class Layout {
+export class Layout implements OnInit, AfterViewInit{
+  @Output() showSearchFormEvent: EventEmitter<any> = new EventEmitter();
   config: any;
   configFn: any;
   $sidebar: any;
   el: ElementRef;
-  router: Router;
+  router: Router; 
+  url: any;
   chatOpened: boolean = false;
+  showSearchForm: boolean = false;
 
   constructor(config: AppConfig,
               el: ElementRef,
@@ -32,7 +35,6 @@ export class Layout {
     this.configFn = config;
     this.router = router;
   }
-
   toggleSidebarListener(state): void {
     let toggleNavigation = state === 'static'
       ? this.toggleNavigationState
@@ -66,12 +68,12 @@ export class Layout {
 
   expandNavigation(): void {
     // this method only makes sense for non-static navigation state
-    if (this.isNavigationStatic()
-      && (this.configFn.isScreen('lg') || this.configFn.isScreen('xl'))) { return; }
+    // if (this.isNavigationStatic()
+    //   && (this.configFn.isScreen('lg') || this.configFn.isScreen('xl'))) { return; }
 
-    jQuery('layout').removeClass('nav-collapsed');
-    this.$sidebar.find('.active .active').closest('.collapse').collapse('show')
-      .siblings('[data-toggle=collapse]').removeClass('collapsed');
+    // jQuery('layout').removeClass('nav-collapsed');
+    // this.$sidebar.find('.active .active').closest('.collapse').collapse('show')
+    //   .siblings('[data-toggle=collapse]').removeClass('collapsed');
   }
 
   collapseNavigation(): void {
@@ -219,4 +221,14 @@ export class Layout {
       jQuery(this).closest('li').removeClass('open');
     });
   }
+  ngAfterViewInit(): void{
+    debugger;
+    this.url = this.router.url;
+    console.log(this.url);
+    if(this.url == "/app/homepage")
+    this.showSearchForm = true;
+    else
+    this.showSearchForm = true;
+  }
+
 }
