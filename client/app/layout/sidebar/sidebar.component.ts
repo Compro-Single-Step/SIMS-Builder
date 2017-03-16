@@ -2,7 +2,7 @@ import { Component, OnInit, ElementRef } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { Location } from '@angular/common';
 import { AppConfig } from '../../app.config';
-declare var jQuery: any;
+
 
 @Component({
   selector: '[sidebar]',
@@ -10,13 +10,12 @@ declare var jQuery: any;
 })
 
 export class Sidebar implements OnInit {
-  $el: any;
+
   config: any;
   router: Router;
   location: Location;
 
   constructor(config: AppConfig, el: ElementRef, router: Router, location: Location) {
-    this.$el = jQuery(el.nativeElement);
     this.config = config.getConfig();
     this.router = router;
     this.location = location;

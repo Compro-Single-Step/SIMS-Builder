@@ -17,23 +17,15 @@ export class TaskBuilderComponent implements OnInit {
 
  ngOnInit(): void {
 	 this.initialiseTaskData();
-	 debugger;
-	//  this.StepData = this.TaskData["stepData"];
-	//  this.TaskData = this.Data.taskData;
-	//  this.StepData = this.Data.stepData;
-	 //this .AppImage = this.ApplicationImage(this.TaskData.app)
-	 this .AppImage ="assets/images/Excel.png"
-	//  this.StepData = this.TaskData.stepData;
  }
 initialiseTaskData() {
-	var taskId= "SKL16.XL.04.01.03.T1";
-	debugger;
    	this.route.data
                      .subscribe(
                        taskData => this.TaskData = taskData,
                        error =>  this.errorMessage = <any>error);
 					   this.TaskData = this.TaskData["taskData"];
 					   this.StepData = this.TaskData["stepData"];
+					   this.AppImage = this.ApplicationImage(this.TaskData["app"]);
   }
  ApplicationImage (taskApp){
 	 switch (taskApp)

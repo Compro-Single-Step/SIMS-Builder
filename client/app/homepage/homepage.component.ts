@@ -9,17 +9,15 @@ import { Router } from '@angular/router';
   
 })
 export class HomePage implements OnInit{
-  username: string = '';
+  taskID: string = '';
   constructor(private router: Router){
   }
 	ngOnInit(): void {
-    console.log("asdasdasda");
-    debugger;
 
 }
   onSearch() {
-    console.log('Search for task ', this.username, ' in Baloo');
-    this.router.navigate(["/app/taskbuilder",this.username]);
+    console.log('Search for task ', this.taskID, ' in Baloo');
+    this.router.navigate(["/app/taskbuilder",this.taskID]);
 
   }
 }

@@ -35,7 +35,6 @@ export class Navbar implements OnInit {
     });
   }
   ngOnChanges(): void{
-    console.log("navchanges");
     this.showSearchform = this.showForm;
   }
 }

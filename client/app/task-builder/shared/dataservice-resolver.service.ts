@@ -10,7 +10,6 @@ export class TaskDataResolver implements Resolve<any> {
   ) {}
 
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-      debugger;
     return this.dataService.getTaskData(route.params['id']);
   }
 }

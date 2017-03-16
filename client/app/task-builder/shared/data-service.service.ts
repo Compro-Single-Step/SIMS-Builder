@@ -18,8 +18,6 @@ export class DataService {
                     .catch(this.handleError);
   }
   private extractData(res: Response) {
-    debugger;
-    console.log(res);
     let body = res.json();
     return body || { };
   }

@@ -13,16 +13,6 @@ errorMessage;
   constructor(private Data: DataService) { }
 
   ngOnInit(): void {
-    debugger;
-   this.step=this.stepData;
-  //   this.initialiseStepData();
-  //   // this.step = this.Data.stepData[this.stepNo-1];
-  // }
-  // initialiseStepData() {
-  //  var step=this.stepData;
-  //   // this.Data.getStepData(taskId,stepId)
-  //   //                  .subscribe(
-  //   //                    stepData => this.step = stepData,
-  //   //                    error =>  this.errorMessage = <any>error);
+    this.step=this.stepData;
    }
 }
