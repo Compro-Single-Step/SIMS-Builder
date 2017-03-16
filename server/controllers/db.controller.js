@@ -1,5 +1,5 @@
-const skillConfigRepoModel = require('../models/skillConfigRepoModel').skill_config_repo;
-const taskStepUIModel = require('../models/taskStepUIModel').taskStepUIModel;
+const skillConfigRepoModel = require('../models/skillConfigRepo.model').skill_config_repo;
+const taskStepUIModel = require('../models/taskStepUI.model').taskStepUIModel;
 
 module.exports.getUIConfigPath = function(templateId, callback) {
     getFilePath(templateId, 'ui_config_path', callback);
