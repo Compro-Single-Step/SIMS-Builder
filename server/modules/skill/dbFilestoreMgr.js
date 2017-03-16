@@ -45,8 +45,14 @@ module.exports.getSkillModel = function(templateId, callback) {
     });
 };
 
-module.exports.getStepUIState = function(taskId, stateIndex, callback) {
-    dbController.getStepUIState(taskId, stateIndex, (data, error) => {
+module.exports.getStepUIState = function(taskId, stepIndex, callback) {
+    dbController.getStepUIState(taskId, stepIndex, (data, error) => {
+        callback(data, error);
+    });
+};
+
+module.exports.saveStepUIState = function(taskId, stepIndex, stepUIData, callback) {
+    dbController.saveStepUIState(taskId, stepIndex, stepUIData, (data, error) => {
         callback(data, error);
     });
 };

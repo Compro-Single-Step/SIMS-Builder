@@ -28,6 +28,18 @@ module.exports.getStepUIState = function(taskId, stepIndex, callback) {
     });
 };
 
+module.exports.saveStepUIState = function(taskId, stepIndex, stepUIData, callback) {
+    let updateCriteria = {"task_id": taskId};
+    let jsonKey = "task_data.step_" + stepIndex;
+    let updateData = { $set: {}};
+    updateData.$set[jsonKey] = stepUIData;
+    let options = { upsert: true };
+
+    taskStepUIModel.updateStepUIData(updateCriteria, updateData, options, (error, success) => {
+        callback(error, success);
+    });
+};
+
 function getFilePath(templateId, fileKey, callback) {
     let filterCriteria = {"_id": false};
     filterCriteria[fileKey] = true;
