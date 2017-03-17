@@ -22,7 +22,6 @@ export class Navbar implements OnInit {
     this.toggleSidebarEvent.emit(state);
   }
   toggledropdown($event):void {
-    debugger;
     if(jQuery($event.currentTarget).hasClass("open"))
     jQuery($event.currentTarget).removeClass("open");
     else
