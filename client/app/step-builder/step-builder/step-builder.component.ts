@@ -1,6 +1,6 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { BuilderDataService } from '../shared/builder-data.service';
-import { UIConfig } from '../../shared/UIConfig.model';
+import { UIConfig, itemDataModel } from '../../shared/UIConfig.model';
 declare var jQuery;
 @Component({
   selector: 'app-step-builder',
@@ -36,6 +36,18 @@ export class StepBuilderComponent implements OnInit {
       height: '100%',
       size: '6px',
       alwaysVisible: false
+    });
+  }
+
+  save(): any {
+    const modelData = {
+      data: {
+        model: itemDataModel
+      }
+    };
+    this.bds.saveSkillData(modelData).subscribe(function(data){
+      // TODO: Remove the Console Statement and Notify User of the success or failure
+      console.log(data);
     });
   }
 }
