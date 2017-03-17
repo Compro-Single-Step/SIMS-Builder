@@ -87,4 +87,15 @@ router.get('/generatexml/:templateId/:taskid/:stepidx', (req, res) => {
     });
 });
 
+//let uploadFileCallback =  skillControllerObj.saveResourceFile();
+router.post("/uploadresource", (req, res) => {
+    let upload = skillControllerObj.saveResourceFile();
+    upload(req, res, (error) => {
+        if(error) {
+            return res.end("Error uploading file.");
+        }
+        res.end("File is uploaded");
+    });
+});
+
 module.exports = router;
