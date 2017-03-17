@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { DataService } from './../shared/data-service.service';
+import { DataService } from './../shared/data.service';
 
 @Component({
   selector: 'taskbuilder-taskstep',

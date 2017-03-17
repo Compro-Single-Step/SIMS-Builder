@@ -46,8 +46,8 @@
                      uses Sing's ajax-load plugin for async content loading. See #load-notifications-btn -->
        
       </li>
-      <li class="nav-item dropdown hello">
-        <a href class="nav-link dropdown-toggle" (click)="toggledropdown()" data-toggle="dropdown">
+      <li class="nav-item dropdown" (click)="toggledropdown($event)">
+        <a href class="nav-link dropdown-toggle" data-toggle="dropdown">
           <i class="fa fa-cog fa-lg"></i>
         </a>
         <ul class="dropdown-menu dropdown-menu-right">

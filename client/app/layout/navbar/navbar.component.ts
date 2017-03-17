@@ -21,11 +21,12 @@ export class Navbar implements OnInit {
   toggleSidebar(state): void {
     this.toggleSidebarEvent.emit(state);
   }
-  toggledropdown():void {
-    if(jQuery(this).hasClass("open"))
-    jQuery(this).removeClass("open");
+  toggledropdown($event):void {
+    debugger;
+    if(jQuery($event.currentTarget).hasClass("open"))
+    jQuery($event.currentTarget).removeClass("open");
     else
-    jQuery(this).addClass("open");
+    jQuery($event.currentTarget).addClass("open");
   }
 
   ngOnInit(): void {
