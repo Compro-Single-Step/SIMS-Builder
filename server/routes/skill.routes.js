@@ -79,7 +79,7 @@ router.get('/generatexml/:templateId/:taskid/:stepidx', (req, res) => {
     
     skillController.generateXML(templateId, taskId, stepIdx, (error, data) => {
         if (!error) {
-            res.json(JSON.parse(data));
+            res.end(data);
         } else {
             console.log("error occurred");
             res.json(error);
