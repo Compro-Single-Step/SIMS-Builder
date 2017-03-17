@@ -6,7 +6,7 @@ import { HomePage } from './homepage.component';
 
 import { FormsModule } from '@angular/forms';
 
-export const routes = [
+const routes = [
   { path: '', component: HomePage, pathMatch: 'full' }
 ];
 
@@ -15,5 +15,4 @@ export const routes = [
   declarations: [ HomePage ]
 })
 export class HomePageModule {
-  static routes = routes;
 }
