@@ -57,6 +57,10 @@ class DatabaseFileStoreManager {
             callback(data, error);
         });
     }
+
+    saveResourceFile() {
+        return fileStoreControllerObj.saveResourceFile();
+    }
 }
 
 module.exports = new DatabaseFileStoreManager();
