@@ -9,7 +9,7 @@ function identifySkill(templateId){
     }[templateId];
 }
 
-module.exports.generateStepXML = function(taskId, stepIndex, templateId, callback){
+module.exports.generateStepXML = function(templateId, taskId, stepIndex, callback){
 
     dbFilestoreMgr.getStepUIState(taskId, stepIndex, (stepUIState, error) => {
         if(!error){

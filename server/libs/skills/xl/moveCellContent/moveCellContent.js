@@ -97,8 +97,6 @@
         }
 
     }
-    finalArray = JSON.stringify(finalArray);
-    
     return finalArray;
 
   }

@@ -56,7 +56,7 @@ module.exports = class component {
     }
     function2(parentSet, XMLNode, jsonMap) {
         if (jsonMap && jsonMap[parentSet]) {
-            this.function1("defaultAttrs", XMLNode, jsonMap[parentSet]);
+            this.function1("default-attrs", XMLNode, jsonMap[parentSet]);
         }
     }
     function3(parentSet, XMLNode, jsonMap) {
