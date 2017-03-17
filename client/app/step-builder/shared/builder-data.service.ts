@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Http, Response, Headers, RequestOptions } from '@angular/http';
 
 import { UIConfig } from '../../shared/UIConfig.model';
 
@@ -15,12 +15,21 @@ export class BuilderDataService {
     this.uiconfig = new UIConfig();
   }
   getuiconfig(): Observable<UIConfig> {
+    // TODO: Dynamically create the GET URL (api/skill/uiconfig /<SKILL ID>)
     return this.http.get('api/skill/uiconfig/movecellcontent')
                         .map(this.extractData)
                         .catch(this.handleError);
   }
+  saveSkillData (data: Object): Observable<Object> {
+    const headers = new Headers({ 'Content-Type': 'application/json' });
+    const options = new RequestOptions({ headers: headers });
+    // TODO: Dynamically create the post URL (api/skill/taskstep/ <TASK ID> / <STEP NUMBER>)
+    return this.http.post('api/skill/taskstep/task_1/2', { data } , options)
+                    .map(this.extractData)
+                    .catch(this.handleError);
+  }
   private extractData(res: Response) {
-    let body = res.json();
+    const body = res.json();
     return body || { };
   }
   private handleError (error: Response | any) {
