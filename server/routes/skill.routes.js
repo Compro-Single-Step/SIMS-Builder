@@ -1,13 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const SkillController = require('../controllers/skill.controller');
+const skillControllerObj = require('../controllers/skill.controller');
 //const dbFilestoreMgr = require('../modules/skill/dbFilestoreMgr');
-const skillController = new SkillController();
 
 router.get('/uiconfig/:templateId', (req, res) => {
     let templateId = req.params.templateId;
     let data = {};
-    skillController.getUIConfig(req.params.templateId, data, (error, data) => {
+    skillControllerObj.getUIConfig(req.params.templateId, data, (error, data) => {
         if(!error) {
             res.json(JSON.parse(data));
         }
@@ -63,7 +62,7 @@ router.get('/stepui/:taskId/:stepIndex', (req, res) => {
 */
 router.post('/taskstep/:taskId/:stepIndex', (req, res) => {
     let data = req.body.data;
-    skillController.saveStepUIState(req.params.taskId, req.params.stepIndex, data, (error, data) => {
+    skillControllerObj.saveStepUIState(req.params.taskId, req.params.stepIndex, data, (error, data) => {
         if(!error) {
             res.json(data);
         }
@@ -78,7 +77,7 @@ router.get('/generatexml/:templateId/:taskid/:stepidx', (req, res) => {
     let taskId = req.params.taskid;
     let stepIdx = req.params.stepidx;
     
-    skillController.generateXML(templateId, taskId, stepIdx, (error, data) => {
+    skillControllerObj.generateXML(templateId, taskId, stepIdx, (error, data) => {
         if (!error) {
             res.end(data);
         } else {

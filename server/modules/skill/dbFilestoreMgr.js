@@ -1,11 +1,11 @@
-const dbController = require('../../controllers/db.controller');
-const fileStoreController = require('../../controllers/filestore.controller');
+const dbControllerObj = require('../../controllers/db.controller');
+const fileStoreControllerObj = require('../../controllers/filestore.controller');
 
-module.exports = class DatabaseFileStoreManager {
+class DatabaseFileStoreManager {
     getUIConfig(templateId, callback) {
-        dbController.getUIConfigPath(templateId, (filePath, error) => {
+        dbControllerObj.getUIConfigPath(templateId, (filePath, error) => {
             if(!error) {
-                fileStoreController.getUIConfig(filePath, callback);
+                fileStoreControllerObj.getUIConfig(filePath, callback);
             }
             else {
                 callback(error);
@@ -14,9 +14,9 @@ module.exports = class DatabaseFileStoreManager {
     }
 
     getSkillXML(templateId, callback) {
-        dbController.getSkillXMLPath(templateId, (filePath, error) => {
+        dbControllerObj.getSkillXMLPath(templateId, (filePath, error) => {
             if(!error) {
-                fileStoreController.getSkillXML(filePath, callback);
+                fileStoreControllerObj.getSkillXML(filePath, callback);
             }
             else {
                 callback(error);
@@ -25,9 +25,9 @@ module.exports = class DatabaseFileStoreManager {
     }
 
     getIOMap(templateId, callback) {
-        dbController.getIOMapPath(templateId, (filePath, error) => {
+        dbControllerObj.getIOMapPath(templateId, (filePath, error) => {
             if(!error) {
-                fileStoreController.getIOMap(filePath, callback);
+                fileStoreControllerObj.getIOMap(filePath, callback);
             }
             else {
                 callback(error);
@@ -36,9 +36,9 @@ module.exports = class DatabaseFileStoreManager {
     }
 
     getSkillModel(templateId, callback) {
-        dbController.getSkillModelPath(templateId, (filePath, error) => {
+        dbControllerObj.getSkillModelPath(templateId, (filePath, error) => {
             if(!error) {
-                fileStoreController.getSkillModel(filePath, callback);
+                fileStoreControllerObj.getSkillModel(filePath, callback);
             }
             else {
                 callback(error);
@@ -47,14 +47,16 @@ module.exports = class DatabaseFileStoreManager {
     }
 
     getStepUIState(taskId, stepIndex, callback) {
-        dbController.getStepUIState(taskId, stepIndex, (data, error) => {
+        dbControllerObj.getStepUIState(taskId, stepIndex, (data, error) => {
             callback(data, error);
         });
     }
 
     saveStepUIState(taskId, stepIndex, stepUIData, callback) {
-        dbController.saveStepUIState(taskId, stepIndex, stepUIData, (data, error) => {
+        dbControllerObj.saveStepUIState(taskId, stepIndex, stepUIData, (data, error) => {
             callback(data, error);
         });
     }
 }
+
+module.exports = new DatabaseFileStoreManager();

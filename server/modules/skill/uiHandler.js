@@ -1,12 +1,10 @@
-const DatabaseFileStoreManager = require('./dbFilestoreMgr');
+const dbFilestoreManagerObj = require('./dbFilestoreMgr');
 
-module.exports = class UIHandler {
-    
-    constructor() {
-        this.dbFilestoreMgr = new DatabaseFileStoreManager();
-    }
+class UIHandler {
 
     getUIConfig(templateId, data, callback) {
-        return this.dbFilestoreMgr.getUIConfig(templateId, callback);
+        return dbFilestoreManagerObj.getUIConfig(templateId, callback);
     }
 }
+
+module.exports = new UIHandler();
