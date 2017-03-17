@@ -2,26 +2,31 @@ const path = require('path');
 const config = require('../config/config');
 const fs = require('fs');
 
-module.exports.getUIConfig = function(filepath, callback) {
-    readFromFileStore(filepath, callback);
-};
+class FileStoreController {
 
-module.exports.getSkillXML = function(filepath, callback) {
-    readFromFileStore(filepath, callback);
-};
+    getUIConfig(filepath, callback) {
+        FileStoreController.readFromFileStore(filepath, callback);
+    }
 
-module.exports.getIOMap = function(filepath, callback) {
-    readFromFileStore(filepath, callback);
-};
+    getSkillXML(filepath, callback) {
+        FileStoreController.readFromFileStore(filepath, callback);
+    }
 
-module.exports.getSkillModel = function(filepath, callback) {
-    readFromFileStore(filepath, callback);
-};
+    getIOMap(filepath, callback) {
+        FileStoreController.readFromFileStore(filepath, callback);
+    }
 
-function readFromFileStore(filepath, callback) {
-    let absolutePath = config.root + "/" + filepath;
+    getSkillModel(filepath, callback) {
+        FileStoreController.readFromFileStore(filepath, callback);
+    }
 
-    fs.readFile(absolutePath, 'utf8', function (err, data) {
-        callback(err, data);
-    });
-};
+    static readFromFileStore(filepath, callback) {
+        let absolutePath = config.root + "/" + filepath;
+
+        fs.readFile(absolutePath, 'utf8', function (err, data) {
+            callback(err, data);
+        });
+    }
+}
+
+module.exports = new FileStoreController();
