@@ -11,6 +11,7 @@ import { AuthGuard } from './_guards/auth.guard';
 import { AuthService } from './_services/auth.service';
 import { LoginComponent } from './login/login.component';
 import { TasksearchComponent } from './tasksearch/tasksearch.component';
+import { AuthModule  } from './auth.module';
 
 @NgModule({
   declarations: [
@@ -22,10 +23,11 @@ import { TasksearchComponent } from './tasksearch/tasksearch.component';
     BrowserModule,
     FormsModule,
     HttpModule,
+    AuthModule,
     routing
-
+    
   ],
-  providers: [AuthService, AuthGuard],
+  providers: [ AuthService, AuthGuard ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
