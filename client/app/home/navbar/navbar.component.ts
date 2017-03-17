@@ -1,5 +1,7 @@
 import { Component, EventEmitter, OnInit, ElementRef, Output, Input } from '@angular/core';
 import { AppConfig } from '../../app.config';
+import { AuthService } from '../../_services/auth.service';
+import { Router } from '@angular/router';
 declare var jQuery: any;
 
 @Component({
@@ -13,7 +15,7 @@ export class Navbar implements OnInit {
   $el: any;
   config: any;
   showSearchform: any;
-  constructor(el: ElementRef, config: AppConfig) {
+  constructor(el: ElementRef, config: AppConfig, private authenticationService: AuthService, private router: Router) {
     this.$el = jQuery(el.nativeElement);
     this.config = config.getConfig();
   }
@@ -26,6 +28,10 @@ export class Navbar implements OnInit {
     jQuery($event.currentTarget).removeClass("open");
     else
     jQuery($event.currentTarget).addClass("open");
+  }
+  logout(): void {
+    this.authenticationService.logout();
+    this.router.navigate(['/login']);
   }
 
   ngOnInit(): void {
