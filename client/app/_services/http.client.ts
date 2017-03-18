@@ -19,15 +19,13 @@ export class HttpClient {
   get(url, options?, bProtected?) {
     let httpModule;
     httpModule = this.getHTTPInstance(bProtected);
-    return httpModule.get(url, options, {
-    });
+    return httpModule.get(url, options);
   }
 
   post(url, data, options?, bProtected?) {
     let httpModule;
     httpModule = this.getHTTPInstance(bProtected);
-    return httpModule.post(url, data, options, {
-    });
+    return httpModule.post(url, data, options);
   }
 
 }
