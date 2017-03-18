@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewContainerRef, Injector, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewContainerRef, Injector, ViewChild, Input } from '@angular/core';
 import { ElementContainerComponent } from '../element-container.component';
 import { InputFactoryService } from '../input-factory.service';
 
@@ -13,6 +13,18 @@ export class WrapperComponent extends ElementContainerComponent implements OnIni
   constructor(vcref: ViewContainerRef, injector: Injector) {
     super();
     this.factoryRef = injector.get(InputFactoryService);
+  }
+
+  AddChildElements(factoryRef, containerRef, itemArray) {
+    if (this.dynamicMode == true) {
+      for (let item of itemArray) {
+        let childModelRef = this.modelRef[item.relVal];
+        factoryRef.createComp(containerRef, item, childModelRef);
+      }
+    }
+    else {
+      super.AddChildElements(factoryRef, containerRef, itemArray);
+    }
   }
 
   ngOnInit() {

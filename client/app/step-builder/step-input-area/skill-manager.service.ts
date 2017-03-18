@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
-import { itemDataModel } from '../../shared/UIConfig.model'
+import { BuilderModelObj } from '../shared/builder-model.service'
 
 @Injectable()
 export class SkillManagerService {
+  itemDataModel = BuilderModelObj.getModel();
   constructor() { }
 
   getSheetNameAndSheetCountFromInitDocJSON(initDocJSON, modelReference) {
 
     //Extract Array of the Dependant Sheets
-    var dependantSheetArrayInModel = this.getNestedObject(itemDataModel, modelReference);
+    var dependantSheetArrayInModel = this.getNestedObject(this.itemDataModel, modelReference);
     //Add The Required Number of Sheets in Model
     if (initDocJSON.sheetCount >= dependantSheetArrayInModel.length) {
       let sheetCountDiff = initDocJSON.sheetCount - dependantSheetArrayInModel.length;
@@ -35,7 +36,7 @@ export class SkillManagerService {
 
   addSheetNamesToDropdown(initDocJSON, modelReference) {
     //Extract the Array of Sheets in 'Sheet in Action' Dropdown
-    var dependantSheetArrayInModel = this.getNestedObject(itemDataModel, modelReference);
+    var dependantSheetArrayInModel = this.getNestedObject(this.itemDataModel, modelReference);
 
     //Add Sheet Names to Array From Init Doc JSON
     for (let sheetNum = 0; sheetNum < initDocJSON.sheetCount; sheetNum++) {

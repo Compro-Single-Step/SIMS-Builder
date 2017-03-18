@@ -35,7 +35,7 @@
               "rendererProperties": {
                 "dataType": "string"
               },
-              "val": "views[1].documentTitle"
+              "val": "{{views[1].documentTitle}}"
             }
           ]
         },
@@ -79,7 +79,7 @@
                 }
               ],
               "mandatory": true,
-              "val": "views[1].documentData"
+              "val": "{{views[1].documentData}}"
             },
             {
               "id": "1.2.2",
@@ -92,12 +92,13 @@
               "itemType": "child",
               "disabled": true,
               "rendererProperties": {
-                "layout": "horizontal"
+                "layout": "horizontal",
+                "dynamicMode": true,
+                "itemListRef": "{{views[1].sheets}}"
               },
               "items": [
                 {
                   "id": "1.2.2.1",
-                  "label": "views[1].sheets[1].name",
                   "itemRenderer": "TabPage",
                   "itemType": "",
                   "items": [
@@ -107,11 +108,12 @@
                       "itemType": "leaf",
                       "rendererProperties": {
                         "placeHolder": "Drop Grid Image",
+                        "dynamicMode": true,
                         "dataType": "img"
                       },
                       "pos": "x,y",
                       "dim": "200px,200px",
-                      "val": "views[1].sheets[1].gridImage"
+                      "relVal": "gridImage"
                     },
                     {
                       "id": "RowImage",
@@ -119,11 +121,12 @@
                       "itemType": "leaf",
                       "rendererProperties": {
                         "placeHolder": "Drop Row Image",
+                        "dynamicMode": true,
                         "dataType": "img"
                       },
                       "pos": "x,y",
                       "dim": "200px,200px",
-                      "val": "views[1].sheets[1].rowImage"
+                      "relVal": "rowImage"
                     },
                     {
                       "id": "ColumnImage",
@@ -131,11 +134,12 @@
                       "itemType": "leaf",
                       "rendererProperties": {
                         "placeHolder": "Drop Column Image",
+                        "dynamicMode": true,
                         "dataType": "img"
                       },
                       "pos": "x,y",
                       "dim": "200px,200px",
-                      "val": "views[1].sheets[1].columnImage"
+                      "relVal": "columnImage"
                     },
                     {
                       "id": "CellImage",
@@ -143,11 +147,12 @@
                       "itemType": "leaf",
                       "rendererProperties": {
                         "placeHolder": "Drop Cell Image",
+                        "dynamicMode": true,
                         "dataType": "img"
                       },
                       "pos": "x,y",
                       "dim": "200px,200px",
-                      "val": "views[1].sheets[1].cellImage"
+                      "relVal": "cellImage"
                     }
                   ]
                 }

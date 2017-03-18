@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, Input } from '@angular/core';
 import { BaseComponent } from '../base.component';
 import { itemSchema } from '../UIConfig.model';
 import { SkillManagerService } from '../../step-builder/step-input-area/skill-manager.service';
@@ -20,6 +20,9 @@ export class DropzoneComponent extends BaseComponent implements OnInit {
   }
   ngOnInit() {
     var self = this;
+    if (this.compConfig.rendererProperties.dynamicMode === true) {
+      this.dynamicMode = true;
+    }
     this.labelConfig.rendererProperties.text = this.compConfig.label;
     this.labelConfig.rendererProperties.type = 'ElementHeading';
     if (this.compConfig.dim != undefined) {
@@ -44,6 +47,12 @@ export class DropzoneComponent extends BaseComponent implements OnInit {
     dropzone.on("addedfile", function (file) { //To be Changed from 'addedfile' to 'success' when file starts getting stored on server;
       //Read File when it is Dropped
       reader.readAsText(file, 'UTF8');
+      if (self.dynamicMode === true) {
+        self.modelRef.name = file.name;
+      }
+      else {
+        self.builderModelSrvc.getModelRef(self.compConfig.val).value = file.name;
+      }
     });
     reader.onload = function (e) {
       //Update Dependencies when contents have been read;
