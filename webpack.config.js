@@ -114,13 +114,6 @@ module.exports = {
           "less-loader"
         ]
       },
-      { 
-        "exclude": [
-          /\/node_modules\//
-        ],
-        test: /\.(woff2?|ttf|eot|svg)$/, 
-        loaders: ['url-loader?limit=10000&name=[name].[ext]']
-      },
       {
         "exclude": [
           path.join(process.cwd(), "client\\styles.css"),
