@@ -2,7 +2,6 @@
 import { NgModule }      from '@angular/core';
 import { CommonModule }  from '@angular/common';
 import { FormsModule }  from '@angular/forms';
-import { TooltipModule } from 'ng2-bootstrap';
 
 import { ROUTES }       from './home.routes';
 
