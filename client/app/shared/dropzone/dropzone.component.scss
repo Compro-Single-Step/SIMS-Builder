@@ -1,0 +1,20 @@
+@import "../../../../node_modules/bootstrap/scss/variables";
+
+$dropzoneTextColor: #aaa;
+
+.heading {
+  display: flex;
+}
+.dropzone {
+  border: $border-width*2 dashed $pre-border-color;
+  position: relative;
+  margin: {
+  	top: $spacer;
+  	right: $spacer;
+  	bottom: $spacer;
+  }
+  color: $dropzoneTextColor;
+}
+.dz-message {
+  margin-top: 4.5rem;
+}

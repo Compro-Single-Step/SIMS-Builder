@@ -1,0 +1,78 @@
+{
+"id":"SKL16.XL.04.01.03.T1",
+"app":"PPT",
+"testStatus":true,
+"commitStatus":false,
+"createdBy":"UserX",
+"lastModifiedBy":"UserY",    
+"stepData":[
+    {
+    "stepIndex": "1",
+    "stepText": "Move the range G5:H6 to the range D5:E6.",
+    "stepDetails":{
+        "SkillName": "Move Cell Contents",
+        "MethodCount": "5",
+        "TemplateName": "Move Cell Range"
+    },
+    "stepProgress": "25%",
+    "stepTestStatus":true
+    },
+    {
+    "stepIndex": "2",
+    "stepText": "In the merged cell B4, apply the Angle Counterclockwise text alignment.",
+    "stepDetails":{
+        "SkillName": "Change Cell Orientation",
+        "MethodCount": "7",
+        "TemplateName": "Change Cell Orientation"
+    },
+    "stepProgress": "35%",
+    "stepTestStatus":false
+    },
+    {
+    "stepIndex": "3",
+    "stepText": "Apply the preset Outside Borders to the range B4:E6.",
+    "stepDetails":{
+        "SkillName": "Apply Borders",
+        "MethodCount": "5",
+        "TemplateName": "Apply Borders"
+    },
+    "stepProgress": "45%",
+    "stepTestStatus":false
+    },
+    {
+    "stepIndex": "4",
+    "stepText": "Move the range G5:H6 to the range D5:E6.",
+    "stepDetails":{
+        "SkillName": "Move Cell Contents",
+        "MethodCount": "5",
+        "TemplateName": "Move Cell Range"
+    },
+    "stepProgress": "25%",
+    "stepTestStatus":true
+    },
+    {
+    "stepIndex": "5",
+    "stepText": "In the merged cell B4, apply the Angle Counterclockwise text alignment.",
+    "stepDetails":{
+        "SkillName": "Change Cell Orientation",
+        "MethodCount": "7",
+        "TemplateName": "Change Cell Orientation"
+    },
+    "stepProgress": "35%",
+    "stepTestStatus":false
+    },
+    {
+    "stepIndex": "6",
+    "stepText": "Apply the preset Outside Borders to the range B4:E6.",
+    "stepDetails":{
+        "SkillName": "Apply Borders",
+        "MethodCount": "5",
+        "TemplateName": "Apply Borders"
+    },
+    "stepProgress": "45%",
+    "stepTestStatus":false
+    }
+],
+"previewUrl":"/preview/taskid",
+"testUrl":"/test/taskid"
+}
