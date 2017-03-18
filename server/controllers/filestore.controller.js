@@ -32,7 +32,7 @@ class FileStoreController {
     }
 
     saveResourceFile(templateId, taskId, stepIndex, fileName) {
-        let filePath = FileStoreController.getTaskFolderPath(taskId);
+        let filePath = FileStoreController.getTaskFolderPath(taskId) + "Assets/step-" + stepIndex;
 
         return FileStoreController.uploadFileHandler(filePath);
     }
