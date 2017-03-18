@@ -1,3 +1,6 @@
+const multer = require('multer');
+const mkdirp = require('mkdirp');
+
 const uiHandlerObj = require('../modules/skill/uiHandler');
 const dbFilestoreMgrObj = require('../modules/skill/dbFilestoreMgr');
 const xmlGenerationHandler = require('../modules/skill/xmlGenerationHandler');
@@ -14,6 +17,10 @@ class SkillController {
 
     generateXML(templateId, taskId, stepIdx, callback) {
         xmlGenerationHandler.generateStepXML(templateId, taskId, stepIdx, callback);
+    }
+
+    saveResourceFile(templateId, taskId, stepIndex) {
+        return dbFilestoreMgrObj.saveResourceFile(templateId, taskId, stepIndex);
     }
 };
 

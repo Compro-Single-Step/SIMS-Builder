@@ -87,4 +87,17 @@ router.get('/generatexml/:templateId/:taskid/:stepidx', (req, res) => {
     });
 });
 
+router.post("/uploadresource", (req, res) => {
+    let templateId = "";
+    let taskId = "EXP16.WD.03.01.03.T1";
+    let stepIndex = 1;
+    let upload = skillControllerObj.saveResourceFile(templateId, taskId, stepIndex);
+    upload(req, res, (error) => {
+        if(error) {
+            res.end("Error uploading file.");
+        }
+        res.end("File is uploaded");
+    });
+});
+
 module.exports = router;

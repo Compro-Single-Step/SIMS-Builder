@@ -2,6 +2,7 @@ const path = require('path');
 const serverRootPath = path.normalize(__dirname + '/..');
 const env = process.env.NODE_ENV || 'development';
 
+
 const config = {
     local: {
         app: {
@@ -19,7 +20,11 @@ const config = {
                 }
             }
         },
-        root: serverRootPath
+        root: serverRootPath,
+        fileStore: {
+            baseURL: path.normalize(__dirname + '../fileStore/'),
+            relativePath: 'XMLs/'
+        }
     },
     development: {
         app: {
@@ -39,7 +44,11 @@ const config = {
                 pass: 'task_builder'
             }
         },
-        root: serverRootPath
+        root: serverRootPath,
+        fileStore: {
+            baseURL: path.normalize(__dirname + '../fileStore/'),
+            relativePath: 'XMLs/'
+        }
     },
     production: {
         app: {
@@ -59,7 +68,11 @@ const config = {
                 pass: 'test'
             }
         },
-        root: serverRootPath
+        root: serverRootPath,
+        fileStore: {
+            baseURL: path.normalize(__dirname + '../fileStore/'),
+            relativePath: 'XMLs/'
+        }
     }
 };
 
