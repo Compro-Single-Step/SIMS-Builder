@@ -1,5 +1,6 @@
 const dbFilestoreMgr = require('./dbFilestoreMgr');
-const translator = require("./ioTranslator.js");
+const translatorClass = require("./ioTranslator.js");
+const translator = new translatorClass();
 const xmlGenerator = require("./xmlGenerator/Step.js");
 
 
@@ -20,7 +21,8 @@ module.exports.generateStepXML = function(templateId, taskId, stepIndex, callbac
                     let IOMap = JSON.parse(IOMapJson);
 
                     var identifiedSkill = identifySkill(templateId);
-                    var skillRef = require("../../libs/skills" + identifiedSkill);
+                    const skillRefClass = require("../../libs/skills" + identifiedSkill);
+                    var skillRef = new skillRefClass();
             
                     stepUIState = stepUIState[0]._doc.task_data['step_' + stepIndex];
                     attrValueMap = translator.translateMap(IOMap, stepUIState, skillRef);
