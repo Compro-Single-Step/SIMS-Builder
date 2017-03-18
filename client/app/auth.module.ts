@@ -4,7 +4,8 @@ import { AuthHttp, AuthConfig } from 'angular2-jwt';
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
   return new AuthHttp(new AuthConfig({
-    noTokenScheme : true
+    noTokenScheme : true,
+      tokenGetter: (() => JSON.parse(localStorage.getItem('currentUser')).token)
   }), http, options);
 }
 
