@@ -30,13 +30,15 @@ class FileStoreController {
         });
     }
 
-    static uploadFileHandler() {
+    static uploadFileHandler(filePath) {
         let storage = multer.diskStorage({
             destination: function (req, file, callback) {
-                let destinationFilePath = config.root + '/fileStore/XMLs';
+                let destinationFilePath = filePath;
 
                 mkdirp(destinationFilePath, (error) => {
-                    console.log(error);
+                    if(error) {
+                        console.log(error);
+                    }
                 });
 
                 callback(null, destinationFilePath);
@@ -49,11 +51,33 @@ class FileStoreController {
         return upload.fields([{ name: 'Browse', maxCount: 1 }]);
     }
 
-    saveResourceFile() {
+    saveResourceFile(templateId, taskId, stepIndex, fileName) {
+        let filePath = FileStoreController.getFilePath(taskId);
 
-        return FileStoreController.uploadFileHandler();
+        return FileStoreController.uploadFileHandler(filePath);
     }
 
+    static getFilePath(taskId) {
+        let taskIdArr = taskId.toLowerCase().split('.');
+        taskIdArr[0] = taskIdArr[0].slice(0, taskIdArr[0].length - 2);
+        let taskIdPath = "";
+        let taskFolder = "";
+
+        for(let i = 0; i < taskIdArr.length; i++) {
+            if(i < taskIdArr.length - 3) {
+                taskIdPath += taskIdArr[i] + "/";
+            }
+            else if (i == taskIdArr.length - 1){
+                taskFolder += taskIdArr[i] + "/";
+            }
+            else {
+                taskFolder += taskIdArr[i] + ".";
+            }
+        }
+        
+        let filePath = config.fileStore.baseURL + config.fileStore.relativePath + '/' + taskIdPath + taskFolder;
+        return filePath;
+    }
 }
 
 module.exports = new FileStoreController();
