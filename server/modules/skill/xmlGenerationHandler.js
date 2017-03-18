@@ -32,7 +32,9 @@ module.exports.generateStepXML = function(templateId, taskId, stepIndex, callbac
                         if(!error) {
                             let newStep = new xmlGenerator(skillTemplate, attrValueMap);
                             let OutputXML = newStep.stepGenerator();
-                            callback(error, OutputXML);
+
+                            //Saving Step XML in File Store
+                            dbFilestoreMgr.saveStepXML(taskId, stepIndex, OutputXML, callback);
                         }
                         else{
                             callback(error, skillTemplate);

@@ -22,7 +22,7 @@ const config = {
         },
         root: serverRootPath,
         fileStore: {
-            baseURL: path.normalize(__dirname + '../fileStore/'),
+            baseURL: path.normalize(__dirname + '/../fileStore/'),
             relativePath: 'XMLs/'
         }
     },
@@ -46,7 +46,7 @@ const config = {
         },
         root: serverRootPath,
         fileStore: {
-            baseURL: path.normalize(__dirname + '../fileStore/'),
+            baseURL: path.normalize(__dirname + '/../fileStore/'),
             relativePath: 'XMLs/'
         }
     },
@@ -70,7 +70,7 @@ const config = {
         },
         root: serverRootPath,
         fileStore: {
-            baseURL: path.normalize(__dirname + '../fileStore/'),
+            baseURL: path.normalize(__dirname + '/../fileStore/'),
             relativePath: 'XMLs/'
         }
     }
