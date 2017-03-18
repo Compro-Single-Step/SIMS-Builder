@@ -38,7 +38,7 @@ class FileStoreController {
     }
 
     static readFromFileStore(filepath, callback) {
-        let absolutePath = config.root + "/" + filepath;
+        let absolutePath = config.fileStore.baseURL + filepath;
 
         fs.readFile(absolutePath, 'utf8', function (err, data) {
             callback(err, data);
