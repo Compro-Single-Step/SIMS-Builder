@@ -10,12 +10,12 @@ export class HttpClient {
   getHTTPInstance(isProtected) {
     let httpModule;
     httpModule = this.authHttp;
-    if(isProtected === false){
+    if (isProtected === false) {
       httpModule = this.http;
     }
     return httpModule;
   }
-  
+
   get(url, options?, bProtected?) {
     let httpModule;
     httpModule = this.getHTTPInstance(bProtected);
@@ -29,5 +29,5 @@ export class HttpClient {
     return httpModule.post(url, data, options, {
     });
   }
-  
+
 }
