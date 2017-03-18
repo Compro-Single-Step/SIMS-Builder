@@ -22,6 +22,21 @@ class FileStoreController {
         FileStoreController.readFromFileStore(filepath, callback);
     }
 
+    saveStepXML(taskId, stepIndex, OutputXML, callback){
+        //HARDCODING task ID here
+        var taskId = "EXP16.WD.02.03.01.t1";
+        let filePath = FileStoreController.getTaskFolderPath(taskId) + "stepxmls/";
+        let fileName = stepIndex + ".xml";
+        
+        FileStoreController.saveToFileStore(filePath, fileName, OutputXML, callback);
+    }
+
+    saveResourceFile(templateId, taskId, stepIndex, fileName) {
+        let filePath = FileStoreController.getTaskFolderPath(taskId);
+
+        return FileStoreController.uploadFileHandler(filePath);
+    }
+
     static readFromFileStore(filepath, callback) {
         let absolutePath = config.root + "/" + filepath;
 
@@ -35,13 +50,9 @@ class FileStoreController {
             destination: function (req, file, callback) {
                 let destinationFilePath = filePath;
 
-                mkdirp(destinationFilePath, (error) => {
-                    if(error) {
-                        console.log(error);
-                    }
+                FileStoreController.createFolder(destinationFilePath, (error) => {
+                    callback(null, destinationFilePath);
                 });
-
-                callback(null, destinationFilePath);
             },
             filename: function (req, file, callback) {
                 callback(null, file.originalname);
@@ -51,13 +62,13 @@ class FileStoreController {
         return upload.fields([{ name: 'Browse', maxCount: 1 }]);
     }
 
-    saveResourceFile(templateId, taskId, stepIndex, fileName) {
-        let filePath = FileStoreController.getFilePath(taskId);
-
-        return FileStoreController.uploadFileHandler(filePath);
+    static createFolder(folderPath, callback){
+        mkdirp(folderPath, (error) => {
+            callback(error);
+        });
     }
 
-    static getFilePath(taskId) {
+    static getTaskFolderPath(taskId) {
         let taskIdArr = taskId.toLowerCase().split('.');
         taskIdArr[0] = taskIdArr[0].slice(0, taskIdArr[0].length - 2);
         let taskIdPath = "";
@@ -75,8 +86,23 @@ class FileStoreController {
             }
         }
         
-        let filePath = config.fileStore.baseURL + config.fileStore.relativePath + '/' + taskIdPath + taskFolder;
+        let filePath = config.fileStore.baseURL + config.fileStore.relativePath + taskIdPath + taskFolder;
         return filePath;
+    }
+
+    static saveToFileStore(filepath, fileName, file, callback) {
+        
+        //Create Folder if already don't exist
+        FileStoreController.createFolder(filepath, (error) => {
+            if(!error){
+                //Saving XML
+                fs.writeFile(filepath + fileName, file, (err) => {
+                    callback(err);
+                });
+            }
+            else
+                 callback(err);
+        });
     }
 }
 

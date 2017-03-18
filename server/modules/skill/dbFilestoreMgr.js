@@ -58,6 +58,10 @@ class DatabaseFileStoreManager {
         });
     }
 
+    saveStepXML(taskId, stepIndex, OutputXML, callback){
+        fileStoreControllerObj.saveStepXML(taskId, stepIndex, OutputXML, callback);
+	}
+
     saveResourceFile(templateId, taskId, stepIndex, fileName) {
         return fileStoreControllerObj.saveResourceFile(templateId, taskId, stepIndex, fileName);
     }

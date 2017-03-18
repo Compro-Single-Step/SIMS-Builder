@@ -77,12 +77,11 @@ router.get('/generatexml/:templateId/:taskid/:stepidx', (req, res) => {
     let taskId = req.params.taskid;
     let stepIdx = req.params.stepidx;
     
-    skillControllerObj.generateXML(templateId, taskId, stepIdx, (error, data) => {
+    skillControllerObj.generateXML(templateId, taskId, stepIdx, (error) => {
         if (!error) {
-            res.end(data);
+            res.end("success");
         } else {
-            console.log("error occurred");
-            res.json(error);
+            res.send(error);
         }
     });
 });
