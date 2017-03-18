@@ -9,14 +9,13 @@ import { routing } from './app-routing.module';
 
 import { AuthGuard } from './_guards/auth.guard';
 import { AuthService } from './_services/auth.service';
+import { AppConfig } from './app.config';
 import { LoginComponent } from './login/login.component';
-import { TasksearchComponent } from './tasksearch/tasksearch.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
-    TasksearchComponent
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -25,7 +24,7 @@ import { TasksearchComponent } from './tasksearch/tasksearch.component';
     routing
 
   ],
-  providers: [AuthService, AuthGuard],
+  providers: [AuthService, AuthGuard, AppConfig],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
