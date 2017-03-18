@@ -5,6 +5,8 @@ import { FormsModule }  from '@angular/forms';
 
 import { ROUTES }       from './home.routes';
 
+import { TooltipModule } from 'ng2-bootstrap';
+
 import { Layout } from './layout.component';
 import { Sidebar } from './sidebar/sidebar.component';
 import { Navbar } from './navbar/navbar.component';
