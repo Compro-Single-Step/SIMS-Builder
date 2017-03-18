@@ -7,27 +7,25 @@ export class HttpClient {
 
   constructor(private http: Http, private authHttp: AuthHttp) { }
 
-
-  get(url, options, notProtected) {
+  getHTTPInstance(isProtected) {
     let httpModule;
-    if (notProtected) {
+    httpModule = this.authHttp;
+    if(isProtected === false){
       httpModule = this.http;
     }
-    else {
-      httpModule = this.authHttp;
-    }
-    return httpModule.get(url,options, {
+    return httpModule;
+  }
+  
+  get(url, options?, bProtected?) {
+    let httpModule;
+    httpModule = this.getHTTPInstance(bProtected);
+    return httpModule.get(url, options, {
     });
   }
 
-  post(url, data, options, notProtected) {
+  post(url, data, options?, bProtected?) {
     let httpModule;
-    if (notProtected) {
-      httpModule = this.http;
-    }
-    else {
-      httpModule = this.authHttp;
-    }
+    httpModule = this.getHTTPInstance(bProtected);
     return httpModule.post(url, data, options, {
     });
   }
