@@ -27,25 +27,13 @@ initialiseTaskData() {
 					   this.StepData = this.TaskData["stepData"];
 					   this.AppImage = this.ApplicationImage(this.TaskData["app"]);
   }
- ApplicationImage (taskApp){
-	 switch (taskApp)
-	 {
-		 case "Excel" : {
-			 return "assets/images/Excel.png";
-		 }
-		 case "Word" : {
-			 return "assets/images/Word.png";
-		 }
-		 case "Access" : {
-			 return "assets/images/Access.png";
-		 }
-		 case "PPT" : {
-			 return "assets/images/PPT.png";
-		 }
-		 default : {
-			 return "assets/images/Access.png";
-		 };
-	 }
 
- }
+	ApplicationImage(taskApp){
+		return {
+		"Excel": "assets/images/Excel.png",
+		"Word": "assets/images/Word.png",
+		"Access": "assets/images/Access.png",
+		"PPT": "assets/images/PPT.png"
+		}[taskApp] || "assets/images/Access.png" ;
+	}
 }

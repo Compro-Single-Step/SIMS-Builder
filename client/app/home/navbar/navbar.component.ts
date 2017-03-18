@@ -11,10 +11,8 @@ declare var jQuery: any;
 })
 export class Navbar implements OnInit {
  @Output() toggleSidebarEvent: EventEmitter<any> = new EventEmitter();
- @Input() showForm: boolean = false;
   $el: any;
   config: any;
-  showSearchform: any;
   constructor(el: ElementRef, config: AppConfig, private authenticationService: AuthService, private router: Router) {
     this.$el = jQuery(el.nativeElement);
     this.config = config.getConfig();
@@ -39,8 +37,5 @@ export class Navbar implements OnInit {
       jQuery(this).parents('.input-group')
         [e.type === 'focus' ? 'addClass' : 'removeClass']('focus');
     });
-  }
-  ngOnChanges(): void{
-    this.showSearchform = this.showForm;
   }
 }

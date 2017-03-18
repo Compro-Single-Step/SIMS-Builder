@@ -2,7 +2,7 @@ import { NgModule }      from '@angular/core';
 import { CommonModule }  from '@angular/common';
 
 import { RouterModule } from '@angular/router';
-import { AlertModule, TooltipModule } from 'ng2-bootstrap';
+
 import { TaskBuilderComponent } from './task-builder.component';
 import { TaskstepComponent } from './taskstep/taskstep.component';
 import { DataService } from './shared/data.service';
@@ -16,7 +16,7 @@ const routes = [
 
 
 @NgModule({
-  imports: [ CommonModule, RouterModule.forChild(routes), TooltipModule.forRoot() ],
+  imports: [ CommonModule, RouterModule.forChild(routes)],
   declarations: [ TaskBuilderComponent, TaskstepComponent],
   providers: [DataService, TaskDataResolver]
 })

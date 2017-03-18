@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ElementRef, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ElementRef, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppConfig } from '../app.config';
 
@@ -16,8 +16,7 @@ declare var jQuery: any;
   },
   styles:['.fixed_navbar{position:fixed;} .searchForm{margin-top:2px;}']
 })  
-export class Layout implements OnInit, AfterViewInit{
-  @Output() showSearchFormEvent: EventEmitter<any> = new EventEmitter();
+export class Layout implements OnInit{
   config: any;
   configFn: any;
   $sidebar: any;
@@ -221,12 +220,4 @@ export class Layout implements OnInit, AfterViewInit{
       jQuery(this).closest('li').removeClass('open');
     });
   }
-  ngAfterViewInit(): void{
-    this.url = this.router.url;
-    if(this.url == "/app/homepage")
-    this.showSearchForm = true;
-    else
-    this.showSearchForm = true;
-  }
-
 }
