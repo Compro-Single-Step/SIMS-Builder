@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { AppConfig } from '../app.config';
 
 declare var jQuery: any;
-declare var Hammer: any;
+//declare var Hammer: any;
 
 @Component({
   selector: 'layout',
