@@ -58,8 +58,8 @@ class DatabaseFileStoreManager {
         });
     }
 
-    saveResourceFile() {
-        return fileStoreControllerObj.saveResourceFile();
+    saveResourceFile(templateId, taskId, stepIndex, fileName) {
+        return fileStoreControllerObj.saveResourceFile(templateId, taskId, stepIndex, fileName);
     }
 }
 

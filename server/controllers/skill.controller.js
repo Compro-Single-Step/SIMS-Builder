@@ -19,8 +19,8 @@ class SkillController {
         xmlGenerationHandler.generateStepXML(templateId, taskId, stepIdx, callback);
     }
 
-    saveResourceFile() {
-        return dbFilestoreMgrObj.saveResourceFile();
+    saveResourceFile(templateId, taskId, stepIndex) {
+        return dbFilestoreMgrObj.saveResourceFile(templateId, taskId, stepIndex);
     }
 };
 
