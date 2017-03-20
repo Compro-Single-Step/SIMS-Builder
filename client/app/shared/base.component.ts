@@ -1,9 +1,9 @@
 import { itemSchema } from './UIConfig.model';
-import { Input } from '@angular/core';
+import { Input, OnInit } from '@angular/core';
 import { BuilderModelObj } from '../step-builder/shared/builder-model.service';
 import { skillManager } from '../step-builder/shared/skill-manager.service';
 
-export class BaseComponent {
+export class BaseComponent implements OnInit{
     @Input() compConfig: itemSchema;
     @Input() modelRef = {};
     builderModelSrvc;
@@ -14,6 +14,9 @@ export class BaseComponent {
         this.compConfig = new itemSchema();
         this.builderModelSrvc = BuilderModelObj;
         this.itemDataModel = this.builderModelSrvc.getModel();
+    }
+
+    ngOnInit(){   
     }
 
     setData(inputConfig, modelRef?) {

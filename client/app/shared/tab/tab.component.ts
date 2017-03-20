@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { BaseComponent } from '../base.component';
 import { itemSchema } from '../UIConfig.model';
 
@@ -7,11 +7,12 @@ import { itemSchema } from '../UIConfig.model';
   templateUrl: './tab.component.html',
   styleUrls: ['./tab.component.scss']
 })
-export class TabComponent extends BaseComponent implements OnInit {
+export class TabComponent extends BaseComponent {
   labelConfig: itemSchema = new itemSchema();
   tabs: Array<Object> = [];
 
   ngOnInit() {
+    super.ngOnInit();
     this.UpdateView();
   }
 

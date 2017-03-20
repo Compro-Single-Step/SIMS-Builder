@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewContainerRef, ViewChild, Injector } from '@angular/core';
+import { Component, ElementRef, ViewContainerRef, ViewChild, Injector } from '@angular/core';
 import { ContainerComponent } from '../element-container.component';
 import { InputFactoryService } from '../input-factory.service';
 import { itemSchema } from '../UIConfig.model';
@@ -9,7 +9,8 @@ declare var jQuery: any;
   templateUrl: './panel.component.html',
   styleUrls: ['./panel.component.scss']
 })
-export class PanelComponent extends ContainerComponent implements OnInit {
+
+export class PanelComponent extends ContainerComponent {
   @ViewChild('inputElementsContainer', { read: ViewContainerRef }) inputElementsContainer;
   $el: any;
   labelConfig: itemSchema = new itemSchema();
@@ -23,6 +24,7 @@ export class PanelComponent extends ContainerComponent implements OnInit {
   }
 
   ngOnInit() {
+    super.ngOnInit();
     this.UpdateView();
     this.AddChildElements(this.factoryRef, this.inputElementsContainer, this.compConfig.items);
   }

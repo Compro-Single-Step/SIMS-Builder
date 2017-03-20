@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild, Input } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { BaseComponent } from '../base.component';
 import { itemSchema } from '../UIConfig.model';
 
@@ -9,7 +9,7 @@ Dropzone.autoDiscover = false;
   templateUrl: './dropzone.component.html',
   styleUrls: ['./dropzone.component.scss']
 })
-export class DropzoneComponent extends BaseComponent implements OnInit {
+export class DropzoneComponent extends BaseComponent {
   @ViewChild('dropzone') dropzoneContainer;
   labelConfig: itemSchema = new itemSchema();
   width: string;
@@ -19,6 +19,7 @@ export class DropzoneComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
+    super.ngOnInit();
     this.UpdateView();
   }
 
