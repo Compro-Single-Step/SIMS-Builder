@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { BaseComponent } from '../base.component';
 import { itemSchema } from '../UIConfig.model';
 import { SkillManagerService } from '../../step-builder/step-input-area/skill-manager.service';
@@ -10,13 +10,14 @@ Dropzone.autoDiscover = false;
   templateUrl: './dropzone.component.html',
   styleUrls: ['./dropzone.component.scss']
 })
-export class DropzoneComponent extends BaseComponent implements OnInit {
+export class DropzoneComponent extends BaseComponent {
   @ViewChild('dropzone') dropzoneContainer;
   labelConfig: itemSchema = new itemSchema();
   constructor(private elementRef: ElementRef, private skillManager: SkillManagerService) {
     super();
   }
   ngOnInit() {
+    super.ngOnInit();
     var self = this;
     this.labelConfig.rendererProperties.text = this.compConfig.label;
     this.labelConfig.rendererProperties.type = 'ElementHeading';

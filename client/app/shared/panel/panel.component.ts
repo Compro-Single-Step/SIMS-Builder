@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewContainerRef, ViewChild, Injector } from '@angular/core';
+import { Component, ElementRef, ViewContainerRef, ViewChild, Injector } from '@angular/core';
 import { ElementContainerComponent } from '../element-container.component';
 import { InputFactoryService } from '../input-factory.service';
 import { itemSchema } from '../UIConfig.model';
@@ -9,7 +9,7 @@ declare var jQuery: any;
   templateUrl: './panel.component.html',
   styleUrls: ['./panel.component.scss']
 })
-export class PanelComponent extends ElementContainerComponent implements OnInit {
+export class PanelComponent extends ElementContainerComponent {
   @ViewChild('inputElementsContainer', { read: ViewContainerRef }) inputElementsContainer;
   $el: any;
   labelConfig: itemSchema = new itemSchema();
@@ -23,6 +23,7 @@ export class PanelComponent extends ElementContainerComponent implements OnInit 
   }
 
   ngOnInit() {
+    super.ngOnInit();
     this.labelConfig.rendererProperties.text = this.compConfig.label;
     this.labelConfig.rendererProperties.type = 'PanelHeading';
     this.$el.find('.widget').widgster();

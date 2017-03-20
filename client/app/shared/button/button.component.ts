@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { BaseComponent } from '../base.component';
 import { itemSchema } from '../UIConfig.model';
 
@@ -8,10 +8,11 @@ import { itemSchema } from '../UIConfig.model';
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.scss']
 })
-export class ButtonComponent extends BaseComponent implements OnInit {
+export class ButtonComponent extends BaseComponent {
   type: string;
 
   ngOnInit() {
+    super.ngOnInit();
     this.type = this.compConfig.rendererProperties.type || 'default';
   }
 
