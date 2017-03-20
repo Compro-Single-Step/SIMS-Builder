@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { BaseComponent } from '../base.component';
 import { itemSchema, itemDataModel } from '../UIConfig.model';
 
@@ -7,12 +7,13 @@ import { itemSchema, itemDataModel } from '../UIConfig.model';
   templateUrl: './text-box.component.html',
   styleUrls: ['./text-box.component.scss']
 })
-export class TextBoxComponent extends BaseComponent implements OnInit {
+export class TextBoxComponent extends BaseComponent {
   labelConfig: itemSchema = new itemSchema();
   itemDataModel;
   modelRef;
 
   ngOnInit() {
+    super.ngOnInit();
     this.itemDataModel = itemDataModel;
     if (this.compConfig.val) {
       this.modelRef = this.getVariableRef("this.itemDataModel." + this.compConfig.val);

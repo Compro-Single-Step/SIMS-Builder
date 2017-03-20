@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { BaseComponent } from '../base.component';
 
 @Component({
@@ -6,7 +6,5 @@ import { BaseComponent } from '../base.component';
   templateUrl: './tag.component.html',
   styleUrls: ['./tag.component.scss']
 })
-export class TagComponent extends BaseComponent implements OnInit {
-  ngOnInit() {
-  }
+export class TagComponent extends BaseComponent {
 }

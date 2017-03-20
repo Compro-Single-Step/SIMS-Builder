@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewContainerRef, Injector, ViewChild } from '@angular/core';
+import { Component, ViewContainerRef, Injector, ViewChild } from '@angular/core';
 import { ElementContainerComponent } from '../element-container.component';
 import { InputFactoryService } from '../input-factory.service';
 
@@ -7,7 +7,7 @@ import { InputFactoryService } from '../input-factory.service';
   templateUrl: './wrapper.component.html',
   styleUrls: ['./wrapper.component.scss']
 })
-export class WrapperComponent extends ElementContainerComponent implements OnInit {
+export class WrapperComponent extends ElementContainerComponent {
   @ViewChild('wrapper', { read: ViewContainerRef }) wrapperContainer;
   private factoryRef: InputFactoryService;
   constructor(vcref: ViewContainerRef, injector: Injector) {
@@ -16,6 +16,7 @@ export class WrapperComponent extends ElementContainerComponent implements OnIni
   }
 
   ngOnInit() {
+    super.ngOnInit();
     this.AddChildElements(this.factoryRef, this.wrapperContainer, this.compConfig.items);
   }
 }
