@@ -1,5 +1,5 @@
 const skillConfigRepoModel = require('../models/skillConfigRepo.model').skill_config_repo;
-const taskStepUIModel = require('../models/taskStepUI.model').taskStepUIModel;
+const uiTaskStepModel = require('../models/uiTaskStep.model').uiTaskStepModel;
 
 class DatabaseController {
     
@@ -25,7 +25,7 @@ class DatabaseController {
         let map = {"_id": false};
         map[jsonKey] = true;
 
-        taskStepUIModel.getStepUI(condition, map, (error, data) => {
+        uiTaskStepModel.getStepUI(condition, map, (error, data) => {
             callback(data, error);
         });
     }
@@ -37,7 +37,7 @@ class DatabaseController {
         updateData.$set[jsonKey] = stepUIData;
         let options = { upsert: true };
 
-        taskStepUIModel.updateStepUIData(updateCriteria, updateData, options, (error, success) => {
+        uiTaskStepModel.updateStepUIData(updateCriteria, updateData, options, (error, success) => {
             callback(error, success);
         });
     }

@@ -1,5 +1,7 @@
 const path = require('path');
 const serverRootPath = path.normalize(__dirname + '/..');
+const fileStorePath = path.normalize(__dirname + '/../fileStore/');
+const xmlFolderRelativePath = 'XMLs/';
 const env = process.env.NODE_ENV || 'development';
 
 
@@ -10,7 +12,7 @@ const config = {
         },
         port: process.env.port || 3000,
         db: {
-            url: 'mongodb://localhost:27017/testDB',
+            url: 'mongodb://localhost:27017/sims-task-bullder',
             dbOptions: {
                 db: {
                     native_parser: true
@@ -22,8 +24,8 @@ const config = {
         },
         root: serverRootPath,
         fileStore: {
-            baseURL: path.normalize(__dirname + '/../fileStore/'),
-            relativePath: 'XMLs/'
+            baseURL: fileStorePath,
+            xmlFolderRelativePath: xmlFolderRelativePath
         }
     },
     development: {
@@ -46,8 +48,8 @@ const config = {
         },
         root: serverRootPath,
         fileStore: {
-            baseURL: path.normalize(__dirname + '/../fileStore/'),
-            relativePath: 'XMLs/'
+            baseURL: fileStorePath,
+            xmlFolderRelativePath: xmlFolderRelativePath
         }
     },
     production: {
@@ -56,7 +58,7 @@ const config = {
         },
         port: process.env.port || 3000,
         db: {
-            url: 'mongodb://localhost:27017/testDB',
+            url: 'ds113650.mlab.com:13650/sims-task-bullder',
             dbOptions: {
                 db: {
                     native_parser: true
@@ -64,14 +66,14 @@ const config = {
                 server: {
                     poolsize: 20
                 },
-                user: 'test',
-                pass: 'test'
+                user: 'task_builder',
+                pass: 'task_builder'
             }
         },
         root: serverRootPath,
         fileStore: {
-            baseURL: path.normalize(__dirname + '/../fileStore/'),
-            relativePath: 'XMLs/'
+            baseURL: fileStorePath,
+            xmlFolderRelativePath: xmlFolderRelativePath
         }
     }
 };

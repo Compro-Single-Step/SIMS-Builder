@@ -89,7 +89,7 @@ class FileStoreController {
             }
         }
         
-        let filePath = config.fileStore.baseURL + config.fileStore.relativePath + taskIdPath + taskFolder;
+        let filePath = config.fileStore.baseURL + config.fileStore.xmlFolderRelativePath + taskIdPath + taskFolder;
         return filePath;
     }
 
