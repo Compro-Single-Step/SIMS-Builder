@@ -11,9 +11,11 @@ export class TextBoxComponent extends BaseComponent implements OnInit {
   labelConfig: itemSchema = new itemSchema();
 
   ngOnInit() {
-    if (this.checkForReference(this.compConfig.val)) {
-      this.modelRef = this.builderModelSrvc.getModelRef(this.compConfig.val);
-    }
+    this.modelRef = this.builderModelSrvc.getModelRef(this.compConfig.val);
+    this.UpdateView();
+  }
+
+  UpdateView() {
     this.labelConfig.rendererProperties.text = this.compConfig.label;
     this.labelConfig.rendererProperties.type = 'ElementHeading';
   }

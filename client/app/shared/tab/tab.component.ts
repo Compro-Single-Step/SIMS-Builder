@@ -12,7 +12,11 @@ export class TabComponent extends BaseComponent implements OnInit {
   tabs: Array<Object> = [];
 
   ngOnInit() {
-    if(this.compConfig.rendererProperties.dynamicMode === true){
+    this.UpdateView();
+  }
+
+  UpdateView() {
+    if (this.compConfig.rendererProperties.dynamicMode === true) {
       this.dynamicMode = true;
       this.tabs = this.builderModelSrvc.getModelRef(this.compConfig.rendererProperties.itemListRef);
     }

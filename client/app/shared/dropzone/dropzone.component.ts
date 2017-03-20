@@ -17,7 +17,12 @@ export class DropzoneComponent extends BaseComponent implements OnInit {
   constructor(private elementRef: ElementRef) {
     super();
   }
+
   ngOnInit() {
+    this.UpdateView();
+  }
+
+  UpdateView() {
     var self = this;
     this.labelConfig.rendererProperties.text = this.compConfig.label;
     this.labelConfig.rendererProperties.type = 'ElementHeading';
@@ -34,7 +39,6 @@ export class DropzoneComponent extends BaseComponent implements OnInit {
         self.dropzoneInitializer(this);
       }
     });
-
   }
 
   dropzoneInitializer(dropzone) {

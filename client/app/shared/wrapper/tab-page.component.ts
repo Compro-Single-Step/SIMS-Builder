@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewContainerRef, Injector, ViewChild, Input } from '@angular/core';
-import { ElementContainerComponent } from '../element-container.component';
+import { ContainerComponent } from '../element-container.component';
 import { InputFactoryService } from '../input-factory.service';
 
 @Component({
@@ -7,7 +7,7 @@ import { InputFactoryService } from '../input-factory.service';
   templateUrl: './wrapper.component.html',
   styleUrls: ['./wrapper.component.scss']
 })
-export class WrapperComponent extends ElementContainerComponent implements OnInit {
+export class TabPageComponent extends ContainerComponent implements OnInit {
   @ViewChild('wrapper', { read: ViewContainerRef }) wrapperContainer;
   private factoryRef: InputFactoryService;
   constructor(vcref: ViewContainerRef, injector: Injector) {

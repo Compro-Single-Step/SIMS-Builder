@@ -4,15 +4,15 @@
 </div>
 <tabset>
   <template [ngIf]="!dynamicMode">
-    <tab *ngFor="let tab of compConfig.items" customClass="customClass">
-      <template tabHeading>{{tab.label}}</template>
-      <app-wrapper [compConfig]="tab"></app-wrapper>
+    <tab *ngFor="let tabConfig of compConfig.items" customClass="customClass">
+      <template tabHeading>{{tabConfig.label}}</template>
+      <app-wrapper [compConfig]="tabConfig"></app-wrapper>
     </tab>
   </template>
   <template [ngIf]="dynamicMode">
-    <tab *ngFor="let tab of tabs" customClass="customClass">
-      <template tabHeading>{{tab.name}}</template>
-      <app-wrapper [compConfig]="compConfig.items[0]" [modelRef]="tab"></app-wrapper>
+    <tab *ngFor="let tabModel of tabs" customClass="customClass">
+      <template tabHeading>{{tabModel.name}}</template>
+      <app-wrapper [compConfig]="compConfig.items[0]" [modelRef]="tabModel"></app-wrapper>
     </tab>
   </template>
 </tabset>
