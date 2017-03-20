@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { BaseComponent } from '../base.component';
 
 @Component({
@@ -6,11 +6,12 @@ import { BaseComponent } from '../base.component';
   templateUrl: './label.component.html',
   styleUrls: ['./label.component.scss']
 })
-export class LabelComponent extends BaseComponent implements OnInit {
+export class LabelComponent extends BaseComponent {
   text: string;
   type: string = 'ElementHeading';
 
   ngOnInit() {
+    super.ngOnInit();
     this.text = this.compConfig.rendererProperties.text;
     this.type = this.compConfig.rendererProperties.type;
   }
