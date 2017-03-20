@@ -13,7 +13,6 @@ import { AuthService } from './_services/auth.service';
 import { HttpClient } from './_services/http.client';
 import { AppConfig } from './app.config';
 import { LoginComponent } from './login/login.component';
-import { TasksearchComponent } from './tasksearch/tasksearch.component';
 import { AuthModule  } from './auth.module';
 
 @NgModule({
