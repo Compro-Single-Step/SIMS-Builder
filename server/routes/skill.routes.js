@@ -1,13 +1,16 @@
 const express = require('express');
 const router = express.Router();
-const skillControllerObj = require('../controllers/skill.controller');
+const skillController = require('../controllers/skill.controller');
 //const dbFilestoreMgr = require('../modules/skill/dbFilestoreMgr');
 
-router.get('/uiconfig/:templateId', (req, res) => {
+router.get('/uiconfig/:templateId/:taskId/:stepIndex', (req, res) => {
     let templateId = req.params.templateId;
-    let data = {};
-    skillControllerObj.getUIConfig(req.params.templateId, data, (error, data) => {
+    let taskId = req.params.taskId;
+    let stepIndex = req.params.stepIndex;
+    
+    skillController.getUIConfig(templateId, taskId, stepIndex, (error, data) => {
         if(!error) {
+            //reason to parse
             res.json(JSON.parse(data));
         }
         else {
@@ -15,9 +18,10 @@ router.get('/uiconfig/:templateId', (req, res) => {
         }
     });
 });
-/*
-router.get('/skillxml/:templateId', (req, res) => {
-    dbFilestoreMgr.getSkillXML(req.params.templateId, (error, data) => {
+
+router.post('/stepuistate/:taskId/:stepIndex', (req, res) => {
+    let stepUIState = req.body.stepUIState;
+    skillController.saveStepUIState(req.params.taskId, req.params.stepIndex, stepUIState, (error, data) => {
         if(!error) {
             res.json(data);
         }
@@ -27,57 +31,12 @@ router.get('/skillxml/:templateId', (req, res) => {
     });
 });
 
-router.get('/iomap/:templateId', (req, res) => {
-    dbFilestoreMgr.getIOMap(req.params.templateId, (error, data) => {
-        if(!error) {
-            res.json(JSON.parse(data));
-        }
-        else {
-            res.json(error);
-        }
-    });
-});
-
-router.get('/skillmodel/:templateId', (req, res) => {
-    dbFilestoreMgr.getSkillModel(req.params.templateId, (error, data) => {
-        if(!error) {
-            res.json(JSON.parse(data));
-        }
-        else {
-            res.json(error);
-        }
-    });
-});
-
-router.get('/stepui/:taskId/:stepIndex', (req, res) => {
-    dbFilestoreMgr.getStepUIState(req.params.taskId, req.params.stepIndex, (data, error) => {
-        if(!error) {
-            res.json(data);
-        }
-        else {
-            res.json(error);
-        }
-    });
-});
-*/
-router.post('/taskstep/:taskId/:stepIndex', (req, res) => {
-    let data = req.body.data;
-    skillControllerObj.saveStepUIState(req.params.taskId, req.params.stepIndex, data, (error, data) => {
-        if(!error) {
-            res.json(data);
-        }
-        else {
-            res.json(error);
-        }
-    });
-});
-
-router.get('/generatexml/:templateId/:taskid/:stepidx', (req, res) => {
+router.get('/xmlgeneration/:templateId/:taskid/:stepidx', (req, res) => {
     let templateId = req.params.templateId;
     let taskId = req.params.taskid;
     let stepIdx = req.params.stepidx;
     
-    skillControllerObj.generateXML(templateId, taskId, stepIdx, (error) => {
+    skillController.generateXML(templateId, taskId, stepIdx, (error) => {
         if (!error) {
             res.end("success");
         } else {
@@ -87,10 +46,11 @@ router.get('/generatexml/:templateId/:taskid/:stepidx', (req, res) => {
 });
 
 router.post("/uploadresource", (req, res) => {
+    //getting below data to be decided.
     let templateId = "";
     let taskId = "EXP16.WD.03.01.03.T1";
     let stepIndex = 1;
-    let upload = skillControllerObj.saveResourceFile(templateId, taskId, stepIndex);
+    let upload = skillController.saveResourceFile(templateId, taskId, stepIndex);
     upload(req, res, (error) => {
         if(error) {
             res.end("Error uploading file.");
