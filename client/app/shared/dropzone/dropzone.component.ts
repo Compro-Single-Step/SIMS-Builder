@@ -23,9 +23,9 @@ export class DropzoneComponent extends BaseComponent {
     var self = this;
     this.labelConfig.rendererProperties.text = this.compConfig.label;
     this.labelConfig.rendererProperties.type = 'ElementHeading';
-    if (this.compConfig.dim != undefined) {
-      this.height = `${this.compConfig.dim.split(',')[0]}`;
-      this.width = `${this.compConfig.dim.split(',')[1]}`;
+    if (this.compConfig.dim !== undefined) {
+      this.height = `${this.compConfig.dim['height']}`;
+      this.width = `${this.compConfig.dim['width']}`;
     } else {
       this.height = `200px`;
       this.width = `100%`;
