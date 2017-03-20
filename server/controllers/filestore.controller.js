@@ -70,7 +70,10 @@ class FileStoreController {
 
     static getTaskFolderPath(taskId) {
         let taskIdArr = taskId.toLowerCase().split('.');
-        taskIdArr[0] = taskIdArr[0].slice(0, taskIdArr[0].length - 2);
+        if(taskIdArr[0].length > 3) {
+            taskIdArr[0] = taskIdArr[0].slice(0, taskIdArr[0].length - 2);
+        }
+        
         let taskIdPath = "";
         let taskFolder = "";
 
