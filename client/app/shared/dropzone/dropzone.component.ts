@@ -20,9 +20,6 @@ export class DropzoneComponent extends BaseComponent implements OnInit {
   }
   ngOnInit() {
     var self = this;
-    if (this.compConfig.rendererProperties.dynamicMode === true) {
-      this.dynamicMode = true;
-    }
     this.labelConfig.rendererProperties.text = this.compConfig.label;
     this.labelConfig.rendererProperties.type = 'ElementHeading';
     if (this.compConfig.dim != undefined) {
@@ -47,11 +44,11 @@ export class DropzoneComponent extends BaseComponent implements OnInit {
     dropzone.on("addedfile", function (file) { //To be Changed from 'addedfile' to 'success' when file starts getting stored on server;
       //Read File when it is Dropped
       reader.readAsText(file, 'UTF8');
-      if (self.dynamicMode === true) {
-        self.modelRef.name = file.name;
+      if (self.modelRef) {
+        self.modelRef["name"] = file.name;
       }
       else {
-        self.builderModelSrvc.getModelRef(self.compConfig.val).value = file.name;
+        self.builderModelSrvc.getModelRef(self.compConfig.val).name = file.name;
       }
     });
     reader.onload = function (e) {

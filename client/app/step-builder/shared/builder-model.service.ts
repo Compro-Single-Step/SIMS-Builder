@@ -73,7 +73,7 @@ class BuilderModel {
     }
 
     getModelRef(modelRefStr) {
-        return eval("this.builderModel." + modelRefStr.replace(/['{','}']/g, ""));
+        return eval("this.builderModel." + modelRefStr.replace(/['{{','}}']/g, ""));
     }
 };
 

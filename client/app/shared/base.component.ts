@@ -4,7 +4,7 @@ import { BuilderModelObj } from '../step-builder/shared/builder-model.service';
 
 export class BaseComponent {
     @Input() compConfig: itemSchema;
-    @Input() modelRef;
+    @Input() modelRef = {};
     builderModelSrvc;
     dynamicMode: boolean = false;
 
@@ -18,5 +18,9 @@ export class BaseComponent {
         if(modelRef){
             this.modelRef = modelRef;
         }
+    }
+
+    checkForReference(pathStr){
+        return pathStr && (pathStr.indexOf("{{")!=-1);
     }
 }

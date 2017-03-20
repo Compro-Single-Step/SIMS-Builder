@@ -9,13 +9,9 @@ import { itemSchema, itemDataModel } from '../UIConfig.model';
 })
 export class TextBoxComponent extends BaseComponent implements OnInit {
   labelConfig: itemSchema = new itemSchema();
-  itemDataModel;
-  modelRef = { value: "" };
 
   ngOnInit() {
-    this.itemDataModel = itemDataModel;
-    if (this.compConfig.val && this.compConfig.val.indexOf("{{")!=-1) {
-      debugger;
+    if (this.checkForReference(this.compConfig.val)) {
       this.modelRef = this.builderModelSrvc.getModelRef(this.compConfig.val);
     }
     this.labelConfig.rendererProperties.text = this.compConfig.label;
