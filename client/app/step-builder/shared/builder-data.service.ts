@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Response } from '@angular/http';
+import { HttpClient } from '../../_services/http.client';
 
 import { UIConfig } from '../../shared/UIConfig.model';
 
@@ -10,12 +11,9 @@ import 'rxjs/add/operator/map';
 
 @Injectable()
 export class BuilderDataService {
-  uiconfig: UIConfig;
-  constructor(private http: Http) {
-    this.uiconfig = new UIConfig();
-  }
+  constructor(private httpClient: HttpClient) { }
   getuiconfig(): Observable<UIConfig> {
-    return this.http.get('api/skill/uiconfig/movecellcontent')
+    return this.httpClient.get('api/skill/uiconfig/movecellcontent')
                         .map(this.extractData)
                         .catch(this.handleError);
   }
