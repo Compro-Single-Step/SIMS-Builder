@@ -10,10 +10,7 @@ import 'rxjs/add/operator/map';
 
 @Injectable()
 export class BuilderDataService {
-  uiconfig: UIConfig;
-  constructor(private http: Http) {
-    this.uiconfig = new UIConfig();
-  }
+  constructor(private http: Http) {}
   getuiconfig(): Observable<UIConfig> {
     // TODO: Dynamically create the GET URL (api/skill/uiconfig /<SKILL ID>)
     return this.http.get('api/skill/uiconfig/movecellcontent')
