@@ -13,7 +13,6 @@ module.exports.generateStepXML = function(templateId, taskId, stepIndex, skillRe
 
                     //IO Translator
                     let IOMap = JSON.parse(IOMapJson);
-                    stepUIState = stepUIState[0]._doc.task_data['step_' + stepIndex];
                     attrValueMap = translator.translateMap(IOMap, stepUIState, skillRef);
 
                     //XML GENERATION
