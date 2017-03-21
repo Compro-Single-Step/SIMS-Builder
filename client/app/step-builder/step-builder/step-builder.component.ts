@@ -54,7 +54,6 @@ export class StepBuilderComponent implements OnInit {
   }
 
   onClose() {
-    console.log('Search for task ', this.taskID, ' in Baloo');
     this.router.navigate(["/task",this.taskID]);
   }
 }
