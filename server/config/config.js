@@ -1,8 +1,8 @@
 const path = require('path');
 const serverRootPath = path.normalize(__dirname + '/..');
-const fileStorePath = path.normalize(__dirname + '/../fileStore/');
-const xmlFolderRelativePath = 'XMLs/';
-const env = process.env.NODE_ENV || 'development';
+const fileStorePath = serverRootPath + '/fileStore/';
+const xmlFolderPath = fileStorePath + 'XMLs/';
+const env = process.env.NODE_ENV || 'local';
 
 
 const config = {
@@ -12,20 +12,22 @@ const config = {
         },
         port: process.env.port || 3000,
         db: {
-            url: 'mongodb://localhost:27017/sims-task-bullder',
+            url: 'ds137360.mlab.com:37360/ss_testdb',
             dbOptions: {
                 db: {
                     native_parser: true
                 },
                 server: {
                     poolsize: 10
-                }
+                },
+                user: 'task_builder',
+                pass: 'task_builder'
             }
         },
         root: serverRootPath,
         fileStore: {
             baseURL: fileStorePath,
-            xmlFolderRelativePath: xmlFolderRelativePath
+            xmlFolderPath: xmlFolderPath
         }
     },
     development: {
@@ -49,7 +51,7 @@ const config = {
         root: serverRootPath,
         fileStore: {
             baseURL: fileStorePath,
-            xmlFolderRelativePath: xmlFolderRelativePath
+            xmlFolderPath: xmlFolderPath
         }
     },
     production: {
@@ -73,7 +75,7 @@ const config = {
         root: serverRootPath,
         fileStore: {
             baseURL: fileStorePath,
-            xmlFolderRelativePath: xmlFolderRelativePath
+            xmlFolderPath: xmlFolderPath
         }
     }
 };
