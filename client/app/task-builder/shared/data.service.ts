@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
-import { Http, Response, URLSearchParams }from '@angular/http';
+import { Response, URLSearchParams }from '@angular/http';
+import { HttpClient } from '../../_services/http.client';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
 @Injectable()
 export class DataService {
-  stepData: Array<Object>;
-  taskData;
-  constructor(private http:Http ) { 
+
+  constructor(private http:HttpClient ) { 
   }
   getTaskData(taskId: string) {
    let params = new URLSearchParams();

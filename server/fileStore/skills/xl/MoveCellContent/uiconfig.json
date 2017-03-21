@@ -110,7 +110,10 @@
                         "dataType": "img"
                       },
                       "pos": "x,y",
-                      "dim": "200px,200px",
+                      "dim": {
+                        "height": "200px",
+                        "width": "200px"
+                      },
                       "val": "views[1].sheets[1].gridImage"
                     },
                     {
@@ -122,7 +125,10 @@
                         "dataType": "img"
                       },
                       "pos": "x,y",
-                      "dim": "200px,200px",
+                      "dim": {
+                        "height": "200px",
+                        "width": "200px"
+                      },
                       "val": "views[1].sheets[1].rowImage"
                     },
                     {
@@ -134,7 +140,10 @@
                         "dataType": "img"
                       },
                       "pos": "x,y",
-                      "dim": "200px,200px",
+                      "dim": {
+                        "height": "200px",
+                        "width": "200px"
+                      },
                       "val": "views[1].sheets[1].columnImage"
                     },
                     {
@@ -146,7 +155,10 @@
                         "dataType": "img"
                       },
                       "pos": "x,y",
-                      "dim": "200px,200px",
+                      "dim": {
+                        "height": "200px",
+                        "width": "200px"
+                      },
                       "val": "views[1].sheets[1].cellImage"
                     }
                   ]
@@ -338,7 +350,10 @@
                         "dataType": "img"
                       },
                       "pos": "x,y",
-                      "dim": "200px,200px",
+                      "dim": {
+                        "height": "200px",
+                        "width": "200px"
+                      },
                       "val": "views[3].sheets[1].gridImage"
                     },
                     {
@@ -350,7 +365,10 @@
                         "dataType": "img"
                       },
                       "pos": "x,y",
-                      "dim": "200px,200px",
+                      "dim": {
+                        "height": "200px",
+                        "width": "200px"
+                      },
                       "val": "views[3].sheets[1].rowImage"
                     },
                     {
@@ -362,7 +380,10 @@
                         "dataType": "img"
                       },
                       "pos": "x,y",
-                      "dim": "200px,200px",
+                      "dim": {
+                        "height": "200px",
+                        "width": "200px"
+                      },
                       "val": "views[3].sheets[1].columnImage"
                     },
                     {
@@ -374,7 +395,10 @@
                         "dataType": "img"
                       },
                       "pos": "x,y",
-                      "dim": "200px,200px",
+                      "dim": {
+                        "height": "200px",
+                        "width": "200px"
+                      },
                       "val": "views[3].sheets[1].cellImage"
                     }
                   ]

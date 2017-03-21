@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { DataService } from './../shared/data.service';
 
 @Component({
   selector: 'taskbuilder-taskstep',
@@ -10,7 +9,7 @@ export class TaskstepComponent implements OnInit {
 @Input() stepData: Array<Object> = [];
 step;
 errorMessage;
-  constructor(private Data: DataService) { }
+  constructor() { }
 
   ngOnInit(): void {
     this.step=this.stepData;
