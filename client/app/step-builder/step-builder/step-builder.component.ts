@@ -13,7 +13,7 @@ export class StepBuilderComponent implements OnInit {
   uiConfig: UIConfig;
   $el: any;
   private selectedView: number;
-  taskID: string = ''; //TODO: will get task id from previous screen
+  taskID: string;
 
   constructor(el: ElementRef, private route: ActivatedRoute, private bds: BuilderDataService, private router: Router) {
     this.$el = jQuery(el.nativeElement);
@@ -25,8 +25,9 @@ export class StepBuilderComponent implements OnInit {
     jQuery(window).on('sn:resize', this.initScroll.bind(this));
     this.initScroll();
     this.route.params.subscribe((params: Params) => {
+      this.taskID = params["id"];
       let paramObj = {
-        id: params["id"],
+        id: this.taskID,
         stepIndex: params["stepIndex"]
       };
       this.bds.getuiconfig(paramObj).subscribe((data) => {
