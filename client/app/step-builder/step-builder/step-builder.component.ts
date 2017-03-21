@@ -1,4 +1,5 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
 import { BuilderDataService } from '../shared/builder-data.service';
 import { UIConfig } from '../../shared/UIConfig.model';
 declare var jQuery;
@@ -11,7 +12,7 @@ export class StepBuilderComponent implements OnInit {
   uiConfig: UIConfig;
   $el: any;
 
-  constructor(el: ElementRef, private bds: BuilderDataService) {
+  constructor(el: ElementRef, private route: ActivatedRoute, private bds: BuilderDataService) {
     this.$el = jQuery(el.nativeElement);
     this.uiConfig = new UIConfig();
   }
@@ -19,10 +20,15 @@ export class StepBuilderComponent implements OnInit {
   ngOnInit() {
     jQuery(window).on('sn:resize', this.initScroll.bind(this));
     this.initScroll();
-    var self =this;
-    this.bds.getuiconfig().subscribe(function(data){
-      self.uiConfig = data;
-    });
+    this.route.params.subscribe((params: Params) => {
+      let paramObj = {
+        id: params["id"],
+        stepIndex: params["stepIndex"]
+      };
+      this.bds.getuiconfig(paramObj).subscribe((data) => {
+        this.uiConfig = data;
+      });
+    })
   }
 
   initScroll(): void {
