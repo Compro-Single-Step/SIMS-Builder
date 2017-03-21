@@ -1,7 +1,6 @@
 import { Component, OnInit, ElementRef, ViewChild, Input } from '@angular/core';
 import { BaseComponent } from '../base.component';
 import { itemSchema } from '../UIConfig.model';
-import { SkillManagerService } from '../../step-builder/step-input-area/skill-manager.service';
 
 declare var Dropzone: any;
 Dropzone.autoDiscover = false;
@@ -15,7 +14,7 @@ export class DropzoneComponent extends BaseComponent implements OnInit {
   labelConfig: itemSchema = new itemSchema();
   width: string;
   height: string;
-  constructor(private elementRef: ElementRef, private skillManager: SkillManagerService) {
+  constructor(private elementRef: ElementRef) {
     super();
   }
   ngOnInit() {
@@ -55,15 +54,6 @@ export class DropzoneComponent extends BaseComponent implements OnInit {
       //Update Dependencies when contents have been read;
       var droppedFile = JSON.parse(e.target['result']);
       self.updateDependencies(droppedFile);
-    }
-  }
-
-  updateDependencies(droppedFile) {
-    var dependants = this.compConfig.dependants;
-    for (let i = 0; i < dependants.length; i++) {
-      let dependantModelReference = dependants[i]['modelReference'];
-      let dependantRule = dependants[i]['rule'];
-      this.skillManager[dependantRule](droppedFile, dependantModelReference);
     }
   }
 
