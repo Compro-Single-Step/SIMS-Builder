@@ -47,8 +47,8 @@ class DatabaseFileStoreManager {
     }
 
     getStepUIState(taskId, stepIndex, callback) {
-        dbController.getStepUIState(taskId, stepIndex, (data, error) => {
-            callback(data, error);
+        dbController.getStepUIState(taskId, stepIndex, (error, data) => {
+            callback(error, data);
         });
     }
 
