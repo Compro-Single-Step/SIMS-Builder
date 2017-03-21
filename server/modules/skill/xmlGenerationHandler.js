@@ -4,14 +4,8 @@ const translator = new translatorClass();
 const xmlGenerator = require("./xmlGenerator/Step.js");
 
 
-function identifySkill(templateId){
-    return {
-        "movecellcontent":"/xl/moveCellContent/moveCellContent"
-    }[templateId];
-}
-
-module.exports.generateStepXML = function(templateId, taskId, stepIndex, callback){
-
+module.exports.generateStepXML = function(templateId, taskId, stepIndex, skillRef, callback){
+    
     dbFilestoreMgr.getStepUIState(taskId, stepIndex, (stepUIState, error) => {
         if(!error){
             dbFilestoreMgr.getIOMap(templateId, (error, IOMapJson) => {
@@ -19,11 +13,6 @@ module.exports.generateStepXML = function(templateId, taskId, stepIndex, callbac
 
                     //IO Translator
                     let IOMap = JSON.parse(IOMapJson);
-
-                    var identifiedSkill = identifySkill(templateId);
-                    const skillRefClass = require("../../libs/skills" + identifiedSkill);
-                    var skillRef = new skillRefClass();
-            
                     stepUIState = stepUIState[0]._doc.task_data['step_' + stepIndex];
                     attrValueMap = translator.translateMap(IOMap, stepUIState, skillRef);
 
