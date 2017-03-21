@@ -14,7 +14,7 @@ export class BuilderDataService {
   constructor(private http: Http) {
     this.uiconfig = new UIConfig();
   }
-  getuiconfig(): Observable<UIConfig> {
+  getuiconfig(params): Observable<UIConfig> {
     return this.http.get('api/skill/uiconfig/movecellcontent')
                         .map(this.extractData)
                         .catch(this.handleError);
