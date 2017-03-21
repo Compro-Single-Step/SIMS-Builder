@@ -12,7 +12,7 @@
         </div>
         <div class="col-md-2">
           <ul class="nav navbar-nav navbar-right">
-            <li><button class="btn btn-inverse pull-right">Close</button></li>
+            <li><button class="btn btn-inverse pull-right" (click)="onClose()">Close</button></li>
           </ul>
         </div>
       </div>
@@ -23,7 +23,7 @@
   <div id="body">
     <div class="row">
       <div class="col-lg-12 col-md-12">
-        <app-step-input-area [stepConfig]="uiConfig"></app-step-input-area>
+        <app-step-input-area [stepConfig]="uiConfig" (viewChanged)="setSelectedView($event.viewNumber)" [selectedView]="selectedView"></app-step-input-area>
       </div>
     </div>
   </div>
@@ -33,8 +33,9 @@
     <button class="btn btn-inverse">Preview Step</button>
     <button class="btn btn-inverse">Save</button>
     <div class="pull-right">
-      <button class="btn btn-inverse">Previous</button>
-      <button class="btn btn-inverse">Next</button>
+      <button class="btn btn-inverse" (click)="setSelectedView(selectedView-1)" [disabled]="selectedView == 1">Previous</button>
+      <button class="btn btn-inverse" *ngIf="selectedView < uiConfig.views.length" (click)="setSelectedView(selectedView+1)">Next</button>
+      <button class="btn btn-inverse" *ngIf="selectedView == uiConfig.views.length">Finish</button>
     </div>
   </div>
 </div>
