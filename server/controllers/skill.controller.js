@@ -8,8 +8,8 @@ const skillFactory  = require("../modules/skill/skillFactory")
 
 class SkillController {
 
-    getUIConfig(templateId, taskId, stepIndex, callback) {
-        return uiHandler.getUIConfig(templateId, taskId, stepIndex, callback);
+    getUIConfig(templateId, taskId, stepIndex, contentFilter, callback) {
+        uiHandler.getUIConfig(templateId, taskId, stepIndex, contentFilter, callback);
     }
 
     saveStepUIState(taskId, stepIndex, stepUIData, callback) {
