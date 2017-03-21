@@ -6,7 +6,7 @@ const xmlGenerator = require("./xmlGenerator/Step.js");
 
 module.exports.generateStepXML = function(templateId, taskId, stepIndex, skillRef, callback){
     
-    dbFilestoreMgr.getStepUIState(taskId, stepIndex, (stepUIState, error) => {
+    dbFilestoreMgr.getStepUIState(taskId, stepIndex, (error, stepUIState) => {
         if(!error){
             dbFilestoreMgr.getIOMap(templateId, (error, IOMapJson) => {
                 if(!error) {
