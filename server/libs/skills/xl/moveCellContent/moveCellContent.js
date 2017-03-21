@@ -102,3 +102,29 @@
     return finalArray;
 
   }
+
+  exports.getSheetNameAndSheetCountFromInitDocJSON = function(initDocJSON, dependantSheetArrayInModel) {
+
+    //Add The Required Number of Sheets in Model
+    if (initDocJSON.sheetCount >= dependantSheetArrayInModel.length) {
+        let sheetCountDiff = initDocJSON.sheetCount - dependantSheetArrayInModel.length;
+        while (sheetCountDiff > 0) {
+            dependantSheetArrayInModel.push(JSON.parse(JSON.stringify(dependantSheetArrayInModel[(dependantSheetArrayInModel.length - 1)])));
+            sheetCountDiff--;
+        }
+    }
+
+    //Add Sheet Names From Init Doc JSON
+    for (let sheetNum = 0; sheetNum < initDocJSON.sheetCount; sheetNum++) {
+        dependantSheetArrayInModel[sheetNum].name = initDocJSON.sheets[sheetNum].name;
+    }
+  }
+
+  exports.addSheetNamesToDropdown = function(initDocJSON, dependantSheetArrayInModel) {
+    
+    //Add Sheet Names to Array From Init Doc JSON
+    for (let sheetNum = 0; sheetNum < initDocJSON.sheetCount; sheetNum++) {
+        dependantSheetArrayInModel.push(initDocJSON.sheets[sheetNum].name);
+    }
+  }
+
