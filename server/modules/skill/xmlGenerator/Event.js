@@ -1,26 +1,127 @@
-module.exports = class event {
-    constructor(eventNode, dependencyMap) {
-        this.eventNode = eventNode;
-        this.dependencyMap = dependencyMap;
-    }
-    eventGenerator() {
-        let validate_compNode = this.eventNode.getElementsByTagName("comp");
-        for (let i = 0; i < validate_compNode.$$length; i++) {
-            if (validate_compNode[i].getAttribute("multiple-occurence") === "true") {
-                let dependencySet = validate_compNode[i].getAttribute("dependency-set"), compId = validate_compNode[i].getAttribute("id"), parentNode = validate_compNode[i].parentNode;
-                validate_compNode[i].removeAttribute("multiple-occurence");
-                validate_compNode[i].removeAttribute("based-on");
-                validate_compNode[i].removeAttribute("dependency-set");
-                if (this.dependencyMap[compId][dependencySet]) {
-                    this.dependencyMap[compId][dependencySet].forEach((finalAttrSetName, index) => {
-                        //Cloning Attribute Set
-                        let newcompNode = validate_compNode[i].cloneNode(true);
-                        newcompNode.setAttribute("validation-set", finalAttrSetName);
-                        parentNode.insertBefore(newcompNode, validate_compNode);
-                    });
-                    parentNode.removeChild(validate_compNode);
+module.exports = class CompEvent {
+
+
+    constructor  (args, compRef){
+        this.compRef = compRef;
+        this.id = args.props.id;
+        this.desc = args.props.desc;
+        if(args.props.followup){
+            this.followUp = args.props.followup;
+        }
+
+        // structur of one validation/ validate node inside an event
+        /*this.validations = [
+            {
+                "props": {
+                    "followUp": "",
+                    "targetAttrSet": "",
+                    "operator": ""
                 }
+                "compsToValidate": [
+                    {
+                        "id": "compId1",
+                        "validationSet": "ValidationSetName"
+                    }
+                    {
+                        "id": "compId2",
+                        "validationSet": "ValidationSetName"
+                    }
+                ]
             }
+        ];*/
+
+        if(args.validate){
+            this.generateValidations(args.validate);
         }
     }
-};
+
+    generateValidations (validations){
+        this.validations = [];
+        for(let i=0; i<validations.length; i++){
+
+            let currValidation = {
+                "props": { },
+                "compsToValidate": []
+            };
+
+            let currValProps = Object.keys(validations[i]["props"]);
+            for(let j=0; j<currValProps.length; j++){
+                currValidation["props"][currValProps[j]] = validations[i]["props"][currValProps[j]]
+            }
+
+            let currValidationComps = validations[i]["comp"];
+            for(let j=0; j<currValidationComps.length; j++){
+                if(currValidationComps[j]["props"]["multiple-occurence"]=="true"){
+                    let validationSet = this.getCompValidationSets(currValidationComps[j]["props"]);
+                    for(let k=0; k<validationSet.length; k++){
+                        let currValidationComp = {
+                            "id": currValidationComps[j]["props"]["id"],
+                            "validationSet": validationSet[k]
+                        };
+                        currValidation["compsToValidate"].push(currValidationComp);
+                    }
+                }else{
+                    let currValidationComp = {
+                        "id": currValidationComps[j]["props"]["id"],
+                        "validationSet": currValidationComps[j]["props"]["validation-set"]
+                    };
+                    currValidation["compsToValidate"].push(currValidationComp);
+                }
+            }
+
+            this.validations[i] = currValidation;
+        }
+    }
+
+    getCompValidationSets (validationComp){
+        let validationsSet = this.compRef.getCompValidationSets(validationComp["id"], validationComp["dependency-set"]);
+        return validationsSet;
+        /*switch(validationComp["based-on"]){
+
+            "finalAttrSet" :
+
+
+                break;
+
+            default:
+                break;
+
+        }*/
+    }
+
+    generateXML (){
+        let eventNode = '<event id="'+this.id+'" desc="'+this.desc+'" >';
+        eventNode += this.generateValidateXMLNode();
+        eventNode += '</event>';
+        return eventNode;
+    }
+
+    generateValidateXMLNode (){
+
+        let xmlString = "";
+
+        for(let idx = 0; idx<this.validations.length; idx++){
+            let currValidation = this.validations[idx];
+
+            xmlString += '<validate followup="'+ currValidation.props.followUp+'"' +
+                ' operator="'+currValidation.props.operator+'"' +
+                ' targetAttrSet="'+currValidation.props.targetAttrSet+'"' +'>';
+
+            xmlString += this.generateCompNodes(currValidation);
+            xmlString += '</validate>';
+        }
+
+        return xmlString;
+    }
+
+    generateCompNodes (validationNode){
+        let xmlString = "";
+
+        for(let idx=0; idx<validationNode.compsToValidate.length; idx++){
+            xmlString += '<comp id="'+ validationNode.compsToValidate[idx].id +'" validation-set="'+ validationNode.compsToValidate[idx].validationSet +'"/>'
+        }
+
+        return xmlString;
+    }
+
+}

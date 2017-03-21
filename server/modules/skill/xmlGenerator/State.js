@@ -1,33 +1,66 @@
-const component = require('./Component'), helper = require('./Helper');
-;
-module.exports = class state {
-    constructor(stateNode, stateID, IOMapJson) {
-        this.componentObject = {};
-        this.stateNode = stateNode;
-        this.IOMapJson = IOMapJson;
-        this.stateID = stateID;
+const Comp = require('./Comp')
+module.exports = class State {
+
+    constructor (args, attrValMap, parentStepRef){
+        this.id = args.props.id; // state id
+        this.description = args.props.desc;
+        this.stepId = args.props.txt;
+        this.stepRef = parentStepRef;
+        this.comps = {};
+
+        this.generateComponents(args.comps, attrValMap);
+
     }
-    stateGenerator(compIDMapping, IOMap_additional) {
-        this.compsNode = this.stateNode.getElementsByTagName("comps")[0];
-        let compNodes = this.compsNode.childNodes, dependencyMap = {};
-        //Update all Components of a state
-        for (let i = 0; i < compNodes.length; i++) {
-            if (compNodes[i].nodeName === "comp") {
-                let compID = compNodes[i].getAttribute("id");
-                this.componentObject[compID] = new component(compNodes[i], this.IOMapJson.components[compID], IOMap_additional[compIDMapping[compID]]);
-                this.componentObject[compID].compGenerator(dependencyMap);
-                delete IOMap_additional[compIDMapping[compID]];
+
+    generateComponents (comps, attrValMap){
+
+        for(let i=0; i<comps.length; i++){
+            this.addComp(comps[i], attrValMap);
+        }
+
+        for(let i=0; i<comps.length; i++){
+            if(comps[i].events){
+                this.comps[comps[i].props.id].addEvents(comps[i].events);
             }
+
         }
-        //Update all events of a state
-        for (let key in this.componentObject) {
-            this.componentObject[key].eventGenerator(dependencyMap);
+
+    }
+
+    addComp (comp, attrValMap){
+
+        if(this.comps[comp.props.id]){
+            this.updateComp(comp);
+        }else{
+            let myComp = this.createComp(comp, attrValMap.components[comp.props.id]);
+            this.comps[comp.props.id] = myComp;
         }
     }
-    addAdditionalComponent(IOMap_additionalComps, compID) {
-        for (let key in IOMap_additionalComps) {
-            this.componentObject[compID] = new component(null, null, IOMap_additionalComps[key]);
-            this.componentObject[compID].newCompGenerator(compID++, this.compsNode);
-        }
+
+    createComp   (comp, attrValMap) {
+        let myComp = new Comp(comp, attrValMap, this);
+        return myComp;
     }
-};
+
+    updateComp  (args) {
+        // update comp based on args
+    }
+
+    getCompValidationSets (compId, dependencyName){
+        return this.comps[compId].getDependencySetByName(dependencyName);
+    }
+
+    generateXML (){
+        console.log("this.comps: ", this.comps);
+        let xml = '<state id="'+ this.id +'" desc="'+ this.description +'"><comps>';
+
+
+        for (let currComp in this.comps) {
+            xml += this.comps[currComp].generateXML();
+        }
+        xml += '</comps></state>';
+
+        return xml;
+
+    }
+}

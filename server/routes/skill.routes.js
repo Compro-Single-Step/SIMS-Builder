@@ -40,9 +40,10 @@ router.get('/xmlgeneration/:templateId/:taskid/:stepidx', (req, res) => {
     let taskId = req.params.taskid;
     let stepIdx = req.params.stepidx;
     
-    skillController.generateXML(templateId, taskId, stepIdx, (error) => {
+    skillController.generateXML(templateId, taskId, stepIdx, (error, data) => {
         if (!error) {
-            res.end("success");
+            res.setHeader("Content-Type", "text/xml");
+            res.end(data);
         } else {
             res.send(error);
         }

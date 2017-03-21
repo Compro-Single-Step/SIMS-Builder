@@ -1,83 +1,80 @@
-var DOMParser = require('xmldom').DOMParser, XMLSerializer = require('xmldom').XMLSerializer;
-const state = require('./State'), helper = require('./Helper');
-// const preloadGenerator = require('./preloadGenerator');
-module.exports = class step {
-    constructor(skillTemplate, IOMapJson) {
-        this.stateObject = {};
-        this.compIDMapping = {};
-        this.skillTemplate = skillTemplate;
-        this.IOMapJson = IOMapJson;
+const State = require('./State');
+
+module.exports = class Step {
+
+    constructor (stepJson, attrValMap, skillRef, stepData){
+        /*this.id = data.stepId;   // step number 1|2|3...
+        this.sText = data.stepText;*/
+
+        this.preloadEntities = stepJson[0];
+        this.preloadComps = this.preloadEntities[0];
+        console.log("this.preloadComps: ", this.preloadComps);
+
+        this.states = {}; // object holding state objects with state id as key
+        this.generateStates(stepJson[1], attrValueMap);
     }
-    stepGenerator() {
-        this.skillTemplateXML = new DOMParser().parseFromString(this.skillTemplate, "text/xml");
-        //Initializing helper function
-        let self = this;
-        helper.createNewElement = function (tagName) {
-            return self.skillTemplateXML.createElement(tagName);
-        };
-        let preloadNode = this.skillTemplateXML.getElementsByTagName("preload")[0];
 
-        //Getting Comp ID compIDMapping
-        let preloadCompNodes = preloadNode.getElementsByTagName("comp");
-        for (let i = 0; i < preloadCompNodes.$$length; i++) {
-            this.compIDMapping[preloadCompNodes[i].getAttribute("id")] = preloadCompNodes[i].getAttribute("name");
-        }
-        //Updating Preload Resources
-        this.preloadGenerator(preloadNode, this.IOMapJson.preloadResources);
+    generateStates (states, attrValueMap){
 
-        //Creating each state
-        let stateNodes = this.skillTemplateXML.getElementsByTagName("state"),
-            IOMap_additional = {};
-        if(this.IOMapJson["additionals"])
-            IOMap_additional = JSON.parse(JSON.stringify(this.IOMapJson["additionals"]));
+        for(let idx=0; idx<states.length; idx++){
 
-        for (let i = 0; i < stateNodes.$$length; i++) {
-            let stateID = stateNodes[i].getAttribute("id");
-            this.stateObject[stateID] = new state(stateNodes[i], stateID, this.IOMapJson.states[stateID]);
-            this.stateObject[stateID].stateGenerator(this.compIDMapping, IOMap_additional);
+            console.log("state map: ", attrValueMap.states[states[idx].props.id]);
+
+            let state = new State (states[idx], attrValueMap.states[states[idx].props.id], this);
+
+            this.states[states[idx].props.id] = state;
         }
 
-        //ADDITIONAL ATTRIBUTES AND Components
-        if(IOMap_additional){
-            //HARDCODING NEW COMP ID but it has to be fetched from Start state info
-            let compID = parseInt("100"),
-                i = 0;
-
-            //Adding Additional Comp in Preload section
-            for (let key in IOMap_additional) {
-                let preloadCompsNode = preloadNode.getElementsByTagName("comps")[0];
-                let compNode = helper.createNewElement("comp");
-                compNode.setAttribute("id", compID + i);
-                compNode.setAttribute("name", key);
-                for (let preloadArgument in IOMap_additional[key]["preload"]) {
-                    compNode.setAttribute(preloadArgument, IOMap_additional[key]["preload"][preloadArgument]);
-                }
-                preloadCompsNode.appendChild(compNode);
-                delete IOMap_additional[key]["preload"];
-                i++;
-            }
-            //Adding Additional Components - Hardcoding State 1 as initial state 
-            this.stateObject["1"].addAdditionalComponent(IOMap_additional, compID);
-        }
-        
-        //Converting back to XML
-        let serializer = new XMLSerializer();
-        let OutputXML = serializer.serializeToString(this.skillTemplateXML);
-        return OutputXML;
-        /*var step = this.createStep(xmlDoc, translatedUserData)
-        this.createXml(step);*/
     }
-    preloadGenerator(preloadNode, IOMapJson) {
-        if(IOMapJson){
-            let resourcesNode = helper.createNewElement("resources");
-            preloadNode.appendChild(resourcesNode);
-            IOMapJson.forEach((object, index) => {
-                let resNode = helper.createNewElement("res");
-                resourcesNode.appendChild(resNode);
-                for (let key in object) {
-                    resNode.setAttribute(key, object[key]);
-                }
-            });
-        }
+
+    updateState (args){
+        // update state based on args
     }
-};
+
+    addStepText  (txt){
+
+        // fn to add step text to the xml
+    }
+
+    generateXML (){
+        let xmlString = '<task>';
+
+        xmlString += this.generatePreloadNodeXML();
+        xmlString += this.generateStatesXML();
+
+        xmlString += '</task>';
+        return xmlString;
+    }
+
+    generatePreloadNodeXML (){
+        let xmlString = '<preload>';
+
+        console.log("this.preloadComps: ", this.preloadComps);
+
+        // adding comps to preload node
+        xmlString += "<comps>";
+        for(let idx=0; idx<this.preloadComps.length; idx++){
+            let currCompProps = this.preloadComps[idx].props;
+            xmlString += '<comp id="'+currCompProps.id+'" name="'+currCompProps.name+'" cssclass="'+currCompProps.cssclass+'" type="'+currCompProps.default+'"/>';
+        }
+        xmlString += "</comps>";
+
+        // adding preload resources
+        xmlString += "<resources>" + "</resources>";
+
+        xmlString += '</preload>';
+        return xmlString;
+    }
+
+    generateStatesXML (){
+        let xmlString = '<states>';
+
+        for (let stateId in this.states){
+            xmlString += this.states[stateId].generateXML();
+        }
+
+        xmlString += '</states>';
+        return xmlString;
+    }
+
+}
