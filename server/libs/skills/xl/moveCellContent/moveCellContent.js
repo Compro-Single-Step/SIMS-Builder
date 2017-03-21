@@ -3,7 +3,7 @@
 
   const ExcelBaseSkill = require("../common/xlSkill");
 
-  module.exports  = class moveCellContent extends ExcelBaseSkill{
+  class moveCellContent extends ExcelBaseSkill{
     //init DOC JSON 
     createJsonPath(valueParam){
 
@@ -26,33 +26,7 @@
       return finalObject;
 
     }
-
-    createTooltipImagePath(paramValueArr){
-      
-      return paramValueArr[0].path;
-    }
-    //this function to be moved to  Base Excel Skill 
-    // to be done as soon as the Sheet number can be generated from the component handler 
-    createImageJson (paramValueArr){
-      
-      var finalObject = {};
-      finalObject['folderPath'] = paramValueArr[0].path;
-      var sheetArr = []
-
-        for(var iterator = 0 ; iterator < paramValueArr[0].length; ++iterator){
-          sheetArr[iterator] = {};
-          sheetArr[iterator]['sheetNo'] = 1;
-          sheetArr[iterator]['gridImg'] = paramValueArr[0][iterator].gridImage.name;
-          sheetArr[iterator]['rowImg'] = paramValueArr[0][iterator].rowImage.name;
-          sheetArr[iterator]['colImg'] = paramValueArr[0][iterator].cellImage.name;
-          sheetArr[iterator]['cellImg'] = paramValueArr[0][iterator].columnImage.name;
-      }
-      finalObject['sheetImages'] = sheetArr;
-      finalObject = JSON.stringify(finalObject);
-      return finalObject;
-    }
-
-
+    
     createHighlightJson (paramValueArr){
       
       // requires sheet number using Init Doc json
@@ -103,5 +77,6 @@
     }
     
   }
+  module.exports = new moveCellContent();
 
 })(typeof module.exports === 'undefined'? this['myModule']={}: module);

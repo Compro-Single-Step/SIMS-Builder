@@ -1,5 +1,5 @@
 
-module.exports = class IOTranslator{
+class IOTranslator{
 
   //common function for getting the param array for the passed array of params
   getEvaluatedParams (paramArr , stepUIState){
@@ -14,13 +14,13 @@ module.exports = class IOTranslator{
     return finalArray;
   }
 
-  evaluateFromFunc (functionName, paramsArr, skillobject){
+  evaluateFromFunc (attrName, functionName, paramsArr, skillobject){
 
       if(skillobject[functionName]){
         var finalValue = skillobject[functionName](paramsArr);
       }
       else{
-        console.log("function not defined for the attribute");
+        console.log("function not defined for the attribute : " + attrName);
       }
 
       return finalValue;
@@ -40,7 +40,7 @@ module.exports = class IOTranslator{
     }
     else{
       // call the function type execution for the evaluation
-      attrObjectValue = this.evaluateFromFunc(attrObject["function-name"], evaluatedParams, skillobject);
+      attrObjectValue = this.evaluateFromFunc(attrName, attrObject["function-name"], evaluatedParams, skillobject);
     }
     return attrObjectValue
   }
@@ -70,8 +70,10 @@ module.exports = class IOTranslator{
     return iomap;
   }
 
-  translateMap (iomap, stepUIState, skillobject){
+  getAttrValueMap (iomap, stepUIState, skillobject){
     //move out
     return this.readIOMap(iomap, stepUIState, skillobject);
   }
 }
+
+module.exports = new IOTranslator();

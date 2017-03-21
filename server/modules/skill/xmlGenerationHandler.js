@@ -1,6 +1,5 @@
 const dbFilestoreMgr = require('./dbFilestoreMgr');
-const translatorClass = require("./ioTranslator.js");
-const translator = new translatorClass();
+const translator = require("./ioTranslator.js");
 const xmlGenerator = require("./xmlGenerator/Step.js");
 
 
@@ -14,7 +13,7 @@ module.exports.generateStepXML = function(templateId, taskId, stepIndex, skillRe
                     //IO Translator
                     let IOMap = JSON.parse(IOMapJson);
                     stepUIState = stepUIState[0]._doc.task_data['step_' + stepIndex];
-                    attrValueMap = translator.translateMap(IOMap, stepUIState, skillRef);
+                    let attrValueMap = translator.getAttrValueMap(IOMap, stepUIState, skillRef);
 
                     //XML GENERATION
                     dbFilestoreMgr.getSkillXML(templateId, (error, skillTemplate) => {
