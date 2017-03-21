@@ -19,7 +19,7 @@ errorMessage;
       this.taskID = params["id"];
     })
    }
-   callStepBuilder(){
+   navigateToStepBuilder(){
      this.router.navigate(["task",this.taskID,"step",this.step.stepIndex]);
    }
 }
