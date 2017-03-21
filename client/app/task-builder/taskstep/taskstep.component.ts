@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 @Component({
   selector: 'taskbuilder-taskstep',
@@ -8,10 +9,17 @@ import { Component, OnInit, Input } from '@angular/core';
 export class TaskstepComponent implements OnInit {
 @Input() stepData: Array<Object> = [];
 step;
+taskID;
 errorMessage;
-  constructor() { }
+  constructor(private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
     this.step=this.stepData;
+    this.route.params.subscribe((params: Params) => {
+      this.taskID = params["id"];
+    })
+   }
+   callStepBuilder(){
+     this.router.navigate(["task",this.taskID,"step",this.step.stepIndex]);
    }
 }
