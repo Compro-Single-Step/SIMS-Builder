@@ -26,7 +26,9 @@ class DatabaseController {
         map[jsonKey] = true;
 
         uiTaskStepModel.getStepUI(condition, map, (error, data) => {
-            callback(data, error);
+            let stepId = "step_" + stepIndex;
+            let stepUIState = data[0]._doc.task_data[stepId];
+            callback(error, stepUIState);
         });
     }
 

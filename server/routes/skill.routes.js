@@ -7,11 +7,15 @@ router.get('/uiconfig/:templateId/:taskId/:stepIndex', (req, res) => {
     let templateId = req.params.templateId;
     let taskId = req.params.taskId;
     let stepIndex = req.params.stepIndex;
+
+    let contentFilter = {
+        skillModelFlag: req.query.skillmodel || "true",
+        stepUIStateFlag: req.query.stepuistate || "true"
+    }
     
-    skillController.getUIConfig(templateId, taskId, stepIndex, (error, data) => {
+    skillController.getUIConfig(templateId, taskId, stepIndex, contentFilter, (error, data) => {
         if(!error) {
-            //reason to parse
-            res.json(JSON.parse(data));
+            res.send(data);
         }
         else {
             res.json(error);

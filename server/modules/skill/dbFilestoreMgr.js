@@ -2,7 +2,7 @@ const dbController = require('../../controllers/db.controller');
 const fileStoreController = require('../../controllers/filestore.controller');
 
 class DatabaseFileStoreManager {
-    getUIConfig(templateId, taskId, stepIndex, callback) {
+    getUIConfig(templateId, callback) {
         dbController.getUIConfigPath(templateId, (filePath, error) => {
             if(!error) {
                 fileStoreController.getUIConfig(filePath, callback);
@@ -53,8 +53,8 @@ class DatabaseFileStoreManager {
     }
 
     saveStepUIState(taskId, stepIndex, stepUIData, callback) {
-        dbController.saveStepUIState(taskId, stepIndex, stepUIData, (data, error) => {
-            callback(data, error);
+        dbController.saveStepUIState(taskId, stepIndex, stepUIData, (error, data) => {
+            callback(error, data);
         });
     }
 
