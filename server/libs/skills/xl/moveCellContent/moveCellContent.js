@@ -1,7 +1,7 @@
 
 const ExcelBaseSkill = require("../common/xlSkill");
 
-module.exports  = class moveCellContent extends ExcelBaseSkill{
+class moveCellContent extends ExcelBaseSkill{
   //init DOC JSON 
   createJsonPath(valueParam){
 
@@ -101,3 +101,5 @@ module.exports  = class moveCellContent extends ExcelBaseSkill{
   }
   
 }
+
+module.exports  = new moveCellContent();

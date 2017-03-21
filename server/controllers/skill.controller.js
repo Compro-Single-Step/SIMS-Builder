@@ -25,6 +25,16 @@ class SkillController {
     saveResourceFile(templateId, taskId, stepIndex) {
         return dbFilestoreMgr.saveResourceFile(templateId, taskId, stepIndex);
     }
+
+    getSkillFiles(templateId, callback){
+        let skillFilesObject = {},
+            skillFactoryRef = new skillFactory();
+
+        skillFilesObject["skill"] = skillFactoryRef.getSkillObjectRef(templateId);
+        skillFilesObject["comps"] = skillFactoryRef.getCompsRef(templateId);
+
+        callback(null, skillFilesObject);
+    }
 };
 
 module.exports = new SkillController();

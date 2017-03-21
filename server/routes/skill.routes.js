@@ -59,4 +59,15 @@ router.post("/uploadresource", (req, res) => {
     });
 });
 
+router.get("/skillFiles/:templateId", (req,res) => {
+    let templateId = req.params.templateId;
+    skillController.getSkillFiles(templateId, (error, files) => {
+        if (!error) {
+            res.send(files);
+        } else {
+            res.send(error);
+        }
+    });
+})
+
 module.exports = router;
