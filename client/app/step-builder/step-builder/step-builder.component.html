@@ -1,4 +1,41 @@
-<button (click)="fetchConfig()">Click Me!</button>
-<app-step-input-area [stepConfig]="uiConfig"></app-step-input-area>
-
-
+<nav class="navbar navbar-default" id="header">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <div class="row">
+        <div class="col-md-10">
+          <div class="row">
+            <h4><strong>STEP 1</strong>&nbsp;Move the range G5:H6 to the range D5:E6</h4>
+          </div>
+          <div class="row">
+            <span class="tag tag-primary"><span>Task ID:&nbsp;</span> SKL16.XL.04.01.03.T1  </span>&nbsp;<span class="tag tagFontNormal tag-primary"><span >Skill:&nbsp;</span> Move Cell Contents</span> &nbsp; <span class="tag tag-primary"><span>Template:&nbsp;</span> Move Cell Range </span>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <ul class="nav navbar-nav navbar-right">
+            <li><button class="btn btn-inverse pull-right" (click)="onClose()">Close</button></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+<div class="body-container">
+  <div id="body">
+    <div class="row">
+      <div class="col-lg-12 col-md-12">
+        <app-step-input-area [stepConfig]="uiConfig" (viewChanged)="setSelectedView($event.viewNumber)" [selectedView]="selectedView"></app-step-input-area>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="footer">
+  <div class="col-md-12">
+    <button class="btn btn-inverse">Preview Step</button>
+    <button class="btn btn-inverse">Save</button>
+    <div class="pull-right">
+      <button class="btn btn-inverse" (click)="setSelectedView(selectedView-1)" [disabled]="selectedView == 1">Previous</button>
+      <button class="btn btn-inverse" *ngIf="selectedView < uiConfig.views.length" (click)="setSelectedView(selectedView+1)">Next</button>
+      <button class="btn btn-inverse" *ngIf="selectedView == uiConfig.views.length">Finish</button>
+    </div>
+  </div>
+</div>

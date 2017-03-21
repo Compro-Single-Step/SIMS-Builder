@@ -1,3 +1,5 @@
+import 'jquery';
+import 'jquery-slimscroll';
 // Importing Angular Libraries
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -14,21 +16,12 @@ import { MethodViewerComponent } from './method-viewer/method-viewer.component';
 import { ScenarioFilesViewerComponent } from './scenario-files-viewer/scenario-files-viewer.component';
 import { ScenarioDocsComponent } from './scenario-docs/scenario-docs.component';
 import { TaskFileStoreComponent } from './task-file-store/task-file-store.component';
-import { InputFactoryService } from './shared/input-factory.service';
 
-// Imports from External Libraries
-import { TabsModule } from 'ng2-bootstrap';
+import { SharedModule } from '../shared/shared.module';
 
-//Importing the components available for dynamic insertion.
-import { TextBoxComponent } from './shared/text-box/text-box.component';
-import { GroupComponent } from './shared/group/group.component';
-import { LabelComponent } from './shared/label/label.component';
-import { TagComponent } from './shared/tag/tag.component';
-import { SelectComponent } from './shared/select/select.component';
-import { TabComponent } from './shared/tab/tab.component';
-import { ButtonComponent } from './shared/button/button.component';
-
-
+//Importing Services
+import { SkillManagerService } from './step-input-area/skill-manager.service';
+import { BuilderDataService } from './shared/builder-data.service';
 
 @NgModule({
   imports: [
@@ -40,10 +33,9 @@ import { ButtonComponent } from './shared/button/button.component';
         component: StepBuilderComponent
       }
     ]),
-    TabsModule.forRoot()
+    SharedModule
   ],
-  declarations: [StepBuilderComponent, StepInputAreaComponent, BalooReferenceComponent, ViewNavigatorComponent, ViewInputAreaComponent, MethodViewerComponent, ScenarioFilesViewerComponent, ScenarioDocsComponent, TaskFileStoreComponent, TextBoxComponent, GroupComponent, LabelComponent, TagComponent, SelectComponent, TabComponent, ButtonComponent],
-  providers: [InputFactoryService],
-  entryComponents: [ TextBoxComponent, GroupComponent, SelectComponent, TabComponent, ButtonComponent ]
+  declarations: [StepBuilderComponent, StepInputAreaComponent, BalooReferenceComponent, ViewNavigatorComponent, ViewInputAreaComponent, MethodViewerComponent, ScenarioFilesViewerComponent, ScenarioDocsComponent, TaskFileStoreComponent],
+  providers: [SkillManagerService, BuilderDataService]
 })
 export class StepBuilderModule { }
