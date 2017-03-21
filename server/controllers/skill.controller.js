@@ -4,6 +4,7 @@ const mkdirp = require('mkdirp');
 const uiHandler = require('../modules/skill/uiHandler');
 const dbFilestoreMgr = require('../modules/skill/dbFilestoreMgr');
 const xmlGenerationHandler = require('../modules/skill/xmlGenerationHandler');
+const skillFactory  = require("../modules/skill/skillFactory")
 
 class SkillController {
 
@@ -16,7 +17,9 @@ class SkillController {
     }
 
     generateXML(templateId, taskId, stepIdx, callback) {
-        xmlGenerationHandler.generateStepXML(templateId, taskId, stepIdx, callback);
+        var skillFactoryRef = new skillFactory();
+        var skillRef = skillFactoryRef.getSkillObjectRef(templateId)
+        xmlGenerationHandler.generateStepXML(templateId, taskId, stepIdx, skillRef, callback);
     }
 
     saveResourceFile(templateId, taskId, stepIndex) {
