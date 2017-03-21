@@ -1,4 +1,4 @@
-class SkillManagerClass {
+class SkillManager {
   skillTranslator: Object;
   constructor() { 
     this.skillTranslator = this.getSkillTranslator();
@@ -10,4 +10,4 @@ class SkillManagerClass {
   }
 }
 
-export let skillManager = new SkillManagerClass();
+export let skillManager = new SkillManager();
