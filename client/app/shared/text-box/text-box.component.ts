@@ -9,7 +9,7 @@ import { itemSchema, itemDataModel } from '../UIConfig.model';
 })
 export class TextBoxComponent extends BaseComponent {
   labelConfig: itemSchema = new itemSchema();
-
+  descriptionConfig: itemSchema = new itemSchema();
   ngOnInit() {
     super.ngOnInit();
     this.modelRef = this.builderModelSrvc.getModelRef(this.compConfig.val);
@@ -19,5 +19,8 @@ export class TextBoxComponent extends BaseComponent {
   UpdateView() {
     this.labelConfig.rendererProperties.text = this.compConfig.label;
     this.labelConfig.rendererProperties.type = 0;
+
+    this.descriptionConfig.rendererProperties.text = this.compConfig.desc['basic'];
+    this.descriptionConfig.rendererProperties.type = 2;
   }
 }

@@ -12,6 +12,7 @@ Dropzone.autoDiscover = false;
 export class DropzoneComponent extends BaseComponent {
   @ViewChild('dropzone') dropzoneContainer;
   labelConfig: itemSchema = new itemSchema();
+  descriptionConfig: itemSchema = new itemSchema();
   width: string;
   height: string;
   constructor(private elementRef: ElementRef) {
@@ -27,6 +28,12 @@ export class DropzoneComponent extends BaseComponent {
     var self = this;
     this.labelConfig.rendererProperties.text = this.compConfig.label;
     this.labelConfig.rendererProperties.type = 0;
+
+    if(this.compConfig.desc != undefined){
+      this.descriptionConfig.rendererProperties.text = this.compConfig.desc['basic'];
+      this.descriptionConfig.rendererProperties.type = 2;
+    }
+
     if (this.compConfig.dim != undefined) {
       this.height = `${this.compConfig.dim.split(',')[0]}`;
       this.width = `${this.compConfig.dim.split(',')[1]}`;

@@ -2,7 +2,8 @@ import { Component, Input } from '@angular/core';
 import { BaseComponent } from '../base.component';
 enum labelType {
   ElementHeading = 0,
-  PanelHeading = 1
+  PanelHeading = 1,
+  Description = 2
 }
 @Component({
   selector: 'app-label',

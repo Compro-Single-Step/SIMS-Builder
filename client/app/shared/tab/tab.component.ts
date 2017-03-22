@@ -9,6 +9,7 @@ import { itemSchema } from '../UIConfig.model';
 })
 export class TabComponent extends BaseComponent {
   labelConfig: itemSchema = new itemSchema();
+  descriptionConfig: itemSchema = new itemSchema();
   tabs: Array<Object> = [];
 
   ngOnInit() {
@@ -24,5 +25,8 @@ export class TabComponent extends BaseComponent {
 
     this.labelConfig.rendererProperties.text = this.compConfig.label;
     this.labelConfig.rendererProperties.type = 0;
+
+    this.descriptionConfig.rendererProperties.text = this.compConfig.desc['basic'];
+    this.descriptionConfig.rendererProperties.type = 2;
   }
 }
