@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TabPageComponent } from './wrapper.component';
+import { TabPageComponent } from './tab-page.component';
 
 describe('TabPageComponent', () => {
   let component: TabPageComponent;

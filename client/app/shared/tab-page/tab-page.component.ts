@@ -3,9 +3,9 @@ import { ContainerComponent } from '../element-container.component';
 import { InputFactoryService } from '../input-factory.service';
 
 @Component({
-  selector: 'app-wrapper',
-  templateUrl: './wrapper.component.html',
-  styleUrls: ['./wrapper.component.scss']
+  selector: 'app-tab-page',
+  templateUrl: './tab-page.component.html',
+  styleUrls: ['./tab-page.component.scss']
 })
 
 export class TabPageComponent extends ContainerComponent {

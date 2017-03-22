@@ -16,7 +16,7 @@ import { ButtonComponent } from './button/button.component';
 
 import { InputFactoryService } from './input-factory.service';
 import { DropzoneComponent } from './dropzone/dropzone.component';
-import { TabPageComponent } from './wrapper/wrapper.component';
+import { TabPageComponent } from './tab-page/tab-page.component';
 
 @NgModule({
   imports: [
