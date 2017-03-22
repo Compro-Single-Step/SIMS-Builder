@@ -23,6 +23,6 @@ export class TabComponent extends BaseComponent {
     }
 
     this.labelConfig.rendererProperties.text = this.compConfig.label;
-    this.labelConfig.rendererProperties.type = 'ElementHeading';
+    this.labelConfig.rendererProperties.type = 0;
   }
 }

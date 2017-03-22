@@ -26,7 +26,7 @@ export class DropzoneComponent extends BaseComponent {
   UpdateView() {
     var self = this;
     this.labelConfig.rendererProperties.text = this.compConfig.label;
-    this.labelConfig.rendererProperties.type = 'ElementHeading';
+    this.labelConfig.rendererProperties.type = 0;
     if (this.compConfig.dim != undefined) {
       this.height = `${this.compConfig.dim.split(',')[0]}`;
       this.width = `${this.compConfig.dim.split(',')[1]}`;
