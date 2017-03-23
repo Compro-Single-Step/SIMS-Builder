@@ -1,7 +1,7 @@
 const dbController = require('../../controllers/db.controller');
 const fileStoreController = require('../../controllers/filestore.controller');
 
-class DatabaseFileStoreManager {
+module.exports = class DatabaseFileStoreManager {
     getUIConfig(templateId, callback) {
         dbController.getUIConfigPath(templateId, (filePath, error) => {
             if(!error) {
@@ -53,18 +53,8 @@ class DatabaseFileStoreManager {
     }
 
     saveStepUIState(taskId, stepIndex, stepUIData, callback) {
-        dbController.saveStepUIState(taskId, stepIndex, stepUIData, (error, data) => {
-            callback(error, data);
+        dbController.saveStepUIState(taskId, stepIndex, stepUIData, (data, error) => {
+            callback(data, error);
         });
     }
-
-    saveStepXML(taskId, stepIndex, OutputXML, callback){
-        fileStoreController.saveStepXML(taskId, stepIndex, OutputXML, callback);
-	}
-
-    saveResourceFile(templateId, taskId, stepIndex, fileName) {
-        return fileStoreController.saveResourceFile(templateId, taskId, stepIndex, fileName);
-    }
 }
-
-module.exports = new DatabaseFileStoreManager();

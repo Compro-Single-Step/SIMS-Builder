@@ -1,31 +1,25 @@
-const multer = require('multer');
-const mkdirp = require('mkdirp');
+const UIHandler = require('../modules/skill/uiHandler');
+const DBFilestoreMgr = require('../modules/skill/dbFilestoreMgr');
+const XmlGenerationHandler = require('../modules/skill/xmlGenerationHandler');
 
-const uiHandler = require('../modules/skill/uiHandler');
-const dbFilestoreMgr = require('../modules/skill/dbFilestoreMgr');
-const xmlGenerationHandler = require('../modules/skill/xmlGenerationHandler');
-const skillFactoryRef  = require("../modules/skill/skillFactory")
-
-class SkillController {
-
-    getUIConfig(templateId, taskId, stepIndex, contentFilter, callback) {
-        uiHandler.getUIConfig(templateId, taskId, stepIndex, contentFilter, callback);
+module.exports = class SkillController {
+    
+    constructor() {
+        this.uiHandlerObj = new UIHandler();
+        this.dbFilestoreMgrObj = new DBFilestoreMgr();
+    }
+    
+    getUIConfig(templateId, data, callback) {
+        return this.uiHandlerObj.getUIConfig(templateId, data, callback);
     }
 
     saveStepUIState(taskId, stepIndex, stepUIData, callback) {
-        dbFilestoreMgr.saveStepUIState(taskId, stepIndex, stepUIData, callback);
+        this.dbFilestoreMgrObj.saveStepUIState(taskId, stepIndex, stepUIData, callback);
     }
 
     generateXML(templateId, taskId, stepIdx, callback) {
-        skillRef = skillFactoryRef.getSkillObjectRef(templateId)
-        xmlGenerationHandler.generateStepXML(templateId, taskId, stepIdx, skillRef, callback);
-    }
-
-    saveResourceFile(templateId, taskId, stepIndex) {
-        return dbFilestoreMgr.saveResourceFile(templateId, taskId, stepIndex);
+        xmlGenerationHandlerObj.generateStepXML(templateId, taskId, stepIdx, callback);
     }
 };
-
-module.exports = new SkillController();
 
 

@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const skillController = require('../controllers/skill.controller');
+const SkillController = require('../controllers/skill.controller');
 //const dbFilestoreMgr = require('../modules/skill/dbFilestoreMgr');
+const skillController = new SkillController();
 
 router.get('/uiconfig/:templateId/:taskId/:stepIndex', (req, res) => {
     let templateId = req.params.templateId;
