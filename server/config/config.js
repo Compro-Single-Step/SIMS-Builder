@@ -2,7 +2,7 @@ const path = require('path');
 const serverRootPath = path.normalize(__dirname + '/..');
 const fileStorePath = serverRootPath + '/fileStore/';
 const xmlFolderPath = fileStorePath + 'XMLs/';
-const env = process.env.NODE_ENV || 'local';
+const env = process.env.NODE_ENV || 'development';
 
 
 const config = {
