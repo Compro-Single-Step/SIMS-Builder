@@ -6,8 +6,8 @@ const mkdirp = require('mkdirp');
 
 class FileStoreController {
 
-    getUIConfig(filepath, callback) {
-        FileStoreController.readFromFileStore(filepath, callback);
+    getUIConfig(filepath) {
+        return FileStoreController.readFromFileStore(filepath);
     }
 
     getSkillXML(filepath, callback) {
@@ -38,10 +38,18 @@ class FileStoreController {
     }
 
     static readFromFileStore(filepath, callback) {
-        let absolutePath = config.fileStore.baseURL + filepath;
+        return new Promise((resolve, reject)=> {
+            let absolutePath = config.fileStore.baseURL + filepath;
 
-        fs.readFile(absolutePath, 'utf8', function (err, data) {
-            callback(err, data);
+            fs.readFile(absolutePath, 'utf8', function (error, data) {
+                if(error) {
+                    reject(error);
+                }
+                else {
+                    resolve(data);
+                }
+            });
+            //callback(err, data);
         });
     }
 

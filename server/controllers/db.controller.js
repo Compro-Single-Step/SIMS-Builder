@@ -3,8 +3,8 @@ const uiTaskStepModel = require('../models/uiTaskStep.model').uiTaskStepModel;
 
 class DatabaseController {
     
-    getUIConfigPath(templateId, callback) {
-        DatabaseController.getFilePath(templateId, 'ui_config_path', callback);
+    getUIConfigPath(templateId) {
+        return DatabaseController.getFilePath(templateId, 'ui_config_path');
     }
 
     getSkillXMLPath(templateId, callback) {
@@ -44,12 +44,19 @@ class DatabaseController {
         });
     }
 
-    static getFilePath(templateId, fileKey, callback) {
-        let filterCriteria = {"_id": false};
-        filterCriteria[fileKey] = true;
+    static getFilePath(templateId, fileKey) {
+        return new Promise((resolve, reject)=> {
+            let filterCriteria = {"_id": false};
+            filterCriteria[fileKey] = true;
 
-        skillConfigRepoModel.getFilePath({"template_id": templateId}, filterCriteria, (error, data) => {
-            callback(data[0][fileKey], error);
+            skillConfigRepoModel.getFilePath({"template_id": templateId}, filterCriteria, (error, data) => {
+                if(error) {
+                    reject(error);
+                }
+                else {
+                    resolve(data[0][fileKey])
+                }
+            });
         });
     }
 }

@@ -3,14 +3,26 @@ const fileStoreController = require('../../controllers/filestore.controller');
 
 class DatabaseFileStoreManager {
     getUIConfig(templateId, callback) {
-        dbController.getUIConfigPath(templateId, (filePath, error) => {
-            if(!error) {
-                fileStoreController.getUIConfig(filePath, callback);
-            }
-            else {
-                callback(error);
-            }
+        return new Promise((resolve, reject)=> {
+            dbController.getUIConfigPath(templateId).then((filePath)=> {
+                fileStoreController.getUIConfig(filePath).then((uiConfigData)=> {
+                    resolve(uiConfigData);
+                }, (errorMessege)=> {
+                    reject(errorMessege);
+                });
+            }, (errorMessege)=> {
+                reject(errorMessege);
+            });
         });
+        
+        // dbController.getUIConfigPath(templateId, (filePath, error) => {
+        //     if(!error) {
+        //         fileStoreController.getUIConfig(filePath, callback);
+        //     }
+        //     else {
+        //         callback(error);
+        //     }
+        // });
     }
 
     getSkillXML(templateId, callback) {

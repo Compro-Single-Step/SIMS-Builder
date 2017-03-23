@@ -13,14 +13,12 @@ router.get('/uiconfig/:templateId/:taskId/:stepIndex', (req, res) => {
         stepUIStateFlag: req.query.stepuistate || "true"
     }
     
-    skillController.getUIConfig(templateId, taskId, stepIndex, contentFilter, (error, data) => {
-        if(!error) {
-            res.send(data);
-        }
-        else {
-            res.json(error);
-        }
-    });
+    skillController.getUIConfig(templateId, taskId, stepIndex, contentFilter)
+    .then((data) => {
+        res.send(data);
+    }).catch((errorMessege)=> {
+        res.send(errorMessege);
+    })
 });
 
 router.post('/stepuistate/:taskId/:stepIndex', (req, res) => {
