@@ -3,7 +3,7 @@ const fileStoreController = require('../../controllers/filestore.controller');
 
 class DatabaseFileStoreManager {
     getUIConfig(templateId, callback) {
-        dbController.getUIConfigPath(templateId, (filePath, error) => {
+        dbController.getSkillConfigFilePath(templateId, 'ui_config_path', (filePath, error) => {
             if(!error) {
                 fileStoreController.getUIConfig(filePath, callback);
             }
@@ -14,7 +14,7 @@ class DatabaseFileStoreManager {
     }
 
     getSkillXML(templateId, callback) {
-        dbController.getSkillXMLPath(templateId, (filePath, error) => {
+        dbController.getSkillConfigFilePath(templateId, 'skill_xml_path', (filePath, error) => {
             if(!error) {
                 fileStoreController.getSkillXML(filePath, callback);
             }
@@ -25,7 +25,7 @@ class DatabaseFileStoreManager {
     }
 
     getIOMap(templateId, callback) {
-        dbController.getIOMapPath(templateId, (filePath, error) => {
+        dbController.getSkillConfigFilePath(templateId, 'io_map_path', (filePath, error) => {
             if(!error) {
                 fileStoreController.getIOMap(filePath, callback);
             }
@@ -36,7 +36,7 @@ class DatabaseFileStoreManager {
     }
 
     getSkillModel(templateId, callback) {
-        dbController.getSkillModelPath(templateId, (filePath, error) => {
+        dbController.getSkillConfigFilePath(templateId, 'data_model_path', (filePath, error) => {
             if(!error) {
                 fileStoreController.getSkillModel(filePath, callback);
             }

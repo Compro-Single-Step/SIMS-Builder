@@ -18,7 +18,7 @@ router.get('/uiconfig/:templateId/:taskId/:stepIndex', (req, res) => {
             res.send(data);
         }
         else {
-            res.json(error);
+            res.send(error);
         }
     });
 });
@@ -27,10 +27,10 @@ router.post('/stepuistate/:taskId/:stepIndex', (req, res) => {
     let stepUIState = req.body.stepUIState;
     skillController.saveStepUIState(req.params.taskId, req.params.stepIndex, stepUIState, (error, data) => {
         if(!error) {
-            res.json(data);
+            res.send(data);
         }
         else {
-            res.json(error);
+            res.send(error);
         }
     });
 });
@@ -42,7 +42,7 @@ router.get('/xmlgeneration/:templateId/:taskid/:stepidx', (req, res) => {
     
     skillController.generateXML(templateId, taskId, stepIdx, (error) => {
         if (!error) {
-            res.end("success");
+            res.send("success");
         } else {
             res.send(error);
         }
@@ -57,9 +57,11 @@ router.post("/uploadresource", (req, res) => {
     let upload = skillController.saveResourceFile(templateId, taskId, stepIndex);
     upload(req, res, (error) => {
         if(error) {
-            res.end("Error uploading file.");
+            res.send("Error uploading file.");
         }
-        res.end("File is uploaded");
+        else {
+            res.end("File is uploaded");
+        }
     });
 });
 

@@ -2,8 +2,8 @@ const path = require('path');
 const serverRootPath = path.normalize(__dirname + '/..');
 const fileStorePath = serverRootPath + '/fileStore/';
 const xmlFolderPath = fileStorePath + 'XMLs/';
+const skillFolderPath = fileStorePath + 'skills/';
 const env = process.env.NODE_ENV || 'development';
-
 
 const config = {
     local: {
@@ -26,7 +26,7 @@ const config = {
         },
         root: serverRootPath,
         fileStore: {
-            baseURL: fileStorePath,
+            skillFolderPath: skillFolderPath,
             xmlFolderPath: xmlFolderPath
         }
     },
@@ -50,7 +50,7 @@ const config = {
         },
         root: serverRootPath,
         fileStore: {
-            baseURL: fileStorePath,
+            skillFolderPath: skillFolderPath,
             xmlFolderPath: xmlFolderPath
         }
     },
@@ -74,7 +74,7 @@ const config = {
         },
         root: serverRootPath,
         fileStore: {
-            baseURL: fileStorePath,
+            skillFolderPath: skillFolderPath,
             xmlFolderPath: xmlFolderPath
         }
     }
