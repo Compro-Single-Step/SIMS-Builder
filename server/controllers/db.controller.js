@@ -2,22 +2,6 @@ const skillConfigRepoModel = require('../models/skillConfigRepo.model').skill_co
 const uiTaskStepModel = require('../models/uiTaskStep.model').uiTaskStepModel;
 
 class DatabaseController {
-    
-    getUIConfigPath(templateId, callback) {
-        DatabaseController.getFilePath(templateId, 'ui_config_path', callback);
-    }
-
-    getSkillXMLPath(templateId, callback) {
-        DatabaseController.getFilePath(templateId, 'skill_xml_path', callback);
-    }
-
-    getIOMapPath(templateId, callback) {
-        DatabaseController.getFilePath(templateId, 'io_map_path', callback);
-    }
-
-    getSkillModelPath(templateId, callback) {
-        DatabaseController.getFilePath(templateId, 'data_model_path', callback);
-    }
 
     getStepUIState(taskId, stepIndex, callback) {
         let condition = {"task_id": taskId};
@@ -44,7 +28,7 @@ class DatabaseController {
         });
     }
 
-    static getFilePath(templateId, fileKey, callback) {
+    getSkillConfigFilePath(templateId, fileKey, callback) {
         let filterCriteria = {"_id": false};
         filterCriteria[fileKey] = true;
 
