@@ -9,16 +9,6 @@ var SkillObjectMap = {
         }
     }
 
-function identifySkill(templateId){
-    if(SkillObjectMap[templateId]){
-        return SkillObjectMap[templateId]["skillFilepath"];
-    }
-    else{
-        console.log("No Skill Exists in the map for the templateId : "+ templateId);
-    }
-
-}
-
 module.exports = class skillFactory{
 
     getSkillObjectRef (templateId){
@@ -26,12 +16,22 @@ module.exports = class skillFactory{
         return require("../../libs/skills" + skillFile);
     }
 
-    getCompsRef(templateID){
+    identifySkill(templateId){
+        if(SkillObjectMap[templateId]){
+            return SkillObjectMap[templateId]["skillFilepath"];
+        }
+        else{
+            console.log("No Skill Exists in the map for the templateId : "+ templateId);
+        }
+
+    }
+
+    getCompsPath(templateID){
         let compNames = SkillObjectMap[templateID]["comps"];
         let compObject = {};
 
         for(let comp of compNames){
-            compObject[comp] = compFactory.getCompObjectRef(comp);
+            compObject[comp] = compFactory.getCompPath(comp);
         }
         return compObject;
     }

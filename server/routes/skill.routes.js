@@ -59,11 +59,11 @@ router.post("/uploadresource", (req, res) => {
     });
 });
 
-router.get("/skillFiles/:templateId", (req,res) => {
+router.get("/skillFilesPath/:templateId", (req,res) => {
     let templateId = req.params.templateId;
-    skillController.getSkillFiles(templateId, (error, files) => {
+    skillController.getSkillFilesPath(templateId, (error, filesPath) => {
         if (!error) {
-            res.send(files);
+            res.send(filesPath);
         } else {
             res.send(error);
         }

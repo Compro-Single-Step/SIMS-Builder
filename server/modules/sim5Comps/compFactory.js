@@ -1,3 +1,5 @@
+const path = require('path');
+
 class compFactory{
 
     constructor(){
@@ -13,17 +15,19 @@ class compFactory{
         }
     }
 
-    getCompObjectRef (compName){
-        let compPath = this.getCompPath(compName);
-        if(compPath){
-            return require("../../libs/sim5Comps" + compPath);
-        }
-        else
-            return {};  //Component not found
-    }
+    // getCompObjectRef (compName){
+    //     let compPath = this.getCompPath(compName);
+    //     if(compPath){
+    //         return require("../../libs/sim5Comps" + compPath);
+    //     }
+    //     else
+    //         return {};  //Component not found
+    // }
 
     getCompPath(compName){
-        return this.compMap[compName]["CompFilePath"];
+        if(this.compMap[compName])
+            return path.join("libs", "sim5Comps", this.compMap[compName]["CompFilePath"] + ".js");
+        return "Component not found"
     }
 }
 

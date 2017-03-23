@@ -1,5 +1,6 @@
 const multer = require('multer');
 const mkdirp = require('mkdirp');
+const path = require('path');
 
 const uiHandler = require('../modules/skill/uiHandler');
 const dbFilestoreMgr = require('../modules/skill/dbFilestoreMgr');
@@ -26,12 +27,12 @@ class SkillController {
         return dbFilestoreMgr.saveResourceFile(templateId, taskId, stepIndex);
     }
 
-    getSkillFiles(templateId, callback){
+    getSkillFilesPath(templateId, callback){
         let skillFilesObject = {},
             skillFactoryRef = new skillFactory();
 
-        skillFilesObject["skill"] = skillFactoryRef.getSkillObjectRef(templateId);
-        skillFilesObject["comps"] = skillFactoryRef.getCompsRef(templateId);
+        skillFilesObject["skill"] = path.join("libs", "skills", skillFactoryRef.identifySkill(templateId) + ".js");
+        skillFilesObject["comps"] = skillFactoryRef.getCompsPath(templateId);
 
         callback(null, skillFilesObject);
     }
