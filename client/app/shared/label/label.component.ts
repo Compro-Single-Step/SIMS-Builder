@@ -12,7 +12,7 @@ export class LabelComponent extends BaseComponent {
   type: string;
   constructor() {
     super();
-    this.type = LabelTypes.ElementHeading;
+    this.type = LabelTypes.ELEMENT_HEADING;
   }
 
   ngOnInit() {

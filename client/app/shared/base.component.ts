@@ -51,6 +51,6 @@ export class BaseComponent implements OnInit{
 
     updateDescription() {
         this.descriptionConfig.rendererProperties.text = this.compConfig.desc['basic'];
-        this.descriptionConfig.rendererProperties.type = LabelTypes.Description;
+        this.descriptionConfig.rendererProperties.type = LabelTypes.DESCRIPTION;
     }
 }

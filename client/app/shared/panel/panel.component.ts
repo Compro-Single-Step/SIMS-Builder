@@ -33,7 +33,7 @@ export class PanelComponent extends ContainerComponent {
 
   UpdateView() {
     this.labelConfig.rendererProperties.text = this.compConfig.label;
-    this.labelConfig.rendererProperties.type = LabelTypes.PanelHeading;
+    this.labelConfig.rendererProperties.type = LabelTypes.PANEL_HEADING;
     this.$el.find('.widget').widgster();
   }
 }

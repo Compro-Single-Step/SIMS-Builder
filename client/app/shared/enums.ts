@@ -1,5 +1,5 @@
 export const LabelTypes =  {
-  ElementHeading : "ElementHeading",
-  PanelHeading : "PanelHeading",
-  Description :"Description"
+  ELEMENT_HEADING: "ElementHeading",
+  PANEL_HEADING: "PanelHeading",
+  DESCRIPTION: "Description"
 }
