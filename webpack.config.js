@@ -296,7 +296,8 @@ module.exports = {
       $: 'jquery',
       jquery: 'jquery',
       'window.jQuery': 'jquery',
-      Dropzone: 'dropzone'
+      Dropzone: 'dropzone',
+      localForage: "localforage"
     })
   ],
   "node": {
