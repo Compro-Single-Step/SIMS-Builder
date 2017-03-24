@@ -3,70 +3,66 @@ const dbFilestoreManager = require('./dbFilestoreMgr');
 class UIHandler {
 
     getUIConfig(templateId, taskId, stepIndex, contentFilter, callback) {
-        dbFilestoreManager.getUIConfig(templateId, (error, uiConfig) => {
+        let uiConfig, skillModel, stepUIState;
+
+        dbFilestoreManager.getUIConfig(templateId, (error, uiConfigData) => {
             if(!error) {
-                if(contentFilter.skillModelFlag === "true" && contentFilter.stepUIStateFlag === "false") {
-                    dbFilestoreManager.getSkillModel(templateId, (error, skillModel) => {
-                        if(!error) {
-                            let data = {
-                                'uiconfig': JSON.parse(uiConfig),
-                                'skillmodel': JSON.parse(skillModel)
-                            }
-                            callback(error, data);
-                        }
-                        else {
-                            callback(error);
-                        }
-                    });
-                }
-                else if(contentFilter.skillModelFlag === "false" && contentFilter.stepUIStateFlag === "true") {
-                    dbFilestoreManager.getStepUIState(taskId, stepIndex, (error, stepUIState) => {
-                        if(!error) {
-                            let data = {
-                                'uiconfig': JSON.parse(uiConfig),
-                                'stepuistate': stepUIState
-                            }
-                            callback(error, data);
-                        }
-                        else {
-                            callback(error);
-                        }
-                    });
-                }
-                else if(contentFilter.skillModelFlag === "false" && contentFilter.stepUIStateFlag === "false") {
-                    let data = {
-                        'uiconfig': JSON.parse(uiConfig)
-                    }
+                uiConfig = uiConfigData;
+                let data = this.createRequestObject(uiConfig, skillModel, stepUIState, contentFilter);
+                if(data) {
                     callback(error, data);
                 }
-                else { 
-                    dbFilestoreManager.getSkillModel(templateId, (error, skillModel) => {
-                        if(!error) {
-                            dbFilestoreManager.getStepUIState(taskId, stepIndex, (error, stepUIState) => {
-                                if(!error) {
-                                    let data = {
-                                        'uiconfig': JSON.parse(uiConfig),
-                                        'skillmodel': JSON.parse(skillModel),
-                                        'stepuistate': stepUIState
-                                    }
-                                    callback(error, data);
-                                }
-                                else {
-                                    callback(error);
-                                }
-                            });
-                        }
-                        else {
-                            callback(error);
-                        }
-                    });
-                }
-            }
-            else {
+            } else {
                 callback(error);
             }
         });
+
+        if(contentFilter.skillModelFlag === "true") {
+            dbFilestoreManager.getSkillModel(templateId, (error, skillModelData) => {
+                if(!error) {
+                    skillModel = skillModelData;
+                    let data = this.createRequestObject(uiConfig, skillModel, stepUIState, contentFilter);
+                    if(data) {
+                        callback(error, data);
+                    }
+                } else {
+                    callback(error);
+                }
+            });
+        }
+        
+        if(contentFilter.stepUIStateFlag === "true") {
+            dbFilestoreManager.getStepUIState(taskId, stepIndex, (error, stepUIStateData) => {
+                if(!error) {
+                    stepUIState = stepUIStateData;
+                    let data = this.createRequestObject(uiConfig, skillModel, stepUIState, contentFilter);
+                    if(data) {
+                        callback(error, data);
+                    }
+                } else {
+                    callback(error);
+                }
+            });
+        }
+    }
+
+    createRequestObject(uiConfig, skillModel, stepUIState, contentFilter) {
+        if(uiConfig && (!contentFilter.skillModelFlag || skillModel) && (!contentFilter.stepUIStateFlag || stepUIState)) {
+            let data = {
+                'uiconfig': JSON.parse(uiConfig),
+                'skillmodel': JSON.parse(skillModel),
+                'stepuistate': stepUIState
+            }
+            if(!skillModel) {
+                delete data.skillmodel;
+            }
+            if(!stepUIState) {
+                delete data.stepUIState;
+            }
+            return data;
+        }
     }
 }
 
 module.exports = new UIHandler();
+
