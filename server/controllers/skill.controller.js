@@ -32,7 +32,7 @@ class SkillController {
             skillFactoryRef = new skillFactory();
 
         skillFilesObject["skill"] = path.join("libs", "skills", skillFactoryRef.identifySkill(templateId) + ".js");
-        skillFilesObject["comps"] = skillFactoryRef.getCompsPath(templateId);
+        skillFilesObject["comps"] = skillFactoryRef.getSkillFilesPathObject(templateId);
 
         callback(null, skillFilesObject);
     }
