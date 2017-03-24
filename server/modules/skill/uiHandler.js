@@ -5,59 +5,57 @@ class UIHandler {
     getUIConfig(templateId, taskId, stepIndex, contentFilter, callback) {
         let uiConfig, skillModel, stepUIState;
 
-        dbFilestoreManager.getUIConfig(templateId, (error, uiConfigData) => {
-            if(!error) {
-                uiConfig = uiConfigData;
-                let data = this.createRequestObject(uiConfig, skillModel, stepUIState, contentFilter);
-                if(data) {
-                    callback(error, data);
+            dbFilestoreManager.getUIConfig(templateId, (error, uiConfigData) => {
+                if(!error) {
+                    uiConfig = uiConfigData;
+                    let data = this.createRequestObject(uiConfig, skillModel, stepUIState, contentFilter);
+                    if(data) {
+                        callback(error, data);
+                    }
+                } else {
+                    callback(error);
                 }
-            } else {
-                callback(error);
-            }
-        });
+            });
 
-        if(contentFilter.skillModelFlag) {
-            dbFilestoreManager.getSkillModel(templateId, (error, skillModelData) => {
-                if(!error) {
-                    skillModel = skillModelData;
-                    let data = this.createRequestObject(uiConfig, skillModel, stepUIState, contentFilter);
-                    if(data) {
-                        callback(error, data);
+            if(contentFilter.skillModelFlag) {
+                dbFilestoreManager.getSkillModel(templateId, (error, skillModelData) => {
+                    if(!error) {
+                        skillModel = skillModelData;
+                        let data = this.createRequestObject(uiConfig, skillModel, stepUIState, contentFilter);
+                        if(data) {
+                            callback(error, data);
+                        }
+                    } else {
+                        callback(error);
                     }
-                } else {
-                    callback(error);
-                }
-            });
-        }
-        
-        if(contentFilter.stepUIStateFlag) {
-            dbFilestoreManager.getStepUIState(taskId, stepIndex, (error, stepUIStateData) => {
-                if(!error) {
-                    stepUIState = stepUIStateData;
-                    let data = this.createRequestObject(uiConfig, skillModel, stepUIState, contentFilter);
-                    if(data) {
-                        callback(error, data);
+                });
+            }
+            
+            if(contentFilter.stepUIStateFlag) {
+                dbFilestoreManager.getStepUIState(taskId, stepIndex, (error, stepUIStateData) => {
+                    if(!error) {
+                        stepUIState = stepUIStateData;
+                        let data = this.createRequestObject(uiConfig, skillModel, stepUIState, contentFilter);
+                        if(data) {
+                            callback(error, data);
+                        }
+                    } else {
+                        callback(error);
                     }
-                } else {
-                    callback(error);
-                }
-            });
-        }
+                });
+            }
     }
 
     createRequestObject(uiConfig, skillModel, stepUIState, contentFilter) {
         if(uiConfig && (!contentFilter.skillModelFlag || skillModel) && (!contentFilter.stepUIStateFlag || stepUIState)) {
             let data = {
-                'uiconfig': JSON.parse(uiConfig),
-                'skillmodel': skillModel?JSON.parse(skillModel):"",
-                'stepuistate': stepUIState || ""
+                'uiconfig': JSON.parse(uiConfig)
             }
-            if(!skillModel) {
-                delete data.skillmodel;
+            if(contentFilter.skillModelFlag) {
+                data.skillmodel = JSON.parse(skillModel);
             }
-            if(!stepUIState) {
-                delete data.stepuistate;
+            if(contentFilter.stepUIStateFlag) {
+                data.stepuistate = stepUIState;
             }
             return data;
         }
