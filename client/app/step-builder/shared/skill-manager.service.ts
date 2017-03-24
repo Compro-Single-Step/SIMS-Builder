@@ -1,12 +1,20 @@
+declare var jQuery;
 class SkillManager {
   skillTranslator: Object;
-  constructor() { 
-    this.skillTranslator = this.getSkillTranslator();
+  constructor() {
+    this.skillTranslator = {};
   }
 
-  getSkillTranslator(){
-        this.skillTranslator = require("../../../../server/libs/skills/xl/moveCellContent/moveCellContent.js");
-        return this.skillTranslator;
+  getMultiScripts(arr) {
+    var _arr = arr.map(function(src){
+      return jQuery.getScript(src)
+    });
+    return Promise.all(_arr);
+  }
+
+  getSkillTranslator() {
+    let allScriptsPromise =  this.getMultiScripts(['moveCellContent.js']);
+    return allScriptsPromise;
   }
 }
 

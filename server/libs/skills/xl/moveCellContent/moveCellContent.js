@@ -1,18 +1,18 @@
-
+(function(module){
   //init DOC JSON 
-  exports.createJsonPath = function(valueParam){
+  module.exports.createJsonPath = function(valueParam){
      
     return valueParam[0].path;
   }
 
 
-  exports.getSelectedCell = function(paramValueArr){
+  module.exports.getSelectedCell = function(paramValueArr){
     
     return paramValueArr[0];
 
   }
 
-  exports.getSelDragCell = function(paramValueArr){
+  module.exports.getSelDragCell = function(paramValueArr){
     //requires sheet name using init doc json
     
     var finalObject = {};
@@ -25,7 +25,7 @@
   }
 
 
-  exports.createTooltipImagePath  = function(paramValueArr){
+  module.exports.createTooltipImagePath  = function(paramValueArr){
      
     return paramValueArr[0].path;
 
@@ -33,7 +33,7 @@
 
 
 
-  exports.createImageJson = function(paramValueArr){
+  module.exports.createImageJson = function(paramValueArr){
     
     var finalObject = {};
     finalObject['folderPath'] = paramValueArr[0].path;
@@ -53,7 +53,7 @@
   }
 
 
-  exports.createHighlightJson  =  function(paramValueArr){
+  module.exports.createHighlightJson  =  function(paramValueArr){
      
     // requires sheet number using Init Doc json
     var finalObject = {};
@@ -64,7 +64,7 @@
   }
 
 
-  exports.createSheetCellData =function(paramValueArr){
+  module.exports.createSheetCellData =function(paramValueArr){
      
     var finalObject = {};
     finalObject["sheetNo"] = 1;
@@ -75,7 +75,7 @@
 
   }
 
-    exports.getSelectedCellFinal = function(paramValueArr){
+    module.exports.getSelectedCellFinal = function(paramValueArr){
     
     finalArray = [];
     
@@ -103,7 +103,7 @@
 
   }
 
-  exports.getSheetNameAndSheetCountFromInitDocJSON = function(initDocJSON, dependantSheetArrayInModel) {
+  module.exports.getSheetNameAndSheetCountFromInitDocJSON = function(initDocJSON, dependantSheetArrayInModel) {
 
     //Add The Required Number of Sheets in Model
     if (initDocJSON.sheetCount >= dependantSheetArrayInModel.length) {
@@ -120,7 +120,7 @@
     }
   }
 
-  exports.addSheetNamesToDropdown = function(initDocJSON, dependantSheetArrayInModel) {
+  module.exports.addSheetNamesToDropdown = function(initDocJSON, dependantSheetArrayInModel) {
     
     //Add Sheet Names to Array From Init Doc JSON
     for (let sheetNum = 0; sheetNum < initDocJSON.sheetCount; sheetNum++) {
@@ -128,3 +128,25 @@
     }
   }
 
+
+  module.exports.getSheetNameAndSheetCountFromInitDocJSON = function(initDocJSON, dependantSheetArrayInModel) {
+    if (initDocJSON.sheetCount >= dependantSheetArrayInModel.length) {
+        var sheetCountDiff = initDocJSON.sheetCount - dependantSheetArrayInModel.length;
+        while (sheetCountDiff > 0) {
+            dependantSheetArrayInModel.push(JSON.parse(JSON.stringify(dependantSheetArrayInModel[(dependantSheetArrayInModel.length - 1)])));
+            sheetCountDiff--;
+        }
+    }
+    for (var sheetNum = 0; sheetNum < initDocJSON.sheetCount; sheetNum++) {
+        dependantSheetArrayInModel[sheetNum].name = initDocJSON.sheets[sheetNum].name;
+    }
+  }
+
+  module.exports.addSheetNamesToDropdown = function(initDocJSON, dependantSheetArrayInModel) {
+    for (var sheetNum = 0; sheetNum < initDocJSON.sheetCount; sheetNum++) {
+        dependantSheetArrayInModel.push(initDocJSON.sheets[sheetNum].name);
+    }
+  }
+
+
+})(typeof module === 'undefined'? this['skillModule']={ "exports": {}}: module);

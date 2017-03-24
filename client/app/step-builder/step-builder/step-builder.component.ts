@@ -1,7 +1,9 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { BuilderDataService } from '../shared/builder-data.service';
 import { UIConfig } from '../../shared/UIConfig.model';
+import { skillManager } from '../shared/skill-manager.service';
 declare var jQuery;
+declare var skillModule;
 @Component({
   selector: 'app-step-builder',
   templateUrl: './step-builder.component.html',
@@ -22,6 +24,13 @@ export class StepBuilderComponent implements OnInit {
     var self =this;
     this.bds.getuiconfig().subscribe(function(data){
       self.uiConfig = data;
+    });
+    this.getSkillTranslatorFunctions();
+  }
+
+  getSkillTranslatorFunctions() {
+    skillManager.getSkillTranslator().then(function () {
+      skillManager.skillTranslator = skillModule.exports;
     });
   }
 
