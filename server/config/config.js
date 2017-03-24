@@ -3,7 +3,7 @@ const serverRootPath = path.normalize(__dirname + '/..');
 const fileStorePath = serverRootPath + '/fileStore/';
 const xmlFolderPath = fileStorePath + 'XMLs/';
 const skillFolderPath = fileStorePath + 'skills/';
-const env = process.env.NODE_ENV || 'development';
+const env = process.env.NODE_ENV || 'local';
 
 const config = {
     local: {
