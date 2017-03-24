@@ -1,5 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { BaseComponent } from '../base.component';
+import { LabelTypes } from '../enums';
 import { itemSchema } from '../UIConfig.model';
 
 declare var Dropzone: any;
@@ -27,11 +28,11 @@ export class DropzoneComponent extends BaseComponent {
   UpdateView() {
     var self = this;
     this.labelConfig.rendererProperties.text = this.compConfig.label;
-    this.labelConfig.rendererProperties.type = 0;
+    this.labelConfig.rendererProperties.type = LabelTypes.ElementHeading;
 
     if(this.compConfig.desc != undefined){
       this.descriptionConfig.rendererProperties.text = this.compConfig.desc['basic'];
-      this.descriptionConfig.rendererProperties.type = 2;
+      this.descriptionConfig.rendererProperties.type = LabelTypes.Description;
     }
 
     if (this.compConfig.dim != undefined) {

@@ -2,6 +2,8 @@ import { Component, ElementRef, ViewContainerRef, ViewChild, Injector } from '@a
 import { ContainerComponent } from '../element-container.component';
 import { InputFactoryService } from '../input-factory.service';
 import { itemSchema } from '../UIConfig.model';
+import { LabelTypes } from '../enums';
+
 declare var jQuery: any;
 
 @Component({
@@ -31,7 +33,7 @@ export class PanelComponent extends ContainerComponent {
 
   UpdateView() {
     this.labelConfig.rendererProperties.text = this.compConfig.label;
-    this.labelConfig.rendererProperties.type = 1;
+    this.labelConfig.rendererProperties.type = LabelTypes.PanelHeading;
     this.$el.find('.widget').widgster();
   }
 }

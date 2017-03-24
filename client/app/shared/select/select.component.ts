@@ -1,6 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { BaseComponent } from '../base.component';
 import { itemSchema } from '../UIConfig.model';
+import { LabelTypes } from '../enums';
+
 
 @Component({
   selector: 'app-select',
@@ -15,10 +17,10 @@ export class SelectComponent extends BaseComponent {
   ngOnInit() {
     super.ngOnInit();
     this.labelConfig.rendererProperties.text = this.compConfig.label;
-    this.labelConfig.rendererProperties.type = 0;
+    this.labelConfig.rendererProperties.type = LabelTypes.ElementHeading;
 
     this.descriptionConfig.rendererProperties.text = this.compConfig.desc['basic'];
-    this.descriptionConfig.rendererProperties.type = 2;
+    this.descriptionConfig.rendererProperties.type = LabelTypes.Description;
 
     //TODO: Bind the data present in the data model at the reference mentioned in the val node of the ui config.
     this.itemList = [];
