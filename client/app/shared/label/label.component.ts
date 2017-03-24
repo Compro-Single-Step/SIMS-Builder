@@ -12,12 +12,12 @@ export class LabelComponent extends BaseComponent {
   type: string;
   constructor() {
     super();
-    this.type = LabelTypes[0];
+    this.type = LabelTypes.ElementHeading;
   }
 
   ngOnInit() {
     super.ngOnInit();
     this.text = this.compConfig.rendererProperties.text;
-    this.type = LabelTypes[this.compConfig.rendererProperties.type];
+    this.type = this.compConfig.rendererProperties.type;
   }
 }

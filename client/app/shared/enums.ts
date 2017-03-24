@@ -1,5 +1,5 @@
-export enum LabelTypes {
-  ElementHeading = 0,
-  PanelHeading = 1,
-  Description = 2
+export const LabelTypes =  {
+  ElementHeading : "ElementHeading",
+  PanelHeading : "PanelHeading",
+  Description :"Description"
 }
