@@ -19,9 +19,7 @@ export class SelectComponent extends BaseComponent {
     this.labelConfig.rendererProperties.text = this.compConfig.label;
     this.labelConfig.rendererProperties.type = LabelTypes.ElementHeading;
 
-    this.descriptionConfig.rendererProperties.text = this.compConfig.desc['basic'];
-    this.descriptionConfig.rendererProperties.type = LabelTypes.Description;
-
+    this.updateDescription();
     //TODO: Bind the data present in the data model at the reference mentioned in the val node of the ui config.
     this.itemList = [];
   }

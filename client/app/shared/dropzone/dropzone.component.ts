@@ -13,7 +13,6 @@ Dropzone.autoDiscover = false;
 export class DropzoneComponent extends BaseComponent {
   @ViewChild('dropzone') dropzoneContainer;
   labelConfig: itemSchema = new itemSchema();
-  descriptionConfig: itemSchema = new itemSchema();
   width: string;
   height: string;
   constructor(private elementRef: ElementRef) {
@@ -31,8 +30,7 @@ export class DropzoneComponent extends BaseComponent {
     this.labelConfig.rendererProperties.type = LabelTypes.ElementHeading;
 
     if(this.compConfig.desc != undefined){
-      this.descriptionConfig.rendererProperties.text = this.compConfig.desc['basic'];
-      this.descriptionConfig.rendererProperties.type = LabelTypes.Description;
+      this.updateDescription();
     }
 
     if (this.compConfig.dim != undefined) {

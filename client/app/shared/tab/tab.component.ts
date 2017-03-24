@@ -27,7 +27,6 @@ export class TabComponent extends BaseComponent {
     this.labelConfig.rendererProperties.text = this.compConfig.label;
     this.labelConfig.rendererProperties.type = LabelTypes.ElementHeading;
 
-    this.descriptionConfig.rendererProperties.text = this.compConfig.desc['basic'];
-    this.descriptionConfig.rendererProperties.type = LabelTypes.Description;
+    this.updateDescription();
   }
 }
