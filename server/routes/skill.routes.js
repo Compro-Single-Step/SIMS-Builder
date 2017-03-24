@@ -9,8 +9,8 @@ router.get('/uiconfig/:templateId/:taskId/:stepIndex', (req, res) => {
     let stepIndex = req.params.stepIndex;
 
     let contentFilter = {
-        skillModelFlag: req.query.skillmodel || "true",
-        stepUIStateFlag: req.query.stepuistate || "true"
+        skillModelFlag: req.query.skillmodel === "false"?false:true,
+        stepUIStateFlag: req.query.stepuistate === "false"?false:true
     }
     
     skillController.getUIConfig(templateId, taskId, stepIndex, contentFilter, (error, data) => {
