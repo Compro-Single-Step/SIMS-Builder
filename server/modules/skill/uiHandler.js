@@ -17,7 +17,7 @@ class UIHandler {
             }
         });
 
-        if(contentFilter.skillModelFlag === "true") {
+        if(contentFilter.skillModelFlag) {
             dbFilestoreManager.getSkillModel(templateId, (error, skillModelData) => {
                 if(!error) {
                     skillModel = skillModelData;
@@ -31,7 +31,7 @@ class UIHandler {
             });
         }
         
-        if(contentFilter.stepUIStateFlag === "true") {
+        if(contentFilter.stepUIStateFlag) {
             dbFilestoreManager.getStepUIState(taskId, stepIndex, (error, stepUIStateData) => {
                 if(!error) {
                     stepUIState = stepUIStateData;
@@ -50,14 +50,14 @@ class UIHandler {
         if(uiConfig && (!contentFilter.skillModelFlag || skillModel) && (!contentFilter.stepUIStateFlag || stepUIState)) {
             let data = {
                 'uiconfig': JSON.parse(uiConfig),
-                'skillmodel': JSON.parse(skillModel),
-                'stepuistate': stepUIState
+                'skillmodel': skillModel?JSON.parse(skillModel):"",
+                'stepuistate': stepUIState || ""
             }
             if(!skillModel) {
                 delete data.skillmodel;
             }
             if(!stepUIState) {
-                delete data.stepUIState;
+                delete data.stepuistate;
             }
             return data;
         }

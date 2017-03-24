@@ -5,7 +5,7 @@ class DatabaseFileStoreManager {
     getUIConfig(templateId, callback) {
         dbController.getSkillConfigFilePath(templateId, 'ui_config_path', (filePath, error) => {
             if(!error) {
-                fileStoreController.getUIConfig(filePath, callback);
+                fileStoreController.getFromFileStore(filePath, callback);
             }
             else {
                 callback(error);
@@ -16,7 +16,7 @@ class DatabaseFileStoreManager {
     getSkillXML(templateId, callback) {
         dbController.getSkillConfigFilePath(templateId, 'skill_xml_path', (filePath, error) => {
             if(!error) {
-                fileStoreController.getSkillXML(filePath, callback);
+                fileStoreController.getFromFileStore(filePath, callback);
             }
             else {
                 callback(error);
@@ -27,7 +27,7 @@ class DatabaseFileStoreManager {
     getIOMap(templateId, callback) {
         dbController.getSkillConfigFilePath(templateId, 'io_map_path', (filePath, error) => {
             if(!error) {
-                fileStoreController.getIOMap(filePath, callback);
+                fileStoreController.getFromFileStore(filePath, callback);
             }
             else {
                 callback(error);
@@ -38,7 +38,7 @@ class DatabaseFileStoreManager {
     getSkillModel(templateId, callback) {
         dbController.getSkillConfigFilePath(templateId, 'data_model_path', (filePath, error) => {
             if(!error) {
-                fileStoreController.getSkillModel(filePath, callback);
+                fileStoreController.getFromFileStore(filePath, callback);
             }
             else {
                 callback(error);

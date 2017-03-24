@@ -6,22 +6,6 @@ const mkdirp = require('mkdirp');
 
 class FileStoreController {
 
-    getUIConfig(filepath, callback) {
-        FileStoreController.readFromFileStore(filepath, callback);
-    }
-
-    getSkillXML(filepath, callback) {
-        FileStoreController.readFromFileStore(filepath, callback);
-    }
-
-    getIOMap(filepath, callback) {
-        FileStoreController.readFromFileStore(filepath, callback);
-    }
-
-    getSkillModel(filepath, callback) {
-        FileStoreController.readFromFileStore(filepath, callback);
-    }
-
     saveStepXML(taskId, stepIndex, OutputXML, callback){
         //HARDCODING task ID here
         var taskId = "EXP16.WD.02.03.01.t1";
@@ -37,7 +21,7 @@ class FileStoreController {
         return FileStoreController.uploadFileHandler(filePath);
     }
 
-    static readFromFileStore(filepath, callback) {
+    getFromFileStore(filepath, callback) {
         let absolutePath = config.fileStore.skillFolderPath + filepath;
 
         fs.readFile(absolutePath, 'utf8', function (err, data) {
