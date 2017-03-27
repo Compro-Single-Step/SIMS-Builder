@@ -6,17 +6,18 @@ try {
 }
 catch(error) {
     console.log(error);
+    return;
 }
 
 const db = mongoose.connection;
 
 db.on('connected', function () {
-    console.log('Mongoose default connection open');
+    console.log('Mongoose default connection established.');
 });
 
 // When the connection is disconnected
 db.on('disconnected', function () {
-    console.log('Mongoose default connection disconnected');
+    console.log('Mongoose default connection ended.');
 });
 
 exports.db = db;

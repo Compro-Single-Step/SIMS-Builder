@@ -1,12 +1,12 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const taskStepUISchema = new Schema({
+const uiTaskStepSchema = new Schema({
     task_id: "string",
     ui_task_data: Schema.Types.Mixed
 }, {collection: 'ui_task_step'});
 
-taskStepUISchema.statics = {
+uiTaskStepSchema.statics = {
     getStepUI: function(condition, map, callback) {
         this.find(condition, map, callback);
     },
@@ -15,8 +15,8 @@ taskStepUISchema.statics = {
     }
 };
 
-let taskStepUIModel = mongoose.model('ui_task_step', taskStepUISchema);
+let uiTaskStepModel = mongoose.model('ui_task_step', uiTaskStepSchema);
 
 module.exports = {
-    taskStepUIModel
+    uiTaskStepModel
 };
