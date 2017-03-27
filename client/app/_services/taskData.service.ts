@@ -54,40 +54,4 @@ export class DataService {
     console.error(errMsg);
     return Observable.throw(errMsg);
   }
-  // mapTaskData(res){
-  //   var taskData: Task = new Task();
-  //   taskData.id = res.TaskFriendlyID,
-  //   taskData.app = this.getAppName(res.TaskFriendlyID),
-  //   taskData.testStatus = true,
-  //   taskData.commitStatus = true,
-  //   taskData.stepData = this.getScenario(res.ScenarioItemList);
-  //   taskData.previewUrl = "preview/"+res.TaskFriendlyID,
-  //   taskData.testUrl = "test/"+res.TaskFriendlyID
-  //   return taskData;
-  // }
-  // getAppName(taskid){
-  //   var app = taskid.split(".")[1] // first part of the task id 
-  //   app = app.split("").reverse().join("")  //reverse the string
-  //   app = app.replace(parseInt(app).toString(),"");  //remove integer part from the same
-  //   app = app.split("").reverse().join("")
-  //   return {
-	// 	"XL": "Excel",
-	// 	"WD": "Word",
-	// 	"AC": "Access",
-	// 	"PPT": "PPT"
-  //   }[app] || "Access" ;     
-  // }
-  //  getStepData(item,index){
-  //   var step: Step = new Step();
-  //   step.stepIndex = item.ScenarioOrder;
-  //   step.stepText = item.QuesText;
-  //   step.stepDetails.SkillName = "Demo Skill";
-  //   step.stepDetails.MethodCount  = item.ScenarioPathwayList.length;
-  //   step.stepDetails.TemplateName = "Demo Template";
-  //   step.stepTestStatus = true;
-  //   return step;
-  //  }
-  // getScenario(sdata){
-  //   return sdata.map(this.getStepData);  
-  // }
 }
