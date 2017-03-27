@@ -8,8 +8,32 @@ const skillFactoryRef  = require("../modules/skill/skillFactory")
 
 class SkillController {
 
-    getUIConfig(templateId, taskId, stepIndex, contentFilter, callback) {
-        uiHandler.getUIConfig(templateId, taskId, stepIndex, contentFilter, callback);
+    getStepUIConfig(templateId, taskId, stepIndex, callback) {
+        uiHandler.getStepUIConfig(templateId, taskId, stepIndex, callback);
+    }
+
+    getUIConfig(templateId, callback) {
+        dbFilestoreMgr.getUIConfig(templateId, callback);
+    }
+
+    getSkillModel(templateId, callback) {
+        dbFilestoreMgr.getSkillModel(templateId, (error, skillModelData) => {
+            if(!error) {
+                callback(error, skillModelData);
+            } else {
+                callback(error);
+            }
+        });
+    }
+
+    getStepUIState(taskId, stepIndex, callback) {
+        dbFilestoreMgr.getStepUIState(taskId, stepIndex, (error, skillModelData) => {
+            if(!error) {
+                callback(error, skillModelData);
+            } else {
+                callback(error);
+            }
+        });
     }
 
     saveStepUIState(taskId, stepIndex, stepUIData, callback) {
