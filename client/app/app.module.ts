@@ -11,6 +11,7 @@ import { AuthGuard } from './_guards/auth.guard';
 import { AuthService } from './_services/auth.service';
 
 import { HttpClient } from './_services/http.client';
+import { DataService } from './_services/data.service' 
 import { AppConfig } from './app.config';
 import { LoginComponent } from './login/login.component';
 import { AuthModule  } from './auth.module';
@@ -29,7 +30,7 @@ import { AuthModule  } from './auth.module';
     
   ],
 
-  providers: [ AuthService,HttpClient,AuthGuard,AppConfig ],
+  providers: [ AuthService,HttpClient,AuthGuard,AppConfig,DataService ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

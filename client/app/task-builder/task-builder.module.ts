@@ -5,7 +5,6 @@ import { RouterModule } from '@angular/router';
 
 import { TaskBuilderComponent } from './task-builder.component';
 import { TaskstepComponent } from './taskstep/taskstep.component';
-import { DataService } from './shared/data.service';
 import { TaskDataResolver } from '../task-builder/shared/dataservice-resolver.service' 
 
 const routes = [
@@ -18,7 +17,7 @@ const routes = [
 @NgModule({
   imports: [ CommonModule, RouterModule.forChild(routes)],
   declarations: [ TaskBuilderComponent, TaskstepComponent],
-  providers: [DataService, TaskDataResolver]
+  providers: [ TaskDataResolver]
 })
 export class TaskBuilderModule {
 }

@@ -6,7 +6,7 @@
                 <span class="fw-bold step_number">Step {{step.stepIndex}}</span>
             </div>
             <div class="col-md-10 step_text">
-                <span>{{step.stepText}}</span>
+                <span [innerHTML]="step.stepText"></span>
                 <div class="row col-md-12">
                   <span class="skill_metadata">Skill :&nbsp;{{step.stepDetails.SkillName}}</span>
                   <span>|</span>
