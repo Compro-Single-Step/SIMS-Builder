@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, ElementRef, Input } from '@angular/core';
 import { BuilderDataService } from '../shared/builder-data.service';
 import { UIConfig } from '../../shared/UIConfig.model';
 import { BuilderModelObj } from '../shared/builder-model.service';
@@ -9,7 +9,7 @@ declare var localForage;
   templateUrl: './step-builder.component.html',
   styleUrls: ['./step-builder.component.scss']
 })
-export class StepBuilderComponent implements OnInit, OnChanges {
+export class StepBuilderComponent implements OnInit {
   uiConfig: UIConfig;
   $el: any;
   @Input() itemDataModel;
@@ -44,9 +44,6 @@ export class StepBuilderComponent implements OnInit, OnChanges {
       self.uiConfig = data;
     });
   }
-  ngOnChanges() {
-    console.log("on change");
-  }
   initScroll(): void {
     let $primaryContent = this.$el.find('#body');
     if (this.$el.find('.slimScrollDiv').length !== 0) {
@@ -66,12 +63,12 @@ export class StepBuilderComponent implements OnInit, OnChanges {
     setInterval(function(){
         localForage.getItem('model').then(function(value){
           if(JSON.stringify(value) === JSON.stringify(self.itemDataModel)){
-            console.log("same Model");
+            console.log("same Model: Do Nothing");
           } else {
-            console.log("Different Model");
+            console.log("Different Model: Update LocalStorage and Send to Sever");
             localForage.setItem('model', self.itemDataModel);
           }
         });
-      }, 3000);
+      }, 5000);
   }
 }
