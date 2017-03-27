@@ -7,34 +7,33 @@ const mkdirp = require('mkdirp');
 class FileStoreController {
 
     saveStepXML(taskId, stepIndex, OutputXML, callback){
-        //HARDCODING task ID here
+
         var taskId = "EXP16.WD.02.03.01.t1";
-        let filePath = FileStoreController.getTaskFolderPath(taskId) + "stepxmls/";
-        let fileName = stepIndex + ".xml";
+        let folderPath = this.getStepXMLFolderPath(taskId, stepIndex);
         
-        FileStoreController.saveToFileStore(filePath, fileName, OutputXML, callback);
+        this.saveToFileStore(folderPath, OutputXML, callback);
     }
 
     saveResourceFile(templateId, taskId, stepIndex, fileName) {
-        let filePath = FileStoreController.getTaskFolderPath(taskId) + "Assets/step-" + stepIndex;
+        let folderPath = this.getResourceFolderPath(taskId, stepIndex);
 
-        return FileStoreController.uploadFileHandler(filePath);
+        return this.uploadFileHandler(folderPath);
     }
 
-    getFromFileStore(filepath, callback) {
-        let absolutePath = config.fileStore.skillFolderPath + filepath;
+    getFileFromFileStore(filepath, callback) {
+        let absolutePath = config.fileStore.skillFolder + filepath;
 
         fs.readFile(absolutePath, 'utf8', function (err, data) {
             callback(err, data);
         });
     }
 
-    static uploadFileHandler(filePath) {
+    uploadFileHandler(filePath) {
         let storage = multer.diskStorage({
             destination: function (req, file, callback) {
                 let destinationFilePath = filePath;
 
-                FileStoreController.createFolder(destinationFilePath, (error) => {
+                this.createFolder(destinationFilePath, (error) => {
                     callback(null, destinationFilePath);
                 });
             },
@@ -46,49 +45,30 @@ class FileStoreController {
         return upload.fields([{ name: 'Browse', maxCount: 1 }]);
     }
 
-    static createFolder(folderPath, callback){
+    createFolder(folderPath, callback){
         mkdirp(folderPath, (error) => {
             callback(error);
         });
     }
 
-    static getTaskFolderPath(taskId) {
-        let taskIdArr = taskId.toLowerCase().split('.');
-        if(taskIdArr[0].length > 3) {
-            taskIdArr[0] = taskIdArr[0].slice(0, taskIdArr[0].length - 2);
-        }
-        
-        let taskIdPath = "";
-        let taskFolder = "";
-
-        for(let i = 0; i < taskIdArr.length; i++) {
-            if(i < taskIdArr.length - 3) {
-                taskIdPath += taskIdArr[i] + "/";
-            }
-            else if (i == taskIdArr.length - 1){
-                taskFolder += taskIdArr[i] + "/";
-            }
-            else {
-                taskFolder += taskIdArr[i] + ".";
-            }
-        }
-        
-        let filePath = config.fileStore.baseURL + config.fileStore.xmlFolderRelativePath + taskIdPath + taskFolder;
-        return filePath;
+    getStepXMLFolderPath(taskId, stepIndex) {
+        return config.fileStore.xmlFolderPath + taskId + "/step-" + stepIndex + "/";
     }
 
-    static saveToFileStore(filepath, fileName, file, callback) {
-        
-        //Create Folder if already don't exist
-        FileStoreController.createFolder(filepath, (error) => {
-            if(!error){
-                //Saving XML
-                fs.writeFile(filepath + fileName, file, (err) => {
+    getResourceFolderPath(taskId, stepIndex) {
+        return config.fileStore.resourceFolder + taskId + "/" + stepIndex + "/";
+    }
+
+    saveToFileStore(filepath, file, callback) {
+        this.createFolder(filepath, (error) => {
+            if(!error) {
+                fs.writeFile(filepath + "task.xml", file, (err) => {
                     callback(err);
                 });
             }
-            else
-                 callback(err);
+            else {
+                callback(err);
+            }
         });
     }
 }

@@ -12,8 +12,25 @@ const skillConfigRepoSchema = new mongoose.Schema({
 });
 
 skillConfigRepoSchema.statics = {
-    getFilePath: function(query, map, callback) {
-        this.find(query, map, callback);
+    getUIConfigPath: function(templateId, callback) {
+        this.find({"template_id": templateId}, {"_id": false, "ui_config_path": true}, (error, data) => {
+            callback(data[0]["ui_config_path"], error);
+        });
+    },
+    getIOMapPath: function(templateId, callback) {
+        this.find({"template_id": templateId}, {"_id": false, "io_map_path": true}, (error, data) => {
+            callback(data[0]["io_map_path"], error);
+        });
+    },
+    getSkillXMLPath: function(templateId, callback) {
+        this.find({"template_id": templateId}, {"_id": false, "skill_xml_path": true}, (error, data) => {
+            callback(data[0]["skill_xml_path"], error);
+        });
+    },
+    getSkillModelPath: function(templateId, callback) {
+        this.find({"template_id": templateId}, {"_id": false, "data_model_path": true}, (error, data) => {
+            callback(data[0]["data_model_path"], error);
+        });
     }
 };
 

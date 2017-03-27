@@ -3,9 +3,9 @@ const fileStoreController = require('../../controllers/filestore.controller');
 
 class DatabaseFileStoreManager {
     getUIConfig(templateId, callback) {
-        dbController.getSkillConfigFilePath(templateId, 'ui_config_path', (filePath, error) => {
+        dbController.getUIConfigPath(templateId, (filePath, error) => {
             if(!error) {
-                fileStoreController.getFromFileStore(filePath, callback);
+                fileStoreController.getFileFromFileStore(filePath, callback);
             }
             else {
                 callback(error);
@@ -14,9 +14,9 @@ class DatabaseFileStoreManager {
     }
 
     getSkillXML(templateId, callback) {
-        dbController.getSkillConfigFilePath(templateId, 'skill_xml_path', (filePath, error) => {
+        dbController.getSkillXMLPath(templateId, (filePath, error) => {
             if(!error) {
-                fileStoreController.getFromFileStore(filePath, callback);
+                fileStoreController.getFileFromFileStore(filePath, callback);
             }
             else {
                 callback(error);
@@ -25,9 +25,9 @@ class DatabaseFileStoreManager {
     }
 
     getIOMap(templateId, callback) {
-        dbController.getSkillConfigFilePath(templateId, 'io_map_path', (filePath, error) => {
+        dbController.getIOMapPath(templateId, (filePath, error) => {
             if(!error) {
-                fileStoreController.getFromFileStore(filePath, callback);
+                fileStoreController.getFileFromFileStore(filePath, callback);
             }
             else {
                 callback(error);
@@ -36,9 +36,9 @@ class DatabaseFileStoreManager {
     }
 
     getSkillModel(templateId, callback) {
-        dbController.getSkillConfigFilePath(templateId, 'data_model_path', (filePath, error) => {
+        dbController.getSkillModelPath(templateId, (filePath, error) => {
             if(!error) {
-                fileStoreController.getFromFileStore(filePath, callback);
+                fileStoreController.getFileFromFileStore(filePath, callback);
             }
             else {
                 callback(error);
