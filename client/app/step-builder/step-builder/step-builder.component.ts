@@ -2,6 +2,9 @@ import { Component, OnInit, ElementRef, Input } from '@angular/core';
 import { BuilderDataService } from '../shared/builder-data.service';
 import { UIConfig } from '../../shared/UIConfig.model';
 import { BuilderModelObj } from '../shared/builder-model.service';
+
+import { IntervalObservable } from 'rxjs/observable/IntervalObservable';
+
 declare var jQuery;
 declare var localForage;
 @Component({
@@ -33,8 +36,6 @@ export class StepBuilderComponent implements OnInit {
     let self = this;
     localForage.setItem('model', this.itemDataModel).then(function () {
       return localForage.getItem('model');
-    }).then(function (value) {
-      self.checkForModelChange();
     }).catch(function (err) {
       console.warn("Error while saving to Local Storage");
     });
@@ -43,6 +44,7 @@ export class StepBuilderComponent implements OnInit {
     this.bds.getuiconfig().subscribe(function(data){
       self.uiConfig = data;
     });
+    IntervalObservable.create(5000).subscribe(() => self.checkForModelChange());
   }
   initScroll(): void {
     let $primaryContent = this.$el.find('#body');
@@ -60,15 +62,13 @@ export class StepBuilderComponent implements OnInit {
 
   checkForModelChange(){
     let self = this;
-    setInterval(function(){
-        localForage.getItem('model').then(function(value){
-          if(JSON.stringify(value) === JSON.stringify(self.itemDataModel)){
-            console.log("same Model: Do Nothing");
-          } else {
-            console.log("Different Model: Update LocalStorage and Send to Sever");
-            localForage.setItem('model', self.itemDataModel);
-          }
-        });
-      }, 5000);
+    localForage.getItem('model').then(function(value){
+      if(JSON.stringify(value) === JSON.stringify(self.itemDataModel)){
+        console.log("same Model: Do Nothing");
+      } else {
+        console.log("Different Model: Update LocalStorage and Send to Sever");
+        localForage.setItem('model', self.itemDataModel);
+      }
+    });
   }
 }
