@@ -28,13 +28,13 @@ class FileStoreController {
         });
     }
 
-    uploadFileHandler(filePath) {
+    uploadFileHandler(folderPath) {
         let storage = multer.diskStorage({
             destination: function (req, file, callback) {
-                let destinationFilePath = filePath;
+                let destinationFolder = folderPath;
 
-                this.createFolder(destinationFilePath, (error) => {
-                    callback(null, destinationFilePath);
+                this.createFolder(destinationFolder, (error) => {
+                    callback(null, destinationFolder);
                 });
             },
             filename: function (req, file, callback) {
