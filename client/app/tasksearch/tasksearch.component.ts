@@ -20,7 +20,6 @@ export class TaskSearch implements OnInit{
 
 }
   onSearch() {
-    console.log('Search for task ', this.taskID, ' in Baloo');
     this.dataService.getTaskData(this.taskID).subscribe(
                        taskData => {
                          this.TaskData = taskData;
