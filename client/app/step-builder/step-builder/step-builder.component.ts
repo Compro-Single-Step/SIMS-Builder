@@ -12,7 +12,7 @@ declare var localForage;
 export class StepBuilderComponent implements OnInit {
   uiConfig: UIConfig;
   $el: any;
-  @Input() itemDataModel;
+  itemDataModel;
   builderModelSrvc;
   constructor(el: ElementRef, private bds: BuilderDataService) {
     this.$el = jQuery(el.nativeElement);
