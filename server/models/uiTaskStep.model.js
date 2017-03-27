@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const uiTaskStepSchema = new Schema({
     task_id: "string",
-    ui_task_data: Schema.Types.Mixed
+    task_data: Schema.Types.Mixed
 }, {collection: 'ui_task_step'});
 
 uiTaskStepSchema.statics = {
@@ -16,7 +16,7 @@ uiTaskStepSchema.statics = {
 
         this.find(condition, projection, (error, data) => {
             let stepId = "step_" + stepIndex;
-            let stepUIState = data[0]._doc.task_data[stepId];
+            let stepUIState = data[0].task_data[stepId];
             callback(error, stepUIState);
         });
     },
