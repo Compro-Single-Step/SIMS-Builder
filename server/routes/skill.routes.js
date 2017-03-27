@@ -3,17 +3,54 @@ const router = express.Router();
 const skillController = require('../controllers/skill.controller');
 //const dbFilestoreMgr = require('../modules/skill/dbFilestoreMgr');
 
-router.get('/uiconfig/:templateId/:taskId/:stepIndex', (req, res) => {
+
+router.get('/stepuiconfig/uiconfig/:templateId', (req, res) => {
+    let templateId = req.params.templateId;
+    
+    skillController.getUIConfig(templateId, (error, data) => {
+        if(!error) {
+            res.send(data);
+        }
+        else {
+            res.send(error);
+        }
+    });
+});
+
+router.get('/stepuiconfig/model/:templateId', (req, res) => {
+    let templateId = req.params.templateId;
+    
+    skillController.getSkillModel(templateId, (error, data) => {
+        if(!error) {
+            res.send(data);
+        }
+        else {
+            res.send(error);
+        }
+    });
+});
+
+router.get('/stepuiconfig/step/:taskId/:stepIndex', (req, res) => {
+    
+    let taskId = req.params.taskId;
+    let stepIndex = req.params.stepIndex;
+    
+    skillController.getStepUIState(taskId, stepIndex, (error, data) => {
+        if(!error) {
+            res.send(data);
+        }
+        else {
+            res.send(error);
+        }
+    });
+});
+
+router.get('/stepuiconfig/:templateId/:taskId/:stepIndex', (req, res) => {
     let templateId = req.params.templateId;
     let taskId = req.params.taskId;
     let stepIndex = req.params.stepIndex;
-
-    let contentFilter = {
-        skillModelFlag: req.query.skillmodel === "false"?false:true,
-        stepUIStateFlag: req.query.stepuistate === "false"?false:true
-    }
     
-    skillController.getUIConfig(templateId, taskId, stepIndex, contentFilter, (error, data) => {
+    skillController.getStepUIConfig(templateId, taskId, stepIndex, (error, data) => {
         if(!error) {
             res.send(data);
         }
