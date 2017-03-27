@@ -1,8 +1,9 @@
 const path = require('path');
-const serverRootPath = path.normalize(__dirname + '/..');
-const fileStorePath = serverRootPath + '/fileStore/';
-const xmlFolderPath = fileStorePath + 'XMLs/';
-const skillFolderPath = fileStorePath + 'skills/';
+const serverRootPath = path.normalize(__dirname + '/../');
+const fileStore = serverRootPath + 'fileStore/';
+const xmlFolder = fileStore + 'XMLs/';
+const skillFolder = fileStore + 'skills/';
+const resourceFolder = fileStore + 'Resources/';
 const env = process.env.NODE_ENV || 'local';
 
 const config = {
@@ -26,8 +27,9 @@ const config = {
         },
         root: serverRootPath,
         fileStore: {
-            skillFolderPath: skillFolderPath,
-            xmlFolderPath: xmlFolderPath
+            skillFolder: skillFolder,
+            xmlFolder: xmlFolder,
+            resourceFolder: resourceFolder
         }
     },
     development: {
@@ -50,8 +52,9 @@ const config = {
         },
         root: serverRootPath,
         fileStore: {
-            skillFolderPath: skillFolderPath,
-            xmlFolderPath: xmlFolderPath
+            skillFolder: skillFolder,
+            xmlFolder: xmlFolder,
+            resourceFolder: resourceFolder
         }
     },
     production: {
@@ -74,8 +77,9 @@ const config = {
         },
         root: serverRootPath,
         fileStore: {
-            skillFolderPath: skillFolderPath,
-            xmlFolderPath: xmlFolderPath
+            skillFolder: skillFolder,
+            xmlFolder: xmlFolder,
+            resourceFolder: resourceFolder
         }
     }
 };
