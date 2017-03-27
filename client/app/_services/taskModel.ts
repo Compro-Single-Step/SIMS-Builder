@@ -1,4 +1,4 @@
-import { Step } from './step';
+import { Step } from './stepModel';
 
 export class Task {
  		id:string;

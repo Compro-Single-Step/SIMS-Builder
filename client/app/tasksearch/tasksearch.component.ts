@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { DataService } from '../_services/data.service';
+import { DataService } from '../_services/taskData.service';
 
 
 @Component({
@@ -24,7 +24,7 @@ export class TaskSearch implements OnInit{
                        taskData => {
                          this.TaskData = taskData;
                          if(this.TaskData == "Invalid task ID")
-                          this.message="Such Task doesnot exist";
+                          this.message="Such Task does not exist";
                          else
                           this.router.navigate(["/task",this.taskID]);
                         });

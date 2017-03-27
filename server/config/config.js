@@ -39,7 +39,8 @@ const config = {
                 pass: 'task_builder'
             }
         },
-        root: serverRootPath
+        root: serverRootPath,
+        taskDataServerUrl: 'http://billi.comprotechnologies.com/SIMsInternal/internal/ScenarioPathways.ashx?scenario='   
     },
     production: {
         app: {

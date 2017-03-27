@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 
 import { TaskBuilderComponent } from './task-builder.component';
 import { TaskstepComponent } from './taskstep/taskstep.component';
-import { TaskDataResolver } from '../task-builder/shared/dataservice-resolver.service' 
+import { TaskDataResolver } from '../task-builder/shared/taskDataResolver.service' 
 
 const routes = [
   { path: '', component: TaskBuilderComponent, pathMatch: 'full',resolve: {
