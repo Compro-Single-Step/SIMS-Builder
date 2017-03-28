@@ -29,7 +29,9 @@ import { UserService } from './_services/user.service';
     routing
     
   ],
-providers: [ AuthService,HttpClient,AuthGuard,AppConfig,TaskDataService,UserService ],
-bootstrap: [AppComponent]
+
+  providers: [ AuthService,HttpClient,AuthGuard,AppConfig,TaskDataService,UserService ],
+
+  bootstrap: [AppComponent]
 })
 export class AppModule {}
