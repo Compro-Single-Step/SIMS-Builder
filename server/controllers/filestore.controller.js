@@ -6,6 +6,14 @@ const mkdirp = require('mkdirp');
 
 class FileStoreController {
 
+    constructor() {
+        this.fileTypeFolderPathMap = {
+            "skillConfig": config.fileStore.skillFolder,
+            "uploadedResource": config.fileStore.resourceFolder,
+            "xml": config.fileStore.xmlFolderPath
+        };
+    }
+
     saveStepXML(taskId, stepIndex, OutputXML, callback){
 
         var taskId = "EXP16.WD.02.03.01.t1";
@@ -20,8 +28,8 @@ class FileStoreController {
         return this.uploadFileHandler(folderPath);
     }
 
-    getFileFromFileStore(filepath, callback) {
-        let absolutePath = config.fileStore.skillFolder + filepath;
+    getFileFromFileStore(filepath, fileType, callback) {
+        let absolutePath = this.fileTypeFolderPathMap[fileType] + filepath;
 
         fs.readFile(absolutePath, 'utf8', function (err, data) {
             callback(err, data);

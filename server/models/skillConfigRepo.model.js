@@ -11,25 +11,21 @@ const skillConfigRepoSchema = new mongoose.Schema({
     collection: 'skill_config_repo'
 });
 
+const configTypeMap = {
+    "uiconfig": "ui_config_path",
+    "iomap": "io_map_path",
+    "xml": "skill_xml_path",
+    "model": "data_model_path"
+}
+
 skillConfigRepoSchema.statics = {
-    getUIConfigPath: function(templateId, callback) {
-        this.find({"template_id": templateId}, {"_id": false, "ui_config_path": true}, (error, data) => {
-            callback(data[0]["ui_config_path"], error);
-        });
-    },
-    getIOMapPath: function(templateId, callback) {
-        this.find({"template_id": templateId}, {"_id": false, "io_map_path": true}, (error, data) => {
-            callback(data[0]["io_map_path"], error);
-        });
-    },
-    getSkillXMLPath: function(templateId, callback) {
-        this.find({"template_id": templateId}, {"_id": false, "skill_xml_path": true}, (error, data) => {
-            callback(data[0]["skill_xml_path"], error);
-        });
-    },
-    getSkillModelPath: function(templateId, callback) {
-        this.find({"template_id": templateId}, {"_id": false, "data_model_path": true}, (error, data) => {
-            callback(data[0]["data_model_path"], error);
+    getSkillConfigPath: function(templateId, configType, callback) {
+
+        let projection = {"_id": false};
+        projection[configTypeMap[configType]] = true;
+
+        this.find({"template_id": templateId}, projection, (error, data) => {
+            callback(data[0][configTypeMap[configType]], error);
         });
     }
 };

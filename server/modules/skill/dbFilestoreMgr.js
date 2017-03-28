@@ -1,22 +1,23 @@
 const dbController = require('../../controllers/db.controller');
 const fileStoreController = require('../../controllers/filestore.controller');
+const config = require('../../config/config');
 
 class DatabaseFileStoreManager {
     getUIConfig(templateId, callback) {
-        dbController.getUIConfigPath(templateId, (filePath, error) => {
+        dbController.getSkillConfigPath(templateId, config.configType.UI_CONFIG, (filePath, error) => {
             if(!error) {
-                fileStoreController.getFileFromFileStore(filePath, callback);
+                fileStoreController.getFileFromFileStore(filePath, config.fileTypes.SKILL_CONFIG, callback);
             }
             else {
                 callback(error);
             }
         });
     }
-
+ 
     getSkillXML(templateId, callback) {
-        dbController.getSkillXMLPath(templateId, (filePath, error) => {
+        dbController.getSkillConfigPath(templateId, config.configType.XML, (filePath, error) => {
             if(!error) {
-                fileStoreController.getFileFromFileStore(filePath, callback);
+                fileStoreController.getFileFromFileStore(filePath, config.fileTypes.SKILL_CONFIG, callback);
             }
             else {
                 callback(error);
@@ -25,9 +26,9 @@ class DatabaseFileStoreManager {
     }
 
     getIOMap(templateId, callback) {
-        dbController.getIOMapPath(templateId, (filePath, error) => {
+        dbController.getSkillConfigPath(templateId, config.configType.IO_MAP, (filePath, error) => {
             if(!error) {
-                fileStoreController.getFileFromFileStore(filePath, callback);
+                fileStoreController.getFileFromFileStore(filePath, config.fileTypes.SKILL_CONFIG, callback);
             }
             else {
                 callback(error);
@@ -36,9 +37,9 @@ class DatabaseFileStoreManager {
     }
 
     getSkillModel(templateId, callback) {
-        dbController.getSkillModelPath(templateId, (filePath, error) => {
+        dbController.getSkillConfigPath(templateId, config.configType.MODEL, (filePath, error) => {
             if(!error) {
-                fileStoreController.getFileFromFileStore(filePath, callback);
+                fileStoreController.getFileFromFileStore(filePath, config.fileTypes.SKILL_CONFIG, callback);
             }
             else {
                 callback(error);

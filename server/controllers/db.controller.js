@@ -19,20 +19,8 @@ class DatabaseController {
         });
     }
 
-    getUIConfigPath(templateId, callback) {
-        skillConfigRepoModel.getUIConfigPath(templateId, callback);
-    }
-
-    getSkillXMLPath(templateId, callback) {
-        skillConfigRepoModel.getSkillXMLPath(templateId, callback);
-    }
-
-    getIOMapPath(templateId, callback) {
-        skillConfigRepoModel.getIOMapPath(templateId, callback);
-    }
-
-    getSkillModelPath(templateId, callback) {
-        skillConfigRepoModel.getSkillModelPath(templateId, callback);
+    getSkillConfigPath(templateId, configType, callback) {
+        skillConfigRepoModel.getSkillConfigPath(templateId, configType, callback);
     }
 }
 
