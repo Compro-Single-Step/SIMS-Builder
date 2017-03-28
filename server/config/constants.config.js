@@ -1,4 +1,4 @@
-var constants = {
+const constants = {
 	httpResponseMessages: {
 		/* 2xx */
 		ok: 'OK.',
@@ -17,6 +17,18 @@ var constants = {
 		internalServerError: 'Internal server error.',
 		/* General */
 		deleted: 'Deleted.'
+	},
+	fileTypes: {
+		"SKILL_CONFIG": "skillConfig",
+		"RESOURCE": "uploadedResource",
+		"XML": "xml"
+	},
+	skillConfigType: {
+		"UI_CONFIG": "uiconfig",
+		"IO_MAP": "iomap",
+		"XML": "xml",
+		"MODEL": "model"
 	}
 };
+
 module.exports = constants;

@@ -11,29 +11,17 @@ class SkillController {
     getStepUIConfig(templateId, taskId, stepIndex, callback) {
         uiHandler.getStepUIConfig(templateId, taskId, stepIndex, callback);
     }
-
+    //will rename this function after meeting feedback.
     getUIConfig(templateId, callback) {
         dbFilestoreMgr.getUIConfig(templateId, callback);
     }
 
     getSkillModel(templateId, callback) {
-        dbFilestoreMgr.getSkillModel(templateId, (error, skillModelData) => {
-            if(!error) {
-                callback(error, skillModelData);
-            } else {
-                callback(error);
-            }
-        });
+        dbFilestoreMgr.getSkillModel(templateId, callback);
     }
 
     getStepUIState(taskId, stepIndex, callback) {
-        dbFilestoreMgr.getStepUIState(taskId, stepIndex, (error, skillModelData) => {
-            if(!error) {
-                callback(error, skillModelData);
-            } else {
-                callback(error);
-            }
-        });
+        dbFilestoreMgr.getStepUIState(taskId, stepIndex, callback);
     }
 
     saveStepUIState(taskId, stepIndex, stepUIData, callback) {

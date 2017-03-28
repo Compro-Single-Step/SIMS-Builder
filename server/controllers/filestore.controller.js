@@ -16,16 +16,15 @@ class FileStoreController {
 
     saveStepXML(taskId, stepIndex, OutputXML, callback) {
 
-        let taskId = "EXP16.WD.02.03.01.t1";
         let folderPath = this.getStepXMLFolderPath(taskId, stepIndex);
-        
-        this.saveToFileStore(folderPath, OutputXML, callback);
+        let fileName = "task.xml";  //this will come from out side.
+        this.saveFileToFileStore(folderPath, fileName, OutputXML, callback);
     }
 
     saveResourceFile(templateId, taskId, stepIndex, fileName) {
         let folderPath = this.getUploadedResourceFolderPath(taskId, stepIndex);
 
-        return this.uploadFileHandler(folderPath);
+        return this.uploadFileHandler(folderPath, fileName);
     }
 
     getFileFromFileStore(filepath, fileType, callback) {
@@ -36,7 +35,7 @@ class FileStoreController {
         });
     }
 
-    uploadFileHandler(folderPath) {
+    uploadFileHandler(folderPath, fileName) {
         let storage = multer.diskStorage({
             destination: function (req, file, callback) {
                 let destinationFolder = folderPath;
@@ -46,7 +45,7 @@ class FileStoreController {
                 });
             },
             filename: function (req, file, callback) {
-                callback(null, file.originalname);
+                callback(null, fileName || file.originalname);
             }
         });
         let upload = multer({ storage: storage });
@@ -67,10 +66,10 @@ class FileStoreController {
         return config.fileStore.resourceFolder + taskId + "/" + stepIndex + "/";
     }
 
-    saveToFileStore(filepath, file, callback) {
+    saveFileToFileStore(filepath, fileName, file, callback) {
         this.createFolder(filepath, (error) => {
             if(!error) {
-                fs.writeFile(filepath + "task.xml", file, (err) => {
+                fs.writeFile(filepath + fileName, file, (err) => {
                     callback(err);
                 });
             }
