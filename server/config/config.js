@@ -6,19 +6,6 @@ const skillFolder = fileStore + 'skills/';
 const resourceFolder = fileStore + 'Resources/';
 const env = process.env.NODE_ENV || 'local';
 
-const fileTypes = {
-    "SKILL_CONFIG": "skillConfig",
-    "RESOURCE": "uploadedResource",
-    "XML": "xml"
-}
-
-const configType = {
-    "UI_CONFIG": "uiconfig",
-    "IO_MAP": "iomap",
-    "XML": "xml",
-    "MODEL": "model"
-}
-
 const config = {
     local: {
         app: {
@@ -43,9 +30,7 @@ const config = {
             skillFolder: skillFolder,
             xmlFolder: xmlFolder,
             resourceFolder: resourceFolder
-        },
-        fileTypes: fileTypes,
-        configType: configType
+        }
     },
     development: {
         app: {
@@ -70,9 +55,7 @@ const config = {
             skillFolder: skillFolder,
             xmlFolder: xmlFolder,
             resourceFolder: resourceFolder
-        },
-        fileTypes: fileTypes,
-        configType: configType
+        }
     },
     production: {
         app: {
@@ -97,9 +80,7 @@ const config = {
             skillFolder: skillFolder,
             xmlFolder: xmlFolder,
             resourceFolder: resourceFolder
-        },
-        fileTypes: fileTypes,
-        configType: configType
+        }
     }
 };
 

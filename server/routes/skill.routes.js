@@ -30,7 +30,7 @@ router.get('/stepuiconfig/model/:templateId', (req, res) => {
     });
 });
 
-router.get('/stepuiconfig/step/:taskId/:stepIndex', (req, res) => {
+router.get('/stepuiconfig/stepuistate/:taskId/:stepIndex', (req, res) => {
     
     let taskId = req.params.taskId;
     let stepIndex = req.params.stepIndex;
