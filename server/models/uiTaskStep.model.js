@@ -20,8 +20,17 @@ uiTaskStepSchema.statics = {
             callback(error, stepUIState);
         });
     },
-    updateStepUIData: function(updateCriteria, updateData, options, callback) {
-        this.collection.update(updateCriteria, updateData, options, callback);
+    updateStepUIData: function(taskId, stepIndex, stepUIData, callback) {
+
+        let condition = {"task_id": taskId};
+        let jsonKey = "task_data.step_" + stepIndex;
+        let updateData = { $set: {}};
+        updateData.$set[jsonKey] = stepUIData;
+        let options = { upsert: true };
+
+        this.collection.update(updateCriteria, updateData, options, (error, success) => {
+            callback(error, success);
+        });
     }
 };
 

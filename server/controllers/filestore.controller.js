@@ -14,16 +14,16 @@ class FileStoreController {
         };
     }
 
-    saveStepXML(taskId, stepIndex, OutputXML, callback){
+    saveStepXML(taskId, stepIndex, OutputXML, callback) {
 
-        var taskId = "EXP16.WD.02.03.01.t1";
+        let taskId = "EXP16.WD.02.03.01.t1";
         let folderPath = this.getStepXMLFolderPath(taskId, stepIndex);
         
         this.saveToFileStore(folderPath, OutputXML, callback);
     }
 
     saveResourceFile(templateId, taskId, stepIndex, fileName) {
-        let folderPath = this.getResourceFolderPath(taskId, stepIndex);
+        let folderPath = this.getUploadedResourceFolderPath(taskId, stepIndex);
 
         return this.uploadFileHandler(folderPath);
     }
@@ -53,7 +53,7 @@ class FileStoreController {
         return upload.fields([{ name: 'Browse', maxCount: 1 }]);
     }
 
-    createFolder(folderPath, callback){
+    createFolder(folderPath, callback) {
         mkdirp(folderPath, (error) => {
             callback(error);
         });
@@ -63,7 +63,7 @@ class FileStoreController {
         return config.fileStore.xmlFolderPath + taskId + "/step-" + stepIndex + "/";
     }
 
-    getResourceFolderPath(taskId, stepIndex) {
+    getUploadedResourceFolderPath(taskId, stepIndex) {
         return config.fileStore.resourceFolder + taskId + "/" + stepIndex + "/";
     }
 

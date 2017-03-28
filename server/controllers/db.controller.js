@@ -8,15 +8,7 @@ class DatabaseController {
     }
 
     saveStepUIState(taskId, stepIndex, stepUIData, callback) {
-        let condition = {"task_id": taskId};
-        let jsonKey = "task_data.step_" + stepIndex;
-        let updateData = { $set: {}};
-        updateData.$set[jsonKey] = stepUIData;
-        let options = { upsert: true };
-
-        uiTaskStepModel.updateStepUIData(condition, updateData, options, (error, success) => {
-            callback(error, success);
-        });
+        uiTaskStepModel.updateStepUIData(taskId, stepIndex, stepUIData, callback);
     }
 
     getSkillConfigPath(templateId, configType, callback) {
