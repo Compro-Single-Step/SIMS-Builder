@@ -15,7 +15,7 @@ import { DataService } from './_services/taskData.service'
 import { AppConfig } from './app.config';
 import { LoginComponent } from './login/login.component';
 import { AuthModule  } from './auth.module';
-
+import { UserService } from './_services/user.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,7 +30,7 @@ import { AuthModule  } from './auth.module';
     
   ],
 
-  providers: [ AuthService,HttpClient,AuthGuard,AppConfig,DataService ],
+  providers: [ AuthService,HttpClient,AuthGuard,AppConfig,DataService,UserService ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
