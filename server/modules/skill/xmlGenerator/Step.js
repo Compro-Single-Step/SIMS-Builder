@@ -11,6 +11,7 @@ module.exports = class Step {
         console.log("this.preloadComps: ", this.preloadComps);
 
         this.states = {}; // object holding state objects with state id as key
+        this.stateOrderIdMap = {};
         this.generateStates(stepJson[1], attrValueMap);
     }
 
@@ -23,6 +24,7 @@ module.exports = class Step {
             let state = new State (states[idx], attrValueMap.states[states[idx].props.id], this);
 
             this.states[states[idx].props.id] = state;
+            this.stateOrderIdMap[idx] = states[idx].props.id;
         }
 
     }
@@ -69,8 +71,8 @@ module.exports = class Step {
     generateStatesXML (){
         let xmlString = '<states>';
 
-        for (let stateId in this.states){
-            xmlString += this.states[stateId].generateXML();
+        for (let idx in this.stateOrderIdMap){
+            xmlString += this.states[this.stateOrderIdMap[idx]].generateXML();
         }
 
         xmlString += '</states>';

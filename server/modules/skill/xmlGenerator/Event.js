@@ -6,7 +6,7 @@ module.exports = class CompEvent {
         this.id = args.props.id;
         this.desc = args.props.desc;
         if(args.props.followup){
-            this.followUp = args.props.followup;
+            this.followup = args.props.followup;
         }
 
         // structur of one validation/ validate node inside an event
@@ -46,8 +46,9 @@ module.exports = class CompEvent {
 
             let currValProps = Object.keys(validations[i]["props"]);
             for(let j=0; j<currValProps.length; j++){
-                currValidation["props"][currValProps[j]] = validations[i]["props"][currValProps[j]]
+                currValidation["props"][currValProps[j]] = validations[i]["props"][currValProps[j]];
             }
+            console.log("currValidation.props: ", currValidation["props"]);
 
             let currValidationComps = validations[i]["comp"];
             for(let j=0; j<currValidationComps.length; j++){
@@ -103,9 +104,23 @@ module.exports = class CompEvent {
         for(let idx = 0; idx<this.validations.length; idx++){
             let currValidation = this.validations[idx];
 
-            xmlString += '<validate followup="'+ currValidation.props.followUp+'"' +
-                ' operator="'+currValidation.props.operator+'"' +
-                ' targetAttrSet="'+currValidation.props.targetAttrSet+'"' +'>';
+            xmlString += '<validate';
+
+            if(currValidation.props.followup){
+                xmlString += ' followup="'+ currValidation.props.followup+'"';
+            }
+
+            if(currValidation.props.operator){
+                xmlString += ' operator="'+currValidation.props.operator+'"';
+            }
+
+            if(currValidation.props["target-attribute-set"]){
+                xmlString += ' target-attribute-set="'+currValidation.props["target-attribute-set"]+'"';
+            }
+
+            xmlString +=  ' >';
+                
+                
 
             xmlString += this.generateCompNodes(currValidation);
             xmlString += '</validate>';

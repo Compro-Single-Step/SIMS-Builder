@@ -1,6 +1,7 @@
 const path = require('path');
 const serverRootPath = path.normalize(__dirname + '/..');
 const fileStorePath = serverRootPath + '/fileStore/';
+const skillStorePath = fileStorePath + '/skills/';
 const xmlFolderPath = fileStorePath + 'XMLs/';
 const env = process.env.NODE_ENV || 'local';
 
@@ -26,7 +27,7 @@ const config = {
         },
         root: serverRootPath,
         fileStore: {
-            baseURL: fileStorePath,
+            baseURL: skillStorePath,
             xmlFolderPath: xmlFolderPath
         }
     },

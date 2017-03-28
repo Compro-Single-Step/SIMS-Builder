@@ -4,7 +4,9 @@ module.exports = class State {
     constructor (args, attrValMap, parentStepRef){
         this.id = args.props.id; // state id
         this.description = args.props.desc;
-        this.stepId = args.props.txt;
+        this.compstack = args.props.compstack;
+        this.txt = args.props.txt;
+        this.islast = args.props.islast;
         this.stepRef = parentStepRef;
         this.comps = {};
 
@@ -52,8 +54,21 @@ module.exports = class State {
 
     generateXML (){
         console.log("this.comps: ", this.comps);
-        let xml = '<state id="'+ this.id +'" desc="'+ this.description +'"><comps>';
+        let xml = '<state id="'+ this.id +'" desc="'+ this.description +'" ';
 
+        if(this.compstack){
+            xml += 'compstack="'+this.compstack+'" ';
+        }
+
+        if(this.txt){
+            xml += 'txt="'+this.txt+'" ';
+        }
+
+        if(this.islast){
+            xml += 'islast="'+this.islast+'" ';
+        }
+
+        xml += '><comps>';
 
         for (let currComp in this.comps) {
             xml += this.comps[currComp].generateXML();

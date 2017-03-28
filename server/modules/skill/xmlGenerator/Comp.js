@@ -16,7 +16,14 @@ module.exports = class Comp {
 
         this.id = comp.props.id;
         this.mode = comp.props.mode;
+        
+        // this var holds the state id (a string) to be mentioned in the xml 
+        // so that the attribute of this same comp from that state can be refered by the SIMS engine
+        this.xmlStateRef = comp.props["ref-state"];
+
+        // this var holds the reference of state object of which this comp object is child
         this.stateRef = parentStateRef;
+
         this.attrValMap = attrValMap;
         console.log("comp attrValMap: ", attrValMap);
 
@@ -61,28 +68,50 @@ module.exports = class Comp {
             }
         };
 
+        this.xmlAttrToObjFnMap = {
+            "sizeandpos": {
+                "fnName": "createAttrs",
+                "attrType": "sizeandpos"
+            },
+
+            "initialattrs": {
+                "fnName": "createAttrs",
+                "attrType": "initial"
+            },
+
+            "finalattrs": {
+                "fnName": "createAttrs",
+                "attrType": "final"
+            },
+
+            "initialattributesets": {
+                "fnName": "createAttrSets",
+                "attrType": "initial"
+            },
+
+            "finalattributesets": {
+                "fnName": "createAttrSets",
+                "attrType": "final"
+            }
+        }
+
         this.addAttrs(comp);
 
     }
 
+    
+
+
     addAttrs (comp){
-
-        if(comp.initialattrs){
-            this.attributeSets.initialattrs = this.createAttrs(comp.initialattrs, "initial");
+        // only those props of component will be handled which are present in xmlAttrToObjFnMap
+        // only attributes will be handled
+        // events will not be handled in this loop
+        for (let attrSet in comp){
+            if(this.xmlAttrToObjFnMap[attrSet]){
+                let fnMap = this.xmlAttrToObjFnMap[attrSet];
+                this.attributeSets[attrSet] = this[fnMap.fnName](comp[attrSet], fnMap.attrType);
+            }
         }
-
-        if(comp.finalattrs){
-            this.attributeSets.finalattrs = this.createAttrs(comp.finalattrs, "final");
-        }
-
-        if(comp.initialattributesets){
-            this.attributeSets.initialattributesets = this.createAttrSets(comp.initialattributesets, "initial");
-        }
-
-        if(comp.finalattributesets){
-            this.attributeSets.finalattributesets = this.createAttrSets(comp.finalattributesets, "final");
-        }
-
     }
 
     createAttrSets (attrSets, attrType){
@@ -186,7 +215,7 @@ module.exports = class Comp {
         let myAttr = new Attr(args);
 
         let val = args.value;
-        if(!val){
+        if(args.userDefined == "true"){
             if(attrsVal){
                 if(attrsVal[args.name]){
                     val = attrsVal[args.name];
@@ -229,16 +258,25 @@ module.exports = class Comp {
     generateParentSetXML (parentAttrSet, parentSetNodeName){
         let xmlString = '<'+parentSetNodeName+'>';
 
-        for (let attrSet in parentAttrSet){
-            xmlString += this.generateAttrSetXML(parentAttrSet[attrSet].attrs, "attributeset", attrSet);
+        for (let attrSetName in parentAttrSet){
+            let currParentAttrSet = parentAttrSet[attrSetName];
+            xmlString += this.generateAttrSetXML(currParentAttrSet["attrs"], "attributeset", attrSetName, currParentAttrSet["inherits-default"]);
         }
 
         xmlString += '</'+parentSetNodeName+'>';
         return xmlString;
     }
 
-    generateAttrSetXML (attrSet, setNodeName, setName){
-        let xmlString = '<'+setNodeName+' name="'+setName+'">';
+    generateAttrSetXML (attrSet, setNodeName, setName, inheritsDef){
+        let xmlString = '<'+setNodeName+' ';
+        if(setName){
+            xmlString += 'name="'+setName+'" ';
+        }
+        if(inheritsDef){
+            xmlString += 'inherits-default="'+inheritsDef+'"';
+        }
+        xmlString += '>';
+
 
         for(let idx=0; idx<attrSet.length; idx++){
             xmlString += attrSet[idx].generateXML();
@@ -250,19 +288,26 @@ module.exports = class Comp {
     }
 
     generateXML (){
-        let xmlString = '<comp id="'+ this.id +'" mode="' + this.mode + '">';
+        let xmlString = '<comp id="'+ this.id +'" mode="' + this.mode + '" ';
+
+        if(this.xmlStateRef){
+            xmlString += 'ref-state="'+this.xmlStateRef+'" ';
+        }
+
+        xmlString += '>';
 
         // adding attribute XML
         for (let attrSet in this.attributeSets){
-            console.log("attrSet: ", attrSet);
             xmlString += this[this.attrXMLGenerationMap[attrSet]["fnName"]](this.attributeSets[attrSet], attrSet);
         }
 
         // adding event XML
         if(this.events){
+            xmlString += "<events>";
             for(let evtIdx = 0; evtIdx<this.events.length; evtIdx++){
                 xmlString += this.events[evtIdx].generateXML();
             }
+            xmlString += "</events>";
         }
 
         xmlString += '</comp>';
