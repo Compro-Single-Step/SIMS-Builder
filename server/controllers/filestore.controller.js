@@ -7,7 +7,7 @@ const mkdirp = require('mkdirp');
 class FileStoreController {
 
     constructor() {
-        this.fileTypeFolderPathMap = {
+        this.fileTypeFolderMap = {
             "skillConfig": config.fileStore.skillFolder,
             "uploadedResource": config.fileStore.resourceFolder,
             "xml": config.fileStore.xmlFolderPath
@@ -29,7 +29,7 @@ class FileStoreController {
     }
 
     getFileFromFileStore(filepath, fileType, callback) {
-        let absolutePath = this.fileTypeFolderPathMap[fileType] + filepath;
+        let absolutePath = this.fileTypeFolderMap[fileType] + filepath;
 
         fs.readFile(absolutePath, 'utf8', function (err, data) {
             callback(err, data);
