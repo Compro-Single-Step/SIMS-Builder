@@ -5,7 +5,8 @@ const path = require('path');
 const uiHandler = require('../modules/skill/uiHandler');
 const dbFilestoreMgr = require('../modules/skill/dbFilestoreMgr');
 const xmlGenerationHandler = require('../modules/skill/xmlGenerationHandler');
-const skillFactory  = require("../modules/skill/skillFactory")
+const skillFactory  = require("../modules/skill/skillFactory");
+const fs  = require("fs");
 
 class SkillController {
 
@@ -28,13 +29,81 @@ class SkillController {
     }
 
     getSkillFilesPath(templateId, callback){
-        let skillFilesObject = {},
-            skillFactoryRef = new skillFactory();
+        let skillFactoryRef = new skillFactory();
+        let skillfilesPath = skillFactoryRef.getSkillFilesPathObject(templateId);
+        let primaryFileName = this.getFileName(skillfilesPath[0]);
+                
+        let webpackBundle = `         
+            ${templateId}.exports = (function(modules) {
+                // The module cache
+                var installedModules = {};
 
-        skillFilesObject["skill"] = path.join("libs", "skills", skillFactoryRef.identifySkill(templateId) + ".js");
-        skillFilesObject["comps"] = skillFactoryRef.getSkillFilesPathObject(templateId);
+                // The require function
+                function require(filePath) {
+                    if(~filePath.lastIndexOf('.js'))
+                        var FileName = filePath.lastIndexOf('\\\\') > filePath.lastIndexOf('/') ? filePath.substring(filePath.lastIndexOf('\\\\')+1, filePath.lastIndexOf('.js')) : filePath.substring(filePath.lastIndexOf('/')+1, filePath.lastIndexOf('.js'));
+                    else    
+                        var FileName = filePath.lastIndexOf('\\\\') > filePath.lastIndexOf('/') ? filePath.substring(filePath.lastIndexOf('\\\\')+1) : filePath.substring(filePath.lastIndexOf('/')+1);
 
-        callback(null, skillFilesObject);
+                    moduleId = ${templateId}.webpackBundleMap[FileName];
+
+                    //Check if module is not in map (it must be present in global)
+                    if(moduleId === undefined)
+                        return ""
+
+                    // Check if module is in cache
+                    if(installedModules[moduleId])
+                        return installedModules[moduleId].exports;
+
+                    // Create a new module (and put it into the cache)
+                    var module = installedModules[moduleId] = {
+                        i: moduleId,
+                        l: false,
+                        exports: {}
+                    };
+
+                    // Execute the module function
+                    modules[moduleId].call(module.exports, module, module.exports, require);
+
+                    // Flag the module as loaded
+                    module.l = true;
+
+                    // Return the exports of the module
+                    return module.exports;
+                }
+
+                // Load entry module and return exports
+                return require('./${primaryFileName}');
+            })`;
+        let webpackBundleMap = {};
+        let webpackBundleFilesArray = [];
+        let readFilesCount = 0;
+
+        skillfilesPath.forEach( (file, index) => {
+            let filePath = path.join(__dirname,"../", file);
+            let self = this;
+            fs.readFile(filePath, 'utf8', function (err, file) {
+                readFilesCount++;
+                if(!err){
+                    file = "(function(module, exports, require) {"+file+"})";
+                    webpackBundleFilesArray.push(file);
+                    let FileName = self.getFileName(filePath);
+                    webpackBundleMap[FileName] = webpackBundleFilesArray.length-1;
+                    if(readFilesCount === skillfilesPath.length){
+                        webpackBundle = `var ${templateId} = {}; ${templateId}.webpackBundleMap = ${JSON.stringify(webpackBundleMap)}; ${webpackBundle}([${webpackBundleFilesArray.toString()}])`;
+                        callback(null, webpackBundle);
+                    }                 
+                }
+            });
+        })
+       
+    }
+
+    getFileName(filePath){
+        if(~filePath.lastIndexOf('.js')){
+            return filePath.lastIndexOf('\\') > filePath.lastIndexOf('/') ? filePath.substring(filePath.lastIndexOf('\\')+1, filePath.lastIndexOf('.js')) : filePath.substring(filePath.lastIndexOf('/')+1, filePath.lastIndexOf('.js'));
+        }
+            return filePath.lastIndexOf('\\') > filePath.lastIndexOf('/') ? filePath.substring(filePath.lastIndexOf('\\')+1) : filePath.substring(filePath.lastIndexOf('/')+1);
     }
 };
 

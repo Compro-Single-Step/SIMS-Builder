@@ -6,7 +6,7 @@ var SkillObjectMap = {
         "movecellcontent": {
             primaryFile: "/xl/moveCellContent/moveCellContent",
             dependencyFiles: ["/xl/moveCellContent/dummyDependencyFile"],
-            dependencySkills: ["dummyDependencySkill"]
+
         },
         "dummyDependencySkill":{
             primaryFile: "/xl/moveCellContent/dummyDependencySkill",
@@ -32,20 +32,27 @@ module.exports = class skillFactory{
     }
 
     getSkillFilesPathObject(templateID){
-        let skillFilesPathObject = {};
+        let files = [],
+            rootPath = "libs/skills";
             
-        let files = skillFilesPathObject["files"] = [];
-        skillFilesPathObject["skillObjectName"] = `skill.${templateID}`;
+        (function addFilePath (skillMapOfTemplate) {
+            rootPath = "libs/skills";
+            files.push(rootPath+skillMapOfTemplate.primaryFile+".js");
 
-        function addFilePath (SkillObjectMap) {
-            let skillMapOfTemplate = SkillObjectMap[templateID];
-            files.push(skillMapOfTemplate.primaryFile);
+            if(skillMapOfTemplate.dependencyFiles && skillMapOfTemplate.dependencyFiles.length!==0){
+                skillMapOfTemplate.dependencyFiles.forEach( (value) => {
+                    files.push(rootPath+value+".js");
+                })
+            }
 
-            if(skillMapOfTemplate.dependencyFiles)
-        }
-        for(let comp of compNames){
-            compObject[comp] = compFactory.getCompPath(comp);
-        }
-        return compObject;
+            if(skillMapOfTemplate.dependencySkills && skillMapOfTemplate.dependencySkills.length!==0){
+                skillMapOfTemplate.dependencySkills.forEach( (skillName) => {
+                    addFilePath(SkillObjectMap[skillName]);
+                });
+            }
+        })(SkillObjectMap[templateID])
+
+        return files;
     }
+
 }
