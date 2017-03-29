@@ -1,1 +1,139 @@
-{"states":{"1":{"components":{"1":{"initial":{"default-attrs":{"DOCUMENT_NAME":{"function-name":null,"params":["views['1'].documentTitle"]}}}},"2":{"initial":{"default-attrs":{"INIT_DOC_JSON":{"function-name":"createJsonPath","params":["views['1'].documentData"]},"IMAGE_JSON":{"function-name":"createImageJson","params":["views['1'].sheets"]}}},"final":{"set-1":{"SELECTED_CELLS":{"function-name":"getSelectedCell","params":["views['2'].sourceRange"]}},"set-3":{"SEL_DRAG_CELL":{"function-name":"getSelDragCell","params":["views['2'].sheetInAction","views['2'].sourceRange","views['2'].destinationRange"]}}}},"3":{"initial":{"default-attrs":{"APP_TOOLTIP_IMAGE":{"function-name":"createTooltipImagePath","params":["views['1'].taskbarPreviewImage"]},"OPENWORDFILE":{"function-name":null,"params":["views['1'].documentTitle"]}}}}}},"2":{"components":{"2":{"initial":{"default-attrs":{"IMAGE_JSON":{"function-name":"createImageJson","params":["views['3'].sheets"]},"SHEET_CELLS_DATA":{"function-name":"createSheetCellData","params":["views['2'].sheetInAction","views['3'].workbookData"]},"SELECTED_CELLS":{"function-name":"getSelectedCell","params":["views['2'].sourceRange"]}}}}}},"3":{"components":{"2":{"initial":{"cut1":{"COPY_HIGHLIGHT_CELLS":{"function-name":"createHighlightJson","params":["views['2'].sheetInAction","views['2'].sourceRange"]}}},"final":{"set1_":{"SELECTED_CELLS":{"function-name":"getSelectedCellFinal","params":["views['2'].destinationRange"]},"COPY_HIGHLIGHT_CELLS":{"function-name":"createHighlightJson","params":["views['2'].sheetInAction","views['2'].sourceRange"]}}}}}}}}
+{
+  "states": {
+    "1": {
+      "components": {
+        "1": {
+          "initial": {
+            "default-attrs": {  
+              "DOCUMENT_NAME": {
+                "function-name": null,
+                "params": {
+                  "docTitle":"views['1'].documentTitle"
+                }
+              }
+            }
+          }
+        },
+        "2": {
+          "initial": {
+            "default-attrs": {
+              "INIT_DOC_JSON": {
+                "function-name": "createJsonPath",
+                "params": {
+                  "docData":"views['1'].documentData"
+                }
+              },
+              "IMAGE_JSON": {
+                "function-name": "createImageJson",
+                "params": {
+                  "sheets":"views['1'].sheets"
+                }
+              }
+            }
+          },
+          "final": {
+            "set-1": {
+              "SELECTED_CELLS": {
+                "function-name": "getSelectedCell",
+                "params": {
+                  "srcRange":"views['2'].sourceRange"
+                }
+              }
+            },
+            "set-3": {
+              "SEL_DRAG_CELL": {
+                "function-name": "getSelDragCell",
+                "params": {
+                  "sheetAction":"views['2'].sheetInAction",
+                  "srcRange":"views['2'].sourceRange",
+                  "destRange":"views['2'].destinationRange"
+                }                
+              }
+            }
+          }
+        },
+        "3": {
+          "initial": {
+            "default-attrs": {
+              "APP_TOOLTIP_IMAGE": {
+                "function-name": "createTooltipImagePath",
+                "params": {
+                  "tbPrvImage":"views['1'].taskbarPreviewImage"
+                }
+              },
+              "OPENWORDFILE": {
+                "function-name": null,
+                "params": {
+                  "DocTitle":"views['1'].documentTitle"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "2": {
+      "components": {
+        "2": {
+          "initial": {
+            "default-attrs": {
+              "IMAGE_JSON": {
+                "function-name": "createImageJson",
+                "params": {
+                  "sheets":"views['3'].sheets"
+                }
+              },
+              "SHEET_CELLS_DATA": {
+                "function-name": "createSheetCellData",
+                "params": {
+                  "sheetAction":"views['2'].sheetInAction",
+                  "wbData":"views['3'].workbookData"
+                }
+              },
+              "SELECTED_CELLS": {
+                "function-name": "getSelectedCell",
+                "params": {
+                  "srcRange":"views['2'].sourceRange"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "3": {
+      "components": {
+        "2": {
+          "initial": {
+            "cut1": {
+              "COPY_HIGHLIGHT_CELLS": {
+                "function-name": "createHighlightJson",
+                "params": {
+                  "sheetAction":"views['2'].sheetInAction",
+                  "srcRange":"views['2'].sourceRange"
+                }
+              }
+            }
+          },
+          "final": {
+            "set1_": {
+              "SELECTED_CELLS": {
+                "function-name": "getSelectedCellFinal",
+                "params": {
+                  "destRange":"views['2'].destinationRange"
+                }
+              },
+              "COPY_HIGHLIGHT_CELLS": {
+                "function-name": "createHighlightJson",
+                "params": {
+                  "sheetAction":"views['2'].sheetInAction",
+                  "srcRange":"views['2'].sourceRange"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

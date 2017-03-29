@@ -1,31 +1,31 @@
+//this file contains the object type implementation for the parameters of an attribute
 
-module.exports = class IOTranslator{
+class IOTranslator{
 
   //common function for getting the param array for the passed array of params
-  getEvaluatedParams (paramArr , stepUIState){
+  getEvaluatedParams (paramObj , stepUIState){
 
     var evalexp = "stepUIState.model.";  
-    var finalArray = [];
+    // var finalArray = [];
 
-    for(var iterator = 0; iterator < paramArr.length; ++iterator ){
-      finalArray[iterator] = eval(evalexp + paramArr[iterator]);
-      
+    for(var param in paramObj ){
+      paramObj[param] = eval(evalexp + paramObj[param]);
+
     }
-    return finalArray;
+    return paramObj;
   }
 
-  evaluateFromFunc (functionName, paramsArr, skillobject){
+  evaluateFromFunc (attrName, functionName, paramsObj, skillobject){
 
       if(skillobject[functionName]){
-        var finalValue = skillobject[functionName](paramsArr);
+        var finalValue = skillobject[functionName](paramsObj);
       }
       else{
-        console.log("function not defined for the attribute");
+        console.log("function not defined for the attribute : " + attrName);
       }
 
       return finalValue;
   }
-
 
   evaluateAttribute (attrName, attrObject, stepUIState, skillobject){
 
@@ -34,13 +34,13 @@ module.exports = class IOTranslator{
     //the attr params currentky contains the string values , the LOC below converts it into values from the Step UI Json 
     evaluatedParams = this.getEvaluatedParams(attrObject.params, stepUIState);
 
-    if(attrObject["function-name"] == null){
+      if(attrObject["function-name"] == null){
       // assign directly
-      attrObjectValue = evaluatedParams[0];
+      attrObjectValue = evaluatedParams[Object.keys(evaluatedParams)[0]];
     }
     else{
       // call the function type execution for the evaluation
-      attrObjectValue = this.evaluateFromFunc(attrObject["function-name"], evaluatedParams, skillobject);
+      attrObjectValue = this.evaluateFromFunc(attrName, attrObject["function-name"], evaluatedParams, skillobject);
     }
     return attrObjectValue
   }
@@ -70,8 +70,10 @@ module.exports = class IOTranslator{
     return iomap;
   }
 
-  translateMap (iomap, stepUIState, skillobject){
+  getAttrValueMap (iomap, stepUIState, skillobject){
     //move out
     return this.readIOMap(iomap, stepUIState, skillobject);
   }
 }
+
+module.exports = new IOTranslator();
