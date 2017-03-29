@@ -7,26 +7,17 @@
  */
 
 const DOMParser = require('xmldom').DOMParser;
-const Step = require('./Step');
+const Step = require('./XMLStep');
 
 module.exports = class StepXMLGenerator {
 
     generateXml (skillTemplate, attrValueMap){
 
-        console.log("attrValueMap: ", attrValueMap);
-
         let parser = new DOMParser();
         let xmlDoc = parser.parseFromString(skillTemplate,"text/xml");
-
         let stepJson = this.xmlToJson(xmlDoc);
-        console.log("stepJson: ", stepJson);
-
         let step = new Step(stepJson[0], attrValueMap, this)
-        console.log("step: ", step);
-
         let xmlString = step.generateXML();
-        console.log("xmlString: ", xmlString);
-
         return xmlString;
         
     }

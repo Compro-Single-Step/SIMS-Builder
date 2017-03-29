@@ -6,8 +6,8 @@
  * To change this template use File | Settings | File Templates.
  */
 
-const Attr = require('./Attr');
-const Sim5Evt = require('./Event');
+const XMLAttr = require('./XMLAttr');
+const XMLEvt = require('./XMLEvent');
 
 
 module.exports = class Comp {
@@ -212,7 +212,7 @@ module.exports = class Comp {
     }
 
     createAttr  (args, attrType, attrSetName, attrsVal){
-        let myAttr = new Attr(args);
+        let myAttr = new XMLAttr(args);
 
         let val = args.value;
         if(args.userDefined == "true"){
@@ -243,7 +243,7 @@ module.exports = class Comp {
     }
 
     createEvt  (evt){
-        let myEvt = new Sim5Evt(evt, this);
+        let myEvt = new XMLEvt(evt, this);
         return myEvt;
     }
 

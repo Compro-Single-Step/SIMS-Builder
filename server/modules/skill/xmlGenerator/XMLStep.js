@@ -1,6 +1,6 @@
-const State = require('./State');
+const XMLState = require('./XMLState');
 
-module.exports = class Step {
+module.exports = class XMLStep {
 
     constructor (stepJson, attrValMap, skillRef, stepData){
         /*this.id = data.stepId;   // step number 1|2|3...
@@ -21,7 +21,7 @@ module.exports = class Step {
 
             console.log("state map: ", attrValueMap.states[states[idx].props.id]);
 
-            let state = new State (states[idx], attrValueMap.states[states[idx].props.id], this);
+            let state = new XMLState (states[idx], attrValueMap.states[states[idx].props.id], this);
 
             this.states[states[idx].props.id] = state;
             this.stateOrderIdMap[idx] = states[idx].props.id;

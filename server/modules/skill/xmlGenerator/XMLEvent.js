@@ -1,4 +1,4 @@
-module.exports = class CompEvent {
+module.exports = class XMLEvent {
 
 
     constructor  (args, compRef){

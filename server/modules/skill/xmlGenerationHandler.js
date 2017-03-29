@@ -1,7 +1,7 @@
 const dbFilestoreMgr = require('./dbFilestoreMgr');
 const translatorClass = require("./ioTranslator.js");
 const translator = new translatorClass();
-const xmlGenerator = require("./xmlGenerator/stepXMLGenerator");
+const xmlGenerator = require("./xmlGenerator/StepXMLGenerator");
 
 module.exports.generateStepXML = function(templateId, taskId, stepIndex, skillRef, callback){
     
@@ -17,19 +17,12 @@ module.exports.generateStepXML = function(templateId, taskId, stepIndex, skillRe
                     //XML GENERATION
                     dbFilestoreMgr.getSkillXML(templateId, (error, skillTemplate) => {
                         if(!error) {
-                            // let newStep = new xmlGenerator(skillTemplate, attrValueMap);
-                            // let OutputXML = newStep.stepGenerator();
-
                             let newStep = new xmlGenerator();
                             let OutputXML = newStep.generateXml(skillTemplate, attrValueMap);
                             
-                            // console.log("OutputXML: ", OutputXML);
-                            dbFilestoreMgr.saveStepXML("exp.xl.01.01.t1", stepIndex, OutputXML, (error, data)=>{
+                            dbFilestoreMgr.saveStepXML(taskId, stepIndex, OutputXML, (error, data)=>{
                                 callback(null, OutputXML);
                             });
-                            
-                            //Saving Step XML in File Store
-                            
                         }
                         else{
                             callback(error, skillTemplate);

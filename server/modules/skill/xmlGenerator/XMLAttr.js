@@ -1,4 +1,4 @@
-module.exports = class Attr {
+module.exports = class XMLAttr {
 
     constructor (arg){
         this.name = arg.name; // INIT_DOC_JSON

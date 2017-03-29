@@ -1,5 +1,6 @@
-const Comp = require('./Comp')
-module.exports = class State {
+const XMLComp = require('./XMLComp')
+
+module.exports = class XMLState {
 
     constructor (args, attrValMap, parentStepRef){
         this.id = args.props.id; // state id
@@ -40,7 +41,7 @@ module.exports = class State {
     }
 
     createComp   (comp, attrValMap) {
-        let myComp = new Comp(comp, attrValMap, this);
+        let myComp = new XMLComp(comp, attrValMap, this);
         return myComp;
     }
 
