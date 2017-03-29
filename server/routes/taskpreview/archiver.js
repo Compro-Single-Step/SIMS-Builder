@@ -18,7 +18,7 @@ archive.on('error', function (err) {
 });
 
 var output = file_system.createWriteStream(serverRootPath+'/tmp/myZip.zip'); //path to create .zip file
-console.log(dirToCompress);
+
 output.on('close', function () {
     var req = request.post({
 			url: serverUrl,
