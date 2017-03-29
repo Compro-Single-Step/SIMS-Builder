@@ -11,27 +11,28 @@ const skillConfigRepoSchema = new mongoose.Schema({
     collection: 'skill_config_repo'
 });
 
-const configTypeMap = {
-    "uiconfig": "ui_config_path",
-    "iomap": "io_map_path",
-    "xml": "skill_xml_path",
-    "model": "data_model_path"
+const skillConfigTypes = {
+    "UI_CONFIG": "ui_config_path",
+    "IO_MAP": "io_map_path",
+    "XML": "skill_xml_path",
+    "MODEL": "data_model_path"
 }
 
 skillConfigRepoSchema.statics = {
     getSkillConfigPath: function(templateId, configType, callback) {
 
         let projection = {"_id": false};
-        projection[configTypeMap[configType]] = true;
+        projection[configType] = true;
 
         this.find({"template_id": templateId}, projection, (error, data) => {
-            callback(data[0][configTypeMap[configType]], error);
+            callback(data[0][configType], error);
         });
     }
 };
 
-let skill_config_repo = mongoose.model('skill_config_repo', skillConfigRepoSchema);
+let skillConfigRepo = mongoose.model('skill_config_repo', skillConfigRepoSchema);
 
 module.exports = {
-    skill_config_repo
+    skillConfigRepo: skillConfigRepo,
+    skillConfigTypes: skillConfigTypes
 };
