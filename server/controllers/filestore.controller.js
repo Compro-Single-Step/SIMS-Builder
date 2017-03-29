@@ -4,15 +4,13 @@ const fs = require('fs');
 const multer = require('multer');
 const mkdirp = require('mkdirp');
 
-class FileStoreController {
+const fileTypeFolderMap = {
+    "SKILL": config.fileStore.skillFolder,
+    "RESOURCE": config.fileStore.resourceFolder,
+    "XML": config.fileStore.xmlFolderPath
+};
 
-    constructor() {
-        this.fileTypeFolderMap = {
-            "skillConfig": config.fileStore.skillFolder,
-            "uploadedResource": config.fileStore.resourceFolder,
-            "xml": config.fileStore.xmlFolderPath
-        };
-    }
+class FileStoreController {
 
     saveStepXML(taskId, stepIndex, OutputXML, callback) {
 
@@ -27,8 +25,8 @@ class FileStoreController {
         return this.uploadFileHandler(folderPath, fileName);
     }
 
-    getFileFromFileStore(filepath, fileType, callback) {
-        let absolutePath = this.fileTypeFolderMap[fileType] + filepath;
+    getFileFromFileStore(filepath, folder, callback) {
+        let absolutePath = folder + filepath;
 
         fs.readFile(absolutePath, 'utf8', function (err, data) {
             callback(err, data);
@@ -80,4 +78,6 @@ class FileStoreController {
     }
 }
 
-module.exports = new FileStoreController();
+module.exports.fileStoreObj = new FileStoreController();
+module.exports.fileTypeFolderMap = fileTypeFolderMap;
+

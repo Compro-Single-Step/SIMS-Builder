@@ -1,4 +1,4 @@
-const skillConfigRepoModel = require('../models/skillConfigRepo.model').skill_config_repo;
+const skillConfigRepoModel = require('../models/skillConfigRepo.model').skillConfigRepo;
 const uiTaskStepModel = require('../models/uiTaskStep.model').uiTaskStepModel;
 
 class DatabaseController {
