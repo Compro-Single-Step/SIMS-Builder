@@ -7,17 +7,23 @@ const uiTaskStepSchema = new Schema({
 }, {collection: 'ui_task_step'});
 
 uiTaskStepSchema.statics = {
-    getStepUI: function(taskId, stepIndex, callback) {
+    getStepUI: function(taskId, stepIndex) {
+        return new Promise((resolve, reject)=> {
+            let condition = {"task_id": taskId};
+            let jsonKey = "task_data.step_" + stepIndex;
+            let projection = {"_id": false};
+            projection[jsonKey] = true;
 
-        let condition = {"task_id": taskId};
-        let jsonKey = "task_data.step_" + stepIndex;
-        let projection = {"_id": false};
-        projection[jsonKey] = true;
-
-        this.find(condition, projection, (error, data) => {
-            let stepId = "step_" + stepIndex;
-            let stepUIState = data[0].task_data[stepId];
-            callback(error, stepUIState);
+            this.find(condition, projection, (error, data) => {
+                if(!error) {
+                    let stepId = "step_" + stepIndex;
+                    let stepUIState = data[0].task_data[stepId];
+                    resolve(stepUIState);
+                }
+                else {
+                    reject(error);
+                }
+            });
         });
     },
     updateStepUIData: function(taskId, stepIndex, stepUIData, callback) {

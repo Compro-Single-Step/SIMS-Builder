@@ -5,19 +5,12 @@ const skillConfigTypes = require('../../models/skillConfigRepo.model').skillConf
 const folderMap = FAL.fileTypeFolderMap;
 
 class DatabaseFileStoreManager {
-    getUIConfig(templateId, callback) {
-        dbController.getSkillConfigPath(templateId, skillConfigTypes.UI_CONFIG, (filePath, error) => {
-            if(!error) {
-                if(filePath !== undefined) {
-                    fsc.getFileFromFileStore(filePath, folderMap.SKILL, callback);
-                }
-                else {
-                    callback({error: "UI Config doesn't exist in database"});    
-                }
-            }
-            else {
-                callback(error);
-            }
+    getUIConfig(templateId) {
+        return dbController.getSkillConfigPath(templateId, skillConfigTypes.UI_CONFIG)
+        .then((filePath)=> {
+            return fsc.getFileFromFileStore(filePath, folderMap.SKILL);
+        }, (error)=> {
+            Promise.reject(error);
         });
     }
  
@@ -53,26 +46,17 @@ class DatabaseFileStoreManager {
         });
     }
 
-    getSkillModel(templateId, callback) {
-        dbController.getSkillConfigPath(templateId, skillConfigTypes.MODEL, (filePath, error) => {
-            if(!error) {
-                if(filePath !== undefined) {
-                    fsc.getFileFromFileStore(filePath, folderMap.SKILL, callback);
-                }
-                else {
-                    callback({error: "Model doesn't exist in database"});    
-                }
-            }
-            else {
-                callback(error);
-            }
+    getSkillModel(templateId) {
+        return dbController.getSkillConfigPath(templateId, skillConfigTypes.MODEL)
+        .then((filePath)=> {
+            return fsc.getFileFromFileStore(filePath, folderMap.SKILL);
+        }, (error)=> {
+            Promise.reject(error);
         });
     }
 
-    getStepUIState(taskId, stepIndex, callback) {
-        dbController.getStepUIState(taskId, stepIndex, (error, data) => {
-            callback(error, data);
-        });
+    getStepUIState(taskId, stepIndex) {
+        return dbController.getStepUIState(taskId, stepIndex);
     }
 
     saveStepUIState(taskId, stepIndex, stepUIData, callback) {

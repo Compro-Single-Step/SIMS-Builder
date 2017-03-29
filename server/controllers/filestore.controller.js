@@ -25,12 +25,19 @@ class FileStoreController {
         return this.uploadFileHandler(folderPath, fileName);
     }
 
-    getFileFromFileStore(filepath, folder, callback) {
-        let absolutePath = folder + filepath;
+    getFileFromFileStore(filepath, folder) {
+        return new Promise((resolve, reject)=> {
+            let absolutePath = folder + filepath;
 
-        fs.readFile(absolutePath, 'utf8', function (err, data) {
-            callback(err, data);
-        });
+            fs.readFile(absolutePath, 'utf8', function (error, data) {
+                if(error) {
+                    reject(error);
+                }
+                else {
+                    resolve(data);
+                }
+            });
+        })
     }
 
     uploadFileHandler(folderPath, fileName) {

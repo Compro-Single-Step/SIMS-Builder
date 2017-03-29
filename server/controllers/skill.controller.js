@@ -8,8 +8,8 @@ const skillFactory  = require("../modules/skill/skillFactory")
 
 class SkillController {
 
-    getStepUIConfig(templateId, taskId, stepIndex, callback) {
-        uiHandler.getStepUIConfig(templateId, taskId, stepIndex, callback);
+    getStepUIConfig(templateId, taskId, stepIndex) {
+        return uiHandler.getStepUIConfig(templateId, taskId, stepIndex);
     }
     //will rename this function after meeting feedback.
     getUIConfig(templateId, callback) {

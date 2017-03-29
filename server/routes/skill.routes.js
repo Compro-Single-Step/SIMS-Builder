@@ -50,13 +50,11 @@ router.get('/stepuiconfig/:templateId/:taskId/:stepIndex', (req, res) => {
     let taskId = req.params.taskId;
     let stepIndex = req.params.stepIndex;
     
-    skillController.getStepUIConfig(templateId, taskId, stepIndex, (error, data) => {
-        if(!error) {
-            res.send(data);
-        }
-        else {
-            res.send(error);
-        }
+    skillController.getStepUIConfig(templateId, taskId, stepIndex)
+    .then((data) => {
+        res.send(data);
+    }, (error)=> {
+        res.send(error);
     });
 });
 
