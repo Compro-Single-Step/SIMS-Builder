@@ -1,18 +1,19 @@
 
+const ExcelBaseSkill = require("../common/xlSkill");
+
+module.exports  = class moveCellContent extends ExcelBaseSkill{
   //init DOC JSON 
-  exports.createJsonPath = function(valueParam){
-     
+  createJsonPath(valueParam){
+
     return valueParam[0].path;
   }
 
-
-  exports.getSelectedCell = function(paramValueArr){
+  getSelectedCell(paramValueArr){
     
     return paramValueArr[0];
-
   }
 
-  exports.getSelDragCell = function(paramValueArr){
+  getSelDragCell(paramValueArr){
     //requires sheet name using init doc json
     
     var finalObject = {};
@@ -24,24 +25,21 @@
 
   }
 
-
-  exports.createTooltipImagePath  = function(paramValueArr){
+  createTooltipImagePath(paramValueArr){
      
     return paramValueArr[0].path;
-
   }
-
-
-
-  exports.createImageJson = function(paramValueArr){
+  //this function to be moved to  Base Excel Skill 
+  // to be done as soon as the Sheet number can be generated from the component handler 
+  createImageJson (paramValueArr){
     
     var finalObject = {};
     finalObject['folderPath'] = paramValueArr[0].path;
     var sheetArr = []
 
-      for(iterator = 0 ; iterator < paramValueArr[0].length; ++iterator){
+      for(var iterator = 0 ; iterator < paramValueArr[0].length; ++iterator){
         sheetArr[iterator] = {};
-        sheetArr[iterator]['sheetNo'] = '1';
+        sheetArr[iterator]['sheetNo'] = 1;
         sheetArr[iterator]['gridImg'] = paramValueArr[0][iterator].gridImage.name;
         sheetArr[iterator]['rowImg'] = paramValueArr[0][iterator].rowImage.name;
         sheetArr[iterator]['colImg'] = paramValueArr[0][iterator].cellImage.name;
@@ -53,7 +51,7 @@
   }
 
 
-  exports.createHighlightJson  =  function(paramValueArr){
+  createHighlightJson (paramValueArr){
      
     // requires sheet number using Init Doc json
     var finalObject = {};
@@ -64,7 +62,7 @@
   }
 
 
-  exports.createSheetCellData =function(paramValueArr){
+  createSheetCellData (paramValueArr){
      
     var finalObject = {};
     finalObject["sheetNo"] = 1;
@@ -75,9 +73,9 @@
 
   }
 
-    exports.getSelectedCellFinal = function(paramValueArr){
+  getSelectedCellFinal (paramValueArr){
     
-    finalArray = [];
+    var finalArray = [];
     
     var valuearray = paramValueArr[0].split(":");
     valuearray[0].trim();
@@ -90,15 +88,16 @@
     
     finalArray.push(valuearray[0]);
     
-      for(iterator = 0 ; iterator <= c2.charCodeAt(0)-c1.charCodeAt(0); ++iterator){
-        for( index = 0; index < r2-r1 ; ++index) {
+      for(var iterator = 0 ; iterator <= c2.charCodeAt(0)-c1.charCodeAt(0); ++iterator){
+        for(var index = 0; index < r2-r1 ; ++index) {
           if(iterator != 0 || index != 0)
             finalArray.push(c1+r1 +":" + (String.fromCharCode(c1.charCodeAt(0) + iterator))+(r1+index));
         }
 
     }
-    finalArray = JSON.stringify(finalArray);
     
     return finalArray;
 
   }
+  
+}
