@@ -2,14 +2,14 @@ const dbController = require('../../controllers/db.controller');
 const fileStoreController = require('../../controllers/filestore.controller');
 const fileStoreObj = fileStoreController.fileStoreObj;
 const skillConfigTypes = require('../../models/skillConfigRepo.model').skillConfigTypes;
-const folder = fileStoreController.fileTypeFolderMap;
+const folderMap = fileStoreController.fileTypeFolderMap;
 
 class DatabaseFileStoreManager {
     getUIConfig(templateId, callback) {
         dbController.getSkillConfigPath(templateId, skillConfigTypes.UI_CONFIG, (filePath, error) => {
             if(!error) {
                 if(filePath !== undefined) {
-                    fileStoreObj.getFileFromFileStore(filePath, folder.SKILL, callback);
+                    fileStoreObj.getFileFromFileStore(filePath, folderMap.SKILL, callback);
                 }
                 else {
                     callback({error: "UI Config doesn't exist in database"});    
@@ -25,7 +25,7 @@ class DatabaseFileStoreManager {
         dbController.getSkillConfigPath(templateId, skillConfigTypes.XML, (filePath, error) => {
             if(!error) {
                 if(filePath !== undefined) {
-                    fileStoreObj.getFileFromFileStore(filePath, folder.SKILL, callback);
+                    fileStoreObj.getFileFromFileStore(filePath, folderMap.SKILL, callback);
                 }
                 else {
                     callback({error: "Skill XML doesn't exist in database"});    
@@ -41,7 +41,7 @@ class DatabaseFileStoreManager {
         dbController.getSkillConfigPath(templateId, skillConfigTypes.IO_MAP, (filePath, error) => {
             if(!error) {
                 if(filePath !== undefined) {
-                    fileStoreObj.getFileFromFileStore(filePath, folder.SKILL, callback);
+                    fileStoreObj.getFileFromFileStore(filePath, folderMap.SKILL, callback);
                 }
                 else {
                     callback({error: "IO Map doesn't exist in database"});    
@@ -57,7 +57,7 @@ class DatabaseFileStoreManager {
         dbController.getSkillConfigPath(templateId, skillConfigTypes.MODEL, (filePath, error) => {
             if(!error) {
                 if(filePath !== undefined) {
-                    fileStoreObj.getFileFromFileStore(filePath, folder.SKILL, callback);
+                    fileStoreObj.getFileFromFileStore(filePath, folderMap.SKILL, callback);
                 }
                 else {
                     callback({error: "Model doesn't exist in database"});    
