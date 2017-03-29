@@ -1,12 +1,19 @@
 const dbController = require('../../controllers/db.controller');
 const fileStoreController = require('../../controllers/filestore.controller');
-const constants = require('../../config/constants.config');
+const fileStoreObj = fileStoreController.fileStoreObj;
+const skillConfigTypes = require('../../models/skillConfigRepo.model').skillConfigTypes;
+const folder = fileStoreController.fileTypeFolderMap;
 
 class DatabaseFileStoreManager {
     getUIConfig(templateId, callback) {
-        dbController.getSkillConfigPath(templateId, constants.skillConfigType.UI_CONFIG, (filePath, error) => {
+        dbController.getSkillConfigPath(templateId, skillConfigTypes.UI_CONFIG, (filePath, error) => {
             if(!error) {
-                fileStoreController.getFileFromFileStore(filePath, constants.fileTypes.SKILL_CONFIG, callback);
+                if(filePath !== undefined) {
+                    fileStoreObj.getFileFromFileStore(filePath, folder.SKILL, callback);
+                }
+                else {
+                    callback({error: "UI Config doesn't exist in database"});    
+                }
             }
             else {
                 callback(error);
@@ -15,9 +22,14 @@ class DatabaseFileStoreManager {
     }
  
     getSkillXML(templateId, callback) {
-        dbController.getSkillConfigPath(templateId, constants.skillConfigType.XML, (filePath, error) => {
+        dbController.getSkillConfigPath(templateId, skillConfigTypes.XML, (filePath, error) => {
             if(!error) {
-                fileStoreController.getFileFromFileStore(filePath, constants.fileTypes.SKILL_CONFIG, callback);
+                if(filePath !== undefined) {
+                    fileStoreObj.getFileFromFileStore(filePath, folder.SKILL, callback);
+                }
+                else {
+                    callback({error: "Skill XML doesn't exist in database"});    
+                }
             }
             else {
                 callback(error);
@@ -26,9 +38,14 @@ class DatabaseFileStoreManager {
     }
 
     getIOMap(templateId, callback) {
-        dbController.getSkillConfigPath(templateId, constants.skillConfigType.IO_MAP, (filePath, error) => {
+        dbController.getSkillConfigPath(templateId, skillConfigTypes.IO_MAP, (filePath, error) => {
             if(!error) {
-                fileStoreController.getFileFromFileStore(filePath, constants.fileTypes.SKILL_CONFIG, callback);
+                if(filePath !== undefined) {
+                    fileStoreObj.getFileFromFileStore(filePath, folder.SKILL, callback);
+                }
+                else {
+                    callback({error: "IO Map doesn't exist in database"});    
+                }
             }
             else {
                 callback(error);
@@ -37,9 +54,14 @@ class DatabaseFileStoreManager {
     }
 
     getSkillModel(templateId, callback) {
-        dbController.getSkillConfigPath(templateId, constants.skillConfigType.MODEL, (filePath, error) => {
+        dbController.getSkillConfigPath(templateId, skillConfigTypes.MODEL, (filePath, error) => {
             if(!error) {
-                fileStoreController.getFileFromFileStore(filePath, constants.fileTypes.SKILL_CONFIG, callback);
+                if(filePath !== undefined) {
+                    fileStoreObj.getFileFromFileStore(filePath, folder.SKILL, callback);
+                }
+                else {
+                    callback({error: "Model doesn't exist in database"});    
+                }
             }
             else {
                 callback(error);
@@ -60,11 +82,11 @@ class DatabaseFileStoreManager {
     }
 
     saveStepXML(taskId, stepIndex, OutputXML, callback){
-        fileStoreController.saveStepXML(taskId, stepIndex, OutputXML, callback);
+        fileStoreObj.saveStepXML(taskId, stepIndex, OutputXML, callback);
 	}
 
     saveResourceFile(templateId, taskId, stepIndex, fileName) {
-        return fileStoreController.saveResourceFile(templateId, taskId, stepIndex, fileName);
+        return fileStoreObj.saveResourceFile(templateId, taskId, stepIndex, fileName);
     }
 }
 
