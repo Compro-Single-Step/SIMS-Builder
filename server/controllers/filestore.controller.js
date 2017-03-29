@@ -78,6 +78,6 @@ class FileStoreController {
     }
 }
 
-module.exports.fileStoreObj = new FileStoreController();
+module.exports.fileStoreController = new FileStoreController();
 module.exports.fileTypeFolderMap = fileTypeFolderMap;
 
