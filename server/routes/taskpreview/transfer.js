@@ -9,7 +9,8 @@ var req = request.post({
 			url: serverUrl,
 			qs: {
 				Method: "SaveTaskFolder",
-				taskId: 'blog example',
+				taskId: 'GO16.XL.03.3A.02.T1',
+				stepNo: "",
 				taskFolderPath: +new Date(),
 				appID: 'blog example',
 				description: "desc",
