@@ -11,7 +11,7 @@ import { AuthGuard } from './_guards/auth.guard';
 import { AuthService } from './_services/auth.service';
 
 import { HttpClient } from './_services/http.client';
-import { DataService } from './_services/taskData.service' 
+import { TaskDataService } from './_services/taskData.service' 
 import { AppConfig } from './app.config';
 import { LoginComponent } from './login/login.component';
 import { AuthModule  } from './auth.module';
@@ -29,8 +29,7 @@ import { UserService } from './_services/user.service';
     routing
     
   ],
-
-  providers: [ AuthService,HttpClient,AuthGuard,AppConfig,DataService,UserService ],
-  bootstrap: [AppComponent]
+providers: [ AuthService,HttpClient,AuthGuard,AppConfig,TaskDataService,UserService ],
+bootstrap: [AppComponent]
 })
 export class AppModule {}

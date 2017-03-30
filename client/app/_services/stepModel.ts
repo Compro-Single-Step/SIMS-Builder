@@ -1,19 +1,18 @@
 export class Step {
-    stepIndex: number;
-    stepText: string;
-    stepDetails: StepDetails;
-    stepTestStatus: boolean
-
-    constructor(){
-        this.stepIndex;
-        this.stepText;
-        this.stepDetails = new StepDetails();
-        this.stepTestStatus;
-    }
-}
-
-export class StepDetails {
+    Index: number;
+    Text: string;
+    TestStatus: boolean;
     SkillName: string;
     MethodCount: number;
     TemplateName: string
+
+    constructor(){
+        this.Index;
+        this.Text;
+        this.TestStatus;
+        this.SkillName;
+        this.MethodCount;
+        this.TemplateName;
+    }
 }
+

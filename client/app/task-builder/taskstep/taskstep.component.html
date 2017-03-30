@@ -3,16 +3,16 @@
       <div class="col-md-10" >
           <div class="text-color row">
             <div class="col col-md-auto">
-                <span class="fw-bold step_number">Step {{step.stepIndex}}</span>
+                <span class="fw-bold step_number">Step {{step.Index}}</span>
             </div>
             <div class="col-md-10 step_text">
-                <span [innerHTML]="step.stepText"></span>
+                <span [innerHTML]="step.Text"></span>
                 <div class="row col-md-12">
-                  <span class="skill_metadata">Skill :&nbsp;{{step.stepDetails.SkillName}}</span>
+                  <span class="skill_metadata">Skill :&nbsp;{{step.SkillName}}</span>
                   <span>|</span>
-                  <span class="method-count skill_metadata">Method Count: <span>{{step.stepDetails.MethodCount}}</span></span>
+                  <span class="method-count skill_metadata">Method Count: <span>{{step.MethodCount}}</span></span>
                   <span>|</span>
-                  <span class="template_label">Template: {{step.stepDetails.TemplateName}}</span>
+                  <span class="template_label">Template: {{step.TemplateName}}</span>
                 </div>
             </div>
           </div>       
@@ -36,8 +36,8 @@
                 </div>
                 <div class="row testSymbol">
                   <div class="col-md-8 offset-md-2">
-                      <span *ngIf="step.stepTestStatus" class="glyphicon glyphicon-ok greenText" aria-hidden="true"></span>
-                      <span *ngIf="!step.stepTestStatus" class="glyphicon glyphicon-remove redText" aria-hidden="true"></span>
+                      <span *ngIf="step.TestStatus" class="glyphicon glyphicon-ok greenText" aria-hidden="true"></span>
+                      <span *ngIf="!step.TestStatus" class="glyphicon glyphicon-remove redText" aria-hidden="true"></span>
                   </div>
                 </div>
             </div>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { DataService } from '../_services/taskData.service';
+import { TaskDataService } from '../_services/taskData.service';
 
 
 @Component({
@@ -14,7 +14,7 @@ export class TaskSearch implements OnInit{
   TaskData;
   errorMessage;
   message='';
-  constructor(private router: Router, private dataService: DataService){
+  constructor(private router: Router, private dataService: TaskDataService){
   }
 	ngOnInit(): void {
 
