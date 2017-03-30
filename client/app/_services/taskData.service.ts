@@ -10,7 +10,7 @@ import { Task } from './taskModel'
 import { Step } from './stepModel'
 
 @Injectable()
-export class DataService {
+export class TaskDataService {
 
   public data: any = undefined;
   public task: any = undefined;
