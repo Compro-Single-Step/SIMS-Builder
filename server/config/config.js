@@ -4,7 +4,7 @@ const fileStore = serverRootPath + 'fileStore/';
 const xmlFolder = fileStore + 'XMLs/';
 const skillFolder = fileStore + 'skills/';
 const resourceFolder = fileStore + 'Resources/';
-const env = process.env.NODE_ENV || 'local';
+const env = process.env.NODE_ENV || 'development';
 
 const config = {
     local: {
