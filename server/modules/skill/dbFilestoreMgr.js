@@ -59,10 +59,8 @@ class DatabaseFileStoreManager {
         return dbController.getStepUIState(taskId, stepIndex);
     }
 
-    saveStepUIState(taskId, stepIndex, stepUIData, callback) {
-        dbController.saveStepUIState(taskId, stepIndex, stepUIData, (error, data) => {
-            callback(error, data);
-        });
+    saveStepUIState(taskId, stepIndex, stepUIData) {
+        return dbController.saveStepUIState(taskId, stepIndex, stepUIData);
     }
 
     saveStepXML(taskId, stepIndex, OutputXML, callback){

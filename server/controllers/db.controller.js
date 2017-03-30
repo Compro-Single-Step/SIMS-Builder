@@ -7,8 +7,8 @@ class DatabaseController {
         return uiTaskStepModel.getStepUI(taskId, stepIndex);
     }
 
-    saveStepUIState(taskId, stepIndex, stepUIData, callback) {
-        uiTaskStepModel.updateStepUIData(taskId, stepIndex, stepUIData, callback);
+    saveStepUIState(taskId, stepIndex, stepUIData) {
+        return uiTaskStepModel.updateStepUIData(taskId, stepIndex, stepUIData);
     }
 
     getSkillConfigPath(templateId, configType) {

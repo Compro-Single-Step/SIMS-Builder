@@ -27,15 +27,22 @@ uiTaskStepSchema.statics = {
         });
     },
     updateStepUIData: function(taskId, stepIndex, stepUIData, callback) {
+        return new Promise((resolve, reject)=> {
+            
+            let condition = {"task_id": taskId};
+            let jsonKey = "task_data.step_" + stepIndex;
+            let updateData = { $set: {}};
+            updateData.$set[jsonKey] = stepUIData;
+            let options = { upsert: true };
 
-        let condition = {"task_id": taskId};
-        let jsonKey = "task_data.step_" + stepIndex;
-        let updateData = { $set: {}};
-        updateData.$set[jsonKey] = stepUIData;
-        let options = { upsert: true };
-
-        this.collection.update(updateCriteria, updateData, options, (error, success) => {
-            callback(error, success);
+            this.collection.update(condition, updateData, options, (error, success) => {
+                if(error) {
+                    reject(eroor);
+                }
+                else {
+                    resolve(success);
+                }
+            });
         });
     }
 };
