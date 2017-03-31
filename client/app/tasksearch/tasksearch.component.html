@@ -35,6 +35,7 @@
               <label class="radioOption"><input type="radio" name="optradio" class="radioButton">Copy from Existing Task</label>
             </div>
           </div>-->
+          <div *ngIf="message" class="alert alert-danger">{{message}}</div>
           <div class="btn-toolbar float-xs-right m-t-1">
             <button class="btn btn-inverse btn-md srchBtn" (click)="onSearch()">Search</button>
           </div>
