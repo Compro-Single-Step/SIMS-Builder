@@ -9,9 +9,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "event-stream": "^3.3.4",
     "gulp": "^3.9.1",
     "gulp-clean": "^0.3.2",
     "gulp-git": "^2.1.0",
+    "gulp-json-editor": "^2.2.1",
+    "robocopy": "^0.1.15",
     "run-sequence": "^1.2.2"
   }
 }
