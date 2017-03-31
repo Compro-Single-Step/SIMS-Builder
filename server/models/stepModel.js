@@ -1,11 +1,11 @@
 class Step {
-    constructor(taskRef,index){
-        this.Index = taskRef.getStepIndex(index);
-        this.Text = taskRef.getStepText(index);
-        this.TestStatus = taskRef.getStepTestStatus(index);
-        this.SkillName = taskRef.getStepSkillName(index);
-        this.MethodCount = taskRef.getStepMethodCount(index);
-        this.TemplateName = taskRef.getStepTemplateName(index);
+    constructor(taskDataObj,index){
+        this.Index = taskDataObj.getStepIndex(index);
+        this.Text = taskDataObj.getStepText(index);
+        this.TestStatus = taskDataObj.getStepTestStatus(index);
+        this.SkillName = taskDataObj.getStepSkillName(index);
+        this.MethodCount = taskDataObj.getStepMethodCount(index);
+        this.TemplateName = taskDataObj.getStepTemplateName(index);
     }
 }
 module.exports = Step;
