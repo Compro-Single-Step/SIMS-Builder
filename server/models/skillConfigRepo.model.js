@@ -26,7 +26,12 @@ skillConfigRepoSchema.statics = {
 
             this.find({"template_id": templateId}, projection, (error, data) => {
                 if(!error) {
-                    resolve(data[0][configType]);
+                    if(data.length > 0) {
+                        resolve(data[0][configType]);
+                    }
+                    else {
+                        reject(error);
+                    }
                 }
                 else {
                     reject(error);
