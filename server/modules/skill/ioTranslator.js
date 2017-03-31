@@ -116,14 +116,15 @@ class IOTranslator{
         }
     }
       Promise.all(PromiseRequestsArr).then(function(value) {
-         console.log('done')
+         console.log("promise all success");
          callback(null,iomap);
         //  return iomap;
         },function(err){
           console.log("promise all rejection");
-          console.log(err);
+          console.log(err.message);
         }).catch(function(err){
           console.log("promise all catch");
+          console.log(err.message);
         });
   }
 
