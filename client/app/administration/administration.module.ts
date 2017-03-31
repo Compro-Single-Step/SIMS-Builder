@@ -5,6 +5,7 @@ import { AlertModule, TooltipModule } from 'ng2-bootstrap';
 import { ButtonsModule, DropdownModule, PaginationModule  } from 'ng2-bootstrap';
 import { DataTableModule } from 'angular2-datatable';
 import { Ng2TableModule } from 'ng2-table';
+import { ModalModule } from 'ng2-bootstrap';
 import 'parsleyjs';
 import {CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
@@ -15,6 +16,7 @@ import { AddUserComponent } from './add-user/add-user.component';
 import { SearchPipe } from './user-list/shared/search-pipe';
 import { UserDataResolverService } from './user-list/shared/userDataResolver.service';
 import { ManageUsersComponent } from './manage-users/manage-users.component';
+import { UserDetailsFormComponent } from './user-details-form/user-details-form.component';
 
 // @NgModule({
 //   imports: [
@@ -34,7 +36,7 @@ import { ManageUsersComponent } from './manage-users/manage-users.component';
 
 @NgModule({
   declarations: [
-    SearchPipe, AddUserComponent, UserListComponent, ManageUsersComponent ],
+    SearchPipe, AddUserComponent, UserListComponent, ManageUsersComponent, UserDetailsFormComponent ],
   imports: [
     CommonModule,
     FormsModule,
@@ -47,6 +49,7 @@ import { ManageUsersComponent } from './manage-users/manage-users.component';
    // UtilsModule,
     Ng2TableModule,
     DataTableModule,
+    ModalModule,
     ROUTES
   ],
   schemas:  [ CUSTOM_ELEMENTS_SCHEMA ],
