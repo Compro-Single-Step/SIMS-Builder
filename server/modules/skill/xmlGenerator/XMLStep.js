@@ -11,7 +11,6 @@ module.exports = class XMLStep {
         
         this.states = {}; // object holding state objects with state id as key
         this.stateOrderIdMap = {};
-        console.log("attrValueMap: ", attrValueMap);
         this.generateStates(stepJson[1], attrValueMap);
     }
 
@@ -24,15 +23,6 @@ module.exports = class XMLStep {
             this.stateOrderIdMap[idx] = states[idx].props.id;
         }
 
-    }
-
-    updateState (args){
-        // update state based on args
-    }
-
-    addStepText  (txt){
-
-        // fn to add step text to the xml
     }
 
     generateXML (){
