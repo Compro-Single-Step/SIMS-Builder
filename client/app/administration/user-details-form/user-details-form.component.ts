@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { UserService} from '../../_services/user.service';
 import { User } from '../../_services/userModel';
 declare var jQuery: any;
@@ -8,7 +8,7 @@ declare var jQuery: any;
   templateUrl: './user-details-form.component.html',
   styleUrls: ['./user-details-form.component.scss']
 })
-export class UserDetailsFormComponent implements OnInit {
+export class UserDetailsFormComponent implements OnInit, OnChanges {
 @Input() title:string;
 @Input() user;
 @Input() mode;
@@ -32,7 +32,6 @@ addUser(): void{
                 .subscribe(result => {
                         this.message = result.message;
                 });
-        console.log("edited");
       }
     }
     else return;
@@ -44,5 +43,8 @@ addUser(): void{
   ngOnInit() {
     console.log(this.user);
     this.instance = jQuery('.parsleyjs').parsley();
+  }
+  ngOnChanges(){
+    this.message='';
   }
 }
