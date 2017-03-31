@@ -13,7 +13,7 @@ import { Step } from './stepModel'
 export class TaskDataService {
 
   public data: any = undefined;
-  public task: any = undefined;
+  public taskId: any = undefined;
 
   constructor(private http:HttpClient ) { 
   }
@@ -21,7 +21,7 @@ export class TaskDataService {
   getTaskData(taskId: string): Observable<Task> {
    let params = new URLSearchParams();
     params.set('TaskId', taskId);
-    if (this.data && this.task == taskId){
+    if (this.data && this.taskId == taskId){
       return Observable.of(this.data);
     }
     else{
@@ -38,7 +38,7 @@ export class TaskDataService {
     else{
       // body = this.mapTaskData(body);
       this.data = body;
-      this.task = body.id;
+      this.taskId = body.id;
       return body || { };
     }
   }
