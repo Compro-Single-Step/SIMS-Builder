@@ -6,26 +6,30 @@ const config = require('../config/config');
 var Task = require('../models/taskModel');
 var Step = require('../models/stepModel');
 
+var taskFactory = require('../modules/taskData/TaskFactory')
+
 router.get("/",function(req,res){
 	var taskId = req.query.TaskId;
 	var data;
-	request(config.taskDataServerUrl+taskId, function (error, response, body) {
+	request(config.taskDataServer.Url+taskId, function (error, response, body) {
 		try{
-			checkResponse = JSON.parse(body);
+			body = JSON.parse(body);
 		}
 		catch(e){
 			console.log(e);
-		}		
-		if(checkResponse.ErrorMessage == null){
-			body = mapTaskData(checkResponse);
+		}	
+
+		if(body.ErrorMessage == null){
+			body = mapTaskData(body, config.taskDataServer.name);
 			res.send(body);
 		}
 		else
-			res.send(JSON.stringify({"Error":checkResponse.ErrorMessage}));
+			res.send(JSON.stringify({"Error":body.ErrorMessage}));
 	});
 });
- function mapTaskData(res){
-    var taskData = new Task(res);
+ function mapTaskData(res, modelType){
+    var taskModel = taskFactory.getTaskDataModel(modelType, res);
+	let taskData = new Task (taskModel);	
 	return taskData;
   }
 module.exports = router;

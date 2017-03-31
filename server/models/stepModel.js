@@ -1,16 +1,11 @@
 class Step {
-    constructor(item){
-        this.stepIndex = item.ScenarioOrder;
-        this.stepText = item.QuesText;
-        this.stepDetails = new StepDetails(item.ScenarioPathwayList.length);
-        this.stepTestStatus = true;
-    }
-}
-class StepDetails {
-    constructor(methodCount){
-        this.SkillName ="Demo Skill";
-        this.MethodCount=methodCount;
-        this.TemplateName="Demo Template";
+    constructor(taskRef,index){
+        this.Index = taskRef.getStepIndex(index);
+        this.Text = taskRef.getStepText(index);
+        this.TestStatus = taskRef.getStepTestStatus(index);
+        this.SkillName = taskRef.getStepSkillName(index);
+        this.MethodCount = taskRef.getStepMethodCount(index);
+        this.TemplateName = taskRef.getStepTemplateName(index);
     }
 }
 module.exports = Step;

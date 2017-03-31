@@ -40,7 +40,10 @@ const config = {
             }
         },
         root: serverRootPath,
-        taskDataServerUrl: 'http://billi.comprotechnologies.com/SIMsInternal/internal/ScenarioPathways.ashx?scenario='   
+        taskDataServer: {
+            Url: 'http://billi.comprotechnologies.com/SIMsInternal/internal/ScenarioPathways.ashx?scenario=',
+            name: "billi"
+        }   
     },
     production: {
         app: {
