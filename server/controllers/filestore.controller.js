@@ -20,9 +20,9 @@ class FileStoreController {
     }
 
     saveResourceFile(templateId, taskId, stepIndex, fileName) {
-        let folderPath = this.getUploadedResourceFolderPath(taskId, stepIndex);
+        
 
-        return this.uploadFileHandler(folderPath, fileName);
+        return this.uploadFileHandler();
     }
 
     getFileFromFileStore(filepath, folder) {
@@ -40,21 +40,25 @@ class FileStoreController {
         })
     }
 
-    uploadFileHandler(folderPath, fileName) {
+    uploadFileHandler() {
+        let self = this;
         let storage = multer.diskStorage({
             destination: function (req, file, callback) {
-                let destinationFolder = folderPath;
-
-                this.createFolder(destinationFolder, (error) => {
+                let taskId = req.body.taskId;
+                let stepIndex = req.body.stepIndex;
+                let destinationFolder = self.getUploadedResourceFolderPath(taskId, stepIndex);
+                self.createFolder(destinationFolder, (error) => {
                     callback(null, destinationFolder);
                 });
             },
             filename: function (req, file, callback) {
-                callback(null, fileName || file.originalname);
+                let fileName = req.body.fileName;
+                fileName = fileName || file.originalname;
+                callback(null, fileName);
             }
         });
         let upload = multer({ storage: storage });
-        return upload.fields([{ name: 'Browse', maxCount: 1 }]);
+        return upload.fields([{ name: 'dzfile', maxCount: 1 }]);
     }
 
     createFolder(folderPath, callback) {

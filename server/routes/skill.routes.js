@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const skillController = require('../controllers/skill.controller');
-//const dbFilestoreMgr = require('../modules/skill/dbFilestoreMgr');
-
+const config = require('../config/config');
 
 router.get('/stepuiconfig/uiconfig/:templateId', (req, res) => {
     let templateId = req.params.templateId;
@@ -82,12 +81,20 @@ router.post("/uploadresource", (req, res) => {
     let taskId = "EXP16.WD.03.01.03.T1";
     let stepIndex = 1;
     let upload = skillController.saveResourceFile(templateId, taskId, stepIndex);
-    upload(req, res, (error) => {
+    upload(req, res, (error, data) => {
         if(error) {
             res.send("Error uploading file.");
         }
         else {
-            res.end("File is uploaded");
+            let taskId = req.body.taskId;
+            let stepIndex = req.body.stepIndex;
+            let fileName = req.files.dzfile[0].originalname;
+            let folderPath = config.fileStore.resourceFolder + taskId + "/" + stepIndex + "/";
+            let filePath = folderPath + fileName;
+            
+            res.send({
+                filePath: filePath.replace(/\\/g,"/")
+            });
         }
     });
 });
