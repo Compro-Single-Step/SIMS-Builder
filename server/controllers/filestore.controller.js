@@ -19,9 +19,7 @@ class FileStoreController {
         this.saveFileToFileStore(folderPath, fileName, OutputXML, callback);
     }
 
-    saveResourceFile(templateId, taskId, stepIndex, fileName) {
-        
-
+    saveResourceFile() {
         return this.uploadFileHandler();
     }
 

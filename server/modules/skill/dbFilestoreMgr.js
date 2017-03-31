@@ -67,8 +67,8 @@ class DatabaseFileStoreManager {
         fsc.saveStepXML(taskId, stepIndex, OutputXML, callback);
 	}
 
-    saveResourceFile(templateId, taskId, stepIndex, fileName) {
-        return fsc.saveResourceFile(templateId, taskId, stepIndex, fileName);
+    saveResourceFile() {
+        return fsc.saveResourceFile();
     }
 }
 

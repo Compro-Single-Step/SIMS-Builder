@@ -76,11 +76,8 @@ router.get('/xmlgeneration/:templateId/:taskid/:stepidx', (req, res) => {
 });
 
 router.post("/uploadresource", (req, res) => {
-    //getting below data to be decided.
-    let templateId = "";
-    let taskId = "EXP16.WD.03.01.03.T1";
-    let stepIndex = 1;
-    let upload = skillController.saveResourceFile(templateId, taskId, stepIndex);
+
+    let upload = skillController.saveResourceFile();
     upload(req, res, (error, data) => {
         if(error) {
             res.send("Error uploading file.");
