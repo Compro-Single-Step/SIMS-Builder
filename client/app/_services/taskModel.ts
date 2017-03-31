@@ -6,6 +6,4 @@ export class Task {
         testStatus: boolean;
         commitStatus:boolean;
         stepData: Array<Step>;
-        previewUrl:string;
-        testUrl:string
  }

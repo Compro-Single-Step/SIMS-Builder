@@ -30,7 +30,11 @@ const config = {
             skillFolder: skillFolder,
             xmlFolder: xmlFolder,
             resourceFolder: resourceFolder
-        }
+        },
+        taskDataServer: {
+            Url: 'http://billi.comprotechnologies.com/SIMsInternal/internal/ScenarioPathways.ashx?scenario=',
+            name: "billi"
+        }  
     },
     development: {
         app: {
@@ -55,7 +59,11 @@ const config = {
             skillFolder: skillFolder,
             xmlFolder: xmlFolder,
             resourceFolder: resourceFolder
-        }
+        },
+        taskDataServer: {
+            Url: 'http://billi.comprotechnologies.com/SIMsInternal/internal/ScenarioPathways.ashx?scenario=',
+            name: "billi"
+        }   
     },
     production: {
         app: {
@@ -80,7 +88,11 @@ const config = {
             skillFolder: skillFolder,
             xmlFolder: xmlFolder,
             resourceFolder: resourceFolder
-        }
+        },
+        taskDataServer: {
+            Url: 'http://billi.comprotechnologies.com/SIMsInternal/internal/ScenarioPathways.ashx?scenario=',
+            name: "billi"
+        }  
     }
 };
 
