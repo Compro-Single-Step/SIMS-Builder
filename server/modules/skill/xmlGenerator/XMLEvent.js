@@ -48,8 +48,7 @@ module.exports = class XMLEvent {
             for(let j=0; j<currValProps.length; j++){
                 currValidation["props"][currValProps[j]] = validations[i]["props"][currValProps[j]];
             }
-            console.log("currValidation.props: ", currValidation["props"]);
-
+            
             let currValidationComps = validations[i]["comp"];
             for(let j=0; j<currValidationComps.length; j++){
                 if(currValidationComps[j]["props"]["multiple-occurence"]=="true"){

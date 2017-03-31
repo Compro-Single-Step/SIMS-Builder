@@ -3,7 +3,6 @@
  * User: Tushar
  * Date: 2/6/17
  * Time: 3:24 PM
- * To change this template use File | Settings | File Templates.
  */
 
 const DOMParser = require('xmldom').DOMParser;

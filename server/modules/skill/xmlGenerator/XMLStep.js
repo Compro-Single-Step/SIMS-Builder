@@ -8,19 +8,16 @@ module.exports = class XMLStep {
 
         this.preloadEntities = stepJson[0];
         this.preloadComps = this.preloadEntities[0];
-        console.log("this.preloadComps: ", this.preloadComps);
-
+        
         this.states = {}; // object holding state objects with state id as key
         this.stateOrderIdMap = {};
+        console.log("attrValueMap: ", attrValueMap);
         this.generateStates(stepJson[1], attrValueMap);
     }
 
     generateStates (states, attrValueMap){
 
         for(let idx=0; idx<states.length; idx++){
-
-            console.log("state map: ", attrValueMap.states[states[idx].props.id]);
-
             let state = new XMLState (states[idx], attrValueMap.states[states[idx].props.id], this);
 
             this.states[states[idx].props.id] = state;
@@ -51,13 +48,11 @@ module.exports = class XMLStep {
     generatePreloadNodeXML (){
         let xmlString = '<preload>';
 
-        console.log("this.preloadComps: ", this.preloadComps);
-
         // adding comps to preload node
         xmlString += "<comps>";
         for(let idx=0; idx<this.preloadComps.length; idx++){
             let currCompProps = this.preloadComps[idx].props;
-            xmlString += '<comp id="'+currCompProps.id+'" name="'+currCompProps.name+'" cssclass="'+currCompProps.cssclass+'" type="'+currCompProps.default+'"/>';
+            xmlString += '<comp id="'+currCompProps.id+'" name="'+currCompProps.name+'" cssclass="'+currCompProps.cssclass+'" type="'+currCompProps.type+'"/>';
         }
         xmlString += "</comps>";
 

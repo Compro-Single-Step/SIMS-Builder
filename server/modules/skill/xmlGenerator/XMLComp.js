@@ -25,8 +25,7 @@ module.exports = class Comp {
         this.stateRef = parentStateRef;
 
         this.attrValMap = attrValMap;
-        console.log("comp attrValMap: ", attrValMap);
-
+        
         // this object will be having references of attributes according to their sets
         // this is to be used in XML formation
         this.attributeSets = {
@@ -117,18 +116,14 @@ module.exports = class Comp {
     createAttrSets (attrSets, attrType){
         let result = {};
 
-        console.log("this.attrValMap: ", this.attrValMap);
-
         for(let i=0; i<attrSets.length; i++){
 
             if(attrSets[i].props["multiple-occurence"]=="true"){
                 let dependencyAttrs = JSON.parse(attrSets[i].props["dependency-attr"]);
                 
-                let dependencyValArr = this.getAttrValArrBySetNameAndType(attrType, dependencyAttrs, attrSets[i].props.name);
+                let dependencyVal = this.getAttrValArrBySetNameAndType(attrType, dependencyAttrs, attrSets[i].props.name);
 
-                // console.log("dependencyValArr: ", dependencyValArr);
-
-                let dependencyValSetsArr = this.generateDependencyAttrValSets(dependencyValArr);
+                let dependencyValSetsArr = this.generateDependencyAttrValSets(dependencyVal);
                 this.dependencyMap[attrSets[i].props.name] = [];
 
                 for(let j=1; j<=dependencyValSetsArr.length; j++){
@@ -156,11 +151,7 @@ module.exports = class Comp {
     }
 
     getAttrValArrBySetNameAndType (attrType, attrNamesArr, attrSetName = "default-attrs"){
-        // console.log("dependencyAttrs: ", attrNamesArr);
-        // console.log("attrSetName: ", attrSetName);
-
         let attrValMap = {};
-        
         for(let i=0; i<attrNamesArr.length; i++){
             attrValMap[attrNamesArr[i]] = this.attrValMap[attrType][attrSetName][attrNamesArr[i]];
         }
@@ -173,34 +164,44 @@ module.exports = class Comp {
         try{
             val = this.attrValMap[attrType][attrSetName][attrName]
         }catch(e){
-
+            console.log("ERROR: Value for attribute "+attrName+" not found in the Attr Value Map");
         }
         
         return val;
     }
 
-    generateDependencyAttrValSets (dependencyValArr){
-        /*for(let i=0; i<Object.keys(dependencyValArr).length; i++){
+    generateDependencyAttrValSets (attrsValsMap){
+        
+        let attrArr = [];
+        let attrValsArr = [];
+        
+        for(let attr in attrsValsMap){
+            attrArr.push(attr);
+            attrValsArr.push(attrsValsMap[attr]);
+        }
 
-         }*/
+        var attrValsCartProd = this.cartesianProduct(attrValsArr);
+        let result = [];
+        for(let i=0; i<attrValsCartProd.length; i++){
+            let resAttrSet = {};
+            for(let j=0; j<attrArr.length; j++){
+                resAttrSet[attrArr[j]] = attrValsCartProd[i][j];
+            } 
+            result.push(resAttrSet)  ;
+        }
 
-        return [
-            {
-                "SELECTED_CELLS": "D5:E6"
-            },
-            {
-                "SELECTED_CELLS": "D5:E5"
-            },
-            {
-                "SELECTED_CELLS": "D5:D6"
-            },
-            {
-                "SELECTED_CELLS": "D5"
-            }
-        ]
-
+        return result;
     }
 
+    cartesianProduct(arr){
+        return arr.reduce(function(a,b){
+            return a.map(function(x){
+                return b.map(function(y){
+                    return x.concat(y);
+                })
+            }).reduce(function(a,b){ return a.concat(b) },[])
+        }, [[]])
+    }
 
     createAttrs (attrs, attrType, attrSetName, attrsVal){
         let result = [];
@@ -225,13 +226,10 @@ module.exports = class Comp {
             }
 
         }
-        console.log("val: ", val);
+        
         myAttr.setValue(val);
         return myAttr;
     }
-
-
-
 
     addEvents (events){
         this.events = [];

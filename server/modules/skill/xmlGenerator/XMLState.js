@@ -54,7 +54,7 @@ module.exports = class XMLState {
     }
 
     generateXML (){
-        console.log("this.comps: ", this.comps);
+        
         let xml = '<state id="'+ this.id +'" desc="'+ this.description +'" ';
 
         if(this.compstack){
