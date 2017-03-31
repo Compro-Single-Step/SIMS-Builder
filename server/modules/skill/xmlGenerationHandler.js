@@ -1,8 +1,15 @@
 const dbFilestoreMgr = require('./dbFilestoreMgr');
-const translatorClass = require("./ioTranslator.js");
-const translator = new translatorClass();
-// const xmlGenerator = require("./xmlGenerator/Step.js");
+const translator = require("./ioTranslator.js");
+const xmlGenerator = require("./xmlGenerator/Step.js");
 
+var mapTranslationParams = function(IOMap, stepUIState, skillRef, taskId, stepIndex, dbFilestoreMgr){
+     this.IOMap = IOMap;
+     this.stepUIState = stepUIState;
+     this.skillRef = skillRef;
+     this.taskId = taskId;
+     this.stepIndex = stepIndex;
+     this.dbFilestoreMgr = dbFilestoreMgr;
+}
 
 module.exports.generateStepXML = function(templateId, taskId, stepIndex, skillRef, callback){
     
@@ -13,7 +20,13 @@ module.exports.generateStepXML = function(templateId, taskId, stepIndex, skillRe
 
                     //IO Translator
                     let IOMap = JSON.parse(IOMapJson);
-                    attrValueMap = translator.translateMap(IOMap, stepUIState, skillRef);
+                    let mapTranslationParam = new mapTranslationParams(IOMap, stepUIState, skillRef, taskId, stepIndex, dbFilestoreMgr)
+                    // let attrValueMap = translator.getAttrValueMap(IOMap, stepUIState, skillRef, taskId, stepIndex,dbFilestoreMgr);
+                    let attrValueMap = translator.getAttrValueMap(mapTranslationParam, function(error,IOmap){
+                        //XML generation
+                        console.log("returned in Xmlgeneration handler");
+                        console.log(IOmap);
+                    });
 
                     //XML GENERATION
                     dbFilestoreMgr.getSkillXML(templateId, (error, skillTemplate) => {

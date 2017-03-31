@@ -5,6 +5,48 @@ const skillConfigTypes = require('../../models/skillConfigRepo.model').skillConf
 const folderMap = FAL.fileTypeFolderMap;
 
 class DatabaseFileStoreManager {
+
+
+    copyTaskAssetFile(residentPath, taskParams, callback){
+
+    //take out the filename from the path 
+    var filepathArr = residentPath.split("/")
+    var fileName = filepathArr[filepathArr.length-1].trim();
+    var fileTypeArr = fileName.split(".")
+    var fileType = fileTypeArr[fileTypeArr.length-1];
+
+    taskParams.dbFilestoreMgr.getTaskAsset(residentPath,function(error,data){
+        if(!error){
+          taskParams.dbFilestoreMgr.storeTaskAssets(taskParams.taskId, taskParams.stepIndex, fileName, data, function(error,path){
+              if(!error){
+                // this.updateResourcePath(path)
+                //returning the fileType as well
+                callback(error, path, fileType);
+              }
+              else{
+                callback(error);
+              }
+          });
+        }
+        else{
+            callback(error)
+        } 
+    });
+  }
+    
+    copyAssetFolderContents(srcPath, stepIndex, taskId, callback){
+        fsc.copyResToTaskFolder(srcPath, stepIndex, taskId, callback);
+    }
+
+    getTaskAsset( filePath,callback){
+        fsc.getTaskRes(filePath,callback)
+    }
+
+    storeTaskAssets(taskId, stepIdx, fileName, data, callback){
+        fsc.saveTaskRes(taskId, stepIdx, fileName, data, callback);
+    }
+
+
     getUIConfig(templateId, callback) {
         dbController.getSkillConfigPath(templateId, skillConfigTypes.UI_CONFIG, (filePath, error) => {
             if(!error) {
@@ -20,7 +62,7 @@ class DatabaseFileStoreManager {
             }
         });
     }
- 
+
     getSkillXML(templateId, callback) {
         dbController.getSkillConfigPath(templateId, skillConfigTypes.XML, (filePath, error) => {
             if(!error) {

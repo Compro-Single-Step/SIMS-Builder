@@ -5,6 +5,10 @@ const bodyParser = require('body-parser');
 const db = require('./config/db');
 const config = require('./config/config');
 
+debugger
+const xmlGenHander = require("./modules/skill/xmlGenerationHandler");
+xmlGenHander.generateStepXML();
+
 
 // Get our API routes
 const apiRouter = require('./routes');

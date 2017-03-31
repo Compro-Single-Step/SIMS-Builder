@@ -1,103 +1,118 @@
+// this file contains all the functions for the MovecellContent with the object implementation of the parameterArray
 
-const ExcelBaseSkill = require("../common/xlSkill");
+(function(){
 
-module.exports  = class moveCellContent extends ExcelBaseSkill{
-  //init DOC JSON 
-  createJsonPath(valueParam){
+  const ExcelBaseSkill = require("../common/xlSkill");
 
-    return valueParam[0].path;
-  }
-
-  getSelectedCell(paramValueArr){
-    
-    return paramValueArr[0];
-  }
-
-  getSelDragCell(paramValueArr){
-    //requires sheet name using init doc json
-    
-    var finalObject = {};
-    finalObject["sheetNo"] = 1;
-    finalObject["startRange"] = paramValueArr[1];
-    finalObject["endRange"] = paramValueArr[2];
-    finalObject = JSON.stringify(finalObject);
-    return finalObject;
-
-  }
-
-  createTooltipImagePath(paramValueArr){
-     
-    return paramValueArr[0].path;
-  }
-  //this function to be moved to  Base Excel Skill 
-  // to be done as soon as the Sheet number can be generated from the component handler 
-  createImageJson (paramValueArr){
-    
-    var finalObject = {};
-    finalObject['folderPath'] = paramValueArr[0].path;
-    var sheetArr = []
-
-      for(var iterator = 0 ; iterator < paramValueArr[0].length; ++iterator){
-        sheetArr[iterator] = {};
-        sheetArr[iterator]['sheetNo'] = 1;
-        sheetArr[iterator]['gridImg'] = paramValueArr[0][iterator].gridImage.name;
-        sheetArr[iterator]['rowImg'] = paramValueArr[0][iterator].rowImage.name;
-        sheetArr[iterator]['colImg'] = paramValueArr[0][iterator].cellImage.name;
-        sheetArr[iterator]['cellImg'] = paramValueArr[0][iterator].columnImage.name;
-    }
-    finalObject['sheetImages'] = sheetArr;
-    finalObject = JSON.stringify(finalObject);
-    return finalObject;
-  }
-
-
-  createHighlightJson (paramValueArr){
-     
-    // requires sheet number using Init Doc json
-    var finalObject = {};
-    finalObject["sheetNo"] = 1;
-    finalObject["range"] = paramValueArr[1];
-    finalObject = JSON.stringify(finalObject);
-    return finalObject;
-  }
-
-
-  createSheetCellData (paramValueArr){
-     
-    var finalObject = {};
-    finalObject["sheetNo"] = 1;
-    finalObject["dataJSONPath"] = paramValueArr[1].path;
-    
-    finalObject  =  JSON.stringify(finalObject);
-    return finalObject;
-
-  }
-
-  getSelectedCellFinal (paramValueArr){
-    
-    var finalArray = [];
-    
-    var valuearray = paramValueArr[0].split(":");
-    valuearray[0].trim();
-    valuearray[1].trim();
-    
-    var c1 = valuearray[0].toUpperCase().charAt(0);
-    var c2 = valuearray[1].toUpperCase().charAt(0);
-    var r1 = parseInt(valuearray[0].substring(1, valuearray[0].length));
-    var r2 = parseInt(valuearray[1].substring(1, valuearray[0].length));
-    
-    finalArray.push(valuearray[0]);
-    
-      for(var iterator = 0 ; iterator <= c2.charCodeAt(0)-c1.charCodeAt(0); ++iterator){
-        for(var index = 0; index < r2-r1 ; ++index) {
-          if(iterator != 0 || index != 0)
-            finalArray.push(c1+r1 +":" + (String.fromCharCode(c1.charCodeAt(0) + iterator))+(r1+index));
+  class moveCellContent extends ExcelBaseSkill{
+    // //init DOC JSON 
+    createJsonPath(skillParams ,callback){
+        
+      var taskParams = skillParams.taskParams;
+      var paramValueObj = skillParams.paramsObj
+      taskParams.dbFilestoreMgr.copyTaskAssetFile(paramValueObj["docData"]["path"], taskParams, function(error, xmlPath, fileType){
+        paramValueObj["docData"]["path"] = xmlPath;
+        if(!error){
+          var preloadResArr = [];
+          preloadResArr.push({"path":""+xmlPath,"type":""+fileType})
+          callback(null, paramValueObj["docData"]["path"]);
+          //add this new path to the preloadResources Array
         }
+        else{
+          callback(error);
+        }  
+      })
+    }
+
+    getSelectedCell(skillParams ,callback){
+      
+      var paramValueObj = skillParams.paramsObj
+      callback(null,paramValueObj["srcRange"]);
+      
+    }
+
+    getSelDragCell(skillParams ,callback){
+      
+      var paramValueObj = skillParams.paramsObj
+      //requires sheet name using init doc json
+      var finalObject = {};
+      finalObject["sheetNo"] = 1;
+      finalObject["startRange"] = paramValueObj["srcRange"];
+      finalObject["endRange"] = paramValueObj["destRange"];
+      finalObject = JSON.stringify(finalObject);
+      callback(null,finalObject)
+      
 
     }
     
-    return finalArray;
+    createHighlightJson (skillParams, callback){
+      
+      var paramValueObj = skillParams.paramsObj
+      // requires sheet number using Init Doc json
+      var finalObject = {};
+      finalObject["sheetNo"] = 1;
+      finalObject["range"] = paramValueObj["srcRange"];
+      finalObject = JSON.stringify(finalObject);
+      callback(null,finalObject)
+      
+    }
 
+
+    createSheetCellData (skillParams, callback){
+      
+      var taskParams = skillParams.taskParams;
+      var paramValueObj = skillParams.paramsObj;
+      var finalObject = {};
+      finalObject["sheetNo"] = 1;
+      paramValueObj["wbData"].path = "Res1.json";
+      taskParams.dbFilestoreMgr.copyTaskAssetFile(paramValueObj["wbData"].path, taskParams, function(error, xmlPath, fileType){
+        
+        if(!error){
+          paramValueObj["wbData"].path = xmlPath;
+          finalObject["dataJSONPath"] = paramValueObj["wbData"].path;
+          finalObject  =  JSON.stringify(finalObject);
+          var preloadResArr = [];
+          preloadResArr.push({"path":""+xmlPath,"type":""+fileType})
+          callback(null, finalObject, preloadResArr);
+        }
+        else{
+          // console.log("error in the createSheetCellData");
+          callback(error);
+        }
+          
+      })
+    }
+
+    getSelectedCellFinal(skillParams, callback){
+      
+      var paramValueObj = skillParams.paramsObj
+      var finalArray = [];
+      
+      var valuearray = paramValueObj["destRange"].split(":");
+      valuearray[0].trim();
+      valuearray[1].trim();
+      
+      var col1 = valuearray[0].toUpperCase().charAt(0);
+      var col2 = valuearray[1].toUpperCase().charAt(0);
+      var row1 = parseInt(valuearray[0].substring(1, valuearray[0].length));
+      var row2 = parseInt(valuearray[1].substring(1, valuearray[0].length));
+      
+      finalArray.push(valuearray[0]);
+      
+        for(var iterator = 0 ; iterator <= col2.charCodeAt(0)-col1.charCodeAt(0); ++iterator){
+          for(var index = 0; index < row2-row1 ; ++index) {
+            if(iterator != 0 || index != 0)
+              finalArray.push(col1+row1 +":" + (String.fromCharCode(col1.charCodeAt(0) + iterator))+(row1 + index));
+          }
+
+      }
+      
+      callback(null,finalArray);
+      
+
+    }
+    
   }
-  
-}
+  module.exports = new moveCellContent();
+
+})(typeof module.exports === 'undefined'? this['myModule']={}: module);
