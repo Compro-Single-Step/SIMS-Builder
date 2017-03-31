@@ -1,5 +1,8 @@
-import { Component, ViewEncapsulation, OnInit } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ModalDirective } from 'ng2-bootstrap/modal';
+import { UserService} from '../../_services/user.service';
+import { User } from '../../_services/userModel';
 declare var jQuery: any;
 
 
@@ -13,8 +16,14 @@ declare var jQuery: any;
 export class UserListComponent implements OnInit {
 Data ;
 userData;
+selectedUser = 1;
 errorMessage;
-  constructor(private route: ActivatedRoute, private router: Router) {
+userdetails: User;
+message="";
+@ViewChild('modalWindow') public modalWindow:ModalDirective;
+@ViewChild('deleteModalWindow') public deleteModalWindow:ModalDirective;
+  constructor(private route: ActivatedRoute, private router: Router, private userservice: UserService) {
+    this.userdetails = new User();
   }
 
   ngOnInit(): void {
@@ -36,6 +45,24 @@ errorMessage;
                        Data => this.Data = Data,
                        error =>  this.errorMessage = <any>error);
 					   this.userData = this.Data["userData"];
+  }
+  showUpdateModal(index) {
+    this.selectedUser = index;
+    this.userdetails = this.userData[this.selectedUser];
+    this.modalWindow.show();
+  }
+  showDeleteModal(index){
+    this.selectedUser = index;
+    this.userdetails = this.userData[this.selectedUser];
+    this.deleteModalWindow.show();
+  }
+  disableUser(){
+    this.userdetails["enable"] = false;
+    this.userservice.editUser(this.userdetails)
+                .subscribe(result => {
+                        this.message = result.message;
+                });
+    this.deleteModalWindow.hide();
   }
   
 }

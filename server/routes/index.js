@@ -11,7 +11,7 @@ module.exports = function () {
 	router.use('*', verifyToken);
 	router.use('/skill', skillRoutes);
   router.use('/fetchTaskData', taskBuilderData);	
-	router.use('/users', userData);	
+	router.use('/user', userData);	
 
 	return router;
 };
