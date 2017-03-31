@@ -7,12 +7,6 @@ export class Step {
     TemplateName: string
 
     constructor(){
-        this.Index;
-        this.Text;
-        this.TestStatus;
-        this.SkillName;
-        this.MethodCount;
-        this.TemplateName;
     }
 }
 
