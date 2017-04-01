@@ -13,13 +13,16 @@ function getSkill(templateId){
 
 }
 
-module.exports = class skillFactory{
+class SkillFactory{
 
     getSkillObject (templateId){
-        var skillFile = getSkill(templateId);
-        var skillRefClass = require("../../libs/skills" + skillFile);
-        var skillRef = new skillRefClass();
-        return skillRef;
+        let skillFile = getSkill(templateId);
+        let SkillClass = new require("../../libs/skills" + skillFile)
+        let skill = new SkillClass();
+        // var skillRef = new skillRefClass();
+        return skill;
     }
 
 }
+
+module.exports = new SkillFactory();

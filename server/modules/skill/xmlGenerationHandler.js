@@ -1,6 +1,6 @@
 const dbFilestoreMgr = require('./dbFilestoreMgr');
 const translator = require("./ioTranslator.js");
-const xmlGenerator = require("./xmlGenerator/Step.js");
+// const xmlGenerator = require("./xmlGenerator/Step.js");
 
 var mapTranslationParams = function(IOMap, stepUIState, skillRef, taskId, stepIndex, dbFilestoreMgr){
      this.IOMap = IOMap;
@@ -12,7 +12,7 @@ var mapTranslationParams = function(IOMap, stepUIState, skillRef, taskId, stepIn
 }
 
 module.exports.generateStepXML = function(templateId, taskId, stepIndex, skillRef, callback){
-    
+  
     dbFilestoreMgr.getStepUIState(taskId, stepIndex, (error, stepUIState) => {
         if(!error){
             dbFilestoreMgr.getIOMap(templateId, (error, IOMapJson) => {
@@ -26,9 +26,10 @@ module.exports.generateStepXML = function(templateId, taskId, stepIndex, skillRe
                         //XML generation
                         console.log("returned in Xmlgeneration handler");
                         console.log(IOmap);
+                        // TO DO generate XML using ATTRVALUEMAP
                     });
 
-                    //XML GENERATION
+                    // XML GENERATION
                     dbFilestoreMgr.getSkillXML(templateId, (error, skillTemplate) => {
                         if(!error) {
                             // let newStep = new xmlGenerator(skillTemplate, attrValueMap);

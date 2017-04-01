@@ -1,6 +1,6 @@
 // this file contains all the functions for the MovecellContent with the object implementation of the parameterArray
 
-(function(){
+
 
   const ExcelBaseSkill = require("../common/xlSkill");
 
@@ -64,6 +64,8 @@
       var paramValueObj = skillParams.paramsObj;
       var finalObject = {};
       finalObject["sheetNo"] = 1;
+      //getSheetNameMapgetSheetNameMap(sheetName, initDocJsonPath)
+
       paramValueObj["wbData"].path = "Res1.json";
       taskParams.dbFilestoreMgr.copyTaskAssetFile(paramValueObj["wbData"].path, taskParams, function(error, xmlPath, fileType){
         
@@ -100,7 +102,7 @@
       finalArray.push(valuearray[0]);
       
         for(var iterator = 0 ; iterator <= col2.charCodeAt(0)-col1.charCodeAt(0); ++iterator){
-          for(var index = 0; index < row2-row1 ; ++index) {
+          for(var index = 0; index <= row2-row1 ; ++index) {
             if(iterator != 0 || index != 0)
               finalArray.push(col1+row1 +":" + (String.fromCharCode(col1.charCodeAt(0) + iterator))+(row1 + index));
           }
@@ -113,6 +115,4 @@
     }
     
   }
-  module.exports = new moveCellContent();
-
-})(typeof module.exports === 'undefined'? this['myModule']={}: module);
+  module.exports = moveCellContent;

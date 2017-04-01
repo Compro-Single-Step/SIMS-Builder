@@ -11,7 +11,7 @@ module.exports = class ExcelBaseSkill extends baseSkill{
         taskParams.dbFilestoreMgr.copyAssetFolderContents(paramValueObj["sheets"][0]["path"], taskParams.stepIndex,taskParams.taskId, function(error,newFolderPath){
             if(!error){
                 var finalObject = {};
-                finalObject['folderPath'] = paramValueObj["sheets"][0]["path"];
+                finalObject['folderPath'] = newFolderPath;
                 // only this path needds to be changed.
                 var sheetArr = []
                 var requestArray = [];

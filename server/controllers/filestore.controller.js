@@ -17,22 +17,54 @@ class FileStoreController {
         this.readTaskRes(filepath, callback);
     }
 
-    getFileStoretaskFolderPath(taskId, stepIdx){
-        return config.fileStore.xmlFolder + taskId + "/" + stepIdx + "/";
+    getFileStoreStepFolderPath(taskId, stepIdx){
+        return taskId + "/" + stepIdx + "/";
     }
     getSimsXmlTaskFolderPath(taskId, stepIdx){
         return this.getTaskFolderPath(taskId, stepIdx);
     }
 
+    copyAssetToTaskFolder(residentPath, taskParams, callback){
+    
+    var filepathArr = residentPath.split("/")
+    var fileName = filepathArr[filepathArr.length-1].trim();
+    var fileTypeArr = fileName.split(".")
+    var fileType = fileTypeArr[fileTypeArr.length-1];
+    var self =  this;
+    self.getTaskAsset(residentPath,function(error,data){
+        if(!error){
+          self.storeTaskAsset(taskParams.taskId, taskParams.stepIndex, fileName, data, function(error,path){
+              if(!error){
+                // this.updateResourcePath(path)
+                //returning the fileType as well
+                callback(error, path, fileType);
+              }
+              else{
+                callback(error);
+              }
+          });
+        }
+        else{
+            callback(error)
+        } 
+    });
+
+}
+    getTaskAsset( filePath,callback){
+        this.getTaskRes(filePath,callback)
+    }
+
+    storeTaskAsset(taskId, stepIdx, fileName, data, callback){
+        this.saveTaskRes(taskId, stepIdx, fileName, data, callback);
+    }
+
     saveTaskRes(taskId, stepIdx, fileName, fileContent, callback){
         
-        var absFilePath = this.getFileStoretaskFolderPath(taskId, stepIdx);
+        var absFilePath = this.getFileStoreStepFolderPath(taskId, stepIdx);
 
         // var relativeXmlPath = this.getTaskFolderPath(taskId);
         var relativeXmlPath = this.getSimsXmlTaskFolderPath(taskId, stepIdx);
         
-        var srcPath  = config.fileStore.resourceFolder +  srcPath;
-
         this.saveFileToFileStore(absFilePath, fileName, fileContent, function(error){
             if(!error){
                 callback(null, relativeXmlPath + fileName);
@@ -48,8 +80,8 @@ class FileStoreController {
         var folderPathArr = srcPath.split("/");
 
         var folderName = folderPathArr[folderPathArr.length-1];
-        var relativeDestPath = this.getFileStoretaskFolderPath(taskId, stepIdx);
-         var relativeXmlPath = this.getSimsXmlTaskFolderPath(taskId, stepIdx);
+        var relativeDestPath = this.getFileStoreStepFolderPath(taskId, stepIndex);
+         var relativeXmlPath = this.getSimsXmlTaskFolderPath(taskId, stepIndex);
         var destPath = config.fileStore.xmlFolder + relativeDestPath + folderName;
 
         srcPath  = config.fileStore.resourceFolder + srcPath;

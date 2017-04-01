@@ -64,7 +64,7 @@ class IOTranslator{
  var functionName = attrParams.attrObject["function-name"];
  
       if(!attrParams.skillobject[functionName]){
-        functionName = "assignTopValue"
+        functionName = "extractSingleParamVal"
       }
       
       var skillParams = {"paramsObj":paramsObj, "taskParams": taskParam}

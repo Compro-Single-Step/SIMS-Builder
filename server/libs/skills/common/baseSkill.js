@@ -15,12 +15,11 @@ module.exports = class baseSkill{
           }
       })
       
-    //   return paramValueObj["DocTitle"].path;
-    }
-    assignTopValue(skillParams, callback){
+  }
+  
+    extractSingleParamVal(skillParams, callback){
 
       var paramValueObj = skillParams.paramsObj;
-        callback(null,paramValueObj[Object.keys(paramValueObj)[0]])
-    //   return paramValueObj[Object.keys(evaluatedParams)[0]];
+        callback(null,paramValueObj[Object.keys(paramValueObj)[0]]);
     }
 }
