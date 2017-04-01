@@ -1,6 +1,7 @@
 var gulp = require('gulp');
 var git = require('gulp-git');
 var runSequence = require('run-sequence');
+var exec = require('child_process').exec;
 var clean = require('gulp-clean');
 var robocopy = require('robocopy');
 var es         = require('event-stream');
@@ -77,4 +78,30 @@ gulp.task('push', function(){
 
 gulp.task('gitsend', function() {
   runSequence('add', 'commit', 'push');
+});
+
+gulp.task('chdir', function(cb) {
+    process.chdir('./checkout/develop');
+    //process.chdir('path');
+});
+
+gulp.task('install', function(cb) {
+    exec('npm install', function(err, stdout, stderr) {
+        console.log(stdout);
+        console.log(stderr);
+        cb(err);
+    });
+});
+
+gulp.task('build', function(cb) {
+    exec('npm run build', function(err, stdout, stderr) {
+        console.log(stdout);
+        console.log(stderr);
+        cb(err);
+    });
+});
+
+
+gulp.task('build', function(callback) {
+  runSequence(['chdir','install','build'],callback);
 });
