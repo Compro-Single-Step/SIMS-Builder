@@ -1,76 +1,149 @@
+//this file contains the object type implementation for the parameters of an attribute
 
+var attrParam = function(attrName, attrObject, stepUIState, skillobject ,IOMapRef){
+    this.attrName = attrName;
+    this.attrObject = attrObject;
+    this.stepUIState = stepUIState;
+    this.skillobject = skillobject;
+}
 
-//common function for getting the param array for the passed array of params
-getEvaluatedParams = function(paramArr , stepUIState){
-  
-  
-  var evalexp = "stepUIState.model.";  
-  var finalArray = [];
-
-  for(var iterator = 0; iterator < paramArr.length; ++iterator ){
-    finalArray[iterator] = eval(evalexp + paramArr[iterator]);
+var attrTaskParam = function( taskId, stepIndex, dbFilestoreMgr){
     
-  }
-  return finalArray;
+    this.taskId = taskId;
+    this.stepIndex = stepIndex;
+    this.dbFilestoreMgr = dbFilestoreMgr;
 }
 
-evaluateFromFunc = function(functionName, paramsArr, skillobject){
+class IOTranslator{
 
-    if(skillobject[functionName]){
-      var finalValue = skillobject[functionName](paramsArr);
+  genPromise(attrParams, taskParam, callback){
+    var self =  this;
+    return new Promise(function(resolve, reject){
+      // return self.execPromise(resolve, reject, attrParams, taskParam, callback);
+      iotranslatorobj.evaluateAttribute(attrParams, taskParam, function(error, attrVal, preloadResArr){
+
+      if(!error){
+        var resolveParam = {"attrVal":attrVal,"preloadResArr":preloadResArr}
+        resolve(resolveParam);
+      }
+      else{
+        reject(error);
+      }
+     
+  });
+    })
+    .then(function(resolveParam){
+      callback(null, resolveParam.attrVal, resolveParam.preloadResArr);
+    })
+    // ,function(error){
+    //   console.log("rejection");
+    //   return Promise.reject();
+    // })
+    // .catch(function(error){
+    //   console.log("Promise has been rejected");
+    //   callback(error,null);
+    // })
+}
+
+
+  //common function for getting the param array for the passed array of params
+  getEvaluatedParams (paramObj , stepUIState){
+
+    var evalexp = "stepUIState.model.";  
+    // var finalArray = [];
+
+    for(var param in paramObj ){
+      paramObj[param] = eval(evalexp + paramObj[param]);
+
     }
-    else{
-      console.log("function not defined for the attribute");
-    }
-
-    return finalValue;
-}
-
-
-evaluateAttribute = function(attrName, attrObject, stepUIState, skillobject){
-
-  var evaluatedParams = [];
-  var attrObjectValue = "";
-  //the attr params currentky contains the string values , the LOC below converts it into values from the Step UI Json 
-  evaluatedParams = getEvaluatedParams(attrObject.params, stepUIState);
-
-  if(attrObject["function-name"] == null){
-    // assign directly
-    attrObjectValue = evaluatedParams[0];
+    return paramObj;
   }
-  else{
-    // call the function type execution for the evaluation
-    attrObjectValue = evaluateFromFunc(attrObject["function-name"], evaluatedParams, skillobject);
+
+  evaluateFromFunc ( attrParams, paramsObj, taskParam, callback){
+
+ var functionName = attrParams.attrObject["function-name"];
+ 
+      if(!attrParams.skillobject[functionName]){
+        functionName = "extractSingleParamVal"
+      }
+      
+      var skillParams = {"paramsObj":paramsObj, "taskParams": taskParam}
+      attrParams.skillobject[functionName](skillParams, callback);
   }
-  return attrObjectValue
-}
+
+  evaluateAttribute(attrParams, taskParam, callback){
+
+    var evaluatedParams = [];
+    var attrObjectValue = "";
+    //the attr params currentky contains the string values , the LOC below converts it into values from the Step UI Json 
+    evaluatedParams = this.getEvaluatedParams(attrParams.attrObject.params, attrParams.stepUIState);
+      
+    this.evaluateFromFunc(attrParams, evaluatedParams, taskParam, function(error, dataObject, preloadResArr){
+        callback(error, dataObject, preloadResArr);
+      });
+  }
 
 
+  readIOMap(attrObj,callback){
+      
+      var iomap = attrObj.IOMap;
+      var PromiseRequestsArr  = [];
 
-readIOMap = function(iomap, stepUIState, skillobject){
-    
-    for(stateNum in iomap.states){
-      var stateObj = iomap.states[stateNum];
-      for(componentNum in stateObj.components){
-          var componentObj = iomap.states[stateNum].components[componentNum];
-          for(attrType in componentObj){
-            var attrTypeObj  = iomap.states[stateNum].components[componentNum][attrType]
-            for(attrSet in attrTypeObj){
-              var attrSetObj = iomap.states[stateNum].components[componentNum][attrType][attrSet];
-              for(attrName in attrSetObj){
-                
-                attrSetObj[attrName] = evaluateAttribute(attrName, attrSetObj[attrName], stepUIState, skillobject);
-           
-             }
+      for(let stateNum in iomap.states){
+        let stateObj = iomap.states[stateNum];
+        for(let componentNum in stateObj.components){
+            let componentObj = iomap.states[stateNum].components[componentNum];
+            for(let attrType in componentObj){
+              let attrTypeObj  = iomap.states[stateNum].components[componentNum][attrType]
+              for(let attrSet in attrTypeObj){
+                let attrSetObj = iomap.states[stateNum].components[componentNum][attrType][attrSet];
+                for(let attrName in attrSetObj){
+
+                  var attrParams = new attrParam(attrName, attrSetObj[attrName], attrObj.stepUIState, attrObj.skillRef);
+                  var taskParam = new attrTaskParam(attrObj.taskId, attrObj.stepIndex, attrObj.dbFilestoreMgr);
+                  var self = this;
+                  PromiseRequestsArr.push(self.genPromise(attrParams, taskParam, function(error, attrVal, preloadResArr){
+                    if(!error){
+                      attrSetObj[attrName] = attrVal;
+                      if(preloadResArr){
+                        self.appendPreloadRes(preloadResArr,attrObj.IOMap)
+                      }
+                    }
+                 }));
+              }
             }
           }
-      }
+        }
+    }
+      Promise.all(PromiseRequestsArr).then(function(value) {
+         console.log("promise all success");
+         callback(null,iomap);
+        //  return iomap;
+        },function(err){
+          console.log("promise all rejection");
+          console.log(err.message);
+        }).catch(function(err){
+          console.log("promise all catch");
+          console.log(err.message);
+        });
   }
-  // return the IOMap
-  return iomap;
-}
 
-exports.translateMap = function(iomap, stepUIState, skillobject){
-  //move out
-  return readIOMap(iomap, stepUIState, skillobject);
+    appendPreloadRes(preloadResArr, IOMap){
+      if(!(IOMap["preloadResources"])){
+        IOMap["preloadResources"] = [];
+      }
+      for(var index = 0; index < preloadResArr.length; ++index){
+           IOMap["preloadResources"].push(preloadResArr[index]);
+      }
+    }
+
+    getAttrValueMap (attrObj, callback){
+
+    //move out
+      return this.readIOMap(attrObj, callback);
+
+  }
+
 }
+var iotranslatorobj = new IOTranslator();
+module.exports = iotranslatorobj;

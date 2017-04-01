@@ -20,6 +20,6 @@ errorMessage;
     })
    }
    navigateToStepBuilder(){
-     this.router.navigate(["task",this.taskID,"step",this.step.stepIndex]);
+     this.router.navigate(["task",this.taskID,"step",this.step.Index]);
    }
 }

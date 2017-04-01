@@ -24,9 +24,15 @@ initialiseTaskData() {
                      .subscribe(
                        taskData => this.TaskData = taskData,
                        error =>  this.errorMessage = <any>error);
-					   this.TaskData = this.TaskData["taskData"];
-					   this.StepData = this.TaskData["stepData"];
-					   this.AppImage = this.ApplicationImage(this.TaskData["app"]);
+					   if(this.TaskData["taskData"] == "Invalid task ID"){
+						   this.router.navigate(["/"]);
+					   }
+					   else{
+						this.TaskData = this.TaskData["taskData"];
+						this.StepData = this.TaskData["stepData"];
+						this.AppImage = this.ApplicationImage(this.TaskData["app"]);
+					   }
+					   
   }
 
 	ApplicationImage(taskApp){

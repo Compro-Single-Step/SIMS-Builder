@@ -12,6 +12,7 @@ import { AuthService } from './_services/auth.service';
 import { PreviewService } from './_services/preview.service' 
 
 import { HttpClient } from './_services/http.client';
+import { TaskDataService } from './_services/taskData.service' 
 import { AppConfig } from './app.config';
 import { LoginComponent } from './login/login.component';
 import { AuthModule  } from './auth.module';
@@ -30,7 +31,7 @@ import { AuthModule  } from './auth.module';
     
   ],
 
-  providers: [ AuthService,HttpClient,AuthGuard,AppConfig,PreviewService ],
+  providers: [ AuthService,HttpClient,AuthGuard,AppConfig,TaskDataService,PreviewService ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

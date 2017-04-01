@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { TaskDataService } from '../_services/taskData.service';
 
 
 @Component({
@@ -10,14 +11,23 @@ import { Router } from '@angular/router';
 })
 export class TaskSearch implements OnInit{
   taskID: string = '';
-  constructor(private router: Router){
+  TaskData;
+  errorMessage;
+  message='';
+  constructor(private router: Router, private dataService: TaskDataService){
   }
 	ngOnInit(): void {
 
 }
   onSearch() {
-    console.log('Search for task ', this.taskID, ' in Baloo');
-    this.router.navigate(["/task",this.taskID]);
-
+    this.dataService.getTaskData(this.taskID).subscribe(
+                       taskData => {
+                         this.TaskData = taskData;
+                         if(this.TaskData == "Invalid task ID")
+                          this.message="Such Task does not exist";
+                         else
+                          this.router.navigate(["/task",this.taskID]);
+                        });
   }
+
 }

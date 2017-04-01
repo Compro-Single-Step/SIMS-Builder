@@ -1,4 +1,4 @@
-var constants = {
+const constants = {
 	httpResponseMessages: {
 		/* 2xx */
 		ok: 'OK.',
@@ -19,4 +19,5 @@ var constants = {
 		deleted: 'Deleted.'
 	}
 };
+
 module.exports = constants;

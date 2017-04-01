@@ -207,7 +207,8 @@
           "itemRenderer": "Button",
           "itemType": "leaf",
           "rendererProperties": {
-            "click": {}
+            "click": {},
+            "disabled": true
           }
         }
       ]
