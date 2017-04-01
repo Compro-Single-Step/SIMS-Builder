@@ -9,10 +9,8 @@ module.exports = function () {
     router.get('/',
         sleArchiver,
         transfer,
-       
         function (req, res) {
-			if (req.sleID && req.data) return res.status(200).json(req.data);
-			else return res.status(500).send();
+			res.json(JSON.parse(res.locals.urlToLaunch));
 		}
     );
   

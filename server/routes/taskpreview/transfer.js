@@ -2,7 +2,7 @@ var file_system = require('fs');
 var path = require('path');
 var serverRootPath = path.normalize(__dirname + '/../..');
 var request = require('request');
-var serverUrl = "http://localhost/sim5ongit/ServerCode/SIM5Service.ashx";
+var serverUrl = "http://tanuj/sims_server/ServerCode/SIM5Service.ashx";
 
 module.exports = function (req, res, next) {
 var req = request.post({
@@ -26,6 +26,8 @@ var req = request.post({
 	  		} 
 	  		else {
 	    		console.log('URL: ' + body);
+	    		res.locals.urlToLaunch = body;
+	    		next();
 	  		}
 		}
 	);
