@@ -66,7 +66,6 @@
       finalObject["sheetNo"] = 1;
       //getSheetNameMapgetSheetNameMap(sheetName, initDocJsonPath)
 
-      paramValueObj["wbData"].path = "Res1.json";
       taskParams.dbFilestoreMgr.copyTaskAssetFile(paramValueObj["wbData"].path, taskParams, function(error, xmlPath, fileType){
         
         if(!error){
