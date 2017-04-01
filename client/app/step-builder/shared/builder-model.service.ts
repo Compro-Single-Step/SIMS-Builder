@@ -34,8 +34,8 @@ class BuilderModel {
             },
             "2": {
                 "sheetInAction": [],
-                "sourceRange": "",
-                "destinationRange": ""
+                "sourceRange": { "value": "G5:H6"},
+                "destinationRange": { "value": "D5:E6"}
             },
             "3": {
                 "workbookData": {

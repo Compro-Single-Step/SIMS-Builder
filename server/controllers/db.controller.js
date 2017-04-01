@@ -45,6 +45,6 @@ function getFilePath(templateId, fileKey, callback) {
     filterCriteria[fileKey] = true;
 
     skillConfigRepoModel.getFilePath({"template_id": templateId}, filterCriteria, (error, data) => {
-        callback(data[0][fileKey], error);
+        callback("filestore/skills/"+data[0][fileKey], error);
     });
 }
