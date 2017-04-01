@@ -246,7 +246,16 @@ module.exports = class Comp {
     }
 
     getCompValidationSets (compId, dependencyName){
-        return this.stateRef.getCompValidationSets(compId, dependencyName);
+        
+        let result;
+
+        if(compId == this.id){
+            result = this.getDependencySetByName(dependencyName);
+        }else{
+            result = this.stateRef.getCompValidationSets(compId, dependencyName);;
+        }
+        
+        return result;
     }
 
     getDependencySetByName (name){
