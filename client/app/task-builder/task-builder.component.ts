@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { PreviewService } from '../_services/preview.service' 
 
 @Component({
   selector: 'app-task-builder',
@@ -11,7 +12,7 @@ export class TaskBuilderComponent implements OnInit {
  TaskData = {};
  AppImage;
  errorMessage;
- constructor(private route: ActivatedRoute,
+ constructor(private route: ActivatedRoute,private previewService:PreviewService ,
     private router: Router) { 
 	}
 
@@ -35,5 +36,8 @@ initialiseTaskData() {
 		"Access": "assets/images/Access.png",
 		"PPT": "assets/images/PPT.png"
 		}[taskApp] || "assets/images/Access.png" ;
+	}
+	lauchPreviewTask(){
+		this.previewService.launchPreviewWindow(this.TaskData["id"]);
 	}
 }

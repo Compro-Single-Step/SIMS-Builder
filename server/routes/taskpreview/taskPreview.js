@@ -10,7 +10,7 @@ module.exports = function () {
         sleArchiver,
         transfer,
         function (req, res) {
-			res.json(JSON.parse(res.locals.urlToLaunch));
+			res.json({'Url':res.locals.urlToLaunch});
 		}
     );
   

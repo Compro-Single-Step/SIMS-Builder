@@ -1,16 +1,15 @@
 var file_system = require('fs');
 var archiver = require('archiver');
 var path = require('path');
-var serverRootPath = path.normalize(__dirname + '/../..');
-
-var sourcePath = '\\fileStore\\XMLs\\exp\\xl\\01\\01.t1';
-
-
-var dirToCompress = serverRootPath + sourcePath;
+var serverConfig = require('../../config/server.config');
 
 module.exports = function (req, res, next) {
     
 var archive = archiver.create('zip', {});
+var taskId = req.query.taskId || "GO16.XL.03.3A.02.T1";
+var serverRootPath = path.normalize(__dirname + '/../..');
+var sourcePath = '\\fileStore\\XMLs\\' + taskId;
+var dirToCompress = serverRootPath + sourcePath;
 
 archive.on('error', function (err) {
     throw err;
@@ -23,6 +22,6 @@ output.on('close', function () {
 });
 
 archive.pipe(output);
-archive.directory(dirToCompress, sourcePath);
+archive.directory(dirToCompress, taskId);
 archive.finalize();
 };

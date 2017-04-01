@@ -7,11 +7,11 @@ var verifyToken = require('./login/verifyToken');
 var taskPreviewRouter = require('./taskpreview/taskPreview');
 
 module.exports = function () {
-	router.use('/login', loginRouter());
-	router.use('/taskPreview', taskPreviewRouter());
-			
-	router.use('*', verifyToken);
+	router.use('/login', loginRouter());		
 	
+	router.use('*', verifyToken);
+
+	router.use('/taskPreview', taskPreviewRouter());
 	router.use('/skill', skillRoutes);
     router.use('/fetchTaskData', taskBuilderData);
 

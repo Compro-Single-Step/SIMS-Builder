@@ -6,13 +6,13 @@ var serverConfig = require('../../config/server.config');
 var serverUrl = serverConfig.previewServerURL + "/ServerCode/SIM5Service.ashx";
 
 module.exports = function (req, res, next) {
-var taskId = req.params.taskId || "GO16.XL.03.3A.02.T1";
+var taskId = req.query.taskId || "GO16.XL.03.3A.02.T1";
 var req = request.post({
 			url: serverUrl,
 			qs: {
 				Method: "SaveTaskFolder",
 				taskId: taskId,
-				stepNo: req.params.stepNo || "",
+				stepNo: req.query.stepNo || "",
 			}
 		}, function (err, resp, body) {
 	  		if (err) {
