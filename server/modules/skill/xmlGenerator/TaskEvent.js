@@ -1,4 +1,4 @@
-module.exports = class XMLEvent {
+module.exports = class TaskEvent {
 
 
     constructor  (args, compRef){

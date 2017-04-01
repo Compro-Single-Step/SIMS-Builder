@@ -6,8 +6,8 @@
  * To change this template use File | Settings | File Templates.
  */
 
-const XMLAttr = require('./XMLAttr');
-const XMLEvt = require('./XMLEvent');
+const TaskAttr = require('./TaskAttr');
+const TaskEvent = require('./TaskEvent');
 
 
 module.exports = class Comp {
@@ -213,7 +213,7 @@ module.exports = class Comp {
     }
 
     createAttr  (args, attrType, attrSetName, attrsVal){
-        let myAttr = new XMLAttr(args);
+        let myAttr = new TaskAttr(args);
 
         let val = args.value;
         if(args.userDefined == "true"){
@@ -241,7 +241,7 @@ module.exports = class Comp {
     }
 
     createEvt  (evt){
-        let myEvt = new XMLEvt(evt, this);
+        let myEvt = new TaskEvent(evt, this);
         return myEvt;
     }
 

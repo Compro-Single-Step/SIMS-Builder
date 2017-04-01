@@ -6,7 +6,7 @@
  */
 
 const DOMParser = require('xmldom').DOMParser;
-const Step = require('./XMLStep');
+const Step = require('./Step');
 
 module.exports = class StepXMLGenerator {
 

@@ -1,4 +1,4 @@
-module.exports = class XMLAttr {
+module.exports = class TaskAttr {
 
     constructor (arg){
         this.name = arg.name; // INIT_DOC_JSON
