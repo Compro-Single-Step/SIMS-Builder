@@ -14,21 +14,14 @@ export class ManageUsersComponent implements OnInit {
 switchView(tab:string){
   if(tab=="vieUser-tab")
   {
-    console.log('Tab Selected is:'+ tab);
     this.router.navigate(["admin/users"]);
   }
   else if(tab=="addUser-tab")
   {
-    console.log('Tab Selected is:'+ tab);
     this.router.navigate(["admin/adduser"]);
   }
 }
   ngOnInit() {
-    // jQuery('.nav-tabs').on('shown.bs.tab', 'a', (e) => {
-    //   if (e.relatedTarget) {
-    //     jQuery(e.relatedTarget).removeClass('active');
-    //   }
-    // });
   }
 
 }

@@ -41,7 +41,6 @@ addUser(): void{
   }
 
   ngOnInit() {
-    console.log(this.user);
     this.instance = jQuery('.parsleyjs').parsley();
   }
   ngOnChanges(){

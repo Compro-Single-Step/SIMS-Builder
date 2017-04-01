@@ -2,15 +2,7 @@
   <div class="col-lg-12">
     <h1 class="page-title">Sims Builder <span class="fw-semi-bold">Users</span></h1>
     <section class="widget">
-      <!--<header>
-        <h4>The <span class="fw-semi-bold">Angular</span> Way</h4>
-        <div class="widget-controls">
-          <a data-widgster="expand" title="Expand" href="#"><i class="glyphicon glyphicon-chevron-up"></i></a>
-          <a data-widgster="collapse" title="Collapse" href="#"><i class="glyphicon glyphicon-chevron-down"></i></a>
-          <a data-widgster="close" title="Close" href="#"><i class="glyphicon glyphicon-remove"></i></a>
-        </div>
-      </header>-->
-      <div class="widget-body">
+       <div class="widget-body">
         <div class="mt">
           <div class="width-200 float-xs-right">
             <div class="input-group input-group-sm input-group-transparent input-group-rounded">
@@ -41,9 +33,6 @@
               <th class="no-sort">
                 <mfDefaultSorter by="options">Options</mfDefaultSorter>
               </th>   
-              <!--<th class="no-sort">
-                <mfDefaultSorter by="status">Status</mfDefaultSorter>
-              </th>-->
             </tr>
             </thead>
             <tbody>
@@ -57,24 +46,6 @@
                 <button (click)="showUpdateModal(i)"><span class="glyphicon glyphicon-edit"></span></button>
                 <button (click)="showDeleteModal(i)"><span class="glyphicon glyphicon-trash"></span></button>             
               </td>
-              <!--<td class="hidden-sm-down">
-                <small>
-                  <span class="fw-semi-bold">Type:</span>
-                  &nbsp; {{person.info.type}}
-                </small>
-                <br>
-                <small>
-                  <span class="fw-semi-bold">Dimensions:</span>
-                  &nbsp; {{person.info.dimensions}}
-                </small>
-              </td>
-              <td class="hidden-sm-down"><a href="#">{{person.description}}</a></td>
-              <td class="hidden-sm-down">{{person.date}}</td>-->
-              <!--<td class="width-150">
-                <div class="bg-gray-lighter progress-bar mt-xs">
-                  <progress class="progress progress-sm progress-{{person.status.type}}" value="100" max="100" [ngStyle]="{ 'width': person.status.progress}"></progress>
-                </div>
-              </td>-->
             </tr>
             <tr *ngIf="(mf.data | SearchPipe : searchText).length === 0">
               <td colspan="100">

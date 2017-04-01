@@ -29,7 +29,6 @@ message="";
   ngOnInit(): void {
    // this.data =  userData;
    this.initializeUserData();
-   console.log(this.userData);
     let searchInput = jQuery('#table-search-input, #search-countries');
     searchInput
       .focus((e) => {
