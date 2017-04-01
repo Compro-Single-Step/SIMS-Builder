@@ -184,7 +184,7 @@ class FileStoreController {
     }
 
     getStepXMLFolderPath(taskId, stepIndex) {
-        return config.fileStore.xmlFolder + taskId + "/step-" + stepIndex + "/";
+        return config.fileStore.xmlFolder + taskId + "/" + stepIndex + "/";
     }
 
     getUploadedResourceFolderPath(taskId, stepIndex) {
