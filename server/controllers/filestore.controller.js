@@ -18,7 +18,7 @@ class FileStoreController {
     }
 
     getFileStoreStepFolderPath(taskId, stepIdx){
-        return taskId + "/" + stepIdx + "/";
+        return  config.fileStore.xmlFolder + taskId + "/" + stepIdx + "/";
     }
     getSimsXmlTaskFolderPath(taskId, stepIdx){
         return this.getTaskFolderPath(taskId, stepIdx);
@@ -80,9 +80,8 @@ class FileStoreController {
         var folderPathArr = srcPath.split("/");
 
         var folderName = folderPathArr[folderPathArr.length-1];
-        var relativeDestPath = this.getFileStoreStepFolderPath(taskId, stepIndex);
-         var relativeXmlPath = this.getSimsXmlTaskFolderPath(taskId, stepIndex);
-        var destPath = config.fileStore.xmlFolder + relativeDestPath + folderName;
+        var relativeXmlPath = this.getSimsXmlTaskFolderPath(taskId, stepIndex);
+        var destPath = this.getFileStoreStepFolderPath(taskId, stepIndex) + folderName;
 
         srcPath  = config.fileStore.resourceFolder + srcPath;
 
@@ -100,9 +99,17 @@ class FileStoreController {
     }
 
     copyFolderContents(srcPath, destPath, callback){
-        fse.copy(srcPath, destPath, function(error){
-            callback(error);
-        });                                     
+        fse.ensureDir(destPath, function(error){
+            if(!error){
+                fse.copy(srcPath, destPath, function(error){
+                    callback(error);
+                });       
+            }
+            else{
+                callback(error);
+            }                              
+        });
+        
     }
 
     readTaskRes(filepath, callback) {

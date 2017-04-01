@@ -4,11 +4,11 @@ module.exports = class baseSkill{
             
       var taskParams = skillParams.taskParams;
       var paramValueObj = skillParams.paramsObj;
-      taskParams.dbFilestoreMgr.copyAssetFolderContents(paramValueObj["tbPrvImage"].path, taskParams.stepIndex,taskParams.taskId, function(error, newFilePath, fileType){
+      taskParams.dbFilestoreMgr.copyTaskAssetFile(paramValueObj["tbPrvImage"].path, taskParams, function(error, xmlPath, fileType){
            var preloadResArr = [];
-           preloadResArr.push({"path":"" + newFilePath,"type":"" + fileType});
+           preloadResArr.push({"path":"" + xmlPath,"type":"" + fileType});
           if(!error){
-            callback(null, newFilePath, preloadResArr);
+            callback(null, xmlPath, preloadResArr);
           }
           else{
             callback(error);
