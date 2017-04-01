@@ -59,19 +59,21 @@ gulp.task('move', function(){
 });
 
 gulp.task('add', function() {
-  return gulp.src('./checkout/qaRelease/')
+  return gulp.src('./checkout/qaRelease/*')
     .pipe(git.add());
 });
 
 gulp.task('commit', function() {
 
-    return gulp.src('./checkout/qaRelease/')
+    return gulp.src('./checkout/qaRelease/*')
       .pipe(git.commit("initial test"));
 
 });
 
+
 gulp.task('push', function(){
-  git.push('https://tanujaggarwal@github.com/Compro-Single-Step/SIMS-Builder.git', 'SIM-Builder-Release', function (err) {
+
+  git.push('https://github.com/Compro-Single-Step/SIMS-Builder.git', 'SIM-Builder-Release', function (err) {
     if (err) throw err;
   });
 });
@@ -94,7 +96,7 @@ gulp.task('install', function(cb) {
 });
 
 gulp.task('buildforDeploy', function(cb) {
-    exec('npm run build', {maxBuffer: 1024 * 500}, function(err, stdout, stderr) {
+    exec('npm build', {maxBuffer: 1024 * 500}, function(err, stdout, stderr) {
         console.log(stdout);
         console.log(stderr);
         cb(err);
