@@ -29,9 +29,8 @@ class SkillController {
     }
 
     generateXML(templateId, taskId, stepIdx, callback) {
-        var skillFactoryRef = new skillFactory();
-        var skillRef = skillFactoryRef.getSkillObjectRef(templateId)
-        xmlGenerationHandler.generateStepXML(templateId, taskId, stepIdx, skillRef, callback);
+        var skill = skillFactory.getSkillObject(templateId);
+        xmlGenerationHandler.generateStepXML(templateId, taskId, stepIdx, skill, callback);
     }
 
     saveResourceFile(templateId, taskId, stepIndex) {

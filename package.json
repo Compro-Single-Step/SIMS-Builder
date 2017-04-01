@@ -35,6 +35,7 @@
     "dropzone": "^4.3.0",
     "express": "^4.14.1",
     "font-awesome": "4.7.0",
+    "fs-extra": "^2.1.2",
     "glyphicons-halflings": "1.9.0",
     "jquery": "^3.1.1",
     "mkdirp": "^0.5.1",

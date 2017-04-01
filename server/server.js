@@ -5,7 +5,6 @@ const bodyParser = require('body-parser');
 const db = require('./config/db');
 const config = require('./config/config');
 
-
 // Get our API routes
 const apiRouter = require('./routes');
 
