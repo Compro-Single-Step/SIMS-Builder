@@ -29,7 +29,7 @@ class SkillController {
     }
 
     generateXML(templateId, taskId, stepIdx, callback) {
-        var skill = skillFactory.getSkillObject(templateId)
+        var skill = skillFactory.getSkillObject(templateId);
         xmlGenerationHandler.generateStepXML(templateId, taskId, stepIdx, skill, callback);
     }
 
