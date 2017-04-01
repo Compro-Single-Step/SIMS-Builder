@@ -17,9 +17,9 @@ module.exports = class skillFactory{
 
     getSkillObject (templateId){
         var skillFile = getSkill(templateId);
-        var skillRefClass = require("../../libs/skills" + skillFile);
-        var skillRef = new skillRefClass();
-        return skillRef;
+        var skill = new require("../../libs/skills" + skillFile)();
+        // var skillRef = new skillRefClass();
+        return skill;
     }
 
 }

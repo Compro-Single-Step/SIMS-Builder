@@ -6,7 +6,7 @@
           "initial": {
             "default-attrs": {  
               "DOCUMENT_NAME": {
-                "function-name": "assignTopValue",
+                "function-name": "extractSingleParamVal",
                 "params": {
                   "docTitle":"views['1'].documentTitle"
                 }
@@ -62,7 +62,7 @@
                 }
               },
               "OPENWORDFILE": {
-                "function-name": "assignTopValue",
+                "function-name": "extractSingleParamVal",
                 "params": {
                   "DocTitle":"views['1'].documentTitle"
                 }
