@@ -5,7 +5,7 @@ const UserModel = require('../models/user/user.model');
 
 var UserDataJson=null;
 
-router.get("/fetchUser/:username?",function(req,res){
+router.get("/:username?",function(req,res){
 
 	var username = req.query.username;
 	let condition={};
@@ -21,7 +21,7 @@ router.get("/fetchUser/:username?",function(req,res){
 	// 	res.send(UserDataJson);
 	// })
 })
-router.post("/addUser",function(req,res){
+router.post("/",function(req,res){
 	var user = req.body;
 	//user = JSON.stringify(user);
 	userData = {
@@ -60,7 +60,7 @@ router.post("/addUser",function(req,res){
 			});
 	})
 })
-router.post("/updateUser",function(req,res){
+router.put("/",function(req,res){
 	var user = req.body;
 	var userUpdateData = {  $set:{
 		firstname: user.firstname,

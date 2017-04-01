@@ -19,7 +19,7 @@ public useradded: boolean;
     if(this.userData && this.useradded == false){
       return Observable.of(this.userData);
     }
-    return this.http.get("/api/user/fetchUser")
+    return this.http.get("/api/user")
                     .map(this.extractData.bind(this))
                     .catch(this.handleError);
   }
@@ -47,7 +47,7 @@ public useradded: boolean;
     }
     let params = new URLSearchParams();
     params.set('username', name);
-    return this.http.get("/api/user/fetchUser",{ search: params })
+    return this.http.get("/api/user",{ search: params })
                     .map(this.extractUser.bind(this))
                     .catch(this.handleError);
   }
@@ -60,7 +60,7 @@ public useradded: boolean;
   addUser(newUser:User) {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    return this.http.post("/api/user/addUser", newUser, options)
+    return this.http.post("/api/user", newUser, options)
                     .map(this.extractResponse.bind(this))
                     .catch(this.handleError);
   }
@@ -72,7 +72,7 @@ public useradded: boolean;
   editUser(newUser:User) {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    return this.http.post("/api/user/updateUser", newUser, options)
+    return this.http.put("/api/user", newUser, options)
                     .map(this.editresponse)
                     .catch(this.handleError);
   }
