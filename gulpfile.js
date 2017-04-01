@@ -86,15 +86,15 @@ gulp.task('chdir', function(cb) {
 });
 
 gulp.task('install', function(cb) {
-    exec('npm install', function(err, stdout, stderr) {
+    exec('npm install', {maxBuffer: 1024 * 500}, function(err, stdout, stderr) {
         console.log(stdout);
         console.log(stderr);
         cb(err);
     });
 });
 
-gulp.task('build', function(cb) {
-    exec('npm run build', function(err, stdout, stderr) {
+gulp.task('buildforDeploy', function(cb) {
+    exec('npm run build', {maxBuffer: 1024 * 500}, function(err, stdout, stderr) {
         console.log(stdout);
         console.log(stderr);
         cb(err);
@@ -103,5 +103,5 @@ gulp.task('build', function(cb) {
 
 
 gulp.task('build', function(callback) {
-  runSequence(['chdir','install','build'],callback);
+  runSequence(['chdir','install','buildforDeploy'],callback);
 });
