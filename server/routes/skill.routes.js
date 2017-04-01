@@ -7,8 +7,8 @@ router.get('/stepuiconfig/uiconfig/:templateId', (req, res) => {
     let templateId = req.params.templateId;
     
     skillController.getUIConfig(templateId)
-    .then((data) => {
-        res.send(data);
+    .then((uiConfig) => {
+        res.send(uiConfig);
     }, (error)=> {
         res.send(error);
     });
@@ -18,8 +18,8 @@ router.get('/stepuiconfig/model/:templateId', (req, res) => {
     let templateId = req.params.templateId;
     
     skillController.getSkillModel(templateId)
-    .then((data) => {
-        res.send(data);
+    .then((model) => {
+        res.send(model);
     }, (error)=> {
         res.send(error);
     });
@@ -31,8 +31,8 @@ router.get('/stepuiconfig/stepuistate/:taskId/:stepIndex', (req, res) => {
     let stepIndex = req.params.stepIndex;
     
     skillController.getStepUIState(taskId, stepIndex)
-    .then((data) => {
-        res.send(data);
+    .then((stepUIState) => {
+        res.send(stepUIState);
     }, (error)=> {
         res.send(error);
     });
@@ -44,8 +44,8 @@ router.get('/stepuiconfig/:templateId/:taskId/:stepIndex', (req, res) => {
     let stepIndex = req.params.stepIndex;
     
     skillController.getStepUIConfig(templateId, taskId, stepIndex)
-    .then((data) => {
-        res.send(data);
+    .then((stepUIConfig) => {
+        res.send(stepUIConfig);
     }, (error)=> {
         res.send(error);
     });
