@@ -8,48 +8,54 @@ class DatabaseFileStoreManager {
     getUIConfig(templateId) {
         return dbController.getSkillConfigPath(templateId, skillConfigTypes.UI_CONFIG)
         .then((filePath)=> {
-            return fsc.getFileFromFileStore(filePath, folderMap.SKILL);
+            if(filePath === undefined || filePath === null) {
+                Promise.reject("Skill Config doesn't exist in database");
+            }
+            else {
+                return fsc.getFileFromFileStore(filePath, folderMap.SKILL);
+            }
         }, (error)=> {
             Promise.reject(error);
         });
     }
  
-    getSkillXML(templateId, callback) {
-        dbController.getSkillConfigPath(templateId, skillConfigTypes.XML, (filePath, error) => {
-            if(!error) {
-                if(filePath !== undefined) {
-                    fsc.getFileFromFileStore(filePath, folderMap.SKILL, callback);
-                }
-                else {
-                    callback({error: "Skill XML doesn't exist in database"});    
-                }
+    getSkillXML(templateId) {
+        return dbController.getSkillConfigPath(templateId, skillConfigTypes.XML)
+        .then((filePath)=> {
+            if(filePath === undefined || filePath === null) {
+                Promise.reject("Skill XML doesn't exist in database");
             }
             else {
-                callback(error);
+                return fsc.getFileFromFileStore(filePath, folderMap.SKILL);
             }
+        }, (error)=> {
+            Promise.reject(error);
         });
     }
 
-    getIOMap(templateId, callback) {
-        dbController.getSkillConfigPath(templateId, skillConfigTypes.IO_MAP, (filePath, error) => {
-            if(!error) {
-                if(filePath !== undefined) {
-                    fsc.getFileFromFileStore(filePath, folderMap.SKILL, callback);
-                }
-                else {
-                    callback({error: "IO Map doesn't exist in database"});    
-                }
+    getIOMap(templateId) {
+        return dbController.getSkillConfigPath(templateId, skillConfigTypes.IO_MAP)
+        .then((filePath)=> {
+            if(filePath === undefined || filePath === null) {
+                Promise.reject("I/O Map doesn't exist in database");
             }
             else {
-                callback(error);
+                return fsc.getFileFromFileStore(filePath, folderMap.SKILL);
             }
+        }, (error)=> {
+            Promise.reject(error);
         });
     }
 
     getSkillModel(templateId) {
         return dbController.getSkillConfigPath(templateId, skillConfigTypes.MODEL)
         .then((filePath)=> {
-            return fsc.getFileFromFileStore(filePath, folderMap.SKILL);
+            if(filePath === undefined || filePath === null) {
+                Promise.reject("Skill Model doesn't exist in database");
+            }
+            else {
+                return fsc.getFileFromFileStore(filePath, folderMap.SKILL);
+            }
         }, (error)=> {
             Promise.reject(error);
         });
@@ -63,8 +69,8 @@ class DatabaseFileStoreManager {
         return dbController.saveStepUIState(taskId, stepIndex, stepUIData);
     }
 
-    saveStepXML(taskId, stepIndex, OutputXML, callback){
-        fsc.saveStepXML(taskId, stepIndex, OutputXML, callback);
+    saveStepXML(taskId, stepIndex, OutputXML){
+        return fsc.saveStepXML(taskId, stepIndex, OutputXML);
 	}
 
     saveResourceFile() {

@@ -11,7 +11,7 @@ class SkillController {
     getStepUIConfig(templateId, taskId, stepIndex) {
         return uiHandler.getStepUIConfig(templateId, taskId, stepIndex);
     }
-    //will rename this function after meeting feedback.
+    
     getUIConfig(templateId) {
         return dbFilestoreMgr.getUIConfig(templateId);
     }

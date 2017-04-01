@@ -12,11 +12,11 @@ const fileTypeFolderMap = {
 
 class FileStoreController {
 
-    saveStepXML(taskId, stepIndex, OutputXML, callback) {
+    saveStepXML(taskId, stepIndex, OutputXML) {
 
         let folderPath = this.getStepXMLFolderPath(taskId, stepIndex);
         let fileName = "task.xml";  //this will come from out side.
-        this.saveFileToFileStore(folderPath, fileName, OutputXML, callback);
+        return this.saveFileToFileStore(folderPath, fileName, OutputXML);
     }
 
     saveResourceFile() {
@@ -59,9 +59,16 @@ class FileStoreController {
         return upload.fields([{ name: 'dzfile', maxCount: 1 }]);
     }
 
-    createFolder(folderPath, callback) {
-        mkdirp(folderPath, (error) => {
-            callback(error);
+    createFolder(folderPath) {
+        return new Promise((resolve, reject)=> {
+            mkdirp(folderPath, (error) => {
+                if(error) {
+                    reject(error);
+                }
+                else {
+                    resolve(true);
+                }
+            });
         });
     }
 
@@ -73,16 +80,19 @@ class FileStoreController {
         return config.fileStore.resourceFolder + taskId + "/" + stepIndex + "/";
     }
 
-    saveFileToFileStore(filepath, fileName, file, callback) {
-        this.createFolder(filepath, (error) => {
-            if(!error) {
-                fs.writeFile(filepath + fileName, file, (err) => {
-                    callback(err);
-                });
-            }
-            else {
-                callback(err);
-            }
+    saveFileToFileStore(filepath, fileName, file) {
+        return this.createFolder(filepath)
+        .then((success)=> {
+            fs.writeFile(filepath + fileName, file, (err) => {
+                if(error) {
+                    Promise.reject(error);
+                }
+                else {
+                    Promise.resolve("saved in directory");
+                }
+            });
+        }, (error)=> {
+            Promise.reject(error);
         });
     }
 }
