@@ -1,6 +1,6 @@
 const dbFilestoreMgr = require('./dbFilestoreMgr');
 const translator = require("./ioTranslator.js");
-// const xmlGenerator = require("./xmlGenerator/Step.js");
+const XmlGenerator = require("./xmlGenerator/stepXMLGenerator");
 
 var mapTranslationParams = function(IOMap, stepUIState, skillRef, taskId, stepIndex, dbFilestoreMgr){
      this.IOMap = IOMap;
@@ -22,27 +22,24 @@ module.exports.generateStepXML = function(templateId, taskId, stepIndex, skillRe
                     let IOMap = JSON.parse(IOMapJson);
                     let mapTranslationParam = new mapTranslationParams(IOMap, stepUIState, skillRef, taskId, stepIndex, dbFilestoreMgr)
                     // let attrValueMap = translator.getAttrValueMap(IOMap, stepUIState, skillRef, taskId, stepIndex,dbFilestoreMgr);
-                    let attrValueMap = translator.getAttrValueMap(mapTranslationParam, function(error,IOmap){
+                    translator.getAttrValueMap(mapTranslationParam, function(error,IOmap){
                         //XML generation
-                        console.log("returned in Xmlgeneration handler");
-                        console.log(IOmap);
-                        // TO DO generate XML using ATTRVALUEMAP
+                        
+                        dbFilestoreMgr.getSkillXML(templateId, (error, skillTemplate) => {
+                            if(!error) {
+                                let xmlGenerator = new XmlGenerator();
+                                let OutputXML = xmlGenerator.generateXml(skillTemplate, IOmap);
+
+                                //Saving Step XML in File Store
+                                dbFilestoreMgr.saveStepXML(taskId, stepIndex, OutputXML, callback);
+                                
+                            }
+                            else{
+                                callback(error, skillTemplate);
+                            }
+                        });
                     });
 
-                    // XML GENERATION
-                    dbFilestoreMgr.getSkillXML(templateId, (error, skillTemplate) => {
-                        if(!error) {
-                            // let newStep = new xmlGenerator(skillTemplate, attrValueMap);
-                            // let OutputXML = newStep.stepGenerator();
-
-                            // //Saving Step XML in File Store
-                            // dbFilestoreMgr.saveStepXML(taskId, stepIndex, OutputXML, callback);
-                            callback(error,"");
-                        }
-                        else{
-                            callback(error, skillTemplate);
-                        }
-                    });
                 }
                 else {
                     callback(error, IOMapJson);
