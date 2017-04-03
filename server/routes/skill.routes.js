@@ -78,7 +78,7 @@ router.get('/xmlgeneration/:templateId/:taskid/:stepidx', (req, res) => {
 router.post("/uploadresource", (req, res) => {
 
     let upload = skillController.saveResourceFile();
-    upload(req, res, (error, data) => {
+    upload(req, res, (error) => {
         if(error) {
             res.send("Error uploading file.");
         }
@@ -86,8 +86,8 @@ router.post("/uploadresource", (req, res) => {
             let taskId = req.body.taskId;
             let stepIndex = req.body.stepIndex;
             let fileName = req.files.dzfile[0].originalname;
-            let folderPath = config.fileStore.resourceFolder + taskId + "/" + stepIndex + "/";
-            let filePath = folderPath + fileName;
+                let folderPath = config.fileStore.resourceFolder + taskId + "/" + stepIndex + "/";
+                let filePath = folderPath + fileName;
             
             res.send({
                 filePath: filePath.replace(/\\/g,"/")

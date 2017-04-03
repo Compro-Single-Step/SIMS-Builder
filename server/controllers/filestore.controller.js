@@ -45,8 +45,10 @@ class FileStoreController {
                 let taskId = req.body.taskId;
                 let stepIndex = req.body.stepIndex;
                 let destinationFolder = self.getUploadedResourceFolderPath(taskId, stepIndex);
-                self.createFolder(destinationFolder, (error) => {
+                self.createFolder(destinationFolder).then((success)=> {
                     callback(null, destinationFolder);
+                }, (error)=> {
+                    console.log("Folder not created.");
                 });
             },
             filename: function (req, file, callback) {
