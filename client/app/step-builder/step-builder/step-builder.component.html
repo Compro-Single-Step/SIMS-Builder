@@ -30,7 +30,7 @@
 </div>
 <div id="footer">
   <div class="col-md-12">
-    <button class="btn btn-inverse">Preview Step</button>
+    <button class="btn btn-inverse" (click)='lauchPreviewTask()'>Preview Step</button>
     <button class="btn btn-inverse">Save</button>
     <div class="pull-right">
       <button class="btn btn-inverse" (click)="setSelectedView(selectedView-1)" [disabled]="selectedView == 1">Previous</button>
