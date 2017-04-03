@@ -5,6 +5,16 @@ const skillConfigTypes = require('../../models/skillConfigRepo.model').skillConf
 const folderMap = FAL.fileTypeFolderMap;
 
 class DatabaseFileStoreManager {
+
+
+    copyTaskAssetFile(residentPath, taskParams, callback){
+        fsc.copyAssetToTaskFolder(residentPath, taskParams, callback);
+    }
+    
+    copyAssetFolderContents(srcPath, stepIndex, taskId, callback){
+        fsc.copyResToTaskFolder(srcPath, stepIndex, taskId, callback);
+    }
+
     getUIConfig(templateId, callback) {
         dbController.getSkillConfigPath(templateId, skillConfigTypes.UI_CONFIG, (filePath, error) => {
             if(!error) {
@@ -20,7 +30,7 @@ class DatabaseFileStoreManager {
             }
         });
     }
- 
+
     getSkillXML(templateId, callback) {
         dbController.getSkillConfigPath(templateId, skillConfigTypes.XML, (filePath, error) => {
             if(!error) {

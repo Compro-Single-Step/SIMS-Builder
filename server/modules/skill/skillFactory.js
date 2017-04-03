@@ -3,7 +3,7 @@ var SkillObjectMap = {
         "movecellcontent":"/xl/moveCellContent/moveCellContent"
     }
 
-function identifySkill(templateId){
+function getSkill(templateId){
     if(SkillObjectMap[templateId]){
         return SkillObjectMap[templateId];
     }
@@ -13,13 +13,16 @@ function identifySkill(templateId){
 
 }
 
-module.exports = class skillFactory{
+class SkillFactory{
 
-    getSkillObjectRef (templateId){
-        var skillFile = identifySkill(templateId);
-        var skillRefClass = require("../../libs/skills" + skillFile);
-        var skillRef = new skillRefClass();
-        return skillRef;
+    getSkillObject (templateId){
+        let skillFile = getSkill(templateId);
+        let SkillClass = new require("../../libs/skills" + skillFile)
+        let skill = new SkillClass();
+        // var skillRef = new skillRefClass();
+        return skill;
     }
 
 }
+
+module.exports = new SkillFactory();
