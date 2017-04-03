@@ -60,6 +60,6 @@ export class StepBuilderComponent implements OnInit {
     this.router.navigate(["/task",this.taskID]);
   }
   lauchPreviewTask(){
-		this.previewService.launchPreviewWindow(this.taskID,this.stepIndex);
+		this.previewService.launchStepPreviewWindow(this.taskID,this.stepIndex,"movecellcontent");
 	}
 }

@@ -44,6 +44,6 @@ initialiseTaskData() {
 		}[taskApp] || "assets/images/Access.png" ;
 	}
 	lauchPreviewTask(){
-		this.previewService.launchPreviewWindow(this.TaskData["id"]);
+		// this.previewService.launchPreviewWindow(this.TaskData["id"]);
 	}
 }

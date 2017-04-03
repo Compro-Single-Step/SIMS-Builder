@@ -12,7 +12,7 @@ var req = request.post({
 			qs: {
 				Method: "SaveTaskFolder",
 				taskId: taskId,
-				stepNo: req.query.stepNo || "",
+				stepNo: req.query.stepNo || "1",
 			}
 		}, function (err, resp, body) {
 	  		if (err) {
