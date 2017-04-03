@@ -9,24 +9,17 @@ import 'rxjs/add/observable/of';
 import { User } from './userModel';
 @Injectable()
 export class UserService {
-public userData: any;
 public currentUser: any;
-public useradded: boolean;
 
  constructor(private http:HttpClient ) { 
   }
   getUsers(): Observable<User[]>{
-    if(this.userData && this.useradded == false){
-      return Observable.of(this.userData);
-    }
     return this.http.get("/api/user")
                     .map(this.extractData.bind(this))
                     .catch(this.handleError);
   }
   private extractData(res: Response) {
     let body = res.json();
-    this.userData = body;
-    this.useradded = false;
     return body || { };
   }
   private handleError (error: Response | any) {
@@ -66,7 +59,6 @@ public useradded: boolean;
   }
    private extractResponse(res: Response) {
     let body = res.json();
-    this.useradded = true;
     return body || { };
   }
   editUser(newUser:User) {
