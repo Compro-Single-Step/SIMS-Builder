@@ -115,7 +115,7 @@ class moveCellContent extends ExcelBaseSkill {
 
 
 
-  getSheetNameAndSheetCountFromInitDocJSON = function (initDocJSON, dependantSheetArrayInModel) {
+  getSheetNameAndSheetCountFromInitDocJSON(initDocJSON, dependantSheetArrayInModel) {
 
     //Add The Required Number of Sheets in Model
     if (initDocJSON.sheetCount >= dependantSheetArrayInModel.length) {
@@ -132,7 +132,7 @@ class moveCellContent extends ExcelBaseSkill {
     }
   }
 
-  addSheetNamesToDropdown = function (initDocJSON, dependantSheetArrayInModel) {
+  addSheetNamesToDropdown(initDocJSON, dependantSheetArrayInModel) {
 
     //Add Sheet Names to Array From Init Doc JSON
     for (let sheetNum = 0; sheetNum < initDocJSON.sheetCount; sheetNum++) {
