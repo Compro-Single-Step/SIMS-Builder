@@ -17,6 +17,10 @@ export class TextBoxComponent extends BaseComponent {
   }
 
   UpdateView() {
+    this.itemDataModel = itemDataModel;
+    if (this.compConfig.val) {
+      this.modelRef = this.getVariableRef("this.itemDataModel." + this.compConfig.val);
+    }
     this.labelConfig.rendererProperties.text = this.compConfig.label;
     this.labelConfig.rendererProperties.type = 0;
   }

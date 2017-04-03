@@ -21,7 +21,6 @@ export class TabComponent extends BaseComponent {
       this.dynamicMode = true;
       this.tabs = this.builderModelSrvc.getModelRef(this.compConfig.rendererProperties.itemListRef);
     }
-
     this.labelConfig.rendererProperties.text = this.compConfig.label;
     this.labelConfig.rendererProperties.type = 0;
   }

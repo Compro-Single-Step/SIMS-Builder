@@ -6,7 +6,7 @@ export class itemSchema {
   desc?: Object;
   disabled?: boolean;
   pos?: string;
-  dim?: string;
+  dim?: Object;
   mandatory?: boolean;
   dependants?: Array<Object>;
   items?: Array<itemSchema>;
@@ -22,7 +22,7 @@ export class itemSchema {
     this.desc = {};
     this.disabled = false;
     this.pos = "";
-    this.dim = "";
+    this.dim = {};
     this.mandatory = true;
     this.dependants = [{}];
     this.items = [];

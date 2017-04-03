@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { UIConfig } from '../../shared/UIConfig.model';
 
 @Component({
@@ -7,15 +7,15 @@ import { UIConfig } from '../../shared/UIConfig.model';
   styleUrls: ['./step-input-area.component.scss']
 })
 export class StepInputAreaComponent implements OnInit {
-  private selectedView: number;
+  @Input() selectedView: number;
   @Input() stepConfig: UIConfig;
-  constructor() {
-    this.selectedView = 1;
-  }
+  @Output() viewChanged: EventEmitter<Object> = new EventEmitter();
+  constructor() {}
 
   ngOnInit() {}
 
   setSelectedView($event) {
     this.selectedView = $event.viewNumber;
+    this.viewChanged.emit({viewNumber: this.selectedView});
   }
 }
