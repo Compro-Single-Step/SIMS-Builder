@@ -34,32 +34,31 @@ class BuilderModel {
             },
             "2": {
                 "sheetInAction": { "value": [] },
-                "sourceRange": { "value": "G5:H6"},
-                "destinationRange": { "value": "D5:E6"}
+                "sourceRange": { "value": "G5:H6" },
+                "destinationRange": { "value": "D5:E6" }
             },
             "3": {
                 "workbookData": {
                     "name": "",
                     "path": ""
                 },
-                "sheets": [
-                    {
-                        "name": "",
-                        "path": "",
-                        "gridImage": {
-                            "name": ""
-                        },
-                        "rowImage": {
-                            "name": ""
-                        },
-                        "columnImage": {
-                            "name": ""
-                        },
-                        "cellImage": {
-                            "name": ""
-                        }
+                "sheets":
+                [{
+                    "name": "",
+                    "path": "",
+                    "gridImage": {
+                        "name": ""
+                    },
+                    "rowImage": {
+                        "name": ""
+                    },
+                    "columnImage": {
+                        "name": ""
+                    },
+                    "cellImage": {
+                        "name": ""
                     }
-                ]
+                }]
             }
         }
     }

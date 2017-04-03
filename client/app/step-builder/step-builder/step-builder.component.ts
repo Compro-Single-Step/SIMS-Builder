@@ -178,6 +178,10 @@ module.exports = (function () {
             dependantSheetArrayInModel.push(initDocJSON.sheets[sheetNum].name);
         }
     };
+
+    moveCellContent.prototype.updateSheetNameUsingDropdown = function (selectedSheetName, dependentSheetNameInModel) {
+        dependentSheetNameInModel = selectedSheetName;
+    };
     return moveCellContent;
 }());
 })])
