@@ -19,7 +19,8 @@ export class StepBuilderComponent implements OnInit {
   $el: any;
   private selectedView: number;
   taskID: string;
-    itemDataModel;
+  stepIndex: string ;
+  itemDataModel;
   builderModelSrvc;
   constructor(el: ElementRef, private route: ActivatedRoute, private bds: BuilderDataService, private router: Router) {
     this.$el = jQuery(el.nativeElement);
@@ -49,6 +50,7 @@ export class StepBuilderComponent implements OnInit {
     IntervalObservable.create(5000).subscribe(() => self.checkForModelChange());    
     this.route.params.subscribe((params: Params) => {
       this.taskID = params["id"];
+      this.stepIndex =params["stepIndex"];
       let paramObj = {
         id: this.taskID,
         stepIndex: params["stepIndex"]
@@ -233,6 +235,15 @@ module.exports = (function () {
       } else {
         console.log("Different Model: Update LocalStorage and Send to Sever");
         localForage.setItem('model', self.itemDataModel);
+        self.bds.saveSkillData({stepUIState: self.itemDataModel }, self.taskID, self.stepIndex).subscribe(function(data){
+          if(data["status"] === "success") {
+            //TODO: Notify user of the draft save
+            console.log("Model Data Sent to Server");
+          } else if(data["status"] === "error") {
+            //TODO: Try saving on server again
+            console.log("Couldn't Save Model Data on Server.");
+          }
+        });
       }
     });
   }
