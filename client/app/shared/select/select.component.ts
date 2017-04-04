@@ -1,6 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { BaseComponent } from '../base.component';
 import { itemSchema } from '../UIConfig.model';
+import { LabelTypes } from '../enums';
+
 
 @Component({
   selector: 'app-select',
@@ -19,7 +21,8 @@ export class SelectComponent extends BaseComponent {
 
   UpdateView() {
     this.labelConfig.rendererProperties.text = this.compConfig.label;
-    this.labelConfig.rendererProperties.type = 0;
+    this.labelConfig.rendererProperties.type = LabelTypes.ELEMENT_HEADING;
+    this.updateDescription();
     if (this.compConfig.rendererProperties.itemListRef) {
       this.itemList = this.builderModelSrvc.getModelRef(this.compConfig.rendererProperties.itemListRef);
     }

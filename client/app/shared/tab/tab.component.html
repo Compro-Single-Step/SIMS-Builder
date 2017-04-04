@@ -1,8 +1,8 @@
 <div class="heading">
   <app-label [compConfig]="labelConfig"></app-label>
-  <span class="glyphicon glyphicon-info-sign"></span>
+  <span class="glyphicon glyphicon-info-sign info-icon"></span>
 </div>
-<tabset>
+<tabset class="tabset">
   <template [ngIf]="!dynamicMode">
     <tab *ngFor="let tabConfig of compConfig.items" customClass="customClass">
       <template tabHeading>{{tabConfig.label}}</template>
@@ -16,3 +16,4 @@
     </tab>
   </template>
 </tabset>
+<app-label [compConfig]="descriptionConfig"></app-label>

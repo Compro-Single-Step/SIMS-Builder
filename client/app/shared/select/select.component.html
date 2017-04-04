@@ -1,11 +1,12 @@
 <fieldset>
 	<div class="heading">
 	  	<app-label [compConfig]="labelConfig"></app-label>
-		<span class="glyphicon glyphicon-info-sign"></span>
+		<span class="glyphicon glyphicon-info-sign info-icon"></span>
 	</div>
-	  <div class="form-group">
+	  <div class="form-group input-max-width">
 	    <select class="form-control" [(ngModel)]="selectedItem.value" (change)="selectedItemChange()">
 		  <option value={{item}} *ngFor="let item of itemList.value" [value]="item">{{item}}</option>
 		</select>	
 	  </div>
+		<app-label [compConfig]="descriptionConfig"></app-label>
 </fieldset>

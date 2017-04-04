@@ -1,4 +1,5 @@
 @import "../../../../node_modules/bootstrap/scss/variables";
+@import "../../scss/_variables.scss";
 .heading {
   display: flex;
 }
@@ -8,4 +9,15 @@ app-tab-page {
 }
 :host /deep/ .customClass {
  	height: 2.5rem;
+}
+
+.info-icon{
+    line-height: 25px;
+    color: $info-icon;
+    left: 2px;
+}
+
+.tabset{
+	display: block;
+	max-width: 1000px;
 }

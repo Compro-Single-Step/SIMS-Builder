@@ -1,14 +1,15 @@
-import { Component, OnInit, ElementRef, Input } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { Component, OnInit, ElementRef } from '@angular/core';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { BuilderDataService } from '../shared/builder-data.service';
 import { UIConfig } from '../../shared/UIConfig.model';
-import { Router } from '@angular/router';
 import { skillManager } from '../shared/skill-manager.service';
 import { BuilderModelObj } from '../shared/builder-model.service';
-
+import { PreviewService } from '../../_services/preview.service';
 import { IntervalObservable } from 'rxjs/observable/IntervalObservable';
+
 declare var jQuery;
 declare var localForage;
+
 @Component({
     selector: 'app-step-builder',
     templateUrl: './step-builder.component.html',
@@ -257,4 +258,8 @@ module.exports = (function () {
     onClose() {
         this.router.navigate(["/task", this.taskID]);
     }
+    
+    lauchPreviewTask(){
+		  this.previewService.launchStepPreviewWindow(this.taskID,this.stepIndex,"movecellcontent");
+	  }
 }

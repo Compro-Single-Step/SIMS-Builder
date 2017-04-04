@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { BaseComponent } from '../base.component';
 import { itemSchema, itemDataModel } from '../UIConfig.model';
+import { LabelTypes } from '../enums';
 
 @Component({
   selector: 'app-text-box-component',
@@ -9,7 +10,7 @@ import { itemSchema, itemDataModel } from '../UIConfig.model';
 })
 export class TextBoxComponent extends BaseComponent {
   labelConfig: itemSchema = new itemSchema();
-
+  descriptionConfig: itemSchema = new itemSchema();
   ngOnInit() {
     super.ngOnInit();
     this.modelRef = this.builderModelSrvc.getModelRef(this.compConfig.val);
@@ -18,6 +19,8 @@ export class TextBoxComponent extends BaseComponent {
 
   UpdateView() {
     this.labelConfig.rendererProperties.text = this.compConfig.label;
-    this.labelConfig.rendererProperties.type = 0;
+    this.labelConfig.rendererProperties.type = LabelTypes.ELEMENT_HEADING;
+
+    this.updateDescription();
   }
 }
