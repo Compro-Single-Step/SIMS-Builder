@@ -233,7 +233,7 @@
             "itemType": "leaf",
             "mandatory": true,
             "dependants": [{
-              "modelReference": "views.3.sheets.name",
+              "modelReference": "views.3.sheets[0].name",
               "rule": "updateSheetNameUsingDropdown"
             }],
             "val": "views[2].sheetInAction"
