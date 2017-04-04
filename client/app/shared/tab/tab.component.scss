@@ -5,7 +5,6 @@
 app-wrapper {
 	border: 1px solid $pre-border-color;
 	padding-left: 1rem;
-	max-width: 1000px;
 }
 :host /deep/ .customClass {
  	height: 2.5rem;
@@ -15,4 +14,9 @@ app-wrapper {
     line-height: 25px;
     color: #afaaaa;
     left: 2px;
+}
+
+.tabset{
+	display: block;
+	max-width: 1000px;
 }
