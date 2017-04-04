@@ -16,7 +16,7 @@ import { ButtonComponent } from './button/button.component';
 
 import { InputFactoryService } from './input-factory.service';
 import { DropzoneComponent } from './dropzone/dropzone.component';
-import { WrapperComponent } from './wrapper/wrapper.component';
+import { TabPageComponent } from './tab-page/tab-page.component';
 
 @NgModule({
   imports: [
@@ -24,7 +24,7 @@ import { WrapperComponent } from './wrapper/wrapper.component';
     TabsModule.forRoot(),
     FormsModule
   ],
-  declarations: [TextBoxComponent, PanelComponent, LabelComponent, TagComponent, SelectComponent, TabComponent, ButtonComponent, DropzoneComponent, WrapperComponent],
+  declarations: [TextBoxComponent, PanelComponent, LabelComponent, TagComponent, SelectComponent, TabComponent, ButtonComponent, DropzoneComponent, TabPageComponent],
   entryComponents: [TextBoxComponent, PanelComponent, SelectComponent, TabComponent, ButtonComponent, DropzoneComponent],
   providers: [InputFactoryService]
 })

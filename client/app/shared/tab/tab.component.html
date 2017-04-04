@@ -3,8 +3,16 @@
   <span class="glyphicon glyphicon-info-sign"></span>
 </div>
 <tabset>
-  <tab *ngFor="let tab of compConfig.items" customClass="customClass">
-    <template tabHeading>{{tab.label}}</template>
-    <app-wrapper [compConfig] = "tab"></app-wrapper>
-  </tab>
+  <template [ngIf]="!dynamicMode">
+    <tab *ngFor="let tabConfig of compConfig.items" customClass="customClass">
+      <template tabHeading>{{tabConfig.label}}</template>
+      <app-tab-page [compConfig]="tabConfig"></app-tab-page>
+    </tab>
+  </template>
+  <template [ngIf]="dynamicMode">
+    <tab *ngFor="let tabModel of tabs.value" customClass="customClass">
+      <template tabHeading>{{tabModel.name}}</template>
+      <app-tab-page [compConfig]="compConfig.items[0]" [modelRef]="tabModel"></app-tab-page>
+    </tab>
+  </template>
 </tabset>

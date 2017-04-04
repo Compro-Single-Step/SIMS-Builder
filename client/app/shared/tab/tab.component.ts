@@ -9,9 +9,19 @@ import { itemSchema } from '../UIConfig.model';
 })
 export class TabComponent extends BaseComponent {
   labelConfig: itemSchema = new itemSchema();
+  tabs: Array<Object> = [];
+
   ngOnInit() {
     super.ngOnInit();
+    this.UpdateView();
+  }
+
+  UpdateView() {
+    if (this.compConfig.rendererProperties.dynamicMode === true) {
+      this.dynamicMode = true;
+      this.tabs = this.builderModelSrvc.getModelRef(this.compConfig.rendererProperties.itemListRef);
+    }
     this.labelConfig.rendererProperties.text = this.compConfig.label;
-    this.labelConfig.rendererProperties.type = 'ElementHeading';
+    this.labelConfig.rendererProperties.type = 0;
   }
 }
