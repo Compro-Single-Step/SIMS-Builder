@@ -26,4 +26,8 @@ export class SelectComponent extends BaseComponent {
       this.itemList["value"] = this.compConfig.rendererProperties.itemList;
     }
   }
+
+  selectedItemChange($event) {
+    this.updateDependencies($event);
+  }
 }
