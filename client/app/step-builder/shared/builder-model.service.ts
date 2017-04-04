@@ -10,7 +10,12 @@ class BuilderModel {
     }
 
     getModelRef(modelRefStr) {
-        return eval("this.builderModel." + modelRefStr.replace(/['{{','}}']/g, ""));
+        var accessedObject = this.builderModel;
+        var propertyAccessorPathArray = modelRefStr.replace(/['{{','}}']/g, "").split('.');
+        for (let nestingLevel = 0; nestingLevel < propertyAccessorPathArray.length; nestingLevel++) {
+            accessedObject = accessedObject[propertyAccessorPathArray[nestingLevel]];
+        }
+        return accessedObject;
     }
 };
 

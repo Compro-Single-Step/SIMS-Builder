@@ -4,8 +4,8 @@
 		<span class="glyphicon glyphicon-info-sign"></span>
 	</div>
 	  <div class="form-group">
-	    <select class="form-control" [ngModel]="selectedItem" (ngModelChange)="selectedItemChange($event)">
-		  <option value={{item}} *ngFor="let item of itemList.value">{{item}}</option>
+	    <select class="form-control" [(ngModel)]="selectedItem.value" (change)="selectedItemChange()">
+		  <option value={{item}} *ngFor="let item of itemList.value" [value]="item">{{item}}</option>
 		</select>	
 	  </div>
 </fieldset>
