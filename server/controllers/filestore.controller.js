@@ -11,6 +11,16 @@ const fileTypeFolderMap = {
     "XML": config.fileStore.xmlFolder
 };
 
+const resTypeMap = {
+        "png":"img",
+        "jpeg":"img",
+        "jpg":"img",
+        "json":"json",
+        "txt":"text",
+        "html":"html",
+        "xml":"xml"
+    };
+    
 class FileStoreController {
 
     getTaskRes(filepath, callback){
