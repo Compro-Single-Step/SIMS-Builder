@@ -20,7 +20,7 @@ uiTaskStepSchema.statics = {
                         resolve(stepUIState);
                     }
                     else {
-                        reject({error: "Document to corresponding task id doesn't exist in collection"});
+                        reject({error: "Document to corresponding task " + taskId + " doesn't exist in collection"});
                     }
                 }
                 else {

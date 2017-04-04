@@ -9,7 +9,7 @@ class DatabaseFileStoreManager {
         return dbController.getSkillConfigPath(templateId, skillConfigTypes.UI_CONFIG)
         .then((filePath)=> {
             if(filePath === undefined || filePath === null) {
-                Promise.reject("Skill Config doesn't exist in database");
+                Promise.reject("Skill Config for template id " + templateId + " doesn't exist in database");
             }
             else {
                 return fsc.getFileFromFileStore(filePath, folderMap.SKILL);
@@ -23,7 +23,7 @@ class DatabaseFileStoreManager {
         return dbController.getSkillConfigPath(templateId, skillConfigTypes.XML)
         .then((filePath)=> {
             if(filePath === undefined || filePath === null) {
-                Promise.reject("Skill XML doesn't exist in database");
+                Promise.reject("Skill XML for template id "+ templateId + " doesn't exist in database");
             }
             else {
                 return fsc.getFileFromFileStore(filePath, folderMap.SKILL);
@@ -37,7 +37,7 @@ class DatabaseFileStoreManager {
         return dbController.getSkillConfigPath(templateId, skillConfigTypes.IO_MAP)
         .then((filePath)=> {
             if(filePath === undefined || filePath === null) {
-                Promise.reject("I/O Map doesn't exist in database");
+                Promise.reject("I/O Map for template id "+ templateId + " doesn't exist in database");
             }
             else {
                 return fsc.getFileFromFileStore(filePath, folderMap.SKILL);
@@ -51,7 +51,7 @@ class DatabaseFileStoreManager {
         return dbController.getSkillConfigPath(templateId, skillConfigTypes.MODEL)
         .then((filePath)=> {
             if(filePath === undefined || filePath === null) {
-                Promise.reject("Skill Model doesn't exist in database");
+                Promise.reject("Skill Model for template id "+ templateId + " doesn't exist in database");
             }
             else {
                 return fsc.getFileFromFileStore(filePath, folderMap.SKILL);

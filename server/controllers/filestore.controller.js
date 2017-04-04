@@ -45,6 +45,7 @@ class FileStoreController {
                 let taskId = req.body.taskId;
                 let stepIndex = req.body.stepIndex;
                 let destinationFolder = self.getUploadedResourceFolderPath(taskId, stepIndex);
+                req.body.folder = destinationFolder;
                 self.createFolder(destinationFolder).then((success)=> {
                     callback(null, destinationFolder);
                 }, (error)=> {
@@ -53,7 +54,14 @@ class FileStoreController {
             },
             filename: function (req, file, callback) {
                 let fileName = req.body.fileName;
-                fileName = fileName || file.originalname;
+                
+                if(fileName) {
+                    fileName = fileName + "." + file.originalname;
+                } else {
+                    fileName = file.originalname;
+                }
+                
+                req.body.filePath = req.body.folder + fileName;
                 callback(null, fileName);
             }
         });

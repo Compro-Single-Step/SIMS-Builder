@@ -83,11 +83,7 @@ router.post("/resource", (req, res) => {
             res.send("Error uploading file.");
         }
         else {
-            let taskId = req.body.taskId;
-            let stepIndex = req.body.stepIndex;
-            let fileName = req.files.dzfile[0].originalname;
-            let folderPath = config.fileStore.resourceFolder + taskId + "/" + stepIndex + "/";
-            let filePath = folderPath + fileName;
+            let filePath = req.body.filePath;
             
             res.send({
                 filePath: filePath.replace(/\\/g,"/")

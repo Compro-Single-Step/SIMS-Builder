@@ -30,7 +30,7 @@ skillConfigRepoSchema.statics = {
                         resolve(data[0][configType]);
                     }
                     else {
-                        reject(error);
+                        reject("No document exist for template id " + templateId);
                     }
                 }
                 else {
