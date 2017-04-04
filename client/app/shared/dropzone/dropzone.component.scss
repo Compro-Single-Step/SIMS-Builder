@@ -1,4 +1,5 @@
 @import "../../../../node_modules/bootstrap/scss/variables";
+@import "../../scss/_variables.scss";
 
 $dropzoneTextColor: #aaa;
 
@@ -19,4 +20,14 @@ $dropzoneTextColor: #aaa;
 }
 .dz-message {
   margin-top: 4.5rem;
+}
+
+.input-max-width{
+  max-width: 1000px;
+}
+
+.info-icon{
+    line-height: 25px;
+    color: $info-icon;
+    left: 2px;
 }

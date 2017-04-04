@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { BaseComponent } from '../base.component';
 import { itemSchema } from '../UIConfig.model';
+import { LabelTypes } from '../enums';
 
 @Component({
   selector: 'app-tab',
@@ -9,6 +10,7 @@ import { itemSchema } from '../UIConfig.model';
 })
 export class TabComponent extends BaseComponent {
   labelConfig: itemSchema = new itemSchema();
+  descriptionConfig: itemSchema = new itemSchema();
   tabs: Array<Object> = [];
 
   ngOnInit() {
@@ -22,6 +24,8 @@ export class TabComponent extends BaseComponent {
       this.tabs = this.builderModelSrvc.getModelRef(this.compConfig.rendererProperties.itemListRef);
     }
     this.labelConfig.rendererProperties.text = this.compConfig.label;
-    this.labelConfig.rendererProperties.type = 0;
+    this.labelConfig.rendererProperties.type = LabelTypes.ELEMENT_HEADING;
+
+    this.updateDescription();
   }
 }

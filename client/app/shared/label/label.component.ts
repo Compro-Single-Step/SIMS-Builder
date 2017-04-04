@@ -1,9 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { BaseComponent } from '../base.component';
-enum labelType {
-  ElementHeading = 0,
-  PanelHeading = 1
-}
+import { LabelTypes } from '../enums';
+
 @Component({
   selector: 'app-label',
   templateUrl: './label.component.html',
@@ -14,12 +12,12 @@ export class LabelComponent extends BaseComponent {
   type: string;
   constructor() {
     super();
-    this.type = labelType[0];
+    this.type = LabelTypes.ELEMENT_HEADING;
   }
 
   ngOnInit() {
     super.ngOnInit();
     this.text = this.compConfig.rendererProperties.text;
-    this.type = labelType[this.compConfig.rendererProperties.type];
+    this.type = this.compConfig.rendererProperties.type;
   }
 }
