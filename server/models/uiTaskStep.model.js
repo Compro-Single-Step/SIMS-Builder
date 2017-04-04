@@ -40,7 +40,7 @@ uiTaskStepSchema.statics = {
 
             this.collection.update(condition, updateData, options, (error, success) => {
                 if(error) {
-                    reject(eroor);
+                    reject(error);
                 }
                 else {
                     resolve(success);
