@@ -6,7 +6,7 @@ module.exports = class baseSkill{
       var paramValueObj = skillParams.paramsObj;
       taskParams.dbFilestoreMgr.copyTaskAssetFile(paramValueObj["tbPrvImage"].path, taskParams, function(error, xmlPath, fileType){
            var preloadResArr = [];
-           preloadResArr.push({"path":"" + xmlPath,"type":"" + fileType});
+           preloadResArr.push({"path":"" + xmlPath,"type":"img"});
           if(!error){
             callback(null, xmlPath, preloadResArr);
           }

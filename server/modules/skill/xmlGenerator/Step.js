@@ -9,6 +9,7 @@ module.exports = class Step {
         this.preloadEntities = stepJson[0];
         this.preloadComps = this.preloadEntities[0];
         
+        this.attrValMap = attrValMap;
         this.states = {}; // object holding state objects with state id as key
         this.stateOrderIdMap = {};
         this.generateStates(stepJson[1], attrValMap);
@@ -29,10 +30,27 @@ module.exports = class Step {
         let xmlString = '<task>';
 
         xmlString += this.generatePreloadNodeXML();
+        xmlString += this.addStepTextToXML();
         xmlString += this.generateStatesXML();
 
         xmlString += '</task>';
         return xmlString;
+    }
+
+    addStepTextToXML (){
+        let stepText = this.fetchStepText();
+        let xmlString = '<texts_formatted>' +
+                            '<txt id="1" StateStart="1">'+
+                                '<![CDATA['+stepText+']]>'+
+                            '</txt>'+
+                        '</texts_formatted>';
+
+        return xmlString;
+    }
+
+    // fn to fetch step text from Baloo
+    fetchStepText(taskId, stepIdx){
+        return "Model Step Text later to be fetched from Baloo or to be provided by the SIM Builder while making XML generation request.";
     }
 
     generatePreloadNodeXML (){
@@ -47,7 +65,12 @@ module.exports = class Step {
         xmlString += "</comps>";
 
         // adding preload resources
-        xmlString += "<resources>" + "</resources>";
+        xmlString += "<resources>";
+        for(let idx=0; idx<this.attrValMap.preloadResources.length; idx++){
+            let currRes = this.attrValMap.preloadResources[idx];
+            xmlString += '<res path="'+currRes.path+'" type="'+currRes.type+'"/>';
+        }
+        xmlString += "</resources>";
 
         xmlString += '</preload>';
         return xmlString;
