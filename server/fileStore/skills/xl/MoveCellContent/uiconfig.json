@@ -1,61 +1,52 @@
 {
-  "views": [
-    {
+  "views": [{
       "id": "1",
       "label": "Initial Document Settings",
       "itemType": "root",
       "desc": {},
-      "items": [
-        {
+      "items": [{
           "id": "1.1",
           "label": "Ribbon",
           "itemRenderer": "Panel",
           "itemType": "child",
-          "tags": [
-            {
-              "compName": "SIMS.Components.Excel.Ribbon",
-              "type": "default"
-            }
-          ],
+          "tags": [{
+            "compName": "SIMS.Components.Excel.Ribbon",
+            "type": "default"
+          }],
           "rendererProperties": {
             "collapsable": true,
             "optionalItems": true
           },
-          "items": [
-            {
-              "id": "1.1.1",
-              "label": "Document Title",
-              "desc": {
-                "basic": "Name of the document to be displayed in Ribbon.",
-                "detailed": ""
-              },
-              "itemRenderer": "TextBox",
-              "itemType": "leaf",
-              "mandatory": false,
-              "rendererProperties": {
-                "dataType": "string"
-              },
-              "val": "views[1].documentTitle"
-            }
-          ]
+          "items": [{
+            "id": "1.1.1",
+            "label": "Document Title",
+            "desc": {
+              "basic": "Name of the document to be displayed in Ribbon.",
+              "detailed": ""
+            },
+            "itemRenderer": "TextBox",
+            "itemType": "leaf",
+            "mandatory": false,
+            "rendererProperties": {
+              "dataType": "string"
+            },
+            "val": "{{views.1.documentTitle}}"
+          }]
         },
         {
           "id": "1.2",
           "label": "Workbook",
           "itemRenderer": "Panel",
           "itemType": "child",
-          "tags": [
-            {
-              "compName": "SIMS.Components.Excel.JSONGrid",
-              "type": "default"
-            }
-          ],
+          "tags": [{
+            "compName": "SIMS.Components.Excel.JSONGrid",
+            "type": "default"
+          }],
           "rendererProperties": {
             "collapsable": true,
             "optionalItems": true
           },
-          "items": [
-            {
+          "items": [{
               "id": "1.2.1",
               "label": "Document Data",
               "desc": {
@@ -68,18 +59,17 @@
                 "dataType": "JSON",
                 "placeHolder": "Drop JSON file here to upload"
               },
-              "dependants": [
-                {
-                  "modelReference": "views.1.sheets",
+              "dependants": [{
+                  "modelReference": "{{views.1.sheets.value}}",
                   "rule": "getSheetNameAndSheetCountFromInitDocJSON"
                 },
                 {
-                  "modelReference": "views.2.sheetInAction",
+                  "modelReference": "{{views.2.sheetInAction.options.value}}",
                   "rule": "addSheetNamesToDropdown"
                 }
               ],
               "mandatory": true,
-              "val": "views[1].documentData"
+              "val": "{{views.1.documentData}}"
             },
             {
               "id": "1.2.2",
@@ -92,78 +82,80 @@
               "itemType": "child",
               "disabled": true,
               "rendererProperties": {
-                "layout": "horizontal"
+                "layout": "horizontal",
+                "dynamicMode": true,
+                "itemListRef": "{{views.1.sheets}}"
               },
-              "items": [
-                {
-                  "id": "1.2.2.1",
-                  "label": "views[1].sheets[1].name",
-                  "itemRenderer": "TabPage",
-                  "itemType": "",
-                  "items": [
-                    {
-                      "id": "GridImage",
-                      "itemRenderer": "Dropzone",
-                      "itemType": "leaf",
-                      "rendererProperties": {
-                        "placeHolder": "Drop Grid Image",
-                        "dataType": "img"
-                      },
-                      "pos": "x,y",
-                      "dim": {
-                        "height": "200px",
-                        "width": "200px"
-                      },
-                      "val": "views[1].sheets[1].gridImage"
+              "items": [{
+                "id": "1.2.2.1",
+                "itemRenderer": "TabPage",
+                "itemType": "",
+                "items": [{
+                    "id": "GridImage",
+                    "itemRenderer": "Dropzone",
+                    "itemType": "leaf",
+                    "rendererProperties": {
+                      "placeHolder": "Drop Grid Image",
+                      "dynamicMode": true,
+                      "dataType": "img"
                     },
-                    {
-                      "id": "RowImage",
-                      "itemRenderer": "Dropzone",
-                      "itemType": "leaf",
-                      "rendererProperties": {
-                        "placeHolder": "Drop Row Image",
-                        "dataType": "img"
-                      },
-                      "pos": "x,y",
-                      "dim": {
-                        "height": "200px",
-                        "width": "200px"
-                      },
-                      "val": "views[1].sheets[1].rowImage"
+                    "pos": "x,y",
+                    "dim": {
+                      "height": "200px",
+                      "width": "200px"
                     },
-                    {
-                      "id": "ColumnImage",
-                      "itemRenderer": "Dropzone",
-                      "itemType": "leaf",
-                      "rendererProperties": {
-                        "placeHolder": "Drop Column Image",
-                        "dataType": "img"
-                      },
-                      "pos": "x,y",
-                      "dim": {
-                        "height": "200px",
-                        "width": "200px"
-                      },
-                      "val": "views[1].sheets[1].columnImage"
+                    "relVal": "gridImage"
+                  },
+                  {
+                    "id": "RowImage",
+                    "itemRenderer": "Dropzone",
+                    "itemType": "leaf",
+                    "rendererProperties": {
+                      "placeHolder": "Drop Row Image",
+                      "dynamicMode": true,
+                      "dataType": "img"
                     },
-                    {
-                      "id": "CellImage",
-                      "itemRenderer": "Dropzone",
-                      "itemType": "leaf",
-                      "rendererProperties": {
-                        "placeHolder": "Drop Cell Image",
-                        "dataType": "img"
-                      },
-                      "pos": "x,y",
-                      "dim": {
-                        "height": "200px",
-                        "width": "200px"
-                      },
-                      "val": "views[1].sheets[1].cellImage"
-                    }
-                  ]
-                }
-              ]
+                    "pos": "x,y",
+                    "dim": {
+                      "height": "200px",
+                      "width": "200px"
+                    },
+                    "relVal": "rowImage"
+                  },
+                  {
+                    "id": "ColumnImage",
+                    "itemRenderer": "Dropzone",
+                    "itemType": "leaf",
+                    "rendererProperties": {
+                      "placeHolder": "Drop Column Image",
+                      "dynamicMode": true,
+                      "dataType": "img"
+                    },
+                    "pos": "x,y",
+                    "dim": {
+                      "height": "200px",
+                      "width": "200px"
+                    },
+                    "relVal": "columnImage"
+                  },
+                  {
+                    "id": "CellImage",
+                    "itemRenderer": "Dropzone",
+                    "itemType": "leaf",
+                    "rendererProperties": {
+                      "placeHolder": "Drop Cell Image",
+                      "dynamicMode": true,
+                      "dataType": "img"
+                    },
+                    "pos": "x,y",
+                    "dim": {
+                      "height": "200px",
+                      "width": "200px"
+                    },
+                    "relVal": "cellImage"
+                  }
+                ]
+              }]
             }
           ]
         },
@@ -172,34 +164,30 @@
           "label": "Taskbar",
           "itemRenderer": "Panel",
           "itemType": "child",
-          "tags": [
-            {
-              "compName": "SIMS.Components.Common.TaskBar",
-              "type": "default"
-            }
-          ],
+          "tags": [{
+            "compName": "SIMS.Components.Common.TaskBar",
+            "type": "default"
+          }],
           "rendererProperties": {
             "collapsable": true,
             "optionalItems": true
           },
-          "items": [
-            {
-              "id": "1.3.1",
-              "label": "Taskbar Preview Image",
-              "desc": {
-                "basic": "Upload taskbar preview image.",
-                "detailed": ""
-              },
-              "itemRenderer": "Dropzone",
-              "itemType": "leaf",
-              "rendererProperties": {
-                "dataType": "img",
-                "placeHolder": "Drop image here to upload"
-              },
-              "mandatory": false,
-              "val": "views[1].taskbarPreviewImage"
-            }
-          ]
+          "items": [{
+            "id": "1.3.1",
+            "label": "Taskbar Preview Image",
+            "desc": {
+              "basic": "Upload taskbar preview image.",
+              "detailed": ""
+            },
+            "itemRenderer": "Dropzone",
+            "itemType": "leaf",
+            "rendererProperties": {
+              "dataType": "img",
+              "placeHolder": "Drop image here to upload"
+            },
+            "mandatory": false,
+            "val": "{{views.1.taskbarPreviewImage}}"
+          }]
         },
         {
           "id": "1.4",
@@ -218,197 +206,190 @@
       "label": "Skill Specific Inputs",
       "itemType": "root",
       "desc": {},
-      "items": [
-        {
-          "id": "2.1",
-          "label": "Workbook",
-          "itemRenderer": "Panel",
-          "itemType": "child",
-          "tags": [
-            {
-              "compName": "SIMS.Components.Excel.JSONGrid",
-              "type": "default"
-            }
-          ],
-          "rendererProperties": {
-            "collapsable": true,
-            "optionalItems": false
+      "items": [{
+        "id": "2.1",
+        "label": "Workbook",
+        "itemRenderer": "Panel",
+        "itemType": "child",
+        "tags": [{
+          "compName": "SIMS.Components.Excel.JSONGrid",
+          "type": "default"
+        }],
+        "rendererProperties": {
+          "collapsable": true,
+          "optionalItems": false
+        },
+        "items": [{
+            "id": "2.1.1",
+            "label": "Sheet in Action",
+            "desc": {
+              "basic": "Name of the sheet in which the move cell content skill is to be performed.",
+              "detailed": ""
+            },
+            "itemRenderer": "Dropdown",
+            "rendererProperties": {
+              "itemListRef": "{{views.2.sheetInAction.options}}"
+            },
+            "itemType": "leaf",
+            "mandatory": true,
+            "dependants": [{
+              "modelReference": "{{views.3.sheets.value.0}}",
+              "rule": "updateSheetNameUsingDropdown"
+            }],
+            "val": "{{views.2.sheetInAction.selectedOption}}"
           },
-          "items": [
-            {
-              "id": "2.1.1",
-              "label": "Sheet in Action",
-              "desc": {
-                "basic": "Name of the sheet in which the move cell content skill is to be performed.",
-                "detailed": ""
-              },
-              "itemRenderer": "Dropdown",
-              "itemType": "leaf",
-              "mandatory": true,
-              "dependants": [
-                {
-                  "modelReference": "3.1.2",
-                  "rule": ""
-                }
-              ],
-              "val": "views[2].sheetInAction"
+          {
+            "id": "2.1.2",
+            "label": "Source Range",
+            "desc": {
+              "basic": "Cell range containing the data to be moved.",
+              "detailed": ""
             },
-            {
-              "id": "2.1.2",
-              "label": "Source Range",
-              "desc": {
-                "basic": "Cell range containing the data to be moved.",
-                "detailed": ""
-              },
-              "itemRenderer": "TextBox",
-              "itemType": "leaf",
-              "mandatory": true,
-              "rendererProperties": {
-                "dataType": "string"
-              },
-              "val": "views[2].sourceRange"
+            "itemRenderer": "TextBox",
+            "itemType": "leaf",
+            "mandatory": true,
+            "rendererProperties": {
+              "dataType": "string"
             },
-            {
-              "id": "2.1.3",
-              "label": "Destination Range",
-              "desc": {
-                "basic": "Cell Range where the data is to be placed.",
-                "detailed": ""
-              },
-              "itemRenderer": "TextBox",
-              "itemType": "leaf",
-              "mandatory": true,
-              "val": "views[2].destinationRange"
-            }
-          ]
-        }
-      ]
+            "val": "{{views.2.sourceRange}}"
+          },
+          {
+            "id": "2.1.3",
+            "label": "Destination Range",
+            "desc": {
+              "basic": "Cell Range where the data is to be placed.",
+              "detailed": ""
+            },
+            "itemRenderer": "TextBox",
+            "itemType": "leaf",
+            "mandatory": true,
+            "val": "{{views.2.destinationRange}}"
+          }
+        ]
+      }]
     },
     {
       "id": "3",
       "label": "Final Document Settings",
       "itemType": "root",
       "desc": {},
-      "items": [
-        {
-          "id": "3.1",
-          "label": "Workbook",
-          "itemRenderer": "Panel",
-          "itemType": "child",
-          "tags": [
-            {
-              "compName": "SIMS.Components.Excel.JSONGrid",
-              "type": "default"
-            }
-          ],
-          "rendererProperties": {
-            "collapsable": true,
-            "optionalItems": false
-          },
-          "items": [
-            {
-              "id": "3.1.1",
-              "label": "Workbook Data",
-              "desc": {
-                "basic": "Upload JSON file containing the changes made in the worksheet after moving the cell range.",
-                "detailed": ""
-              },
-              "itemRenderer": "Dropzone",
-              "itemType": "leaf",
-              "rendererProperties": {
-                "dataType": "JSON",
-                "placeHolder": "Drop JSON file here to upload"
-              },
-              "mandatory": true,
-              "val": "views[3].workbookData"
+      "items": [{
+        "id": "3.1",
+        "label": "Workbook",
+        "itemRenderer": "Panel",
+        "itemType": "child",
+        "tags": [{
+          "compName": "SIMS.Components.Excel.JSONGrid",
+          "type": "default"
+        }],
+        "rendererProperties": {
+          "collapsable": true,
+          "optionalItems": false
+        },
+        "items": [{
+            "id": "3.1.1",
+            "label": "Workbook Data",
+            "desc": {
+              "basic": "Upload JSON file containing the changes made in the worksheet after moving the cell range.",
+              "detailed": ""
             },
-            {
-              "id": "3.1.2",
-              "label": "Worksheet Images",
-              "desc": {
-                "basic": "Upload the images containing the changes made in the worksheet after moving the cell range.",
-                "detailed": ""
-              },
-              "itemRenderer": "TabGroup",
-              "itemType": "child",
-              "disabled": true,
-              "rendererProperties": {
-                "layout": "horizontal"
-              },
-              "items": [
+            "itemRenderer": "Dropzone",
+            "itemType": "leaf",
+            "rendererProperties": {
+              "dataType": "JSON",
+              "placeHolder": "Drop JSON file here to upload"
+            },
+            "mandatory": true,
+            "val": "{{views.3.workbookData}}"
+          },
+          {
+            "id": "3.1.2",
+            "label": "Worksheet Images",
+            "desc": {
+              "basic": "Upload the images containing the changes made in the worksheet after moving the cell range.",
+              "detailed": ""
+            },
+            "itemRenderer": "TabGroup",
+            "itemType": "child",
+            "disabled": true,
+            "rendererProperties": {
+              "layout": "horizontal",
+              "dynamicMode": true,
+              "itemListRef": "{{views.3.sheets}}"
+            },
+            "items": [{
+              "id": "3.1.2.1",
+              "itemRenderer": "TabPage",
+              "itemType": "",
+              "items": [{
+                  "id": "GridImage",
+                  "itemRenderer": "Dropzone",
+                  "itemType": "leaf",
+                  "rendererProperties": {
+                    "placeHolder": "Drop Grid Image",
+                    "dynamicMode": true,
+                    "dataType": "img"
+                  },
+                  "pos": "x,y",
+                  "dim": {
+                    "height": "200px",
+                    "width": "200px"
+                  },
+                  "relVal": "gridImage"
+                },
                 {
-                  "id": "3.1.2.1",
-                  "label": "views[3].sheets[1].name",
-                  "itemRenderer": "TabPage",
-                  "itemType": "",
-                  "items": [
-                    {
-                      "id": "GridImage",
-                      "itemRenderer": "Dropzone",
-                      "itemType": "leaf",
-                      "rendererProperties": {
-                        "placeHolder": "Drop Grid Image",
-                        "dataType": "img"
-                      },
-                      "pos": "x,y",
-                      "dim": {
-                        "height": "200px",
-                        "width": "200px"
-                      },
-                      "val": "views[3].sheets[1].gridImage"
-                    },
-                    {
-                      "id": "RowImage",
-                      "itemRenderer": "Dropzone",
-                      "itemType": "leaf",
-                      "rendererProperties": {
-                        "placeHolder": "Drop Row Image",
-                        "dataType": "img"
-                      },
-                      "pos": "x,y",
-                      "dim": {
-                        "height": "200px",
-                        "width": "200px"
-                      },
-                      "val": "views[3].sheets[1].rowImage"
-                    },
-                    {
-                      "id": "ColumnImage",
-                      "itemRenderer": "Dropzone",
-                      "itemType": "leaf",
-                      "rendererProperties": {
-                        "placeHolder": "Drop Column Image",
-                        "dataType": "img"
-                      },
-                      "pos": "x,y",
-                      "dim": {
-                        "height": "200px",
-                        "width": "200px"
-                      },
-                      "val": "views[3].sheets[1].columnImage"
-                    },
-                    {
-                      "id": "CellImage",
-                      "itemRenderer": "Dropzone",
-                      "itemType": "leaf",
-                      "rendererProperties": {
-                        "placeHolder": "Drop Cell Image",
-                        "dataType": "img"
-                      },
-                      "pos": "x,y",
-                      "dim": {
-                        "height": "200px",
-                        "width": "200px"
-                      },
-                      "val": "views[3].sheets[1].cellImage"
-                    }
-                  ]
+                  "id": "RowImage",
+                  "itemRenderer": "Dropzone",
+                  "itemType": "leaf",
+                  "rendererProperties": {
+                    "placeHolder": "Drop Row Image",
+                    "dynamicMode": true,
+                    "dataType": "img"
+                  },
+                  "pos": "x,y",
+                  "dim": {
+                    "height": "200px",
+                    "width": "200px"
+                  },
+                  "relVal": "rowImage"
+                },
+                {
+                  "id": "ColumnImage",
+                  "itemRenderer": "Dropzone",
+                  "itemType": "leaf",
+                  "rendererProperties": {
+                    "placeHolder": "Drop Column Image",
+                    "dynamicMode": true,
+                    "dataType": "img"
+                  },
+                  "pos": "x,y",
+                  "dim": {
+                    "height": "200px",
+                    "width": "200px"
+                  },
+                  "relVal": "columnImage"
+                },
+                {
+                  "id": "CellImage",
+                  "itemRenderer": "Dropzone",
+                  "itemType": "leaf",
+                  "rendererProperties": {
+                    "placeHolder": "Drop Cell Image",
+                    "dynamicMode": true,
+                    "dataType": "img"
+                  },
+                  "pos": "x,y",
+                  "dim": {
+                    "height": "200px",
+                    "width": "200px"
+                  },
+                  "relVal": "cellImage"
                 }
               ]
-            }
-          ]
-        }
-      ]
+            }]
+          }
+        ]
+      }]
     }
   ]
 }

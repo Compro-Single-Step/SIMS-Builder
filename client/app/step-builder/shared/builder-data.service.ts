@@ -11,7 +11,10 @@ import 'rxjs/add/operator/map';
 
 @Injectable()
 export class BuilderDataService {
-  constructor(private httpClient: HttpClient) { }
+  uiconfig: UIConfig;
+  constructor(private httpClient: HttpClient) { 
+    this.uiconfig = new UIConfig();
+  }
   getuiconfig(params): Observable<UIConfig> {
     return this.httpClient.get('api/skill/stepuiconfig/uiconfig/movecellcontent')
       .map(this.extractData)
