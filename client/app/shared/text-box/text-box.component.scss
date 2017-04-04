@@ -1,3 +1,14 @@
+@import "../../scss/_variables.scss";
 .heading {
   display: flex;
+}
+
+.input-max-width {
+  max-width: 1000px;
+}
+
+.info-icon{
+    line-height: 25px;
+    color: $info-icon;
+    left: 2px;
 }
