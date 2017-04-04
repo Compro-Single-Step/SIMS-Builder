@@ -11,6 +11,16 @@ const fileTypeFolderMap = {
     "XML": config.fileStore.xmlFolder
 };
 
+const resTypeMap = {
+        "png":"img",
+        "jpeg":"img",
+        "jpg":"img",
+        "json":"json",
+        "txt":"text",
+        "html":"html",
+        "xml":"xml"
+    };
+    
 class FileStoreController {
 
     getTaskRes(filepath, callback){
@@ -25,29 +35,33 @@ class FileStoreController {
     }
 
     copyAssetToTaskFolder(residentPath, taskParams, callback){
-    
-        var filepathArr = residentPath.split("/")
-        var fileName = filepathArr[filepathArr.length-1].trim();
-        var fileTypeArr = fileName.split(".")
-        var fileType = fileTypeArr[fileTypeArr.length-1];
-        var self =  this;
-        self.getTaskAsset(residentPath,function(error,data){
-            if(!error){
-            self.storeTaskAsset(taskParams.taskId, taskParams.stepIndex, fileName, data, function(error,path){
-                if(!error){
-                    // this.updateResourcePath(path)
-                    //returning the fileType as well
-                    callback(error, path, fileType);
-                }
-                else{
-                    callback(error);
-                }
-            });
-            }
-            else{
-                callback(error)
-            } 
-        });
+
+    var filepathArr = residentPath.split("/")
+    var fileName = filepathArr[filepathArr.length-1].trim();
+    var fileTypeArr = fileName.split(".")
+    var fileType = fileTypeArr[fileTypeArr.length-1];
+    var resFileType = fileType;
+    if(resTypeMap[fileType]){
+        resFileType = resTypeMap[fileType]
+    }
+    var self =  this;
+    self.getTaskAsset(residentPath,function(error,data){
+        if(!error){
+          self.storeTaskAsset(taskParams.taskId, taskParams.stepIndex, fileName, data, function(error,path){
+              if(!error){
+                // this.updateResourcePath(path)
+                //returning the fileType as well
+                callback(error, path, resFileType);
+              }
+              else{
+                callback(error);
+              }
+          });
+        }
+        else{
+            callback(error)
+        } 
+    });
 
     }
     getTaskAsset( filePath,callback){
