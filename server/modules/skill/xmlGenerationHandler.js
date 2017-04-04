@@ -28,6 +28,7 @@ module.exports.generateStepXML = function(templateId, taskId, stepIndex, skillRe
                         dbFilestoreMgr.getSkillXML(templateId, (error, skillTemplate) => {
                             if(!error) {
                                 let xmlGenerator = new XmlGenerator();
+
                                 let OutputXML1 = xmlGenerator.generateXml(skillTemplate, IOmap);
 
                                 //Saving Step XML in File Store
