@@ -9,6 +9,7 @@ import { routing } from './app-routing.module';
 
 import { AuthGuard } from './_guards/auth.guard';
 import { AuthService } from './_services/auth.service';
+import { PreviewService } from './_services/preview.service' 
 
 import { HttpClient } from './_services/http.client';
 import { TaskDataService } from './_services/taskData.service' 
@@ -30,7 +31,7 @@ import { AuthModule  } from './auth.module';
     
   ],
 
-  providers: [ AuthService,HttpClient,AuthGuard,AppConfig,TaskDataService ],
+  providers: [ AuthService,HttpClient,AuthGuard,AppConfig,TaskDataService,PreviewService ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
