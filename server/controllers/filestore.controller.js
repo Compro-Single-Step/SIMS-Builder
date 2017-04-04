@@ -11,6 +11,16 @@ const fileTypeFolderMap = {
     "XML": config.fileStore.xmlFolder
 };
 
+const resTypeMap = {
+        "png":"img",
+        "jpeg":"img",
+        "jpg":"img",
+        "json":"json",
+        "txt":"text",
+        "html":"html",
+        "xml":"xml"
+    };
+    
 class FileStoreController {
 
     getTaskRes(filepath, callback){
@@ -30,6 +40,10 @@ class FileStoreController {
     var fileName = filepathArr[filepathArr.length-1].trim();
     var fileTypeArr = fileName.split(".")
     var fileType = fileTypeArr[fileTypeArr.length-1];
+    var resFileType = fileType;
+    if(resTypeMap[fileType]){
+        resFileType = resTypeMap[fileType]
+    }
     var self =  this;
     self.getTaskAsset(residentPath,function(error,data){
         if(!error){
@@ -37,7 +51,7 @@ class FileStoreController {
               if(!error){
                 // this.updateResourcePath(path)
                 //returning the fileType as well
-                callback(error, path, fileType);
+                callback(error, path, resFileType);
               }
               else{
                 callback(error);
@@ -80,7 +94,7 @@ class FileStoreController {
         var folderPathArr = srcPath.split("/");
 
         var folderName = folderPathArr[folderPathArr.length-1];
-        var relativeXmlPath = this.getSimsXmlTaskFolderPath(taskId, stepIndex);
+         var relativeXmlPath = this.getSimsXmlTaskFolderPath(taskId, stepIndex);
         var destPath = this.getFileStoreStepFolderPath(taskId, stepIndex) + folderName;
 
         srcPath  = config.fileStore.resourceFolder + srcPath;
