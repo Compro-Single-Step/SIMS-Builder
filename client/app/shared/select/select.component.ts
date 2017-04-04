@@ -10,7 +10,7 @@ import { itemSchema } from '../UIConfig.model';
 export class SelectComponent extends BaseComponent {
   labelConfig: itemSchema = new itemSchema();
   itemList: Object;
-  selectedItem;
+  selectedItem: Object;
 
   ngOnInit() {
     super.ngOnInit();
@@ -26,9 +26,10 @@ export class SelectComponent extends BaseComponent {
     else {
       this.itemList["value"] = this.compConfig.rendererProperties.itemList;
     }
+    this.selectedItem = this.builderModelSrvc.getModelRef(this.compConfig.val); 
   }
 
-  selectedItemChange($event) {
-    this.updateDependencies($event);
+  selectedItemChange() {
+    this.updateDependencies(this.selectedItem["value"]);
   }
 }
