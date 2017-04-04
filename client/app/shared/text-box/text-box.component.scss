@@ -1,3 +1,4 @@
+@import "../../scss/_variables.scss";
 .heading {
   display: flex;
 }
@@ -8,6 +9,6 @@
 
 .info-icon{
     line-height: 25px;
-    color: #afaaaa;
+    color: $info-icon;
     left: 2px;
 }

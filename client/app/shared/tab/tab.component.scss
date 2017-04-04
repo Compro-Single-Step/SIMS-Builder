@@ -1,4 +1,5 @@
 @import "../../../../node_modules/bootstrap/scss/variables";
+@import "../../scss/_variables.scss";
 .heading {
   display: flex;
 }
@@ -12,7 +13,7 @@ app-wrapper {
 
 .info-icon{
     line-height: 25px;
-    color: #afaaaa;
+    color: $info-icon;
     left: 2px;
 }
 
