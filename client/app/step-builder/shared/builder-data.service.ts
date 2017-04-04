@@ -13,7 +13,7 @@ import 'rxjs/add/operator/map';
 export class BuilderDataService {
   constructor(private httpClient: HttpClient) { }
   getuiconfig(params): Observable<UIConfig> {
-    return this.httpClient.get('api/skill/stepuiconfig/uiconfig/movecellcontent')
+    return this.httpClient.get('api/skill/uiconfig/movecellcontent')
       .map(this.extractData)
       .catch(this.handleError);
   }
