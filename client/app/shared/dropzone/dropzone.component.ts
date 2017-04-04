@@ -26,10 +26,13 @@ export class DropzoneComponent extends BaseComponent {
   UpdateView() {
     var self = this;
     this.labelConfig.rendererProperties.text = this.compConfig.label;
-    this.labelConfig.rendererProperties.type = 0;
-    if (this.compConfig.dim != undefined) {
-      this.height = `${this.compConfig.dim.split(',')[0]}`;
-      this.width = `${this.compConfig.dim.split(',')[1]}`;
+    this.labelConfig.rendererProperties.type = 'ElementHeading';
+    if (this.compConfig.dim !== undefined) {
+      this.height = `${this.compConfig.dim['height']}`;
+      this.width = `${this.compConfig.dim['width']}`;
+    } else {
+      this.height = `200px`;
+      this.width = `100%`;
     }
     let dropzone = new Dropzone(this.dropzoneContainer.nativeElement, {
       url: "/api/file",
