@@ -31,16 +31,9 @@ export class DropzoneComponent extends BaseComponent {
       this.width = `100%`;
     }
     let dropzone = new Dropzone(this.dropzoneContainer.nativeElement, {
-      url: "/api/skill/uploadresource",
-      paramName: "dzfile",
+      url: "/api/file",
       init: function () {
         self.dropzoneInitializer(this);
-      },
-      sending: function(file, xhr, formData) {
-        xhr.setRequestHeader('Authorization', JSON.parse(localStorage.getItem('currentUser')).token);
-        formData.append("taskId", "EXP16.WD.03.01.03.T1");
-        formData.append("stepIndex", "1");
-        formData.append("modelref", self.compConfig.val);
       }
     });
 
