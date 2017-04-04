@@ -94,7 +94,7 @@ class FileStoreController {
         var folderPathArr = srcPath.split("/");
 
         var folderName = folderPathArr[folderPathArr.length-1];
-         var relativeXmlPath = this.getSimsXmlTaskFolderPath(taskId, stepIndex);
+        var relativeXmlPath = this.getSimsXmlTaskFolderPath(taskId, stepIndex);
         var destPath = this.getFileStoreStepFolderPath(taskId, stepIndex) + folderName;
 
         srcPath  = config.fileStore.resourceFolder + srcPath;
