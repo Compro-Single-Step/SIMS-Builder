@@ -9,7 +9,7 @@ module.exports = function (req, res, next) {
 var archive = archiver.create('zip', {});
 var taskId = req.query.taskId || "GO16.XL.03.3A.02.T1";
 var serverRootPath = path.normalize(__dirname + '/../..');
-var dirToCompress = config.fileStore.xmlFolder;
+var dirToCompress = config.fileStore.xmlFolder + taskId;
 
 archive.on('error', function (err) {
     throw err;
