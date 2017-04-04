@@ -1,5 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { BaseComponent } from '../base.component';
+import { LabelTypes } from '../enums';
 import { itemSchema } from '../UIConfig.model';
 
 declare var Dropzone: any;
@@ -26,13 +27,15 @@ export class DropzoneComponent extends BaseComponent {
   UpdateView() {
     var self = this;
     this.labelConfig.rendererProperties.text = this.compConfig.label;
-    this.labelConfig.rendererProperties.type = 'ElementHeading';
-    if (this.compConfig.dim !== undefined) {
+    this.labelConfig.rendererProperties.type = LabelTypes.ELEMENT_HEADING;
+
+    if(this.compConfig.desc != undefined){
+      this.updateDescription();
+    }
+
+    if (this.compConfig.dim != undefined) {
       this.height = `${this.compConfig.dim['height']}`;
       this.width = `${this.compConfig.dim['width']}`;
-    } else {
-      this.height = `200px`;
-      this.width = `100%`;
     }
     let dropzone = new Dropzone(this.dropzoneContainer.nativeElement, {
       url: "/api/file",

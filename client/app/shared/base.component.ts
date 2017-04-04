@@ -2,14 +2,14 @@ import { itemSchema } from './UIConfig.model';
 import { Input, OnInit } from '@angular/core';
 import { BuilderModelObj } from '../step-builder/shared/builder-model.service';
 import { skillManager } from '../step-builder/shared/skill-manager.service';
-
+import { LabelTypes } from './enums';
 export class BaseComponent implements OnInit{
     @Input() compConfig: itemSchema;
     @Input() modelRef = {};
     builderModelSrvc;
     itemDataModel;
     dynamicMode: boolean = false;
-
+    descriptionConfig: itemSchema = new itemSchema();
     constructor() {
         this.compConfig = new itemSchema();
         this.builderModelSrvc = BuilderModelObj;
@@ -47,5 +47,10 @@ export class BaseComponent implements OnInit{
             accessedObject = accessedObject[propertyAccessorPathArray[nestingLevel]];
         }
         return accessedObject;
+    }
+
+    updateDescription() {
+        this.descriptionConfig.rendererProperties.text = this.compConfig.desc['basic'];
+        this.descriptionConfig.rendererProperties.type = LabelTypes.DESCRIPTION;
     }
 }
