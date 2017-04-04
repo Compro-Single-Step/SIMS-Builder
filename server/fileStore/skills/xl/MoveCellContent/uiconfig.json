@@ -60,7 +60,7 @@
                 "placeHolder": "Drop JSON file here to upload"
               },
               "dependants": [{
-                  "modelReference": "views.1.sheets",
+                  "modelReference": "views.1.sheets.value",
                   "rule": "getSheetNameAndSheetCountFromInitDocJSON"
                 },
                 {
@@ -233,7 +233,7 @@
             "itemType": "leaf",
             "mandatory": true,
             "dependants": [{
-              "modelReference": "views.3.sheets[0].name",
+              "modelReference": "views.3.sheets.value.0",
               "rule": "updateSheetNameUsingDropdown"
             }],
             "val": "views[2].sheetInAction"
