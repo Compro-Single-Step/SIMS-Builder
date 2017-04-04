@@ -20,14 +20,12 @@ export class StepBuilderComponent implements OnInit {
   private selectedView: number;
   taskID: string;
   stepIndex: string ;
-  itemDataModel;
   builderModelSrvc;
   constructor(el: ElementRef, private route: ActivatedRoute, private bds: BuilderDataService, private router: Router) {
     this.$el = jQuery(el.nativeElement);
     this.uiConfig = new UIConfig();
     this.selectedView = 1;
     this.builderModelSrvc = BuilderModelObj;
-    this.itemDataModel = this.builderModelSrvc.getModel();
   }
 
   ngOnInit() {
@@ -39,15 +37,9 @@ export class StepBuilderComponent implements OnInit {
         storeName   : 'model', // Should be alphanumeric, with underscores.
         description : 'Model of the Current Task'
     });
-    let self = this;
-    localForage.setItem('model', this.itemDataModel).then(function () {
-      return localForage.getItem('model');
-    }).catch(function (err) {
-      console.warn("Error while saving to Local Storage");
-    });
     jQuery(window).on('sn:resize', this.initScroll.bind(this));
     this.initScroll();
-    IntervalObservable.create(5000).subscribe(() => self.checkForModelChange());    
+    IntervalObservable.create(5000).subscribe(() => this.checkForModelChange());    
     this.route.params.subscribe((params: Params) => {
       this.taskID = params["id"];
       this.stepIndex =params["stepIndex"];
@@ -55,8 +47,14 @@ export class StepBuilderComponent implements OnInit {
         id: this.taskID,
         stepIndex: params["stepIndex"]
       };
-      this.bds.getuiconfig(paramObj).subscribe((data) => {
-        this.uiConfig = data;
+      this.bds.getskilldata(paramObj).subscribe((data) => {
+				this.builderModelSrvc.setModel(data["stepuistate"] || data["skillmodel"].model);
+				localForage.setItem('model', this.builderModelSrvc.getModel()).then(function () {
+					return localForage.getItem('model');
+				}).catch(function (err) {
+					console.warn("Error while saving to Local Storage");
+				});
+        this.uiConfig = data["uiconfig"];
       });
       let skillfilesbundle = `var skill = {}; skill.movecellcontent = {}; skill.movecellcontent.webpackBundleMap = {"moveCellContent":0}; var movecellcontentClass = (function(modules) {
                                                 // The module cache
@@ -229,21 +227,23 @@ module.exports = (function () {
 
   checkForModelChange(){
     let self = this;
+		let itemDataModel = this.builderModelSrvc.getModel();
     localForage.getItem('model').then(function(value){
-      if(JSON.stringify(value) === JSON.stringify(self.itemDataModel)){
+      if(JSON.stringify(value) === JSON.stringify(itemDataModel)){
         console.log("same Model: Do Nothing");
       } else {
         console.log("Different Model: Update LocalStorage and Send to Sever");
-        localForage.setItem('model', self.itemDataModel);
-        self.bds.saveSkillData({stepUIState: self.itemDataModel }, self.taskID, self.stepIndex).subscribe(function(data){
-          if(data["status"] === "success") {
-            //TODO: Notify user of the draft save
-            console.log("Model Data Sent to Server");
-          } else if(data["status"] === "error") {
-            //TODO: Try saving on server again
-            console.log("Couldn't Save Model Data on Server.");
-          }
-        });
+        localForage.setItem('model', itemDataModel).then(function(){
+					self.bds.saveSkillData({stepUIState: itemDataModel }, self.taskID, self.stepIndex).subscribe(function(data){
+						if(data["status"] === "success") {
+							//TODO: Notify user of the draft save
+							console.log("Model Data Sent to Server");
+						} else if(data["status"] === "error") {
+							//TODO: Try saving on server again
+							console.log("Couldn't Save Model Data on Server.");
+						}
+					});
+				});
       }
     });
   }
