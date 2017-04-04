@@ -167,10 +167,8 @@ class FileStoreController {
         this.saveFileToFileStore(folderPath, fileName, OutputXML, callback);
     }
 
-    saveResourceFile(templateId, taskId, stepIndex, fileName) {
-        let folderPath = this.getUploadedResourceFolderPath(taskId, stepIndex);
-
-        return this.uploadFileHandler(folderPath, fileName);
+    saveResourceFile() {
+        return this.uploadFileHandler();
     }
 
     getFileFromFileStore(filepath, folder, callback) {
@@ -181,21 +179,49 @@ class FileStoreController {
         });
     }
 
-    uploadFileHandler(folderPath, fileName) {
+    uploadFileHandler() {
+        let self = this;
         let storage = multer.diskStorage({
             destination: function (req, file, callback) {
-                let destinationFolder = folderPath;
-
-                this.createFolder(destinationFolder, (error) => {
+                let taskId = req.body.taskId;
+                let stepIndex = req.body.stepIndex;
+                let destinationFolder = self.getUploadedResourceFolderPath(taskId, stepIndex);
+                req.body.folder = destinationFolder;
+                self.createFolderEnhanced(destinationFolder)
+                .then((success)=> {
                     callback(null, destinationFolder);
+                }, (error)=> {
+                    console.log("Folder not created.");
                 });
             },
             filename: function (req, file, callback) {
-                callback(null, fileName || file.originalname);
+                let fileName = req.body.fileName;
+                
+                if(fileName) {
+                    fileName = fileName + "." + file.originalname;
+                } else {
+                    fileName = file.originalname;
+                }
+                
+                req.body.filePath = req.body.folder + fileName;
+                callback(null, fileName);
             }
         });
         let upload = multer({ storage: storage });
-        return upload.fields([{ name: 'Browse', maxCount: 1 }]);
+        return upload.fields([{ name: 'dzfile', maxCount: 1 }]);
+    }
+
+    createFolderEnhanced(folderPath) {
+        return new Promise((resolve, reject)=> {
+            mkdirp(folderPath, (error) => {
+                if(error) {
+                    reject(error);
+                }
+                else {
+                    resolve(true);
+                }
+            });
+        });
     }
 
     createFolder(folderPath, callback) {
