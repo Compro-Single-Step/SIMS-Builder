@@ -2,8 +2,9 @@ import { Component, OnInit, ElementRef } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { BuilderDataService } from '../shared/builder-data.service';
 import { UIConfig } from '../../shared/UIConfig.model';
-import { PreviewService } from '../../_services/preview.service';
 import { skillManager } from '../shared/skill-manager.service';
+import { PreviewService } from '../../_services/preview.service';
+
 declare var jQuery;
 @Component({
   selector: 'app-step-builder',
