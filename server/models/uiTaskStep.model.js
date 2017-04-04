@@ -7,29 +7,45 @@ const uiTaskStepSchema = new Schema({
 }, {collection: 'ui_task_step'});
 
 uiTaskStepSchema.statics = {
-    getStepUI: function(taskId, stepIndex, callback) {
+    getStepUI: function(taskId, stepIndex) {
+        return new Promise((resolve, reject)=> {
+            let condition = {"task_id": taskId};
+            let projection = {"_id": false, "task_data": true};
 
-        let condition = {"task_id": taskId};
-        let jsonKey = "task_data.step_" + stepIndex;
-        let projection = {"_id": false};
-        projection[jsonKey] = true;
-
-        this.find(condition, projection, (error, data) => {
-            let stepId = "step_" + stepIndex;
-            let stepUIState = data[0].task_data[stepId];
-            callback(error, stepUIState);
+            this.find(condition, projection, (error, data) => {
+                if(!error) {
+                    if(data.length > 0) {
+                        let stepId = "step_" + stepIndex;
+                        let stepUIState = data[0].task_data[stepId];
+                        resolve(stepUIState);
+                    }
+                    else {
+                        reject({error: "Document to corresponding task " + taskId + " doesn't exist in collection"});
+                    }
+                }
+                else {
+                    reject(error);
+                }
+            });
         });
     },
     updateStepUIData: function(taskId, stepIndex, stepUIData, callback) {
+        return new Promise((resolve, reject)=> {
+            
+            let condition = {"task_id": taskId};
+            let jsonKey = "task_data.step_" + stepIndex;
+            let updateData = { $set: {}};
+            updateData.$set[jsonKey] = stepUIData;
+            let options = { upsert: true };
 
-        let condition = {"task_id": taskId};
-        let jsonKey = "task_data.step_" + stepIndex;
-        let updateData = { $set: {}};
-        updateData.$set[jsonKey] = stepUIData;
-        let options = { upsert: true };
-
-        this.collection.update(updateCriteria, updateData, options, (error, success) => {
-            callback(error, success);
+            this.collection.update(condition, updateData, options, (error, success) => {
+                if(error) {
+                    reject(eroor);
+                }
+                else {
+                    resolve(success);
+                }
+            });
         });
     }
 };

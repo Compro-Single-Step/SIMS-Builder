@@ -8,24 +8,24 @@ const skillFactory  = require("../modules/skill/skillFactory")
 
 class SkillController {
 
-    getStepUIConfig(templateId, taskId, stepIndex, callback) {
-        uiHandler.getStepUIConfig(templateId, taskId, stepIndex, callback);
+    getStepUIConfig(templateId, taskId, stepIndex) {
+        return uiHandler.getStepUIConfig(templateId, taskId, stepIndex);
     }
-    //will rename this function after meeting feedback.
-    getUIConfig(templateId, callback) {
-        dbFilestoreMgr.getUIConfig(templateId, callback);
-    }
-
-    getSkillModel(templateId, callback) {
-        dbFilestoreMgr.getSkillModel(templateId, callback);
+    
+    getUIConfig(templateId) {
+        return dbFilestoreMgr.getUIConfig(templateId);
     }
 
-    getStepUIState(taskId, stepIndex, callback) {
-        dbFilestoreMgr.getStepUIState(taskId, stepIndex, callback);
+    getSkillModel(templateId) {
+        return dbFilestoreMgr.getSkillModel(templateId);
     }
 
-    saveStepUIState(taskId, stepIndex, stepUIData, callback) {
-        dbFilestoreMgr.saveStepUIState(taskId, stepIndex, stepUIData, callback);
+    getStepUIState(taskId, stepIndex) {
+        return dbFilestoreMgr.getStepUIState(taskId, stepIndex);
+    }
+
+    saveStepUIState(taskId, stepIndex, stepUIData) {
+        return dbFilestoreMgr.saveStepUIState(taskId, stepIndex, stepUIData);
     }
 
     generateXML(templateId, taskId, stepIdx, callback) {
@@ -33,8 +33,8 @@ class SkillController {
         xmlGenerationHandler.generateStepXML(templateId, taskId, stepIdx, skill, callback);
     }
 
-    saveResourceFile(templateId, taskId, stepIndex) {
-        return dbFilestoreMgr.saveResourceFile(templateId, taskId, stepIndex);
+    saveResourceFile() {
+        return dbFilestoreMgr.saveResourceFile();
     }
 };
 

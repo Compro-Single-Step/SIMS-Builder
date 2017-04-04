@@ -19,13 +19,24 @@ const skillConfigTypes = {
 }
 
 skillConfigRepoSchema.statics = {
-    getSkillConfigPath: function(templateId, configType, callback) {
+    getSkillConfigPath: function(templateId, configType) {    
+        return new Promise((resolve, reject)=> {
+            let projection = {"_id": false};
+            projection[configType] = true;
 
-        let projection = {"_id": false};
-        projection[configType] = true;
-
-        this.find({"template_id": templateId}, projection, (error, data) => {
-            callback(data[0][configType], error);
+            this.find({"template_id": templateId}, projection, (error, data) => {
+                if(!error) {
+                    if(data.length > 0) {
+                        resolve(data[0][configType]);
+                    }
+                    else {
+                        reject("No document exist for template id " + templateId);
+                    }
+                }
+                else {
+                    reject(error);
+                }
+            });
         });
     }
 };
