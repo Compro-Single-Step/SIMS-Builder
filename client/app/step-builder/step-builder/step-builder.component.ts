@@ -204,7 +204,7 @@ module.exports = (function () {
     };
 
     moveCellContent.prototype.updateSheetNameUsingDropdown = function (selectedSheetName, dependentSheetNameInModel) {
-        dependentSheetNameInModel = selectedSheetName;
+        dependentSheetNameInModel.name = selectedSheetName;
     };
     return moveCellContent;
 }());

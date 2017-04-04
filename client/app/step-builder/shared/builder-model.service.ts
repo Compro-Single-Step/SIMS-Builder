@@ -3,30 +3,32 @@ class BuilderModel {
         "views": {
             "1": {
                 "documentTitle": {
-                    "value": "ashish"
+                    "value": ""
                 },
                 "documentData": {
                     "name": "",
                     "path": ""
                 },
-                "sheets": [
-                    {
-                        "name": "dummy sheet",
-                        "path": "",
-                        "gridImage": {
-                            "name": "img.png"
-                        },
-                        "rowImage": {
-                            "name": ""
-                        },
-                        "columnImage": {
-                            "name": ""
-                        },
-                        "cellImage": {
-                            "name": ""
+                "sheets": {
+                    "value": [
+                        {
+                            "name": "dummy sheet",
+                            "path": "",
+                            "gridImage": {
+                                "name": "img.png"
+                            },
+                            "rowImage": {
+                                "name": ""
+                            },
+                            "columnImage": {
+                                "name": ""
+                            },
+                            "cellImage": {
+                                "name": ""
+                            }
                         }
-                    }
-                ],
+                    ]
+                },
                 "taskbarPreviewImage": {
                     "name": "",
                     "path": ""
@@ -42,23 +44,24 @@ class BuilderModel {
                     "name": "",
                     "path": ""
                 },
-                "sheets":
-                [{
-                    "name": "",
-                    "path": "",
-                    "gridImage": {
-                        "name": ""
-                    },
-                    "rowImage": {
-                        "name": ""
-                    },
-                    "columnImage": {
-                        "name": ""
-                    },
-                    "cellImage": {
-                        "name": ""
-                    }
-                }]
+                "sheets": {
+                    "value": [{
+                        "name": "dummy sheet",
+                        "path": "",
+                        "gridImage": {
+                            "name": ""
+                        },
+                        "rowImage": {
+                            "name": ""
+                        },
+                        "columnImage": {
+                            "name": ""
+                        },
+                        "cellImage": {
+                            "name": ""
+                        }
+                    }]
+                }
             }
         }
     }

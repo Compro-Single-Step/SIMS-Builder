@@ -10,6 +10,7 @@ import { itemSchema } from '../UIConfig.model';
 export class SelectComponent extends BaseComponent {
   labelConfig: itemSchema = new itemSchema();
   itemList: Object;
+  selectedItem;
 
   ngOnInit() {
     super.ngOnInit();

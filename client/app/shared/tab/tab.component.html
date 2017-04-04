@@ -10,7 +10,7 @@
     </tab>
   </template>
   <template [ngIf]="dynamicMode">
-    <tab *ngFor="let tabModel of tabs" customClass="customClass">
+    <tab *ngFor="let tabModel of tabs.value" customClass="customClass">
       <template tabHeading>{{tabModel.name}}</template>
       <app-tab-page [compConfig]="compConfig.items[0]" [modelRef]="tabModel"></app-tab-page>
     </tab>
