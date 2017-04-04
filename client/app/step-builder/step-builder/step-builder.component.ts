@@ -1,9 +1,10 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { BuilderDataService } from '../shared/builder-data.service';
 import { UIConfig } from '../../shared/UIConfig.model';
-import { Router } from '@angular/router';
 import { skillManager } from '../shared/skill-manager.service';
+import { PreviewService } from '../../_services/preview.service'; 
+
 declare var jQuery;
 @Component({
   selector: 'app-step-builder',
@@ -15,8 +16,9 @@ export class StepBuilderComponent implements OnInit {
   $el: any;
   private selectedView: number;
   taskID: string;
+  stepIndex: string;
 
-  constructor(el: ElementRef, private route: ActivatedRoute, private bds: BuilderDataService, private router: Router) {
+  constructor(el: ElementRef, private route: ActivatedRoute, private router: Router, private bds: BuilderDataService, private previewService:PreviewService) {
     this.$el = jQuery(el.nativeElement);
     this.uiConfig = new UIConfig();
     this.selectedView = 1;
@@ -27,9 +29,10 @@ export class StepBuilderComponent implements OnInit {
     this.initScroll();
     this.route.params.subscribe((params: Params) => {
       this.taskID = params["id"];
+      this.stepIndex = params["stepIndex"];
       let paramObj = {
         id: this.taskID,
-        stepIndex: params["stepIndex"]
+        stepIndex: this.stepIndex
       };
       this.bds.getuiconfig(paramObj).subscribe((data) => {
         this.uiConfig = data;
@@ -211,4 +214,7 @@ module.exports = (function () {
   onClose() {
     this.router.navigate(["/task",this.taskID]);
   }
+  lauchPreviewTask(){
+		this.previewService.launchStepPreviewWindow(this.taskID,this.stepIndex,"movecellcontent");
+	}
 }
