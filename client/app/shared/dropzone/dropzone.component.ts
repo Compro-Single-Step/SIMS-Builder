@@ -34,8 +34,8 @@ export class DropzoneComponent extends BaseComponent {
     }
 
     if (this.compConfig.dim != undefined) {
-      this.height = `${this.compConfig.dim.split(',')[0]}`;
-      this.width = `${this.compConfig.dim.split(',')[1]}`;
+      this.height = `${this.compConfig.dim['height']}`;
+      this.width = `${this.compConfig.dim['width']}`;
     }
     let dropzone = new Dropzone(this.dropzoneContainer.nativeElement, {
       url: "/api/file",

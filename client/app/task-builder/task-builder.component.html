@@ -1,0 +1,41 @@
+<div id="TaskMetadata">
+   <div class="row">
+      <div class="col-md-6">
+         <h3 class="page-title">
+            <span><strong>TASK ID:</strong> &nbsp;</span>
+            <span>
+            <img [src]="AppImage"/>
+            </span>
+            <span class="fw-semi-bold">
+            {{TaskData.id}}
+            </span>
+         </h3>
+      </div>
+      <div class="col-md-6">
+        <h3 class="taskbadges pull-right">
+          <span class="badge badge-pill badge-success align-middle">Task Commit Status : {{TaskData.testStatus}}</span>
+          <span class="badge badge-pill badge-info align-middle">Task Tested : {{TaskData.commitStatus}}</span>
+        </h3>
+      </div>
+   </div>
+</div>
+<div class="row">
+   <div class="col-md-12">
+      <taskbuilder-taskstep *ngFor="let step of StepData" [stepData]="step"></taskbuilder-taskstep>
+   </div>
+</div>
+<div class="row" >
+   <div class="col-md-12">
+			<button class="btn btn-inverse mr-1">
+          Test Task
+        </button>
+      <div class="pull-right">
+				<button (click) = "lauchPreviewTask()"class="btn btn-inverse mr-1">
+					Preview Task
+				</button>
+				<button class="btn btn-inverse width-100">
+					Generate
+				</button>
+			</div>
+   </div>
+</div>

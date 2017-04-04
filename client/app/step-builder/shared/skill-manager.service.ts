@@ -1,12 +1,16 @@
+declare var skill;
 class SkillManager {
   skillTranslator: Object;
   constructor() { 
-    this.skillTranslator = this.getSkillTranslator();
+    this.skillTranslator = {};
   }
 
-  getSkillTranslator(){
-        this.skillTranslator = require("../../../../server/libs/skills/xl/moveCellContent/moveCellContent.js");
-        return this.skillTranslator;
+  getSkillTranslator(skillfilesbundle, skillName) {
+    var skillTranslatorScript = document.createElement("script");
+    skillTranslatorScript.innerHTML = skillfilesbundle;
+    document.getElementsByTagName("head")[0].appendChild(skillTranslatorScript);
+    skillManager.skillTranslator = skill[skillName].exports;
+
   }
 }
 

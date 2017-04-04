@@ -1,48 +1,52 @@
 const dbFilestoreMgr = require('./dbFilestoreMgr');
 const translator = require("./ioTranslator.js");
-const xmlGenerator = require("./xmlGenerator/Step.js");
+const XmlGenerator = require("./xmlGenerator/stepXMLGenerator");
 
-
-function identifySkill(templateId){
-    return {
-        "movecellcontent":"/xl/moveCellContent/moveCellContent"
-    }[templateId];
+var mapTranslationParams = function(IOMap, stepUIState, skillRef, taskId, stepIndex, dbFilestoreMgr){
+     this.IOMap = IOMap;
+     this.stepUIState = stepUIState;
+     this.skillRef = skillRef;
+     this.taskId = taskId;
+     this.stepIndex = stepIndex;
+     this.dbFilestoreMgr = dbFilestoreMgr;
 }
 
-module.exports.generateStepXML = function(taskId, stepIndex, templateId, callback){
-
-    dbFilestoreMgr.getStepUIState(taskId, stepIndex, (stepUIState, error) => {
+module.exports.generateStepXML = function(templateId, taskId, stepIndex, skillRef, callback){
+  
+    dbFilestoreMgr.getStepUIState(taskId, stepIndex, (error, stepUIState) => {
         if(!error){
             dbFilestoreMgr.getIOMap(templateId, (error, IOMapJson) => {
-                if(!error){
+                if(!error) {
 
                     //IO Translator
                     let IOMap = JSON.parse(IOMapJson);
+                    let mapTranslationParam = new mapTranslationParams(IOMap, stepUIState, skillRef, taskId, stepIndex, dbFilestoreMgr)
+                    // let attrValueMap = translator.getAttrValueMap(IOMap, stepUIState, skillRef, taskId, stepIndex,dbFilestoreMgr);
+                    translator.getAttrValueMap(mapTranslationParam, function(error,IOmap){
+                        //XML generation
+                        
+                        dbFilestoreMgr.getSkillXML(templateId, (error, skillTemplate) => {
+                            if(!error) {
+                                let xmlGenerator = new XmlGenerator();
+                                let OutputXML = xmlGenerator.generateXml(skillTemplate, IOmap);
 
-                    var identifiedSkill = identifySkill(templateId);
-                    var skillRef = require("../../libs/skills" + identifiedSkill);
-            
-                    stepUIState = stepUIState[0]._doc.task_data['step_' + stepIndex];
-                    attrValueMap = translator.translateMap(IOMap, stepUIState, skillRef);
-
-                    //XML GENERATION
-                    dbFilestoreMgr.getSkillXML(templateId, (error, skillTemplate) => {
-                        if(!error){
-                            let newStep = new xmlGenerator(skillTemplate, attrValueMap);
-                            let OutputXML = newStep.stepGenerator();
-                            callback(error, OutputXML);
-                        }
-                        else{
-                            callback(error, skillTemplate);
-                        }
+                                //Saving Step XML in File Store
+                                dbFilestoreMgr.saveStepXML(taskId, stepIndex, OutputXML, callback);
+                                
+                            }
+                            else{
+                                callback(error, skillTemplate);
+                            }
+                        });
                     });
+
                 }
-                else{
+                else {
                     callback(error, IOMapJson);
                 }
             });
         }
-        else{
+        else {
             callback(error, stepUIState);
         }
     });

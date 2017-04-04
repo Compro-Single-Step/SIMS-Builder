@@ -35,7 +35,7 @@ export class BaseComponent implements OnInit{
         for (let i = 0; i < dependants.length; i++) {
             let dependantModelReference = dependants[i]['modelReference'];
             let dependantRule = dependants[i]['rule'];
-            let dependentObjectInModel = this.getNestedObject(this.itemDataModel, dependantModelReference);
+            let dependentObjectInModel = this.builderModelSrvc.getModelRef(dependantModelReference);
             skillManager.skillTranslator[dependantRule](componentInput, dependentObjectInModel);
         }
     }

@@ -5,7 +5,6 @@ const bodyParser = require('body-parser');
 const db = require('./config/db');
 const config = require('./config/config');
 
-
 // Get our API routes
 const apiRouter = require('./routes');
 
@@ -31,7 +30,7 @@ app.get('*', (req, res) => {
 /**
  * Get port from environment and store in Express.
  */
-const port = config.port;
+const port = process.env.PORT || config.port;
 app.set('port', port);
 
 /**
