@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AlertModule, TooltipModule } from 'ng2-bootstrap';
-import { ButtonsModule, DropdownModule, PaginationModule  } from 'ng2-bootstrap';
+import { ButtonsModule, BsDropdownModule, PaginationModule  } from 'ng2-bootstrap';
 import { DataTableModule } from 'angular2-datatable';
 import { Ng2TableModule } from 'ng2-table';
 import { ModalModule } from 'ng2-bootstrap';
@@ -44,7 +44,7 @@ import { UserDetailsFormComponent } from './user-details-form/user-details-form.
     AlertModule.forRoot(),
     TooltipModule.forRoot(),
     ButtonsModule.forRoot(),
-    DropdownModule.forRoot(),
+    BsDropdownModule.forRoot(),
     PaginationModule.forRoot(),
    // WidgetModule,
    // UtilsModule,
