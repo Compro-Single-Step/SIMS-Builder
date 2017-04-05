@@ -22,7 +22,7 @@ export class StepBuilderComponent implements OnInit {
     taskID: string;
     stepIndex: string;
     builderModelSrvc;
-    constructor(el: ElementRef, private route: ActivatedRoute, private bds: BuilderDataService, private router: Router) {
+    constructor(el: ElementRef, private route: ActivatedRoute, private router: Router, private bds: BuilderDataService, private previewService:PreviewService) {
         this.$el = jQuery(el.nativeElement);
         this.uiConfig = new UIConfig();
         this.selectedView = 1;
