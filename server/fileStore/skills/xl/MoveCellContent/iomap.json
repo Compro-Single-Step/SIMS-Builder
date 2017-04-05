@@ -26,7 +26,9 @@
               "IMAGE_JSON": {
                 "function-name": "createImageJson",
                 "params": {
-                  "sheets":"views['1'].sheets"
+                  "sheets":"views['1'].sheets",
+                  "initDocJsonPath":"views['1'].documentData.path",
+                  "sheetAction":"views['2'].sheetInAction"
                 }
               }
             }
@@ -46,7 +48,8 @@
                 "params": {
                   "sheetAction":"views['2'].sheetInAction",
                   "srcRange":"views['2'].sourceRange",
-                  "destRange":"views['2'].destinationRange"
+                  "destRange":"views['2'].destinationRange",
+                  "initDocJsonPath":"views['1'].documentData.path"
                 }                
               }
             }
@@ -80,14 +83,17 @@
               "IMAGE_JSON": {
                 "function-name": "createImageJson",
                 "params": {
-                  "sheets":"views['3'].sheets"
+                  "sheets":"views['3'].sheets",
+                  "initDocJsonPath":"views['1'].documentData.path",
+                  "sheetAction":"views['2'].sheetInAction"
                 }
               },
               "SHEET_CELLS_DATA": {
                 "function-name": "createSheetCellData",
                 "params": {
                   "sheetAction":"views['2'].sheetInAction",
-                  "wbData":"views['3'].workbookData"
+                  "wbData":"views['3'].workbookData",
+                  "initDocJsonPath":"views['1'].documentData.path"
                 }
               },
               "SELECTED_CELLS": {
@@ -110,7 +116,8 @@
                 "function-name": "createHighlightJson",
                 "params": {
                   "sheetAction":"views['2'].sheetInAction",
-                  "srcRange":"views['2'].sourceRange"
+                  "srcRange":"views['2'].sourceRange",
+                  "initDocJsonPath":"views['1'].documentData.path"
                 }
               }
             }
@@ -127,7 +134,8 @@
                 "function-name": "createHighlightJson",
                 "params": {
                   "sheetAction":"views['2'].sheetInAction",
-                  "srcRange":"views['2'].sourceRange"
+                  "srcRange":"views['2'].sourceRange",
+                  "initDocJsonPath":"views['1'].documentData.path"
                 }
               }
             }
