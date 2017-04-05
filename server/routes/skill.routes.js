@@ -64,7 +64,9 @@ router.post('/stepuistate/:taskId/:stepIndex', (req, res) => {
     let stepUIState = req.body.stepUIState;
     skillController.saveStepUIState(req.params.taskId, req.params.stepIndex, stepUIState, (error, data) => {
         if(!error) {
-            res.send(data);
+            res.send({
+                status: "success"
+            });
         }
         else {
             res.send(error);
@@ -79,7 +81,9 @@ router.get('/xmlgeneration/:templateId/:taskid/:stepidx', (req, res) => {
     
     skillController.generateXML(templateId, taskId, stepIdx, (error) => {
         if (!error) {
-            res.send("success");
+            res.send({
+                status: "success"
+            });
         } else {
             res.send(error);
         }
