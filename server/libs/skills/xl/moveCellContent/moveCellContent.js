@@ -15,7 +15,7 @@ class moveCellContent extends ExcelBaseSkill {
       if (!error) {
         var preloadResArr = [];
         preloadResArr.push({ "path": "" + xmlPath, "type": "" + fileType })
-        callback(null, paramValueObj["docData"]["path"]);
+        callback(null, paramValueObj["docData"]["path"], preloadResArr);
         //add this new path to the preloadResources Array
       }
       else {

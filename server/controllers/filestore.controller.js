@@ -31,7 +31,8 @@ class FileStoreController {
         return  config.fileStore.xmlFolder + taskId + "/" + stepIdx + "/";
     }
     getSimsXmlTaskFolderPath(taskId, stepIdx){
-        return this.getTaskFolderPath(taskId, stepIdx);
+        return this.getTaskFolderPath(taskId, stepIdx) + stepIdx + "/";
+
     }
 
     copyAssetToTaskFolder(residentPath, taskParams, callback){
