@@ -64,7 +64,9 @@ router.post('/stepuistate/:taskId/:stepIndex', (req, res) => {
     let stepUIState = req.body.stepUIState;
     skillController.saveStepUIState(req.params.taskId, req.params.stepIndex, stepUIState, (error, data) => {
         if(!error) {
-            res.send(data);
+            res.send({
+                status: "success"
+            });
         }
         else {
             res.send(error);
@@ -79,25 +81,31 @@ router.get('/xmlgeneration/:templateId/:taskid/:stepidx', (req, res) => {
     
     skillController.generateXML(templateId, taskId, stepIdx, (error) => {
         if (!error) {
-            res.send("success");
+            res.send({
+                status: "success"
+            });
         } else {
-            res.send(error);
+            res.send({
+                status: "Error",
+                Error: error
+            });
         }
     });
 });
 
-router.post("/uploadresource", (req, res) => {
-    //getting below data to be decided.
-    let templateId = "";
-    let taskId = "EXP16.WD.03.01.03.T1";
-    let stepIndex = 1;
-    let upload = skillController.saveResourceFile(templateId, taskId, stepIndex);
+router.post("/resource", (req, res) => {
+
+    let upload = skillController.saveResourceFile();
     upload(req, res, (error) => {
         if(error) {
             res.send("Error uploading file.");
         }
         else {
-            res.end("File is uploaded");
+            let filePath = req.body.filePath;
+            
+            res.send({
+                filePath: filePath.replace(/\\/g,"/")
+            });
         }
     });
 });

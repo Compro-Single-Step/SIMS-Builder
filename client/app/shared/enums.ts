@@ -2,7 +2,7 @@ export const LabelTypes =  {
   ELEMENT_HEADING: "ElementHeading",
   PANEL_HEADING: "PanelHeading",
   DESCRIPTION: "Description"
-}
+};
 export const Map={
     'USER_ADDED' : "User Added",
     "DATABASE_ERROR" : "Database Error",
@@ -11,3 +11,5 @@ export const Map={
     "USERDATA_UPDATED" : "User Data Updated",
     "NO_CHANGES" : "No Changes"
 };
+
+}

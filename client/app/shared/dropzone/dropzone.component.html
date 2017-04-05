@@ -1,7 +1,8 @@
 <div class="heading">
 	<app-label [compConfig]="labelConfig" *ngIf="compConfig.label"></app-label>
-	<span class="glyphicon glyphicon-info-sign" *ngIf="compConfig.label"></span>
+	<span class="glyphicon glyphicon-info-sign info-icon" *ngIf="compConfig.label"></span>
 </div>
-<div #dropzone class="dropzone" [ngStyle]="{'height':height,'width':width}">
+<div #dropzone class="dropzone input-max-width" [ngStyle]="{'height':height,'width':width}">
   <p class="dz-message">{{compConfig.rendererProperties.placeHolder}}</p>
 </div>
+<app-label [compConfig]="descriptionConfig"></app-label>

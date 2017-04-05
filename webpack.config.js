@@ -202,7 +202,6 @@ module.exports = {
   },
   "plugins": [
     new NoEmitOnErrorsPlugin(),
-    new CopyWebpackPlugin([{ from: 'server', to: '../server'}]),
     new CopyWebpackPlugin([{
         from: 'client/assets',
         to: 'assets'
@@ -296,7 +295,8 @@ module.exports = {
       $: 'jquery',
       jquery: 'jquery',
       'window.jQuery': 'jquery',
-      Dropzone: 'dropzone'
+      Dropzone: 'dropzone',
+      localForage: "localforage"
     })
   ],
   "node": {

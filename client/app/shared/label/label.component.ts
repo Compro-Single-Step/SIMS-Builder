@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { BaseComponent } from '../base.component';
+import { LabelTypes } from '../enums';
 
 @Component({
   selector: 'app-label',
@@ -8,7 +9,11 @@ import { BaseComponent } from '../base.component';
 })
 export class LabelComponent extends BaseComponent {
   text: string;
-  type: string = 'ElementHeading';
+  type: string;
+  constructor() {
+    super();
+    this.type = LabelTypes.ELEMENT_HEADING;
+  }
 
   ngOnInit() {
     super.ngOnInit();

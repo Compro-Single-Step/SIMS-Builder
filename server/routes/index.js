@@ -5,13 +5,18 @@ var taskBuilderData = require('./taskBuilderData');
 var skillRoutes = require('./skill.routes');
 var verifyToken = require('./login/verifyToken');
 var userData = require('./userData');
-module.exports = function () {
-	router.use('/login', loginRouter());
+var taskPreviewRouter = require('./taskpreview/taskPreview');
 
+
+module.exports = function () {
+	router.use('/login', loginRouter());		
+	
 	router.use('*', verifyToken);
+
+	router.use('/taskPreview', taskPreviewRouter());
 	router.use('/skill', skillRoutes);
   router.use('/fetchTaskData', taskBuilderData);	
 	router.use('/user', userData);	
 
-	return router;
+  return router;
 };
