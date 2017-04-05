@@ -6,16 +6,22 @@ class UIHandler {
         return new Promise((resolve, reject)=> {
             Promise.all([
                 dbFilestoreManager.getUIConfig(templateId),
-                dbFilestoreManager.getSkillModel(templateId),
-                dbFilestoreManager.getStepUIState(taskId, stepIndex)
+                dbFilestoreManager.getSkillModel(templateId)
             ])
-            .then(([uiConfig, model, uiState])=> {
+            .then(([uiConfig, model])=> {
                 let data = {
                     "uiconfig": JSON.parse(uiConfig),
-                    "skillmodel": JSON.parse(model),
-                    "stepuistate": uiState
+                    "skillmodel": JSON.parse(model)
                 }
-                resolve(data);
+
+                dbFilestoreManager.getStepUIState(taskId, stepIndex)
+                .then((uiState)=> {
+                    data.stepuistate = uiState || null;
+                    resolve(data);
+                }, (error)=> {
+                    data.stepuistate = null;
+                    resolve(data);
+                });
             })
             .catch((error)=> {
                 reject(error);
