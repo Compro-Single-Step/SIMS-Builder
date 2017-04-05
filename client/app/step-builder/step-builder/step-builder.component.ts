@@ -6,6 +6,7 @@ import { skillManager } from '../shared/skill-manager.service';
 import { BuilderModelObj } from '../shared/builder-model.service';
 import { PreviewService } from '../../_services/preview.service';
 import { IntervalObservable } from 'rxjs/observable/IntervalObservable';
+import { TaskDataService } from '../../_services/taskData.service';
 
 declare var jQuery;
 declare var localForage;
@@ -22,7 +23,10 @@ export class StepBuilderComponent implements OnInit {
     taskID: string;
     stepIndex: string;
     builderModelSrvc;
-    constructor(el: ElementRef, private route: ActivatedRoute, private router: Router, private bds: BuilderDataService, private previewService: PreviewService) {
+    skillName: string;
+    templateName: string;
+    stepText: string;
+    constructor(el: ElementRef, private route: ActivatedRoute, private router: Router, private bds: BuilderDataService, private previewService: PreviewService, private tds: TaskDataService) {
         this.$el = jQuery(el.nativeElement);
         this.uiConfig = new UIConfig();
         this.selectedView = 1;
@@ -39,6 +43,12 @@ export class StepBuilderComponent implements OnInit {
         jQuery(window).on('sn:resize', this.initScroll.bind(this));
         this.initScroll();
         IntervalObservable.create(5000).subscribe(() => this.checkForModelChange());
+        this.tds.getTaskData(this.taskID).subscribe( taskData => {
+            let stepData = taskData.stepData[parseInt(this.stepIndex) - 1];
+            this.skillName = stepData.SkillName;
+            this.templateName = stepData.TemplateName;
+            this.stepText = stepData.Text;
+        });
         this.route.params.subscribe((params: Params) => {
             this.taskID = params["taskId"];
             this.stepIndex = params["stepIndex"];
