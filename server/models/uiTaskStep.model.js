@@ -28,7 +28,7 @@ uiTaskStepSchema.statics = {
         updateData.$set[jsonKey] = stepUIData;
         let options = { upsert: true };
 
-        this.collection.update(condition, updateData, options, (error, success) => {
+        this.collection.update(updateCriteria, updateData, options, (error, success) => {
             callback(error, success);
         });
     }
