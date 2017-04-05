@@ -1,6 +1,6 @@
 const skillRepo = require('./skillRepo');
 
-class skillFactory{
+class SkillFactory{
 
     _getSkill (templateId){
         if(skillRepo[templateId]){
@@ -52,4 +52,4 @@ class skillFactory{
 
 }
 
-module.exports = new skillFactory();
+module.exports = new SkillFactory();
