@@ -12,4 +12,3 @@ export const Map={
     "NO_CHANGES" : "No Changes"
 };
 
-}
