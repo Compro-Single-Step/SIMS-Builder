@@ -1,7 +1,9 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { BaseComponent } from '../base.component';
+import { ActivatedRoute } from '@angular/router';
 import { LabelTypes } from '../enums';
 import { itemSchema } from '../UIConfig.model';
+import { AuthService } from '../../_services/auth.service';
 
 declare var Dropzone: any;
 Dropzone.autoDiscover = false;
@@ -15,7 +17,7 @@ export class DropzoneComponent extends BaseComponent {
   labelConfig: itemSchema = new itemSchema();
   width: string;
   height: string;
-  constructor(private elementRef: ElementRef) {
+  constructor(private elementRef: ElementRef, private route: ActivatedRoute, private authSrvc: AuthService) {
     super();
   }
 
@@ -29,7 +31,7 @@ export class DropzoneComponent extends BaseComponent {
     this.labelConfig.rendererProperties.text = this.compConfig.label;
     this.labelConfig.rendererProperties.type = LabelTypes.ELEMENT_HEADING;
 
-    if(this.compConfig.desc != undefined){
+    if (this.compConfig.desc != undefined) {
       this.updateDescription();
     }
 
@@ -37,32 +39,52 @@ export class DropzoneComponent extends BaseComponent {
       this.height = `${this.compConfig.dim['height']}`;
       this.width = `${this.compConfig.dim['width']}`;
     }
+    var routeParams = this.route.snapshot.params;
     let dropzone = new Dropzone(this.dropzoneContainer.nativeElement, {
-      url: "/api/file",
+      url: "/api/skill/resource",
+      paramName: "dzfile",
+      acceptedFiles: MIMETYPE[self.compConfig.rendererProperties.dataType],
       init: function () {
         self.dropzoneInitializer(this);
+      },
+      sending: function (file, xhr, formData) {
+        xhr.setRequestHeader('Authorization', self.authSrvc.getCurrentUserToken());
+        formData.append("taskId", routeParams["taskId"]);
+        formData.append("stepIndex", routeParams["stepIndex"]);
+        // Need to discuss the passing of model ref along with the file as the model can be generated dynamicallly in some cases.
+        // formData.append("modelref", self.compConfig.val);
       }
     });
   }
 
   dropzoneInitializer(dropzone) {
-    var self = this;
     var reader = new FileReader();
-    dropzone.on("addedfile", function (file) { //To be Changed from 'addedfile' to 'success' when file starts getting stored on server;
-      //Read File when it is Dropped
-      reader.readAsText(file, 'UTF8');
-      if (self.modelRef) {
-        self.modelRef["name"] = file.name;
-      }
-      else {
-        self.builderModelSrvc.getModelRef(self.compConfig.val).name = file.name;
+    var self = this;
+    var droppedFile;
+
+    dropzone.on("success", function (file, response) {
+      if (file.status === "success") {
+        if (self.modelRef) {
+          self.modelRef["name"] = file.name;
+          self.modelRef["filepath"] = response.filePath;
+        }
+        else {
+          self.builderModelSrvc.getModelRef(self.compConfig.val).name = file.name;
+          self.builderModelSrvc.getModelRef(self.compConfig.val).filepath = response.filepath;
+        }
+        if (MIMETYPE[self.compConfig.rendererProperties.dataType] === ".json") {
+          reader.readAsText(file, 'UTF8');
+          reader.onload = function (e) {
+            //Update Dependencies when contents have been read;
+            droppedFile = JSON.parse(e.target['result']);
+            self.updateDependencies(droppedFile);
+          }
+        }
       }
     });
-    reader.onload = function (e) {
-      //Update Dependencies when contents have been read;
-      var droppedFile = JSON.parse(e.target['result']);
-      self.updateDependencies(droppedFile);
-    }
   }
-
+}
+enum MIMETYPE {
+    JSON = <any>".json",
+    img = <any>"image/*"
 }
