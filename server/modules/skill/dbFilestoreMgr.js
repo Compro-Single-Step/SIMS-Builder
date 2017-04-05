@@ -85,6 +85,10 @@ class DatabaseFileStoreManager {
         });
     }
 
+    getSkillHelperFile(filePath, callback) {
+        return fsc.getFileFromFileStoreEnhanced(filePath);
+    }
+
     saveStepUIState(taskId, stepIndex, stepUIData, callback) {
         dbController.saveStepUIState(taskId, stepIndex, stepUIData, (error, data) => {
             callback(error, data);

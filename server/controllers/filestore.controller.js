@@ -179,6 +179,18 @@ class FileStoreController {
         });
     }
 
+    //To be merged with above function
+    getFileFromFileStoreEnhanced(filepath) {
+        return new Promise( (resolve, reject) => {
+            fs.readFile(filepath, 'utf8', function (err, data) {
+                if(err)
+                    reject(err);
+                else
+                    resolve(data);
+            });
+        })
+    }
+
     uploadFileHandler() {
         let self = this;
         let storage = multer.diskStorage({
