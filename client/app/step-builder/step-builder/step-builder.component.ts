@@ -4,6 +4,7 @@ import { BuilderDataService } from '../shared/builder-data.service';
 import { UIConfig } from '../../shared/UIConfig.model';
 import { skillManager } from '../shared/skill-manager.service';
 import { PreviewService } from '../../_services/preview.service';
+import { TaskDataService } from '../../_services/taskData.service';
 
 declare var jQuery;
 @Component({
@@ -17,8 +18,11 @@ export class StepBuilderComponent implements OnInit {
   private selectedView: number;
   taskID: string;
   stepIndex: string;
+  skillName: string;
+  templateName: string;
+  stepText: string;
 
-  constructor(el: ElementRef, private route: ActivatedRoute, private router: Router, private bds: BuilderDataService, private previewService:PreviewService) {
+  constructor(el: ElementRef, private route: ActivatedRoute, private router: Router, private bds: BuilderDataService, private previewService:PreviewService, private tds: TaskDataService) {
     this.$el = jQuery(el.nativeElement);
     this.uiConfig = new UIConfig();
     this.selectedView = 1;
@@ -34,6 +38,13 @@ export class StepBuilderComponent implements OnInit {
         id: this.taskID,
         stepIndex: this.stepIndex
       };
+      this.tds.getTaskData(this.taskID).subscribe(
+        taskData => {
+            let stepData = taskData.stepData[parseInt(this.stepIndex) - 1];
+            this.skillName = stepData.SkillName;
+            this.templateName = stepData.TemplateName;
+            this.stepText = stepData.Text;
+        });
       this.bds.getuiconfig(paramObj).subscribe((data) => {
         this.uiConfig = data;
       });
