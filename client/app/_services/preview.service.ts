@@ -15,8 +15,8 @@ res;
     previewparams.set('stepNo', stepId);
     this.http.get("/api/skill/xmlgeneration/"+templateId+"/"+taskId+"/"+stepId)
         .subscribe(res =>{
-          this.res = res["_body"];
-          if(this.res == "success"){
+          this.res = res.json();
+          if(this.res.status == "success"){
             this.http.get("/api/taskPreview",{ search: previewparams })
                 .subscribe(
                   res => {
@@ -31,7 +31,11 @@ res;
 
                 });
           }
+          else{
+                      return this.res["Error"]
+                    }
         });
+        
   }
 }
 
