@@ -38,7 +38,7 @@ export class Navbar implements OnInit {
     this.authenticationService.logout();
     this.router.navigate(['/login']);
   }
-  checkUsertype(userRole){
+  isAdminUser(userRole){
     if(userRole == 'admin')
       return true;
     else
@@ -58,7 +58,7 @@ export class Navbar implements OnInit {
     this.userservice.getUser(this.user).subscribe(
                        Data => {
                          this.currentUser = Data;
-                         this.adminUser = this.checkUsertype(this.currentUser.role);
+                         this.adminUser = this.isAdminUser(this.currentUser.role);
                       });
   }
 }

@@ -76,7 +76,7 @@
         <h4 class="modal-title text-xs-center fw-bold mt" id="myModalLabel18">Edit User</h4>
       </div>
       <div class="modal-body">
-        <app-user-details-form [title]="'Edit the information about the user in Sims Builder.'" [user]="userdetails" [mode]="'edit'" (emittedEvent)="emittedEventListener($event)"></app-user-details-form>
+        <app-user-details-form [title]="'Edit the information about the user in Sims Builder.'" [user]="userdetails" [mode]="'edit'" (userDetailsChangedEvent)="userDetailsChangedListener($event)"></app-user-details-form>
       </div>
       <div class="modal-footer">
       </div>

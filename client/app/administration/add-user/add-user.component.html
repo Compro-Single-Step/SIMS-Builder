@@ -2,7 +2,7 @@
 <section class="widget" widget>
   <div class="row">
     <div class="col-lg-6 offset-lg-3 col-xs-12">
-      <app-user-details-form [title]="'Add the information about the user you want to add in Sims Builder.'" [mode]="'add'" (emittedEvent)="emittedEventListener($event)"></app-user-details-form>
+      <app-user-details-form [title]="'Add the information about the user you want to add in Sims Builder.'" [mode]="'add'" (userDetailsChangedEvent)="userDetailsChangedListener($event)"></app-user-details-form>
     </div>
   </div>
 </section>
