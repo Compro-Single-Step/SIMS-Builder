@@ -85,7 +85,10 @@ router.get('/xmlgeneration/:templateId/:taskid/:stepidx', (req, res) => {
                 status: "success"
             });
         } else {
-            res.send(error);
+            res.send({
+                status: "Error",
+                Error: error
+            });
         }
     });
 });
