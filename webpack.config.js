@@ -202,7 +202,6 @@ module.exports = {
   },
   "plugins": [
     new NoEmitOnErrorsPlugin(),
-    new CopyWebpackPlugin([{ from: 'server', to: '../server'}]),
     new CopyWebpackPlugin([{
         from: 'client/assets',
         to: 'assets'
