@@ -6,7 +6,6 @@ try {
 }
 catch(error) {
     console.log(error);
-    return;
 }
 
 const db = mongoose.connection;
