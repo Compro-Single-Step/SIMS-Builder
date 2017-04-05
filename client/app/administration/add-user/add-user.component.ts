@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService} from '../../_services/user.service';
+import { Map} from '../../_services/messageMap';
 declare var Messenger: any;
 @Component({
   selector: 'app-add-user',
@@ -12,10 +13,10 @@ export class AddUserComponent implements OnInit {
      Messenger.options = { extraClasses: 'messenger-fixed messenger-on-top',
 							theme: 'block'}
    }
-  closeFormEventListener(message){
-    if(message){
+  emittedEventListener(message){
+    if(Map[message]!= "No Changes"){
       Messenger().post({
-							message: message,
+							message:Map[message],
 							type: 'success',
 							showCloseButton: true,
 							hideAfter: 4

@@ -42,17 +42,17 @@ router.post("/",function(req,res){
 			if(error.errors.email || error.errors.username)
 			{
 					successFlag = false;
-					messageToSend = 'User Name / Email  Already Present';
+					messageToSend = 'USERNAME/EMAIL_PRESENT';
 			}
 			else		
 			{
 					successFlag = false;
-					messageToSend = 'Database Error';
+					messageToSend = 'DATABASE_ERROR';
 			}
 		}
 	 	else{
 				successFlag = true;
-				messageToSend = 'User Added';
+				messageToSend = 'USER_ADDED';
 		}
 		res.json({
 				success: successFlag,
@@ -77,17 +77,17 @@ router.put("/",function(req,res){
 			if(error.errors.email)
 			{
 					successFlag = false;
-					messageToSend = 'Email  Already Present';
+					messageToSend = 'EMAIL_PRESENT';
 			}
 			else		
 			{
 					successFlag = false;
-					messageToSend = 'Database Error';
+					messageToSend = 'DATABASE_ERROR';
 			}
 		}
 	 	else{
 				successFlag = true;
-				messageToSend = 'User Data Updated';
+				messageToSend = 'USERDATA_UPDATED';
 		}
 		res.json({
 				success: successFlag,

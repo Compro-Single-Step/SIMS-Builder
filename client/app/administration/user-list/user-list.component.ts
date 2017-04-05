@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ModalDirective } from 'ng2-bootstrap/modal';
 import { UserService} from '../../_services/user.service';
 import { User } from '../../_services/userModel';
+import { Map} from '../../_services/messageMap';
 declare var jQuery: any;
 declare var Messenger: any;
 
@@ -60,19 +61,19 @@ message="";
     this.userdetails["enable"] = false;
     this.userservice.editUser(this.userdetails)
                 .subscribe(result => {
-                        this.message = result.message;
+                        this.message = Map[result.message];
                 });
     this.deleteModalWindow.hide();
   }
-  closeFormEventListener(Message){
-    if(Message!=''){
-      if(Message == "User Data Updated"){
+  emittedEventListener(Message){
+    if(Map[Message]!="No Changes"){
+      if(Map[Message] == "User Data Updated"){
         this.userservice.getUsers()
                        .subscribe(
                        Data => this.userData = Data,
                        error =>  this.errorMessage = <any>error);
                              Messenger().post({
-                                message: Message,
+                                message: Map[Message],
                                 type: 'success',
                                 showCloseButton: true,
                                 hideAfter: 2
