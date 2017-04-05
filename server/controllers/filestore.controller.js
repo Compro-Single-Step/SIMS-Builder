@@ -59,13 +59,13 @@ class FileStoreController {
           });
         }
         else{
-            callback(error)
+            callback(error);
         } 
     });
 
 }
     getTaskAsset( filePath,callback){
-        this.getTaskRes(filePath,callback)
+        this.getTaskRes(filePath,callback);
     }
 
     storeTaskAsset(taskId, stepIdx, fileName, data, callback){
