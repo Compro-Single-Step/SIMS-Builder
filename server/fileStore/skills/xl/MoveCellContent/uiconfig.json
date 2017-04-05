@@ -56,7 +56,7 @@
               "itemRenderer": "Dropzone",
               "itemType": "leaf",
               "rendererProperties": {
-                "dataType": "JSON",
+                "dataType": ".json",
                 "placeHolder": "Drop JSON file here to upload"
               },
               "dependants": [{
@@ -97,7 +97,7 @@
                     "rendererProperties": {
                       "placeHolder": "Drop Grid Image",
                       "dynamicMode": true,
-                      "dataType": "img"
+                      "dataType": "image/*"
                     },
                     "pos": "x,y",
                     "dim": {
@@ -113,7 +113,7 @@
                     "rendererProperties": {
                       "placeHolder": "Drop Row Image",
                       "dynamicMode": true,
-                      "dataType": "img"
+                      "dataType": "image/*"
                     },
                     "pos": "x,y",
                     "dim": {
@@ -129,7 +129,7 @@
                     "rendererProperties": {
                       "placeHolder": "Drop Column Image",
                       "dynamicMode": true,
-                      "dataType": "img"
+                      "dataType": "image/*"
                     },
                     "pos": "x,y",
                     "dim": {
@@ -145,7 +145,7 @@
                     "rendererProperties": {
                       "placeHolder": "Drop Cell Image",
                       "dynamicMode": true,
-                      "dataType": "img"
+                      "dataType": "image/*"
                     },
                     "pos": "x,y",
                     "dim": {
@@ -182,7 +182,7 @@
             "itemRenderer": "Dropzone",
             "itemType": "leaf",
             "rendererProperties": {
-              "dataType": "img",
+              "dataType": "image/*",
               "placeHolder": "Drop image here to upload"
             },
             "mandatory": false,
@@ -296,7 +296,7 @@
             "itemRenderer": "Dropzone",
             "itemType": "leaf",
             "rendererProperties": {
-              "dataType": "JSON",
+              "dataType": ".json",
               "placeHolder": "Drop JSON file here to upload"
             },
             "mandatory": true,
@@ -328,7 +328,7 @@
                   "rendererProperties": {
                     "placeHolder": "Drop Grid Image",
                     "dynamicMode": true,
-                    "dataType": "img"
+                    "dataType": "image/*"
                   },
                   "pos": "x,y",
                   "dim": {
@@ -344,7 +344,7 @@
                   "rendererProperties": {
                     "placeHolder": "Drop Row Image",
                     "dynamicMode": true,
-                    "dataType": "img"
+                    "dataType": "image/*"
                   },
                   "pos": "x,y",
                   "dim": {
@@ -360,7 +360,7 @@
                   "rendererProperties": {
                     "placeHolder": "Drop Column Image",
                     "dynamicMode": true,
-                    "dataType": "img"
+                    "dataType": "image/*"
                   },
                   "pos": "x,y",
                   "dim": {
@@ -376,7 +376,7 @@
                   "rendererProperties": {
                     "placeHolder": "Drop Cell Image",
                     "dynamicMode": true,
-                    "dataType": "img"
+                    "dataType": "image/*"
                   },
                   "pos": "x,y",
                   "dim": {
