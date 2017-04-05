@@ -22,7 +22,7 @@ export class StepBuilderComponent implements OnInit {
     taskID: string;
     stepIndex: string;
     builderModelSrvc;
-    constructor(el: ElementRef, private route: ActivatedRoute, private router: Router, private bds: BuilderDataService, private previewService:PreviewService) {
+    constructor(el: ElementRef, private route: ActivatedRoute, private router: Router, private bds: BuilderDataService, private previewService: PreviewService) {
         this.$el = jQuery(el.nativeElement);
         this.uiConfig = new UIConfig();
         this.selectedView = 1;
@@ -31,10 +31,8 @@ export class StepBuilderComponent implements OnInit {
 
     ngOnInit() {
         localForage.config({
-            driver: localForage.INDEXEDDB,
             name: 'SimsBuilder',
             version: 1.0,
-            size: 4980736, // Size of database, in bytes. WebSQL-only for now.
             storeName: 'model', // Should be alphanumeric, with underscores.
             description: 'Model of the Current Task'
         });
@@ -42,7 +40,7 @@ export class StepBuilderComponent implements OnInit {
         this.initScroll();
         IntervalObservable.create(5000).subscribe(() => this.checkForModelChange());
         this.route.params.subscribe((params: Params) => {
-            this.taskID = params["id"];
+            this.taskID = params["taskId"];
             this.stepIndex = params["stepIndex"];
             this.fetchSkillData();
             let skillfilesbundle = `var skill = {}; skill.movecellcontent = {}; skill.movecellcontent.webpackBundleMap = {"moveCellContent":0}; var movecellcontentClass = (function(modules) {
@@ -203,7 +201,7 @@ module.exports = (function () {
 
     fetchSkillData() {
         let params = {
-            id: this.taskID,
+            taskId: this.taskID,
             stepIndex: this.stepIndex
         };
         this.bds.getskilldata(params).subscribe((data) => {
