@@ -43,15 +43,15 @@ export class StepBuilderComponent implements OnInit {
         jQuery(window).on('sn:resize', this.initScroll.bind(this));
         this.initScroll();
         IntervalObservable.create(5000).subscribe(() => this.checkForModelChange());
-        this.tds.getTaskData(this.taskID).subscribe( taskData => {
-            let stepData = taskData.stepData[parseInt(this.stepIndex) - 1];
-            this.skillName = stepData.SkillName;
-            this.templateName = stepData.TemplateName;
-            this.stepText = stepData.Text;
-        });
         this.route.params.subscribe((params: Params) => {
             this.taskID = params["taskId"];
             this.stepIndex = params["stepIndex"];
+            this.tds.getTaskData(this.taskID).subscribe(taskData => {
+                let stepData = taskData.stepData[parseInt(this.stepIndex) - 1];
+                this.skillName = stepData.SkillName;
+                this.templateName = stepData.TemplateName;
+                this.stepText = stepData.Text;
+            });
             this.fetchSkillData();
             let skillfilesbundle = `var skill = {}; skill.movecellcontent = {}; skill.movecellcontent.webpackBundleMap = {"moveCellContent":0}; var movecellcontentClass = (function(modules) {
                                                 // The module cache
@@ -266,8 +266,8 @@ module.exports = (function () {
     onClose() {
         this.router.navigate(["/task", this.taskID]);
     }
-    
-    lauchPreviewTask(){
-		  this.previewService.launchStepPreviewWindow(this.taskID,this.stepIndex,"movecellcontent");
-	  }
+
+    lauchPreviewTask() {
+        this.previewService.launchStepPreviewWindow(this.taskID, this.stepIndex, "movecellcontent");
+    }
 }
