@@ -48,7 +48,8 @@ export class DropzoneComponent extends BaseComponent {
         xhr.setRequestHeader('Authorization', JSON.parse(localStorage.getItem('currentUser')).token);
         formData.append("taskId", "EXP16.WD.03.01.03.T1");
         formData.append("stepIndex", "1");
-        formData.append("modelref", self.compConfig.val);
+        // Need to discuss the passing of model ref along with the file as the model can be generated dynamicallly in some cases.
+        // formData.append("modelref", self.compConfig.val);
       }
     });
   }
