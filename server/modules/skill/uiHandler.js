@@ -12,13 +12,8 @@ class UIHandler {
                             "skillmodel": JSON.parse(skillModelData)
                         }
                         dbFilestoreManager.getStepUIState(taskId, stepIndex, (error, stepUIStateData) => {
-                            if(!error) {
-                                data.stepuistate = stepUIStateData || null;
-                                callback(null, data);
-                            } else {
-                                data.stepuistate = null;
-                                callback(null, data);
-                            }
+                          data.stepuistate = stepUIStateData || null;                            
+                          callback(null, data);
                         });
                     } else {
                         callback(error);
