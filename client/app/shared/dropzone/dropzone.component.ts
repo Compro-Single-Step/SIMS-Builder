@@ -40,7 +40,7 @@ export class DropzoneComponent extends BaseComponent {
     let dropzone = new Dropzone(this.dropzoneContainer.nativeElement, {
       url: "/api/skill/resource",
       paramName: "dzfile",
-      acceptedFiles: self.compConfig.rendererProperties.dataType,
+      acceptedFiles: MIMETYPE[self.compConfig.rendererProperties.dataType],
       init: function () {
         self.dropzoneInitializer(this);
       },
@@ -63,13 +63,13 @@ export class DropzoneComponent extends BaseComponent {
       if (file.status === "success") {
         if (self.modelRef) {
           self.modelRef["name"] = file.name;
-          self.modelRef["filepath"] = response.filepath;
+          self.modelRef["filepath"] = response.filePath;
         }
         else {
           self.builderModelSrvc.getModelRef(self.compConfig.val).name = file.name;
           self.builderModelSrvc.getModelRef(self.compConfig.val).filepath = response.filepath;
         }
-        if (self.getMimeType() === "json") {
+        if (MIMETYPE[self.compConfig.rendererProperties.dataType] === ".json") {
           reader.readAsText(file, 'UTF8');
           reader.onload = function (e) {
             //Update Dependencies when contents have been read;
@@ -80,10 +80,8 @@ export class DropzoneComponent extends BaseComponent {
       }
     });
   }
-  getMimeType() {
-    return {
-      ".json": "json",
-      "images/*": "image"
-    }[this.compConfig.rendererProperties.dataType];
-  }
+}
+enum MIMETYPE {
+    JSON = <any>".json",
+    img = <any>"image/*"
 }

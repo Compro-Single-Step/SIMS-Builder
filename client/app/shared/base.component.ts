@@ -5,7 +5,7 @@ import { skillManager } from '../step-builder/shared/skill-manager.service';
 import { LabelTypes } from './enums';
 export class BaseComponent implements OnInit{
     @Input() compConfig: itemSchema;
-    @Input() modelRef = {};
+    @Input() modelRef: Object;
     builderModelSrvc;
     itemDataModel;
     dynamicMode: boolean = false;

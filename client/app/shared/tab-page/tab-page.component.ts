@@ -17,7 +17,7 @@ export class TabPageComponent extends ContainerComponent {
   }
 
   AddChildElements(factoryRef, containerRef, itemArray) {
-    if (this.dynamicMode == true) {
+    if (this.modelRef) {
       for (let item of itemArray) {
         let childModelRef = this.modelRef[item.relVal];
         factoryRef.createComp(containerRef, item, childModelRef);
