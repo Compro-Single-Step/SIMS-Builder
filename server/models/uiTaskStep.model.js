@@ -16,8 +16,18 @@ uiTaskStepSchema.statics = {
 
         this.find(condition, projection, (error, data) => {
             let stepId = "step_" + stepIndex;
-            let stepUIState = data[0].task_data[stepId];
-            callback(error, stepUIState);
+            let stepUIState;
+            let err;
+            
+            try {
+                stepUIState = data[0].task_data[stepId];
+            }
+            catch (error) {
+                err = error;
+            }
+            finally {
+                callback(err, stepUIState);
+            }
         });
     },
     updateStepUIData: function(taskId, stepIndex, stepUIData, callback) {
