@@ -1,5 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { BaseComponent } from '../base.component';
+import { ActivatedRoute } from '@angular/router';
 import { LabelTypes } from '../enums';
 import { itemSchema } from '../UIConfig.model';
 
@@ -15,7 +16,7 @@ export class DropzoneComponent extends BaseComponent {
   labelConfig: itemSchema = new itemSchema();
   width: string;
   height: string;
-  constructor(private elementRef: ElementRef) {
+  constructor(private elementRef: ElementRef, private route: ActivatedRoute) {
     super();
   }
 
@@ -37,6 +38,7 @@ export class DropzoneComponent extends BaseComponent {
       this.height = `${this.compConfig.dim['height']}`;
       this.width = `${this.compConfig.dim['width']}`;
     }
+    var routeParams = this.route.snapshot.params;
     let dropzone = new Dropzone(this.dropzoneContainer.nativeElement, {
       url: "/api/skill/resource",
       paramName: "dzfile",
@@ -46,8 +48,8 @@ export class DropzoneComponent extends BaseComponent {
       },
       sending: function (file, xhr, formData) {
         xhr.setRequestHeader('Authorization', JSON.parse(localStorage.getItem('currentUser')).token);
-        formData.append("taskId", "EXP16.WD.03.01.03.T1");
-        formData.append("stepIndex", "1");
+        formData.append("taskId", routeParams["taskId"]);
+        formData.append("stepIndex", routeParams["stepIndex"]);
         // Need to discuss the passing of model ref along with the file as the model can be generated dynamicallly in some cases.
         // formData.append("modelref", self.compConfig.val);
       }
