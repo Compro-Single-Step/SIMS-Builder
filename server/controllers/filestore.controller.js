@@ -31,7 +31,7 @@ class FileStoreController {
         return config.fileStore.xmlFolder + taskId + "/" + stepIdx + "/";
     }
 
-    getSimsXmlTaskFolderPath(taskId, stepIdx){
+    getSimsXmlStepFolderPath(taskId, stepIdx){
         return this.getTaskFolderPath(taskId, stepIdx) + stepIdx + "/";
     }
 
@@ -78,7 +78,7 @@ class FileStoreController {
         var absFilePath = this.getFileStoreStepFolderPath(taskId, stepIdx);
 
         // var relativeXmlPath = this.getTaskFolderPath(taskId);
-        var relativeXmlPath = this.getSimsXmlTaskFolderPath(taskId, stepIdx);
+        var relativeXmlPath = this.getSimsXmlStepFolderPath(taskId, stepIdx);
 
         this.saveFileToFileStore(absFilePath, fileName, fileContent, function (error) {
             if (!error) {
@@ -95,7 +95,7 @@ class FileStoreController {
         var folderPathArr = srcPath.split("/");
 
         var folderName = folderPathArr[folderPathArr.length - 1];
-        var relativeXmlPath = this.getSimsXmlTaskFolderPath(taskId, stepIndex);
+        var relativeXmlPath = this.getSimsXmlStepFolderPath(taskId, stepIndex);
         var destPath = this.getFileStoreStepFolderPath(taskId, stepIndex) + folderName;
 
         srcPath = config.fileStore.resourceFolder + srcPath;
