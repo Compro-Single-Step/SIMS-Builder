@@ -3,6 +3,7 @@ import { BaseComponent } from '../base.component';
 import { ActivatedRoute } from '@angular/router';
 import { LabelTypes } from '../enums';
 import { itemSchema } from '../UIConfig.model';
+import { AuthService } from '../../_services/auth.service';
 
 declare var Dropzone: any;
 Dropzone.autoDiscover = false;
@@ -16,7 +17,7 @@ export class DropzoneComponent extends BaseComponent {
   labelConfig: itemSchema = new itemSchema();
   width: string;
   height: string;
-  constructor(private elementRef: ElementRef, private route: ActivatedRoute) {
+  constructor(private elementRef: ElementRef, private route: ActivatedRoute, private authSrvc: AuthService) {
     super();
   }
 
@@ -47,7 +48,7 @@ export class DropzoneComponent extends BaseComponent {
         self.dropzoneInitializer(this);
       },
       sending: function (file, xhr, formData) {
-        xhr.setRequestHeader('Authorization', JSON.parse(localStorage.getItem('currentUser')).token);
+        xhr.setRequestHeader('Authorization', self.authSrvc.getCurrentUserToken());
         formData.append("taskId", routeParams["taskId"]);
         formData.append("stepIndex", routeParams["stepIndex"]);
         // Need to discuss the passing of model ref along with the file as the model can be generated dynamicallly in some cases.
