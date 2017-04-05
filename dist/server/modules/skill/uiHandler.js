@@ -7,17 +7,13 @@ class UIHandler {
             if(!error) {
                 dbFilestoreManager.getSkillModel(templateId, (error, skillModelData) => {
                     if(!error) {
+                        let data = {
+                            "uiconfig": JSON.parse(uiConfigData),
+                            "skillmodel": JSON.parse(skillModelData)
+                        }
                         dbFilestoreManager.getStepUIState(taskId, stepIndex, (error, stepUIStateData) => {
-                            if(!error) {
-                                let data = {
-                                    "uiconfig": JSON.parse(uiConfigData),
-                                    "skillmodel": JSON.parse(skillModelData),
-                                    "stepuistate": stepUIStateData
-                                }
-                                callback(error, data);
-                            } else {
-                                callback(error);
-                            }
+                          data.stepuistate = stepUIStateData || null;                            
+                          callback(null, data);
                         });
                     } else {
                         callback(error);
