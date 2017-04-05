@@ -7,6 +7,7 @@ import { DataTableModule } from 'angular2-datatable';
 import { Ng2TableModule } from 'ng2-table';
 import { ModalModule } from 'ng2-bootstrap';
 import 'parsleyjs';
+import 'messenger/build/js/messenger.js';
 import {CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { ROUTES } from './administration-route';

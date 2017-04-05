@@ -4,17 +4,16 @@ import { ModalDirective } from 'ng2-bootstrap/modal';
 import { UserService} from '../../_services/user.service';
 import { User } from '../../_services/userModel';
 declare var jQuery: any;
+declare var Messenger: any;
 
 
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
-  encapsulation: ViewEncapsulation.None,
   styleUrls: ['./user-list.component.scss']
 })
 
 export class UserListComponent implements OnInit {
-Data ;
 userData;
 selectedUser = 1;
 errorMessage;
@@ -27,8 +26,9 @@ message="";
   }
 
   ngOnInit(): void {
-   // this.data =  userData;
    this.initializeUserData();
+   Messenger.options = { extraClasses: 'messenger-fixed messenger-on-top',
+							theme: 'block'}
     let searchInput = jQuery('#table-search-input, #search-countries');
     searchInput
       .focus((e) => {
@@ -41,18 +41,19 @@ message="";
   initializeUserData(): void{
     this.route.data
                      .subscribe(
-                       Data => this.Data = Data,
+                       Data => this.userData = Data["userData"],
                        error =>  this.errorMessage = <any>error);
-					   this.userData = this.Data["userData"];
   }
   showUpdateModal(index) {
     this.selectedUser = index;
-    this.userdetails = this.userData[this.selectedUser];
+    var user2 = JSON.parse(JSON.stringify(this.userData)); // to make a new reference fo user data
+    this.userdetails = user2[this.selectedUser];
     this.modalWindow.show();
   }
   showDeleteModal(index){
     this.selectedUser = index;
-    this.userdetails = this.userData[this.selectedUser];
+    var user2 = JSON.parse(JSON.stringify(this.userData));
+    this.userdetails = user2[this.selectedUser];
     this.deleteModalWindow.show();
   }
   disableUser(){
@@ -62,6 +63,24 @@ message="";
                         this.message = result.message;
                 });
     this.deleteModalWindow.hide();
+  }
+  closeFormEventListener(Message){
+    if(Message!=''){
+      if(Message == "User Data Updated"){
+        this.userservice.getUsers()
+                       .subscribe(
+                       Data => this.userData = Data,
+                       error =>  this.errorMessage = <any>error);
+                             Messenger().post({
+                                message: Message,
+                                type: 'success',
+                                showCloseButton: true,
+                                hideAfter: 2
+                                });
+      }
+      
+    }
+    this.modalWindow.hide();
   }
   
 }

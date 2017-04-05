@@ -76,7 +76,7 @@
       <div *ngIf="message" class="alert alert-danger">{{message}}</div>
       <div class="form-actions">
         <button type="submit" class="btn btn-danger btn-rounded float-xs-right">Submit</button>
-        <button type="button" (click)="closeForm()"  class="btn btn-default btn-rounded">Cancel</button>
+        <button type="button" (click)="closeForm($event)"  class="btn btn-default btn-rounded">Cancel</button>
       </div>
     </form>
   </div>

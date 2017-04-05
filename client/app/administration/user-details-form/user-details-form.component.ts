@@ -1,6 +1,9 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, OnChanges } from '@angular/core';
+import { Router } from '@angular/router';
+
 import { UserService} from '../../_services/user.service';
 import { User } from '../../_services/userModel';
+
 declare var jQuery: any;
 
 @Component({
@@ -12,17 +15,23 @@ export class UserDetailsFormComponent implements OnInit, OnChanges {
 @Input() title:string;
 @Input() user;
 @Input() mode;
+@Output() closeFormEvent: EventEmitter<any> = new EventEmitter();
 message='';
-instance;
-  constructor(private userservice: UserService) { 
+ParsleyForm;
+  constructor(private userservice: UserService, private router:Router) { 
     this.user = new User();
   }
 addUser(): void{
   //add user service to store the user in the database and provide the output as the result 
-    if(this.instance.isValid()){
+    if(this.ParsleyForm.isValid()){
       if(this.mode == "add" ){
         this.userservice.addUser(this.user)
                 .subscribe(result => {
+                        if(result.message == "User Added"){
+                          this.closeFormEvent.emit(result.message);
+                          this.router.navigate(["admin/users"]);
+                        }                        
+                        else
                         this.message = result.message;
                         
                 });
@@ -30,6 +39,9 @@ addUser(): void{
       else{
         this.userservice.editUser(this.user)
                 .subscribe(result => {
+                        if(result.message == "User Data Updated")
+                        this.closeFormEvent.emit(result.message);
+                        else
                         this.message = result.message;
                 });
       }
@@ -38,9 +50,15 @@ addUser(): void{
   }
 
   ngOnInit() {
-    this.instance = jQuery('.parsleyjs').parsley();
+    this.ParsleyForm = jQuery('.parsleyjs').parsley();
   }
   ngOnChanges(){
     this.message='';
+  }
+  closeForm(){
+      if(this.mode == "add")
+      this.router.navigate(["admin/users"]);
+      else
+      this.closeFormEvent.emit('');
   }
 }
