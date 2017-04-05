@@ -22,17 +22,17 @@ module.exports = class ExcelBaseSkill extends baseSkill{
                     sheetArr[iterator]['sheetNo'] = 1;
                     
                     sheetArr[iterator]['gridImg'] = paramValueObj["sheets"][iterator].gridImage.name;
-                    preloadResArr.push({"path":""+ newFolderPath + sheetArr[iterator]['gridImg'] ,"type":"img"})
+                    preloadResArr.push({"path":""+ newFolderPath +"/"+ sheetArr[iterator]['gridImg'] ,"type":"img"})
                     
                     sheetArr[iterator]['rowImg'] = paramValueObj["sheets"][iterator].rowImage.name
-                    preloadResArr.push({"path":""+ newFolderPath + sheetArr[iterator]['rowImg'] ,"type":"img"})
+                    preloadResArr.push({"path":""+ newFolderPath +"/"+ sheetArr[iterator]['rowImg'] ,"type":"img"})
                     
                     sheetArr[iterator]['colImg'] = paramValueObj["sheets"][iterator].cellImage.name;
-                    preloadResArr.push({"path":""+ newFolderPath + sheetArr[iterator]['colImg'] ,"type":"img"})
+                    preloadResArr.push({"path":""+ newFolderPath +"/"+ sheetArr[iterator]['colImg'] ,"type":"img"})
                     // requestArray.push(returnPromiseObj(finalObject['folderPath'] + sheetArr[iterator]['colImg']))
                     
                     sheetArr[iterator]['cellImg'] = paramValueObj["sheets"][iterator].columnImage.name;
-                    preloadResArr.push({"path":""+ newFolderPath + sheetArr[iterator]['cellImg'] ,"type":"img"})
+                    preloadResArr.push({"path":""+ newFolderPath +"/"+ sheetArr[iterator]['cellImg'] ,"type":"img"})
 
                 }    
                 
