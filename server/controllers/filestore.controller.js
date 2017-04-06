@@ -4,6 +4,7 @@ const fs = require('fs');
 const multer = require('multer');
 const mkdirp = require('mkdirp');
 const fse = require('fs-extra');
+const ResourceUtil = require('../utils/resourceUtil');
 
 const fileTypeFolderMap = {
     "SKILL": config.fileStore.skillFolder,
@@ -199,7 +200,7 @@ class FileStoreController {
                 let taskId = req.body.taskId;
                 let stepIndex = req.body.stepIndex;
                 let destinationFolder = self.getUploadedResourceFolderPath(taskId, stepIndex);
-                req.body.folder = self.getUploadResourceFolderRelativePath(taskId, stepIndex);
+                req.body.folder = ResourceUtil.getUploadResourceFolderRelativePath(taskId, stepIndex);
                 self.createFolderEnhanced(destinationFolder)
                     .then((success) => {
                         callback(null, destinationFolder);
@@ -244,10 +245,6 @@ class FileStoreController {
 
     getUploadedResourceFolderPath(taskId, stepIndex) {
         return config.fileStore.resourceFolder + taskId + "/" + stepIndex + "/";
-    }
-
-    getUploadResourceFolderRelativePath(taskId, stepIndex) {
-        return taskId + "/" + stepIndex + "/";
     }
 
     saveFileToFileStore(filepath, fileName, file, callback) {
