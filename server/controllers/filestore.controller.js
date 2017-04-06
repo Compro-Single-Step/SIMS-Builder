@@ -173,6 +173,19 @@ class FileStoreController {
         return this.uploadFileHandler();
     }
 
+    removeResourceFile(filePath) {
+        return new Promise((resolve, reject)=> {
+            filePath = config.fileStore.resourceFolder + filePath;
+            fs.unlink(filePath, (error)=> {
+                if(error) {
+                    reject(error);
+                } else {
+                    resolve("success");
+                }
+            });
+        });
+    }
+
     getFileFromFileStore(filepath, folder, callback) {
         let absolutePath = folder + filepath;
 
@@ -199,8 +212,10 @@ class FileStoreController {
             destination: function (req, file, callback) {
                 let taskId = req.body.taskId;
                 let stepIndex = req.body.stepIndex;
-                let destinationFolder = self.getUploadedResourceFolderPath(taskId, stepIndex);
-                req.body.folder = ResourceUtil.getUploadResourceFolderRelativePath(taskId, stepIndex);
+                let resFolderPath = ResourceUtil.getUploadResourceFolderRelativePath(taskId, stepIndex);
+                req.body.folder = resFolderPath;
+                let destinationFolder = self.getUploadedResourceFolderPath(resFolderPath);
+                
                 self.createFolderEnhanced(destinationFolder)
                     .then((success) => {
                         callback(null, destinationFolder);
@@ -243,8 +258,8 @@ class FileStoreController {
         return config.fileStore.xmlFolder + taskId + "/" + stepIndex + "/";
     }
 
-    getUploadedResourceFolderPath(taskId, stepIndex) {
-        return config.fileStore.resourceFolder + taskId + "/" + stepIndex + "/";
+    getUploadedResourceFolderPath(relPath) {
+        return config.fileStore.resourceFolder + relPath;
     }
 
     saveFileToFileStore(filepath, fileName, file, callback) {
