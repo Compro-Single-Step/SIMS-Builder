@@ -11,16 +11,9 @@ module.exports = function (req, res, next) {
 		type: tokenConstants.TYPES.ACCESS_TOKEN
 	}, serverConfig.SECRET, {expiresIn: tokenConfig.ACCESS_TOKEN_EXPIRATIONTIME});
 
-	var refreshToken = jwt.sign({
-		id: req.user.id,
-		userVersion: req.user.__v,
-		privileges: req.user.privileges,
-		type: tokenConstants.TYPES.REFRESH_TOKEN
-	}, serverConfig.SECRET, {expiresIn: tokenConfig.REFRESH_TOKEN_EXPIRATONTIME});
 
 	var data = {
-		token: token,
-		refreshToken: refreshToken
+		token: token
 	};
 
 	req.data = data;
