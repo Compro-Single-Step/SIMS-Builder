@@ -43,9 +43,14 @@ export class DropzoneComponent extends BaseComponent {
     let dropzone = new Dropzone(this.dropzoneContainer.nativeElement, {
       url: "/api/skill/resource",
       paramName: "dzfile",
+      maxFiles: 1,
       acceptedFiles: MIMETYPE[self.compConfig.rendererProperties.dataType],
       init: function () {
         self.dropzoneInitializer(this);
+        this.on("maxfilesexceeded", function(file) {
+          this.removeAllFiles();
+          this.addFile(file);
+        });
       },
       sending: function (file, xhr, formData) {
         xhr.setRequestHeader('Authorization', self.authSrvc.getCurrentUserToken());
