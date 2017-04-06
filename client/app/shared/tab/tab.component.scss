@@ -1,20 +1,12 @@
 @import "../../../../node_modules/bootstrap/scss/variables";
-@import "../../scss/_variables.scss";
-.heading {
-  display: flex;
-}
+
+@import "../styles.scss";
 app-tab-page {
 	border: 1px solid $pre-border-color;
 	padding-left: 1rem;
 }
 :host /deep/ .customClass {
  	height: 2.5rem;
-}
-
-.info-icon{
-    line-height: 25px;
-    color: $info-icon;
-    left: 2px;
 }
 
 .tabset{

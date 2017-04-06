@@ -1,0 +1,21 @@
+@import "../../scss/_variables.scss";
+.heading {
+  display: flex;
+}
+.input-max-width{
+  max-width: 1000px;
+}
+.info-icon{
+    height: 25px;
+    color: $info-icon;
+    left: 2px;
+    border: none;
+    background-color: white;
+    cursor: pointer;
+    &:focus {
+      outline: none;
+    }
+    &:hover {
+      color: $brand-info;
+    }
+}

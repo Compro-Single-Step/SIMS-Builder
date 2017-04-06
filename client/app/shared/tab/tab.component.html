@@ -1,6 +1,6 @@
 <div class="heading">
   <app-label [compConfig]="labelConfig"></app-label>
-  <span class="glyphicon glyphicon-info-sign info-icon"></span>
+  <button class="glyphicon glyphicon-info-sign info-icon" [popover]="compConfig.desc.detailed" [popoverTitle]="compConfig.label" placement="right" triggers="focus"></button>
 </div>
 <tabset class="tabset">
   <template [ngIf]="!dynamicMode">
