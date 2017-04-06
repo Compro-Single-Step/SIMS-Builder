@@ -47,10 +47,6 @@ export class DropzoneComponent extends BaseComponent {
       acceptedFiles: MIMETYPE[self.compConfig.rendererProperties.dataType],
       init: function () {
         self.dropzoneInitializer(this);
-        this.on("maxfilesexceeded", function(file) {
-          this.removeAllFiles();
-          this.addFile(file);
-        });
       },
       sending: function (file, xhr, formData) {
         xhr.setRequestHeader('Authorization', self.authSrvc.getCurrentUserToken());
@@ -87,9 +83,13 @@ export class DropzoneComponent extends BaseComponent {
         }
       }
     });
+    dropzone.on("maxfilesexceeded", function (file) {
+      dropzone.removeAllFiles();
+      dropzone.addFile(file);
+    });
   }
 }
 enum MIMETYPE {
-    JSON = <any>".json",
-    img = <any>"image/*"
+  JSON = <any>".json",
+  img = <any>"image/*"
 }
