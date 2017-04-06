@@ -102,6 +102,10 @@ class DatabaseFileStoreManager {
     saveResourceFile() {
         return fsc.saveResourceFile();
     }
+
+    removeResourceFile(filePath) {
+        return fsc.removeResourceFile(filePath);
+    }
 }
 
 module.exports = new DatabaseFileStoreManager();
