@@ -66,12 +66,12 @@ export class DropzoneComponent extends BaseComponent {
     dropzone.on("success", function (file, response) {
       if (file.status === "success") {
         if (self.modelRef) {
-          self.modelRef["name"] = file.name;
-          self.modelRef["filepath"] = response.filePath;
+          self.modelRef["displayName"] = file.name;
+          self.modelRef["path"] = response.filePath;
         }
         else {
-          self.builderModelSrvc.getModelRef(self.compConfig.val).name = file.name;
-          self.builderModelSrvc.getModelRef(self.compConfig.val).filepath = response.filepath;
+          self.builderModelSrvc.getModelRef(self.compConfig.val).displayName = file.name;
+          self.builderModelSrvc.getModelRef(self.compConfig.val).path = response.filePath;
         }
         if (MIMETYPE[self.compConfig.rendererProperties.dataType] === ".json") {
           reader.readAsText(file, 'UTF8');

@@ -6,31 +6,34 @@
                     "value": ""
                 },
                 "documentData": {
-                    "name": "",
+                    "displayName": "",
                     "path": ""
                 },
                 "sheets": {
                     "value": [
                         {
                             "name": "sheet 1",
-                            "path": "",
                             "gridImage": {
-                                "name": ""
+                                "displayName": "",
+                                "path": ""
                             },
                             "rowImage": {
-                                "name": ""
+                                "displayName": "",
+                                "path": ""
                             },
                             "columnImage": {
-                                "name": ""
+                                "displayName": "",
+                                "path": ""
                             },
                             "cellImage": {
-                                "name": ""
+                                "displayName": "",
+                                "path": ""
                             }
                         }
                     ]
                 },
                 "taskbarPreviewImage": {
-                    "name": "",
+                    "displayName": "",
                     "path": ""
                 }
             },
@@ -48,24 +51,27 @@
             },
             "3": {
                 "workbookData": {
-                    "name": "",
+                    "displayName": "",
                     "path": ""
                 },
                 "sheets": {
                     "value": [{
                         "name": "sheet 1",
-                        "path": "",
                         "gridImage": {
-                            "name": ""
+                            "displayName": "",
+                            "path": ""
                         },
                         "rowImage": {
-                            "name": ""
+                            "displayName": "",
+                            "path": ""
                         },
                         "columnImage": {
-                            "name": ""
+                            "displayName": "",
+                            "path": ""
                         },
                         "cellImage": {
-                            "name": ""
+                            "displayName": "",
+                            "path": ""
                         }
                     }]
                 }
