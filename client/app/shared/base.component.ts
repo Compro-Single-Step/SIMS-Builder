@@ -31,7 +31,7 @@ export class BaseComponent implements OnInit{
     }
 
     updateDependencies(componentInput) {
-        var dependants = this.compConfig.dependants;
+        var dependants = this.compConfig.dependants || [];
         for (let i = 0; i < dependants.length; i++) {
             let dependantModelReference = dependants[i]['modelReference'];
             let dependantRule = dependants[i]['rule'];
