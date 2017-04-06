@@ -101,11 +101,8 @@ router.post("/resource", (req, res) => {
             res.send("Error uploading file.");
         }
         else {
-            let filePath = req.body.filePath;
-            
-            res.send({
-                filePath: filePath.replace(/\\/g,"/")
-            });
+            console.log("req.body.resData: ", req.body.resData);
+            res.send(req.body.resData);
         }
     });
 });

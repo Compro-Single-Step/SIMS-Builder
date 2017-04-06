@@ -198,8 +198,15 @@ class FileStoreController {
             destination: function (req, file, callback) {
                 let taskId = req.body.taskId;
                 let stepIndex = req.body.stepIndex;
-                let destinationFolder = self.getUploadedResourceFolderPath(taskId, stepIndex);
+                
+                let parentFolderName;
+                if(req.body.parentFolderName){
+                    parentFolderName = req.body.parentFolderName;
+                }
+                
+                let destinationFolder = self.getUploadedResourceFolderPath(taskId, stepIndex, parentFolderName);
                 req.body.folder = destinationFolder;
+                
                 self.createFolderEnhanced(destinationFolder)
                     .then((success) => {
                         callback(null, destinationFolder);
@@ -215,8 +222,14 @@ class FileStoreController {
                 } else {
                     fileName = file.originalname;
                 }
-
-                req.body.filePath = req.body.folder + fileName;
+                req.body.resData = {};
+                if(req.body.parentFolderName){
+                    req.body.resData["folderPath"] = (req.body.folder).replace(/\\/g,"/");
+                    req.body.resData["fileName"] = fileName;
+                }else{
+                    req.body.resData["filePath"] = (req.body.folder + fileName).replace(/\\/g,"/");
+                }
+                // req.body.filePath = req.body.folder + fileName;
                 callback(null, fileName);
             }
         });
@@ -247,8 +260,14 @@ class FileStoreController {
         return config.fileStore.xmlFolder + taskId + "/" + stepIndex + "/";
     }
 
-    getUploadedResourceFolderPath(taskId, stepIndex) {
-        return config.fileStore.resourceFolder + taskId + "/" + stepIndex + "/";
+    getUploadedResourceFolderPath(taskId, stepIndex, parentFolderName) {
+        let folderPath = config.fileStore.resourceFolder + taskId + "/" + stepIndex + "/";
+        
+        if(parentFolderName){
+            folderPath += parentFolderName + '/';
+        }
+        
+        return folderPath;
     }
 
     saveFileToFileStore(filepath, fileName, file, callback) {
