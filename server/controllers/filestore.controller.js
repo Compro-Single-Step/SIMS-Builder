@@ -4,6 +4,7 @@ const fs = require('fs');
 const multer = require('multer');
 const mkdirp = require('mkdirp');
 const fse = require('fs-extra');
+const ResourceUtil = require('../utils/resourceUtil');
 
 const fileTypeFolderMap = {
     "SKILL": config.fileStore.skillFolder,
@@ -172,6 +173,19 @@ class FileStoreController {
         return this.uploadFileHandler();
     }
 
+    removeResourceFile(filePath) {
+        return new Promise((resolve, reject)=> {
+            filePath = config.fileStore.resourceFolder + filePath;
+            fs.unlink(filePath, (error)=> {
+                if(error) {
+                    reject(error);
+                } else {
+                    resolve("success");
+                }
+            });
+        });
+    }
+
     getFileFromFileStore(filepath, folder, callback) {
         let absolutePath = folder + filepath;
 
@@ -198,8 +212,10 @@ class FileStoreController {
             destination: function (req, file, callback) {
                 let taskId = req.body.taskId;
                 let stepIndex = req.body.stepIndex;
-                let destinationFolder = self.getUploadedResourceFolderPath(taskId, stepIndex);
-                req.body.folder = destinationFolder;
+                let resFolderPath = ResourceUtil.getUploadResourceFolderRelativePath(taskId, stepIndex);
+                req.body.folder = resFolderPath;
+                let destinationFolder = self.getUploadedResourceFolderPath(resFolderPath);
+
                 self.createFolderEnhanced(destinationFolder)
                     .then((success) => {
                         callback(null, destinationFolder);
@@ -208,13 +224,8 @@ class FileStoreController {
                     });
             },
             filename: function (req, file, callback) {
-                let fileName = req.body.fileName;
-
-                if (fileName) {
-                    fileName = fileName + "." + file.originalname;
-                } else {
-                    fileName = file.originalname;
-                }
+                let timestamp = new Date().getTime().toString();
+                let fileName = timestamp + "." + file.originalname;
 
                 req.body.filePath = req.body.folder + fileName;
                 callback(null, fileName);
@@ -247,8 +258,8 @@ class FileStoreController {
         return config.fileStore.xmlFolder + taskId + "/" + stepIndex + "/";
     }
 
-    getUploadedResourceFolderPath(taskId, stepIndex) {
-        return config.fileStore.resourceFolder + taskId + "/" + stepIndex + "/";
+    getUploadedResourceFolderPath(relPath) {
+        return config.fileStore.resourceFolder + relPath;
     }
 
     saveFileToFileStore(filepath, fileName, file, callback) {
