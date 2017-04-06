@@ -74,7 +74,7 @@ router.put("/",function(req,res){
 	UserModel.updateUser(criterion,userUpdateData,(error,data) => {
 		if (error) 
 		{
-			if(error.errors.email)
+			if(error.code = 11000)
 			{
 					successFlag = false;
 					messageToSend = 'EMAIL_PRESENT';
