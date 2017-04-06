@@ -13,5 +13,8 @@ export class HttpClient {
   post(url, data, options?) {
     return this.authHttp.post(url, data, options);
   }
+  put(url, data, options?) {
+    return this.authHttp.put(url, data, options);
+  }
 
 }

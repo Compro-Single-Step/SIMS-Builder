@@ -1,0 +1,107 @@
+<div class="row">
+  <div class="col-lg-12">
+    <h1 class="page-title">Sims Builder <span class="fw-semi-bold">Users</span></h1>
+    <section class="widget">
+       <div class="widget-body">
+        <div class="mt">
+          <div class="width-200 float-xs-right">
+            <div class="input-group input-group-sm input-group-transparent input-group-rounded">
+              <span class="input-group-addon">
+                <i class="fa fa-search"></i>
+              </span>
+              <input class="form-control form-control-sm" id="table-search-input" [(ngModel)]="searchText" type="text" placeholder="Search Users">
+            </div>
+          </div>
+          <table class="table table-striped table-hover" [mfData]="userData" #mf="mfDataTable" [mfRowsOnPage]="20">
+            <thead>
+            <tr>
+              <th>
+                <mfDefaultSorter by="username">User Name</mfDefaultSorter>
+              </th>
+              <th>
+                <mfDefaultSorter by="firstname">First Name</mfDefaultSorter>
+              </th>
+              <th>
+                <mfDefaultSorter by="lastname">Last Name</mfDefaultSorter>
+              </th>
+              <th>
+                <mfDefaultSorter by="email">Email</mfDefaultSorter>
+              </th>
+              <th>
+                <mfDefaultSorter by="role">Roles</mfDefaultSorter>
+              </th>
+              <th class="no-sort">
+                <mfDefaultSorter by="options">Options</mfDefaultSorter>
+              </th>   
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let person of mf.data | SearchPipe : searchText; let i = index">
+              <td><span class="fw-semi-bold">{{person.username}}</span></td>
+              <td>{{person.firstname}}</td>
+              <td>{{person.lastname}}</td>
+              <td>{{person.email}}</td>
+              <td>{{person.role}}</td>
+              <td>
+                <button (click)="showUpdateModal(i)"><span class="glyphicon glyphicon-edit"></span></button>
+                <button (click)="showDeleteModal(i)"><span class="glyphicon glyphicon-trash"></span></button>             
+              </td>
+            </tr>
+            <tr *ngIf="(mf.data | SearchPipe : searchText).length === 0">
+              <td colspan="100">
+                No matches
+              </td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+              <td colspan="12">
+                <mfBootstrapPaginator [rowsOnPageSet]="[10, 25, 50, 100]"></mfBootstrapPaginator>
+              </td>
+            </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+<div bsModal #modalWindow="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button (click)="modalWindow.hide()" aria-label="Close" class="close" type="button">
+          <span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title text-xs-center fw-bold mt" id="myModalLabel18">Edit User</h4>
+      </div>
+      <div class="modal-body">
+        <app-user-details-form [title]="'Edit the information about the user in Sims Builder.'" [user]="userdetails" [mode]="'edit'" (userDetailsChangedEvent)="userDetailsChangedListener($event)"></app-user-details-form>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>  
+</div>
+<div bsModal #deleteModalWindow="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="DeleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button (click)="deleteModalWindow.hide()" aria-label="Close" class="close" type="button">
+          <span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title text-xs-center fw-bold fs-larger" id="myModalLabel19">Delete User</h4>
+      </div>
+      <div class="modal-body">
+        <p class="text-xs-center text-muted ">
+          The user {{userdetails.username}} will be disabled. Are you sure?
+        </p>
+        <div *ngIf="message" class="alert alert-danger">{{message}}</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-gray" (click)="deleteModalWindow.hide()">Close</button>
+        <button type="button" class="btn btn-success" (click)="disableUser()">Ok</button>
+      </div>
+    </div>
+  </div>  
+</div>

@@ -22,6 +22,6 @@ output.on('close', function () {
 });
 
 archive.pipe(output);
-archive.directory(dirToCompress, taskId);
+archive.directory(dirToCompress, '');
 archive.finalize();
 };

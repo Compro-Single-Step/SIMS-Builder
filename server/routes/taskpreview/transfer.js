@@ -4,6 +4,7 @@ var serverRootPath = path.normalize(__dirname + '/../..');
 var request = require('request');
 var serverConfig = require('../../config/server.config');
 var serverUrl = serverConfig.previewServerURL + "/ServerCode/SIM5Service.ashx";
+var xmlUtil = require('../../utils/xmlUtil');
 
 module.exports = function (req, res, next) {
 var taskId = req.query.taskId || "GO16.XL.03.3A.02.T1";
@@ -12,6 +13,7 @@ var req = request.post({
 			qs: {
 				Method: "SaveTaskFolder",
 				taskId: taskId,
+				taskFolderPath: xmlUtil.generateTaskFolderPath(taskId),
 				stepNo: req.query.stepNo || "1",
 			}
 		}, function (err, resp, body) {

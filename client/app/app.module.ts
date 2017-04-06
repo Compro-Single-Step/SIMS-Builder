@@ -16,7 +16,7 @@ import { TaskDataService } from './_services/taskData.service'
 import { AppConfig } from './app.config';
 import { LoginComponent } from './login/login.component';
 import { AuthModule  } from './auth.module';
-
+import { UserService } from './_services/user.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,7 +31,7 @@ import { AuthModule  } from './auth.module';
     
   ],
 
-  providers: [ AuthService,HttpClient,AuthGuard,AppConfig,TaskDataService,PreviewService ],
+  providers: [ AuthService,HttpClient,AuthGuard,AppConfig,TaskDataService,PreviewService,UserService ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
