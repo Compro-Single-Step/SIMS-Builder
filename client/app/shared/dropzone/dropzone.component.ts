@@ -43,6 +43,7 @@ export class DropzoneComponent extends BaseComponent {
     let dropzone = new Dropzone(this.dropzoneContainer.nativeElement, {
       url: "/api/skill/resource",
       paramName: "dzfile",
+      maxFiles: 1,
       acceptedFiles: MIMETYPE[self.compConfig.rendererProperties.dataType],
       init: function () {
         self.dropzoneInitializer(this);
@@ -82,9 +83,14 @@ export class DropzoneComponent extends BaseComponent {
         }
       }
     });
+    dropzone.on("maxfilesexceeded", function (file) {
+      dropzone.removeAllFiles();
+      // TODO: Add functionality to delete the old file on server
+      dropzone.addFile(file);
+    });
   }
 }
 enum MIMETYPE {
-    JSON = <any>".json",
-    img = <any>"image/*"
+  JSON = <any>".json",
+  img = <any>"image/*"
 }
