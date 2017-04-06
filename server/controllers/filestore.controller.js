@@ -199,7 +199,7 @@ class FileStoreController {
                 let taskId = req.body.taskId;
                 let stepIndex = req.body.stepIndex;
                 let destinationFolder = self.getUploadedResourceFolderPath(taskId, stepIndex);
-                req.body.folder = destinationFolder;
+                req.body.folder = self.getUploadResourceFolderRelativePath(taskId, stepIndex);
                 self.createFolderEnhanced(destinationFolder)
                     .then((success) => {
                         callback(null, destinationFolder);
@@ -208,13 +208,8 @@ class FileStoreController {
                     });
             },
             filename: function (req, file, callback) {
-                let fileName = req.body.fileName;
-
-                if (fileName) {
-                    fileName = fileName + "." + file.originalname;
-                } else {
-                    fileName = file.originalname;
-                }
+                let timestamp = new Date().getTime().toString();
+                let fileName = timestamp + "." + file.originalname;
 
                 req.body.filePath = req.body.folder + fileName;
                 callback(null, fileName);
@@ -249,6 +244,10 @@ class FileStoreController {
 
     getUploadedResourceFolderPath(taskId, stepIndex) {
         return config.fileStore.resourceFolder + taskId + "/" + stepIndex + "/";
+    }
+
+    getUploadResourceFolderRelativePath(taskId, stepIndex) {
+        return taskId + "/" + stepIndex + "/";
     }
 
     saveFileToFileStore(filepath, fileName, file, callback) {
