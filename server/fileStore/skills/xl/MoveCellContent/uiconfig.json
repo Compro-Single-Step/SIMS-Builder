@@ -353,6 +353,9 @@
                   "id": "3.1.2.1",
                   "itemRenderer": "TabPage",
                   "itemType": "",
+                  "rendererProperties": {
+                    "dynamicMode": true
+                  },
                   "items": [
                     {
                       "id": "GridImage",
