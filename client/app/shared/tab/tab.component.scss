@@ -17,8 +17,12 @@ app-tab-page {
     left: 2px;
 		border: none;
     background-color: white;
+    cursor: pointer;
 		&:focus {
       outline: none;
+    }
+    &:hover {
+      color: $brand-info;
     }
 }
 
