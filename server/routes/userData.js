@@ -74,7 +74,7 @@ router.put("/",function(req,res){
 	UserModel.updateUser(criterion,userUpdateData,(error,data) => {
 		if (error) 
 		{
-			if(error.code = 11000)
+			if(error.code = 11000)  // Mongoose error code for duplicate unique key (email) in collection. 
 			{
 					successFlag = false;
 					messageToSend = 'EMAIL_PRESENT';
