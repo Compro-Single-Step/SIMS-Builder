@@ -2,7 +2,7 @@ import { Component, OnInit, Output, EventEmitter, Input, OnChanges } from '@angu
 import { Router } from '@angular/router';
 
 import { UserService} from '../../_services/user.service';
-import { Map } from '../../shared/enums';
+import { MessageMap } from '../../shared/enums';
 import { User } from '../../_services/userModel';
 
 declare var jQuery: any;
@@ -28,22 +28,22 @@ addUser(): void{
       if(this.mode == "add" ){
         this.userservice.addUser(this.user)
                 .subscribe(result => {
-                        if(Map[result.message] == "User Added"){
+                        if(MessageMap[result.message] == "User Added"){
                           this.userDetailsChangedEvent.emit(result.message);
                           this.router.navigate(["admin/users"]);
                         }                        
                         else
-                        this.message = Map[result.message]
+                        this.message = MessageMap[result.message]
                         
                 });
       }
       else{
         this.userservice.editUser(this.user)
                 .subscribe(result => {
-                        if(Map[result.message] == "User Data Updated")
+                        if(MessageMap[result.message] == "User Data Updated")
                         this.userDetailsChangedEvent.emit(result.message);
                         else
-                        this.message = Map[result.message]
+                        this.message = MessageMap[result.message]
                 });
       }
     }
