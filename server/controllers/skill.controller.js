@@ -36,6 +36,10 @@ class SkillController {
     saveResourceFile() {
         return dbFilestoreMgr.saveResourceFile();
     }
+
+    removeResourceFile(filePath) {
+        return dbFilestoreMgr.removeResourceFile(filePath);
+    }
 };
 
 module.exports = new SkillController();
