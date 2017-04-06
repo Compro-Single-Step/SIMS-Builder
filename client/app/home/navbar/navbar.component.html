@@ -38,7 +38,7 @@
                     <img class="rounded-circle" src="assets/images/avatar.png" alt="...">
                 </span>
           &nbsp;
-          John Doe&nbsp;
+          {{currentUser.firstname+" "+currentUser.lastname}}&nbsp;
         </a>
         <!-- ready to use notifications dropdown. inspired by smartadmin template.
                      consists of three components:
@@ -53,11 +53,13 @@
         <ul class="dropdown-menu dropdown-menu-right">
           <li><a class="dropdown-item" href="#"><i class="glyphicon glyphicon-user"></i> &nbsp; My Account</a></li>
           <li class="dropdown-divider"></li>
+          <li *ngIf="adminUser" ><a class="dropdown-item" [routerLink]=" ['/admin']"><i class="glyphicon glyphicon-user"></i> &nbsp; Administration</a></li>
+          <li *ngIf="adminUser" class="dropdown-divider"></li>
           <li><a class="dropdown-item" (click)="logout()"><i class="fa fa-sign-out"></i> &nbsp; Log Out</a></li>
         </ul>
       </li>
     </ul>
-    <form class="navbar-form float-xs-right searchForm" *ngIf="showSearchform" role="search" #f="ngForm" (ngSubmit)="onDashboardSearch(f)">
+    <form action="" class="navbar-form float-xs-right searchForm" *ngIf="showSearchform" role="search" #f="ngForm" (ngSubmit)="onDashboardSearch(f)">
       <div class="form-group">
         <div class="input-group input-group-no-border">
           <span class="input-group-addon">
