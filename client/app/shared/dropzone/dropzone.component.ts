@@ -4,6 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { LabelTypes } from '../enums';
 import { itemSchema } from '../UIConfig.model';
 import { AuthService } from '../../_services/auth.service';
+import { BuilderDataService } from '../../step-builder/shared/builder-data.service';
+
 
 declare var Dropzone: any;
 Dropzone.autoDiscover = false;
@@ -17,7 +19,7 @@ export class DropzoneComponent extends BaseComponent {
   labelConfig: itemSchema = new itemSchema();
   width: string;
   height: string;
-  constructor(private elementRef: ElementRef, private route: ActivatedRoute, private authSrvc: AuthService) {
+  constructor(private elementRef: ElementRef, private route: ActivatedRoute, private authSrvc: AuthService, private bds: BuilderDataService) {
     super();
   }
 
@@ -44,6 +46,8 @@ export class DropzoneComponent extends BaseComponent {
       url: "/api/skill/resource",
       paramName: "dzfile",
       maxFiles: 1,
+      addRemoveLinks: true,
+
       acceptedFiles: MIMETYPE[self.compConfig.rendererProperties.dataType],
       init: function () {
         self.dropzoneInitializer(this);
@@ -88,6 +92,23 @@ export class DropzoneComponent extends BaseComponent {
       // TODO: Add functionality to delete the old file on server
       dropzone.addFile(file);
     });
+    dropzone.on("removedfile", function (file) {
+      self.bds.removeFile(self.modelRef["filepath"]).subscribe(function (data) {
+        if (data.status === "success") {
+          if (self.modelRef) {
+            self.modelRef["displayName"] = "";
+            self.modelRef["path"] = "";
+          }
+          else {
+            self.builderModelSrvc.getModelRef(self.compConfig.val).displayName = "";
+            self.builderModelSrvc.getModelRef(self.compConfig.val).path = "";
+          }
+        } else if(data.status == "error"){
+          // TODO: Code for handling - File Doesn't Exist Error
+        }
+      });
+    })
+
   }
 }
 enum MIMETYPE {

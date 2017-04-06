@@ -12,7 +12,7 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class BuilderDataService {
   uiconfig: UIConfig;
-  constructor(private httpClient: HttpClient) { 
+  constructor(private httpClient: HttpClient) {
     this.uiconfig = new UIConfig();
   }
   getskilldata(params): Observable<UIConfig> {
@@ -20,20 +20,26 @@ export class BuilderDataService {
       .map(this.extractData)
       .catch(this.handleError);
   }
-  saveSkillData (data: Object, taskId, stepIndex): Observable<Object> {
+  saveSkillData(data: Object, taskId, stepIndex): Observable<Object> {
     const headers = new Headers({ 'Content-Type': 'application/json' });
     const options = new RequestOptions({ headers: headers });
     // TODO: Dynamically create the post URL (api/skill/taskstep/ <TASK ID> / <STEP NUMBER>)
     return this.httpClient.post(`api/skill/stepuistate/${taskId}/${stepIndex}`, data, options)
-                    .map(this.extractData)
-                    .catch(this.handleError);
+      .map(this.extractData)
+      .catch(this.handleError);
   }
-
+  removeFile(filePath: string): Observable<any> {
+    const headers = new Headers({ 'Content-Type': 'application/json' });
+    const options = new RequestOptions({ headers: headers });
+    return this.httpClient.delete(`api/skill/resource/${filePath}`, options)
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
   private extractData(res: Response) {
     let body = res.json();
-    return body || { };
+    return body || {};
   }
-  private handleError (error: Response | any) {
+  private handleError(error: Response | any) {
     // In a real world app, you might use a remote logging infrastructure
     let errMsg: string;
     if (error instanceof Response) {
