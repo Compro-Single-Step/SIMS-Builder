@@ -8,7 +8,7 @@
               "DOCUMENT_NAME": {
                 "function-name": "extractSingleParamVal",
                 "params": {
-                  "docTitle":"views['1'].documentTitle"
+                  "docTitle":"views['1'].documentTitle.value"
                 }
               }
             }
@@ -20,13 +20,13 @@
               "INIT_DOC_JSON": {
                 "function-name": "createJsonPath",
                 "params": {
-                  "docData":"views['1'].documentData"
+                  "docData":"views['1'].documentData.path"
                 }
               },
               "IMAGE_JSON": {
                 "function-name": "createImageJson",
                 "params": {
-                  "sheets":"views['1'].sheets"
+                  "sheets":"views['1'].sheets.value"
                 }
               }
             }
@@ -36,7 +36,7 @@
               "SELECTED_CELLS": {
                 "function-name": "getSelectedCell",
                 "params": {
-                  "srcRange":"views['2'].sourceRange"
+                  "srcRange":"views['2'].sourceRange.value"
                 }
               }
             },
@@ -44,9 +44,10 @@
               "SEL_DRAG_CELL": {
                 "function-name": "getSelDragCell",
                 "params": {
-                  "sheetAction":"views['2'].sheetInAction",
-                  "srcRange":"views['2'].sourceRange",
-                  "destRange":"views['2'].destinationRange"
+                  "sheetAction":"views['2'].sheetInAction.selectedOption.value",
+                  "srcRange":"views['2'].sourceRange.value",
+                  "destRange":"views['2'].destinationRange.value",
+                  "initDocJson":"views['1'].documentData.path"
                 }                
               }
             }
@@ -58,13 +59,13 @@
               "APP_TOOLTIP_IMAGE": {
                 "function-name": "createTooltipImagePath",
                 "params": {
-                  "tbPrvImage":"views['1'].taskbarPreviewImage"
+                  "tbPrvImage":"views['1'].taskbarPreviewImage.path"
                 }
               },
               "OPENWORDFILE": {
                 "function-name": "extractSingleParamVal",
                 "params": {
-                  "DocTitle":"views['1'].documentTitle"
+                  "DocTitle":"views['1'].documentTitle.value"
                 }
               }
             }
@@ -80,20 +81,22 @@
               "IMAGE_JSON": {
                 "function-name": "createImageJson",
                 "params": {
-                  "sheets":"views['3'].sheets"
+                  "sheets":"views['3'].sheets.value",
+                  "initDocJson":"views['1'].documentData.path"
                 }
               },
               "SHEET_CELLS_DATA": {
                 "function-name": "createSheetCellData",
                 "params": {
-                  "sheetAction":"views['2'].sheetInAction",
-                  "wbData":"views['3'].workbookData"
+                  "sheetAction":"views['2'].sheetInAction.selectedOption.value",
+                  "wbData":"views['3'].workbookData.path",
+                  "initDocJson":"views['1'].documentData.path"
                 }
               },
               "SELECTED_CELLS": {
                 "function-name": "getSelectedCell",
                 "params": {
-                  "srcRange":"views['2'].sourceRange"
+                  "srcRange":"views['2'].sourceRange.value"
                 }
               }
             }
@@ -109,8 +112,9 @@
               "COPY_HIGHLIGHT_CELLS": {
                 "function-name": "createHighlightJson",
                 "params": {
-                  "sheetAction":"views['2'].sheetInAction",
-                  "srcRange":"views['2'].sourceRange"
+                  "sheetAction":"views['2'].sheetInAction.selectedOption.value",
+                  "srcRange":"views['2'].sourceRange.value",
+                  "initDocJson":"views['1'].documentData.path"
                 }
               }
             }
@@ -120,14 +124,15 @@
               "SELECTED_CELLS": {
                 "function-name": "getSelectedCellFinal",
                 "params": {
-                  "destRange":"views['2'].destinationRange"
+                  "destRange":"views['2'].destinationRange.value"
                 }
               },
               "COPY_HIGHLIGHT_CELLS": {
                 "function-name": "createHighlightJson",
                 "params": {
-                  "sheetAction":"views['2'].sheetInAction",
-                  "srcRange":"views['2'].sourceRange"
+                  "sheetAction":"views['2'].sheetInAction.selectedOption.value",
+                  "srcRange":"views['2'].sourceRange.value",
+                  "initDocJson":"views['1'].documentData.path"
                 }
               }
             }
