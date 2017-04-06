@@ -85,6 +85,7 @@ export class DropzoneComponent extends BaseComponent {
     });
     dropzone.on("maxfilesexceeded", function (file) {
       dropzone.removeAllFiles();
+      // TODO: Add functionality to delete the old file on server
       dropzone.addFile(file);
     });
   }
