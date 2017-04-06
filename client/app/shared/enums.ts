@@ -3,7 +3,7 @@ export const LabelTypes =  {
   PANEL_HEADING: "PanelHeading",
   DESCRIPTION: "Description"
 };
-export const Map={
+export const MessageMap={
     'USER_ADDED' : "User Added",
     "DATABASE_ERROR" : "Database Error",
     "USERNAME/EMAIL_PRESENT" : "User Name / Email  Already Present",
