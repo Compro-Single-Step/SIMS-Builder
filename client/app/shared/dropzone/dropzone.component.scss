@@ -27,7 +27,12 @@ $dropzoneTextColor: #aaa;
 }
 
 .info-icon{
-    line-height: 25px;
+    height: 25px;
     color: $info-icon;
     left: 2px;
+    border: none;
+    background-color: white;
+    &:focus {
+      outline: none;
+    }
 }
