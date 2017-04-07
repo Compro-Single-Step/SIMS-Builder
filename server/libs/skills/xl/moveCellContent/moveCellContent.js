@@ -10,12 +10,12 @@ class moveCellContent extends ExcelBaseSkill {
 
     var taskParams = skillParams.taskParams;
     var paramValueObj = skillParams.paramsObj
-    taskParams.dbFilestoreMgr.copyTaskAssetFile(paramValueObj["docData"]["path"], taskParams, function (error, xmlPath, fileType) {
-      paramValueObj["docData"]["path"] = xmlPath;
+    taskParams.dbFilestoreMgr.copyTaskAssetFile(paramValueObj["docData"], taskParams, function (error, xmlPath, fileType) {
+      paramValueObj["docData"] = xmlPath;
       if (!error) {
         var preloadResArr = [];
         preloadResArr.push({ "path": "" + xmlPath, "type": "" + fileType })
-        callback(null, paramValueObj["docData"]["path"], preloadResArr);
+        callback(null, paramValueObj["docData"], preloadResArr);
         //add this new path to the preloadResources Array
       }
       else {
@@ -66,11 +66,11 @@ class moveCellContent extends ExcelBaseSkill {
     finalObject["sheetNo"] = 1;
     //getSheetNameMapgetSheetNameMap(sheetName, initDocJsonPath)
 
-    taskParams.dbFilestoreMgr.copyTaskAssetFile(paramValueObj["wbData"].path, taskParams, function (error, xmlPath, fileType) {
+    taskParams.dbFilestoreMgr.copyTaskAssetFile(paramValueObj["wbData"], taskParams, function (error, xmlPath, fileType) {
 
       if (!error) {
-        paramValueObj["wbData"].path = xmlPath;
-        finalObject["dataJSONPath"] = paramValueObj["wbData"].path;
+        paramValueObj["wbData"] = xmlPath;
+        finalObject["dataJSONPath"] = paramValueObj["wbData"];
         finalObject = JSON.stringify(finalObject);
         var preloadResArr = [];
         preloadResArr.push({ "path": "" + xmlPath, "type": "" + fileType })

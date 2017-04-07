@@ -7,10 +7,11 @@ var attrParam = function(attrName, attrObject, stepUIState, skillobject ,IOMapRe
     this.skillobject = skillobject;
 }
 
-var attrTaskParam = function( taskId, stepIndex, dbFilestoreMgr){
+var attrTaskParam = function( taskId, stepIndex, stateId, dbFilestoreMgr){
     
     this.taskId = taskId;
     this.stepIndex = stepIndex;
+    this.stateId = stateId;
     this.dbFilestoreMgr = dbFilestoreMgr;
 }
 
@@ -49,12 +50,12 @@ class IOTranslator{
   //common function for getting the param array for the passed array of params
   getEvaluatedParams (paramObj , stepUIState){
 
-    var evalexp = "stepUIState.model.";  
+    var evalexp = "stepUIState.";  
     // var finalArray = [];
 
     for(var param in paramObj ){
       paramObj[param] = eval(evalexp + paramObj[param]);
-
+      
     }
     return paramObj;
   }
@@ -100,7 +101,7 @@ class IOTranslator{
                 for(let attrName in attrSetObj){
 
                   var attrParams = new attrParam(attrName, attrSetObj[attrName], attrObj.stepUIState, attrObj.skillRef);
-                  var taskParam = new attrTaskParam(attrObj.taskId, attrObj.stepIndex, attrObj.dbFilestoreMgr);
+                  var taskParam = new attrTaskParam(attrObj.taskId, attrObj.stepIndex, stateNum, attrObj.dbFilestoreMgr);
                   var self = this;
                   PromiseRequestsArr.push(self.genPromise(attrParams, taskParam, function(error, attrVal, preloadResArr){
                     if(!error){
