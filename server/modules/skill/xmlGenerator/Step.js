@@ -26,19 +26,22 @@ module.exports = class Step {
 
     }
 
-    generateXML (){
+    generateXML (stepText){
         let xmlString = '<task>';
 
         xmlString += this.generatePreloadNodeXML();
-        xmlString += this.addStepTextToXML();
+        xmlString += this.addStepTextToXML(stepText);
         xmlString += this.generateStatesXML();
 
         xmlString += '</task>';
         return xmlString;
     }
 
-    addStepTextToXML (){
-        let stepText = this.fetchStepText();
+    addStepTextToXML (stepText){
+        if(!stepText){
+            stepText = this.fetchStepText();
+        }
+        
         let xmlString = '<texts_formatted>' +
                             '<txt id="1" StateStart="1">'+
                                 '<![CDATA['+stepText+']]>'+

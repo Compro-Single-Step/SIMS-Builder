@@ -74,12 +74,13 @@ router.post('/stepuistate/:taskId/:stepIndex', (req, res) => {
     });
 });
 
-router.get('/xmlgeneration/:templateId/:taskid/:stepidx', (req, res) => {
-    let templateId = req.params.templateId;
-    let taskId = req.params.taskid;
-    let stepIdx = req.params.stepidx;
+router.post('/xmlgeneration', (req, res) => {
+    let templateId = req.body.templateId;
+    let taskId = req.body.taskId;
+    let stepIdx = req.body.stepId;
+    let stepText = req.body.stepText;
     
-    skillController.generateXML(templateId, taskId, stepIdx, (error) => {
+    skillController.generateXML(templateId, taskId, stepIdx, stepText, (error) => {
         if (!error) {
             res.send({
                 status: "success"
@@ -110,8 +111,9 @@ router.post("/resource", (req, res) => {
     });
 });
 
-router.delete("/resource/:filePath", (req, res) => {
-     let filePath = req.params.filePath;
+router.delete("/resource/*", (req, res) => {
+     let filePath = req.params[0];
+
      skillController.removeResourceFile(filePath)
      .then((success)=> {
          res.send({
@@ -119,7 +121,8 @@ router.delete("/resource/:filePath", (req, res) => {
          })
      }, (error)=> {
          res.send({
-             "status": "error"
+             "status": "error",
+             "error": error
          })
      });
  });

@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { BuilderDataService } from '../shared/builder-data.service';
 import { UIConfig } from '../../shared/UIConfig.model';
@@ -26,6 +26,9 @@ export class StepBuilderComponent implements OnInit {
     skillName: string;
     templateName: string;
     stepText: string;
+
+    @ViewChild('stepTextContainer') stepTextContainer;
+
     constructor(el: ElementRef, private route: ActivatedRoute, private router: Router, private bds: BuilderDataService, private previewService: PreviewService, private tds: TaskDataService) {
         this.$el = jQuery(el.nativeElement);
         this.uiConfig = new UIConfig();
@@ -116,6 +119,6 @@ export class StepBuilderComponent implements OnInit {
     }
 
     lauchPreviewTask() {
-        this.previewService.launchStepPreviewWindow(this.taskID, this.stepIndex, "movecellcontent");
+        this.previewService.launchStepPreviewWindow(this.taskID, this.stepIndex, "movecellcontent", this.stepTextContainer.nativeElement.textContent);
     }
 }
