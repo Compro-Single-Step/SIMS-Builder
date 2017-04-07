@@ -6,6 +6,9 @@ const folderMap = FAL.fileTypeFolderMap;
 
 class DatabaseFileStoreManager {
 
+    readFileFromFileStore(filePath, callback){
+         fsc.readTaskRes(filePath, callback);
+    }
 
     copyTaskAssetFile(residentPath, taskParams, callback) {
         fsc.copyAssetToTaskFolder(residentPath, taskParams, callback);
