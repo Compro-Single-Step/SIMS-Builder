@@ -10,13 +10,13 @@ const Step = require('./Step');
 
 module.exports = class StepXMLGenerator {
 
-    generateXml (skillTemplate, attrValueMap){
+    generateXml (skillTemplate, attrValueMap, stepText){
 
         let parser = new DOMParser();
         let xmlDoc = parser.parseFromString(skillTemplate,"text/xml");
         let stepJson = this.xmlToJson(xmlDoc);
         let step = new Step(stepJson[0], attrValueMap, this)
-        let xmlString = step.generateXML();
+        let xmlString = step.generateXML(stepText);
         return xmlString;
         
     }

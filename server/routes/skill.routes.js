@@ -74,12 +74,13 @@ router.post('/stepuistate/:taskId/:stepIndex', (req, res) => {
     });
 });
 
-router.get('/xmlgeneration/:templateId/:taskid/:stepidx', (req, res) => {
-    let templateId = req.params.templateId;
-    let taskId = req.params.taskid;
-    let stepIdx = req.params.stepidx;
+router.post('/xmlgeneration', (req, res) => {
+    let templateId = req.body.templateId;
+    let taskId = req.body.taskId;
+    let stepIdx = req.body.stepId;
+    let stepText = req.body.stepText;
     
-    skillController.generateXML(templateId, taskId, stepIdx, (error) => {
+    skillController.generateXML(templateId, taskId, stepIdx, stepText, (error) => {
         if (!error) {
             res.send({
                 status: "success"
