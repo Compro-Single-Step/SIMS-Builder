@@ -69,14 +69,10 @@ export class DropzoneComponent extends BaseComponent {
 
     dropzone.on("success", function (file, response) {
       if (file.status === "success") {
-        if (self.modelRef) {
-          self.modelRef["displayName"] = file.name;
-          self.modelRef["path"] = response.filePath;
-        }
-        else {
-          self.builderModelSrvc.getModelRef(self.compConfig.val).displayName = file.name;
-          self.builderModelSrvc.getModelRef(self.compConfig.val).path = response.filePath;
-        }
+        let currModelRef = self.getData();
+        currModelRef["displayName"] = file.name;
+        currModelRef["path"] = response.filePath;
+
         if (MIMETYPE[self.compConfig.rendererProperties.dataType] === ".json") {
           reader.readAsText(file, 'UTF8');
           reader.onload = function (e) {
@@ -89,26 +85,25 @@ export class DropzoneComponent extends BaseComponent {
     });
     dropzone.on("maxfilesexceeded", function (file) {
       dropzone.removeAllFiles();
-      // TODO: Add functionality to delete the old file on server
+      // The event "removedfile" is called which internally calls the api to delete file from the server.
       dropzone.addFile(file);
     });
     dropzone.on("removedfile", function (file) {
-      self.bds.removeFile(self.modelRef["filepath"]).subscribe(function (data) {
+      let currModelRef = self.getData();
+      self.bds.removeFile(currModelRef["path"]).subscribe(function (data) {
         if (data.status === "success") {
-          if (self.modelRef) {
-            self.modelRef["displayName"] = "";
-            self.modelRef["path"] = "";
-          }
-          else {
-            self.builderModelSrvc.getModelRef(self.compConfig.val).displayName = "";
-            self.builderModelSrvc.getModelRef(self.compConfig.val).path = "";
-          }
-        } else if(data.status == "error"){
+          currModelRef["displayName"] = "";
+          currModelRef["path"] = "";
+        } else if (data.status == "error") {
           // TODO: Code for handling - File Doesn't Exist Error
         }
       });
     })
 
+  }
+
+  getData() {
+    return this.modelRef ? this.modelRef : this.builderModelSrvc.getModelRef(this.compConfig.val);
   }
 }
 enum MIMETYPE {
