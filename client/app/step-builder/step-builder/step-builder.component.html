@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-md-10">
           <div class="row">
-            <h4><strong>STEP {{stepIndex}}</strong>&nbsp;</h4><h4 [innerHTML]="stepText"></h4>
+            <h4><strong>STEP {{stepIndex}}</strong>&nbsp;</h4><h4 #stepTextContainer [innerHTML]="stepText"></h4>
           </div>
           <div class="row">
             <span class="tag tag-primary"><span>Task ID:&nbsp;</span> {{taskID}}  </span>&nbsp;<span class="tag tagFontNormal tag-primary"><span >Skill:&nbsp;</span> {{skillName}}</span> &nbsp; <span class="tag tag-primary"><span>Template:&nbsp;</span> {{templateName}} </span>

@@ -11,7 +11,7 @@ var mapTranslationParams = function(IOMap, stepUIState, skillRef, taskId, stepIn
      this.dbFilestoreMgr = dbFilestoreMgr;
 }
 
-module.exports.generateStepXML = function(templateId, taskId, stepIndex, skillRef, callback){
+module.exports.generateStepXML = function(templateId, taskId, stepIndex, stepText, skillRef, callback){
   
     dbFilestoreMgr.getStepUIState(taskId, stepIndex, (error, stepUIState) => {
         if(!error){
@@ -28,7 +28,7 @@ module.exports.generateStepXML = function(templateId, taskId, stepIndex, skillRe
                         dbFilestoreMgr.getSkillXML(templateId, (error, skillTemplate) => {
                             if(!error) {
                                 let xmlGenerator = new XmlGenerator();
-                                let OutputXML = xmlGenerator.generateXml(skillTemplate, IOmap);
+                                let OutputXML = xmlGenerator.generateXml(skillTemplate, IOmap, stepText);
 
                                 //Saving Step XML in File Store
                                 dbFilestoreMgr.saveStepXML(taskId, stepIndex, OutputXML, callback);
