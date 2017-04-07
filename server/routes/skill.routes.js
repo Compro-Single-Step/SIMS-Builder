@@ -111,8 +111,9 @@ router.post("/resource", (req, res) => {
     });
 });
 
-router.delete("/resource/:filePath", (req, res) => {
-     let filePath = req.params.filePath;
+router.delete("/resource/*", (req, res) => {
+     let filePath = req.params[0];
+
      skillController.removeResourceFile(filePath)
      .then((success)=> {
          res.send({
@@ -120,7 +121,8 @@ router.delete("/resource/:filePath", (req, res) => {
          })
      }, (error)=> {
          res.send({
-             "status": "error"
+             "status": "error",
+             "error": error
          })
      });
  });
