@@ -94,6 +94,7 @@ export class DropzoneComponent extends BaseComponent {
         if (data.status === "success") {
           currModelRef["displayName"] = "";
           currModelRef["path"] = "";
+          self.updateDependencies(null);
         } else if (data.status == "error") {
           // TODO: Code for handling - File Doesn't Exist Error
         }
