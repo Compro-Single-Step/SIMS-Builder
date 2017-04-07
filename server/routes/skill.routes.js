@@ -114,7 +114,7 @@ router.delete("/resource/:taskId/*", (req, res) => {
      let taskId = req.params.taskId;
      let path = req.params[0];
      let filePath = taskId + "/" + path;
-     
+
      skillController.removeResourceFile(filePath)
      .then((success)=> {
          res.send({
@@ -122,7 +122,7 @@ router.delete("/resource/:taskId/*", (req, res) => {
          })
      }, (error)=> {
          res.send({
-             "status": "error"
+             "status": error.message
          })
      });
  });
