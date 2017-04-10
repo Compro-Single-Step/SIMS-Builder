@@ -2,17 +2,17 @@
   <app-label [compConfig]="labelConfig"></app-label>
   <button class="glyphicon glyphicon-info-sign info-icon" [popover]="compConfig.desc.detailed" [popoverTitle]="compConfig.label" placement="right" triggers="focus"></button>
 </div>
-<tabset class="tabset">
+<tabset class="tabset" [ngStyle]="compConfig.rendererProperties.customCSS">
   <template [ngIf]="!dynamicMode">
     <tab *ngFor="let tabConfig of compConfig.items" customClass="customClass">
       <template tabHeading>{{tabConfig.label}}</template>
-      <app-tab-page [compConfig]="tabConfig" [ngStyle]="compConfig.cssProp"></app-tab-page>
+      <app-tab-page [compConfig]="tabConfig"></app-tab-page>
     </tab>
   </template>
   <template [ngIf]="dynamicMode">
     <tab *ngFor="let tabModel of tabs.value" customClass="customClass">
       <template tabHeading>{{tabModel.name}}</template>
-      <app-tab-page [compConfig]="compConfig.items[0]" [modelRef]="tabModel" [ngStyle]="compConfig.cssProp"></app-tab-page>
+      <app-tab-page [compConfig]="compConfig.items[0]" [modelRef]="tabModel"></app-tab-page>
     </tab>
   </template>
 </tabset>

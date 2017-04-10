@@ -90,14 +90,14 @@
               },
               "itemRenderer": "TabGroup",
               "itemType": "child",
-              "cssProp": {
-                "max-width": "450px"
-              },
               "disabled": true,
               "rendererProperties": {
                 "layout": "horizontal",
                 "dynamicMode": true,
-                "itemListRef": "{{views.1.sheets}}"
+                "itemListRef": "{{views.1.sheets}}",
+                "customCSS": {
+                  "max-width": "450px"
+                }
               },
               "items": [
                 {
@@ -349,7 +349,10 @@
               "rendererProperties": {
                 "layout": "horizontal",
                 "dynamicMode": true,
-                "itemListRef": "{{views.3.sheets}}"
+                "itemListRef": "{{views.3.sheets}}",
+                "customCSS": {
+                  "max-width": "450px"
+                }
               },
               "items": [
                 {
