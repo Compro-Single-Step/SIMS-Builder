@@ -223,9 +223,13 @@ class FileStoreController {
         });
     }
 
-    getFileFromFileStore(filepath, folder) {
+    getFileFromFileStore(filePath, folder) {
         return new Promise((resolve, reject)=> {
-            let absolutePath = folder + filepath;
+            let absolutePath = filePath;;
+            
+            if(folder) {
+                absolutePath = folder + filePath;
+            }
 
             fs.readFile(absolutePath, 'utf8', function (error, data) {
                 if(error) {
@@ -234,17 +238,6 @@ class FileStoreController {
                 else {
                     resolve(data);
                 }
-            });
-        })
-    }
-    //To be merged with above function
-    getFileFromFileStoreEnhanced(filepath) {
-        return new Promise((resolve, reject) => {
-            fs.readFile(filepath, 'utf8', function (err, data) {
-                if (err)
-                    reject(err);
-                else
-                    resolve(data);
             });
         })
     }
@@ -259,7 +252,7 @@ class FileStoreController {
                 req.body.folder = resFolderPath;
                 let destinationFolder = self.getUploadedResourceFolderPath(resFolderPath);
 
-                self.createFolderEnhanced(destinationFolder)
+                self.createFolder(destinationFolder)
                     .then((success) => {
                         callback(null, destinationFolder);
                     }, (error) => {
@@ -276,19 +269,6 @@ class FileStoreController {
         });
         let upload = multer({ storage: storage });
         return upload.fields([{ name: 'dzfile', maxCount: 1 }]);
-    }
-
-    createFolderEnhanced(folderPath) {
-        return new Promise((resolve, reject) => {
-            mkdirp(folderPath, (error) => {
-                if (error) {
-                    reject(error);
-                }
-                else {
-                    resolve(true);
-                }
-            });
-        });
     }
 
     createFolder(folderPath) {
@@ -314,19 +294,18 @@ class FileStoreController {
 
     saveFileToFileStore(filepath, fileName, file) {
         return this.createFolder(filepath)
-        .then((success)=> {
-            fs.writeFile(filepath + fileName, file, (err) => {
-                if(error) {
-                    Promise.reject(error);
-                }
-                else {
-                    Promise.resolve("saved in directory");
-                }
+            .then((success)=> {
+                fs.writeFile(filepath + fileName, file, (err) => {
+                    if(error) {
+                        Promise.reject(error);
+                    }
+                    else {
+                        Promise.resolve("saved in directory");
+                    }
+                });
+            }, (error)=> {
+                Promise.reject(error);
             });
-        }, (error)=> {
-            Promise.reject(error);
-            }
-        });
     }
 }
 

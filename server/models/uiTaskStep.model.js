@@ -21,13 +21,11 @@ uiTaskStepSchema.statics = {
                 } else {
                     let stepId = "step_" + stepIndex;
                     let stepUIState;
-                    let err;
 
                     try {
                         stepUIState = data[0].task_data[stepId];
                         resolve(stepUIState);
-                    }
-                    catch (error) {
+                    } catch (error) {
                         reject({error: "Document to corresponding task " + taskId + " doesn't exist in collection"});
                     }
                 }
@@ -46,8 +44,7 @@ uiTaskStepSchema.statics = {
             this.collection.update(condition, updateData, options, (error, success) => {
                 if(error) {
                     reject(error);
-                }
-                else {
+                } else {
                     resolve(success);
                 }
             });

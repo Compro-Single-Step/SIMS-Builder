@@ -25,16 +25,15 @@ skillConfigRepoSchema.statics = {
             projection[configType] = true;
 
             this.find({"template_id": templateId}, projection, (error, data) => {
-                if(!error) {
-                    if(data.length > 0) {
-                        resolve(data[0][configType]);
-                    }
-                    else {
+                if(error) {
+                    reject(error);
+                } else {
+                    try {
+                        let filePath = data[0][configType];
+                        resolve(filePath);
+                    } catch(error) {
                         reject("No document exist for template id " + templateId);
                     }
-                }
-                else {
-                    reject(error);
                 }
             });
         });
