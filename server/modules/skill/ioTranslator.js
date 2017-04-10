@@ -7,10 +7,11 @@ var attrParam = function(attrName, attrObject, stepUIState, skillobject ,IOMapRe
     this.skillobject = skillobject;
 }
 
-var attrTaskParam = function( taskId, stepIndex, dbFilestoreMgr){
+var attrTaskParam = function( taskId, stepIndex, stateId, dbFilestoreMgr){
     
     this.taskId = taskId;
     this.stepIndex = stepIndex;
+    this.stateId = stateId;
     this.dbFilestoreMgr = dbFilestoreMgr;
 }
 
@@ -54,7 +55,7 @@ class IOTranslator{
 
     for(var param in paramObj ){
       paramObj[param] = eval(evalexp + paramObj[param]);
-
+      
     }
     return paramObj;
   }
@@ -88,6 +89,7 @@ class IOTranslator{
       
       var iomap = attrObj.IOMap;
       var PromiseRequestsArr  = [];
+
       var self = this;
       attrObj.skillRef["init"](attrObj, function(error){
         if(!error)
@@ -103,8 +105,8 @@ class IOTranslator{
                     for(let attrName in attrSetObj){
 
                       var attrParams = new attrParam(attrName, attrSetObj[attrName], attrObj.stepUIState, attrObj.skillRef);
-                      var taskParam = new attrTaskParam(attrObj.taskId, attrObj.stepIndex, attrObj.dbFilestoreMgr);
-                      
+                      var taskParam = new attrTaskParam(attrObj.taskId, attrObj.stepIndex, stateNum, attrObj.dbFilestoreMgr);
+                      var self = this;
                       PromiseRequestsArr.push(self.genPromise(attrParams, taskParam, function(error, attrVal, preloadResArr){
                         if(!error){
                           attrSetObj[attrName] = attrVal;
@@ -113,14 +115,12 @@ class IOTranslator{
                           }
                         }
                     }));
+                    }
                   }
-                }
-              }
+                }        
             }
+          }
         }
-        
-        }
-      });
       
       Promise.all(PromiseRequestsArr).then(function(value) {
          console.log("promise all success");
@@ -133,6 +133,7 @@ class IOTranslator{
           console.log("promise all catch");
           console.log(err.message);
         });
+    });
   }
 
     appendPreloadRes(preloadResArr, IOMap){

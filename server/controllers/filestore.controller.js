@@ -6,6 +6,7 @@ const mkdirp = require('mkdirp');
 const fse = require('fs-extra');
 const ResourceUtil = require('../utils/resourceUtil');
 
+
 const fileTypeFolderMap = {
     "SKILL": config.fileStore.skillFolder,
     "RESOURCE": config.fileStore.resourceFolder,
@@ -36,9 +37,9 @@ class FileStoreController {
         return this.getTaskFolderPath(taskId, stepIdx) + stepIdx + "/";
     }
 
-    copyAssetToTaskFolder(residentPath, taskParams, callback) {
+    copyAssetToTaskFolder(srcPath, taskParams, callback) {
 
-        var filepathArr = residentPath.split("/")
+        var filepathArr = srcPath.split("/")
         var fileName = filepathArr[filepathArr.length - 1].trim();
         var fileTypeArr = fileName.split(".")
         var fileType = fileTypeArr[fileTypeArr.length - 1];
@@ -47,39 +48,71 @@ class FileStoreController {
             resFileType = resTypeMap[fileType]
         }
         var self = this;
-        self.getTaskAsset(residentPath, function (error, data) {
+
+        let src = config.fileStore.resourceFolder + srcPath;
+        let dest = config.fileStore.xmlFolder + taskParams.taskId + "/" + taskParams.stepIndex + "/";
+
+        let relativeXmlPath = this.getTaskFolderPath(taskParams.taskId, taskParams.stepIndex) + taskParams.stepIndex + "/";
+
+        if(taskParams.parentFolder){
+            dest += taskParams.parentFolder
+            relativeXmlPath += taskParams.parentFolder;
+        }
+
+        dest += fileName;
+
+        fse.copy(src, dest, function (error) {
             if (!error) {
-                self.storeTaskAsset(taskParams.taskId, taskParams.stepIndex, fileName, data, function (error, path) {
-                    if (!error) {
-                        // this.updateResourcePath(path)
-                        //returning the fileType as well
-                        callback(error, path, resFileType);
-                    }
-                    else {
-                        callback(error);
-                    }
-                });
+                callback(null, relativeXmlPath + fileName);
             }
             else {
-                callback(error)
+                callback(error);
             }
-        });
+        })
+
+
+        // self.getTaskAsset(residentPath, function (error, data) {
+        //     if (!error) {
+        //         self.storeTaskAsset(taskParams, fileName, data, function (error, path) {
+        //         // self.storeTaskAsset(taskParams.taskId, taskParams.stepIndex, fileName, data, function (error, path) {
+        //             if (!error) {
+        //                 // this.updateResourcePath(path)
+        //                 //returning the fileType as well
+        //                 callback(error, path, resFileType);
+        //             }
+        //             else {
+        //                 callback(error);
+        //             }
+        //         });
+        //     }
+        //     else {
+        //         callback(error)
+        //     }
+        // });
 
     }
     getTaskAsset(filePath, callback) {
         this.getTaskRes(filePath, callback)
     }
 
-    storeTaskAsset(taskId, stepIdx, fileName, data, callback) {
-        this.saveTaskRes(taskId, stepIdx, fileName, data, callback);
+    // storeTaskAsset(taskId, stepIdx, fileName, data, callback) {
+        storeTaskAsset(taskParams, fileName, data, callback) {
+        // this.saveTaskRes(taskId, stepIdx, fileName, data, callback);
+        this.saveTaskRes(taskParams, fileName, data, callback);
     }
 
-    saveTaskRes(taskId, stepIdx, fileName, fileContent, callback) {
+    // saveTaskRes(taskId, stepIdx, fileName, fileContent, callback) {
+    saveTaskRes(taskParams, fileName, fileContent, callback) {
 
-        var absFilePath = this.getFileStoreStepFolderPath(taskId, stepIdx);
-
+        let absFilePath = this.getFileStoreStepFolderPath(taskParams.taskId, taskParams.stepIndex);
+        let relativeXmlPath = this.getSimsXmlStepFolderPath(taskParams.taskId, taskParams.stepIndex);
+        // var stateId = 1;
+        if(taskParams.parentFolder){
+            absFilePath += taskParams.parentFolder
+            relativeXmlPath += taskParams.parentFolder;
+        }
         // var relativeXmlPath = this.getTaskFolderPath(taskId);
-        var relativeXmlPath = this.getSimsXmlStepFolderPath(taskId, stepIdx);
+        // var relativeXmlPath = this.getSimsXmlStepFolderPath(taskParams.taskId, taskParams.stepIndex);
 
         this.saveFileToFileStore(absFilePath, fileName, fileContent, function (error) {
             if (!error) {
@@ -131,7 +164,10 @@ class FileStoreController {
     readTaskRes(filepath, callback) {
         let absolutePath = config.fileStore.resourceFolder + filepath;
 
-        fs.readFile(absolutePath, 'utf8', function (err, data) {
+        fs.readFile(absolutePath, 'utf8', function (err, data, absolutePath) {
+            if(err){
+                console.log("aaaabsolutePath: ", absolutePath);
+            }
             callback(err, data);
         });
     }
