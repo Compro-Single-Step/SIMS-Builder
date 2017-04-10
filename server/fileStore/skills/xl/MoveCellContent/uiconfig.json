@@ -90,6 +90,9 @@
               },
               "itemRenderer": "TabGroup",
               "itemType": "child",
+              "cssProp": {
+                "max-width": "450px"
+              },
               "disabled": true,
               "rendererProperties": {
                 "layout": "horizontal",
