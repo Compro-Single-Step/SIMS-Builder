@@ -56,8 +56,8 @@ router.post('/stepuistate/:taskId/:stepIndex', (req, res) => {
     skillController.saveStepUIState(req.params.taskId, req.params.stepIndex, stepUIState)
     .then((data) => {
         res.send({
-                status: "success"
-            });
+            status: "success"
+        });
     }, (error)=> {
         res.send(error);
     });

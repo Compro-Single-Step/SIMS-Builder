@@ -5,8 +5,8 @@ const skillFactory  = require("./skillFactory");
 
 class UIHandler {
 
-
     getStepUIConfig(templateId, taskId, stepIndex) {
+        let self = this;
         return new Promise((resolve, reject)=> {
             Promise.all([
                 dbFilestoreManager.getUIConfig(templateId),
