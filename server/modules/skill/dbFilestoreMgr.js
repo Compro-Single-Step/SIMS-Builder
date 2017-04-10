@@ -6,7 +6,6 @@ const folderMap = FAL.fileTypeFolderMap;
 
 class DatabaseFileStoreManager {
 
-    
     copyTaskAssetFile(residentPath, taskParams, callback) {
         fsc.copyAssetToTaskFolder(residentPath, taskParams, callback);
     }
@@ -74,6 +73,10 @@ class DatabaseFileStoreManager {
     getStepUIState(taskId, stepIndex) {
         return dbController.getStepUIState(taskId, stepIndex);
     }
+    
+    getSkillHelperFile(filePath, callback) {
+        return fsc.getFileFromFileStoreEnhanced(filePath);
+    }
 
     saveStepUIState(taskId, stepIndex, stepUIData) {
         return dbController.saveStepUIState(taskId, stepIndex, stepUIData);
@@ -81,11 +84,7 @@ class DatabaseFileStoreManager {
 
     saveStepXML(taskId, stepIndex, OutputXML){
         return fsc.saveStepXML(taskId, stepIndex, OutputXML);
-	  }
-    
-    getSkillHelperFile(filePath, callback) {
-        return fsc.getFileFromFileStoreEnhanced(filePath);
-    }
+	}
 
     saveResourceFile() {
         return fsc.saveResourceFile();
