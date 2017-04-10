@@ -110,15 +110,11 @@ module.exports = class ExcelBaseSkill extends baseSkill{
         //         var requestArray = [];
         //         var preloadResArr = [];
           
-<<<<<<< HEAD
-                for(var iterator = 0 ; iterator < paramValueObj["sheets"].length; ++iterator){
-                    sheetArr[iterator] = {};
-                    sheetArr[iterator]['sheetNo'] = this.getSheetNumber(paramValueObj["sheets"][iterator].name);
-=======
+
         //         for(var iterator = 0 ; iterator < paramValueObj["sheets"].length; ++iterator){
         //             sheetArr[iterator] = {};
         //             sheetArr[iterator]['sheetNo'] = 1;
->>>>>>> develop
+
                     
         //             sheetArr[iterator]['gridImg'] = paramValueObj["sheets"][iterator].gridImage.name;
         //             preloadResArr.push({"path":""+ newFolderPath + sheetArr[iterator]['gridImg'] ,"type":"img"})
