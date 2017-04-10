@@ -8,8 +8,7 @@ class moveCellContent extends ExcelBaseSkill {
   // //init DOC JSON 
 
   init(data, callback) {
-        //var initDocJSonPath = data.stepUIState.views["1"].documentData.path;
-        var initDocJSonPath = "SKL16.XL.04.01.03.T1/1/Res1.json";
+        var initDocJSonPath = data.stepUIState.views["1"].documentData.path;
         var skilldata = {"initDocJSonPath": initDocJSonPath, "dbMgr": data.dbFilestoreMgr};
         super.init(skilldata, callback);
   }

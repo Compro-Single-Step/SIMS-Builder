@@ -169,7 +169,7 @@ module.exports = class ExcelBaseSkill extends baseSkill{
             }
             
             var sheetObject = {};
-                sheetObject["sheetNo"] = 1;
+                sheetObject["sheetNo"] = self.getSheetNumber(paramValueObj["sheets"][iterator].name);;
                 sheetObject["gridImg"] = resolveObj["gridImage"].split("/")[resolveObj["gridImage"].split("/").length - 1];
                 sheetObject["rowImg"] = resolveObj["rowImage"].split("/")[resolveObj["rowImage"].split("/").length - 1];
                 sheetObject["cellImg"] = resolveObj["cellImage"].split("/")[resolveObj["cellImage"].split("/").length - 1];

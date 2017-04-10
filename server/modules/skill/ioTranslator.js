@@ -106,7 +106,6 @@ class IOTranslator{
 
                       var attrParams = new attrParam(attrName, attrSetObj[attrName], attrObj.stepUIState, attrObj.skillRef);
                       var taskParam = new attrTaskParam(attrObj.taskId, attrObj.stepIndex, stateNum, attrObj.dbFilestoreMgr);
-                      var self = this;
                       PromiseRequestsArr.push(self.genPromise(attrParams, taskParam, function(error, attrVal, preloadResArr){
                         if(!error){
                           attrSetObj[attrName] = attrVal;
