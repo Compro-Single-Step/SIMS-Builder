@@ -22,6 +22,11 @@ $lightgray: #d3d3d3;
     }
   }
 }
+.loader {
+  height: calc(100% - 10rem);
+  padding-left: calc(50% - 50px);
+  padding-top: calc(50% - 15rem - 100px);
+}
 #footer {
   height: 4rem;
   padding-top: 1rem;
