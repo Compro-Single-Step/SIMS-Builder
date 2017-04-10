@@ -9,22 +9,27 @@ const uiTaskStepSchema = new Schema({
 uiTaskStepSchema.statics = {
     getStepUI: function(taskId, stepIndex) {
         return new Promise((resolve, reject)=> {
+            
             let condition = {"task_id": taskId};
-            let projection = {"_id": false, "task_data": true};
+            let jsonKey = "task_data.step_" + stepIndex;
+            let projection = {"_id": false};
+            projection[jsonKey] = true;
 
             this.find(condition, projection, (error, data) => {
-                if(!error) {
-                    if(data.length > 0) {
-                        let stepId = "step_" + stepIndex;
-                        let stepUIState = data[0].task_data[stepId];
+                if(error) {
+                    reject(error);
+                } else {
+                    let stepId = "step_" + stepIndex;
+                    let stepUIState;
+                    let err;
+
+                    try {
+                        stepUIState = data[0].task_data[stepId];
                         resolve(stepUIState);
                     }
-                    else {
+                    catch (error) {
                         reject({error: "Document to corresponding task " + taskId + " doesn't exist in collection"});
                     }
-                }
-                else {
-                    reject(error);
                 }
             });
         });

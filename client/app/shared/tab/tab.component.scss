@@ -1,11 +1,15 @@
 @import "../../../../node_modules/bootstrap/scss/variables";
-.heading {
-  display: flex;
-}
-app-wrapper {
+
+@import "../styles.scss";
+app-tab-page {
 	border: 1px solid $pre-border-color;
 	padding-left: 1rem;
 }
 :host /deep/ .customClass {
  	height: 2.5rem;
+}
+
+.tabset{
+	display: block;
+	max-width: 1000px;
 }

@@ -21,7 +21,7 @@ export class TaskDataService {
   getTaskData(taskId: string): Observable<Task> {
    let params = new URLSearchParams();
     params.set('TaskId', taskId);
-    if (this.data && this.taskId == taskId){
+    if (this.data && this.taskId.toUpperCase() == taskId.toUpperCase()){  //check if data for the particular task already exists
       return Observable.of(this.data);
     }
     else{

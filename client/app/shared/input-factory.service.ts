@@ -12,7 +12,7 @@ export class InputFactoryService {
 
   constructor(private componentFactoryResolver: ComponentFactoryResolver) { }
 
-  public createComp (vcref: ViewContainerRef, itemConfig){
+  public createComp(vcref: ViewContainerRef, itemConfig, modelRef?) {
 
     /**
      * [resolveComponentFactory - Get the factory object to create the component]
@@ -31,7 +31,12 @@ export class InputFactoryService {
     let comp = component.create(injector);
 
     // add Data to the instance of the Component.
-    comp.instance["setData"](itemConfig);
+    if (modelRef) {
+      comp.instance["setData"](itemConfig, modelRef);
+    }
+    else {
+      comp.instance["setData"](itemConfig);
+    }
 
     // add the newly created component to the DOM ..
     vcref.insert(comp.hostView);
@@ -43,7 +48,7 @@ export class InputFactoryService {
 
   // Map that Maps itemRenderer property with the Component CLass
   //TODO: Error handling.
-  private DynamicCompMap(type){
+  private DynamicCompMap(type) {
     return {
       "Panel": PanelComponent,
       "TextBox": TextBoxComponent,

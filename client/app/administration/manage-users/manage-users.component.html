@@ -1,0 +1,16 @@
+<div class="clearfix">
+    <ul class="nav nav-tabs float-xs-left" id="myTab" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" id="vieUser-tab" data-toggle="tab" (click)="switchView('vieUser-tab')" role="tab" aria-controls="basic" aria-expanded="true">View Users</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" id="addUser-tab" data-toggle="tab" (click)="switchView('addUser-tab')" role="tab" aria-controls="assumtion" aria-expanded="false">Add User</a>
+      </li>
+    </ul>
+</div>
+<div class="tab-content mb-lg" id="myTabContent">
+    <div role="tabpanel" class="tab-pane active in clearfix" id="basic" aria-labelledby="basic-tab" aria-expanded="true">
+      <router-outlet></router-outlet>
+    </div>
+</div>
+

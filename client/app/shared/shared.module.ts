@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 // Imports from External Libraries
-import { TabsModule } from 'ng2-bootstrap';
+import { TabsModule, PopoverModule } from 'ng2-bootstrap';
+
 
 //Importing the components available for dynamic insertion.
 import { TextBoxComponent } from './text-box/text-box.component';
@@ -16,15 +17,16 @@ import { ButtonComponent } from './button/button.component';
 
 import { InputFactoryService } from './input-factory.service';
 import { DropzoneComponent } from './dropzone/dropzone.component';
-import { WrapperComponent } from './wrapper/wrapper.component';
+import { TabPageComponent } from './tab-page/tab-page.component';
 
 @NgModule({
   imports: [
     CommonModule,
     TabsModule.forRoot(),
+    PopoverModule.forRoot(),
     FormsModule
   ],
-  declarations: [TextBoxComponent, PanelComponent, LabelComponent, TagComponent, SelectComponent, TabComponent, ButtonComponent, DropzoneComponent, WrapperComponent],
+  declarations: [TextBoxComponent, PanelComponent, LabelComponent, TagComponent, SelectComponent, TabComponent, ButtonComponent, DropzoneComponent, TabPageComponent],
   entryComponents: [TextBoxComponent, PanelComponent, SelectComponent, TabComponent, ButtonComponent, DropzoneComponent],
   providers: [InputFactoryService]
 })

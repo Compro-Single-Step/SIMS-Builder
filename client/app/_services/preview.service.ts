@@ -9,14 +9,14 @@ previewWindow;
 res;
   constructor(private http: HttpClient) { }
 
-  launchStepPreviewWindow(taskId:string,stepId:string,templateId:string){
+  launchStepPreviewWindow(taskId:string,stepId:string,templateId:string, stepText: string){
     let previewparams = new URLSearchParams();
     previewparams.set('taskId', taskId);
     previewparams.set('stepNo', stepId);
-    this.http.get("/api/skill/xmlgeneration/"+templateId+"/"+taskId+"/"+stepId)
+    this.http.post("/api/skill/xmlgeneration", {templateId: templateId,taskId: taskId, stepId: stepId, stepText: stepText})
         .subscribe(res =>{
-          this.res = res["_body"];
-          if(this.res == "success"){
+          this.res = res.json();
+          if(this.res.status == "success"){
             this.http.get("/api/taskPreview",{ search: previewparams })
                 .subscribe(
                   res => {
@@ -31,7 +31,11 @@ res;
 
                 });
           }
+          else{
+                      return this.res["Error"]
+                    }
         });
+        
   }
 }
 

@@ -28,13 +28,17 @@ class SkillController {
         return dbFilestoreMgr.saveStepUIState(taskId, stepIndex, stepUIData);
     }
 
-    generateXML(templateId, taskId, stepIdx, callback) {
+    generateXML(templateId, taskId, stepIdx, stepText, callback) {
         var skill = skillFactory.getSkillObject(templateId);
-        xmlGenerationHandler.generateStepXML(templateId, taskId, stepIdx, skill, callback);
+        xmlGenerationHandler.generateStepXML(templateId, taskId, stepIdx, stepText, skill, callback);
     }
 
     saveResourceFile() {
         return dbFilestoreMgr.saveResourceFile();
+    }
+
+    removeResourceFile(filePath) {
+        return dbFilestoreMgr.removeResourceFile(filePath);
     }
 };
 

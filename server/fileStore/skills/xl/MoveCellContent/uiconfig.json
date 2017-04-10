@@ -27,7 +27,7 @@
               "label": "Document Title",
               "desc": {
                 "basic": "Name of the document to be displayed in Ribbon.",
-                "detailed": ""
+                "detailed": "Document Name which is shown in the central top area in the Ribbon is to be mentioned here."
               },
               "itemRenderer": "TextBox",
               "itemType": "leaf",
@@ -35,7 +35,7 @@
               "rendererProperties": {
                 "dataType": "string"
               },
-              "val": "views[1].documentTitle"
+              "val": "{{views.1.documentTitle}}"
             }
           ]
         },
@@ -60,7 +60,7 @@
               "label": "Document Data",
               "desc": {
                 "basic": "Upload a JSON file which is used to configure the Excel workbook in SIMS.",
-                "detailed": ""
+                "detailed": "A JSON file, which will be used to configure the Excel workbook in SIMS, is required to be uploaded here. This file can be generated from here(Hyperlink pointing to the JSON creation tool spec)."
               },
               "itemRenderer": "Dropzone",
               "itemType": "leaf",
@@ -70,36 +70,40 @@
               },
               "dependants": [
                 {
-                  "modelReference": "views.1.sheets",
+                  "modelReference": "{{views.1.sheets.value}}",
                   "rule": "getSheetNameAndSheetCountFromInitDocJSON"
                 },
                 {
-                  "modelReference": "views.2.sheetInAction",
+                  "modelReference": "{{views.2.sheetInAction.options.value}}",
                   "rule": "addSheetNamesToDropdown"
                 }
               ],
               "mandatory": true,
-              "val": "views[1].documentData"
+              "val": "{{views.1.documentData}}"
             },
             {
               "id": "1.2.2",
               "label": "Worksheet Images",
               "desc": {
                 "basic": "Upload the images which are used to render worksheets in SIMS.",
-                "detailed": ""
+                "detailed": "This section requires 4 separate images to be uploaded. These images will be used to render a worksheet in SIMS. Details on how to get these images  can be accessed from here (Hyperlink pointing to the Image creation process spec).Images for any number of sheets can be uploaded by pressing the (+) button shown in the right."
               },
               "itemRenderer": "TabGroup",
               "itemType": "child",
               "disabled": true,
               "rendererProperties": {
-                "layout": "horizontal"
+                "layout": "horizontal",
+                "dynamicMode": true,
+                "itemListRef": "{{views.1.sheets}}"
               },
               "items": [
                 {
                   "id": "1.2.2.1",
-                  "label": "views[1].sheets[1].name",
                   "itemRenderer": "TabPage",
                   "itemType": "",
+                  "rendererProperties": {
+                    "dynamicMode": true
+                  },
                   "items": [
                     {
                       "id": "GridImage",
@@ -107,6 +111,7 @@
                       "itemType": "leaf",
                       "rendererProperties": {
                         "placeHolder": "Drop Grid Image",
+                        "dynamicMode": true,
                         "dataType": "img"
                       },
                       "pos": "x,y",
@@ -114,7 +119,7 @@
                         "height": "200px",
                         "width": "200px"
                       },
-                      "val": "views[1].sheets[1].gridImage"
+                      "relVal": "gridImage"
                     },
                     {
                       "id": "RowImage",
@@ -122,6 +127,7 @@
                       "itemType": "leaf",
                       "rendererProperties": {
                         "placeHolder": "Drop Row Image",
+                        "dynamicMode": true,
                         "dataType": "img"
                       },
                       "pos": "x,y",
@@ -129,7 +135,7 @@
                         "height": "200px",
                         "width": "200px"
                       },
-                      "val": "views[1].sheets[1].rowImage"
+                      "relVal": "rowImage"
                     },
                     {
                       "id": "ColumnImage",
@@ -137,6 +143,7 @@
                       "itemType": "leaf",
                       "rendererProperties": {
                         "placeHolder": "Drop Column Image",
+                        "dynamicMode": true,
                         "dataType": "img"
                       },
                       "pos": "x,y",
@@ -144,7 +151,7 @@
                         "height": "200px",
                         "width": "200px"
                       },
-                      "val": "views[1].sheets[1].columnImage"
+                      "relVal": "columnImage"
                     },
                     {
                       "id": "CellImage",
@@ -152,6 +159,7 @@
                       "itemType": "leaf",
                       "rendererProperties": {
                         "placeHolder": "Drop Cell Image",
+                        "dynamicMode": true,
                         "dataType": "img"
                       },
                       "pos": "x,y",
@@ -159,7 +167,7 @@
                         "height": "200px",
                         "width": "200px"
                       },
-                      "val": "views[1].sheets[1].cellImage"
+                      "relVal": "cellImage"
                     }
                   ]
                 }
@@ -188,7 +196,7 @@
               "label": "Taskbar Preview Image",
               "desc": {
                 "basic": "Upload taskbar preview image.",
-                "detailed": ""
+                "detailed": "When a user hovers mouse over the application iconm show in the task bar an image gets opened in the tool tip. That image has to be uploaded here."
               },
               "itemRenderer": "Dropzone",
               "itemType": "leaf",
@@ -197,7 +205,7 @@
                 "placeHolder": "Drop image here to upload"
               },
               "mandatory": false,
-              "val": "views[1].taskbarPreviewImage"
+              "val": "{{views.1.taskbarPreviewImage}}"
             }
           ]
         },
@@ -240,25 +248,28 @@
               "label": "Sheet in Action",
               "desc": {
                 "basic": "Name of the sheet in which the move cell content skill is to be performed.",
-                "detailed": ""
+                "detailed": "Name of the sheet on which the move cell content skill has to be performed is to be mentioned here."
               },
               "itemRenderer": "Dropdown",
+              "rendererProperties": {
+                "itemListRef": "{{views.2.sheetInAction.options}}"
+              },
               "itemType": "leaf",
               "mandatory": true,
               "dependants": [
                 {
-                  "modelReference": "3.1.2",
-                  "rule": ""
+                  "modelReference": "{{views.3.sheets.value.0}}",
+                  "rule": "updateSheetNameUsingDropdown"
                 }
               ],
-              "val": "views[2].sheetInAction"
+              "val": "{{views.2.sheetInAction.selectedOption}}"
             },
             {
               "id": "2.1.2",
               "label": "Source Range",
               "desc": {
                 "basic": "Cell range containing the data to be moved.",
-                "detailed": ""
+                "detailed": "Cell range containing the data to be moved."
               },
               "itemRenderer": "TextBox",
               "itemType": "leaf",
@@ -266,19 +277,19 @@
               "rendererProperties": {
                 "dataType": "string"
               },
-              "val": "views[2].sourceRange"
+              "val": "{{views.2.sourceRange}}"
             },
             {
               "id": "2.1.3",
               "label": "Destination Range",
               "desc": {
                 "basic": "Cell Range where the data is to be placed.",
-                "detailed": ""
+                "detailed": "Cell range where the data has to be moved."
               },
               "itemRenderer": "TextBox",
               "itemType": "leaf",
               "mandatory": true,
-              "val": "views[2].destinationRange"
+              "val": "{{views.2.destinationRange}}"
             }
           ]
         }
@@ -311,7 +322,7 @@
               "label": "Workbook Data",
               "desc": {
                 "basic": "Upload JSON file containing the changes made in the worksheet after moving the cell range.",
-                "detailed": ""
+                "detailed": "A JSON file is to be provided which will be utilised to display the necessary changes in the worksheet after performing the skill. This file can be generated from here(Hyperlink pointing to the JSON creation tool spec)."
               },
               "itemRenderer": "Dropzone",
               "itemType": "leaf",
@@ -320,27 +331,31 @@
                 "placeHolder": "Drop JSON file here to upload"
               },
               "mandatory": true,
-              "val": "views[3].workbookData"
+              "val": "{{views.3.workbookData}}"
             },
             {
               "id": "3.1.2",
               "label": "Worksheet Images",
               "desc": {
                 "basic": "Upload the images containing the changes made in the worksheet after moving the cell range.",
-                "detailed": ""
+                "detailed": "This section requires 4 separate images to be uploaded. These images will be used to render a worksheet in SIMS. Details on how to get these images  can be accessed from here (Hyperlink pointing to the Image creation process spec).Images for any number of sheets can be uploaded by pressing the (+) button shown in the right."
               },
               "itemRenderer": "TabGroup",
               "itemType": "child",
               "disabled": true,
               "rendererProperties": {
-                "layout": "horizontal"
+                "layout": "horizontal",
+                "dynamicMode": true,
+                "itemListRef": "{{views.3.sheets}}"
               },
               "items": [
                 {
                   "id": "3.1.2.1",
-                  "label": "views[3].sheets[1].name",
                   "itemRenderer": "TabPage",
                   "itemType": "",
+                  "rendererProperties": {
+                    "dynamicMode": true
+                  },
                   "items": [
                     {
                       "id": "GridImage",
@@ -348,6 +363,7 @@
                       "itemType": "leaf",
                       "rendererProperties": {
                         "placeHolder": "Drop Grid Image",
+                        "dynamicMode": true,
                         "dataType": "img"
                       },
                       "pos": "x,y",
@@ -355,7 +371,7 @@
                         "height": "200px",
                         "width": "200px"
                       },
-                      "val": "views[3].sheets[1].gridImage"
+                      "relVal": "gridImage"
                     },
                     {
                       "id": "RowImage",
@@ -363,6 +379,7 @@
                       "itemType": "leaf",
                       "rendererProperties": {
                         "placeHolder": "Drop Row Image",
+                        "dynamicMode": true,
                         "dataType": "img"
                       },
                       "pos": "x,y",
@@ -370,7 +387,7 @@
                         "height": "200px",
                         "width": "200px"
                       },
-                      "val": "views[3].sheets[1].rowImage"
+                      "relVal": "rowImage"
                     },
                     {
                       "id": "ColumnImage",
@@ -378,6 +395,7 @@
                       "itemType": "leaf",
                       "rendererProperties": {
                         "placeHolder": "Drop Column Image",
+                        "dynamicMode": true,
                         "dataType": "img"
                       },
                       "pos": "x,y",
@@ -385,7 +403,7 @@
                         "height": "200px",
                         "width": "200px"
                       },
-                      "val": "views[3].sheets[1].columnImage"
+                      "relVal": "columnImage"
                     },
                     {
                       "id": "CellImage",
@@ -393,6 +411,7 @@
                       "itemType": "leaf",
                       "rendererProperties": {
                         "placeHolder": "Drop Cell Image",
+                        "dynamicMode": true,
                         "dataType": "img"
                       },
                       "pos": "x,y",
@@ -400,7 +419,7 @@
                         "height": "200px",
                         "width": "200px"
                       },
-                      "val": "views[3].sheets[1].cellImage"
+                      "relVal": "cellImage"
                     }
                   ]
                 }

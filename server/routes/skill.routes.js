@@ -52,24 +52,33 @@ router.get('/stepuiconfig/:templateId/:taskId/:stepIndex', (req, res) => {
 
 router.post('/stepuistate/:taskId/:stepIndex', (req, res) => {
     let stepUIState = req.body.stepUIState;
+
     skillController.saveStepUIState(req.params.taskId, req.params.stepIndex, stepUIState)
     .then((data) => {
-        res.send(data);
+        res.send({
+                status: "success"
+            });
     }, (error)=> {
         res.send(error);
     });
 });
 
-router.get('/xmlgeneration/:templateId/:taskid/:stepidx', (req, res) => {
-    let templateId = req.params.templateId;
-    let taskId = req.params.taskid;
-    let stepIdx = req.params.stepidx;
+router.post('/xmlgeneration', (req, res) => {
+    let templateId = req.body.templateId;
+    let taskId = req.body.taskId;
+    let stepIdx = req.body.stepId;
+    let stepText = req.body.stepText;
     
-    skillController.generateXML(templateId, taskId, stepIdx, (error) => {
+    skillController.generateXML(templateId, taskId, stepIdx, stepText, (error) => {
         if (!error) {
-            res.send("success");
+            res.send({
+                status: "success"
+            });
         } else {
-            res.send(error);
+            res.send({
+                status: "Error",
+                Error: error
+            });
         }
     });
 });
@@ -90,5 +99,21 @@ router.post("/resource", (req, res) => {
         }
     });
 });
+
+router.delete("/resource/*", (req, res) => {
+     let filePath = req.params[0];
+
+     skillController.removeResourceFile(filePath)
+     .then((success)=> {
+         res.send({
+             "status": "success"
+         })
+     }, (error)=> {
+         res.send({
+             "status": "error",
+             "error": error
+         })
+     });
+ });
 
 module.exports = router;

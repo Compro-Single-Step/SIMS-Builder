@@ -15,5 +15,4 @@ class DatabaseController {
         return skillConfigRepoModel.getSkillConfigPath(templateId, configType);
     }
 }
-
 module.exports = new DatabaseController();
