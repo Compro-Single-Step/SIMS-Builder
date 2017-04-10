@@ -8,9 +8,16 @@ $lightgray: #d3d3d3;
 }
 #header {
   height: 6rem;
-  padding-top: $spacer;
   background-color: $body-bg;
   border-bottom: 3px solid $lightgray;
+}
+.step_text {
+  display: inline-block;
+  height: 3.5rem;
+  overflow-y: auto;
+  span {
+    font-size: 1.5rem;
+  }
 }
 .body-container {
   height: calc(100% - 10rem);
