@@ -12,7 +12,7 @@ export class itemSchema {
   items?: Array<itemSchema>;
   itemRenderer?: string;
   rendererProperties?: any;
-  cssProp?: Object;
+  style?: Object;
   val?: string;
 
   constructor() {
@@ -30,7 +30,7 @@ export class itemSchema {
     this.itemRenderer = "";
     this.rendererProperties = {};
     this.val = "";
-    this.cssProp = {};
+    this.style = {};
   }
 }
 

@@ -95,7 +95,7 @@
                 "layout": "horizontal",
                 "dynamicMode": true,
                 "itemListRef": "{{views.1.sheets}}",
-                "customCSS": {
+                "style": {
                   "max-width": "450px"
                 }
               },
@@ -350,7 +350,7 @@
                 "layout": "horizontal",
                 "dynamicMode": true,
                 "itemListRef": "{{views.3.sheets}}",
-                "customCSS": {
+                "style": {
                   "max-width": "450px"
                 }
               },
