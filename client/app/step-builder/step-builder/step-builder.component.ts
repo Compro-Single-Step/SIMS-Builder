@@ -113,17 +113,20 @@ export class StepBuilderComponent implements OnInit {
     setSelectedView(viewNumber) {
         this.selectedView = viewNumber;
     }
-
-    onClose() {
+    closeStepbuilder () {
+        this.checkForModelChange()
+        this.modelChecker.unsubscribe();
         this.router.navigate(["/task", this.taskID]);
+    }
+    onClose() {
+        // TODO: Ask User if they really want to close the step builder
+        this.closeStepbuilder();
     }
 
     lauchPreviewTask() {
         this.previewService.launchStepPreviewWindow(this.taskID, this.stepIndex, "movecellcontent", this.stepTextContainer.nativeElement.textContent);
     }
     onFinish() {
-        this.checkForModelChange()
-        this.modelChecker.unsubscribe();
-        this.router.navigate(["/task", this.taskID]);
+        this.closeStepbuilder();
     }
 }
