@@ -28,9 +28,9 @@ class SkillController {
         return dbFilestoreMgr.saveStepUIState(taskId, stepIndex, stepUIData);
     }
 
-    generateXML(templateId, taskId, stepIdx, stepText, callback) {
+    generateXML(templateId, taskId, stepIdx, stepText) {
         var skill = skillFactory.getSkillObject(templateId);
-        xmlGenerationHandler.generateStepXML(templateId, taskId, stepIdx, stepText, skill, callback);
+        return xmlGenerationHandler.generateStepXML(templateId, taskId, stepIdx, stepText, skill);
     }
 
     saveResourceFile() {

@@ -69,17 +69,17 @@ router.post('/xmlgeneration', (req, res) => {
     let stepIdx = req.body.stepId;
     let stepText = req.body.stepText;
     
-    skillController.generateXML(templateId, taskId, stepIdx, stepText, (error) => {
-        if (!error) {
-            res.send({
-                status: "success"
-            });
-        } else {
-            res.send({
-                status: "Error",
-                Error: error
-            });
-        }
+    skillController.generateXML(templateId, taskId, stepIdx, stepText)
+    .then( msg => {
+        res.send({
+            status: "success"
+        });
+    }) 
+    .catch( error => {
+        res.send({
+            status: "Error",
+            error: error
+        });
     });
 });
 
