@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { BaseComponent } from '../base.component';
-import { itemSchema, itemDataModel } from '../UIConfig.model';
+import { itemSchema } from '../UIConfig.model';
 import { LabelTypes } from '../enums';
 
 @Component({

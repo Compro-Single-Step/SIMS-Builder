@@ -26,7 +26,7 @@ export class StepBuilderComponent implements OnInit {
     skillName: string;
     templateName: string;
     stepText: string;
-
+    modelChecker;
     @ViewChild('stepTextContainer') stepTextContainer;
 
     constructor(el: ElementRef, private route: ActivatedRoute, private router: Router, private bds: BuilderDataService, private previewService: PreviewService, private tds: TaskDataService) {
@@ -45,7 +45,7 @@ export class StepBuilderComponent implements OnInit {
         });
         jQuery(window).on('sn:resize', this.initScroll.bind(this));
         this.initScroll();
-        IntervalObservable.create(5000).subscribe(() => this.checkForModelChange());
+        this.modelChecker = IntervalObservable.create(5000).subscribe(() => this.checkForModelChange());
         this.route.params.subscribe((params: Params) => {
             this.taskID = params["taskId"];
             this.stepIndex = params["stepIndex"];
@@ -113,12 +113,20 @@ export class StepBuilderComponent implements OnInit {
     setSelectedView(viewNumber) {
         this.selectedView = viewNumber;
     }
-
-    onClose() {
+    closeStepbuilder () {
+        this.checkForModelChange()
+        this.modelChecker.unsubscribe();
         this.router.navigate(["/task", this.taskID]);
+    }
+    onClose() {
+        // TODO: Ask User if they really want to close the step builder
+        this.closeStepbuilder();
     }
 
     lauchPreviewTask() {
         this.previewService.launchStepPreviewWindow(this.taskID, this.stepIndex, "movecellcontent", this.stepTextContainer.nativeElement.textContent);
+    }
+    onFinish() {
+        this.closeStepbuilder();
     }
 }

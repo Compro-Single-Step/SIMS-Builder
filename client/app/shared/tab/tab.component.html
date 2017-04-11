@@ -2,7 +2,7 @@
   <app-label [compConfig]="labelConfig"></app-label>
   <button class="glyphicon glyphicon-info-sign info-icon" [popover]="compConfig.desc.detailed" [popoverTitle]="compConfig.label" placement="right" triggers="focus"></button>
 </div>
-<tabset class="tabset">
+<tabset class="tabset" [ngStyle]="compConfig.rendererProperties.style">
   <template [ngIf]="!dynamicMode">
     <tab *ngFor="let tabConfig of compConfig.items" customClass="customClass">
       <template tabHeading>{{tabConfig.label}}</template>
