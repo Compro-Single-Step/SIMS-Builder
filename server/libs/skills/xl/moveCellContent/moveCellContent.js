@@ -5,14 +5,14 @@
 const ExcelBaseSkill = require("../common/xlSkill");
 
 class moveCellContent extends ExcelBaseSkill {
-  // //init DOC JSON 
-
+  
   init(data, callback) {
         var initDocJSonPath = data.stepUIState.views["1"].documentData.path;
         var skilldata = {"initDocJSonPath": initDocJSonPath, "dbMgr": data.dbFilestoreMgr};
         super.init(skilldata, callback);
   }
 
+  //init DOC JSON 
   createJsonPath(skillParams, callback) {
 
     var taskParams = skillParams.taskParams;
