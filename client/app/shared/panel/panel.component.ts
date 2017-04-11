@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewContainerRef, ViewChild, Injector } from '@angular/core';
-import { ContainerComponent } from '../element-container.component';
+import { ContainerComponent } from '../container.component';
 import { InputFactoryService } from '../input-factory.service';
 import { itemSchema } from '../UIConfig.model';
 import { LabelTypes } from '../enums';

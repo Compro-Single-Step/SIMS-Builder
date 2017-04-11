@@ -1,5 +1,5 @@
 import { Component, ViewContainerRef, Injector, ViewChild, Input } from '@angular/core';
-import { ContainerComponent } from '../element-container.component';
+import { ContainerComponent } from '../container.component';
 import { InputFactoryService } from '../input-factory.service';
 
 @Component({
