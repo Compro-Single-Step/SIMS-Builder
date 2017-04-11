@@ -310,6 +310,10 @@ class FileStoreController {
             }
         });
     }
+
+     getResourcePath(filePath, folder){
+        return folder + filePath;
+     }
 }
 
 module.exports.fileStoreController = new FileStoreController();

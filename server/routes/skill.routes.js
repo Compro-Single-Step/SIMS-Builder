@@ -111,6 +111,19 @@ router.post("/resource", (req, res) => {
     });
 });
 
+router.get("/resource/*", (req, res) => {
+    
+    let filePath = req.params[0];
+    res.sendFile(skillController.getResource(filePath), null, error => {
+        if(error) {
+            res.send({
+                status: error.status,
+                error: "File not found"
+            });
+        }
+    });
+});
+
 router.delete("/resource/*", (req, res) => {
      let filePath = req.params[0];
 
@@ -118,12 +131,12 @@ router.delete("/resource/*", (req, res) => {
      .then((success)=> {
          res.send({
              "status": "success"
-         })
+         });
      }, (error)=> {
          res.send({
              "status": "error",
              "error": error
-         })
+         });
      });
  });
 

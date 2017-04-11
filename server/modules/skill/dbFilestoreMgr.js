@@ -104,8 +104,12 @@ class DatabaseFileStoreManager {
     }
 
     removeResourceFile(filePath) {
-         return fsc.removeResourceFile(filePath);
-     }
+        return fsc.removeResourceFile(filePath);
+    }
+
+    getResource(filePath){
+        return fsc.getResourcePath(filePath, folderMap.RESOURCE);
+    }
 }
 
 module.exports = new DatabaseFileStoreManager();
