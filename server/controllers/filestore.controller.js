@@ -307,6 +307,10 @@ class FileStoreController {
                 Promise.reject(error);
             });
     }
+
+     getResourcePath(filePath, folder){
+        return folder + filePath;
+     }
 }
 
 module.exports.fileStoreController = new FileStoreController();
