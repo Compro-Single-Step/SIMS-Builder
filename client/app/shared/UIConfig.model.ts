@@ -12,6 +12,7 @@ export class itemSchema {
   items?: Array<itemSchema>;
   itemRenderer?: string;
   rendererProperties?: any;
+  style?: Object;
   val?: string;
 
   constructor() {
@@ -29,6 +30,7 @@ export class itemSchema {
     this.itemRenderer = "";
     this.rendererProperties = {};
     this.val = "";
+    this.style = {};
   }
 }
 
