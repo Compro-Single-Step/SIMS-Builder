@@ -21,7 +21,7 @@
 </div>
 <div class="row">
    <div class="col-md-12">
-      <taskbuilder-taskstep *ngFor="let step of StepData" [stepData]="step"></taskbuilder-taskstep>
+      <taskbuilder-taskstep *ngFor="let step of StepData;let i = index" [stepData]="step" [selectedTemplate]="SelectedTemplate" [selectedStep]="SelectedStep" (ModalWindowUpdateEvent)="modalWindowUpdateListener($event,i)"></taskbuilder-taskstep>
    </div>
 </div>
 <div class="row" >
@@ -38,4 +38,28 @@
 				</button>
 			</div>
    </div>
+</div>
+<div bsModal #modalWindow="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button (click)="modalWindow.hide()" aria-label="Close" class="close" type="button">
+          <span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title text-xs-center fw-bold mt" id="myModalLabel18">Select the Template to be used for the Step.</h4>
+      </div>
+      <div class="modal-body">
+        <ul class="list-group templateList">
+          <li class="list-group-item" *ngFor="let template of templateOptions" (dblclick)="setTempalateMap(template.name)" (click)="selectTemplate($event)">{{template.name}}</li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+         <div class="pull-right">
+          <button (click) = "callSetTemplate()"class="btn btn-inverse mr-1">
+            OK
+          </button>
+			  </div>
+      </div>
+    </div>
+  </div>  
 </div>

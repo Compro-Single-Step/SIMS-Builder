@@ -5,7 +5,13 @@
     margin-left: 28px;
     margin-top: 2px;
 }
+.templateList li:hover{
+  background-color: $pre-bg;
+}
+.templateList .selected{
+    background-color: $pre-bg;// set variable  $pre-bg
 
+}  
 .template_label{
   font-size: 14px;
   padding: 0px;

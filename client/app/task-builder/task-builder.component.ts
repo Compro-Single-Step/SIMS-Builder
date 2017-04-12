@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PreviewService } from '../_services/preview.service' 
+import { PreviewService } from '../_services/preview.service';
+import { TaskDataService } from '../_services/taskData.service';
+import { ModalDirective } from 'ng2-bootstrap/modal';
 
+declare var jQuery: any; // for template selection bnx, can be renmoved later
 @Component({
   selector: 'app-task-builder',
   templateUrl: './task-builder.component.html',
@@ -12,12 +15,25 @@ export class TaskBuilderComponent implements OnInit {
  TaskData = {};
  AppImage;
  errorMessage;
- constructor(private route: ActivatedRoute,private previewService:PreviewService ,
+ templateOptions = [];
+ SelectedTemplate="";
+ SelectedStep = 0;
+ selectedTab="";
+ @ViewChild('modalWindow') public modalWindow:ModalDirective;
+ constructor(private route: ActivatedRoute,private previewService:PreviewService ,private taskDataService:TaskDataService, 
     private router: Router) { 
 	}
 
  ngOnInit(): void {
 	 this.initialiseTaskData();
+	 this.getTemplateOptions();
+	//  jQuery(".templateList li").click(function(){
+	// 	jQuery(this).addClass("selected").siblings().removeClass("selected"); 
+	// 	});
+ }
+ selectTemplate($event){
+	 jQuery($event.currentTarget).addClass("selected").siblings().removeClass("selected");
+	 this.selectedTab = jQuery($event.currentTarget).text();
  }
 initialiseTaskData() {
    	this.route.data
@@ -45,5 +61,25 @@ initialiseTaskData() {
 	}
 	lauchPreviewTask(){
 		// this.previewService.launchPreviewWindow(this.TaskData["id"]);
+	}
+	getTemplateOptions(){
+			this.taskDataService.getTemplateOptions()
+                     .subscribe(
+                       data => this.templateOptions = data.templateOptions);
+	}
+	modalWindowUpdateListener(event,index){
+		if(event == "show"){
+			this.SelectedStep = index+1;
+			this.modalWindow.show();			
+		}
+		else{
+			this.modalWindow.hide();
+		}
+	}
+	setTempalateMap(selectedTemplate){
+		 this.SelectedTemplate= selectedTemplate;
+	}
+	callSetTemplate(){
+		this.setTempalateMap(this.selectedTab);
 	}
 }
