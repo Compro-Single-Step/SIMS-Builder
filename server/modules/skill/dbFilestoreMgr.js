@@ -94,7 +94,7 @@ class DatabaseFileStoreManager {
         return fsc.removeResourceFile(filePath);
     }
 
-    getResource(filePath){
+    getResourcePath(filePath){
         return fsc.getResourcePath(filePath, folderMap.RESOURCE);
     }
 }

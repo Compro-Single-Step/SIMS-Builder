@@ -103,7 +103,7 @@ router.post("/resource", (req, res) => {
 router.get("/resource/*", (req, res) => {
     
     let filePath = req.params[0];
-    res.sendFile(skillController.getResource(filePath), null, error => {
+    res.sendFile(skillController.getResourcePath(filePath), null, error => {
         if(error) {
             res.send({
                 status: error.status,

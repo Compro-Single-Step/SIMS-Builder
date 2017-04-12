@@ -41,8 +41,8 @@ class SkillController {
         return dbFilestoreMgr.removeResourceFile(filePath);
     }
 
-    getResource(filePath){
-        return dbFilestoreMgr.getResource(filePath);
+    getResourcePath(filePath){
+        return dbFilestoreMgr.getResourcePath(filePath);
     }
 };
 
