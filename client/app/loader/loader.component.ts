@@ -9,9 +9,9 @@ import { LoaderService } from '../_services/loader.service';
 
 export class LoaderComponent {
   
-  showLoader;
+  loader;
 
   constructor (private loaderService: LoaderService) {
-    this.showLoader = loaderService.getLoaderVisibility();
+    this.loader = loaderService.getLoaderVisibility();
   }
 }
