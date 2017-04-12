@@ -44,13 +44,13 @@ class BilliTaskData extends TaskdataInterface {
       return true;
     }
     getStepSkillName(index){
-      return "DemoSkill";
+      return "Not Selected";
     }
     getStepMethodCount(index){
       return this.taskData.ScenarioItemList[index].ScenarioPathwayList.length;
     }
     getStepTemplateName(index){
-      return "Demo Template";
+      return "Not Selected";
     }
 }
 module.exports = BilliTaskData;
