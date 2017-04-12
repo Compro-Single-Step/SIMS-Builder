@@ -11,32 +11,31 @@ export class HttpClient {
   get(url, options?, hideLoader?) {
     this.onStart(hideLoader);
     return this.authHttp.get(url, options).finally(() => {
-                this.onEnd(hideLoader);
+                this.onEnd();
             });
   }
   post(url, data, options?,hideLoader?) {
     this.onStart(hideLoader);
     return this.authHttp.post(url, data, options).finally(() => {
-                this.onEnd(hideLoader);
+                this.onEnd();
             });
   }
   put(url, data, options?, hideLoader?) {
     this.onStart(hideLoader);
     return this.authHttp.put(url, data, options).finally(() => {
-                this.onEnd(hideLoader);
+                this.onEnd();
             });
   }
   delete(url, data, options?, hideLoader?) {
     this.onStart(hideLoader);
     return this.authHttp.delete(url, options).finally(() => {
-                this.onEnd(hideLoader);
+                this.onEnd();
             });
   }
 
-  private onEnd(hideLoader?): void {
-    if(!hideLoader){
+  private onEnd(): void {   
       this.loaderService.setLoaderVisibility(false);
-    }
+    
   }
 
   private onStart(hideLoader?): void {
