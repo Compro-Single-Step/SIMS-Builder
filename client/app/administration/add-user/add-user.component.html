@@ -1,9 +1,12 @@
-<h1 class="page-title">Add <span class="fw-semi-bold">User</span></h1>
-<section class="widget" widget>
-  <div class="row">
-    <div class="col-lg-6 offset-lg-3 col-xs-12">
-      <app-user-details-form [title]="'Add the information about the user you want to add in Sims Builder.'" [mode]="'add'" (userDetailsChangedEvent)="userDetailsChangedListener($event)"></app-user-details-form>
-    </div>
+<div class="row">
+  <div class="col-lg-12">
+    <h1 class="page-title title">Add <span class="fw-semi-bold">User</span></h1>
+    <section class="widget" widget>
+      <div class="row">
+        <div class="col-lg-6 offset-lg-3 col-xs-12">
+          <app-user-details-form [title]="'Add the information about the user you want to add in Sims Builder.'" [mode]="'add'" (userDetailsChangedEvent)="userDetailsChangedListener($event)"></app-user-details-form>
+        </div>
+      </div>
+    </section>
   </div>
-</section>
-
+</div>
