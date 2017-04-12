@@ -9,7 +9,7 @@ import { LoaderService } from '../_services/loader.service';
 
 export class LoaderComponent {
   
-  showLoader: boolean;
+  showLoader;
 
   constructor (private loaderService: LoaderService) {
     this.showLoader = loaderService.getLoaderVisibility();

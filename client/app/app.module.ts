@@ -36,6 +36,6 @@ import { LoaderComponent } from './loader/loader.component';
   ],
 
   providers: [ AuthService,HttpClient,AuthGuard,AppConfig,TaskDataService,PreviewService,UserService,LoaderService ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent, LoaderComponent]
 })
 export class AppModule {}

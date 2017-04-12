@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AuthHttp } from 'angular2-jwt';
-import { LoaderService } from './loader.service'
+import { LoaderService } from './loader.service';
+import 'rxjs/add/operator/finally';
 
 @Injectable()
 export class HttpClient {

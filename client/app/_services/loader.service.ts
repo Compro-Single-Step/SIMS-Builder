@@ -4,16 +4,18 @@ import { Injectable } from '@angular/core';
 
 export class LoaderService {
   
-  private loaderVisible: boolean;
+  private loader = {
+    Visible : false
+  };
 
   constructor( ) { }
 
   setLoaderVisibility(isvisible: boolean){
-    this.loaderVisible = isvisible;
+    this.loader.Visible = isvisible;
   }
 
-  getLoaderVisibility():boolean {
-    return this.loaderVisible;
+  getLoaderVisibility() {
+    return this.loader;
   }
   
 }
