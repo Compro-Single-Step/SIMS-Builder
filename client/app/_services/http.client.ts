@@ -8,39 +8,39 @@ export class HttpClient {
 
   constructor(private authHttp: AuthHttp, private loaderService: LoaderService) { }
 
-  get(url, options?, dontShowLoader?) {
-    this.onStart(dontShowLoader);
+  get(url, options?, hideLoader?) {
+    this.onStart(hideLoader);
     return this.authHttp.get(url, options).finally(() => {
-                this.onEnd(dontShowLoader);
+                this.onEnd(hideLoader);
             });
   }
-  post(url, data, options?,dontShowLoader?) {
-    this.onStart(dontShowLoader);
+  post(url, data, options?,hideLoader?) {
+    this.onStart(hideLoader);
     return this.authHttp.post(url, data, options).finally(() => {
-                this.onEnd(dontShowLoader);
+                this.onEnd(hideLoader);
             });
   }
-  put(url, data, options?, dontShowLoader?) {
-    this.onStart(dontShowLoader);
+  put(url, data, options?, hideLoader?) {
+    this.onStart(hideLoader);
     return this.authHttp.put(url, data, options).finally(() => {
-                this.onEnd(dontShowLoader);
+                this.onEnd(hideLoader);
             });
   }
-  delete(url, data, options?, dontShowLoader?) {
-    this.onStart(dontShowLoader);
+  delete(url, data, options?, hideLoader?) {
+    this.onStart(hideLoader);
     return this.authHttp.delete(url, options).finally(() => {
-                this.onEnd(dontShowLoader);
+                this.onEnd(hideLoader);
             });
   }
 
-  private onEnd(dontShowLoader?): void {
-    if(!dontShowLoader){
+  private onEnd(hideLoader?): void {
+    if(!hideLoader){
       this.loaderService.setLoaderVisibility(false);
     }
   }
 
-  private onStart(dontShowLoader?): void {
-    if(!dontShowLoader){
+  private onStart(hideLoader?): void {
+    if(!hideLoader){
       this.loaderService.setLoaderVisibility(true);
     }
   }
