@@ -103,12 +103,15 @@ router.post("/resource", (req, res) => {
 router.get("/resource/*", (req, res) => {
     
     let filePath = req.params[0];
-    res.sendFile(skillController.getResourcePath(filePath), null, error => {
-        if(error) {
-            res.send({
-                status: error.status,
-                error: "File not found"
-            });
+    let options = {
+        headers: {
+            "status": "success"
+        }
+    };
+
+    res.sendFile(skillController.getResourcePath(filePath), options, error => {
+        if (error) {
+            res.status(error.status).set("status", "error").end();
         }
     });
 });
