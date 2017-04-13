@@ -18,13 +18,13 @@ class DatabaseFileStoreManager {
         return dbController.getSkillConfigPath(templateId, skillConfigTypes.UI_CONFIG)
         .then((filePath)=> {
             if(filePath === undefined || filePath === null) {
-                Promise.reject("Skill Config for template id " + templateId + " doesn't exist in database");
+                return Promise.reject("Skill Config for template id " + templateId + " doesn't exist in database");
             }
             else {
                 return fsc.getFileFromFileStore(filePath, folderMap.SKILL);
             }
         }, (error)=> {
-            Promise.reject(error);
+            return Promise.reject(error);
         });
     }
  
@@ -32,13 +32,13 @@ class DatabaseFileStoreManager {
         return dbController.getSkillConfigPath(templateId, skillConfigTypes.XML)
         .then((filePath)=> {
             if(filePath === undefined || filePath === null) {
-                Promise.reject("Skill XML for template id "+ templateId + " doesn't exist in database");
+                return Promise.reject("Skill XML for template id "+ templateId + " doesn't exist in database");
             }
             else {
                 return fsc.getFileFromFileStore(filePath, folderMap.SKILL);
             }
         }, (error)=> {
-            Promise.reject(error);
+            return Promise.reject(error);
         });
     }
 
@@ -46,13 +46,13 @@ class DatabaseFileStoreManager {
         return dbController.getSkillConfigPath(templateId, skillConfigTypes.IO_MAP)
         .then((filePath)=> {
             if(filePath === undefined || filePath === null) {
-                Promise.reject("I/O Map for template id "+ templateId + " doesn't exist in database");
+                return Promise.reject("I/O Map for template id "+ templateId + " doesn't exist in database");
             }
             else {
                 return fsc.getFileFromFileStore(filePath, folderMap.SKILL);
             }
         }, (error)=> {
-            Promise.reject(error);
+            return Promise.reject(error);
         });
     }
 
@@ -60,13 +60,13 @@ class DatabaseFileStoreManager {
         return dbController.getSkillConfigPath(templateId, skillConfigTypes.MODEL)
         .then((filePath)=> {
             if(filePath === undefined || filePath === null) {
-                Promise.reject("Skill Model for template id "+ templateId + " doesn't exist in database");
+                return Promise.reject("Skill Model for template id "+ templateId + " doesn't exist in database");
             }
             else {
                 return fsc.getFileFromFileStore(filePath, folderMap.SKILL);
             }
         }, (error)=> {
-            Promise.reject(error);
+            return Promise.reject(error);
         });
     }
 
