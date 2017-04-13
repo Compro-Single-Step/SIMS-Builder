@@ -24,7 +24,7 @@ export class BuilderDataService {
     const headers = new Headers({ 'Content-Type': 'application/json' });
     const options = new RequestOptions({ headers: headers });
     // TODO: Dynamically create the post URL (api/skill/taskstep/ <TASK ID> / <STEP NUMBER>)
-    return this.httpClient.post(`api/skill/stepuistate/${taskId}/${stepIndex}`, data, options)
+    return this.httpClient.post(`api/skill/stepuistate/${taskId}/${stepIndex}`, data, options, true)
       .map(this.extractData)
       .catch(this.handleError);
   }
