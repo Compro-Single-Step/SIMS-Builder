@@ -8,10 +8,11 @@ import { LabelTypes } from '../enums';
   templateUrl: './tab.component.html',
   styleUrls: ['./tab.component.scss']
 })
-export class TabComponent extends BaseComponent {
+export class TabComponent extends BaseComponent{
   labelConfig: itemSchema = new itemSchema();
   descriptionConfig: itemSchema = new itemSchema();
   tabs: Array<Object> = [];
+  activeTabIndex: Number = 0; 
 
   ngOnInit() {
     super.ngOnInit();
