@@ -42,7 +42,7 @@ router.get("/templateOptions",function(req,res){
 		console.log(data);
 		});
 });
-router.get("/taskTemplateMap",function(req,res){
+router.get("/stepTemplate",function(req,res){
 	task = req.query.TaskId;
 	step = req.query.StepIndex;
 	let condition = {"task_id": task};
@@ -68,7 +68,7 @@ router.get("/taskTemplateMap",function(req,res){
 		}
  	});
 });
-router.post("/taskTemplateMap",function(req,res){
+router.post("/stepTemplate",function(req,res){
 	task = req.body.TaskId;
 	step = req.body.StepIndex;
 	template = req.body.TemplateId;

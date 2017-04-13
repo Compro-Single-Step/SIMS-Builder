@@ -21,9 +21,8 @@ export class TaskBuilderComponent implements OnInit {
  templateOptions = [];
  SelectedTemplate="";
  SelectedStep ;
- selectedTab="";
- message;
- @ViewChild('modalWindow') public modalWindow:ModalDirective;
+ selectedTemplateOption="";
+ @ViewChild('selectTemplateDialog') public SelectTemplateDialog:ModalDirective;
  constructor(private route: ActivatedRoute,private previewService:PreviewService ,private taskDataService:TaskDataService, 
     private router: Router) { 
 	}
@@ -37,7 +36,7 @@ export class TaskBuilderComponent implements OnInit {
  }
  selectTemplate($event){
 	 jQuery($event.currentTarget).addClass("selected").siblings().removeClass("selected");
-	 this.selectedTab = jQuery($event.currentTarget).text();
+	 this.selectedTemplateOption = jQuery($event.currentTarget).text();
  }
 initialiseTaskData() {
    	this.route.data
@@ -76,29 +75,35 @@ initialiseTaskData() {
 		if(steptemplate!= "Not Selected")
 			this.router.navigate(["task",this.TaskData["id"],"step",this.SelectedStep.Index]);
 		else{
-			this.modalWindow.show();
+			this.SelectTemplateDialog.show();
 		}
 	}
 	setTempalateMap(selectedTemplate){
 		this.SelectedStep.TemplateName=selectedTemplate;
 		this.taskDataService.setTaskTemplate(this.TaskData["id"],this.SelectedStep.Index,selectedTemplate)
 				.subscribe(res =>{
-					this.message =MessageMap[res.message];
-					if(this.message == "Task Template Updated"){
-					Messenger.options = { extraClasses: 'messenger-fixed messenger-on-top',
+					if(MessageMap[res.message] == "Task Template Updated"){
+						this.displayMessage("The Template Id for the Step " + this.TaskData["id"].toUpperCase() + "-"+this.SelectedStep.Index +" is now changed to " +this.SelectedStep.TemplateName);
+						this.SelectTemplateDialog.hide();
+						this.router.navigate(["task",this.TaskData["id"],"step",this.SelectedStep.Index]);
+					}
+					else{
+						this.displayMessage("Some Database Error Occured!!");
+					}
+					
+				});
+	}
+	callSetTemplate(){
+		this.setTempalateMap(this.selectedTemplateOption);
+	}
+	displayMessage(messageText){
+		Messenger.options = { extraClasses: 'messenger-fixed messenger-on-top',
 							theme: 'block'}
 					Messenger().post({
-					message: "The Template Id for the Step " + this.TaskData["id"].toUpperCase() + "-"+this.SelectedStep.Index +" is now changed to " +this.SelectedStep.TemplateName,
+					message:messageText,
 					type: 'success',
 					showCloseButton: true,
 					hideAfter: 3
 					});
-				}                
-					this.modalWindow.hide();
-					this.router.navigate(["task",this.TaskData["id"],"step",this.SelectedStep.Index]);
-				});
-	}
-	callSetTemplate(){
-		this.setTempalateMap(this.selectedTab);
-	}
+		}	          
 }

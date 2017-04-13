@@ -5,13 +5,17 @@
     margin-left: 28px;
     margin-top: 2px;
 }
-.templateList li:hover{
+.templateList{
+    li:hover{
   background-color: $pre-bg;
 }
-.templateList .selected{
-    background-color: $pre-bg;// set variable  $pre-bg
+  .selected{
+      background-color: $pre-bg;// set variable  $pre-bg
+  }
+  border: 1px solid #ddd;  
+} 
+.templateList 
 
-}  
 .template_label{
   font-size: 14px;
   padding: 0px;

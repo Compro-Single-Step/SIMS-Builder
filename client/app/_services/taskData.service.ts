@@ -81,7 +81,7 @@ export class TaskDataService {
     let params = new URLSearchParams();
     params.set('TaskId', taskId.toUpperCase());
     params.set('StepIndex', stepIndex);
-    return this.http.get("/api/fetchTaskData/taskTemplateMap",{ search: params })
+    return this.http.get("/api/fetchTaskData/stepTemplate",{ search: params })
                     .map(this.extractResponse.bind(this))
                     .catch(this.handleError);
     }
@@ -91,7 +91,7 @@ export class TaskDataService {
   setTaskTemplate(taskId: string, stepIndex: string, templateId: string) {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    return this.http.post("/api/fetchTaskData/taskTemplateMap", {TaskId:taskId.toUpperCase(), StepIndex:stepIndex, TemplateId:templateId}, options)
+    return this.http.post("/api/fetchTaskData/stepTemplate", {TaskId:taskId.toUpperCase(), StepIndex:stepIndex, TemplateId:templateId}, options)
                     .map((res) =>{return res.json();})
                     .catch(this.handleError);
   }
