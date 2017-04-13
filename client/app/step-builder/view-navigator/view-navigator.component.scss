@@ -10,6 +10,8 @@ $gray-dark: #343434;
         position: relative;
         color: black;
         z-index: 1;
+        display: table-cell;
+        width: 1%;
 
         span.stepNumber {
             width: 40px;
