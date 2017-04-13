@@ -35,6 +35,10 @@ export class BuilderDataService {
       .map(this.extractData)
       .catch(this.handleError);
   }
+  getResource(path): Observable<any> {
+    return this.httpClient.get(`api/skill/resource/${path}`)
+      .catch(this.handleError);
+  }
   private extractData(res: Response) {
     let body = res.json();
     return body || {};
