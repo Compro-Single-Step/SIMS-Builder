@@ -102,6 +102,5 @@
     "typescript": "~2.0.3",
     "url-loader": "^0.5.7",
     "webpack-dev-server": "~2.3.0"
-  },
-  "scripts.start": "node dist/server/server"
+  }
 }

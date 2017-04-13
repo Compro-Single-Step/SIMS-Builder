@@ -24992,7 +24992,7 @@ var BuilderDataService = (function () {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
         var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["RequestOptions"]({ headers: headers });
         // TODO: Dynamically create the post URL (api/skill/taskstep/ <TASK ID> / <STEP NUMBER>)
-        return this.httpClient.post("api/skill/stepuistate/" + taskId + "/" + stepIndex, data, options)
+        return this.httpClient.post("api/skill/stepuistate/" + taskId + "/" + stepIndex, data, options, true)
             .map(this.extractData)
             .catch(this.handleError);
     };
@@ -26696,7 +26696,7 @@ exports = module.exports = __webpack_require__(47)();
 
 
 // module
-exports.push([module.i, ".progressbar {\n  counter-reset: step; }\n  .progressbar li {\n    list-style-type: none;\n    font-size: 12px;\n    position: relative;\n    color: black;\n    z-index: 1; }\n    .progressbar li span.stepNumber {\n      width: 40px;\n      height: 40px;\n      content: counter(step);\n      counter-increment: step;\n      line-height: 35px;\n      border: 2px solid #C1C1C1;\n      display: block;\n      text-align: center;\n      margin: 0 auto 10px auto;\n      border-radius: 50%;\n      background-color: white;\n      cursor: pointer;\n      font-size: 14px; }\n    .progressbar li span.separator {\n      width: 100%;\n      height: 4px;\n      position: absolute;\n      background-color: #C1C1C1;\n      top: 19px;\n      left: 53%;\n      z-index: -1; }\n    .progressbar li.active span.stepNumber {\n      border-color: #343434;\n      background-color: #343434;\n      color: white; }\n    .progressbar li:last-child span.separator {\n      content: none; }\n    .progressbar li.visited span.stepNumber {\n      border-color: #5dc4bf;\n      background-color: #5dc4bf;\n      color: white; }\n    .progressbar li.visited span.separator {\n      border-color: #5dc4bf;\n      background-color: #5dc4bf; }\n", ""]);
+exports.push([module.i, ".progressbar {\n  counter-reset: step; }\n  .progressbar li {\n    list-style-type: none;\n    font-size: 12px;\n    position: relative;\n    color: black;\n    z-index: 1;\n    display: table-cell;\n    width: 1%; }\n    .progressbar li span.stepNumber {\n      width: 40px;\n      height: 40px;\n      content: counter(step);\n      counter-increment: step;\n      line-height: 35px;\n      border: 2px solid #C1C1C1;\n      display: block;\n      text-align: center;\n      margin: 0 auto 10px auto;\n      border-radius: 50%;\n      background-color: white;\n      cursor: pointer;\n      font-size: 14px; }\n    .progressbar li span.separator {\n      width: 100%;\n      height: 4px;\n      position: absolute;\n      background-color: #C1C1C1;\n      top: 19px;\n      left: 53%;\n      z-index: -1; }\n    .progressbar li.active span.stepNumber {\n      border-color: #343434;\n      background-color: #343434;\n      color: white; }\n    .progressbar li:last-child span.separator {\n      content: none; }\n    .progressbar li.visited span.stepNumber {\n      border-color: #5dc4bf;\n      background-color: #5dc4bf;\n      color: white; }\n    .progressbar li.visited span.separator {\n      border-color: #5dc4bf;\n      background-color: #5dc4bf; }\n", ""]);
 
 // exports
 
