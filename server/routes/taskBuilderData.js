@@ -39,7 +39,6 @@ router.get("/templateOptions",function(req,res){
 	fs.readFile(__dirname+"/../public/TepmlateOptions.json", (err, data) => {
 		if (err) throw err;
 		res.send(data);
-		console.log(data);
 		});
 });
 router.get("/stepTemplate",function(req,res){
