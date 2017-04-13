@@ -21,7 +21,7 @@
 </div>
 <div class="row">
    <div class="col-md-12">
-      <taskbuilder-taskstep *ngFor="let step of StepData;let i = index" [stepData]="step" [selectedTemplate]="SelectedTemplate" [selectedStep]="SelectedStep" (ModalWindowUpdateEvent)="modalWindowUpdateListener($event,i)"></taskbuilder-taskstep>
+      <taskbuilder-taskstep *ngFor="let step of StepData; let stepIndex = index " [stepData]="step" (stepNavigationEvent)="stepNavigationListner($event,stepIndex)"></taskbuilder-taskstep>
    </div>
 </div>
 <div class="row" >

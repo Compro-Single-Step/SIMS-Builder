@@ -4,6 +4,9 @@ import { PreviewService } from '../_services/preview.service';
 import { TaskDataService } from '../_services/taskData.service';
 import { ModalDirective } from 'ng2-bootstrap/modal';
 
+import { MessageMap } from '../shared/enums';
+
+declare var Messenger: any;
 declare var jQuery: any; // for template selection bnx, can be renmoved later
 @Component({
   selector: 'app-task-builder',
@@ -17,8 +20,9 @@ export class TaskBuilderComponent implements OnInit {
  errorMessage;
  templateOptions = [];
  SelectedTemplate="";
- SelectedStep = 0;
+ SelectedStep ;
  selectedTab="";
+ message;
  @ViewChild('modalWindow') public modalWindow:ModalDirective;
  constructor(private route: ActivatedRoute,private previewService:PreviewService ,private taskDataService:TaskDataService, 
     private router: Router) { 
@@ -67,17 +71,32 @@ initialiseTaskData() {
                      .subscribe(
                        data => this.templateOptions = data.templateOptions);
 	}
-	modalWindowUpdateListener(event,index){
-		if(event == "show"){
-			this.SelectedStep = index+1;
-			this.modalWindow.show();			
-		}
+	stepNavigationListner(steptemplate,stepIndex){
+		this.SelectedStep = this.TaskData["stepData"][stepIndex];
+		if(steptemplate!= "Not Selected")
+			this.router.navigate(["task",this.TaskData["id"],"step",this.SelectedStep.Index]);
 		else{
-			this.modalWindow.hide();
+			this.modalWindow.show();
 		}
 	}
 	setTempalateMap(selectedTemplate){
-		 this.SelectedTemplate= selectedTemplate;
+		this.SelectedStep.TemplateName=selectedTemplate;
+		this.taskDataService.setTaskTemplate(this.TaskData["id"],this.SelectedStep.Index,selectedTemplate)
+				.subscribe(res =>{
+					this.message =MessageMap[res.message];
+					if(this.message == "Task Template Updated"){
+					Messenger.options = { extraClasses: 'messenger-fixed messenger-on-top',
+							theme: 'block'}
+					Messenger().post({
+					message: "The Template Id for the Step " + this.TaskData["id"].toUpperCase() + "-"+this.SelectedStep.Index +" is now changed to " +this.SelectedStep.TemplateName,
+					type: 'success',
+					showCloseButton: true,
+					hideAfter: 3
+					});
+				}                
+					this.modalWindow.hide();
+					this.router.navigate(["task",this.TaskData["id"],"step",this.SelectedStep.Index]);
+				});
 	}
 	callSetTemplate(){
 		this.setTempalateMap(this.selectedTab);
