@@ -2,11 +2,9 @@ const mongoose = require("mongoose");
 const config = require('./config');
 
 try {
-   mongoose.connect(config.db.url, config.db.dbOptions);    
-}
-catch(error) {
+    mongoose.connect(config.db.url, config.db.dbOptions);
+} catch (error) {
     console.log(error);
-    return;
 }
 
 const db = mongoose.connection;

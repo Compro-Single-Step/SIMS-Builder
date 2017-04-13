@@ -10,24 +10,24 @@ const Step = require('./Step');
 
 module.exports = class StepXMLGenerator {
 
-    generateXml (skillTemplate, attrValueMap){
+    generateXml(skillTemplate, attrValueMap, stepText) {
 
         let parser = new DOMParser();
-        let xmlDoc = parser.parseFromString(skillTemplate,"text/xml");
+        let xmlDoc = parser.parseFromString(skillTemplate, "text/xml");
         let stepJson = this.xmlToJson(xmlDoc);
-        let step = new Step(stepJson[0], attrValueMap, this)
-        let xmlString = step.generateXML();
+        let step = new Step(stepJson[0], attrValueMap, this);
+        let xmlString = step.generateXML(stepText);
         return xmlString;
-        
     }
 
     // Changes XML to JSON
-    xmlToJson  (xml) {
+    xmlToJson(xml) {
 
         // Create the return object
         let obj = {};
 
-        if (xml.nodeType == 1) { // element
+        if (xml.nodeType == 1) {
+            // element
             // do attributes
             if (xml.attributes && xml.attributes.length > 0) {
                 obj["props"] = {};
@@ -36,35 +36,37 @@ module.exports = class StepXMLGenerator {
                     obj["props"][attribute.nodeName] = attribute.nodeValue;
                 }
             }
-        } else if (xml.nodeType == 3) { // text
+        } else if (xml.nodeType == 3) {
+            // text
             obj = xml.nodeValue;
-
         }
 
         // do children
         if (xml.hasChildNodes()) {
-            if(obj.props==undefined){
+            if (obj.props == undefined) {
                 obj = [];
-                for(let i = 0; i < xml.childNodes.length; i++) {
+                for (let i = 0; i < xml.childNodes.length; i++) {
                     let item = xml.childNodes[i];
-                    if (item.nodeType == 3) { // text
+                    if (item.nodeType == 3) {
+                        // text
                         continue;
                     }
                     obj.push(this.xmlToJson(item));
                 }
-            }else{
+            } else {
                 let nodeName = xml.nodeName;
 
-                for(let i = 0; i < xml.childNodes.length; i++) {
+                for (let i = 0; i < xml.childNodes.length; i++) {
                     let item = xml.childNodes[i];
-                    if (item.nodeType == 3) { // text
+                    if (item.nodeType == 3) {
+                        // text
                         continue;
                     }
                     let child = this.xmlToJson(item);
-                    if(child.props == undefined){
+                    if (child.props == undefined) {
                         obj[xml.childNodes[i].nodeName] = child;
-                    }else{
-                        if(!obj[xml.childNodes[i].nodeName]){
+                    } else {
+                        if (!obj[xml.childNodes[i].nodeName]) {
                             obj[xml.childNodes[i].nodeName] = [];
                         }
                         obj[xml.childNodes[i].nodeName].push(child);
@@ -73,6 +75,6 @@ module.exports = class StepXMLGenerator {
             }
         }
         return obj;
-   }
+    }
 
-}
+};

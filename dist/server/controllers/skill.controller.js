@@ -4,7 +4,7 @@ const mkdirp = require('mkdirp');
 const uiHandler = require('../modules/skill/uiHandler');
 const dbFilestoreMgr = require('../modules/skill/dbFilestoreMgr');
 const xmlGenerationHandler = require('../modules/skill/xmlGenerationHandler');
-const skillFactory  = require("../modules/skill/skillFactory")
+const skillFactory = require("../modules/skill/skillFactory");
 
 class SkillController {
 
@@ -28,16 +28,18 @@ class SkillController {
         dbFilestoreMgr.saveStepUIState(taskId, stepIndex, stepUIData, callback);
     }
 
-    generateXML(templateId, taskId, stepIdx, callback) {
+    generateXML(templateId, taskId, stepIdx, stepText, callback) {
         var skill = skillFactory.getSkillObject(templateId);
-        xmlGenerationHandler.generateStepXML(templateId, taskId, stepIdx, skill, callback);
+        xmlGenerationHandler.generateStepXML(templateId, taskId, stepIdx, stepText, skill, callback);
     }
 
-    saveResourceFile(templateId, taskId, stepIndex) {
-        return dbFilestoreMgr.saveResourceFile(templateId, taskId, stepIndex);
+    saveResourceFile() {
+        return dbFilestoreMgr.saveResourceFile();
+    }
+
+    removeResourceFile(filePath) {
+        return dbFilestoreMgr.removeResourceFile(filePath);
     }
 };
 
 module.exports = new SkillController();
-
-

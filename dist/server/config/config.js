@@ -26,7 +26,7 @@ const config = {
             }
         },
         root: serverRootPath,
-      taskDataServer: {
+        taskDataServer: {
             Url: 'http://billi.comprotechnologies.com/SIMsInternal/internal/ScenarioPathways.ashx?scenario=',
             name: "billi"
         },
@@ -58,7 +58,7 @@ const config = {
         taskDataServer: {
             Url: 'http://billi.comprotechnologies.com/SIMsInternal/internal/ScenarioPathways.ashx?scenario=',
             name: "billi"
-        }, 
+        },
         fileStore: {
             skillFolder: skillFolder,
             xmlFolder: xmlFolder,
@@ -86,9 +86,9 @@ const config = {
         },
         root: serverRootPath,
         taskDataServer: {
-              Url: 'http://billi.comprotechnologies.com/SIMsInternal/internal/ScenarioPathways.ashx?scenario=',
-              name: "billi"
-          }, 
+            Url: 'http://billi.comprotechnologies.com/SIMsInternal/internal/ScenarioPathways.ashx?scenario=',
+            name: "billi"
+        },
         fileStore: {
             skillFolder: skillFolder,
             xmlFolder: xmlFolder,

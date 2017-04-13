@@ -1,5 +1,5 @@
 class Step {
-    constructor(taskDataObj,index){
+    constructor(taskDataObj, index) {
         this.Index = taskDataObj.getStepIndex(index);
         this.Text = taskDataObj.getStepText(index);
         this.TestStatus = taskDataObj.getStepTestStatus(index);

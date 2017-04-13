@@ -8,7 +8,6 @@ const config = require('./config/config');
 // Get our API routes
 const apiRouter = require('./routes');
 
-
 const app = express();
 
 // Parsers for POST data
@@ -20,7 +19,6 @@ app.use(express.static(path.join(__dirname, '/../dist/client')));
 
 // Set our api routes
 app.use('/api', apiRouter());
-
 
 // Catch all other routes and return the index file
 app.get('*', (req, res) => {
