@@ -6,8 +6,15 @@ const folderMap = FAL.fileTypeFolderMap;
 
 class DatabaseFileStoreManager {
 
-    copyTaskAssetFile(residentPath, taskParams, callback) {
-        fsc.copyAssetToTaskFolder(residentPath, taskParams, callback);
+    //dynamic sheet num 
+      readFileFromFileStore(filePath, callback){
+          return fsc.readTaskRes(filePath);
+     }
+
+    copyTaskAssetFile(residentPath, taskParams) {
+        //construct a promise in filestore controller and return that promise 
+        // this function will as it is return the promise object whether it is resolved or rejected
+        return fsc.copyAssetToTaskFolder(residentPath, taskParams);
     }
 
     copyAssetFolderContents(srcPath, stepIndex, taskId, callback) {
@@ -21,6 +28,7 @@ class DatabaseFileStoreManager {
                 Promise.reject("Skill Config for template id " + templateId + " doesn't exist in database");
             }
             else {
+                // return Promise.reject("Skill Config for template id " + templateId + " doesn't exist in database");
                 return fsc.getFileFromFileStore(filePath, folderMap.SKILL);
             }
         }, (error)=> {
