@@ -23,8 +23,10 @@ router.get("/",function(req,res){
 		}	
 
 		if(body.ErrorMessage == null){
-			body = mapTaskData(body, config.taskDataServer.name);
-			res.send(body);
+			mapTaskData(body, config.taskDataServer.name).then((taskData)=>{
+				body = taskData;
+				res.send(body);
+			});
 		}
 		else
 			res.send(JSON.stringify({"Error":body.ErrorMessage}));
@@ -32,40 +34,14 @@ router.get("/",function(req,res){
 });
  function mapTaskData(res, modelType){
     var taskModel = taskFactory.getTaskDataModel(modelType, res);
-	let taskData = new Task (taskModel);	
-	return taskData;
+	let taskData = new Task (taskModel);
+	return taskData.getstepData(taskModel);
   }
 router.get("/templateOptions",function(req,res){
 	fs.readFile(__dirname+"/../public/TepmlateOptions.json", (err, data) => {
 		if (err) throw err;
 		res.send(data);
 		});
-});
-router.get("/stepTemplate",function(req,res){
-	task = req.query.TaskId;
-	step = req.query.StepIndex;
-	let condition = {"task_id": task};
-	let jsonKey = "steps.step_" + step;
-	let projection = {"_id": false};
-	projection[jsonKey] = true;
-	let err;
-	let template;
-	let stepId = "step_" + step;
-
-	taskTemplateMapModel.getTaskMap(condition, projection, (error, data) => {
-		try {
-			template = data[0].steps[stepId].template;
-		}
-		catch (error) {
-			err = error;
-		}
-		finally {
-			if(err)
-				res.send("Not Selected");
-			else
-				res.send(template);
-		}
- 	});
 });
 router.post("/stepTemplate",function(req,res){
 	task = req.body.TaskId;

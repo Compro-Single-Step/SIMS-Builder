@@ -23,8 +23,6 @@ message;
     
     this.route.params.subscribe((params: Params) => {
       this.taskID = params["id"];
-      this.taskDataService.getTaskTemplate(this.taskID,this.step.Index)
-                                  .subscribe(res => this.step.TemplateName = res);
     })
    }
    navigateToStepBuilder(){

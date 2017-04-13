@@ -5,15 +5,27 @@ class Task {
       this.app = taskDataObj.getTaskApp();
       this.testStatus = taskDataObj.getTaskTestStatus();
       this.commitStatus = taskDataObj.getTaskCommitStatus();
-      this.stepData = this.getScenario(taskDataObj.getStepData(),taskDataObj);
     }
-
-  mapStepData(item,index){
-    var step = new Step(this,index);
-    return step;
+  
+  getstepData(taskDataObj){
+    var self = this;
+   return self.getScenario(taskDataObj.getStepData(),taskDataObj).then((sdata)=>{
+      self.stepData =sdata;
+      return Promise.resolve(self);
+    });
+  }
+  mapStepData(taskDataObj,index){
+    var step = new Step(taskDataObj,index);
+    return step.setStepTemplate(taskDataObj,index);
    }
  getScenario(sdata,taskDataObj){
-    return sdata.map(this.mapStepData,taskDataObj);  
+   let promiseArr = [];
+   for(let stepIndex=0;stepIndex<sdata.length;stepIndex++){
+      promiseArr.push(this.mapStepData(taskDataObj,stepIndex));
+   }
+   return Promise.all(promiseArr).then((value)=>{
+      return Promise.resolve(value);
+   })
   }
  }
 module.exports = Task;

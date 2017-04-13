@@ -1,4 +1,5 @@
 var TaskdataInterface = require('./taskdataInterface'); //all the functions of this class are to be overloaded by the class extending it.
+const  taskTemplateMapModel = require('../../models/taskTemplateMap.model');
 
 class BilliTaskData extends TaskdataInterface {
    constructor(res) {
@@ -44,13 +45,38 @@ class BilliTaskData extends TaskdataInterface {
       return true;
     }
     getStepSkillName(index){
-      return "Not Selected";
+      return ; //to be changed if skill field added to Billi Api
     }
     getStepMethodCount(index){
       return this.taskData.ScenarioItemList[index].ScenarioPathwayList.length;
     }
-    getStepTemplateName(index){
-      return "Not Selected";
+    getStepTemplateName(index, callback){
+      let stepIndex = this.taskData.ScenarioItemList[index].ScenarioOrder;
+      let condition = {"task_id": this.taskData.TaskFriendlyID};
+      let jsonKey = "steps.step_" + stepIndex;
+      let projection = {"_id": false};
+      projection[jsonKey] = true;
+      let err;
+      let template;
+      let stepId = "step_" + stepIndex;
+      return new Promise((resolve, reject) => {
+        taskTemplateMapModel.getTaskMap(condition, projection, (error, data) => {
+        try {
+          template = data[0].steps[stepId].template;
+        }
+        catch (error) {
+          err = error;
+        }
+        finally {
+          if(err)
+            resolve ("Not Selected"); //cannot reject as promise.all in taskModel will fail in that case
+          else
+            resolve (template);
+        }
+      });
+      });
+      
     }
+    
 }
 module.exports = BilliTaskData;

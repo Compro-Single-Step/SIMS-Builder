@@ -56,7 +56,7 @@ export class TaskDataService {
     return Observable.throw(errMsg);
   }
   getTemplateOptions(): Observable<any> {
-    if (this.templateOptions){  //check if data for the particular task already exists
+    if (this.templateOptions){  //check if template options already exists.
       return Observable.of(this.templateOptions);
     }
     else{
@@ -72,21 +72,9 @@ export class TaskDataService {
       return body.Error;
     }
     else{
-      // body = this.mapTaskData(body);
       this.templateOptions = body;
       return body || { };
     }
-  }
-  getTaskTemplate(taskId: string, stepIndex: string): Observable<any> {
-    let params = new URLSearchParams();
-    params.set('TaskId', taskId.toUpperCase());
-    params.set('StepIndex', stepIndex);
-    return this.http.get("/api/fetchTaskData/stepTemplate",{ search: params })
-                    .map(this.extractResponse.bind(this))
-                    .catch(this.handleError);
-    }
-  private extractResponse(res: Response) {
-      return res['_body'];
   }
   setTaskTemplate(taskId: string, stepIndex: string, templateId: string) {
     let headers = new Headers({ 'Content-Type': 'application/json' });
