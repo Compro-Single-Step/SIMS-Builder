@@ -123,6 +123,14 @@ getSheetNameAndSheetCountFromInitDocJSON(initDocJSON, dependantSheetArrayInModel
         dependantSheetArrayInModel.pop(); //https://jsperf.com/array-clear-methods/3
       }
       dependantSheetArrayInModel[0].name = "Sheet 1";
+      dependantSheetArrayInModel[0].gridImage.displayName = "";
+      dependantSheetArrayInModel[0].gridImage.path = "";
+      dependantSheetArrayInModel[0].rowImage.displayName = "";
+      dependantSheetArrayInModel[0].rowImage.path = "";
+      dependantSheetArrayInModel[0].columnImage.displayName = "";
+      dependantSheetArrayInModel[0].columnImage.path = "";
+      dependantSheetArrayInModel[0].cellImage.displayName = "";
+      dependantSheetArrayInModel[0].cellImage.path = "";
     }
 
    
