@@ -41,9 +41,9 @@ function validateTaskData(taskData){
 	let promiseArr = [];
 	let stepData = taskData.getStepData();
 	for(let stepIndex=0;stepIndex<stepData.length;stepIndex++){ //function getSkillName to bre renamed to getTemplateName if Baloo gives skill name and set only template name in it..
-			promiseArr.push(getSkillName( stepData[stepIndex].getIndex(),taskData.getId()).then((skillName)=>{
-			stepData[stepIndex].setSkillName(skillName);
-			stepData[stepIndex].setTemplateName(skillName);
+			promiseArr.push(getTemplateName(taskData.getId(),stepData[stepIndex].getIndex()).then((templateName)=>{
+			stepData[stepIndex].setSkillName(templateName);
+			stepData[stepIndex].setTemplateName(templateName);
 			Promise.resolve();			
 		}));	
 	}
@@ -51,7 +51,7 @@ function validateTaskData(taskData){
 		return Promise.resolve(taskData)
 	});
 }
-function getSkillName(stepIndex,taskId){
+function getTemplateName(taskId,stepIndex){
 	let condition = {"task_id": taskId};
 	let jsonKey = "steps.step_" + stepIndex;
 	let projection = {"_id": false};

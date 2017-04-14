@@ -1,5 +1,4 @@
 var TaskdataInterface = require('./taskdataInterface'); //all the functions of this class are to be overloaded by the class extending it.
-const  taskTemplateMapModel = require('../../models/taskTemplateMap.model');
 
 class BilliTaskData extends TaskdataInterface {
    constructor(res) {
