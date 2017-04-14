@@ -31,11 +31,6 @@ module.exports = class ExcelBaseSkill extends baseSkill{
    getSheetNumber(sheetName){
        return this.sheetNameMap[sheetName];
    }
-    
-
-
-
-
 
     genImageJsonResFolder(stateId){   
         return "state" + stateId;

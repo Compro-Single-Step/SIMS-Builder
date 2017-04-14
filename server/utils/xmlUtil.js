@@ -26,8 +26,8 @@ class XMLUtil{
         return taskFolderPath;
 	}
 
-    generateStepFolderPath(taskId, stateId){
-        return this.generateTaskFolderPath(taskId) + stateId + "/";
+    generateStepFolderPath(taskId, stepIndex){
+        return this.generateTaskFolderPath(taskId) + stepIndex + "/";
     }
 }
 

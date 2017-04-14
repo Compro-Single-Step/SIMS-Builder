@@ -7,7 +7,7 @@ const folderMap = FAL.fileTypeFolderMap;
 class DatabaseFileStoreManager {
 
     //dynamic sheet num 
-      readFileFromFileStore(filePath, callback){
+      readFileFromFileStore(filePath){
           return fsc.readTaskRes(filePath);
      }
 
@@ -15,10 +15,6 @@ class DatabaseFileStoreManager {
         //construct a promise in filestore controller and return that promise 
         // this function will as it is return the promise object whether it is resolved or rejected
         return fsc.copyAssetToTaskFolder(residentPath, taskParams);
-    }
-
-    copyAssetFolderContents(srcPath, stepIndex, taskId, callback) {
-        fsc.copyResToTaskFolder(srcPath, stepIndex, taskId, callback);
     }
     
     getUIConfig(templateId) {
