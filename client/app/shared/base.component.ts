@@ -7,14 +7,12 @@ export class BaseComponent implements OnInit{
     @Input() compConfig: itemSchema;
     @Input() modelRef: Object;
     builderModelSrvc;
-    itemDataModel;
     dynamicMode: boolean = false;
     descriptionConfig: itemSchema = new itemSchema();
     isVisible: Object;
     constructor() {
         this.compConfig = new itemSchema();
         this.builderModelSrvc = BuilderModelObj;
-        this.itemDataModel = this.builderModelSrvc.getModel();
         this.isVisible = {show: true};
     }
 
