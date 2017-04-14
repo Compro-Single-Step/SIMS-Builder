@@ -90,32 +90,37 @@ class IOTranslator{
       var iomap = attrObj.IOMap;
       var PromiseRequestsArr  = [];
 
-      for(let stateNum in iomap.states){
-        let stateObj = iomap.states[stateNum];
-        for(let componentNum in stateObj.components){
-            let componentObj = iomap.states[stateNum].components[componentNum];
-            for(let attrType in componentObj){
-              let attrTypeObj  = iomap.states[stateNum].components[componentNum][attrType]
-              for(let attrSet in attrTypeObj){
-                let attrSetObj = iomap.states[stateNum].components[componentNum][attrType][attrSet];
-                for(let attrName in attrSetObj){
+      var self = this;
+      attrObj.skillRef["init"](attrObj, function(error){
+        if(!error)
+        {
+          for(let stateNum in iomap.states){
+            let stateObj = iomap.states[stateNum];
+            for(let componentNum in stateObj.components){
+                let componentObj = iomap.states[stateNum].components[componentNum];
+                for(let attrType in componentObj){
+                  let attrTypeObj  = iomap.states[stateNum].components[componentNum][attrType]
+                  for(let attrSet in attrTypeObj){
+                    let attrSetObj = iomap.states[stateNum].components[componentNum][attrType][attrSet];
+                    for(let attrName in attrSetObj){
 
-                  var attrParams = new attrParam(attrName, attrSetObj[attrName], attrObj.stepUIState, attrObj.skillRef);
-                  var taskParam = new attrTaskParam(attrObj.taskId, attrObj.stepIndex, stateNum, attrObj.dbFilestoreMgr);
-                  var self = this;
-                  PromiseRequestsArr.push(self.genPromise(attrParams, taskParam, function(error, attrVal, preloadResArr){
-                    if(!error){
-                      attrSetObj[attrName] = attrVal;
-                      if(preloadResArr){
-                        self.appendPreloadRes(preloadResArr,attrObj.IOMap)
-                      }
+                      var attrParams = new attrParam(attrName, attrSetObj[attrName], attrObj.stepUIState, attrObj.skillRef);
+                      var taskParam = new attrTaskParam(attrObj.taskId, attrObj.stepIndex, stateNum, attrObj.dbFilestoreMgr);
+                      PromiseRequestsArr.push(self.genPromise(attrParams, taskParam, function(error, attrVal, preloadResArr){
+                        if(!error){
+                          attrSetObj[attrName] = attrVal;
+                          if(preloadResArr){
+                            self.appendPreloadRes(preloadResArr,attrObj.IOMap)
+                          }
+                        }
+                    }));
                     }
-                 }));
-              }
+                  }
+                }        
             }
           }
         }
-    }
+      
       Promise.all(PromiseRequestsArr).then(function(value) {
          console.log("promise all success");
          callback(null,iomap);
@@ -127,6 +132,7 @@ class IOTranslator{
           console.log("promise all catch");
           console.log(err.message);
         });
+    });
   }
 
     appendPreloadRes(preloadResArr, IOMap){

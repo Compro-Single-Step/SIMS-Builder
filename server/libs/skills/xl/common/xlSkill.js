@@ -6,6 +6,33 @@ const baseSkill = require("../../common/baseSkill");
 const xmlUtil = require("../../../../utils/xmlUtil");
 
 module.exports = class ExcelBaseSkill extends baseSkill{
+    
+    init(data, callback) {
+        var self = this;
+        var initDocJSonPath = data.initDocJSonPath;
+        var dbMgr = data.dbMgr;
+        dbMgr.readFileFromFileStore(initDocJSonPath, function(error, initDocJson){
+               if(!error){
+                 self.initDocJson = JSON.parse(initDocJson);
+                 self.generateSheetNamesMap();
+                 callback(null);
+               }
+               else{
+                 callback(error);
+               }
+           });
+    }
+
+    generateSheetNamesMap(){
+        this.sheetNameMap = {};
+        for(var index = 0; index < this.initDocJson.sheets.length; ++index){
+            this.sheetNameMap[this.initDocJson.sheets[index].name] = (index+1);
+        }
+    }
+
+    getSheetNumber(sheetName){
+        return this.sheetNameMap[sheetName];
+    }
 
     genImageJsonResFolderPath(stateId){
         
@@ -16,8 +43,6 @@ module.exports = class ExcelBaseSkill extends baseSkill{
         // patch fix
         return stepIdx + "/state" + stateId + "/";
     }
-
-    
 
     createImageJson (skillParams, callback){
         
@@ -83,9 +108,11 @@ module.exports = class ExcelBaseSkill extends baseSkill{
         //         var requestArray = [];
         //         var preloadResArr = [];
           
+
         //         for(var iterator = 0 ; iterator < paramValueObj["sheets"].length; ++iterator){
         //             sheetArr[iterator] = {};
         //             sheetArr[iterator]['sheetNo'] = 1;
+
                     
         //             sheetArr[iterator]['gridImg'] = paramValueObj["sheets"][iterator].gridImage.name;
         //             preloadResArr.push({"path":""+ newFolderPath + sheetArr[iterator]['gridImg'] ,"type":"img"})
@@ -140,7 +167,7 @@ module.exports = class ExcelBaseSkill extends baseSkill{
             }
             
             var sheetObject = {};
-                sheetObject["sheetNo"] = 1;
+                sheetObject["sheetNo"] = self.getSheetNumber(paramValueObj["sheets"][iterator].name);;
                 sheetObject["gridImg"] = resolveObj["gridImage"].split("/")[resolveObj["gridImage"].split("/").length - 1];
                 sheetObject["rowImg"] = resolveObj["rowImage"].split("/")[resolveObj["rowImage"].split("/").length - 1];
                 sheetObject["cellImg"] = resolveObj["cellImage"].split("/")[resolveObj["cellImage"].split("/").length - 1];

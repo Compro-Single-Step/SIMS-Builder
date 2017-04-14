@@ -5,7 +5,14 @@
 const ExcelBaseSkill = require("../common/xlSkill");
 
 class moveCellContent extends ExcelBaseSkill {
-  // //init DOC JSON 
+  
+  init(data, callback) {
+        var initDocJSonPath = data.stepUIState.views["1"].documentData.path;
+        var skilldata = {"initDocJSonPath": initDocJSonPath, "dbMgr": data.dbFilestoreMgr};
+        super.init(skilldata, callback);
+  }
+
+  //init DOC JSON 
   createJsonPath(skillParams, callback) {
 
     var taskParams = skillParams.taskParams;
@@ -36,7 +43,7 @@ class moveCellContent extends ExcelBaseSkill {
     var paramValueObj = skillParams.paramsObj
     //requires sheet name using init doc json
     var finalObject = {};
-    finalObject["sheetNo"] = 1;
+    finalObject["sheetNo"] = this.getSheetNumber(paramValueObj.sheetAction);
     finalObject["startRange"] = paramValueObj["srcRange"];
     finalObject["endRange"] = paramValueObj["destRange"];
     finalObject = JSON.stringify(finalObject);
@@ -50,7 +57,7 @@ class moveCellContent extends ExcelBaseSkill {
     var paramValueObj = skillParams.paramsObj
     // requires sheet number using Init Doc json
     var finalObject = {};
-    finalObject["sheetNo"] = 1;
+    finalObject["sheetNo"] = this.getSheetNumber(paramValueObj.sheetAction);
     finalObject["range"] = paramValueObj["srcRange"];
     finalObject = JSON.stringify(finalObject);
     callback(null, finalObject)
@@ -63,7 +70,7 @@ class moveCellContent extends ExcelBaseSkill {
     var taskParams = skillParams.taskParams;
     var paramValueObj = skillParams.paramsObj;
     var finalObject = {};
-    finalObject["sheetNo"] = 1;
+    finalObject["sheetNo"] = this.getSheetNumber(paramValueObj.sheetAction);
     //getSheetNameMapgetSheetNameMap(sheetName, initDocJsonPath)
 
     taskParams.dbFilestoreMgr.copyTaskAssetFile(paramValueObj["wbData"], taskParams, function (error, xmlPath, fileType) {
