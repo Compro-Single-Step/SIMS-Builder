@@ -249,14 +249,14 @@ class FileStoreController {
             .then((success)=> {
                 fs.writeFile(filepath + fileName, file, (err) => {
                     if(err) {
-                        Promise.reject(err);
+                        return Promise.reject(err);
                     }
                     else {
-                        Promise.resolve("saved in directory");
+                        return Promise.resolve("saved in directory");
                     }
                 });
             }, (err)=> {
-                Promise.reject(err);
+                return Promise.reject(err);
             });
     }
 

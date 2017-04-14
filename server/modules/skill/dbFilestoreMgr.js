@@ -24,7 +24,6 @@ class DatabaseFileStoreManager {
                 return Promise.reject("Skill Config for template id " + templateId + " doesn't exist in database");
             }
             else {
-                // return Promise.reject("Skill Config for template id " + templateId + " doesn't exist in database");
                 return fsc.getFileFromFileStore(filePath, folderMap.SKILL);
             }
         }, (error)=> {

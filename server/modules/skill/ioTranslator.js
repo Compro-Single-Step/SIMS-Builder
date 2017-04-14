@@ -120,7 +120,6 @@ class IOTranslator{
           console.log(err.message);
           return Promise.reject(err);
         });
-        // return Promise.resolve();
     },function(error){
       console.log("Init function came with an error");
       return Promise.reject(error)
