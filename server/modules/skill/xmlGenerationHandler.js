@@ -22,8 +22,8 @@ module.exports.generateStepXML = function (templateId, taskId, stepIndex, stepTe
             let IOMap = JSON.parse(IOMapJson);
             let mapTranslationParam = new mapTranslationParams(IOMap, stepUIState, skillRef, taskId, stepIndex, dbFilestoreMgr)
             // let attrValueMap = translator.getAttrValueMap(IOMap, stepUIState, skillRef, taskId, stepIndex,dbFilestoreMgr);
-            translator.getAttrValueMap(mapTranslationParam, function (error, IOmap) {
-                if (!error) {
+            translator.getAttrValueMap(mapTranslationParam)
+            .then(function (IOmap) {
                     //XML generation
                     dbFilestoreMgr.getSkillXML(templateId)
                         .then(skillTemplate => {
@@ -42,11 +42,11 @@ module.exports.generateStepXML = function (templateId, taskId, stepIndex, stepTe
                         .catch(error => {
                             Promise.reject(error);
                         })
-                }
-                else {
-                    Promise.reject(error);
-                }
+                
+            },function(error){
+                Promise.reject(error)
             });
+            // })
         }).catch(error => {
             Promise.reject(error);
         });

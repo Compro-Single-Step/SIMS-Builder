@@ -5,29 +5,43 @@
 const ExcelBaseSkill = require("../common/xlSkill");
 
 class moveCellContent extends ExcelBaseSkill {
-  // //init DOC JSON 
+
+  //dynamic sheet update
+  init(data, callback) {
+            var initDocJSonPath = data.stepUIState.views["1"].documentData.path;
+            var skilldata = {"initDocJSonPath": initDocJSonPath, "dbMgr": data.dbFilestoreMgr};
+            return super.init(skilldata);
+      }
+
+
+   //init DOC JSON 
   createJsonPath(skillParams, callback) {
 
     var taskParams = skillParams.taskParams;
-    var paramValueObj = skillParams.paramsObj
-    taskParams.dbFilestoreMgr.copyTaskAssetFile(paramValueObj["docData"], taskParams, function (error, xmlPath, fileType) {
-      paramValueObj["docData"] = xmlPath;
-      if (!error) {
-        var preloadResArr = [];
-        preloadResArr.push({ "path": "" + xmlPath, "type": "" + fileType })
-        callback(null, paramValueObj["docData"], preloadResArr);
-        //add this new path to the preloadResources Array
-      }
-      else {
-        callback(error);
-      }
-    })
+    var paramValueObj = skillParams.paramsObj;
+
+  
+      return taskParams.dbFilestoreMgr.copyTaskAssetFile(paramValueObj["docData"], taskParams)
+        .then(function(resolveParam){
+          paramValueObj["docData"] = resolveParam.filePath;
+          var preloadResArr = [];
+          preloadResArr.push({ "path": "" +  resolveParam.filePath, "type": "" + resolveParam.fileType })
+          resolveParam = {"attrValue":paramValueObj["docData"],"preloadResArr":preloadResArr}
+          return Promise.resolve(resolveParam);
+    },function(error){
+      return Promise.reject(error);
+      console.log("rejection at the movecellcontent");
+    }).catch(function(error){
+        return Promise.reject(error);
+    });
+    
   }
 
   getSelectedCell(skillParams, callback) {
 
     var paramValueObj = skillParams.paramsObj
-    callback(null, paramValueObj["srcRange"]);
+    var resolveParams = {"attrValue" : paramValueObj["srcRange"]};
+    return Promise.resolve(resolveParams);
 
   }
 
@@ -36,13 +50,12 @@ class moveCellContent extends ExcelBaseSkill {
     var paramValueObj = skillParams.paramsObj
     //requires sheet name using init doc json
     var finalObject = {};
-    finalObject["sheetNo"] = 1;
+    finalObject["sheetNo"] = this.getSheetNumber(paramValueObj.sheetAction);
     finalObject["startRange"] = paramValueObj["srcRange"];
     finalObject["endRange"] = paramValueObj["destRange"];
     finalObject = JSON.stringify(finalObject);
-    callback(null, finalObject)
-
-
+    var resolveParams = {"attrValue" :finalObject};
+    return Promise.resolve(resolveParams);
   }
 
   createHighlightJson(skillParams, callback) {
@@ -50,10 +63,11 @@ class moveCellContent extends ExcelBaseSkill {
     var paramValueObj = skillParams.paramsObj
     // requires sheet number using Init Doc json
     var finalObject = {};
-    finalObject["sheetNo"] = 1;
+    finalObject["sheetNo"] = this.getSheetNumber(paramValueObj.sheetAction);
     finalObject["range"] = paramValueObj["srcRange"];
     finalObject = JSON.stringify(finalObject);
-    callback(null, finalObject)
+    var resolveParams = {"attrValue" :finalObject};
+    return Promise.resolve(resolveParams);
 
   }
 
@@ -63,25 +77,20 @@ class moveCellContent extends ExcelBaseSkill {
     var taskParams = skillParams.taskParams;
     var paramValueObj = skillParams.paramsObj;
     var finalObject = {};
-    finalObject["sheetNo"] = 1;
-    //getSheetNameMapgetSheetNameMap(sheetName, initDocJsonPath)
-
-    taskParams.dbFilestoreMgr.copyTaskAssetFile(paramValueObj["wbData"], taskParams, function (error, xmlPath, fileType) {
-
-      if (!error) {
-        paramValueObj["wbData"] = xmlPath;
+    finalObject["sheetNo"] = this.getSheetNumber(paramValueObj.sheetAction);
+      return taskParams.dbFilestoreMgr.copyTaskAssetFile(paramValueObj["wbData"], taskParams)
+      .then(function(resolaveParams){
+        paramValueObj["wbData"] = resolaveParams.filePath
         finalObject["dataJSONPath"] = paramValueObj["wbData"];
         finalObject = JSON.stringify(finalObject);
         var preloadResArr = [];
-        preloadResArr.push({ "path": "" + xmlPath, "type": "" + fileType })
-        callback(null, finalObject, preloadResArr);
-      }
-      else {
-        // console.log("error in the createSheetCellData");
-        callback(error);
-      }
+        preloadResArr.push({ "path": "" + resolaveParams.filePath, "type": "" + resolaveParams.fileType })
+        var resolveParams = {"attrValue": finalObject, "preloadResArr":preloadResArr};
+        return Promise.resolve(resolveParams);
 
-    })
+    },function(error){
+        return Promise.reject(error);
+    });
   }
 
   getSelectedCellFinal(skillParams, callback) {
@@ -107,8 +116,8 @@ class moveCellContent extends ExcelBaseSkill {
       }
 
     }
-
-    callback(null, finalArray);
+    var resolveParams = {"attrValue" : finalArray};
+    return Promise.resolve(resolveParams);
 
 
   }
