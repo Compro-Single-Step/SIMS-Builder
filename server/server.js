@@ -16,7 +16,13 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // Point static path to dist
-app.use(express.static(path.join(__dirname, '/../dist/client')));
+if (app.get('env') === 'production') {
+	app.use(express.static(path.join(__dirname, '/../client')));	
+}
+else{
+	app.use(express.static(path.join(__dirname, '/../dist/client')));	
+}
+
 
 // Set our api routes
 app.use('/api', apiRouter());
@@ -24,7 +30,12 @@ app.use('/api', apiRouter());
 
 // Catch all other routes and return the index file
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '/../dist/client/index.html'));
+	if (app.get('env') === 'production') {
+  		res.sendFile(path.join(__dirname, '/../client/index.html'));
+  	}
+  	else{
+  		res.sendFile(path.join(__dirname, '/../dist/client/index.html'));
+  	}
 });
 
 /**

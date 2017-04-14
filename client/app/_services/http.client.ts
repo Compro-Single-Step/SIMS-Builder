@@ -8,37 +8,40 @@ export class HttpClient {
 
   constructor(private authHttp: AuthHttp, private loaderService: LoaderService) { }
 
-  get(url, options?) {
-    this.onStart();
+  get(url, options?, hideLoader?) {
+    this.onStart(hideLoader);
     return this.authHttp.get(url, options).finally(() => {
                 this.onEnd();
             });
   }
-  post(url, data, options?) {
-    this.onStart();
+  post(url, data, options?,hideLoader?) {
+    this.onStart(hideLoader);
     return this.authHttp.post(url, data, options).finally(() => {
                 this.onEnd();
             });
   }
-  put(url, data, options?) {
-    this.onStart();
+  put(url, data, options?, hideLoader?) {
+    this.onStart(hideLoader);
     return this.authHttp.put(url, data, options).finally(() => {
                 this.onEnd();
             });
   }
-  delete(url, data, options?) {
-    this.onStart();
+  delete(url, data, options?, hideLoader?) {
+    this.onStart(hideLoader);
     return this.authHttp.delete(url, options).finally(() => {
                 this.onEnd();
             });
   }
 
-  private onEnd(): void {
-        this.loaderService.setLoaderVisibility(false);
+  private onEnd(): void {   
+      this.loaderService.setLoaderVisibility(false);
+    
   }
 
-  private onStart(): void {
-        this.loaderService.setLoaderVisibility(true);
+  private onStart(hideLoader?): void {
+    if(!hideLoader){
+      this.loaderService.setLoaderVisibility(true);
+    }
   }
 
 }
