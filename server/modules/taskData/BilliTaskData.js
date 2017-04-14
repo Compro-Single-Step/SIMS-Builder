@@ -45,38 +45,13 @@ class BilliTaskData extends TaskdataInterface {
       return true;
     }
     getStepSkillName(index){
-      return ; //to be changed if skill field added to Billi Api
+      return "Not Selected"; //to be changed if skill field added to Billi Api
+    }
+    getStepTemplateName(index){
+      return "Not Selected"; //to be changed if skill field added to Billi Api
     }
     getStepMethodCount(index){
       return this.taskData.ScenarioItemList[index].ScenarioPathwayList.length;
-    }
-    getStepTemplateName(index, callback){
-      let stepIndex = this.taskData.ScenarioItemList[index].ScenarioOrder;
-      let condition = {"task_id": this.taskData.TaskFriendlyID};
-      let jsonKey = "steps.step_" + stepIndex;
-      let projection = {"_id": false};
-      projection[jsonKey] = true;
-      let err;
-      let template;
-      let stepId = "step_" + stepIndex;
-      return new Promise((resolve, reject) => {
-        taskTemplateMapModel.getTaskMap(condition, projection, (error, data) => {
-        try {
-          template = data[0].steps[stepId].template;
-        }
-        catch (error) {
-          err = error;
-        }
-        finally {
-          if(err)
-            resolve ("Not Selected"); //cannot reject as promise.all in taskModel will fail in that case
-          else
-            resolve (template);
-        }
-      });
-      });
-      
-    }
-    
+    }    
 }
 module.exports = BilliTaskData;

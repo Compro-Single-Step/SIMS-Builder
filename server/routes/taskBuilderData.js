@@ -24,7 +24,7 @@ router.get("/",function(req,res){
 
 		if(body.ErrorMessage == null){
 			mapTaskData(body, config.taskDataServer.name).then((taskData)=>{
-				body = taskData;
+				body = taskData;				
 				res.send(body);
 			});
 		}
@@ -32,11 +32,51 @@ router.get("/",function(req,res){
 			res.send(JSON.stringify({"Error":body.ErrorMessage}));
 	});
 });
- function mapTaskData(res, modelType){
-    var taskModel = taskFactory.getTaskDataModel(modelType, res);
-	let taskData = new Task (taskModel);
-	return taskData.getstepData(taskModel);
-  }
+function mapTaskData(res, modelType){
+var taskModel = taskFactory.getTaskDataModel(modelType, res);
+let taskData = new Task (taskModel);
+return validateTaskData(taskData);
+}
+function validateTaskData(taskData){
+	let promiseArr = [];
+	let stepData = taskData.getStepData();
+	for(let stepIndex=0;stepIndex<stepData.length;stepIndex++){ //function getSkillName to bre renamed to getTemplateName if Baloo gives skill name and set only template name in it..
+			promiseArr.push(getSkillName( stepData[stepIndex].getIndex(),taskData.getId()).then((skillName)=>{
+			stepData[stepIndex].setSkillName(skillName);
+			stepData[stepIndex].setTemplateName(skillName);
+			Promise.resolve();			
+		}));	
+	}
+	return Promise.all(promiseArr).then(()=>{
+		return Promise.resolve(taskData)
+	});
+}
+function getSkillName(stepIndex,taskId){
+	let condition = {"task_id": taskId};
+	let jsonKey = "steps.step_" + stepIndex;
+	let projection = {"_id": false};
+	projection[jsonKey] = true;
+	let err;
+	let template;
+	let stepId = "step_" + stepIndex;
+	return new Promise((resolve, reject) => {
+	taskTemplateMapModel.getTaskMap(condition, projection, (error, data) => {
+	try {
+		template = data[0].steps[stepId].template;
+	}
+	catch (error) {
+		err = error;
+	}
+	finally {
+		if(err)
+		resolve ("Not Selected"); //cannot reject as promise.all in taskModel will fail in that case
+		else
+		resolve (template);
+	}
+	});
+	});
+	
+}
 router.get("/templateOptions",function(req,res){
 	fs.readFile(__dirname+"/../public/TepmlateOptions.json", (err, data) => {
 		if (err) throw err;

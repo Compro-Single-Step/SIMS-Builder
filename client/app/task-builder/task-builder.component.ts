@@ -73,7 +73,7 @@ initialiseTaskData() {
 	stepNavigationListner(steptemplate,stepIndex){
 		this.SelectedStep = this.TaskData["stepData"][stepIndex];
 		if(steptemplate!= "Not Selected")
-			this.router.navigate(["task",this.TaskData["id"],"step",this.SelectedStep.Index]);
+			this.router.navigate(["task",this.TaskData["id"],"step",this.SelectedStep.Index,"template",steptemplate]);
 		else{
 			this.SelectTemplateDialog.show();
 		}
@@ -85,7 +85,7 @@ initialiseTaskData() {
 					if(MessageMap[res.message] == "Task Template Updated"){
 						this.displayMessage("The Template Id for the Step " + this.TaskData["id"].toUpperCase() + "-"+this.SelectedStep.Index +" is now changed to " +this.SelectedStep.TemplateName);
 						this.SelectTemplateDialog.hide();
-						this.router.navigate(["task",this.TaskData["id"],"step",this.SelectedStep.Index]);
+						this.router.navigate(["task",this.TaskData["id"],"step",this.SelectedStep.Index,"template",selectedTemplate]);
 					}
 					else{
 						this.displayMessage("Some Database Error Occured!!");
