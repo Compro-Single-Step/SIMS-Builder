@@ -69,7 +69,7 @@ class IOTranslator{
   }
 
 
- readIOMap(attrObj,callback){
+ readIOMap(attrObj){
       
       var iomap = attrObj.IOMap;
       var PromiseRequestsArr  = [];
@@ -136,17 +136,15 @@ class IOTranslator{
       }
     }
 
-    getAttrValueMap (attrObj, callback){
+    getAttrValueMap (attrObj){
       var self = this;
         return self.readIOMap(attrObj)
         .then(function(ioMap){
         return Promise.resolve(ioMap);
-      },function(){
+      },function(error){
         return Promise.reject(error);
       });
-
   }
-
 }
 var iotranslatorobj = new IOTranslator();
 module.exports = iotranslatorobj;
