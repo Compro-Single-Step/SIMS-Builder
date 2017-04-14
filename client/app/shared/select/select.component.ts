@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { BaseComponent } from '../base.component';
 import { itemSchema } from '../UIConfig.model';
 import { LabelTypes } from '../enums';
@@ -12,7 +12,6 @@ import { LabelTypes } from '../enums';
 export class SelectComponent extends BaseComponent {
   labelConfig: itemSchema = new itemSchema();
   itemList: Object;
-  selectedItem: Object;
 
   ngOnInit() {
     super.ngOnInit();
@@ -29,10 +28,10 @@ export class SelectComponent extends BaseComponent {
     else {
       this.itemList["value"] = this.compConfig.rendererProperties.itemList;
     }
-    this.selectedItem = this.builderModelSrvc.getModelRef(this.compConfig.val); 
+    this.modelRef = this.builderModelSrvc.getModelRef(this.compConfig.val); 
   }
 
   selectedItemChange() {
-    this.updateDependencies(this.selectedItem["value"]);
+    this.updateDependencies(this.modelRef["value"]);
   }
 }
