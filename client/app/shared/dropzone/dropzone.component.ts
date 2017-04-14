@@ -100,6 +100,22 @@ export class DropzoneComponent extends BaseComponent {
       });
     })
 
+    this.restoreFileUI(dropzone);
+  }
+
+  restoreFileUI(dropzone) {
+    let fileInfo = this.getData();
+    if (fileInfo.path != "") {
+      this.bds.getResource(this.getData().path).subscribe((res) => {
+        if (res.headers.get("status") == "success") {
+          let file = new File([res.body], fileInfo.displayName);
+          dropzone.addFile(file);
+        }
+        else{
+          //TODO: Handling of code when error is receiving file occurrs. 
+        }
+      });
+    }
   }
 
   getData() {
