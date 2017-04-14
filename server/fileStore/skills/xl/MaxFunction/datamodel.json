@@ -1,0 +1,81 @@
+{
+  "model": {
+    "views": {
+      "1": {
+        "documentTitle": {
+          "value": ""
+        },
+        "documentData": {
+          "displayName": "",
+          "path": ""
+        },
+        "sheets": {
+          "value": [
+            {
+              "name": "sheet 1",
+              "gridImage": {
+                "displayName": "",
+                "path": ""
+              },
+              "rowImage": {
+                "displayName": "",
+                "path": ""
+              },
+              "columnImage": {
+                "displayName": "",
+                "path": ""
+              },
+              "cellImage": {
+                "displayName": "",
+                "path": ""
+              }
+            }
+          ]
+        },
+        "taskbarPreviewImage": {
+          "displayName": "",
+          "path": ""
+        },
+        "radios": {
+          "selectedOption": {
+            "value": false
+          }
+        },
+        "cellRange": {
+          "value": "",
+          "show": false
+        },
+        "cellValues": {
+          "value": "",
+          "show": false
+        },
+        "formulaResult": {
+          "value": "",
+          "show": false
+        }
+      },
+      "2": {
+        "sheetInAction": {
+          "options": {
+            "value": []
+          },
+          "selectedOption": {
+            "value": ""
+          }
+        },
+        "formulaCellRangeReference": {
+          "value": ""
+        },
+        "cellContainingFormula": {
+          "value": ""
+        }
+      },
+      "3": {
+        "gridImage": {
+          "displayName": "",
+          "path": ""
+        }
+      }
+    }
+  }
+}

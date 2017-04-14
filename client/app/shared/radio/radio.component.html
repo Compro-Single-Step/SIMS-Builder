@@ -5,8 +5,8 @@
       placement="right" triggers="focus"></button>
   </div>
   <div class="form-group input-max-width">
-    <label class="radio-inline" *ngFor="let item of itemList.value">
-      <input type="radio" name="radioOption" [value]="item" (click)="selectedItemChange(item)" [checked]="selectedItem.value === item"> {{item}}
+    <label class="radio-inline" *ngFor="let item of itemList">
+      <input type="radio" name="radioOption" [value]="item.value" (click)="selectedItemChange(item.value)" [checked]="modelRef.value === item.value"> {{item.label}}
     </label>
   </div>
   <app-label [compConfig]="descriptionConfig"></app-label>

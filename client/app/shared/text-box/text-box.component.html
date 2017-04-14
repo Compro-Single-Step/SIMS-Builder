@@ -1,4 +1,4 @@
-<fieldset [hidden]="modelRef.show === 'No'">
+<fieldset [hidden]="!isVisible.show">
 	<div class="heading">
 	  <app-label [compConfig]="labelConfig"></app-label>
 		<button class="glyphicon glyphicon-info-sign info-icon" [popover]="compConfig.desc.detailed" [popoverTitle]="compConfig.label" placement="right" triggers="focus"></button>

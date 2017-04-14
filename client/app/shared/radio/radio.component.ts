@@ -12,7 +12,6 @@ export class RadioComponent extends BaseComponent {
 
  labelConfig: itemSchema = new itemSchema();
   itemList: Object;
-  selectedItem: Object;
 
   ngOnInit() {
     super.ngOnInit();
@@ -23,17 +22,12 @@ export class RadioComponent extends BaseComponent {
     this.labelConfig.rendererProperties.text = this.compConfig.label;
     this.labelConfig.rendererProperties.type = LabelTypes.ELEMENT_HEADING;
     this.updateDescription();
-    if (this.compConfig.rendererProperties.itemListRef) {
-      this.itemList = this.builderModelSrvc.getModelRef(this.compConfig.rendererProperties.itemListRef);
-    }
-    else {
-      this.itemList["value"] = this.compConfig.rendererProperties.itemList;
-    }
-    this.selectedItem = this.builderModelSrvc.getModelRef(this.compConfig.val); 
+    this.itemList = this.compConfig.items;
+    this.modelRef = this.builderModelSrvc.getModelRef(this.compConfig.val);
   }
 
   selectedItemChange(value) {
-    this.selectedItem["value"] = value;
+    this.modelRef["value"] = value;
     this.updateDependencies(value);
   }
 }

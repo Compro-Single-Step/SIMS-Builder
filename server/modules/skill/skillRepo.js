@@ -14,5 +14,19 @@ module.exports = {
             }
         ],
         dependencySkills: []
+    },
+    "maxfunction": {
+        primaryFile: "xl/maxfunction/maxfunction",
+        dependencyFiles: [
+            {
+                primaryFile: "xl/common/xlSkill",
+                dependencyFiles: [
+                    {
+                        primaryFile: "common/baseSkill",
+                        dependencyFiles: []
+                    }
+                ]
+            }
+        ]
     }
 }

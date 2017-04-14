@@ -20,7 +20,9 @@ export class TextBoxComponent extends BaseComponent {
   UpdateView() {
     this.labelConfig.rendererProperties.text = this.compConfig.label;
     this.labelConfig.rendererProperties.type = LabelTypes.ELEMENT_HEADING;
-
+    if(this.modelRef["show"] != undefined) {
+      this.isVisible = this.modelRef;
+    }
     this.updateDescription();
   }
 }

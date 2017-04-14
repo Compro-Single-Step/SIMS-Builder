@@ -10,10 +10,12 @@ export class BaseComponent implements OnInit{
     itemDataModel;
     dynamicMode: boolean = false;
     descriptionConfig: itemSchema = new itemSchema();
+    isVisible: Object;
     constructor() {
         this.compConfig = new itemSchema();
         this.builderModelSrvc = BuilderModelObj;
         this.itemDataModel = this.builderModelSrvc.getModel();
+        this.isVisible = {show: true};
     }
 
     ngOnInit(){   
