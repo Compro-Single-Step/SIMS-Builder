@@ -33,6 +33,7 @@ export class RadioComponent extends BaseComponent {
   }
 
   selectedItemChange(value) {
+    this.selectedItem["value"] = value;
     this.updateDependencies(value);
   }
 }

@@ -6,7 +6,7 @@
   </div>
   <div class="form-group input-max-width">
     <label class="radio-inline" *ngFor="let item of itemList.value">
-      <input type="radio" name="inlineRadioOptions" id="inlineRadio1" [value]="item" (click)="selectedItemChange(item)"> {{item}}
+      <input type="radio" name="radioOption" [value]="item" (click)="selectedItemChange(item)" [checked]="selectedItem.value === item"> {{item}}
     </label>
   </div>
   <app-label [compConfig]="descriptionConfig"></app-label>
