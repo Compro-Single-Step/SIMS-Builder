@@ -25,6 +25,10 @@ class XMLUtil{
         let taskFolderPath = "XMLs/TaskXmls/" + taskIdPath + taskFolder;
         return taskFolderPath;
 	}
+
+    generateStepFolderPath(taskId, stepIndex){
+        return this.generateTaskFolderPath(taskId) + stepIndex + "/";
+    }
 }
 
 module.exports = new XMLUtil();

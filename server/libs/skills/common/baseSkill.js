@@ -4,22 +4,22 @@ module.exports = class baseSkill{
             
       var taskParams = skillParams.taskParams;
       var paramValueObj = skillParams.paramsObj;
-      taskParams.dbFilestoreMgr.copyTaskAssetFile(paramValueObj["tbPrvImage"], taskParams, function(error, xmlPath, fileType){
+        return taskParams.dbFilestoreMgr.copyTaskAssetFile(paramValueObj["tbPrvImage"], taskParams)
+        .then(function(resolveParam){
            var preloadResArr = [];
-           preloadResArr.push({"path":"" + xmlPath,"type":"img"});
-          if(!error){
-            callback(null, xmlPath, preloadResArr);
-          }
-          else{
-            callback(error);
-          }
-      })
-      
+           preloadResArr.push({"path":"" + resolveParam.filePath ,"type":"img"});
+           var resolveParams = {"attrValue": resolveParam.filePath, "preloadResArr":resolveParam.preloadResArr};
+           return Promise.resolve(resolveParams);
+        },function(error){
+           return Promise.reject(error);
+        });
   }
   
     extractSingleParamVal(skillParams, callback){
 
       var paramValueObj = skillParams.paramsObj;
-        callback(null,paramValueObj[Object.keys(paramValueObj)[0]]);
+      var resolveParam = {"attrValue" : paramValueObj[Object.keys(paramValueObj)[0]]};
+     return Promise.resolve(resolveParam);
+        
     }
 }
