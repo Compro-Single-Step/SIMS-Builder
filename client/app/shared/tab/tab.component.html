@@ -3,7 +3,7 @@
   <button class="glyphicon glyphicon-info-sign info-icon" [popover]="compConfig.desc.detailed" [popoverTitle]="compConfig.label"
     placement="right" triggers="focus"></button>
 </div>
-<div *ngIf="!dynamicMode">
+<div *ngIf="!dynamicMode" [ngStyle]="compConfig.rendererProperties.style">
   <ul class="nav nav-tabs" (click)="$event.preventDefault()">
     <li *ngFor="let tabConfig of compConfig.items; let i = index" [ngClass]="['nav-item']" [class.active]="activeTabIndex == i">
       <a href="javascript:void(0);" class="nav-link" [class.active]="activeTabIndex == i" (click)="activeTabIndex = i">
@@ -17,7 +17,7 @@
     </div>
   </div>
 </div>
-<div *ngIf="dynamicMode">
+<div *ngIf="dynamicMode" [ngStyle]="compConfig.rendererProperties.style">
   <ul class="nav nav-tabs" (click)="$event.preventDefault()">
     <li *ngFor="let tab of tabs.value; let i = index" [ngClass]="['nav-item']" [class.active]="activeTabIndex == i">
       <a href="javascript:void(0);" class="nav-link" [class.active]="activeTabIndex == i" (click)="activeTabIndex = i">
