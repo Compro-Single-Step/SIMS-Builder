@@ -5,6 +5,7 @@ const ProgressPlugin = require('webpack/lib/ProgressPlugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin')
 
 const { NoEmitOnErrorsPlugin, LoaderOptionsPlugin } = require('webpack');
 const { BaseHrefWebpackPlugin, GlobCopyWebpackPlugin } = require('@angular/cli/plugins/webpack');
@@ -201,6 +202,7 @@ module.exports = {
     ]
   },
   "plugins": [
+    new CleanWebpackPlugin('dist'),
     new NoEmitOnErrorsPlugin(),
     new CopyWebpackPlugin([{
         from: 'client/assets',
