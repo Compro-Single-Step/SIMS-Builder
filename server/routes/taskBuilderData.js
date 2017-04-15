@@ -40,16 +40,31 @@ return validateTaskData(taskData);
 function validateTaskData(taskData){
 	let promiseArr = [];
 	let stepData = taskData.getStepData();
-	for(let stepIndex=0;stepIndex<stepData.length;stepIndex++){ //function getSkillName to bre renamed to getTemplateName if Baloo gives skill name and set only template name in it..
-			promiseArr.push(getTemplateName(taskData.getId(),stepData[stepIndex].getIndex()).then((templateName)=>{
+	let templateName;
+	let TemplateOptions=[];
+	return getTemplatOptions().then((templateData)=>{
+		TemplateOptions = JSON.parse(templateData).templateOptions;
+		for(let stepIndex=0;stepIndex<stepData.length;stepIndex++){ //function getSkillName to bre renamed to getTemplateName if Baloo gives skill name and set only template name in it..
+			promiseArr.push(getTemplateName(taskData.getId(),stepData[stepIndex].getIndex()).then((templateId)=>{
+			if(templateId!="NotSelected"){
+					let index;		
+					for(index=0;index<TemplateOptions.length&&TemplateOptions[index].id!=templateId;index++);
+					templateName = TemplateOptions[index].name;
+			}
+			else{
+				templateName = "Not Selected"
+			}
 			stepData[stepIndex].setSkillName(templateName);
 			stepData[stepIndex].setTemplateName(templateName);
+			stepData[stepIndex].setTemplateId(templateId);
 			Promise.resolve();			
-		}));	
-	}
-	return Promise.all(promiseArr).then(()=>{
+			}));
+		}	
+		return Promise.all(promiseArr).then(()=>{
 		return Promise.resolve(taskData)
+		});
 	});
+	
 }
 function getTemplateName(taskId,stepIndex){
 	let condition = {"task_id": taskId};
@@ -61,6 +76,7 @@ function getTemplateName(taskId,stepIndex){
 	let stepId = "step_" + stepIndex;
 	return new Promise((resolve, reject) => {
 	taskTemplateMapModel.getTaskMap(condition, projection, (error, data) => {
+	if (error) throw error;
 	try {
 		template = data[0].steps[stepId].template;
 	}
@@ -69,7 +85,7 @@ function getTemplateName(taskId,stepIndex){
 	}
 	finally {
 		if(err)
-		resolve ("Not Selected"); //cannot reject as promise.all in taskModel will fail in that case
+		resolve ("NotSelected"); //cannot reject as promise.all in taskModel will fail in that case
 		else
 		resolve (template);
 	}
@@ -78,17 +94,26 @@ function getTemplateName(taskId,stepIndex){
 	
 }
 router.get("/templateOptions",function(req,res){
-	fs.readFile(__dirname+"/../public/TepmlateOptions.json", (err, data) => {
-		if (err) throw err;
-		res.send(data);
-		});
+	getTemplatOptions().then((templateData)=>{
+		res.send(templateData);
+	});
 });
+function getTemplatOptions(){
+	let templateOptions;
+	return new Promise((resolve,reject)=>{
+		fs.readFile(__dirname+"/../public/TepmlateOptions.json",'utf8', (err, data) => {
+		if (err) throw err;
+		templateData= data;
+		resolve(templateData);
+		});
+	});
+}
 router.post("/stepTemplate",function(req,res){
 	task = req.body.TaskId;
 	step = req.body.StepIndex;
-	template = req.body.TemplateId;
+	templateId = req.body.TemplateId;
 	stepData = {
-		template:template
+		template:templateId
 	}
 	let condition = {"task_id": task};
 	let jsonKey = "steps.step_" + step;

@@ -50,7 +50,7 @@
       </div>
       <div class="modal-body">
         <ul class="list-group templateList">
-          <li class="list-group-item" *ngFor="let template of templateOptions" (dblclick)="setTempalateMap(template.name)" (click)="selectTemplate($event)">{{template.name}}</li>
+          <li class="list-group-item" *ngFor="let template of templateOptions" (dblclick)="setTempalateMap(template)" (click)="selectTemplate($event,template)">{{template.name}}</li>
         </ul>
       </div>
       <div class="modal-footer">

@@ -26,6 +26,6 @@ message;
     })
    }
    navigateToStepBuilder(){
-     this.stepNavigationEvent.emit(this.step.TemplateName);
+     this.stepNavigationEvent.emit(this.step.TemplateId);
    }
 }

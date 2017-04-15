@@ -1,10 +1,12 @@
 {
     "templateOptions":[
         {
-            "name":"Move Cell Content"
+            "name":"Move Cell Content",
+            "id":"MoveCellContent"
         },
         {
-            "name":"Add New Template!!"
+            "name":"Add New Template!!",
+            "id":"AddNewTemplate"
         }
 
     ]

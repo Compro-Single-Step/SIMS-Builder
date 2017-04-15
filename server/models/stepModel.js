@@ -6,6 +6,7 @@ class Step {
         this.SkillName = taskDataObj.getStepSkillName(index);
         this.MethodCount = taskDataObj.getStepMethodCount(index);
         this.TemplateName = taskDataObj.getStepTemplateName(index);
+        this.TemplateId = taskDataObj.getStepTemplateId(index);
     }
     getIndex(){
         return this.Index;
@@ -16,15 +17,8 @@ class Step {
     setTemplateName(templateName){
         this.TemplateName = templateName;
     }
-    // setStepTemplate(taskDataObj,index){
-    //     var self =this;
-    //   return taskDataObj.getStepTemplateName(index).then((template)=>{
-    //        self.TemplateName = template;
-    //        return Promise.resolve(self);
-    //    });
-    // }
-    // getSIMSTemplateName(SkillName){
-
-    // }
+    setTemplateId(templateId){
+        this.TemplateId = templateId;
+    }
 }
 module.exports = Step;

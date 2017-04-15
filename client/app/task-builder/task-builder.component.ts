@@ -34,9 +34,9 @@ export class TaskBuilderComponent implements OnInit {
 	// 	jQuery(this).addClass("selected").siblings().removeClass("selected"); 
 	// 	});
  }
- selectTemplate($event){
+ selectTemplate($event,selectedTemplate){
 	 jQuery($event.currentTarget).addClass("selected").siblings().removeClass("selected");
-	 this.selectedTemplateOption = jQuery($event.currentTarget).text();
+	 this.selectedTemplateOption = selectedTemplate;
  }
 initialiseTaskData() {
    	this.route.data
@@ -72,20 +72,21 @@ initialiseTaskData() {
 	}
 	stepNavigationListner(steptemplate,stepIndex){
 		this.SelectedStep = this.TaskData["stepData"][stepIndex];
-		if(steptemplate!= "Not Selected")
+		if(steptemplate!= "NotSelected")
 			this.router.navigate(["task",this.TaskData["id"],"step",this.SelectedStep.Index,"template",steptemplate]);
 		else{
 			this.SelectTemplateDialog.show();
 		}
 	}
 	setTempalateMap(selectedTemplate){
-		this.SelectedStep.TemplateName=selectedTemplate;
-		this.taskDataService.setTaskTemplate(this.TaskData["id"],this.SelectedStep.Index,selectedTemplate)
+		this.taskDataService.setTaskTemplate(this.TaskData["id"],this.SelectedStep.Index,selectedTemplate.id)
 				.subscribe(res =>{
 					if(MessageMap[res.message] == "Task Template Updated"){
-						this.displayMessage("The Template Id for the Step " + this.TaskData["id"].toUpperCase() + "-"+this.SelectedStep.Index +" is now changed to " +this.SelectedStep.TemplateName);
+						this.displayMessage("The Template Id for the Step " + this.TaskData["id"].toUpperCase() + "-"+this.SelectedStep.Index +" is now changed to " +selectedTemplate.name);
 						this.SelectTemplateDialog.hide();
-						this.router.navigate(["task",this.TaskData["id"],"step",this.SelectedStep.Index,"template",selectedTemplate]);
+						this.SelectedStep.TemplateName=selectedTemplate.name;
+						this.SelectedStep.TemplateId=selectedTemplate.id;
+						this.router.navigate(["task",this.TaskData["id"],"step",this.SelectedStep.Index,"template",this.SelectedStep.TemplateId]);
 					}
 					else{
 						this.displayMessage("Some Database Error Occured!!");
