@@ -2,6 +2,8 @@
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -23,23 +25,36 @@ var moveCellContent = function (_ExcelBaseSkill) {
   }
 
   _createClass(moveCellContent, [{
-    key: "createJsonPath",
+    key: "init",
 
-    // //init DOC JSON 
+
+    //dynamic sheet update
+    value: function init(data, callback) {
+      var initDocJSonPath = data.stepUIState.views["1"].documentData.path;
+      var skilldata = { "initDocJSonPath": initDocJSonPath, "dbMgr": data.dbFilestoreMgr };
+      return _get(moveCellContent.prototype.__proto__ || Object.getPrototypeOf(moveCellContent.prototype), "init", this).call(this, skilldata);
+    }
+
+    //init DOC JSON 
+
+  }, {
+    key: "createJsonPath",
     value: function createJsonPath(skillParams, callback) {
 
       var taskParams = skillParams.taskParams;
       var paramValueObj = skillParams.paramsObj;
-      taskParams.dbFilestoreMgr.copyTaskAssetFile(paramValueObj["docData"], taskParams, function (error, xmlPath, fileType) {
-        paramValueObj["docData"] = xmlPath;
-        if (!error) {
-          var preloadResArr = [];
-          preloadResArr.push({ "path": "" + xmlPath, "type": "" + fileType });
-          callback(null, paramValueObj["docData"], preloadResArr);
-          //add this new path to the preloadResources Array
-        } else {
-          callback(error);
-        }
+
+      return taskParams.dbFilestoreMgr.copyTaskAssetFile(paramValueObj["docData"], taskParams).then(function (resolveParam) {
+        paramValueObj["docData"] = resolveParam.filePath;
+        var preloadResArr = [];
+        preloadResArr.push({ "path": "" + resolveParam.filePath, "type": "" + resolveParam.fileType });
+        resolveParam = { "attrValue": paramValueObj["docData"], "preloadResArr": preloadResArr };
+        return Promise.resolve(resolveParam);
+      }, function (error) {
+        return Promise.reject(error);
+        console.log("rejection at the movecellcontent");
+      }).catch(function (error) {
+        return Promise.reject(error);
       });
     }
   }, {
@@ -47,7 +62,8 @@ var moveCellContent = function (_ExcelBaseSkill) {
     value: function getSelectedCell(skillParams, callback) {
 
       var paramValueObj = skillParams.paramsObj;
-      callback(null, paramValueObj["srcRange"]);
+      var resolveParams = { "attrValue": paramValueObj["srcRange"] };
+      return Promise.resolve(resolveParams);
     }
   }, {
     key: "getSelDragCell",
@@ -56,11 +72,12 @@ var moveCellContent = function (_ExcelBaseSkill) {
       var paramValueObj = skillParams.paramsObj;
       //requires sheet name using init doc json
       var finalObject = {};
-      finalObject["sheetNo"] = 1;
+      finalObject["sheetNo"] = this.getSheetNumber(paramValueObj.sheetAction);
       finalObject["startRange"] = paramValueObj["srcRange"];
       finalObject["endRange"] = paramValueObj["destRange"];
       finalObject = JSON.stringify(finalObject);
-      callback(null, finalObject);
+      var resolveParams = { "attrValue": finalObject };
+      return Promise.resolve(resolveParams);
     }
   }, {
     key: "createHighlightJson",
@@ -69,10 +86,11 @@ var moveCellContent = function (_ExcelBaseSkill) {
       var paramValueObj = skillParams.paramsObj;
       // requires sheet number using Init Doc json
       var finalObject = {};
-      finalObject["sheetNo"] = 1;
+      finalObject["sheetNo"] = this.getSheetNumber(paramValueObj.sheetAction);
       finalObject["range"] = paramValueObj["srcRange"];
       finalObject = JSON.stringify(finalObject);
-      callback(null, finalObject);
+      var resolveParams = { "attrValue": finalObject };
+      return Promise.resolve(resolveParams);
     }
   }, {
     key: "createSheetCellData",
@@ -81,22 +99,17 @@ var moveCellContent = function (_ExcelBaseSkill) {
       var taskParams = skillParams.taskParams;
       var paramValueObj = skillParams.paramsObj;
       var finalObject = {};
-      finalObject["sheetNo"] = 1;
-      //getSheetNameMapgetSheetNameMap(sheetName, initDocJsonPath)
-
-      taskParams.dbFilestoreMgr.copyTaskAssetFile(paramValueObj["wbData"], taskParams, function (error, xmlPath, fileType) {
-
-        if (!error) {
-          paramValueObj["wbData"] = xmlPath;
-          finalObject["dataJSONPath"] = paramValueObj["wbData"];
-          finalObject = JSON.stringify(finalObject);
-          var preloadResArr = [];
-          preloadResArr.push({ "path": "" + xmlPath, "type": "" + fileType });
-          callback(null, finalObject, preloadResArr);
-        } else {
-          // console.log("error in the createSheetCellData");
-          callback(error);
-        }
+      finalObject["sheetNo"] = this.getSheetNumber(paramValueObj.sheetAction);
+      return taskParams.dbFilestoreMgr.copyTaskAssetFile(paramValueObj["wbData"], taskParams).then(function (resolaveParams) {
+        paramValueObj["wbData"] = resolaveParams.filePath;
+        finalObject["dataJSONPath"] = paramValueObj["wbData"];
+        finalObject = JSON.stringify(finalObject);
+        var preloadResArr = [];
+        preloadResArr.push({ "path": "" + resolaveParams.filePath, "type": "" + resolaveParams.fileType });
+        var resolveParams = { "attrValue": finalObject, "preloadResArr": preloadResArr };
+        return Promise.resolve(resolveParams);
+      }, function (error) {
+        return Promise.reject(error);
       });
     }
   }, {
@@ -122,8 +135,8 @@ var moveCellContent = function (_ExcelBaseSkill) {
           if (iterator != 0 || index != 0) finalArray.push(col1 + row1 + ":" + String.fromCharCode(col1.charCodeAt(0) + iterator) + (row1 + index));
         }
       }
-
-      callback(null, finalArray);
+      var resolveParams = { "attrValue": finalArray };
+      return Promise.resolve(resolveParams);
     }
   }, {
     key: "getSheetNameAndSheetCountFromInitDocJSON",

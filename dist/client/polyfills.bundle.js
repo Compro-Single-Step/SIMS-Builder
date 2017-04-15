@@ -2729,7 +2729,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 // NgClass on SVG elements
 // Needed for: IE10, IE11
 // import 'classlist.js';
-//# sourceMappingURL=E:/SIMS-Builder/SIM-Builder-Pack_Deploy/checkout/develop/client/polyfills.js.map
+//# sourceMappingURL=E:/Sim-Builder-Packaging/checkout/develop/client/polyfills.js.map
 
 /***/ }),
 /* 401 */,

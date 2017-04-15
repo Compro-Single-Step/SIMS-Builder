@@ -8,29 +8,29 @@ const skillFactory = require("../modules/skill/skillFactory");
 
 class SkillController {
 
-    getStepUIConfig(templateId, taskId, stepIndex, callback) {
-        uiHandler.getStepUIConfig(templateId, taskId, stepIndex, callback);
-    }
-    //will rename this function after meeting feedback.
-    getUIConfig(templateId, callback) {
-        dbFilestoreMgr.getUIConfig(templateId, callback);
+    getStepUIConfig(templateId, taskId, stepIndex) {
+        return uiHandler.getStepUIConfig(templateId, taskId, stepIndex);
     }
 
-    getSkillModel(templateId, callback) {
-        dbFilestoreMgr.getSkillModel(templateId, callback);
+    getUIConfig(templateId) {
+        return dbFilestoreMgr.getUIConfig(templateId);
     }
 
-    getStepUIState(taskId, stepIndex, callback) {
-        dbFilestoreMgr.getStepUIState(taskId, stepIndex, callback);
+    getSkillModel(templateId) {
+        return dbFilestoreMgr.getSkillModel(templateId);
     }
 
-    saveStepUIState(taskId, stepIndex, stepUIData, callback) {
-        dbFilestoreMgr.saveStepUIState(taskId, stepIndex, stepUIData, callback);
+    getStepUIState(taskId, stepIndex) {
+        return dbFilestoreMgr.getStepUIState(taskId, stepIndex);
     }
 
-    generateXML(templateId, taskId, stepIdx, stepText, callback) {
+    saveStepUIState(taskId, stepIndex, stepUIData) {
+        return dbFilestoreMgr.saveStepUIState(taskId, stepIndex, stepUIData);
+    }
+
+    generateXML(templateId, taskId, stepIdx, stepText) {
         var skill = skillFactory.getSkillObject(templateId);
-        xmlGenerationHandler.generateStepXML(templateId, taskId, stepIdx, stepText, skill, callback);
+        return xmlGenerationHandler.generateStepXML(templateId, taskId, stepIdx, stepText, skill);
     }
 
     saveResourceFile() {
@@ -39,6 +39,10 @@ class SkillController {
 
     removeResourceFile(filePath) {
         return dbFilestoreMgr.removeResourceFile(filePath);
+    }
+
+    getResourcePath(filePath) {
+        return dbFilestoreMgr.getResourcePath(filePath);
     }
 };
 

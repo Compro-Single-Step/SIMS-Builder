@@ -34,7 +34,7 @@ var LoaderService = (function () {
     ], LoaderService);
     return LoaderService;
 }());
-//# sourceMappingURL=E:/SIMS-Builder/SIM-Builder-Pack_Deploy/checkout/develop/client/loader.service.js.map
+//# sourceMappingURL=E:/Sim-Builder-Packaging/checkout/develop/client/loader.service.js.map
 
 /***/ }),
 
@@ -104,7 +104,7 @@ var AuthService = (function () {
     return AuthService;
     var _a;
 }());
-//# sourceMappingURL=E:/SIMS-Builder/SIM-Builder-Pack_Deploy/checkout/develop/client/auth.service.js.map
+//# sourceMappingURL=E:/Sim-Builder-Packaging/checkout/develop/client/auth.service.js.map
 
 /***/ }),
 
@@ -187,7 +187,7 @@ var AuthGuard = (function () {
     return AuthGuard;
     var _a;
 }());
-//# sourceMappingURL=E:/SIMS-Builder/SIM-Builder-Pack_Deploy/checkout/develop/client/auth.guard.js.map
+//# sourceMappingURL=E:/Sim-Builder-Packaging/checkout/develop/client/auth.guard.js.map
 
 /***/ }),
 
@@ -247,7 +247,7 @@ var LoginComponent = (function () {
     return LoginComponent;
     var _a, _b, _c;
 }());
-//# sourceMappingURL=E:/SIMS-Builder/SIM-Builder-Pack_Deploy/checkout/develop/client/login.component.js.map
+//# sourceMappingURL=E:/Sim-Builder-Packaging/checkout/develop/client/login.component.js.map
 
 /***/ }),
 
@@ -268,7 +268,7 @@ if (__WEBPACK_IMPORTED_MODULE_2__environments_environment__["a" /* environment *
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["enableProdMode"])();
 }
 __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_3__app_app_module__["a" /* AppModule */]);
-//# sourceMappingURL=E:/SIMS-Builder/SIM-Builder-Pack_Deploy/checkout/develop/client/main.js.map
+//# sourceMappingURL=E:/Sim-Builder-Packaging/checkout/develop/client/main.js.map
 
 /***/ }),
 
@@ -375,7 +375,7 @@ var UserService = (function () {
     return UserService;
     var _a;
 }());
-//# sourceMappingURL=E:/SIMS-Builder/SIM-Builder-Pack_Deploy/checkout/develop/client/user.service.js.map
+//# sourceMappingURL=E:/Sim-Builder-Packaging/checkout/develop/client/user.service.js.map
 
 /***/ }),
 
@@ -461,7 +461,7 @@ var TaskDataService = (function () {
     return TaskDataService;
     var _a;
 }());
-//# sourceMappingURL=E:/SIMS-Builder/SIM-Builder-Pack_Deploy/checkout/develop/client/taskData.service.js.map
+//# sourceMappingURL=E:/Sim-Builder-Packaging/checkout/develop/client/taskData.service.js.map
 
 /***/ }),
 
@@ -681,7 +681,7 @@ var AppConfig = (function () {
     ], AppConfig);
     return AppConfig;
 }());
-//# sourceMappingURL=E:/SIMS-Builder/SIM-Builder-Pack_Deploy/checkout/develop/client/app.config.js.map
+//# sourceMappingURL=E:/Sim-Builder-Packaging/checkout/develop/client/app.config.js.map
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(169)))
 
 /***/ }),
@@ -743,7 +743,7 @@ var PreviewService = (function () {
     return PreviewService;
     var _a;
 }());
-//# sourceMappingURL=E:/SIMS-Builder/SIM-Builder-Pack_Deploy/checkout/develop/client/preview.service.js.map
+//# sourceMappingURL=E:/Sim-Builder-Packaging/checkout/develop/client/preview.service.js.map
 
 /***/ }),
 
@@ -765,7 +765,7 @@ var appRoutes = [
     { path: '**', redirectTo: '' }
 ];
 var routing = __WEBPACK_IMPORTED_MODULE_0__angular_router__["a" /* RouterModule */].forRoot(appRoutes);
-//# sourceMappingURL=E:/SIMS-Builder/SIM-Builder-Pack_Deploy/checkout/develop/client/app-routing.module.js.map
+//# sourceMappingURL=E:/Sim-Builder-Packaging/checkout/develop/client/app-routing.module.js.map
 
 /***/ }),
 
@@ -798,7 +798,7 @@ var AppComponent = (function () {
     ], AppComponent);
     return AppComponent;
 }());
-//# sourceMappingURL=E:/SIMS-Builder/SIM-Builder-Pack_Deploy/checkout/develop/client/app.component.js.map
+//# sourceMappingURL=E:/Sim-Builder-Packaging/checkout/develop/client/app.component.js.map
 
 /***/ }),
 
@@ -880,7 +880,7 @@ var AppModule = (function () {
     ], AppModule);
     return AppModule;
 }());
-//# sourceMappingURL=E:/SIMS-Builder/SIM-Builder-Pack_Deploy/checkout/develop/client/app.module.js.map
+//# sourceMappingURL=E:/Sim-Builder-Packaging/checkout/develop/client/app.module.js.map
 
 /***/ }),
 
@@ -930,7 +930,7 @@ var AuthModule = (function () {
     ], AuthModule);
     return AuthModule;
 }());
-//# sourceMappingURL=E:/SIMS-Builder/SIM-Builder-Pack_Deploy/checkout/develop/client/auth.module.js.map
+//# sourceMappingURL=E:/Sim-Builder-Packaging/checkout/develop/client/auth.module.js.map
 
 /***/ }),
 
@@ -968,7 +968,7 @@ var LoaderComponent = (function () {
     return LoaderComponent;
     var _a;
 }());
-//# sourceMappingURL=E:/SIMS-Builder/SIM-Builder-Pack_Deploy/checkout/develop/client/loader.component.js.map
+//# sourceMappingURL=E:/Sim-Builder-Packaging/checkout/develop/client/loader.component.js.map
 
 /***/ }),
 
@@ -984,7 +984,7 @@ var LoaderComponent = (function () {
 var environment = {
     production: false
 };
-//# sourceMappingURL=E:/SIMS-Builder/SIM-Builder-Pack_Deploy/checkout/develop/client/environment.js.map
+//# sourceMappingURL=E:/Sim-Builder-Packaging/checkout/develop/client/environment.js.map
 
 /***/ }),
 
@@ -1032,7 +1032,7 @@ exports = module.exports = __webpack_require__(47)();
 
 
 // module
-exports.push([module.i, ".login-page {\n  background-color: lightgray; }\n\n.page-footer {\n  margin-bottom: 25px;\n  font-size: 10px;\n  color: lightgray;\n  text-align: center; }\n  @media (min-height: 600px) {\n    .page-footer {\n      position: absolute;\n      bottom: 0;\n      left: 0;\n      right: 0; } }\n\n.widget-login-container {\n  padding-top: 10%;\n  padding-bottom: 20px;\n  min-height: 700px; }\n\n.widget-login-logo {\n  margin-top: 15px;\n  margin-bottom: 15px;\n  text-align: center;\n  font-weight: normal; }\n  .widget-login-logo .fa-circle {\n    font-size: 13px;\n    margin: 0 20px; }\n\n.widget-login {\n  padding: 30px; }\n  .widget-login > header h1, .widget-login > header h2, .widget-login > header h3, .widget-login > header h4, .widget-login > header h5, .widget-login > header h6 {\n    font-weight: normal;\n    text-align: center; }\n\n.widget-login-info {\n  font-size: 10px;\n  color: #888;\n  margin-top: 1px;\n  margin-bottom: 0;\n  text-align: center; }\n  .widget-login-info.abc-checkbox {\n    margin-left: -25px; }\n\n.login-form .form-control {\n  font-size: 10px;\n  border: none;\n  background-color: lightgrey; }\n  .login-form .form-control:focus {\n    background-color: lightgray; }\n\n.lab {\n  text-align: right;\n  padding-right: 30px;\n  margin-bottom: 0px;\n  margin-top: 5px;\n  color: black; }\n\n.form-group .inp {\n  padding: 2px;\n  background-color: white; }\n\n.form-group .inp:focus {\n  background-color: white; }\n\n.loginText {\n  text-align: center;\n  font-weight: bold;\n  font-size: 25px; }\n\n.sectionlogin {\n  border-bottom-right-radius: 4%;\n  border-top-right-radius: 4%;\n  border-bottom-left-radius: 0;\n  border-top-left-radius: 0;\n  background: #ffffff;\n  border-color: #cccccc;\n  color: black; }\n\n.forgetPassRow {\n  padding-top: 15px; }\n\n.loginBackground {\n  background: -webkit-radial-gradient(center ellipse, rgba(4, 13, 17, 0.8) 0%, rgba(4, 13, 17, 0.88) 44%, rgba(4, 13, 17, 0.97) 100%);\n  background: radial-gradient(ellipse at center, rgba(4, 13, 17, 0.8) 0%, rgba(4, 13, 17, 0.88) 44%, rgba(4, 13, 17, 0.97) 100%);\n  width: 100%;\n  height: 100%; }\n\n.lineSep {\n  color: black;\n  background-color: black;\n  height: 1px; }\n\n.fgtPass {\n  color: #1d3167;\n  font-weight: 400; }\n\n.infoSection {\n  border-bottom-left-radius: 4%;\n  border-top-left-radius: 4%;\n  border-bottom-right-radius: 0;\n  border-top-right-radius: 0;\n  background: #dddddd;\n  border-color: #cccccc; }\n\n.Section {\n  padding: 0; }\n\n.InfoHead {\n  color: #008b7f;\n  text-align: center;\n  font-weight: bold;\n  font-size: 25px; }\n\n.InfoBody {\n  text-align: center;\n  font-weight: bold; }\n", ""]);
+exports.push([module.i, ".login-page {\n  background-color: lightgray; }\n\n.page-footer {\n  margin-bottom: 25px;\n  font-size: 10px;\n  color: lightgray;\n  text-align: center; }\n  @media (min-height: 600px) {\n    .page-footer {\n      position: absolute;\n      bottom: 0;\n      left: 0;\n      right: 0; } }\n\n.widget-login-container {\n  padding-top: 10%;\n  padding-bottom: 20px;\n  min-height: 700px; }\n\n.widget-login-logo {\n  margin-top: 15px;\n  margin-bottom: 15px;\n  text-align: center;\n  font-weight: normal; }\n  .widget-login-logo .fa-circle {\n    font-size: 13px;\n    margin: 0 20px; }\n\n.widget-login {\n  padding: 30px; }\n  .widget-login > header h1, .widget-login > header h2, .widget-login > header h3, .widget-login > header h4, .widget-login > header h5, .widget-login > header h6 {\n    font-weight: normal;\n    text-align: center; }\n\n.widget-login-info {\n  font-size: 10px;\n  color: #888;\n  margin-top: 1px;\n  margin-bottom: 0;\n  text-align: center; }\n  .widget-login-info.abc-checkbox {\n    margin-left: -25px; }\n\n.login-form .form-control {\n  font-size: 10px;\n  border: none;\n  background-color: lightgrey; }\n  .login-form .form-control:focus {\n    background-color: lightgray; }\n\n.lab {\n  text-align: right;\n  padding-right: 30px;\n  margin-bottom: 0px;\n  margin-top: 5px;\n  color: black; }\n\n.form-group .inp {\n  padding: 2px;\n  background-color: white; }\n\n.form-group .inp:focus {\n  background-color: white; }\n\n.loginText {\n  text-align: center;\n  font-weight: bold;\n  font-size: 25px; }\n\n.sectionlogin {\n  border-bottom-right-radius: 4%;\n  border-top-right-radius: 4%;\n  border-bottom-left-radius: 0;\n  border-top-left-radius: 0;\n  background: #ffffff;\n  border-color: #cccccc;\n  color: black; }\n\n.forgetPassRow {\n  padding-top: 15px; }\n\n.loginBackground {\n  background: radial-gradient(ellipse at center, rgba(4, 13, 17, 0.8) 0%, rgba(4, 13, 17, 0.88) 44%, rgba(4, 13, 17, 0.97) 100%);\n  width: 100%;\n  height: 100%; }\n\n.lineSep {\n  color: black;\n  background-color: black;\n  height: 1px; }\n\n.fgtPass {\n  color: #1d3167;\n  font-weight: 400; }\n\n.infoSection {\n  border-bottom-left-radius: 4%;\n  border-top-left-radius: 4%;\n  border-bottom-right-radius: 0;\n  border-top-right-radius: 0;\n  background: #dddddd;\n  border-color: #cccccc; }\n\n.Section {\n  padding: 0; }\n\n.InfoHead {\n  color: #008b7f;\n  text-align: center;\n  font-weight: bold;\n  font-size: 25px; }\n\n.InfoBody {\n  text-align: center;\n  font-weight: bold; }\n", ""]);
 
 // exports
 
@@ -1143,7 +1143,7 @@ var HttpClient = (function () {
     return HttpClient;
     var _a, _b;
 }());
-//# sourceMappingURL=E:/SIMS-Builder/SIM-Builder-Pack_Deploy/checkout/develop/client/http.client.js.map
+//# sourceMappingURL=E:/Sim-Builder-Packaging/checkout/develop/client/http.client.js.map
 
 /***/ })
 

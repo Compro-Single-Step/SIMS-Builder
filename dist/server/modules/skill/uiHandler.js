@@ -5,34 +5,31 @@ const skillFactory = require("./skillFactory");
 
 class UIHandler {
 
-    getStepUIConfig(templateId, taskId, stepIndex, callback) {
+    getStepUIConfig(templateId, taskId, stepIndex) {
         let self = this;
-        dbFilestoreManager.getUIConfig(templateId, (error, uiConfigData) => {
-            if (!error) {
-                dbFilestoreManager.getSkillModel(templateId, (error, skillModelData) => {
-                    if (!error) {
-                        let data = {
-                            "uiconfig": JSON.parse(uiConfigData),
-                            "skillmodel": JSON.parse(skillModelData)
-                        };
+        return new Promise((resolve, reject) => {
+            Promise.all([dbFilestoreManager.getUIConfig(templateId), dbFilestoreManager.getSkillModel(templateId)]).then(([uiConfig, model]) => {
+                let data = {
+                    "uiconfig": JSON.parse(uiConfig),
+                    "skillmodel": JSON.parse(model)
+                };
 
-                        self._bundleSkillHelperFiles(templateId).then(webpackBundle => {
-                            data.skillfilesbundle = webpackBundle;
+                self._bundleSkillHelperFiles(templateId).then(webpackBundle => {
+                    data.skillfilesbundle = webpackBundle;
 
-                            dbFilestoreManager.getStepUIState(taskId, stepIndex, (error, stepUIStateData) => {
-                                data.stepuistate = stepUIStateData || null;
-                                callback(null, data);
-                            });
-                        }).catch(error => {
-                            callback(error);
-                        });
-                    } else {
-                        callback(error);
-                    }
+                    dbFilestoreManager.getStepUIState(taskId, stepIndex).then(uiState => {
+                        data.stepuistate = uiState || null;
+                        resolve(data);
+                    }, error => {
+                        data.stepuistate = null;
+                        resolve(data);
+                    }).catch(error => {
+                        reject(error);
+                    });
                 });
-            } else {
-                callback(error);
-            }
+            }).catch(error => {
+                reject(error);
+            });
         });
     }
 

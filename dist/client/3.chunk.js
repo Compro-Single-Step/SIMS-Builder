@@ -32,7 +32,7 @@ var TaskDataResolver = (function () {
     return TaskDataResolver;
     var _a;
 }());
-//# sourceMappingURL=E:/SIMS-Builder/SIM-Builder-Pack_Deploy/checkout/develop/client/taskDataResolver.service.js.map
+//# sourceMappingURL=E:/Sim-Builder-Packaging/checkout/develop/client/taskDataResolver.service.js.map
 
 /***/ }),
 
@@ -101,7 +101,7 @@ var TaskBuilderComponent = (function () {
     return TaskBuilderComponent;
     var _a, _b, _c;
 }());
-//# sourceMappingURL=E:/SIMS-Builder/SIM-Builder-Pack_Deploy/checkout/develop/client/task-builder.component.js.map
+//# sourceMappingURL=E:/Sim-Builder-Packaging/checkout/develop/client/task-builder.component.js.map
 
 /***/ }),
 
@@ -154,7 +154,7 @@ var TaskstepComponent = (function () {
     return TaskstepComponent;
     var _a, _b;
 }());
-//# sourceMappingURL=E:/SIMS-Builder/SIM-Builder-Pack_Deploy/checkout/develop/client/taskstep.component.js.map
+//# sourceMappingURL=E:/Sim-Builder-Packaging/checkout/develop/client/taskstep.component.js.map
 
 /***/ }),
 
@@ -253,7 +253,7 @@ var TaskBuilderModule = (function () {
     ], TaskBuilderModule);
     return TaskBuilderModule;
 }());
-//# sourceMappingURL=E:/SIMS-Builder/SIM-Builder-Pack_Deploy/checkout/develop/client/task-builder.module.js.map
+//# sourceMappingURL=E:/Sim-Builder-Packaging/checkout/develop/client/task-builder.module.js.map
 
 /***/ })
 

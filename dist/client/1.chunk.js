@@ -73,7 +73,7 @@ var StepBuilderModule = (function () {
     ], StepBuilderModule);
     return StepBuilderModule;
 }());
-//# sourceMappingURL=E:/SIMS-Builder/SIM-Builder-Pack_Deploy/checkout/develop/client/step-builder.module.js.map
+//# sourceMappingURL=E:/Sim-Builder-Packaging/checkout/develop/client/step-builder.module.js.map
 
 /***/ }),
 /* 737 */,
@@ -5112,7 +5112,7 @@ var MessageMap = {
     "USERDATA_UPDATED": "User Data Updated",
     "NO_CHANGES": "No Changes"
 };
-//# sourceMappingURL=E:/SIMS-Builder/SIM-Builder-Pack_Deploy/checkout/develop/client/enums.js.map
+//# sourceMappingURL=E:/Sim-Builder-Packaging/checkout/develop/client/enums.js.map
 
 /***/ }),
 /* 751 */
@@ -6506,7 +6506,7 @@ var UIConfig = (function () {
     }
     return UIConfig;
 }());
-//# sourceMappingURL=E:/SIMS-Builder/SIM-Builder-Pack_Deploy/checkout/develop/client/UIConfig.model.js.map
+//# sourceMappingURL=E:/Sim-Builder-Packaging/checkout/develop/client/UIConfig.model.js.map
 
 /***/ }),
 /* 774 */
@@ -6788,7 +6788,7 @@ var BaseComponent = (function () {
     return BaseComponent;
     var _a;
 }());
-//# sourceMappingURL=E:/SIMS-Builder/SIM-Builder-Pack_Deploy/checkout/develop/client/base.component.js.map
+//# sourceMappingURL=E:/Sim-Builder-Packaging/checkout/develop/client/base.component.js.map
 
 /***/ }),
 /* 777 */
@@ -24935,7 +24935,7 @@ var InputFactoryService = (function () {
     return InputFactoryService;
     var _a;
 }());
-//# sourceMappingURL=E:/SIMS-Builder/SIM-Builder-Pack_Deploy/checkout/develop/client/input-factory.service.js.map
+//# sourceMappingURL=E:/Sim-Builder-Packaging/checkout/develop/client/input-factory.service.js.map
 
 /***/ }),
 /* 981 */,
@@ -25002,6 +25002,10 @@ var BuilderDataService = (function () {
             .map(this.extractData)
             .catch(this.handleError);
     };
+    BuilderDataService.prototype.getResource = function (path) {
+        return this.httpClient.get("api/skill/resource/" + path)
+            .catch(this.handleError);
+    };
     BuilderDataService.prototype.extractData = function (res) {
         var body = res.json();
         return body || {};
@@ -25027,7 +25031,7 @@ var BuilderDataService = (function () {
     return BuilderDataService;
     var _a;
 }());
-//# sourceMappingURL=E:/SIMS-Builder/SIM-Builder-Pack_Deploy/checkout/develop/client/builder-data.service.js.map
+//# sourceMappingURL=E:/Sim-Builder-Packaging/checkout/develop/client/builder-data.service.js.map
 
 /***/ }),
 /* 990 */,
@@ -25175,7 +25179,7 @@ var ButtonComponent = (function (_super) {
     ], ButtonComponent);
     return ButtonComponent;
 }(__WEBPACK_IMPORTED_MODULE_1__base_component__["a" /* BaseComponent */]));
-//# sourceMappingURL=E:/SIMS-Builder/SIM-Builder-Pack_Deploy/checkout/develop/client/button.component.js.map
+//# sourceMappingURL=E:/Sim-Builder-Packaging/checkout/develop/client/button.component.js.map
 
 /***/ }),
 /* 1001 */
@@ -25203,7 +25207,7 @@ var ContainerComponent = (function (_super) {
     };
     return ContainerComponent;
 }(__WEBPACK_IMPORTED_MODULE_0__base_component__["a" /* BaseComponent */]));
-//# sourceMappingURL=E:/SIMS-Builder/SIM-Builder-Pack_Deploy/checkout/develop/client/container.component.js.map
+//# sourceMappingURL=E:/Sim-Builder-Packaging/checkout/develop/client/container.component.js.map
 
 /***/ }),
 /* 1002 */
@@ -25319,6 +25323,20 @@ var DropzoneComponent = (function (_super) {
                 }
             });
         });
+        this.restoreFileUI(dropzone);
+    };
+    DropzoneComponent.prototype.restoreFileUI = function (dropzone) {
+        var fileInfo = this.getData();
+        if (fileInfo.path != "") {
+            this.bds.getResource(this.getData().path).subscribe(function (res) {
+                if (res.headers.get("status") == "success") {
+                    var file = new File([res.body], fileInfo.displayName);
+                    dropzone.addFile(file);
+                }
+                else {
+                }
+            });
+        }
     };
     DropzoneComponent.prototype.getData = function () {
         return this.modelRef ? this.modelRef : this.builderModelSrvc.getModelRef(this.compConfig.val);
@@ -25343,7 +25361,7 @@ var MIMETYPE;
     MIMETYPE[MIMETYPE["JSON"] = ".json"] = "JSON";
     MIMETYPE[MIMETYPE["img"] = "image/*"] = "img";
 })(MIMETYPE || (MIMETYPE = {}));
-//# sourceMappingURL=E:/SIMS-Builder/SIM-Builder-Pack_Deploy/checkout/develop/client/dropzone.component.js.map
+//# sourceMappingURL=E:/Sim-Builder-Packaging/checkout/develop/client/dropzone.component.js.map
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1109)))
 
 /***/ }),
@@ -25410,7 +25428,7 @@ var PanelComponent = (function (_super) {
     return PanelComponent;
     var _a, _b, _c;
 }(__WEBPACK_IMPORTED_MODULE_1__container_component__["a" /* ContainerComponent */]));
-//# sourceMappingURL=E:/SIMS-Builder/SIM-Builder-Pack_Deploy/checkout/develop/client/panel.component.js.map
+//# sourceMappingURL=E:/Sim-Builder-Packaging/checkout/develop/client/panel.component.js.map
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(169)))
 
 /***/ }),
@@ -25476,7 +25494,7 @@ var SelectComponent = (function (_super) {
     ], SelectComponent);
     return SelectComponent;
 }(__WEBPACK_IMPORTED_MODULE_1__base_component__["a" /* BaseComponent */]));
-//# sourceMappingURL=E:/SIMS-Builder/SIM-Builder-Pack_Deploy/checkout/develop/client/select.component.js.map
+//# sourceMappingURL=E:/Sim-Builder-Packaging/checkout/develop/client/select.component.js.map
 
 /***/ }),
 /* 1005 */
@@ -25537,7 +25555,7 @@ var TabComponent = (function (_super) {
     ], TabComponent);
     return TabComponent;
 }(__WEBPACK_IMPORTED_MODULE_1__base_component__["a" /* BaseComponent */]));
-//# sourceMappingURL=E:/SIMS-Builder/SIM-Builder-Pack_Deploy/checkout/develop/client/tab.component.js.map
+//# sourceMappingURL=E:/Sim-Builder-Packaging/checkout/develop/client/tab.component.js.map
 
 /***/ }),
 /* 1006 */
@@ -25594,7 +25612,7 @@ var TextBoxComponent = (function (_super) {
     ], TextBoxComponent);
     return TextBoxComponent;
 }(__WEBPACK_IMPORTED_MODULE_1__base_component__["a" /* BaseComponent */]));
-//# sourceMappingURL=E:/SIMS-Builder/SIM-Builder-Pack_Deploy/checkout/develop/client/text-box.component.js.map
+//# sourceMappingURL=E:/Sim-Builder-Packaging/checkout/develop/client/text-box.component.js.map
 
 /***/ }),
 /* 1007 */
@@ -25623,7 +25641,7 @@ var BuilderModel = (function () {
 }());
 ;
 var BuilderModelObj = new BuilderModel();
-//# sourceMappingURL=E:/SIMS-Builder/SIM-Builder-Pack_Deploy/checkout/develop/client/builder-model.service.js.map
+//# sourceMappingURL=E:/Sim-Builder-Packaging/checkout/develop/client/builder-model.service.js.map
 
 /***/ }),
 /* 1008 */
@@ -25644,7 +25662,7 @@ var SkillManager = (function () {
     return SkillManager;
 }());
 var skillManager = new SkillManager();
-//# sourceMappingURL=E:/SIMS-Builder/SIM-Builder-Pack_Deploy/checkout/develop/client/skill-manager.service.js.map
+//# sourceMappingURL=E:/Sim-Builder-Packaging/checkout/develop/client/skill-manager.service.js.map
 
 /***/ }),
 /* 1009 */,
@@ -25721,7 +25739,7 @@ var LabelComponent = (function (_super) {
     ], LabelComponent);
     return LabelComponent;
 }(__WEBPACK_IMPORTED_MODULE_1__base_component__["a" /* BaseComponent */]));
-//# sourceMappingURL=E:/SIMS-Builder/SIM-Builder-Pack_Deploy/checkout/develop/client/label.component.js.map
+//# sourceMappingURL=E:/Sim-Builder-Packaging/checkout/develop/client/label.component.js.map
 
 /***/ }),
 /* 1038 */
@@ -25785,7 +25803,7 @@ var SharedModule = (function () {
     ], SharedModule);
     return SharedModule;
 }());
-//# sourceMappingURL=E:/SIMS-Builder/SIM-Builder-Pack_Deploy/checkout/develop/client/shared.module.js.map
+//# sourceMappingURL=E:/Sim-Builder-Packaging/checkout/develop/client/shared.module.js.map
 
 /***/ }),
 /* 1039 */
@@ -25850,7 +25868,7 @@ var TabPageComponent = (function (_super) {
     return TabPageComponent;
     var _a, _b;
 }(__WEBPACK_IMPORTED_MODULE_1__container_component__["a" /* ContainerComponent */]));
-//# sourceMappingURL=E:/SIMS-Builder/SIM-Builder-Pack_Deploy/checkout/develop/client/tab-page.component.js.map
+//# sourceMappingURL=E:/Sim-Builder-Packaging/checkout/develop/client/tab-page.component.js.map
 
 /***/ }),
 /* 1040 */
@@ -25891,7 +25909,7 @@ var TagComponent = (function (_super) {
     ], TagComponent);
     return TagComponent;
 }(__WEBPACK_IMPORTED_MODULE_1__base_component__["a" /* BaseComponent */]));
-//# sourceMappingURL=E:/SIMS-Builder/SIM-Builder-Pack_Deploy/checkout/develop/client/tag.component.js.map
+//# sourceMappingURL=E:/Sim-Builder-Packaging/checkout/develop/client/tag.component.js.map
 
 /***/ }),
 /* 1041 */
@@ -25925,7 +25943,7 @@ var BalooReferenceComponent = (function () {
     ], BalooReferenceComponent);
     return BalooReferenceComponent;
 }());
-//# sourceMappingURL=E:/SIMS-Builder/SIM-Builder-Pack_Deploy/checkout/develop/client/baloo-reference.component.js.map
+//# sourceMappingURL=E:/Sim-Builder-Packaging/checkout/develop/client/baloo-reference.component.js.map
 
 /***/ }),
 /* 1042 */
@@ -25959,7 +25977,7 @@ var MethodViewerComponent = (function () {
     ], MethodViewerComponent);
     return MethodViewerComponent;
 }());
-//# sourceMappingURL=E:/SIMS-Builder/SIM-Builder-Pack_Deploy/checkout/develop/client/method-viewer.component.js.map
+//# sourceMappingURL=E:/Sim-Builder-Packaging/checkout/develop/client/method-viewer.component.js.map
 
 /***/ }),
 /* 1043 */
@@ -25993,7 +26011,7 @@ var ScenarioDocsComponent = (function () {
     ], ScenarioDocsComponent);
     return ScenarioDocsComponent;
 }());
-//# sourceMappingURL=E:/SIMS-Builder/SIM-Builder-Pack_Deploy/checkout/develop/client/scenario-docs.component.js.map
+//# sourceMappingURL=E:/Sim-Builder-Packaging/checkout/develop/client/scenario-docs.component.js.map
 
 /***/ }),
 /* 1044 */
@@ -26027,7 +26045,7 @@ var ScenarioFilesViewerComponent = (function () {
     ], ScenarioFilesViewerComponent);
     return ScenarioFilesViewerComponent;
 }());
-//# sourceMappingURL=E:/SIMS-Builder/SIM-Builder-Pack_Deploy/checkout/develop/client/scenario-files-viewer.component.js.map
+//# sourceMappingURL=E:/Sim-Builder-Packaging/checkout/develop/client/scenario-files-viewer.component.js.map
 
 /***/ }),
 /* 1045 */
@@ -26183,7 +26201,7 @@ var StepBuilderComponent = (function () {
     return StepBuilderComponent;
     var _a, _b, _c, _d, _e, _f;
 }());
-//# sourceMappingURL=E:/SIMS-Builder/SIM-Builder-Pack_Deploy/checkout/develop/client/step-builder.component.js.map
+//# sourceMappingURL=E:/Sim-Builder-Packaging/checkout/develop/client/step-builder.component.js.map
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(169), __webpack_require__(1111)))
 
 /***/ }),
@@ -26237,7 +26255,7 @@ var StepInputAreaComponent = (function () {
     return StepInputAreaComponent;
     var _a, _b;
 }());
-//# sourceMappingURL=E:/SIMS-Builder/SIM-Builder-Pack_Deploy/checkout/develop/client/step-input-area.component.js.map
+//# sourceMappingURL=E:/Sim-Builder-Packaging/checkout/develop/client/step-input-area.component.js.map
 
 /***/ }),
 /* 1047 */
@@ -26271,7 +26289,7 @@ var TaskFileStoreComponent = (function () {
     ], TaskFileStoreComponent);
     return TaskFileStoreComponent;
 }());
-//# sourceMappingURL=E:/SIMS-Builder/SIM-Builder-Pack_Deploy/checkout/develop/client/task-file-store.component.js.map
+//# sourceMappingURL=E:/Sim-Builder-Packaging/checkout/develop/client/task-file-store.component.js.map
 
 /***/ }),
 /* 1048 */
@@ -26330,7 +26348,7 @@ var ViewInputAreaComponent = (function () {
     return ViewInputAreaComponent;
     var _a, _b, _c;
 }());
-//# sourceMappingURL=E:/SIMS-Builder/SIM-Builder-Pack_Deploy/checkout/develop/client/view-input-area.component.js.map
+//# sourceMappingURL=E:/Sim-Builder-Packaging/checkout/develop/client/view-input-area.component.js.map
 
 /***/ }),
 /* 1049 */
@@ -26387,7 +26405,7 @@ var ViewNavigatorComponent = (function () {
     return ViewNavigatorComponent;
     var _a;
 }());
-//# sourceMappingURL=E:/SIMS-Builder/SIM-Builder-Pack_Deploy/checkout/develop/client/view-navigator.component.js.map
+//# sourceMappingURL=E:/Sim-Builder-Packaging/checkout/develop/client/view-navigator.component.js.map
 
 /***/ }),
 /* 1050 */,
@@ -29091,7 +29109,7 @@ module.exports = "<ul class=\"nav-justified mb-sm nav nav-pills progressbar\">\r
     https://localforage.github.io/localForage
     (c) 2013-2017 Mozilla, Apache License 2.0
 */
-(function(f){if(true){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.localforage = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return require(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw (f.code="MODULE_NOT_FOUND", f)}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
+(function(f){if(true){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.localforage = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return require(o,!0);if(i)return require(o,!0);var f=new Error("Cannot find module '"+o+"'");throw (f.code="MODULE_NOT_FOUND", f)}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
 (function (global){
 'use strict';
 var Mutation = global.MutationObserver || global.WebKitMutationObserver;

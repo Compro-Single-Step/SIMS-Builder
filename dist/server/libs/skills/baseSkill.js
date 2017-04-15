@@ -5,36 +5,36 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 module.exports = function () {
-    function baseSkill() {
-        _classCallCheck(this, baseSkill);
-    }
+   function baseSkill() {
+      _classCallCheck(this, baseSkill);
+   }
 
-    _createClass(baseSkill, [{
-        key: "createTooltipImagePath",
+   _createClass(baseSkill, [{
+      key: "createTooltipImagePath",
 
-        // This is the function of the TaskBar tooltip image path
-        value: function createTooltipImagePath(skillParams, callback) {
+      // This is the function of the TaskBar tooltip image path
+      value: function createTooltipImagePath(skillParams, callback) {
 
-            var taskParams = skillParams.taskParams;
-            var paramValueObj = skillParams.paramsObj;
-            taskParams.dbFilestoreMgr.copyTaskAssetFile(paramValueObj["tbPrvImage"], taskParams, function (error, xmlPath, fileType) {
-                var preloadResArr = [];
-                preloadResArr.push({ "path": "" + xmlPath, "type": "img" });
-                if (!error) {
-                    callback(null, xmlPath, preloadResArr);
-                } else {
-                    callback(error);
-                }
-            });
-        }
-    }, {
-        key: "extractSingleParamVal",
-        value: function extractSingleParamVal(skillParams, callback) {
+         var taskParams = skillParams.taskParams;
+         var paramValueObj = skillParams.paramsObj;
+         return taskParams.dbFilestoreMgr.copyTaskAssetFile(paramValueObj["tbPrvImage"], taskParams).then(function (resolveParam) {
+            var preloadResArr = [];
+            preloadResArr.push({ "path": "" + resolveParam.filePath, "type": "img" });
+            var resolveParams = { "attrValue": resolveParam.filePath, "preloadResArr": resolveParam.preloadResArr };
+            return Promise.resolve(resolveParams);
+         }, function (error) {
+            return Promise.reject(error);
+         });
+      }
+   }, {
+      key: "extractSingleParamVal",
+      value: function extractSingleParamVal(skillParams, callback) {
 
-            var paramValueObj = skillParams.paramsObj;
-            callback(null, paramValueObj[Object.keys(paramValueObj)[0]]);
-        }
-    }]);
+         var paramValueObj = skillParams.paramsObj;
+         var resolveParam = { "attrValue": paramValueObj[Object.keys(paramValueObj)[0]] };
+         return Promise.resolve(resolveParam);
+      }
+   }]);
 
-    return baseSkill;
+   return baseSkill;
 }();
