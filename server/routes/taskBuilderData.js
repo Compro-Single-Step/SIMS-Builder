@@ -101,7 +101,7 @@ router.get("/templateOptions",function(req,res){
 function getTemplatOptions(){
 	let templateOptions;
 	return new Promise((resolve,reject)=>{
-		fs.readFile(__dirname+"/../public/TepmlateOptions.json",'utf8', (err, data) => {
+		fs.readFile(__dirname+"/../public/TemplateOptions.json",'utf8', (err, data) => {
 		if (err) throw err;
 		templateData= data;
 		resolve(templateData);
