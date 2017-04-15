@@ -81,7 +81,7 @@ initialiseTaskData() {
 	setTempalateMap(selectedTemplate){
 		this.taskDataService.setTaskTemplate(this.TaskData["id"],this.SelectedStep,selectedTemplate.id)
 				.subscribe(res =>{
-					if(MessageMap[res.message] == "Task Template Updated"){
+					if(res.message == "TEMPLATE_UPDATED"){
 						this.displayMessage("The Template Id for the Step " + this.TaskData["id"].toUpperCase() + "-"+this.SelectedStep.Index +" is now changed to " +selectedTemplate.name);
 						this.SelectTemplateDialog.hide();
 						this.SelectedStep = res.stepData;

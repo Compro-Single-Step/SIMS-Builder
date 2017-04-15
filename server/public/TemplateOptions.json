@@ -2,11 +2,15 @@
     "templateOptions":[
         {
             "name":"Move Cell Content",
-            "id":"MoveCellContent"
+            "id":"movecellcontent"
         },
         {
-            "name":"Add New Template!!",
-            "id":"AddNewTemplate"
+            "name":"Max Function",
+            "id":"maxfunction"
+        },
+        {
+            "name":"Sorting Table Columns",
+            "id":"sortingtablecolumns"
         }
 
     ]
