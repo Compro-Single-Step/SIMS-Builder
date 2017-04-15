@@ -140,9 +140,11 @@ class IOTranslator{
         return self.readIOMap(attrObj)
         .then(function(ioMap){
         return Promise.resolve(ioMap);
-      },function(error){
+      }
+      ,function(error){
         return Promise.reject(error);
-      });
+      }
+      );
   }
 }
 var iotranslatorobj = new IOTranslator();

@@ -1,4 +1,4 @@
-module.exports = class baseSkill{
+module.exports = class BaseSkill{
     // This is the function of the TaskBar tooltip image path
     createTooltipImagePath(skillParams, callback){
             
