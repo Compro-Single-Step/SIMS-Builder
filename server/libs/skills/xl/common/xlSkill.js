@@ -124,11 +124,11 @@ module.exports = class ExcelBaseSkill extends baseSkill{
                     }
                 }
 
-            let resolveParam = {"sheetObject":sheetObject,"preloadResArr":preloadResArr};
+            let resolveParams = {"sheetObject":sheetObject,"preloadResArr":preloadResArr};
             if(sheetImgPresent == false){
-                resolveParam = null;
+                resolveParams = null;
             }
-            resolve(resolveParam);
+            resolve(resolveParams);
         },function(error){
             console.log("single sheet failure");
             reject(error);
