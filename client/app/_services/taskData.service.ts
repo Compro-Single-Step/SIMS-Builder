@@ -76,11 +76,17 @@ export class TaskDataService {
       return body || { };
     }
   }
-  setTaskTemplate(taskId: string, stepIndex: string, templateId: string) {
+  setTaskTemplate(taskId: string , step: any, templateId: string) {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    return this.http.post("/api/fetchTaskData/stepTemplate", {TaskId:taskId.toUpperCase(), StepIndex:stepIndex, TemplateId:templateId}, options)
-                    .map((res) =>{return res.json();})
+    let body;
+    return this.http.post("/api/fetchTaskData/stepTemplate", {TaskId:taskId, Step:step, TemplateId:templateId}, options)
+                    .map((res) =>{
+                      body =res.json();
+                      let index;
+                      for(index=0;index<this.data.stepData.length&&this.data.stepData[index].Index!=body.stepData.Index;index++);
+                      this.data.stepData[index] = body.stepData;
+                      return res.json();})
                     .catch(this.handleError);
   }
 }

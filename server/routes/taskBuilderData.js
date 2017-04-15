@@ -110,13 +110,13 @@ function getTemplatOptions(){
 }
 router.post("/stepTemplate",function(req,res){
 	task = req.body.TaskId;
-	step = req.body.StepIndex;
+	step = req.body.Step;
 	templateId = req.body.TemplateId;
 	stepData = {
 		template:templateId
 	}
 	let condition = {"task_id": task};
-	let jsonKey = "steps.step_" + step;
+	let jsonKey = "steps.step_" + step.Index;
 	let updateData = { $set: {}};
 	updateData.$set[jsonKey] = stepData;
 	let options = { upsert: true };
@@ -124,7 +124,25 @@ router.post("/stepTemplate",function(req,res){
 		if(error)
 			res.send(JSON.stringify({"message": "DATABASE_ERROR"}));
 		else
-			res.send(JSON.stringify({"message": "TEMPLATE_UPDATED"}));
+			updateStepData(step,templateId).then((step)=>{
+				res.send(JSON.stringify({"message": "TEMPLATE_UPDATED",
+										"stepData": step}));
+			});
+			
 		});		
 });
+function updateStepData(step,templateId){
+	let templateName;
+	let TemplateOptions;
+	return getTemplatOptions().then((templateData)=>{
+		TemplateOptions = JSON.parse(templateData).templateOptions;
+		let index;
+		for(index=0;index<TemplateOptions.length&&TemplateOptions[index].id!=templateId;index++);
+		templateName = TemplateOptions[index].name;
+		step.SkillName = templateName;
+		step.TemplateName =	templateName;
+		step.TemplateId =templateId;
+		return Promise.resolve(step);
+	});
+}
 module.exports = router;

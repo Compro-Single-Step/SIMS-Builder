@@ -79,13 +79,12 @@ initialiseTaskData() {
 		}
 	}
 	setTempalateMap(selectedTemplate){
-		this.taskDataService.setTaskTemplate(this.TaskData["id"],this.SelectedStep.Index,selectedTemplate.id)
+		this.taskDataService.setTaskTemplate(this.TaskData["id"],this.SelectedStep,selectedTemplate.id)
 				.subscribe(res =>{
 					if(MessageMap[res.message] == "Task Template Updated"){
 						this.displayMessage("The Template Id for the Step " + this.TaskData["id"].toUpperCase() + "-"+this.SelectedStep.Index +" is now changed to " +selectedTemplate.name);
 						this.SelectTemplateDialog.hide();
-						this.SelectedStep.TemplateName=selectedTemplate.name;
-						this.SelectedStep.TemplateId=selectedTemplate.id;
+						this.SelectedStep = res.stepData;
 						this.router.navigate(["task",this.TaskData["id"],"step",this.SelectedStep.Index,"template",this.SelectedStep.TemplateId]);
 					}
 					else{
