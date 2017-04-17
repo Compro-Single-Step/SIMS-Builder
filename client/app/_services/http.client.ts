@@ -26,16 +26,12 @@ export class HttpClient {
       let errMsg: string;
       if (error.status === 401) {
         this.router.navigate(['/login'], { queryParams: { returnUrl: this.router.url }});
-        obs.throw("unauthorized");
+        return [];
       }
       else{
         return obs;
       }
     })
-    // .finally(function(abc){
-    //   console.log(abc);
-    //   debugger;
-    // });
   }
 
 
