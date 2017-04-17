@@ -10,7 +10,7 @@ import 'rxjs/add/operator/finally';
 
 @Injectable()
 export class HttpClient {
-  constructor(private authHttp: AuthHttp, private router: Router) {
+  constructor(private authHttp: AuthHttp, private router: Router, private loaderService: LoaderService) {
    }
 
   get(url, options?,hideLoader?) {
@@ -47,6 +47,7 @@ export class HttpClient {
     if(!hideLoader){
       this.loaderService.setLoaderVisibility(true);
     }
+  }
     
    private getAuthObservable (obs) {
     return obs.catch((error)=>{
