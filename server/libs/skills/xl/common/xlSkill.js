@@ -49,7 +49,7 @@ module.exports = class ExcelBaseSkill extends BaseSkill {
         var self = this;
         for (var iterator = 0; iterator < paramValueObj["sheets"].length; ++iterator) {
 
-            promiseArr.push(self.genSingleSheetReq(skillParams, iterator));
+            promiseArr.push(self.getSingleSheetImgs(skillParams, iterator));
         }
 
         return Promise.all(promiseArr).then(function (resolveParam) {
@@ -79,7 +79,7 @@ module.exports = class ExcelBaseSkill extends BaseSkill {
     /**
      * skillParams
      */
-    genSingleSheetReq(skillParams, sheetIdx, imageName) {
+    getSingleSheetImgs(skillParams, sheetIdx, imageName) {
         let taskParams = skillParams.taskParams;
         let paramValueObj = skillParams.paramsObj;
         let self = this;
@@ -94,7 +94,7 @@ module.exports = class ExcelBaseSkill extends BaseSkill {
             };
 
             for (let imgName in sheetImgs) {
-                requestArr.push(self.genSheetImgReq(skillParams, sheetIdx, imgName));
+                requestArr.push(self.getSheetImg(skillParams, sheetIdx, imgName));
             }
 
             Promise.all(requestArr).then(function (resultArr) {
@@ -139,7 +139,7 @@ module.exports = class ExcelBaseSkill extends BaseSkill {
 
     }
 
-    genSheetImgReq(skillParams, sheetIdx, imgType) {
+    getSheetImg(skillParams, sheetIdx, imgType) {
 
         var taskParams = skillParams.taskParams;
         var paramValueObj = skillParams.paramsObj;
