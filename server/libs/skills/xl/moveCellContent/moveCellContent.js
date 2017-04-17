@@ -4,7 +4,7 @@
 
 const ExcelBaseSkill = require("../common/xlSkill");
 
-class moveCellContent extends ExcelBaseSkill {
+class MoveCellContent extends ExcelBaseSkill {
 
   //dynamic sheet update
   init(data) {
@@ -156,4 +156,4 @@ class moveCellContent extends ExcelBaseSkill {
     dependentSheetNameInModel.name = selectedSheetName;
   }
 }
-module.exports = moveCellContent;
+module.exports = MoveCellContent;

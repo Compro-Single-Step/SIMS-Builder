@@ -94,7 +94,7 @@ module.exports = class ExcelBaseSkill extends BaseSkill {
             };
 
             for (let imgName in sheetImgs) {
-                requestArr.push(self.genFilePromise(skillParams, iterator, imgName));
+                requestArr.push(self.genSheetImgPromise(skillParams, iterator, imgName));
             }
 
             Promise.all(requestArr).then(function (resultArr) {
@@ -139,7 +139,7 @@ module.exports = class ExcelBaseSkill extends BaseSkill {
 
     }
 
-    genFilePromise(skillParams, iterator, imgType) {
+    genSheetImgPromise(skillParams, iterator, imgType) {
 
         var taskParams = skillParams.taskParams;
         var paramValueObj = skillParams.paramsObj;
