@@ -27,6 +27,7 @@ export class StepBuilderComponent implements OnInit {
     templateName: string;
     stepText: string;
     modelChecker;
+    loader: boolean;
     @ViewChild('stepTextContainer') stepTextContainer;
 
     constructor(el: ElementRef, private route: ActivatedRoute, private router: Router, private bds: BuilderDataService, private previewService: PreviewService, private tds: TaskDataService) {
@@ -34,6 +35,7 @@ export class StepBuilderComponent implements OnInit {
         this.uiConfig = new UIConfig();
         this.selectedView = 1;
         this.builderModelSrvc = BuilderModelObj;
+        this.loader = true;
     }
 
     ngOnInit() {
@@ -70,6 +72,7 @@ export class StepBuilderComponent implements OnInit {
                 console.warn("Error while saving to Local Storage");
             });
             this.uiConfig = data["uiconfig"];
+            this.loader = false;
             skillManager.getSkillTranslator(data["skillfilesbundle"], "movecellcontent");
         });
     }
