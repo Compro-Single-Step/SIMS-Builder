@@ -4,7 +4,8 @@ export class Step {
     TestStatus: boolean;
     SkillName: string;
     MethodCount: number;
-    TemplateName: string
+    TemplateName: string;
+    TemplateId: string
 
     constructor(){
     }

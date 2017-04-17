@@ -9,6 +9,7 @@ export const MessageMap={
     "USERNAME/EMAIL_PRESENT" : "User Name / Email  Already Present",
     "EMAIL_PRESENT" : "Email  Already Present",
     "USERDATA_UPDATED" : "User Data Updated",
-    "NO_CHANGES" : "No Changes"
+    "NO_CHANGES" : "No Changes",
+    "TEMPLATE_UPDATED": "Task Template Updated"
 };
 

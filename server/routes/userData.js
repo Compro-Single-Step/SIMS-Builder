@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const fs = require('fs');
 const UserModel = require('../models/user/user.model');
 
 var UserDataJson=null;
@@ -17,9 +16,6 @@ router.get("/:username?",function(req,res){
 		res.send(data);
 	})
 
-	// fs.readFile(__dirname+"/../public/userData.json",function(err,UserDataJson){
-	// 	res.send(UserDataJson);
-	// })
 })
 router.post("/",function(req,res){
 	var user = req.body;
