@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { AuthHttp } from 'angular2-jwt';
-import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';
-import 'rxjs/add/observable/throw';
+
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/of';
+
 @Injectable()
 export class HttpClient {
   constructor(private authHttp: AuthHttp, private router: Router) {
