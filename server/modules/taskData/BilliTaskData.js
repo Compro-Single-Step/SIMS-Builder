@@ -44,13 +44,16 @@ class BilliTaskData extends TaskdataInterface {
       return true;
     }
     getStepSkillName(index){
-      return "Not Selected";
+      return "Not Selected"; //to be changed if skill field added to Billi Api
+    }
+    getStepTemplateName(index){
+      return "Not Selected"; //to be changed if skill field added to Billi Api
+    }
+    getStepTemplateId(index){
+      return "NotSelected"; //to be changed if skill field added to Billi Api
     }
     getStepMethodCount(index){
       return this.taskData.ScenarioItemList[index].ScenarioPathwayList.length;
-    }
-    getStepTemplateName(index){
-      return "Not Selected";
-    }
+    }    
 }
 module.exports = BilliTaskData;

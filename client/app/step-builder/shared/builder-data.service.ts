@@ -16,7 +16,7 @@ export class BuilderDataService {
     this.uiconfig = new UIConfig();
   }
   getskilldata(params): Observable<UIConfig> {
-    return this.httpClient.get(`api/skill/stepuiconfig/movecellcontent/${params.taskId}/${params.stepIndex}`)
+    return this.httpClient.get(`api/skill/stepuiconfig/${params.templateID}/${params.taskId}/${params.stepIndex}`)
       .map(this.extractData)
       .catch(this.handleError);
   }

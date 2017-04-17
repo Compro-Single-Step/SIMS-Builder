@@ -1,7 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PreviewService } from '../_services/preview.service' 
+import { PreviewService } from '../_services/preview.service';
+import { TaskDataService } from '../_services/taskData.service';
+import { ModalDirective } from 'ng2-bootstrap/modal';
 
+import { MessageMap } from '../shared/enums';
+
+declare var Messenger: any;
+declare var jQuery: any; // for template selection bnx, can be renmoved later
 @Component({
   selector: 'app-task-builder',
   templateUrl: './task-builder.component.html',
@@ -12,12 +18,25 @@ export class TaskBuilderComponent implements OnInit {
  TaskData = {};
  AppImage;
  errorMessage;
- constructor(private route: ActivatedRoute,private previewService:PreviewService ,
+ templateOptions = [];
+ SelectedTemplate="";
+ SelectedStep ;
+ selectedTemplateOption="";
+ @ViewChild('selectTemplateDialog') public SelectTemplateDialog:ModalDirective;
+ constructor(private route: ActivatedRoute,private previewService:PreviewService ,private taskDataService:TaskDataService, 
     private router: Router) { 
 	}
 
  ngOnInit(): void {
 	 this.initialiseTaskData();
+	 this.getTemplateOptions();
+	//  jQuery(".templateList li").click(function(){
+	// 	jQuery(this).addClass("selected").siblings().removeClass("selected"); 
+	// 	});
+ }
+ selectTemplate($event,selectedTemplate){
+	 jQuery($event.currentTarget).addClass("selected").siblings().removeClass("selected");
+	 this.selectedTemplateOption = selectedTemplate;
  }
 initialiseTaskData() {
    	this.route.data
@@ -46,4 +65,45 @@ initialiseTaskData() {
 	lauchPreviewTask(){
 		// this.previewService.launchPreviewWindow(this.TaskData["id"]);
 	}
+	getTemplateOptions(){
+			this.taskDataService.getTemplateOptions()
+                     .subscribe(
+                       data => this.templateOptions = data.templateOptions);
+	}
+	stepNavigationListner(steptemplate,stepIndex){
+		this.SelectedStep = this.TaskData["stepData"][stepIndex];
+		if(steptemplate!= "NotSelected")
+			this.router.navigate(["task",this.TaskData["id"],"step",this.SelectedStep.Index,"template",steptemplate]);
+		else{
+			this.SelectTemplateDialog.show();
+		}
+	}
+	setTempalateMap(selectedTemplate){
+		this.taskDataService.setTaskTemplate(this.TaskData["id"],this.SelectedStep,selectedTemplate.id)
+				.subscribe(res =>{
+					if(res.message == "TEMPLATE_UPDATED"){
+						this.displayMessage("The Template Id for the Step " + this.TaskData["id"].toUpperCase() + "-"+this.SelectedStep.Index +" is now changed to " +selectedTemplate.name);
+						this.SelectTemplateDialog.hide();
+						this.SelectedStep = res.stepData;
+						this.router.navigate(["task",this.TaskData["id"],"step",this.SelectedStep.Index,"template",this.SelectedStep.TemplateId]);
+					}
+					else{
+						this.displayMessage("Some Database Error Occured!!");
+					}
+					
+				});
+	}
+	callSetTemplate(){
+		this.setTempalateMap(this.selectedTemplateOption);
+	}
+	displayMessage(messageText){
+		Messenger.options = { extraClasses: 'messenger-fixed messenger-on-top',
+							theme: 'block'}
+					Messenger().post({
+					message:messageText,
+					type: 'success',
+					showCloseButton: true,
+					hideAfter: 3
+					});
+		}	          
 }
