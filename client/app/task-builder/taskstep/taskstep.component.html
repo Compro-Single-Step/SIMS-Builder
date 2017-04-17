@@ -8,7 +8,7 @@
             <div class="col-md-10 step_text">
                 <span [innerHTML]="step.Text"></span>
                 <div class="row col-md-12">
-                  <span class="skill_metadata">Skill :&nbsp;{{step.SkillName}}</span>
+                  <span class="skill_metadata">Skill :&nbsp;{{step.TemplateName}}</span>
                   <span>|</span>
                   <span class="method-count skill_metadata">Method Count: <span>{{step.MethodCount}}</span></span>
                   <span>|</span>
@@ -24,14 +24,13 @@
                   <span class="icon_label">Attributes Filled</span>
                 </div>
                 <div class="row col-md-12">
-                        <div class="progress">
-                          <div class="progress-bar bg-info" [ngStyle]="{'width':step.stepProgress}" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{step.stepProgress}}</div>
-                        </div>
+                  <div class="progress">
+                    <div class="progress-bar bg-info" [ngStyle]="{'width':step.stepProgress}" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{step.stepProgress}}</div>
+                  </div>
                 </div>
-
             </div>-->
             <div class="col-md-8">
-                <div class="row">
+                <!--<div class="row">
                   <span class="icon_label text-center">Test Status</span>
                 </div>
                 <div class="row testSymbol">
@@ -39,7 +38,7 @@
                       <span *ngIf="step.TestStatus" class="glyphicon glyphicon-ok greenText" aria-hidden="true"></span>
                       <span *ngIf="!step.TestStatus" class="glyphicon glyphicon-remove redText" aria-hidden="true"></span>
                   </div>
-                </div>
+                </div>-->
             </div>
             <div class="col-md-1">
               <div class="row">

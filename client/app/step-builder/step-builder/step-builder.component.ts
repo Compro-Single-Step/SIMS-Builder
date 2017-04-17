@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { BuilderDataService } from '../shared/builder-data.service';
 import { UIConfig } from '../../shared/UIConfig.model';
@@ -26,6 +26,10 @@ export class StepBuilderComponent implements OnInit {
     skillName: string;
     templateName: string;
     stepText: string;
+    modelChecker;
+    templateID: string;
+    @ViewChild('stepTextContainer') stepTextContainer;
+
     constructor(el: ElementRef, private route: ActivatedRoute, private router: Router, private bds: BuilderDataService, private previewService: PreviewService, private tds: TaskDataService) {
         this.$el = jQuery(el.nativeElement);
         this.uiConfig = new UIConfig();
@@ -42,10 +46,11 @@ export class StepBuilderComponent implements OnInit {
         });
         jQuery(window).on('sn:resize', this.initScroll.bind(this));
         this.initScroll();
-        IntervalObservable.create(5000).subscribe(() => this.checkForModelChange());
+        this.modelChecker = IntervalObservable.create(5000).subscribe(() => this.checkForModelChange());
         this.route.params.subscribe((params: Params) => {
             this.taskID = params["taskId"];
             this.stepIndex = params["stepIndex"];
+            this.templateID = params["templateId"];
             this.tds.getTaskData(this.taskID).subscribe(taskData => {
                 let stepData = taskData.stepData[parseInt(this.stepIndex) - 1];
                 this.skillName = stepData.SkillName;
@@ -59,7 +64,8 @@ export class StepBuilderComponent implements OnInit {
     fetchSkillData() {
         let params = {
             taskId: this.taskID,
-            stepIndex: this.stepIndex
+            stepIndex: this.stepIndex,
+            templateID: this.templateID
         };
         this.bds.getskilldata(params).subscribe((data) => {
             this.builderModelSrvc.setModel(data["stepuistate"] || data["skillmodel"].model);
@@ -67,7 +73,7 @@ export class StepBuilderComponent implements OnInit {
                 console.warn("Error while saving to Local Storage");
             });
             this.uiConfig = data["uiconfig"];
-            skillManager.getSkillTranslator(data["skillfilesbundle"], "movecellcontent");
+            skillManager.getSkillTranslator(data["skillfilesbundle"], this.templateID);
         });
     }
 
@@ -110,12 +116,20 @@ export class StepBuilderComponent implements OnInit {
     setSelectedView(viewNumber) {
         this.selectedView = viewNumber;
     }
-
-    onClose() {
+    closeStepbuilder () {
+        this.checkForModelChange()
+        this.modelChecker.unsubscribe();
         this.router.navigate(["/task", this.taskID]);
+    }
+    onClose() {
+        // TODO: Ask User if they really want to close the step builder
+        this.closeStepbuilder();
     }
 
     lauchPreviewTask() {
-        this.previewService.launchStepPreviewWindow(this.taskID, this.stepIndex, "movecellcontent");
+        this.previewService.launchStepPreviewWindow(this.taskID, this.stepIndex, this.templateID, this.stepTextContainer.nativeElement.textContent);
+    }
+    onFinish() {
+        this.closeStepbuilder();
     }
 }

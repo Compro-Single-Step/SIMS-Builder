@@ -6,11 +6,12 @@ class TaskdataInterface {
     getTaskTestStatus(){}
     getTaskCommitStatus(){}
     getStepData(){}
-    getStepIndex(){}
-    getStepText(){}
-    getStepTestStatus(){}
-    getStepSkillName(){}
-    getStepMethodCount(){}
-    getStepTemplateName(){}
+    getStepIndex(index){}
+    getStepText(index){}
+    getStepTestStatus(index){}
+    getStepSkillName(index){}
+    getStepMethodCount(index){}
+    getStepTemplateName(index){}
+    getStepTemplateId(index){}
 }
 module.exports = TaskdataInterface;

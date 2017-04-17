@@ -17,10 +17,14 @@ import { AppConfig } from './app.config';
 import { LoginComponent } from './login/login.component';
 import { AuthModule  } from './auth.module';
 import { UserService } from './_services/user.service';
+import { LoaderService } from './_services/loader.service';
+import { LoaderComponent } from './loader/loader.component';
+
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +35,7 @@ import { UserService } from './_services/user.service';
     
   ],
 
-  providers: [ AuthService,HttpClient,AuthGuard,AppConfig,TaskDataService,PreviewService,UserService ],
-  bootstrap: [AppComponent]
+  providers: [ AuthService,HttpClient,AuthGuard,AppConfig,TaskDataService,PreviewService,UserService,LoaderService ],
+  bootstrap: [AppComponent, LoaderComponent]
 })
 export class AppModule {}

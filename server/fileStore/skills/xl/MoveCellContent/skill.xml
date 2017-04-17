@@ -8,7 +8,7 @@
 	</preload>
 
 	<states>
-		<state id="1" desc="Excel document opened">
+		<state id="1" desc="Excel document opened" txt="1">
 			<comps>
 				<comp id="1" mode="new">
 					<sizeandpos>
@@ -25,7 +25,7 @@
 					<events>
 						<event id="142" desc="Cut:ClipBoard" >
 							<validate followup="3" target-attribute-set="cut1">
-								<comp id="2" validation-set="set1"/>
+								<comp id="2" validation-set="set-1"/>
 							</validate>
 						</event>
 					</events>
@@ -51,12 +51,12 @@
 					<events>
 						<event id="89" desc="Selection correctly dragged">
 							<validate followup="2">
-								<comp id="2" validation-set="set3"/>
+								<comp id="2" validation-set="set-3"/>
 							</validate>
 						</event>
 						<event id="35" desc="Cut SEL:Shortcut">
 							<validate followup="3" target-attribute-set="cut1">
-								<comp id="2" validation-set="set1"/>
+								<comp id="2" validation-set="set-1"/>
 							</validate>
 						</event>
 					</events>
@@ -116,10 +116,7 @@
                         </event>
                         <event id="58" desc="Paste Special Dialog" >
                             <validate followup="2" operator="any">
-                                <comp id="2" validation-set="set1"/>
-                                <comp id="2" validation-set="set2"/>
-                                <comp id="2" validation-set="set3"/>
-                                <comp id="2" validation-set="set4"/>
+                                <comp id="2" validation-set="" multiple-occurence="true" based-on="finalAttrSet" dependency-set="set1_"/>
                             </validate>
                         </event>
                     </events>

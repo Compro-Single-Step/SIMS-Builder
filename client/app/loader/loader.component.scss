@@ -1,0 +1,12 @@
+.loader-hidden {
+    visibility: hidden;
+}
+
+.loader-overlay {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin: -50px 0 0 -50px;
+    width:100px;
+    height:100px;
+}
