@@ -10,16 +10,16 @@ module.exports = class ExcelBaseSkill extends BaseSkill {
         var initDocJSonPath = data.initDocJSonPath;
         var dbMgr = data.dbMgr;
 
-        return dbMgr.readFileFromFileStore(initDocJSonPath)
-            .then(function (resolveParam) {
 
-                self.initDocJson = JSON.parse(resolveParam.fileData);
-                self.generateSheetNamesMap();
-                return Promise.resolve();
+        return dbMgr.readFileFromFileStore(initDocJSonPath).then(function (resolveParam) {
 
-            }, function (error) {
-                return Promise.reject(error)
-            });
+            self.initDocJson = JSON.parse(resolveParam.fileData);
+            self.generateSheetNamesMap();
+            return Promise.resolve(true);
+
+        }, function (error) {
+            return Promise.reject(error)
+        });
     }
 
     generateSheetNamesMap() {
@@ -76,7 +76,9 @@ module.exports = class ExcelBaseSkill extends BaseSkill {
 
     }
 
-
+    /**
+     * skillParams
+     */
     genSheetPromise(skillParams, iterator, imageName) {
         let taskParams = skillParams.taskParams;
         let paramValueObj = skillParams.paramsObj;
@@ -95,27 +97,31 @@ module.exports = class ExcelBaseSkill extends BaseSkill {
                 requestArr.push(self.genFilePromise(skillParams, iterator, imgName));
             }
 
-            Promise.all(requestArr).then(function (resolveParam) {
+            Promise.all(requestArr).then(function (resultArr) {
                 console.log("single sheet success");
-                //update the attrParam for that sheet
-                let resolveObj = {};
-                let preloadResArr = [];
-                for (var index = 0; index < resolveParam.length; ++index) {
-                    var pathKey = Object.keys(resolveParam[index])[0];
-                    resolveObj[pathKey] = resolveParam[index][pathKey];
-                    if ((resolveObj[pathKey] != "") && (resolveObj[pathKey] != null)) {
-                        preloadResArr.push({ "path": resolveObj[pathKey], "type": resolveParam[index]["fileType"] })
+
+                let translatedResult = {};
+                for (let idx = 0; idx < resultArr.length; ++idx) {
+                    translatedResult[resultArr[idx].imgType] = {
+                        "path": resultArr[idx].path,
+                        "fileType": resultArr[idx].fileType
                     }
                 }
 
-                let sheetImgPresent = false;
+                //update the attrParam for that sheet
+                // let resolveObj = {};
+                let preloadResArr = [];
                 let sheetObject = {};
+                let sheetImgPresent = false;
 
                 sheetObject["sheetNo"] = self.getSheetNumber(paramValueObj["sheets"][iterator].name);
 
                 for (let imgName in sheetImgs) {
-                    if ((resolveObj[imgName] != "") && (resolveObj[imgName] != null)) {
-                        sheetObject[sheetImgs[imgName]] = resolveObj[imgName].split("/")[resolveObj[imgName].split("/").length - 1];
+                    let currImg = translatedResult[imgName];
+                    if (currImg && (currImg.path != "") && (currImg.path != null)) {
+                        let tempImgPathArr = currImg.path.split("/");
+                        sheetObject[sheetImgs[imgName]] = tempImgPathArr[tempImgPathArr.length - 1];
+                        preloadResArr.push({ "path": currImg["path"], "type": currImg["fileType"] });
                         sheetImgPresent = true;
                     }
                 }
@@ -146,9 +152,11 @@ module.exports = class ExcelBaseSkill extends BaseSkill {
                     .then(function (resolveParam) {
                         var preloadResArr = [];
 
-                        var resolveParams = {};
-                        resolveParams[imgType] = resolveParam.filePath;
-                        resolveParams["fileType"] = resolveParam.fileType;
+                        let resolveParams = {
+                            "imgType": imgType,
+                            "path": resolveParam.filePath,
+                            "fileType": resolveParam.fileType
+                        };
                         resolve(resolveParams);
 
                     }, function (error) {
@@ -157,9 +165,11 @@ module.exports = class ExcelBaseSkill extends BaseSkill {
             }); //promise object creation end 
         }// ending the if check
         else {
-            var resolveParams = {};
-            resolveParams[imgType] = "";
-            resolveParams["fileType"] = "";
+            let resolveParams = {
+                "imgType": imgType,
+                "path": "",
+                "fileType": ""
+            };
             return Promise.resolve(resolveParams);
         }
     }

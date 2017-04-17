@@ -1,19 +1,20 @@
 // this file contains all the functions for the MovecellContent with the object implementation of the parameterArray
 
+
+
 const ExcelBaseSkill = require("../common/xlSkill");
 
-class MoveCellContent extends ExcelBaseSkill {
+class moveCellContent extends ExcelBaseSkill {
 
   //dynamic sheet update
-  init(data, callback) {
+  init(data) {
     var initDocJSonPath = data.stepUIState.views["1"].documentData.path;
     var skilldata = { "initDocJSonPath": initDocJSonPath, "dbMgr": data.dbFilestoreMgr };
     return super.init(skilldata);
   }
 
-
   //init DOC JSON 
-  createJsonPath(skillParams, callback) {
+  createJsonPath(skillParams) {
 
     var taskParams = skillParams.taskParams;
     var paramValueObj = skillParams.paramsObj;
@@ -35,34 +36,35 @@ class MoveCellContent extends ExcelBaseSkill {
 
   }
 
-  getSelectedCell(skillParams, callback) {
+  getSelectedCell(skillParams) {
 
-    var paramValueObj = skillParams.paramsObj
+    var paramValueObj = skillParams.paramsObj;
+    paramValueObj["srcRange"] = paramValueObj["srcRange"].toUpperCase();
     var resolveParams = { "attrValue": paramValueObj["srcRange"] };
     return Promise.resolve(resolveParams);
 
   }
 
-  getSelDragCell(skillParams, callback) {
+  getSelDragCell(skillParams) {
 
     var paramValueObj = skillParams.paramsObj
     //requires sheet name using init doc json
     var finalObject = {};
     finalObject["sheetNo"] = this.getSheetNumber(paramValueObj.sheetAction);
-    finalObject["startRange"] = paramValueObj["srcRange"];
-    finalObject["endRange"] = paramValueObj["destRange"];
+    finalObject["startRange"] = paramValueObj["srcRange"].toUpperCase();
+    finalObject["endRange"] = paramValueObj["destRange"].toUpperCase();
     finalObject = JSON.stringify(finalObject);
     var resolveParams = { "attrValue": finalObject };
     return Promise.resolve(resolveParams);
   }
 
-  createHighlightJson(skillParams, callback) {
+  createHighlightJson(skillParams) {
 
     var paramValueObj = skillParams.paramsObj
     // requires sheet number using Init Doc json
     var finalObject = {};
     finalObject["sheetNo"] = this.getSheetNumber(paramValueObj.sheetAction);
-    finalObject["range"] = paramValueObj["srcRange"];
+    finalObject["range"] = paramValueObj["srcRange"].toUpperCase();
     finalObject = JSON.stringify(finalObject);
     var resolveParams = { "attrValue": finalObject };
     return Promise.resolve(resolveParams);
@@ -70,7 +72,7 @@ class MoveCellContent extends ExcelBaseSkill {
   }
 
 
-  createSheetCellData(skillParams, callback) {
+  createSheetCellData(skillParams) {
 
     var taskParams = skillParams.taskParams;
     var paramValueObj = skillParams.paramsObj;
@@ -91,11 +93,11 @@ class MoveCellContent extends ExcelBaseSkill {
       });
   }
 
-  getSelectedCellFinal(skillParams, callback) {
+  getSelectedCellFinal(skillParams) {
 
     var paramValueObj = skillParams.paramsObj
     var finalArray = [];
-
+    paramValueObj["destRange"] = paramValueObj["destRange"].toUpperCase();
     var valuearray = paramValueObj["destRange"].split(":");
     valuearray[0].trim();
     valuearray[1].trim();
@@ -154,4 +156,4 @@ class MoveCellContent extends ExcelBaseSkill {
     dependentSheetNameInModel.name = selectedSheetName;
   }
 }
-module.exports = MoveCellContent;
+module.exports = moveCellContent;
