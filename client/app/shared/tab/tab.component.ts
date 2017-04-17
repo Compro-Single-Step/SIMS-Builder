@@ -12,20 +12,21 @@ export class TabComponent extends BaseComponent {
   labelConfig: itemSchema = new itemSchema();
   descriptionConfig: itemSchema = new itemSchema();
   tabs: Array<Object> = [];
-
+  oneLine;
   ngOnInit() {
     super.ngOnInit();
     this.UpdateView();
   }
 
   UpdateView() {
+    this.oneLine = this.compConfig.rendererProperties.oneLine;
     if (this.compConfig.rendererProperties.dynamicMode === true) {
       this.dynamicMode = true;
       this.tabs = this.builderModelSrvc.getModelRef(this.compConfig.rendererProperties.itemListRef);
     }
     this.labelConfig.rendererProperties.text = this.compConfig.label;
     this.labelConfig.rendererProperties.type = LabelTypes.ELEMENT_HEADING;
-
+    
     this.updateDescription();
   }
 }

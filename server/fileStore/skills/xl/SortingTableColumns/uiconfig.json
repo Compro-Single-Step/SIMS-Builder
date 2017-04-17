@@ -97,7 +97,8 @@
                 "itemListRef": "{{views.1.sheets}}",
                 "style": {
                   "max-width": "450px"
-                }
+                },
+                "oneLine" : true
               },
               "items": [
                 {
@@ -189,7 +190,8 @@
               "rendererProperties": {
                 "layout": "horizontal",
                 "dynamicMode": true,
-                "itemListRef": "{{views.1.tables}}"
+                "itemListRef": "{{views.1.tables}}",
+                "oneLine" : false
               },
               "items": [
                 {
