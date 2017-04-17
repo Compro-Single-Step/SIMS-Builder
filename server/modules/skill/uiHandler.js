@@ -25,18 +25,16 @@ class UIHandler {
                         dbFilestoreManager.getStepUIState(taskId, stepIndex)
                             .then((uiState)=> {
                                 data.stepuistate = uiState || null;
-                                resolve(data);
+                                return resolve(data);
                             }, (error)=> {
                                 data.stepuistate = null;
-                                resolve(data);
-                    })
-                    .catch(error => {
-                        reject(error);
+                                return resolve(data);
+                    }, (error) => {
+                        return reject(error);
                     });
                 });
-            })
-            .catch((error)=> {
-                reject(error);
+            }, (error)=> {
+                return reject(error);
             });
         });
     }
