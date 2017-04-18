@@ -301,7 +301,12 @@
           "label": "Prefilled Selection",
           "itemRenderer": "Panel",
           "itemType": "child",
-          "tags": [],
+          "tags": [
+            {
+              "compName": "SIMS.Components.Excel.SumFuncArgDialog",
+              "type": "default"
+            }
+          ],
           "rendererProperties": {
             "collapsable": true,
             "optionalItems": false
