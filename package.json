@@ -1,6 +1,5 @@
 {
   "name": "mean-app",
-  "version": "0.0.0",
   "license": "MIT",
   "angular-cli": {},
   "scripts": {
