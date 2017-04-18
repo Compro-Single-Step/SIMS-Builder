@@ -22,7 +22,7 @@ module.exports = class ExcelBaseSkill extends BaseSkill {
         });
     }
 
-    generateSheetNamesMap() {
+    generateSheetNamesMap() {   
         this.sheetNameMap = {};
         for (var index = 0; index < this.initDocJson.sheets.length; ++index) {
             this.sheetNameMap[this.initDocJson.sheets[index].name] = (index + 1);
@@ -49,7 +49,7 @@ module.exports = class ExcelBaseSkill extends BaseSkill {
         var self = this;
         for (var iterator = 0; iterator < paramValueObj["sheets"].length; ++iterator) {
 
-            promiseArr.push(self.genSheetPromise(skillParams, iterator));
+            promiseArr.push(self.copySheetImages(skillParams, iterator));
         }
 
         return Promise.all(promiseArr).then(function (resolveParam) {
@@ -76,10 +76,7 @@ module.exports = class ExcelBaseSkill extends BaseSkill {
 
     }
 
-    /**
-     * skillParams
-     */
-    genSheetPromise(skillParams, iterator, imageName) {
+    copySheetImages(skillParams, sheetIdx) {
         let taskParams = skillParams.taskParams;
         let paramValueObj = skillParams.paramsObj;
         let self = this;
@@ -94,7 +91,7 @@ module.exports = class ExcelBaseSkill extends BaseSkill {
             };
 
             for (let imgName in sheetImgs) {
-                requestArr.push(self.genSheetImgPromise(skillParams, iterator, imgName));
+                requestArr.push(self.copyImage(skillParams, sheetIdx, imgName));
             }
 
             Promise.all(requestArr).then(function (resultArr) {
@@ -114,7 +111,7 @@ module.exports = class ExcelBaseSkill extends BaseSkill {
                 let sheetObject = {};
                 let sheetImgPresent = false;
 
-                sheetObject["sheetNo"] = self.getSheetNumber(paramValueObj["sheets"][iterator].name);
+                sheetObject["sheetNo"] = self.getSheetNumber(paramValueObj["sheets"][sheetIdx].name);
 
                 for (let imgName in sheetImgs) {
                     let currImg = translatedResult[imgName];
@@ -139,15 +136,15 @@ module.exports = class ExcelBaseSkill extends BaseSkill {
 
     }
 
-    genSheetImgPromise(skillParams, iterator, imgType) {
+    copyImage(skillParams, sheetIdx, imgType) {
 
         var taskParams = skillParams.taskParams;
         var paramValueObj = skillParams.paramsObj;
 
-        var filepath = paramValueObj["sheets"][iterator][imgType]["path"];
+        var filepath = paramValueObj["sheets"][sheetIdx][imgType]["path"];
         if (filepath != null && filepath != "") {
             return new Promise(function (resolve, reject) {
-                // var filepath = paramValueObj["sheets"][iterator][Object.keys(imageObj)[0]]["path"];
+                // var filepath = paramValueObj["sheets"][sheetIdx][Object.keys(imageObj)[0]]["path"];
                 return taskParams.dbFilestoreMgr.copyTaskAssetFile(filepath, taskParams)
                     .then(function (resolveParam) {
                         var preloadResArr = [];
