@@ -1,0 +1,100 @@
+{
+  "model": {
+    "views": {
+      "1": {
+        "documentTitle": {
+          "value": ""
+        },
+        "documentData": {
+          "displayName": "",
+          "path": ""
+        },
+        "sheets": {
+          "value": [
+            {
+              "name": "sheet 1",
+              "gridImage": {
+                "displayName": "",
+                "path": ""
+              },
+              "rowImage": {
+                "displayName": "",
+                "path": ""
+              },
+              "columnImage": {
+                "displayName": "",
+                "path": ""
+              },
+              "cellImage": {
+                "displayName": "",
+                "path": ""
+              }
+            }
+          ]
+        },
+        "taskbarPreviewImage": {
+          "displayName": "",
+          "path": ""
+        }
+      },
+      "2": {
+        "sheetInAction": {
+          "options": {
+            "value": []
+          },
+          "selectedOption": {
+            "value": ""
+          }
+        },
+        "formulaCellRangeReference": {
+          "value": ""
+        },
+        "cellContainingFormula": {
+          "value": ""
+        },
+        "radios": {
+          "selectedOption": {
+            "value": false
+          }
+        },
+        "cellRange": {
+          "value": "",
+          "disabled": false
+        },
+        "cellValues": {
+          "value": "",
+          "disabled": false
+        },
+        "formulaResult": {
+          "value": "",
+          "disabled": false
+        }
+      },
+      "3": {
+        "sheets": {
+          "value": [
+            {
+              "name": "sheet 1",
+              "gridImage": {
+                "displayName": "",
+                "path": ""
+              },
+              "rowImage": {
+                "displayName": "",
+                "path": ""
+              },
+              "columnImage": {
+                "displayName": "",
+                "path": ""
+              },
+              "cellImage": {
+                "displayName": "",
+                "path": ""
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

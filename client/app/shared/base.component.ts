@@ -9,9 +9,11 @@ export class BaseComponent implements OnInit{
     builderModelSrvc;
     dynamicMode: boolean = false;
     descriptionConfig: itemSchema = new itemSchema();
+    isDisabled: Object;
     constructor() {
         this.compConfig = new itemSchema();
         this.builderModelSrvc = BuilderModelObj;
+        this.isDisabled = {disabled: true};
     }
 
     ngOnInit(){   
