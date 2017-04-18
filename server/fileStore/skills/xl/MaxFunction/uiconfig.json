@@ -320,15 +320,15 @@
               "dependants": [
                 {
                   "modelReference": "{{views.2.cellRange}}",
-                  "rule": "show"
+                  "rule": "enableOrDisableOnSwitch"
                 },
                 {
                   "modelReference": "{{views.2.cellValues}}",
-                  "rule": "show"
+                  "rule": "enableOrDisableOnSwitch"
                 },
                 {
                   "modelReference": "{{views.2.formulaResult}}",
-                  "rule": "show"
+                  "rule": "enableOrDisableOnSwitch"
                 }
               ],
               "val": "{{views.2.radios.selectedOption}}"

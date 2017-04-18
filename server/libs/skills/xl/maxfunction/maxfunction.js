@@ -33,7 +33,7 @@ module.exports = class maxFunction extends ExcelBaseSkill {
   updateSheetNameUsingDropdown(selectedSheetName, dependentSheetNameInModel) {
     dependentSheetNameInModel.name = selectedSheetName;
   }
-  show(componentInput, dependentObjectInModel) {
+  enableOrDisableOnSwitch(componentInput, dependentObjectInModel) {
     dependentObjectInModel.disabled = (componentInput) ? true : false;
   }
 }
