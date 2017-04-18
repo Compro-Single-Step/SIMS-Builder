@@ -176,5 +176,8 @@ getSheetNameAndSheetCountFromInitDocJSON(initDocJSON, dependantSheetArrayInModel
   updateSheetNameUsingDropdown(selectedSheetName, dependentSheetNameInModel) {
         dependentSheetNameInModel.name = selectedSheetName;
   }
+  reset(data){
+    console.log("ak91: inside reset");
+  }
 }
 module.exports = moveCellContent;

@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild, OnDestroy } from '@angular/core';
 import { BaseComponent } from '../base.component';
 import { ActivatedRoute } from '@angular/router';
 import { LabelTypes } from '../enums';
@@ -14,7 +14,7 @@ Dropzone.autoDiscover = false;
   templateUrl: './dropzone.component.html',
   styleUrls: ['./dropzone.component.scss']
 })
-export class DropzoneComponent extends BaseComponent {
+export class DropzoneComponent extends BaseComponent implements OnDestroy {
   @ViewChild('dropzone') dropzoneContainer;
   labelConfig: itemSchema = new itemSchema();
   width: string;
@@ -132,6 +132,10 @@ export class DropzoneComponent extends BaseComponent {
 
   getData() {
     return this.modelRef ? this.modelRef : this.builderModelSrvc.getModelRef(this.compConfig.val);
+  }
+
+  ngOnDestroy(){
+    this.bds.removeFile(this.getData()["path"]);
   }
 
 }

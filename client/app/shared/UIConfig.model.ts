@@ -27,7 +27,7 @@ export class itemSchema {
     this.pos = "";
     this.dim = {};
     this.mandatory = true;
-    this.dependants = [{}];
+    this.dependants = [];
     this.items = [];
     this.itemRenderer = "";
     this.rendererProperties = {};

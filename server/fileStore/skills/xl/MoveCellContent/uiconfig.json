@@ -64,7 +64,9 @@
               },
               "itemRenderer": "Dropzone",
               "itemType": "leaf",
-              "emitEvent": ["DOCUMENT_DATA_UPDATED"],
+              "emitEvent": [
+                "DOCUMENT_DATA_UPDATED"
+              ],
               "rendererProperties": {
                 "dataType": "JSON",
                 "placeHolder": "Drop JSON file here to upload"
@@ -82,6 +84,9 @@
               "itemRenderer": "TabGroup",
               "itemType": "child",
               "disabled": true,
+              "emitEvent": [
+                "WORKBOOK_TAB_GROUP_UPDATED"
+              ],
               "dependants": [
                 {
                   "eventId": "DOCUMENT_DATA_UPDATED",
@@ -120,7 +125,14 @@
                         "height": "200px",
                         "width": "200px"
                       },
-                      "relVal": "gridImage"
+                      "relVal": "gridImage",
+                      "dependants": [
+                        {
+                          "eventId": "WORKBOOK_TAB_GROUP_UPDATED",
+                          "modelReference": "",
+                          "rule": "reset"
+                        }
+                      ]
                     },
                     {
                       "id": "RowImage",
@@ -136,7 +148,14 @@
                         "height": "200px",
                         "width": "200px"
                       },
-                      "relVal": "rowImage"
+                      "relVal": "rowImage",
+                      "dependants": [
+                        {
+                          "eventId": "WORKBOOK_TAB_GROUP_UPDATED",
+                          "modelReference": "",
+                          "rule": "reset"
+                        }
+                      ]
                     },
                     {
                       "id": "ColumnImage",
@@ -152,7 +171,14 @@
                         "height": "200px",
                         "width": "200px"
                       },
-                      "relVal": "columnImage"
+                      "relVal": "columnImage",
+                      "dependants": [
+                        {
+                          "eventId": "WORKBOOK_TAB_GROUP_UPDATED",
+                          "modelReference": "",
+                          "rule": "reset"
+                        }
+                      ]
                     },
                     {
                       "id": "CellImage",
@@ -168,7 +194,14 @@
                         "height": "200px",
                         "width": "200px"
                       },
-                      "relVal": "cellImage"
+                      "relVal": "cellImage",
+                      "dependants": [
+                        {
+                          "eventId": "WORKBOOK_TAB_GROUP_UPDATED",
+                          "modelReference": "",
+                          "rule": "reset"
+                        }
+                      ]
                     }
                   ]
                 }
@@ -252,7 +285,9 @@
                 "detailed": "Name of the sheet on which the move cell content skill has to be performed is to be mentioned here."
               },
               "itemRenderer": "Dropdown",
-              "emitEvent": ["SHEET_IN_ACTION_UPDATED"],
+              "emitEvent": [
+                "SHEET_IN_ACTION_UPDATED"
+              ],
               "rendererProperties": {
                 "itemListRef": "{{views.2.sheetInAction.options}}"
               },
@@ -309,6 +344,9 @@
           "label": "Workbook",
           "itemRenderer": "Panel",
           "itemType": "child",
+          "emitEvent": [
+            "WORKSHEET_TAB_UPDATED"
+          ],
           "tags": [
             {
               "compName": "SIMS.Components.Excel.JSONGrid",
@@ -384,7 +422,14 @@
                         "height": "200px",
                         "width": "200px"
                       },
-                      "relVal": "gridImage"
+                      "relVal": "gridImage",
+                      "dependants": [
+                        {
+                          "eventId": "WORKSHEET_TAB_UPDATED",
+                          "modelReference": "",
+                          "rule": "reset"
+                        }
+                      ]
                     },
                     {
                       "id": "RowImage",
@@ -400,7 +445,14 @@
                         "height": "200px",
                         "width": "200px"
                       },
-                      "relVal": "rowImage"
+                      "relVal": "rowImage",
+                      "dependants": [
+                        {
+                          "eventId": "WORKSHEET_TAB_UPDATED",
+                          "modelReference": "",
+                          "rule": "reset"
+                        }
+                      ]
                     },
                     {
                       "id": "ColumnImage",
@@ -416,7 +468,14 @@
                         "height": "200px",
                         "width": "200px"
                       },
-                      "relVal": "columnImage"
+                      "relVal": "columnImage",
+                      "dependants": [
+                        {
+                          "eventId": "WORKSHEET_TAB_UPDATED",
+                          "modelReference": "",
+                          "rule": "reset"
+                        }
+                      ]
                     },
                     {
                       "id": "CellImage",
@@ -432,7 +491,14 @@
                         "height": "200px",
                         "width": "200px"
                       },
-                      "relVal": "cellImage"
+                      "relVal": "cellImage",
+                      "dependants": [
+                        {
+                          "eventId": "WORKSHEET_TAB_UPDATED",
+                          "modelReference": "",
+                          "rule": "reset"
+                        }
+                      ]
                     }
                   ]
                 }
