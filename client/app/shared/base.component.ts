@@ -21,6 +21,7 @@ export class BaseComponent implements OnInit {
 
     ngOnInit() {
         this.registerAllEvents();
+        this.attachSubscribers();
     }
 
     setData(inputConfig, modelRef?) {
@@ -63,6 +64,17 @@ export class BaseComponent implements OnInit {
         if (eventArray && eventArray.length > 0) {
             for (let eventIndex = 0; eventIndex < eventArray.length; eventIndex++) {
                 this.registerEvent(eventArray[eventIndex]);
+            }
+        }
+    }
+
+    attachSubscribers() {
+        let dependants = this.compConfig.dependants;
+        if (dependants && dependants.length > 0) {
+            for (let dependantIndex = 0; dependantIndex < dependants.length; dependantIndex++) {
+                this.addSubscriber(dependants[dependantIndex]["eventId"], (data) => {
+                    this.updateDependencies(data);
+                });
             }
         }
     }

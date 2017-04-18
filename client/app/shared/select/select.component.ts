@@ -28,16 +28,7 @@ export class SelectComponent extends BaseComponent {
     else {
       this.itemList["value"] = this.compConfig.rendererProperties.itemList;
     }
-    this.modelRef = this.builderModelSrvc.getModelRef(this.compConfig.val); 
-
-    let dependants = this.compConfig.dependants;
-    if( dependants && dependants.length > 0){
-      for(let dependantIndex = 0; dependantIndex < dependants.length; dependantIndex++){
-        this.addSubscriber(dependants[dependantIndex]["eventId"], (data)=>{
-          this.updateDependencies(data);
-        });
-      }
-    }
+    this.modelRef = this.builderModelSrvc.getModelRef(this.compConfig.val);
   }
 
   selectedItemChange() {
