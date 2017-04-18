@@ -22,7 +22,7 @@ module.exports = class ExcelBaseSkill extends BaseSkill {
         });
     }
 
-    generateSheetNamesMap() {
+    generateSheetNamesMap() {   
         this.sheetNameMap = {};
         for (var index = 0; index < this.initDocJson.sheets.length; ++index) {
             this.sheetNameMap[this.initDocJson.sheets[index].name] = (index + 1);
@@ -76,7 +76,7 @@ module.exports = class ExcelBaseSkill extends BaseSkill {
 
     }
 
-    copySheetImages(skillParams, sheetIdx, imageName) {
+    copySheetImages(skillParams, sheetIdx) {
         let taskParams = skillParams.taskParams;
         let paramValueObj = skillParams.paramsObj;
         let self = this;
