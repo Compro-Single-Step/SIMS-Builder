@@ -18,7 +18,7 @@ import { ButtonComponent } from './button/button.component';
 import { InputFactoryService } from './input-factory.service';
 import { DropzoneComponent } from './dropzone/dropzone.component';
 import { TabPageComponent } from './tab-page/tab-page.component';
-import { RadioComponent } from './radio/radio.component';
+import { SwitchComponent } from './switch/switch.component';
 
 @NgModule({
   imports: [
@@ -27,8 +27,8 @@ import { RadioComponent } from './radio/radio.component';
     PopoverModule.forRoot(),
     FormsModule
   ],
-  declarations: [TextBoxComponent, PanelComponent, LabelComponent, TagComponent, SelectComponent, TabComponent, ButtonComponent, DropzoneComponent, TabPageComponent, RadioComponent],
-  entryComponents: [TextBoxComponent, PanelComponent, SelectComponent, TabComponent, ButtonComponent, DropzoneComponent, RadioComponent],
+  declarations: [TextBoxComponent, PanelComponent, LabelComponent, TagComponent, SelectComponent, TabComponent, ButtonComponent, DropzoneComponent, TabPageComponent, SwitchComponent],
+  entryComponents: [TextBoxComponent, PanelComponent, SelectComponent, TabComponent, ButtonComponent, DropzoneComponent, SwitchComponent, LabelComponent],
   providers: [InputFactoryService]
 })
 export class SharedModule { }

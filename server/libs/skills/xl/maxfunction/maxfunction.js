@@ -34,6 +34,6 @@ module.exports = class maxFunction extends ExcelBaseSkill {
     dependentSheetNameInModel.name = selectedSheetName;
   }
   show(componentInput, dependentObjectInModel) {
-    dependentObjectInModel.show = (componentInput) ? true : false;
+    dependentObjectInModel.disabled = (componentInput) ? true : false;
   }
 }

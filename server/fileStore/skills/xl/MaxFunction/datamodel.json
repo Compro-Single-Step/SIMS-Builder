@@ -35,23 +35,6 @@
         "taskbarPreviewImage": {
           "displayName": "",
           "path": ""
-        },
-        "radios": {
-          "selectedOption": {
-            "value": false
-          }
-        },
-        "cellRange": {
-          "value": "",
-          "show": false
-        },
-        "cellValues": {
-          "value": "",
-          "show": false
-        },
-        "formulaResult": {
-          "value": "",
-          "show": false
         }
       },
       "2": {
@@ -68,12 +51,48 @@
         },
         "cellContainingFormula": {
           "value": ""
+        },
+        "radios": {
+          "selectedOption": {
+            "value": false
+          }
+        },
+        "cellRange": {
+          "value": "",
+          "disabled": false
+        },
+        "cellValues": {
+          "value": "",
+          "disabled": false
+        },
+        "formulaResult": {
+          "value": "",
+          "disabled": false
         }
       },
       "3": {
-        "gridImage": {
-          "displayName": "",
-          "path": ""
+        "sheets": {
+          "value": [
+            {
+              "name": "sheet 1",
+              "gridImage": {
+                "displayName": "",
+                "path": ""
+              },
+              "rowImage": {
+                "displayName": "",
+                "path": ""
+              },
+              "columnImage": {
+                "displayName": "",
+                "path": ""
+              },
+              "cellImage": {
+                "displayName": "",
+                "path": ""
+              }
+            }
+          ]
         }
       }
     }

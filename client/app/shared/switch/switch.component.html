@@ -1,0 +1,8 @@
+<fieldset>
+  <div class="heading">
+    <app-label [compConfig]="labelConfig"></app-label>
+    <label for="checkbox" class="switch">
+      <input type="checkbox" [checked]="modelRef.value" id="checkbox" [(ngModel)]="modelRef.value" (change)="selectedItemChange()"><i></i>
+    </label>
+  </div>
+</fieldset>

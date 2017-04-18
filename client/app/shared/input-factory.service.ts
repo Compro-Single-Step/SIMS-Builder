@@ -5,7 +5,8 @@ import { SelectComponent } from './select/select.component';
 import { TabComponent } from './tab/tab.component';
 import { ButtonComponent } from './button/button.component';
 import { DropzoneComponent } from './dropzone/dropzone.component';
-import { RadioComponent }from './radio/radio.component';
+import { SwitchComponent }from './switch/switch.component';
+import { LabelComponent }from './label/label.component';
 
 
 @Injectable()
@@ -57,7 +58,8 @@ export class InputFactoryService {
       "TabGroup": TabComponent,
       "Button": ButtonComponent,
       "Dropzone": DropzoneComponent,
-      "Radio": RadioComponent
+      "Switch": SwitchComponent,
+      "Label": LabelComponent
     }[type];
   }
 }

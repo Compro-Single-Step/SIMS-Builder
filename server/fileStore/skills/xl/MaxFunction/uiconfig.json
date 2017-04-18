@@ -175,100 +175,6 @@
                   ]
                 }
               ]
-            },
-            {
-              "id": "1.2.3",
-              "label": "Pre-filled Selection Cell Range",
-              "itemRenderer": "Panel",
-              "itemType": "child",
-              "tags": [],
-              "rendererProperties": {
-                "collapsable": true,
-                "optionalItems": false
-              },
-              "items": [
-                {
-                  "id": "1.2.3.1",
-                  "label": "Radio Button Label",
-                  "desc": {
-                    "basic": "Not Available",
-                    "detailed": "Not Available"
-                  },
-                  "itemRenderer": "Radio",
-                  "items" : [
-                    {
-                      "label": "Yes",
-                      "value": true
-                    },
-                    {
-                      "label": "No",
-                      "value": false
-                    }
-                  ],
-                  "itemType": "leaf",
-                  "mandatory": true,
-                  "dependants": [
-                    {
-                      "modelReference": "{{views.1.cellRange}}",
-                      "rule": "show"
-                    },
-                    {
-                      "modelReference": "{{views.1.cellValues}}",
-                      "rule": "show"
-                    },
-                    {
-                      "modelReference": "{{views.1.formulaResult}}",
-                      "rule": "show"
-                    }
-                  ],
-                  "val": "{{views.1.radios.selectedOption}}"
-                },
-                {
-                  "id": "1.2.3.2",
-                  "label": "Cell Range",
-                  "desc": {
-                    "basic": "Not Available",
-                    "detailed": "Not Available"
-                  },
-                  "itemRenderer": "TextBox",
-                  "itemType": "leaf",
-                  "mandatory": false,
-                  "rendererProperties": {
-                    "dataType": "string"
-                  },
-                  "val": "{{views.1.cellRange}}"
-                },
-                {
-                  "id": "1.2.3.3",
-                  "label": "Cell Values",
-                  "desc": {
-                    "basic": "Not Available",
-                    "detailed": "Not Available"
-                  },
-                  "itemRenderer": "TextBox",
-                  "itemType": "leaf",
-                  "mandatory": false,
-                  "rendererProperties": {
-                    "dataType": "string"
-                  },
-                  "val": "{{views.1.cellValues}}"
-                },
-                {
-                  "id": "1.2.3.4",
-                  "label": "Formula Result",
-                  "desc": {
-                    "basic": "Not Available",
-                    "detailed": "Not Available"
-                  },
-                  "itemRenderer": "TextBox",
-                  "itemType": "leaf",
-                  "mandatory": false,
-                  "rendererProperties": {
-                    "dataType": "string"
-                  },
-                  "val": "{{views.1.formulaResult}}"
-                }
-              ]
             }
           ]
         },
@@ -389,6 +295,90 @@
               "val": "{{views.2.cellContainingFormula}}"
             }
           ]
+        },
+        {
+          "id": "2.2",
+          "label": "Prefilled Selection",
+          "itemRenderer": "Panel",
+          "itemType": "child",
+          "tags": [],
+          "rendererProperties": {
+            "collapsable": true,
+            "optionalItems": false
+          },
+          "items": [
+            {
+              "id": "2.2.1",
+              "label": "Is the Formula Result cell below the cell range?",
+              "desc": {
+                "basic": "Not Available",
+                "detailed": "Not Available"
+              },
+              "itemRenderer": "Switch",
+              "itemType": "leaf",
+              "mandatory": true,
+              "dependants": [
+                {
+                  "modelReference": "{{views.2.cellRange}}",
+                  "rule": "show"
+                },
+                {
+                  "modelReference": "{{views.2.cellValues}}",
+                  "rule": "show"
+                },
+                {
+                  "modelReference": "{{views.2.formulaResult}}",
+                  "rule": "show"
+                }
+              ],
+              "val": "{{views.2.radios.selectedOption}}"
+            },
+            {
+              "id": "2.2.2",
+              "label": "Cell Range",
+              "desc": {
+                "basic": "Not Available",
+                "detailed": "Not Available"
+              },
+              "itemRenderer": "TextBox",
+              "itemType": "leaf",
+              "mandatory": false,
+              "rendererProperties": {
+                "dataType": "string"
+              },
+              "val": "{{views.2.cellRange}}"
+            },
+            {
+              "id": "2.2.3",
+              "label": "Cell Values",
+              "desc": {
+                "basic": "Not Available",
+                "detailed": "Not Available"
+              },
+              "itemRenderer": "TextBox",
+              "itemType": "leaf",
+              "mandatory": false,
+              "rendererProperties": {
+                "dataType": "string"
+              },
+              "val": "{{views.2.cellValues}}"
+            },
+            {
+              "id": "2.2.4",
+              "label": "Formula Result",
+              "desc": {
+                "basic": "Not Available",
+                "detailed": "Not Available"
+              },
+              "itemRenderer": "TextBox",
+              "itemType": "leaf",
+              "mandatory": false,
+              "rendererProperties": {
+                "dataType": "string"
+              },
+              "val": "{{views.2.formulaResult}}"
+            }
+          ]
         }
       ]
     },
@@ -415,20 +405,99 @@
           },
           "items": [
             {
-              "id": "3.1.1",
-              "label": "Grid Image",
+              "id": "3.1.2",
+              "label": "Worksheet Images",
               "desc": {
-                "basic": "Grid image after the 'skill_name' operation has been performed is to be uploadde here.",
-                "detailed": "A JSON file is to be provided which will be utilised to display the necessary changes in the worksheet after performing the skill. This file can be generated from here(Hyperlink pointing to the JSON creation tool spec)."
+                "basic": "Upload the images containing the changes made in the worksheet after moving the cell range.",
+                "detailed": "This section requires 4 separate images to be uploaded. These images will be used to render a worksheet in SIMS. Details on how to get these images  can be accessed from here (Hyperlink pointing to the Image creation process spec).Images for any number of sheets can be uploaded by pressing the (+) button shown in the right."
               },
-              "itemRenderer": "Dropzone",
-              "itemType": "leaf",
+              "itemRenderer": "TabGroup",
+              "itemType": "child",
+              "disabled": true,
               "rendererProperties": {
-                "dataType": "JSON",
-                "placeHolder": "Drop JSON file here to upload"
+                "layout": "horizontal",
+                "dynamicMode": true,
+                "itemListRef": "{{views.3.sheets}}",
+                "style": {
+                  "max-width": "450px"
+                }
               },
-              "mandatory": true,
-              "val": "{{views.3.gridImage}}"
+              "items": [
+                {
+                  "id": "3.1.1",
+                  "itemRenderer": "TabPage",
+                  "itemType": "",
+                  "rendererProperties": {
+                    "dynamicMode": true
+                  },
+                  "items": [
+                    {
+                      "id": "GridImage",
+                      "itemRenderer": "Dropzone",
+                      "itemType": "leaf",
+                      "rendererProperties": {
+                        "placeHolder": "Drop Grid Image",
+                        "dynamicMode": true,
+                        "dataType": "img"
+                      },
+                      "pos": "x,y",
+                      "dim": {
+                        "height": "200px",
+                        "width": "200px"
+                      },
+                      "relVal": "gridImage"
+                    },
+                    {
+                      "id": "RowImage",
+                      "itemRenderer": "Dropzone",
+                      "itemType": "leaf",
+                      "rendererProperties": {
+                        "placeHolder": "Drop Row Image",
+                        "dynamicMode": true,
+                        "dataType": "img"
+                      },
+                      "pos": "x,y",
+                      "dim": {
+                        "height": "200px",
+                        "width": "200px"
+                      },
+                      "relVal": "rowImage"
+                    },
+                    {
+                      "id": "ColumnImage",
+                      "itemRenderer": "Dropzone",
+                      "itemType": "leaf",
+                      "rendererProperties": {
+                        "placeHolder": "Drop Column Image",
+                        "dynamicMode": true,
+                        "dataType": "img"
+                      },
+                      "pos": "x,y",
+                      "dim": {
+                        "height": "200px",
+                        "width": "200px"
+                      },
+                      "relVal": "columnImage"
+                    },
+                    {
+                      "id": "CellImage",
+                      "itemRenderer": "Dropzone",
+                      "itemType": "leaf",
+                      "rendererProperties": {
+                        "placeHolder": "Drop Cell Image",
+                        "dynamicMode": true,
+                        "dataType": "img"
+                      },
+                      "pos": "x,y",
+                      "dim": {
+                        "height": "200px",
+                        "width": "200px"
+                      },
+                      "relVal": "cellImage"
+                    }
+                  ]
+                }
+              ]
             }
           ]
         }
