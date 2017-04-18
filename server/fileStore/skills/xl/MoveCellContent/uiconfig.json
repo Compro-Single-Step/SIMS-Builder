@@ -64,20 +64,11 @@
               },
               "itemRenderer": "Dropzone",
               "itemType": "leaf",
+              "emitEvent": ["DOCUMENT_DATA_UPDATED"],
               "rendererProperties": {
                 "dataType": "JSON",
                 "placeHolder": "Drop JSON file here to upload"
               },
-              "dependants": [
-                {
-                  "modelReference": "{{views.1.sheets.value}}",
-                  "rule": "getSheetNameAndSheetCountFromInitDocJSON"
-                },
-                {
-                  "modelReference": "{{views.2.sheetInAction.options.value}}",
-                  "rule": "addSheetNamesToDropdown"
-                }
-              ],
               "mandatory": true,
               "val": "{{views.1.documentData}}"
             },
@@ -91,6 +82,13 @@
               "itemRenderer": "TabGroup",
               "itemType": "child",
               "disabled": true,
+              "dependants": [
+                {
+                  "eventId": "DOCUMENT_DATA_UPDATED",
+                  "modelReference": "{{views.1.sheets.value}}",
+                  "rule": "getSheetNameAndSheetCountFromInitDocJSON"
+                }
+              ],
               "rendererProperties": {
                 "layout": "horizontal",
                 "dynamicMode": true,
@@ -254,6 +252,7 @@
                 "detailed": "Name of the sheet on which the move cell content skill has to be performed is to be mentioned here."
               },
               "itemRenderer": "Dropdown",
+              "emitEvent": ["SHEET_IN_ACTION_UPDATED"],
               "rendererProperties": {
                 "itemListRef": "{{views.2.sheetInAction.options}}"
               },
@@ -261,8 +260,9 @@
               "mandatory": true,
               "dependants": [
                 {
-                  "modelReference": "{{views.3.sheets.value.0}}",
-                  "rule": "updateSheetNameUsingDropdown"
+                  "eventId": "DOCUMENT_DATA_UPDATED",
+                  "modelReference": "{{views.2.sheetInAction.options.value}}",
+                  "rule": "addSheetNamesToDropdown"
                 }
               ],
               "val": "{{views.2.sheetInAction.selectedOption}}"
@@ -346,6 +346,13 @@
               "itemRenderer": "TabGroup",
               "itemType": "child",
               "disabled": true,
+              "dependants": [
+                {
+                  "eventId": "SHEET_IN_ACTION_UPDATED",
+                  "modelReference": "{{views.3.sheets.value.0}}",
+                  "rule": "updateSheetNameUsingDropdown"
+                }
+              ],
               "rendererProperties": {
                 "layout": "horizontal",
                 "dynamicMode": true,

@@ -2,19 +2,25 @@ import { itemSchema } from './UIConfig.model';
 import { Input, OnInit } from '@angular/core';
 import { BuilderModelObj } from '../step-builder/shared/builder-model.service';
 import { skillManager } from '../step-builder/shared/skill-manager.service';
+import { EventService } from '../step-builder/shared/event.service';
 import { LabelTypes } from './enums';
-export class BaseComponent implements OnInit{
+
+export class BaseComponent implements OnInit {
     @Input() compConfig: itemSchema;
     @Input() modelRef: Object;
     builderModelSrvc;
     dynamicMode: boolean = false;
     descriptionConfig: itemSchema = new itemSchema();
+    eventSrvc: Object;
+
     constructor() {
         this.compConfig = new itemSchema();
         this.builderModelSrvc = BuilderModelObj;
+        this.eventSrvc = EventService;
     }
 
-    ngOnInit(){   
+    ngOnInit() {
+        this.registerAllEvents();
     }
 
     setData(inputConfig, modelRef?) {
@@ -24,8 +30,8 @@ export class BaseComponent implements OnInit{
         }
     }
 
-    checkForReference(pathStr){
-        return pathStr && (pathStr.indexOf("{{")!=-1);
+    checkForReference(pathStr) {
+        return pathStr && (pathStr.indexOf("{{") != -1);
     }
 
     updateDependencies(componentInput) {
@@ -50,5 +56,31 @@ export class BaseComponent implements OnInit{
     updateDescription() {
         this.descriptionConfig.rendererProperties.text = this.compConfig.desc['basic'];
         this.descriptionConfig.rendererProperties.type = LabelTypes.DESCRIPTION;
+    }
+
+    registerAllEvents() {
+        let eventArray = this.compConfig["emitEvent"];
+        if (eventArray && eventArray.length > 0) {
+            for (let eventIndex = 0; eventIndex < eventArray.length; eventIndex++) {
+                this.registerEvent(eventArray[eventIndex]);
+            }
+        }
+    }
+
+    registerEvent(eventId) {
+        this.eventSrvc["registerEvent"](eventId);
+    }
+
+    addSubscriber(eventId, func) {
+        this.eventSrvc["getEvent"](eventId).subscribe(func);
+    }
+
+    emitEvent(eventId, data) {
+        this.eventSrvc["getEvent"](eventId).emit(data);
+    }
+
+    deregisterEvent(eventId) {
+        this.eventSrvc["getEvent"](eventId).unsubscribe();
+        this.eventSrvc["deregisterEvent"](eventId);
     }
 }

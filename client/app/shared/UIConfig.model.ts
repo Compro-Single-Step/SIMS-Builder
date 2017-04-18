@@ -14,6 +14,8 @@ export class itemSchema {
   rendererProperties?: any;
   style?: Object;
   val?: string;
+  relVal?: string;
+  emitEvent?: Array<string>;
 
   constructor() {
     this.id = "";
@@ -31,6 +33,8 @@ export class itemSchema {
     this.rendererProperties = {};
     this.val = "";
     this.style = {};
+    this.relVal = "";
+    this.emitEvent = [];
   }
 }
 

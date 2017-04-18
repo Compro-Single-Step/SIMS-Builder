@@ -77,8 +77,16 @@ export class DropzoneComponent extends BaseComponent {
           reader.readAsText(file, 'UTF8');
           reader.onload = function (e) {
             //Update Dependencies when contents have been read;
-            droppedFile = JSON.parse(e.target['result']);
-            self.updateDependencies(droppedFile);
+            try {
+              droppedFile = JSON.parse(e.target['result']);
+            }
+            catch (e) {
+              console.log(e);
+            }
+            if (self.compConfig["emitEvent"]) {
+              self.emitEvent(self.compConfig["emitEvent"], droppedFile);
+            }
+            // self.updateDependencies(droppedFile);
           }
         }
       }
@@ -92,6 +100,9 @@ export class DropzoneComponent extends BaseComponent {
       let currModelRef = self.getData();
       self.bds.removeFile(currModelRef["path"]).subscribe(function (data) {
         if (data.status === "success") {
+          if (self.compConfig["emitEvent"]) {
+            self.emitEvent(self.compConfig["emitEvent"], null);
+          }
           currModelRef["displayName"] = "";
           currModelRef["path"] = "";
         } else if (data.status == "error") {
@@ -109,9 +120,10 @@ export class DropzoneComponent extends BaseComponent {
       this.bds.getResource(this.getData().path).subscribe((res) => {
         if (res.headers.get("status") == "success") {
           let file = new File([res.body], fileInfo.displayName);
-          dropzone.addFile(file);
+          dropzone.emit("addedfile", file);
+          dropzone.emit("complete", file);
         }
-        else{
+        else {
           //TODO: Handling of code when error is receiving file occurrs. 
         }
       });
@@ -121,6 +133,7 @@ export class DropzoneComponent extends BaseComponent {
   getData() {
     return this.modelRef ? this.modelRef : this.builderModelSrvc.getModelRef(this.compConfig.val);
   }
+
 }
 enum MIMETYPE {
   JSON = <any>".json",
