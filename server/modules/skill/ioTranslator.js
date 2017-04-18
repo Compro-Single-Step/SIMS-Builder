@@ -1,65 +1,65 @@
 //this file contains the object type implementation for the parameters of an attribute
 
-var attrParam = function(attrName, attrObject, stepUIState, skillobject ,IOMapRef){
-    this.attrName = attrName;
-    this.attrObject = attrObject;
-    this.stepUIState = stepUIState;
-    this.skillobject = skillobject;
+var attrParam = function (attrName, attrObject, stepUIState, skillobject, IOMapRef) {
+  this.attrName = attrName;
+  this.attrObject = attrObject;
+  this.stepUIState = stepUIState;
+  this.skillobject = skillobject;
 }
 
-var attrTaskParam = function( taskId, stepIndex, stateId, dbFilestoreMgr){
-    
-    this.taskId = taskId;
-    this.stepIndex = stepIndex;
-    this.stateId = stateId;
-    this.dbFilestoreMgr = dbFilestoreMgr;
+var attrTaskParam = function (taskId, stepIndex, stateId, dbFilestoreMgr) {
+
+  this.taskId = taskId;
+  this.stepIndex = stepIndex;
+  this.stateId = stateId;
+  this.dbFilestoreMgr = dbFilestoreMgr;
 }
 
-class IOTranslator{
+class IOTranslator {
 
-  genPromise(attrParams, taskParam){
-    var self =  this;
-    return new Promise(function(resolve, reject){
+  genPromise(attrParams, taskParam) {
+    var self = this;
+    return new Promise(function (resolve, reject) {
       iotranslatorobj.evaluateAttribute(attrParams, taskParam)
-      .then(function(resolveParams){
+        .then(function (resolveParams) {
           resolve(resolveParams);
-      },function(error){
+        }, function (error) {
           console.log("promise rejection at genPromise");
           reject(error);
-      });
+        });
 
 
 
     })
-}
+  }
 
 
   //common function for getting the param array for the passed array of params
-  getEvaluatedParams (paramObj , stepUIState){
+  getEvaluatedParams(paramObj, stepUIState) {
 
-    var evalexp = "stepUIState.";  
+    var evalexp = "stepUIState.";
     // var finalArray = [];
 
-    for(var param in paramObj ){
+    for (var param in paramObj) {
       paramObj[param] = eval(evalexp + paramObj[param]);
-      
+
     }
     return paramObj;
   }
 
-  evaluateFromFunc ( attrParams, paramsObj, taskParam){
+  evaluateFromFunc(attrParams, paramsObj, taskParam) {
 
- var functionName = attrParams.attrObject["function-name"];
- 
-      if(!attrParams.skillobject[functionName]){
-        functionName = "extractSingleParamVal"
-      }
+    var functionName = attrParams.attrObject["function-name"];
 
-      var skillParams = {"paramsObj":paramsObj, "taskParams": taskParam};
-      return attrParams.skillobject[functionName](skillParams);
+    if (!attrParams.skillobject[functionName]) {
+      functionName = "extractSingleParamVal"
+    }
+
+    var skillParams = { "paramsObj": paramsObj, "taskParams": taskParam };
+    return attrParams.skillobject[functionName](skillParams);
   }
 
-  evaluateAttribute(attrParams, taskParam){
+  evaluateAttribute(attrParams, taskParam) {
 
     var evaluatedParams = [];
     var attrObjectValue = "";
@@ -69,80 +69,82 @@ class IOTranslator{
   }
 
 
- readIOMap(attrObj){
-      
-      var iomap = attrObj.IOMap;
-      var PromiseRequestsArr  = [];
+  readIOMap(attrObj) {
 
-      var self = this;
-      //remove this return statement below
-      return attrObj.skillRef["init"](attrObj).then(function(){
-          for(let stateNum in iomap.states){
-            let stateObj = iomap.states[stateNum];
-            for(let componentNum in stateObj.components){
-                let componentObj = iomap.states[stateNum].components[componentNum];
-                for(let attrType in componentObj){
-                  let attrTypeObj  = iomap.states[stateNum].components[componentNum][attrType]
-                  for(let attrSet in attrTypeObj){
-                    let attrSetObj = iomap.states[stateNum].components[componentNum][attrType][attrSet];
-                    for(let attrName in attrSetObj){
+    var iomap = attrObj.IOMap;
+    var PromiseRequestsArr = [];
 
-                      var attrParams = new attrParam(attrName, attrSetObj[attrName], attrObj.stepUIState, attrObj.skillRef);
-                      var taskParam = new attrTaskParam(attrObj.taskId, attrObj.stepIndex, stateNum, attrObj.dbFilestoreMgr);
-                    
-                      PromiseRequestsArr.push(self.genPromise(attrParams, taskParam).then(function(resolveParams){
-                          attrSetObj[attrName] = resolveParams.attrValue;
-                          if(resolveParams.preloadResArr){
-                            self.appendPreloadRes(resolveParams.preloadResArr,attrObj.IOMap);
-                          }
-                    
-                    },function(error){
+    var self = this;
+    //remove this return statement below
+    return attrObj.skillRef["init"](attrObj).then(function () {
+      for (let stateNum in iomap.states) {
+        let stateObj = iomap.states[stateNum];
+        for (let componentNum in stateObj.components) {
+          let componentObj = iomap.states[stateNum].components[componentNum];
+          for (let attrType in componentObj) {
+            let attrTypeObj = iomap.states[stateNum].components[componentNum][attrType]
+            for (let attrSet in attrTypeObj) {
+              let attrSetObj = iomap.states[stateNum].components[componentNum][attrType][attrSet];
+              for (let attrName in attrSetObj) {
 
-                      return Promise.reject(error);
-                    }));
+                var attrParams = new attrParam(attrName, attrSetObj[attrName], attrObj.stepUIState, attrObj.skillRef);
+                var taskParam = new attrTaskParam(attrObj.taskId, attrObj.stepIndex, stateNum, attrObj.dbFilestoreMgr);
 
-                    }
+                PromiseRequestsArr.push(self.genPromise(attrParams, taskParam).then(function (resolveParams) {
+                  attrSetObj[attrName] = resolveParams.attrValue;
+                  if (resolveParams.preloadResArr) {
+                    self.appendPreloadRes(resolveParams.preloadResArr, attrObj.IOMap);
                   }
-                }        
+
+                }, function (error) {
+
+                  return Promise.reject(error);
+                }));
+
+              }
             }
           }
-        
-      
-      return Promise.all(PromiseRequestsArr).then(function(value) {
-         console.log("promise all success");
-         return Promise.resolve(iomap);
-        },function(err){
-          console.log("promise all rejection");
-          console.log(err.message);
-          return Promise.reject(err);
-        }).catch(function(err){
-          console.log("promise all catch");
-          console.log(err.message);
-          return Promise.reject(err);
-        });
-    },function(error){
+        }
+      }
+
+
+      return Promise.all(PromiseRequestsArr).then(function (value) {
+        console.log("promise all success");
+        return Promise.resolve(iomap);
+      }, function (err) {
+        console.log("promise all rejection");
+        console.log(err.message);
+        return Promise.reject(err);
+      }).catch(function (err) {
+        console.log("promise all catch");
+        console.log(err.message);
+        return Promise.reject(err);
+      });
+    }, function (error) {
       console.log("Init function came with an error");
       return Promise.reject(error)
     });
   }
 
-    appendPreloadRes(preloadResArr, IOMap){
-      if(!(IOMap["preloadResources"])){
-        IOMap["preloadResources"] = [];
-      }
-      for(var index = 0; index < preloadResArr.length; ++index){
-           IOMap["preloadResources"].push(preloadResArr[index]);
-      }
+  appendPreloadRes(preloadResArr, IOMap) {
+    if (!(IOMap["preloadResources"])) {
+      IOMap["preloadResources"] = [];
     }
+    for (var index = 0; index < preloadResArr.length; ++index) {
+      IOMap["preloadResources"].push(preloadResArr[index]);
+    }
+  }
 
-    getAttrValueMap (attrObj){
-      var self = this;
-        return self.readIOMap(attrObj)
-        .then(function(ioMap){
+  getAttrValueMap(attrObj) {
+    var self = this;
+    return self.readIOMap(attrObj)
+      .then(function (ioMap) {
         return Promise.resolve(ioMap);
-      },function(error){
+      }
+      , function (error) {
         return Promise.reject(error);
-      });
+      }
+      );
   }
 }
 var iotranslatorobj = new IOTranslator();
