@@ -1,0 +1,17 @@
+{
+    "templateOptions":[
+        {
+            "name":"Move Cell Content",
+            "id":"movecellcontent"
+        },
+        {
+            "name":"Max Function",
+            "id":"maxfunction"
+        },
+        {
+            "name":"Sorting Table Columns",
+            "id":"sortingtablecolumns"
+        }
+
+    ]
+}

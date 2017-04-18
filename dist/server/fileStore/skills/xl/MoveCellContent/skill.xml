@@ -1,0 +1,154 @@
+<task>
+	<preload>
+		<comps>
+			<comp id="1" name="SIMS.Components.Excel.Ribbon" cssclass="SIMS_Ribbon_Excel" type="default"/>
+			<comp id="2" name="SIMS.Components.Excel.JSONGrid" cssclass="" type="default"/>
+			<comp id="3" name="SIMS.Components.Common.TaskBar" cssclass="SIMS_TaskBar" type="default"/>
+		</comps>
+	</preload>
+
+	<states>
+		<state id="1" desc="Excel document opened" txt="1">
+			<comps>
+				<comp id="1" mode="new">
+					<sizeandpos>
+						<attr name="left" value="0"/>
+						<attr name="top" value="0"/>
+						<attr name="width" value="*"/>
+						<attr name="height" value="150"/>
+					</sizeandpos>
+					<initialattrs>
+						<attr name="APP" value="excel"/>
+						<attr name="RIBBON_PATH" value="app/comps2016/Common/Ribbon/excel-ribbon.xml"/>
+						<attr name="DOCUMENT_NAME" userDefined="true"/>
+					</initialattrs>
+					<events>
+						<event id="142" desc="Cut:ClipBoard" >
+							<validate followup="3" target-attribute-set="cut1">
+								<comp id="2" validation-set="set-1"/>
+							</validate>
+						</event>
+					</events>
+				</comp>
+				<comp id="2" mode="new">
+					<sizeandpos>
+						<attr name="left" value="0"/>
+						<attr name="top" value="147"/>
+						<attr name="width" value="*"/>
+					</sizeandpos>
+					<initialattrs>
+						<attr name="INIT_DOC_JSON" userDefined="true"/>
+						<attr name="IMAGE_JSON" userDefined="true"/>
+					</initialattrs>
+					<finalattributesets>
+						<attributeset name="set-1">
+							<attr name="SELECTED_CELLS" userDefined="true"/>
+						</attributeset>
+						<attributeset name="set-3">
+							<attr name="SEL_DRAG_CELL" userDefined="true"/>
+						</attributeset>
+					</finalattributesets>
+					<events>
+						<event id="89" desc="Selection correctly dragged">
+							<validate followup="2">
+								<comp id="2" validation-set="set-3"/>
+							</validate>
+						</event>
+						<event id="35" desc="Cut SEL:Shortcut">
+							<validate followup="3" target-attribute-set="cut1">
+								<comp id="2" validation-set="set-1"/>
+							</validate>
+						</event>
+					</events>
+				</comp>
+				<comp id="3" mode="new">
+					<sizeandpos>
+						<attr name="left" value="0"/>
+						<attr name="bottom" value="0"/>
+						<attr name="width" value="*"/>
+						<attr name="height" value="31"/>
+					</sizeandpos>
+					<initialattrs>
+						<attr name="APPLICATION" value="excel"/>
+						<attr name="APP_TOOLTIP_IMAGE" userDefined="true"/>
+						<attr name="OPENWORDFILE" userDefined="true"/>
+					</initialattrs>
+				</comp>
+			</comps>
+		</state>
+        <state id="3" desc="Cut Action" txt="1">
+            <comps>
+                <comp id="1" mode="edit">
+                    <initialattrs>
+                        <attr name="RIBBON_SUB_XML" userDefined="true"/>
+                        <attr name="SUB_XML_UPDATE" value="false"/>
+                    </initialattrs>
+                    <events>
+                        <event id="148" desc="Paste Sel Clipboard">
+                            <validate operator="any" followup="2" >
+                                <comp id="2" validation-set="" multiple-occurence="true" based-on="finalAttrSet" dependency-set="set1_"/>
+                            </validate>
+                        </event>
+                        <event id="51" desc="Insert : Insert Cut Cells">
+                            <validate operator="any" followup="2" >
+                                <comp id="2" validation-set="" multiple-occurence="true" based-on="finalAttrSet" dependency-set="set1_"/>
+                            </validate>
+                        </event>
+                    </events>
+                </comp>
+                <comp id="2" mode="edit"        >
+                    <initialattributesets>
+                        <attributeset name="cut1" inherits-default="false">
+                            <attr name="COPY_HIGHLIGHT_CELLS" userDefined="true"/>
+                        </attributeset>
+                    </initialattributesets>
+                    <finalattributesets>
+                        <attributeset name="set1_" multiple-occurence="true" based-on="attr" dependency-attr='["SELECTED_CELLS"]'>
+                            <attr name="SELECTED_CELLS" userDefined="true"/>
+                            <attr name="COPY_HIGHLIGHT_CELLS" value="true"/>
+                        </attributeset>
+                    </finalattributesets>
+                    <events>
+                        <event id="36" desc="Paste SEL shortcut" >
+                            <validate followup="2" operator="any">
+                                <comp id="2" validation-set="" multiple-occurence="true" based-on="finalAttrSet" dependency-set="set1_"/>
+                            </validate>
+                        </event>
+                        <event id="58" desc="Paste Special Dialog" >
+                            <validate followup="2" operator="any">
+                                <comp id="2" validation-set="" multiple-occurence="true" based-on="finalAttrSet" dependency-set="set1_"/>
+                            </validate>
+                        </event>
+                    </events>
+                </comp>
+                <comp id="3" mode="reference" ref-state="1" />
+            </comps>
+        </state>
+		<state id="2" desc="Text in D5" compstack="2" islast="true">
+			<comps>
+				<comp id="1" mode="edit">
+					<sizeandpos>
+						<attr name="left" value="0"/>
+						<attr name="top" value="0"/>
+						<attr name="width" value="*"/>
+						<attr name="height" value="150"/>
+					</sizeandpos>
+				</comp>
+				<comp id="2" mode="edit">
+					<sizeandpos>
+						<attr name="left" value="0"/>
+						<attr name="top" value="147"/>
+						<attr name="width" value="*"/>
+					</sizeandpos>
+					<initialattrs>
+						<attr name="IMAGE_JSON" userDefined="true"/>
+						<attr name="SHEET_CELLS_DATA" userDefined="true"/>
+						<attr name="SELECTED_CELLS" userDefined="true"/>
+						<attr name="COPY_HIGHLIGHT_CELLS" value='{"sheetNo":"1", "range":""}'/>
+					</initialattrs>
+				</comp>
+				<comp id="3" mode="reference" ref-state="1"/>
+			</comps>
+		</state>	
+	</states>
+</task>
