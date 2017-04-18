@@ -91,7 +91,7 @@ module.exports = class ExcelBaseSkill extends BaseSkill {
             };
 
             for (let imgName in sheetImgs) {
-                requestArr.push(self.copySingleImage(skillParams, sheetIdx, imgName));
+                requestArr.push(self.copyImage(skillParams, sheetIdx, imgName));
             }
 
             Promise.all(requestArr).then(function (resultArr) {
@@ -136,7 +136,7 @@ module.exports = class ExcelBaseSkill extends BaseSkill {
 
     }
 
-    copySingleImage(skillParams, sheetIdx, imgType) {
+    copyImage(skillParams, sheetIdx, imgType) {
 
         var taskParams = skillParams.taskParams;
         var paramValueObj = skillParams.paramsObj;
