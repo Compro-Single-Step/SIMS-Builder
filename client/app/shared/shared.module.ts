@@ -28,7 +28,7 @@ import { SwitchComponent } from './switch/switch.component';
     FormsModule
   ],
   declarations: [TextBoxComponent, PanelComponent, LabelComponent, TagComponent, SelectComponent, TabComponent, ButtonComponent, DropzoneComponent, TabPageComponent, SwitchComponent],
-  entryComponents: [TextBoxComponent, PanelComponent, SelectComponent, TabComponent, ButtonComponent, DropzoneComponent, SwitchComponent, LabelComponent],
+  entryComponents: [TextBoxComponent, PanelComponent, SelectComponent, TabComponent, ButtonComponent, DropzoneComponent, SwitchComponent],
   providers: [InputFactoryService]
 })
 export class SharedModule { }
