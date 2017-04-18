@@ -250,8 +250,8 @@
               "id": "2.1.1",
               "label": "Sheet in Action",
               "desc": {
-                "basic": "Name of the sheet in which the move cell content skill is to be performed.",
-                "detailed": "Name of the sheet on which the move cell content skill has to be performed is to be mentioned here."
+                "basic": "Name of the sheet in which using the Max function skill is to be performed.",
+                "detailed": "Name of the sheet on which using the Max function skill has to be performed is to be mentioned here."
               },
               "itemRenderer": "Dropdown",
               "rendererProperties": {
@@ -309,7 +309,7 @@
           "items": [
             {
               "id": "2.2.1",
-              "label": "Is the Formula Result cell below the cell range?",
+              "label": "Is the Cell Containing Formula just below the Reference Cell Range ?",
               "desc": {
                 "basic": "Not Available",
                 "detailed": "Not Available"
@@ -331,14 +331,14 @@
                   "rule": "enableOrDisableOnSwitch"
                 }
               ],
-              "val": "{{views.2.radios.selectedOption}}"
+              "val": "{{views.2.linkedSolutionCellSwitch.selectedOption}}"
             },
             {
               "id": "2.2.2",
               "label": "Cell Range",
               "desc": {
-                "basic": "Not Available",
-                "detailed": "Not Available"
+                "basic": "The default cell range that appears in the Function Arguments dialog box",
+                "detailed": "The default cell range that appears in the Function Arguments dialog box"
               },
               "itemRenderer": "TextBox",
               "itemType": "leaf",
@@ -352,8 +352,8 @@
               "id": "2.2.3",
               "label": "Cell Values",
               "desc": {
-                "basic": "Not Available",
-                "detailed": "Not Available"
+                "basic": "Comma separated values of each cell in the cell range which appears by default in the Function Arguments dialog box",
+                "detailed": "Comma separated values of each cell in the cell range which appears by default in the Function Arguments dialog box"
               },
               "itemRenderer": "TextBox",
               "itemType": "leaf",
@@ -367,8 +367,8 @@
               "id": "2.2.4",
               "label": "Formula Result",
               "desc": {
-                "basic": "Not Available",
-                "detailed": "Not Available"
+                "basic": "The result value of the formula being applied on the cell range which appears by default in the Function Arguments dialog box",
+                "detailed": "The result value of the formula being applied on the cell range which appears by default in the Function Arguments dialog box"
               },
               "itemRenderer": "TextBox",
               "itemType": "leaf",
@@ -408,7 +408,7 @@
               "id": "3.1.2",
               "label": "Worksheet Images",
               "desc": {
-                "basic": "Upload the images containing the changes made in the worksheet after moving the cell range.",
+                "basic": "Upload the images containing the changes made in the worksheet after finding the max of the reference cell range",
                 "detailed": "This section requires 4 separate images to be uploaded. These images will be used to render a worksheet in SIMS. Details on how to get these images  can be accessed from here (Hyperlink pointing to the Image creation process spec).Images for any number of sheets can be uploaded by pressing the (+) button shown in the right."
               },
               "itemRenderer": "TabGroup",

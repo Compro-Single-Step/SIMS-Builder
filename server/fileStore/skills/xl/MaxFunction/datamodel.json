@@ -52,22 +52,22 @@
         "cellContainingFormula": {
           "value": ""
         },
-        "radios": {
+        "linkedSolutionCellSwitch": {
           "selectedOption": {
-            "value": false
+            "value": true
           }
         },
         "cellRange": {
           "value": "",
-          "disabled": false
+          "disabled": true
         },
         "cellValues": {
           "value": "",
-          "disabled": false
+          "disabled": true
         },
         "formulaResult": {
           "value": "",
-          "disabled": false
+          "disabled": true
         }
       },
       "3": {

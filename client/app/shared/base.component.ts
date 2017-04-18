@@ -13,7 +13,7 @@ export class BaseComponent implements OnInit{
     constructor() {
         this.compConfig = new itemSchema();
         this.builderModelSrvc = BuilderModelObj;
-        this.isDisabled = {disabled: true};
+        this.isDisabled = {disabled: false};
     }
 
     ngOnInit(){   
