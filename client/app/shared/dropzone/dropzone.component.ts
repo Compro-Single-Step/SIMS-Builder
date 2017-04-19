@@ -132,10 +132,11 @@ export class DropzoneComponent extends BaseComponent implements OnDestroy {
   }
 
   ngOnDestroy() {
-    console.log("ak91: inside ng destroy.");
-    this.bds.removeFile(this.getData()["path"]).subscribe((data)=>{
-      //TODO: error handling.
-    });
+    if (this.getData()["path"] != "") {
+      this.bds.removeFile(this.getData()["path"]).subscribe((data) => {
+        //TODO: error handling.
+      });
+    }
   }
 }
 enum MIMETYPE {
