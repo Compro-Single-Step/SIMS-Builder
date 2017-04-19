@@ -84,9 +84,6 @@
               "itemRenderer": "TabGroup",
               "itemType": "child",
               "disabled": true,
-              "emitEvent": [
-                "WORKBOOK_TAB_GROUP_UPDATED"
-              ],
               "dependants": [
                 {
                   "eventId": "DOCUMENT_DATA_UPDATED",
@@ -125,14 +122,7 @@
                         "height": "200px",
                         "width": "200px"
                       },
-                      "relVal": "gridImage",
-                      "dependants": [
-                        {
-                          "eventId": "WORKBOOK_TAB_GROUP_UPDATED",
-                          "modelReference": "",
-                          "rule": "reset"
-                        }
-                      ]
+                      "relVal": "gridImage"
                     },
                     {
                       "id": "RowImage",
@@ -148,14 +138,7 @@
                         "height": "200px",
                         "width": "200px"
                       },
-                      "relVal": "rowImage",
-                      "dependants": [
-                        {
-                          "eventId": "WORKBOOK_TAB_GROUP_UPDATED",
-                          "modelReference": "",
-                          "rule": "reset"
-                        }
-                      ]
+                      "relVal": "rowImage"
                     },
                     {
                       "id": "ColumnImage",
@@ -171,14 +154,7 @@
                         "height": "200px",
                         "width": "200px"
                       },
-                      "relVal": "columnImage",
-                      "dependants": [
-                        {
-                          "eventId": "WORKBOOK_TAB_GROUP_UPDATED",
-                          "modelReference": "",
-                          "rule": "reset"
-                        }
-                      ]
+                      "relVal": "columnImage"
                     },
                     {
                       "id": "CellImage",
@@ -194,14 +170,7 @@
                         "height": "200px",
                         "width": "200px"
                       },
-                      "relVal": "cellImage",
-                      "dependants": [
-                        {
-                          "eventId": "WORKBOOK_TAB_GROUP_UPDATED",
-                          "modelReference": "",
-                          "rule": "reset"
-                        }
-                      ]
+                      "relVal": "cellImage"
                     }
                   ]
                 }
@@ -344,9 +313,6 @@
           "label": "Workbook",
           "itemRenderer": "Panel",
           "itemType": "child",
-          "emitEvent": [
-            "WORKSHEET_TAB_UPDATED"
-          ],
           "tags": [
             {
               "compName": "SIMS.Components.Excel.JSONGrid",
@@ -387,7 +353,7 @@
               "dependants": [
                 {
                   "eventId": "SHEET_IN_ACTION_UPDATED",
-                  "modelReference": "{{views.3.sheets.value.0}}",
+                  "modelReference": "{{views.3.sheets.value}}",
                   "rule": "updateSheetNameUsingDropdown"
                 }
               ],
@@ -422,14 +388,7 @@
                         "height": "200px",
                         "width": "200px"
                       },
-                      "relVal": "gridImage",
-                      "dependants": [
-                        {
-                          "eventId": "WORKSHEET_TAB_UPDATED",
-                          "modelReference": "",
-                          "rule": "reset"
-                        }
-                      ]
+                      "relVal": "gridImage"
                     },
                     {
                       "id": "RowImage",
@@ -445,14 +404,7 @@
                         "height": "200px",
                         "width": "200px"
                       },
-                      "relVal": "rowImage",
-                      "dependants": [
-                        {
-                          "eventId": "WORKSHEET_TAB_UPDATED",
-                          "modelReference": "",
-                          "rule": "reset"
-                        }
-                      ]
+                      "relVal": "rowImage"
                     },
                     {
                       "id": "ColumnImage",
@@ -468,14 +420,7 @@
                         "height": "200px",
                         "width": "200px"
                       },
-                      "relVal": "columnImage",
-                      "dependants": [
-                        {
-                          "eventId": "WORKSHEET_TAB_UPDATED",
-                          "modelReference": "",
-                          "rule": "reset"
-                        }
-                      ]
+                      "relVal": "columnImage"
                     },
                     {
                       "id": "CellImage",
@@ -491,14 +436,7 @@
                         "height": "200px",
                         "width": "200px"
                       },
-                      "relVal": "cellImage",
-                      "dependants": [
-                        {
-                          "eventId": "WORKSHEET_TAB_UPDATED",
-                          "modelReference": "",
-                          "rule": "reset"
-                        }
-                      ]
+                      "relVal": "cellImage"
                     }
                   ]
                 }

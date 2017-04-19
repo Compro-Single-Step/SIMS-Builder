@@ -23,15 +23,15 @@ export class SelectComponent extends BaseComponent {
     this.labelConfig.rendererProperties.type = LabelTypes.ELEMENT_HEADING;
     this.updateDescription();
     if (this.compConfig.rendererProperties.itemListRef) {
-      this.itemList = this.builderModelSrvc.getModelRef(this.compConfig.rendererProperties.itemListRef);
+      this.itemList = this.builderModelSrvc.getStateRef(this.compConfig.rendererProperties.itemListRef);
     }
     else {
       this.itemList["value"] = this.compConfig.rendererProperties.itemList;
     }
-    this.modelRef = this.builderModelSrvc.getModelRef(this.compConfig.val);
+    this.modelRef = this.builderModelSrvc.getStateRef(this.compConfig.val);
   }
 
   selectedItemChange() {
-    this.updateDependencies(this.modelRef["value"]);
+    this.emitAllEvents(this.modelRef["value"]);
   }
 }

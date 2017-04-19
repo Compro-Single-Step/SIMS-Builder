@@ -22,7 +22,7 @@ export class TabComponent extends BaseComponent{
   UpdateView() {
     if (this.compConfig.rendererProperties.dynamicMode === true) {
       this.dynamicMode = true;
-      this.tabs = this.builderModelSrvc.getModelRef(this.compConfig.rendererProperties.itemListRef);
+      this.tabs = this.builderModelSrvc.getStateRef(this.compConfig.rendererProperties.itemListRef);
     }
     this.labelConfig.rendererProperties.text = this.compConfig.label;
     this.labelConfig.rendererProperties.type = LabelTypes.ELEMENT_HEADING;

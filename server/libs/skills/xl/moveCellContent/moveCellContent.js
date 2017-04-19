@@ -124,38 +124,19 @@ class moveCellContent extends ExcelBaseSkill {
 
 
 
-  getSheetNameAndSheetCountFromInitDocJSON(initDocJSON, dependantSheetArrayInModel) {
-    let tempModel = {
-      "name": "sheet 1",
-      "gridImage": {
-        "displayName": "",
-        "path": ""
-      },
-      "rowImage": {
-        "displayName": "",
-        "path": ""
-      },
-      "columnImage": {
-        "displayName": "",
-        "path": ""
-      },
-      "cellImage": {
-        "displayName": "",
-        "path": ""
-      }
-    };
+  getSheetNameAndSheetCountFromInitDocJSON(initDocJSON, dependantSheetArrayInModel, clonedDependantSheetArrayInModel) {
     while (dependantSheetArrayInModel.length > 0) {
       dependantSheetArrayInModel.pop(); //https://jsperf.com/array-clear-methods/3
     }
 
     if (initDocJSON === null) { //initDocJSON Removed
-      dependantSheetArrayInModel.push(tempModel);
+      dependantSheetArrayInModel.push(clonedDependantSheetArrayInModel[0]);
     }
     else {  //initDocJSON Added
 
       //Add Sheet Names From Init Doc JSON
       for (let sheetNum = 0; sheetNum < initDocJSON.sheetCount; sheetNum++) {
-        dependantSheetArrayInModel.push(JSON.parse(JSON.stringify(tempModel)));
+        dependantSheetArrayInModel.push(JSON.parse(JSON.stringify(clonedDependantSheetArrayInModel[0])));
         dependantSheetArrayInModel[sheetNum].name = initDocJSON.sheets[sheetNum].name;
       }
     }
@@ -174,11 +155,15 @@ class moveCellContent extends ExcelBaseSkill {
       }
     }
   }
-  updateSheetNameUsingDropdown(selectedSheetName, dependentSheetNameInModel) {
-    dependentSheetNameInModel.name = selectedSheetName;
-  }
-  reset(data) {
-    console.log("ak91: inside reset");
+
+  updateSheetNameUsingDropdown(selectedSheetName, dependentSheetArrayInModel, clonedDependentSheetArrayInModel) {
+    while(dependentSheetArrayInModel.length > 0){
+      dependentSheetArrayInModel.pop();
+    }
+    dependentSheetArrayInModel.push(JSON.parse(JSON.stringify(clonedDependentSheetArrayInModel[0])));
+    if(selectedSheetName){
+      dependentSheetArrayInModel[0].name = selectedSheetName;  
+    }
   }
 }
 module.exports = moveCellContent;

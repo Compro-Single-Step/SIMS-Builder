@@ -40,9 +40,14 @@ export class BaseComponent implements OnInit {
         for (let i = 0; i < dependants.length; i++) {
             let dependantModelReference = dependants[i]['modelReference'];
             let dependantRule = dependants[i]['rule'];
-            let dependentObjectInModel = this.builderModelSrvc.getModelRef(dependantModelReference);
-            skillManager.skillTranslator[dependantRule](componentInput, dependentObjectInModel);
+            let dependentObjectInModel = this.builderModelSrvc.getStateRef(dependantModelReference);
+            let clonedDependentObjectInModel = this.builderModelSrvc.getModelRef(dependantModelReference);
+            this.invokeSkillManager(dependantRule, componentInput, dependentObjectInModel, clonedDependentObjectInModel);        
         }
+    }
+
+    invokeSkillManager(dependantRule, componentInput, dependentObjectInModel, clonedDependentObjectInModel){
+        skillManager.skillTranslator[dependantRule](componentInput, dependentObjectInModel, clonedDependentObjectInModel);
     }
 
     getNestedObject(inputObject, propertyAccessorPath) {

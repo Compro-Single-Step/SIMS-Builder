@@ -68,8 +68,9 @@ export class StepBuilderComponent implements OnInit {
             templateID: this.templateID
         };
         this.bds.getskilldata(params).subscribe((data) => {
-            this.builderModelSrvc.setModel(data["stepuistate"] || data["skillmodel"].model);
-            localForage.setItem('model', this.builderModelSrvc.getModel()).catch(function (err) {
+            this.builderModelSrvc.setModel(data["skillmodel"].model);
+            this.builderModelSrvc.setState(data["stepuistate"] || data["skillmodel"].model);
+            localForage.setItem('model', this.builderModelSrvc.getState()).catch(function (err) {
                 console.warn("Error while saving to Local Storage");
             });
             this.uiConfig = data["uiconfig"];
@@ -93,7 +94,7 @@ export class StepBuilderComponent implements OnInit {
 
     checkForModelChange() {
         let self = this;
-        let itemDataModel = this.builderModelSrvc.getModel();
+        let itemDataModel = this.builderModelSrvc.getState();
         localForage.getItem('model').then(function (value) {
             if (JSON.stringify(value) === JSON.stringify(itemDataModel)) {
                 console.log("same Model: Do Nothing");

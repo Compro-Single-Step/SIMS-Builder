@@ -83,10 +83,7 @@ export class DropzoneComponent extends BaseComponent implements OnDestroy {
             catch (e) {
               console.log(e);
             }
-            if (self.compConfig["emitEvent"]) {
-              self.emitEvent(self.compConfig["emitEvent"], droppedFile);
-            }
-            // self.updateDependencies(droppedFile);
+            self.emitAllEvents(droppedFile);
           }
         }
       }
@@ -131,13 +128,15 @@ export class DropzoneComponent extends BaseComponent implements OnDestroy {
   }
 
   getData() {
-    return this.modelRef ? this.modelRef : this.builderModelSrvc.getModelRef(this.compConfig.val);
+    return this.modelRef ? this.modelRef : this.builderModelSrvc.getStateRef(this.compConfig.val);
   }
 
-  ngOnDestroy(){
-    this.bds.removeFile(this.getData()["path"]);
+  ngOnDestroy() {
+    console.log("ak91: inside ng destroy.");
+    this.bds.removeFile(this.getData()["path"]).subscribe((data)=>{
+      //TODO: error handling.
+    });
   }
-
 }
 enum MIMETYPE {
   JSON = <any>".json",

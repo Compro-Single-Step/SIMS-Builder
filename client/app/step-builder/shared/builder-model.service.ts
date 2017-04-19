@@ -1,21 +1,33 @@
 class BuilderModel {
+    private builderState: Object;
     private builderModel: Object;
 
-    setModel(newModel) {
-        this.builderModel = newModel;
+    setState(state) {
+        this.builderState = state;
     }
 
-    getModel() {
-        return this.builderModel;
+    setModel(model) {
+        this.builderModel = JSON.parse(JSON.stringify(model));
+    }
+
+    getState() {
+        return this.builderState;
+    }
+
+    getStateRef(modelRefStr) {
+        return this.getRef(modelRefStr, this.builderState);
     }
 
     getModelRef(modelRefStr) {
-        var accessedObject = this.builderModel;
+        return this.getRef(modelRefStr, this.builderModel);
+    }
+
+    getRef(modelRefStr, model) {
         var propertyAccessorPathArray = modelRefStr.replace(/['{{','}}']/g, "").split('.');
         for (let nestingLevel = 0; nestingLevel < propertyAccessorPathArray.length; nestingLevel++) {
-            accessedObject = accessedObject[propertyAccessorPathArray[nestingLevel]];
+            model = model[propertyAccessorPathArray[nestingLevel]];
         }
-        return accessedObject;
+        return model;
     }
 };
 
