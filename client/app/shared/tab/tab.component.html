@@ -27,7 +27,7 @@
   </ul>
   <div>
     <div *ngFor="let tab of tabs.value; let i = index">
-      <app-tab-page [hidden]="activeTabIndex != i" [compConfig]="compConfig.items[0]" [modelRef]="tabModel"></app-tab-page>
+      <app-tab-page [hidden]="activeTabIndex != i" [compConfig]="compConfig.items[0]" [modelRef]="tab"></app-tab-page>
     </div>
   </div>
 </div>
