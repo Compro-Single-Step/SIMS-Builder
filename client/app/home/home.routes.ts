@@ -10,7 +10,7 @@ const routes: Routes = [
 	  ]
 	},
 	{
-		path: 'task/:taskId/step/:stepIndex', loadChildren: '../step-builder/step-builder.module#StepBuilderModule'
+		path: 'task/:taskId/step/:stepIndex/template/:templateId', loadChildren: '../step-builder/step-builder.module#StepBuilderModule'
 	}
 ];
 

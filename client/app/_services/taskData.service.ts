@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Response, URLSearchParams }from '@angular/http';
+import { Response, URLSearchParams, Headers, RequestOptions }from '@angular/http';
 import { HttpClient } from './http.client';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
@@ -12,8 +12,9 @@ import { Step } from './stepModel'
 @Injectable()
 export class TaskDataService {
 
-  public data: any = undefined;
-  public taskId: any = undefined;
+  public data: any;
+  public taskId: any;
+  public templateOptions: any;
 
   constructor(private http:HttpClient ) { 
   }
@@ -53,5 +54,39 @@ export class TaskDataService {
     }
     console.error(errMsg);
     return Observable.throw(errMsg);
+  }
+  getTemplateOptions(): Observable<any> {
+    if (this.templateOptions){  //check if template options already exists.
+      return Observable.of(this.templateOptions);
+    }
+    else{
+    return this.http.get("/api/fetchTaskData/templateOptions")
+                    .map(this.extractOptions.bind(this))
+                    .catch(this.handleError);
+    }
+  }
+  private extractOptions(res: Response) {
+    let body = res.json();
+
+    if(body.Error){
+      return body.Error;
+    }
+    else{
+      this.templateOptions = body;
+      return body || { };
+    }
+  }
+  setTaskTemplate(taskId: string , step: any, templateId: string) {
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    let body;
+    return this.http.post("/api/fetchTaskData/stepTemplate", {TaskId:taskId, Step:step, TemplateId:templateId}, options)
+                    .map((res) =>{
+                      body =res.json();
+                      let index;
+                      for(index=0;index<this.data.stepData.length&&this.data.stepData[index].Index!=body.stepData.Index;index++);
+                      this.data.stepData[index] = body.stepData;
+                      return res.json();})
+                    .catch(this.handleError);
   }
 }

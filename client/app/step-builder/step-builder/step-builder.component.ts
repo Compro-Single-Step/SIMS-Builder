@@ -27,6 +27,7 @@ export class StepBuilderComponent implements OnInit {
     templateName: string;
     stepText: string;
     modelChecker;
+    templateID: string;
     @ViewChild('stepTextContainer') stepTextContainer;
 
     constructor(el: ElementRef, private route: ActivatedRoute, private router: Router, private bds: BuilderDataService, private previewService: PreviewService, private tds: TaskDataService) {
@@ -49,6 +50,7 @@ export class StepBuilderComponent implements OnInit {
         this.route.params.subscribe((params: Params) => {
             this.taskID = params["taskId"];
             this.stepIndex = params["stepIndex"];
+            this.templateID = params["templateId"];
             this.tds.getTaskData(this.taskID).subscribe(taskData => {
                 let stepData = taskData.stepData[parseInt(this.stepIndex) - 1];
                 this.skillName = stepData.SkillName;
@@ -62,7 +64,8 @@ export class StepBuilderComponent implements OnInit {
     fetchSkillData() {
         let params = {
             taskId: this.taskID,
-            stepIndex: this.stepIndex
+            stepIndex: this.stepIndex,
+            templateID: this.templateID
         };
         this.bds.getskilldata(params).subscribe((data) => {
             this.builderModelSrvc.setModel(data["stepuistate"] || data["skillmodel"].model);
@@ -70,7 +73,7 @@ export class StepBuilderComponent implements OnInit {
                 console.warn("Error while saving to Local Storage");
             });
             this.uiConfig = data["uiconfig"];
-            skillManager.getSkillTranslator(data["skillfilesbundle"], "movecellcontent");
+            skillManager.getSkillTranslator(data["skillfilesbundle"], this.templateID);
         });
     }
 
@@ -124,7 +127,7 @@ export class StepBuilderComponent implements OnInit {
     }
 
     lauchPreviewTask() {
-        this.previewService.launchStepPreviewWindow(this.taskID, this.stepIndex, "movecellcontent", this.stepTextContainer.nativeElement.textContent);
+        this.previewService.launchStepPreviewWindow(this.taskID, this.stepIndex, this.templateID, this.stepTextContainer.nativeElement.textContent);
     }
     onFinish() {
         this.closeStepbuilder();
