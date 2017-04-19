@@ -14,5 +14,19 @@ module.exports = {
             }
         ],
         dependencySkills: []
+    },
+    "sortingtablecolumns": {
+        primaryFile: "xl/sortingtablecolumns/sortingtablecolumns",
+        dependencyFiles: [
+            {
+                primaryFile: "xl/common/xlSkill",
+                dependencyFiles: [
+                    {
+                        primaryFile: "common/baseSkill",
+                        dependencyFiles: []
+                    }
+                ]
+            }
+        ]
     }
 }
