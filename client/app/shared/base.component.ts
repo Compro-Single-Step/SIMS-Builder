@@ -79,10 +79,14 @@ export class BaseComponent implements OnInit {
             for (let dependantIndex = 0; dependantIndex < dependants.length; dependantIndex++) {
                 this.addSubscriber(dependants[dependantIndex]["eventId"], (data) => {
                     this.updateDependencies(data);
-                    this.emitAllEvents(data);
+                    this.emitAllEvents(this.getEventPayload());
                 });
             }
         }
+    }
+
+    getEventPayload(){
+        return null;
     }
 
     emitAllEvents(payload) {

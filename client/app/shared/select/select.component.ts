@@ -34,4 +34,8 @@ export class SelectComponent extends BaseComponent {
   selectedItemChange() {
     this.emitAllEvents(this.modelRef["value"]);
   }
+
+  getEventPayload(){
+    return this.modelRef["value"];
+  }
 }
