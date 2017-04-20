@@ -1,6 +1,6 @@
 import { Component, ElementRef, ViewChild, OnDestroy } from '@angular/core';
 import { BaseComponent } from '../base.component';
-import { ActivatedRoute } from '@angular/router';
+import { NavigationStart, Router, ActivatedRoute } from '@angular/router';
 import { LabelTypes } from '../enums';
 import { itemSchema } from '../UIConfig.model';
 import { AuthService } from '../../_services/auth.service';
@@ -19,13 +19,22 @@ export class DropzoneComponent extends BaseComponent implements OnDestroy {
   labelConfig: itemSchema = new itemSchema();
   width: string;
   height: string;
-  constructor(private elementRef: ElementRef, private route: ActivatedRoute, private authSrvc: AuthService, private bds: BuilderDataService) {
+  makeDeleteCall: boolean;
+  constructor(private elementRef: ElementRef, private route: ActivatedRoute, private router: Router, private authSrvc: AuthService, private bds: BuilderDataService) {
     super();
+    this.makeDeleteCall = true;
   }
 
   ngOnInit() {
     super.ngOnInit();
     this.UpdateView();
+
+    this.router.events
+      .subscribe((event) => {
+        if (event instanceof NavigationStart) {
+          this.makeDeleteCall = !this.makeDeleteCall;
+        }
+      });
   }
 
   UpdateView() {
@@ -131,7 +140,7 @@ export class DropzoneComponent extends BaseComponent implements OnDestroy {
 
   ngOnDestroy() {
     super.ngOnDestroy();
-    if (this.getData()["path"] != "") {
+    if (this.makeDeleteCall && this.getData()["path"] != "") {
       this.bds.removeFile(this.getData()["path"]).subscribe((data) => {
         //TODO: error handling.
       });
