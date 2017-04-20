@@ -1,11 +1,11 @@
 import { itemSchema } from './UIConfig.model';
-import { Input, OnInit } from '@angular/core';
+import { Input, OnInit, OnDestroy } from '@angular/core';
 import { BuilderModelObj } from '../step-builder/shared/builder-model.service';
 import { skillManager } from '../step-builder/shared/skill-manager.service';
 import { EventService } from '../step-builder/shared/event.service';
 import { LabelTypes } from './enums';
 
-export class BaseComponent implements OnInit {
+export class BaseComponent implements OnInit, OnDestroy {
     @Input() compConfig: itemSchema;
     @Input() modelRef: Object;
     builderModelSrvc;
@@ -22,6 +22,10 @@ export class BaseComponent implements OnInit {
     ngOnInit() {
         this.registerAllEvents();
         this.attachSubscribers();
+    }
+
+    ngOnDestroy() {
+        this.deregisterAllEvents();
     }
 
     setData(inputConfig, modelRef?) {
@@ -42,11 +46,11 @@ export class BaseComponent implements OnInit {
             let dependantRule = dependants[i]['rule'];
             let dependentObjectInModel = this.builderModelSrvc.getStateRef(dependantModelReference);
             let clonedDependentObjectInModel = this.builderModelSrvc.getModelRef(dependantModelReference);
-            this.invokeSkillManager(dependantRule, componentInput, dependentObjectInModel, clonedDependentObjectInModel);        
+            this.invokeSkillManager(dependantRule, componentInput, dependentObjectInModel, clonedDependentObjectInModel);
         }
     }
 
-    invokeSkillManager(dependantRule, componentInput, dependentObjectInModel, clonedDependentObjectInModel){
+    invokeSkillManager(dependantRule, componentInput, dependentObjectInModel, clonedDependentObjectInModel) {
         skillManager.skillTranslator[dependantRule](componentInput, dependentObjectInModel, clonedDependentObjectInModel);
     }
 
@@ -73,6 +77,15 @@ export class BaseComponent implements OnInit {
         }
     }
 
+    deregisterAllEvents() {
+        let eventArray = this.compConfig["emitEvent"];
+        if (eventArray && eventArray.length > 0) {
+            for (let eventIndex = 0; eventIndex < eventArray.length; eventIndex++) {
+                this.deregisterEvent(eventArray[eventIndex]);
+            }
+        }
+    }
+
     attachSubscribers() {
         let dependants = this.compConfig.dependants;
         if (dependants && dependants.length > 0) {
@@ -85,14 +98,14 @@ export class BaseComponent implements OnInit {
         }
     }
 
-    getEventPayload(){
+    getEventPayload() {
         return null;
     }
 
     emitAllEvents(payload) {
         let events = this.compConfig.emitEvent;
-        if(events && events.length>0){
-            for(let eventIndex = 0; eventIndex < events.length; eventIndex++){
+        if (events && events.length > 0) {
+            for (let eventIndex = 0; eventIndex < events.length; eventIndex++) {
                 this.emitEvent(events[eventIndex], payload);
             }
         }

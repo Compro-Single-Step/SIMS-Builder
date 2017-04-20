@@ -97,9 +97,7 @@ export class DropzoneComponent extends BaseComponent implements OnDestroy {
       let currModelRef = self.getData();
       self.bds.removeFile(currModelRef["path"]).subscribe(function (data) {
         if (data.status === "success") {
-          if (self.compConfig["emitEvent"]) {
-            self.emitEvent(self.compConfig["emitEvent"], null);
-          }
+          self.emitAllEvents(null);
           currModelRef["displayName"] = "";
           currModelRef["path"] = "";
         } else if (data.status == "error") {
@@ -132,6 +130,7 @@ export class DropzoneComponent extends BaseComponent implements OnDestroy {
   }
 
   ngOnDestroy() {
+    super.ngOnDestroy();
     if (this.getData()["path"] != "") {
       this.bds.removeFile(this.getData()["path"]).subscribe((data) => {
         //TODO: error handling.
