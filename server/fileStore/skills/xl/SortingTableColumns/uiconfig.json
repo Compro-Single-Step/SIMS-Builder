@@ -193,7 +193,8 @@
               "rendererProperties": {
                 "layout": "horizontal",
                 "dynamicMode": true,
-                "itemListRef": "{{views.1.sheetsForTable}}"
+                "itemListRef": "{{views.1.sheetsForTable}}",
+                "displayInOneLine": false
               },
               "items": [
                 {
@@ -220,34 +221,26 @@
                       "relVal": "tableRange"
                     },
                     {
-                      "id": "columnHeaderNames",
-                      "label": "Column Header Names",
+                      "id": "columnHeaders",
+                      "label": "Column Headers",
                       "desc": {
-                        "basic": "Comma separated list of column header names",
+                        "basic": "Upload a csv file having column 1 as Column Header Names and column 2 as Column Header Types.",
                         "detailed": ""
                       },
-                      "itemRenderer": "TextBox",
+                      "itemRenderer": "Dropzone",
                       "itemType": "leaf",
                       "rendererProperties": {
-                        "dynamicMode": true,
-                        "dataType": "string"
+                        "dataType": "CSV",
+                        "placeHolder": "Drop CSV file here to upload",
+                        "dynamicMode": true
                       },
-                      "relVal": "columnHeaderNames"
-                    },
-                    {
-                      "id": "columnTypes",
-                      "label": "Column Types",
-                      "desc": {
-                        "basic": "Comma separated list of column header types",
-                        "detailed": "Comma separated list of column header types"
-                      },
-                      "itemRenderer": "TextBox",
-                      "itemType": "leaf",
-                      "rendererProperties": {
-                        "dynamicMode": true,
-                        "dataType": "string"
-                      },
-                      "relVal": "columnTypes"
+                      "dependants": [
+                        {
+                          "modelReference": "{{views.2.sortColumnName.value}}",
+                          "rule": "updateColumnNamesInDropdown"
+                        }
+                      ],
+                      "relVal": "columnHeaders"
                     },
                     {
                       "id": "tableFilterMenuData",
@@ -383,13 +376,13 @@
                 "basic": "Name of the column which is to be sorted is to be mentioned here",
                 "detailed": "Name of the column which is to be sorted is to be mentioned here"
               },
-              "itemRenderer": "TextBox",
+              "itemRenderer": "Dropdown",
               "itemType": "leaf",
               "mandatory": true,
               "rendererProperties": {
-                "dataType": "string"
+                "itemListRef": "{{views.2.sortColumnName.options}}"
               },
-              "val": "{{views.2.sortColumnName}}"
+              "val": "{{views.2.sortColumnName.selectedOption}}"
             },
             {
               "id": "2.1.3",

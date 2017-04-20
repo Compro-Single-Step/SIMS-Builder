@@ -6,13 +6,13 @@
   <template [ngIf]="!dynamicMode">
     <tab *ngFor="let tabConfig of compConfig.items" customClass="customClass">
       <template tabHeading>{{tabConfig.label}}</template>
-      <app-tab-page [compConfig]="tabConfig"></app-tab-page>
+      <app-tab-page [compConfig]="tabConfig" [ngClass]="{'displayInOneLine': displayInOneLine}"></app-tab-page>
     </tab>
   </template>
   <template [ngIf]="dynamicMode">
     <tab *ngFor="let tabModel of tabs.value" customClass="customClass">
       <template tabHeading>{{tabModel.name}}</template>
-      <app-tab-page [compConfig]="compConfig.items[0]" [modelRef]="tabModel"></app-tab-page>
+      <app-tab-page [compConfig]="compConfig.items[0]" [modelRef]="tabModel" [ngClass]="{'displayInOneLine': displayInOneLine}"></app-tab-page>
     </tab>
   </template>
 </tabset>

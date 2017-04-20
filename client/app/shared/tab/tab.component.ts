@@ -12,13 +12,17 @@ export class TabComponent extends BaseComponent {
   labelConfig: itemSchema = new itemSchema();
   descriptionConfig: itemSchema = new itemSchema();
   tabs: Array<Object> = [];
-
+  displayInOneLine = true;
   ngOnInit() {
     super.ngOnInit();
     this.UpdateView();
   }
 
   UpdateView() {
+    if(this.compConfig.rendererProperties.displayInOneLine == false)
+    {
+      this.displayInOneLine = false;
+    }
     if (this.compConfig.rendererProperties.dynamicMode === true) {
       this.dynamicMode = true;
       this.tabs = this.builderModelSrvc.getModelRef(this.compConfig.rendererProperties.itemListRef);

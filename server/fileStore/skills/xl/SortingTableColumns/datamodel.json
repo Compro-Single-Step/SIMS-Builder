@@ -43,11 +43,9 @@
               "tableRange": {
                 "value": ""
               },
-              "columnHeaderNames": {
-                "value": ""
-              },
-              "columnTypes": {
-                "value": ""
+              "columnHeaders": {
+                "displayName": "",
+                "path": ""
               },
               "tableFilterMenuData": {
                 "displayName": "",
@@ -71,7 +69,12 @@
           }
         },
         "sortColumnName": {
-          "value": ""
+          "options": {
+            "value": ["A","B"]
+          },
+          "selectedOption": {
+            "value": ""
+          }
         },
         "sortType": {
           "options": {
