@@ -149,7 +149,8 @@ class MoveCellContent extends ExcelBaseSkill {
     }
     //Add Sheet Names to Array From Init Doc JSON
     for (let sheetNum = 0; sheetNum < initDocJSON.sheetCount; sheetNum++) {
-      dependantSheetArrayInModel.push(initDocJSON.sheets[sheetNum].name);
+      var sheetName = initDocJSON.sheets[sheetNum].name;
+      dependantSheetArrayInModel.push({"name":sheetName,"value":sheetName});
     }
   }
   updateSheetNameUsingDropdown(selectedSheetName, dependentSheetNameInModel) {
