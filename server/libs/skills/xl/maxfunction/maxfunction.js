@@ -61,7 +61,9 @@ module.exports = class maxFunction extends ExcelBaseSkill {
       `=MAX`
     ];
     variations.forEach((value) => {
-      cellFormulas.push({ "sheetNo": sheetNumber, "cellID": paramsObj.cellContainingFormula, "formula": value });
+      cellFormulas.push(JSON.stringify(
+        { "sheetNo": sheetNumber, "cellID": paramsObj.cellContainingFormula, "formula": value }
+        ));
     });
 
     let resolveParams = { "attrValue": cellFormulas };
@@ -107,7 +109,7 @@ getMAXCellText(skillParams) {
   let { taskParams, paramsObj } = skillParams;
   let sheetNumber = this.getSheetNumber(paramsObj.sheetInAction);
   let cellText = { "sheetNo": sheetNumber, "cellID": paramsObj.cellContainingFormula, "formula": `MAX(F5:F11)` };
-  let resolveParams = { "attrValue": cellText };
+  let resolveParams = { "attrValue": JSON.stringify(cellText) };
   return Promise.resolve(resolveParams);
 }
 
@@ -115,10 +117,15 @@ getMAXACellText(skillParams) {
   let { taskParams, paramsObj } = skillParams;
   let sheetNumber = this.getSheetNumber(paramsObj.sheetInAction);
   let cellText = { "sheetNo": sheetNumber, "cellID": paramsObj.cellContainingFormula, "formula": `MAXA(F5:F11)` };
-  let resolveParams = { "attrValue": cellText };
+  let resolveParams = { "attrValue": JSON.stringify(cellText) };
   return Promise.resolve(resolveParams);
 }
+getCellValues(skillParams) {
+  let { taskParams, paramsObj } = skillParams;
+  let resolveParams = { "attrValue": `{${paramsObj.cellValues.replace(/,/g, ';')}}`};
 
+  return Promise.resolve(resolveParams);
+}
 getSheetNameAndSheetCountFromInitDocJSON(initDocJSON, dependantSheetArrayInModel) {
 
   //Add The Required Number of Sheets in Model

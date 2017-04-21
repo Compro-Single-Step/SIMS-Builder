@@ -84,7 +84,7 @@
                 }
               },
               "NUMBER_VALUES": {
-                "function-name": "extractSingleParamVal",
+                "function-name": "getCellValues",
                 "params": {
                   "cellValues": "views['2'].cellValues.value"
                 }

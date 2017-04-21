@@ -234,13 +234,13 @@
 							<attr name="BUTTON_FOCUS" value="GO"/>
 						</attributeset>
 						<attributeset name="Date" inherits-default="false">
-							<attr name="SELECT_CATEGORY" value="Date &amp; Time"/>
+							<attr name="SELECT_CATEGORY" value="Date \& Time"/>
 							<attr name="SEARCH_FUNCTION_TEXT" value="Type a brief description of what you want to do and then click Go"/>
 							<attr name="SELECT_FUNCTION" value="DATE"/>
 							<attr name="BUTTON_FOCUS" value="GO"/>
 						</attributeset>
 						<attributeset name="Math" inherits-default="false">
-							<attr name="SELECT_CATEGORY" value="Math &amp; Trig"/>
+							<attr name="SELECT_CATEGORY" value="Math \& Trig"/>
 							<attr name="SEARCH_FUNCTION_TEXT" value="Type a brief description of what you want to do and then click Go"/>
 							<attr name="SELECT_FUNCTION" value="ABS"/>
 							<attr name="BUTTON_FOCUS" value="GO"/>
@@ -252,7 +252,7 @@
 							<attr name="BUTTON_FOCUS" value="GO"/>
 						</attributeset>
 						<attributeset name="Lookup" inherits-default="false">
-							<attr name="SELECT_CATEGORY" value="Lookup &amp; Reference"/>
+							<attr name="SELECT_CATEGORY" value="Lookup \& Reference"/>
 							<attr name="SEARCH_FUNCTION_TEXT" value="Type a brief description of what you want to do and then click Go"/>
 							<attr name="SELECT_FUNCTION" value="ADDRESS"/>
 							<attr name="BUTTON_FOCUS" value="GO"/>
