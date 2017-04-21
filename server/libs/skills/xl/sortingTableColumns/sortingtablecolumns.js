@@ -65,6 +65,11 @@ class sortingTableColumns extends ExcelBaseSkill {
       dependantSheetArrayInModel.push({"label": "Sort A to Z", "data":"Sort A to Z"});
       dependantSheetArrayInModel.push({"label": "Sort Z to A", "data":"Sort Z to A"});
     }
+    else if(selectedColumnHeaderType.toUpperCase() == "DATE")
+    {
+      dependantSheetArrayInModel.push({"label": "Oldest to Newest", "data":"Oldest to Newest"});
+      dependantSheetArrayInModel.push({"label": "Newest to Oldest", "data":"Newest to Oldest"});
+    }
   }
 }
 module.exports = sortingTableColumns;
