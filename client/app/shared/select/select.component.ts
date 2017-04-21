@@ -32,7 +32,7 @@ export class SelectComponent extends BaseComponent {
   }
 
   selectedItemChange() {
-    this.emitAllEvents(this.modelRef["value"]);
+    this.emitEvents(this.modelRef["value"]);
   }
 
   getEventPayload(){

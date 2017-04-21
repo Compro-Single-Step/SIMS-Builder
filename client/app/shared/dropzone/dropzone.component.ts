@@ -92,7 +92,7 @@ export class DropzoneComponent extends BaseComponent implements OnDestroy {
             catch (e) {
               console.log(e);
             }
-            self.emitAllEvents(droppedFile);
+            self.emitEvents(droppedFile);
           }
         }
       }
@@ -106,7 +106,7 @@ export class DropzoneComponent extends BaseComponent implements OnDestroy {
       let currModelRef = self.getData();
       self.bds.removeFile(currModelRef["path"]).subscribe(function (data) {
         if (data.status === "success") {
-          self.emitAllEvents(null);
+          self.emitEvents(null);
           currModelRef["displayName"] = "";
           currModelRef["path"] = "";
         } else if (data.status == "error") {

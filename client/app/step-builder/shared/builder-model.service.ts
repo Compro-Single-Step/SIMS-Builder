@@ -6,7 +6,7 @@ class BuilderModel {
         this.builderState = state;
     }
 
-    setModel(model) {
+    setDefaultState(model) {
         this.builderModel = JSON.parse(JSON.stringify(model));
     }
 
@@ -18,7 +18,7 @@ class BuilderModel {
         return this.getRef(modelRefStr, this.builderState);
     }
 
-    getModelRef(modelRefStr) {
+    getDefaultState(modelRefStr) {
         return this.getRef(modelRefStr, this.builderModel);
     }
 

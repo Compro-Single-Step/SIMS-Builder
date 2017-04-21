@@ -1,6 +1,7 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { BuilderDataService } from '../shared/builder-data.service';
+import { EventService } from '../shared/event.service';
 import { UIConfig } from '../../shared/UIConfig.model';
 import { skillManager } from '../shared/skill-manager.service';
 import { BuilderModelObj } from '../shared/builder-model.service';
@@ -16,7 +17,7 @@ declare var localForage;
     templateUrl: './step-builder.component.html',
     styleUrls: ['./step-builder.component.scss']
 })
-export class StepBuilderComponent implements OnInit {
+export class StepBuilderComponent implements OnInit, OnDestroy {
     uiConfig: UIConfig;
     $el: any;
     private selectedView: number;
@@ -28,6 +29,7 @@ export class StepBuilderComponent implements OnInit {
     stepText: string;
     modelChecker;
     templateID: string;
+    eventSrvc: Object;
     @ViewChild('stepTextContainer') stepTextContainer;
 
     constructor(el: ElementRef, private route: ActivatedRoute, private router: Router, private bds: BuilderDataService, private previewService: PreviewService, private tds: TaskDataService) {
@@ -35,6 +37,7 @@ export class StepBuilderComponent implements OnInit {
         this.uiConfig = new UIConfig();
         this.selectedView = 1;
         this.builderModelSrvc = BuilderModelObj;
+        this.eventSrvc = EventService;
     }
 
     ngOnInit() {
@@ -68,7 +71,7 @@ export class StepBuilderComponent implements OnInit {
             templateID: this.templateID
         };
         this.bds.getskilldata(params).subscribe((data) => {
-            this.builderModelSrvc.setModel(data["skillmodel"].model);
+            this.builderModelSrvc.setDefaultState(data["skillmodel"].model);
             this.builderModelSrvc.setState(data["stepuistate"] || data["skillmodel"].model);
             localForage.setItem('model', this.builderModelSrvc.getState()).catch(function (err) {
                 console.warn("Error while saving to Local Storage");
@@ -117,7 +120,7 @@ export class StepBuilderComponent implements OnInit {
     setSelectedView(viewNumber) {
         this.selectedView = viewNumber;
     }
-    closeStepbuilder () {
+    closeStepbuilder() {
         this.checkForModelChange()
         this.modelChecker.unsubscribe();
         this.router.navigate(["/task", this.taskID]);
@@ -132,5 +135,9 @@ export class StepBuilderComponent implements OnInit {
     }
     onFinish() {
         this.closeStepbuilder();
+    }
+
+    ngOnDestroy() {
+        this.eventSrvc["dispose"]();
     }
 }
