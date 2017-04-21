@@ -18,7 +18,13 @@ module.exports = class Step {
     generateStates (states, attrValueMap){
 
         for(let idx=0; idx<states.length; idx++){
-            let state = new State (states[idx], attrValueMap.states[states[idx].props.id], this);
+            let currAttrValMap;
+
+            if(attrValueMap && attrValueMap.states){
+                currAttrValMap = attrValueMap.states[states[idx].props.id];
+            }
+
+            let state = new State (states[idx], currAttrValMap, this);
 
             this.states[states[idx].props.id] = state;
             this.stateOrderIdMap[idx] = states[idx].props.id;
