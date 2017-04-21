@@ -70,7 +70,7 @@
         },
         "sortColumnName": {
           "options": {
-            "value": ["A","B"]
+            "value": []
           },
           "selectedOption": {
             "value": ""
@@ -78,12 +78,7 @@
         },
         "sortType": {
           "options": {
-            "value": [
-              "A to Z",
-              "Z to A",
-              "Smallest to Largest",
-              "Largest to Smallest"
-            ]
+            "value": []
           },
           "selectedOption": {
             "value": ""

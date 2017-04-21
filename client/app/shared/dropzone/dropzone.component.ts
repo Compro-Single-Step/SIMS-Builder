@@ -80,6 +80,13 @@ export class DropzoneComponent extends BaseComponent {
             droppedFile = JSON.parse(e.target['result']);
             self.updateDependencies(droppedFile);
           }
+        } else if (MIMETYPE[self.compConfig.rendererProperties.dataType] === ".csv") {
+          reader.readAsText(file, 'UTF8');
+          reader.onload = function (e) {
+            //Update Dependencies when contents have been read;
+            droppedFile = e.target['result'];
+            self.updateDependencies(droppedFile);
+          }
         }
       }
     });
@@ -108,7 +115,7 @@ export class DropzoneComponent extends BaseComponent {
     if (fileInfo.path != "") {
       this.bds.getResource(this.getData().path).subscribe((res) => {
         if (res.headers.get("status") == "success") {
-          let file = new File([res.body], fileInfo.displayName);
+          let file = new File([res._body], fileInfo.displayName);
           dropzone.addFile(file);
         }
         else{
@@ -124,5 +131,6 @@ export class DropzoneComponent extends BaseComponent {
 }
 enum MIMETYPE {
   JSON = <any>".json",
-  img = <any>"image/*"
+  img = <any>"image/*",
+  CSV = <any>".csv"
 }

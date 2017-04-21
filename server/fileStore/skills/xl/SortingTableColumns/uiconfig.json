@@ -236,7 +236,7 @@
                       },
                       "dependants": [
                         {
-                          "modelReference": "{{views.2.sortColumnName.value}}",
+                          "modelReference": "{{views.2.sortColumnName.options.value}}",
                           "rule": "updateColumnNamesInDropdown"
                         }
                       ],
@@ -382,7 +382,13 @@
               "rendererProperties": {
                 "itemListRef": "{{views.2.sortColumnName.options}}"
               },
-              "val": "{{views.2.sortColumnName.selectedOption}}"
+              "val": "{{views.2.sortColumnName.selectedOption}}",
+              "dependants": [
+                {
+                  "modelReference": "{{views.2.sortType.options.value}}",
+                  "rule": "updateSortTypesInDropdown"
+                }
+              ]
             },
             {
               "id": "2.1.3",
