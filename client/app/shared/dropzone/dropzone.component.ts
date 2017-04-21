@@ -63,31 +63,13 @@ export class DropzoneComponent extends BaseComponent {
   }
 
   dropzoneInitializer(dropzone) {
-    var reader = new FileReader();
     var self = this;
-    var droppedFile;
-
     dropzone.on("success", function (file, response) {
       if (file.status === "success") {
         let currModelRef = self.getData();
         currModelRef["displayName"] = file.name;
         currModelRef["path"] = response.filePath;
-
-        if (MIMETYPE[self.compConfig.rendererProperties.dataType] === ".json") {
-          reader.readAsText(file, 'UTF8');
-          reader.onload = function (e) {
-            //Update Dependencies when contents have been read;
-            droppedFile = JSON.parse(e.target['result']);
-            self.updateDependencies(droppedFile);
-          }
-        } else if (MIMETYPE[self.compConfig.rendererProperties.dataType] === ".csv") {
-          reader.readAsText(file, 'UTF8');
-          reader.onload = function (e) {
-            //Update Dependencies when contents have been read;
-            droppedFile = e.target['result'];
-            self.updateDependencies(droppedFile);
-          }
-        }
+        self.readFile(file, MIMETYPE[self.compConfig.rendererProperties.dataType]);        
       }
     });
     dropzone.on("maxfilesexceeded", function (file) {
@@ -108,6 +90,21 @@ export class DropzoneComponent extends BaseComponent {
     })
 
     this.restoreFileUI(dropzone);
+  }
+
+  readFile(file,fileType){    
+    let reader = new FileReader();    
+    let droppedFile;
+    let self = this;
+    if(fileType != "image/*")
+    {
+      reader.readAsText(file, 'UTF8');
+      reader.onload = function (e) {
+        //Update Dependencies when contents have been read;
+        droppedFile = (fileType == ".json") ? JSON.parse(e.target['result']) : e.target['result'];
+        self.updateDependencies(droppedFile);
+      }
+    }
   }
 
   restoreFileUI(dropzone) {
