@@ -77,8 +77,8 @@ class DatabaseFileStoreManager {
         return dbController.getStepUIState(taskId, stepIndex);
     }
     
-    getSkillHelperFile(filePath, callback) {
-        return fsc.getFileFromFileStore(filePath);
+    getSkillHelperFile(filePath, folder) {
+        return fsc.getFileFromFileStore(filePath, folder);
     }
 
     saveStepUIState(taskId, stepIndex, stepUIData) {
