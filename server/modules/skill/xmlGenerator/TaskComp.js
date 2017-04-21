@@ -222,7 +222,10 @@ module.exports = class Comp {
                     val = attrsVal[args.name];
                 }
             }else{
-                val = this.getAttrValByNameTypeSet(myAttr.name, attrType, attrSetName, this.id)
+                let tempVal = this.getAttrValByNameTypeSet(myAttr.name, attrType, attrSetName, this.id);
+                if(tempVal){
+                    val = tempVal;
+                }
             }
 
         }

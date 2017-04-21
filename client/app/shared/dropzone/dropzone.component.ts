@@ -108,7 +108,7 @@ export class DropzoneComponent extends BaseComponent {
     if (fileInfo.path != "") {
       this.bds.getResource(this.getData().path).subscribe((res) => {
         if (res.headers.get("status") == "success") {
-          let file = new File([res.body], fileInfo.displayName);
+          let file = new File([res._body], fileInfo.displayName);
           dropzone.addFile(file);
         }
         else{
