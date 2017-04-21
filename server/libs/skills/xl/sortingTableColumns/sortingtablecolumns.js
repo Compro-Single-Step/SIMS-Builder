@@ -28,7 +28,7 @@ class sortingTableColumns extends ExcelBaseSkill {
     //Add Sheet Names to Array From Init Doc JSON
     for (let sheetNum = 0; sheetNum < initDocJSON.sheetCount; sheetNum++) {
       var sheetName = initDocJSON.sheets[sheetNum].name;
-      dependantSheetArrayInModel.push({"name":sheetName,"value":sheetName});
+      dependantSheetArrayInModel.push({"label":sheetName,"data":sheetName});
     }
   }
   updateSheetNameUsingDropdown(selectedSheetName, dependentSheetNameInModel) {
@@ -46,7 +46,7 @@ class sortingTableColumns extends ExcelBaseSkill {
         var columnHeaderName = columnHeaders[i].split(',')[0];
         var columnHeaderDataType = columnHeaders[i].split(',')[1];
         if(columnHeaderName != "")
-          dependantSheetArrayInModel.push({"name":columnHeaderName,"value":columnHeaderDataType});
+          dependantSheetArrayInModel.push({"label":columnHeaderName,"data":columnHeaderDataType});
     }
   }
   updateSortTypesInDropdown(selectedColumnHeaderType, dependantSheetArrayInModel){
@@ -57,13 +57,13 @@ class sortingTableColumns extends ExcelBaseSkill {
 
     if(selectedColumnHeaderType.toUpperCase() == "INT")
     {
-      dependantSheetArrayInModel.push({"name": "Sort Smallest to Largest", "value":"Sort Smallest to Largest"});
-      dependantSheetArrayInModel.push({"name": "Sort Largest to Smallest", "value":"Sort Largest to Smallest"});
+      dependantSheetArrayInModel.push({"label": "Sort Smallest to Largest", "data":"Sort Smallest to Largest"});
+      dependantSheetArrayInModel.push({"label": "Sort Largest to Smallest", "data":"Sort Largest to Smallest"});
     }
     else if(selectedColumnHeaderType.toUpperCase() == "TEXT")
     {
-      dependantSheetArrayInModel.push({"name": "Sort A to Z", "value":"Sort A to Z"});
-      dependantSheetArrayInModel.push({"name": "Sort Z to A", "value":"Sort Z to A"});
+      dependantSheetArrayInModel.push({"label": "Sort A to Z", "data":"Sort A to Z"});
+      dependantSheetArrayInModel.push({"label": "Sort Z to A", "data":"Sort Z to A"});
     }
   }
 }
