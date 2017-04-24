@@ -161,7 +161,7 @@ class MoveCellContent extends ExcelBaseSkill {
     }
     dependentSheetArrayInModel.push(JSON.parse(JSON.stringify(clonedDependentSheetArrayInModel[0])));
     if(selectedSheetName){
-      dependentSheetArrayInModel[0].name = selectedSheetName;  
+      dependentSheetArrayInModel[0].name = selectedSheetName.label;  
     }
   }
 }
