@@ -53,14 +53,21 @@ router.get('/stepuiconfig/:templateId/:taskId/:stepIndex', (req, res) => {
 router.post('/stepuistate/:taskId/:stepIndex', (req, res) => {
     let stepUIState = req.body.stepUIState;
 
-    skillController.saveStepUIState(req.params.taskId, req.params.stepIndex, stepUIState)
-    .then((data) => {
+    if(stepUIState == null || stepUIState == "") {
         res.send({
-            status: "success"
+            status: "error",
+            error: "null value not allowed for Step UI State"
         });
-    }, (error)=> {
-        res.send(error);
-    });
+    } else {
+        skillController.saveStepUIState(req.params.taskId, req.params.stepIndex, stepUIState)
+            .then((data) => {
+                res.send({
+                    status: "success"
+                });
+            }, (error) => {
+                res.send(error);
+            });
+    }
 });
 
 router.post('/xmlgeneration', (req, res) => {
