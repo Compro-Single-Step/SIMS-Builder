@@ -32,7 +32,7 @@ class sortingTableColumns extends ExcelBaseSkill {
     }
   }
   updateSheetNameUsingDropdown(selectedSheetName, dependentSheetNameInModel) {
-        dependentSheetNameInModel.name = selectedSheetName;
+        dependentSheetNameInModel.name = selectedSheetName.label;
   }
 
   updateColumnNamesInDropdown(columnHeadersData, dependantSheetArrayInModel){
@@ -49,7 +49,8 @@ class sortingTableColumns extends ExcelBaseSkill {
           dependantSheetArrayInModel.push({"label":columnHeaderName,"data":columnHeaderDataType});
     }
   }
-  updateSortTypesInDropdown(selectedColumnHeaderType, dependantSheetArrayInModel){
+  updateSortTypesInDropdown(selectedColumnHeader, dependantSheetArrayInModel){
+    var selectedColumnHeaderType = selectedColumnHeader.data;
     //Empty the existing array
     while(dependantSheetArrayInModel.length > 0) {
       dependantSheetArrayInModel.pop(); //https://jsperf.com/array-clear-methods/3
