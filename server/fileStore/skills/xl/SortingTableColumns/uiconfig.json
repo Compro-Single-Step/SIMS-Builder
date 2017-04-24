@@ -107,7 +107,7 @@
                 {
                   "id": "1.2.2.1",
                   "itemRenderer": "TabPage",
-                  "itemType": "",
+                  "itemType": "child",
                   "rendererProperties": {
                     "dynamicMode": true
                   },
@@ -200,7 +200,7 @@
                 {
                   "id": "1.2.3.1",
                   "itemRenderer": "TabPage",
-                  "itemType": "",
+                  "itemType": "child",
                   "rendererProperties": {
                     "dynamicMode": true
                   },
@@ -470,7 +470,7 @@
                 {
                   "id": "3.1.2.1",
                   "itemRenderer": "TabPage",
-                  "itemType": "",
+                  "itemType": "child",
                   "rendererProperties": {
                     "dynamicMode": true
                   },
