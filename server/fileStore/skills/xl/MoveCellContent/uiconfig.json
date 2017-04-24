@@ -64,7 +64,7 @@
               },
               "itemRenderer": "Dropzone",
               "itemType": "leaf",
-              "emitEvent": [
+              "emitEvents": [
                 "DOCUMENT_DATA_UPDATED"
               ],
               "rendererProperties": {
@@ -84,11 +84,11 @@
               "itemRenderer": "TabGroup",
               "itemType": "child",
               "disabled": true,
-              "dependants": [
+              "subscribeEvents": [
                 {
                   "eventId": "DOCUMENT_DATA_UPDATED",
                   "modelReference": "{{views.1.sheets.value}}",
-                  "rule": "getSheetNameAndSheetCountFromInitDocJSON"
+                  "rule": "getSheetDetails"
                 }
               ],
               "rendererProperties": {
@@ -254,7 +254,7 @@
                 "detailed": "Name of the sheet on which the move cell content skill has to be performed is to be mentioned here."
               },
               "itemRenderer": "Dropdown",
-              "emitEvent": [
+              "emitEvents": [
                 "SHEET_IN_ACTION_UPDATED"
               ],
               "rendererProperties": {
@@ -262,7 +262,7 @@
               },
               "itemType": "leaf",
               "mandatory": true,
-              "dependants": [
+              "subscribeEvents": [
                 {
                   "eventId": "DOCUMENT_DATA_UPDATED",
                   "modelReference": "{{views.2.sheetInAction.options.value}}",
@@ -350,11 +350,11 @@
               "itemRenderer": "TabGroup",
               "itemType": "child",
               "disabled": true,
-              "dependants": [
+              "subscribeEvents": [
                 {
                   "eventId": "SHEET_IN_ACTION_UPDATED",
                   "modelReference": "{{views.3.sheets.value}}",
-                  "rule": "updateSheetNameUsingDropdown"
+                  "rule": "updateSheetName"
                 }
               ],
               "rendererProperties": {

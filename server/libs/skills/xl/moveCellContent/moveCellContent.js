@@ -124,7 +124,7 @@ class moveCellContent extends ExcelBaseSkill {
 
 
 
-  getSheetNameAndSheetCountFromInitDocJSON(initDocJSON, dependantSheetArrayInModel, clonedDependantSheetArrayInModel) {
+  getSheetDetails(initDocJSON, dependantSheetArrayInModel, clonedDependantSheetArrayInModel) {
     while (dependantSheetArrayInModel.length > 0) {
       dependantSheetArrayInModel.pop(); //https://jsperf.com/array-clear-methods/3
     }
@@ -156,7 +156,7 @@ class moveCellContent extends ExcelBaseSkill {
     }
   }
 
-  updateSheetNameUsingDropdown(selectedSheetName, dependentSheetArrayInModel, clonedDependentSheetArrayInModel) {
+  updateSheetName(selectedSheetName, dependentSheetArrayInModel, clonedDependentSheetArrayInModel) {
     while(dependentSheetArrayInModel.length > 0){
       dependentSheetArrayInModel.pop();
     }

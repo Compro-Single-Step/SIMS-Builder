@@ -23,11 +23,11 @@ export class BaseComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.registerEvents();
-        this.attachSubscribers();
+        this.subscribeEvents();
     }
 
     ngOnDestroy() {
-        this.detachSubscribers();
+        this.unsubscribeEvents();
     }
 
     setData(inputConfig, modelRef?) {
@@ -42,10 +42,10 @@ export class BaseComponent implements OnInit, OnDestroy {
     }
 
     updateDependencies(componentInput) {
-        var dependants = this.compConfig.dependants || [];
-        for (let i = 0; i < dependants.length; i++) {
-            let dependantModelReference = dependants[i]['modelReference'];
-            let dependantRule = dependants[i]['rule'];
+        var subscribeEvents = this.compConfig.subscribeEvents || [];
+        for (let i = 0; i < subscribeEvents.length; i++) {
+            let dependantModelReference = subscribeEvents[i]['modelReference'];
+            let dependantRule = subscribeEvents[i]['rule'];
             let dependentObjectInModel = this.builderModelSrvc.getStateRef(dependantModelReference);
             let clonedDependentObjectInModel = this.builderModelSrvc.getDefaultState(dependantModelReference);
             this.invokeSkillManager(dependantRule, componentInput, dependentObjectInModel, clonedDependentObjectInModel);
@@ -71,7 +71,7 @@ export class BaseComponent implements OnInit, OnDestroy {
     }
 
     registerEvents() {
-        let eventArray = this.compConfig["emitEvent"];
+        let eventArray = this.compConfig["emitEvents"];
         if (eventArray && eventArray.length > 0) {
             for (let eventIndex = 0; eventIndex < eventArray.length; eventIndex++) {
                 this.registerEvent(eventArray[eventIndex]);
@@ -79,11 +79,11 @@ export class BaseComponent implements OnInit, OnDestroy {
         }
     }
 
-    attachSubscribers() {
-        let dependants = this.compConfig.dependants;
-        if (dependants && dependants.length > 0) {
-            for (let dependantIndex = 0; dependantIndex < dependants.length; dependantIndex++) {
-                let subscriptionId = this.attachSubscriber(dependants[dependantIndex]["eventId"], this.eventCallback.bind(this));
+    subscribeEvents() {
+        let subscribeEvents = this.compConfig.subscribeEvents;
+        if (subscribeEvents && subscribeEvents.length > 0) {
+            for (let eventIndex = 0; eventIndex < subscribeEvents.length; eventIndex++) {
+                let subscriptionId = this.subscribeEvent(subscribeEvents[eventIndex]["eventId"], this.eventCallback.bind(this));
                 this.subscriptions.push(subscriptionId);
             }
         }
@@ -94,9 +94,9 @@ export class BaseComponent implements OnInit, OnDestroy {
         this.emitEvents(this.getEventPayload());
     }
 
-    detachSubscribers() {
+    unsubscribeEvents() {
         for (let subscriptionIndex = 0; subscriptionIndex < this.subscriptions.length; subscriptionIndex++) {
-            this.detachSubscriber(this.subscriptions[subscriptionIndex]);
+            this.unsubscribeEvent(this.subscriptions[subscriptionIndex]);
         }
     }
 
@@ -105,7 +105,7 @@ export class BaseComponent implements OnInit, OnDestroy {
     }
 
     emitEvents(payload) {
-        let events = this.compConfig.emitEvent;
+        let events = this.compConfig.emitEvents;
         if (events && events.length > 0) {
             for (let eventIndex = 0; eventIndex < events.length; eventIndex++) {
                 this.emitEvent(events[eventIndex], payload);
@@ -117,12 +117,12 @@ export class BaseComponent implements OnInit, OnDestroy {
         this.eventSrvc["registerEvent"](eventId);
     }
 
-    attachSubscriber(eventId, func) {
-        return this.eventSrvc["attachSubscriber"](eventId, func);
+    subscribeEvent(eventId, func) {
+        return this.eventSrvc["subscribeEvent"](eventId, func);
     }
 
-    detachSubscriber(subscriptionId) {
-        this.eventSrvc["detachSubscriber"](subscriptionId);
+    unsubscribeEvent(subscriptionId) {
+        this.eventSrvc["unsubscribeEvent"](subscriptionId);
     }
 
     emitEvent(eventId, data) {

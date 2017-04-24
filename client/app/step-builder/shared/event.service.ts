@@ -21,7 +21,7 @@ class EventSrvc {
     return this.eventMap[eventId];
   }
 
-  attachSubscriber(eventId, func) {
+  subscribeEvent(eventId, func) {
     let event = this.getEvent(eventId);
     if (!event) {
       this.registerEvent(eventId);
@@ -32,7 +32,7 @@ class EventSrvc {
     return subscription;
   }
 
-  detachSubscriber(subscriptionId) {
+  unsubscribeEvent(subscriptionId) {
     subscriptionId.unsubscribe();
   }
 
