@@ -90,7 +90,12 @@ module.exports = class TaskEvent {
     }
 
     generateXML (){
-        let eventNode = '<event id="'+this.id+'" desc="'+this.desc+'" >';
+        let eventNode = '<event id="'+this.id+'" desc="'+this.desc+'"';
+        if(this.followup){
+            eventNode += ' followup="'+ this.followup+'"';
+        }
+        eventNode+=  ' >';
+        
         eventNode += this.generateValidateXMLNode();
         eventNode += '</event>';
         return eventNode;
