@@ -125,7 +125,6 @@ module.exports = class TaskEvent {
                 xmlString += ' >';
 
 
-
                 xmlString += this.generateCompNodes(currValidation);
                 xmlString += '</validate>';
             }
@@ -139,6 +138,7 @@ module.exports = class TaskEvent {
         let xmlString = "";
 
         for (let idx = 0; idx < validationNode.compsToValidate.length; idx++) {
+
             xmlString += '<comp id="' + validationNode.compsToValidate[idx].id + '"'; 
             if(validationNode.compsToValidate[idx].validationSet){
                 xmlString += ' validation-set="' + validationNode.compsToValidate[idx].validationSet + '"';

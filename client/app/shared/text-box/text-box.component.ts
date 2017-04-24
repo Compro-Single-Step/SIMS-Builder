@@ -13,7 +13,7 @@ export class TextBoxComponent extends BaseComponent {
   descriptionConfig: itemSchema = new itemSchema();
   ngOnInit() {
     super.ngOnInit();
-    this.modelRef = this.builderModelSrvc.getModelRef(this.compConfig.val);
+    this.modelRef = this.builderModelSrvc.getStateRef(this.compConfig.val);
     this.UpdateView();
   }
 
