@@ -145,15 +145,17 @@ getSheetNameAndSheetCountFromInitDocJSON(initDocJSON, dependantSheetArrayInModel
 
 addSheetNamesToDropdown(initDocJSON, dependantSheetArrayInModel) {
 
-  //Empty the existing array
-  while (dependantSheetArrayInModel.length > 0) {
-    dependantSheetArrayInModel.pop(); //https://jsperf.com/array-clear-methods/3
+    //Empty the existing array
+    while (dependantSheetArrayInModel.length > 0) {
+      dependantSheetArrayInModel.pop(); //https://jsperf.com/array-clear-methods/3
+    }
+    //Add Sheet Names to Array From Init Doc JSON
+    for (let sheetNum = 0; sheetNum < initDocJSON.sheetCount; sheetNum++) {
+      var sheetName = initDocJSON.sheets[sheetNum].name;
+      dependantSheetArrayInModel.push({"label":sheetName,"data":sheetName});
+    }
   }
-  //Add Sheet Names to Array From Init Doc JSON
-  for (let sheetNum = 0; sheetNum < initDocJSON.sheetCount; sheetNum++) {
-    dependantSheetArrayInModel.push(initDocJSON.sheets[sheetNum].name);
-  }
-}
+
 updateSheetNameUsingDropdown(selectedSheetName, dependentSheetNameInModel) {
   dependentSheetNameInModel.name = selectedSheetName;
 }
