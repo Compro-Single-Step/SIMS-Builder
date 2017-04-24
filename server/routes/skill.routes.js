@@ -46,7 +46,7 @@ router.get('/stepuiconfig/:templateId/:taskId/:stepIndex', (req, res) => {
     .then((stepUIConfig) => {
         res.send(stepUIConfig);
     }, (error)=> {
-        res.send(error);
+        res.status(error.statusCode || 404).send(error);
     });
 });
 

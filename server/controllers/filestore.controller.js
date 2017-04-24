@@ -148,6 +148,7 @@ class FileStoreController {
 
             fs.readFile(absolutePath, 'utf8', function (error, data) {
                 if (error) {
+                    error.filePath = filePath;
                     reject(error);
                 }
                 else {
