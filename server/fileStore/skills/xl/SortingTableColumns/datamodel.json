@@ -91,26 +91,26 @@
           "path": ""
         },
         "sheets": {
-                    "value": [{
-                        "name": "sheet 1",
-                        "gridImage": {
-                            "displayName": "",
-                            "path": ""
-                        },
-                        "rowImage": {
-                            "displayName": "",
-                            "path": ""
-                        },
-                        "columnImage": {
-                            "displayName": "",
-                            "path": ""
-                        },
-                        "cellImage": {
-                            "displayName": "",
-                            "path": ""
-                        }
-                    }]
-                }
+          "value": [{
+              "name": "sheet 1",
+              "gridImage": {
+                  "displayName": "",
+                  "path": ""
+              },
+              "rowImage": {
+                  "displayName": "",
+                  "path": ""
+              },
+              "columnImage": {
+                  "displayName": "",
+                  "path": ""
+              },
+              "cellImage": {
+                  "displayName": "",
+                  "path": ""
+              }
+          }]
+        }
       }
     }
   }

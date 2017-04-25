@@ -68,20 +68,9 @@
                 "dataType": "JSON",
                 "placeHolder": "Drop JSON file here to upload"
               },
-              "dependants": [
-                {
-                  "modelReference": "{{views.1.sheets.value}}",
-                  "rule": "getSheetNameAndSheetCountFromInitDocJSON"
-                },
-                {
-                  "modelReference": "{{views.1.sheetsForTable.value}}",
-                  "rule": "getSheetNameAndSheetCountFromInitDocJSON"
-                },
-                {
-                  "modelReference": "{{views.2.sheetInAction.options.value}}",
-                  "rule": "addSheetNamesToDropdown"
-                }
-              ],
+              "emitEvents": [
+                "DOCUMENT_DATA_UPDATED"
+              ],              
               "mandatory": true,
               "val": "{{views.1.documentData}}"
             },
@@ -95,6 +84,13 @@
               "itemRenderer": "TabGroup",
               "itemType": "child",
               "disabled": true,
+              "subscribeEvents": [
+                {
+                  "eventId": "DOCUMENT_DATA_UPDATED",
+                  "modelReference": "{{views.1.sheets.value}}",
+                  "rule": "getSheetDetails"
+                }
+              ],
               "rendererProperties": {
                 "layout": "horizontal",
                 "dynamicMode": true,
@@ -190,6 +186,13 @@
               "itemRenderer": "TabGroup",
               "itemType": "child",
               "disabled": true,
+              "subscribeEvents": [
+                {
+                  "eventId": "DOCUMENT_DATA_UPDATED",
+                  "modelReference": "{{views.1.sheetsForTable.value}}",
+                  "rule": "getSheetDetails"
+                }
+              ],
               "rendererProperties": {
                 "layout": "horizontal",
                 "dynamicMode": true,
@@ -234,11 +237,8 @@
                         "placeHolder": "Drop CSV file here to upload",
                         "dynamicMode": true
                       },
-                      "dependants": [
-                        {
-                          "modelReference": "{{views.2.sortColumnName.options.value}}",
-                          "rule": "updateColumnNamesInDropdown"
-                        }
+                      "emitEvents": [
+                        "COLUMN_HEADERS_UPDATED"
                       ],
                       "relVal": "columnHeaders"
                     },
@@ -361,10 +361,14 @@
               },
               "itemType": "leaf",
               "mandatory": true,
-              "dependants": [
+              "emitEvents": [
+                "SHEET_IN_ACTION_UPDATED"
+              ],
+              "subscribeEvents": [
                 {
-                  "modelReference": "{{views.3.sheets.value.0}}",
-                  "rule": "updateSheetNameUsingDropdown"
+                  "eventId": "DOCUMENT_DATA_UPDATED",
+                  "modelReference": "{{views.2.sheetInAction.options.value}}",
+                  "rule": "addSheetNamesToDropdown"
                 }
               ],
               "val": "{{views.2.sheetInAction.selectedOption}}"
@@ -383,10 +387,14 @@
                 "itemListRef": "{{views.2.sortColumnName.options}}"
               },
               "val": "{{views.2.sortColumnName.selectedOption}}",
-              "dependants": [
+              "emitEvents": [
+                "SORT_COLUMN_NAME_UPDATED"
+              ],
+              "subscribeEvents": [
                 {
-                  "modelReference": "{{views.2.sortType.options.value}}",
-                  "rule": "updateSortTypesInDropdown"
+                  "eventId": "COLUMN_HEADERS_UPDATED",
+                  "modelReference": "{{views.2.sortColumnName.options.value}}",
+                  "rule": "updateColumnNamesInDropdown"
                 }
               ]
             },
@@ -398,6 +406,13 @@
                 "detailed": "Type of sorting done in this skill is to be mentioned here"
               },
               "itemRenderer": "Dropdown",
+              "subscribeEvents": [
+                {
+                  "eventId": "SORT_COLUMN_NAME_UPDATED",
+                  "modelReference": "{{views.2.sortType.options.value}}",
+                  "rule": "updateSortTypesInDropdown"
+                }
+              ],
               "rendererProperties": {
                 "itemListRef": "{{views.2.sortType.options}}"
               },
@@ -458,6 +473,13 @@
               "itemRenderer": "TabGroup",
               "itemType": "child",
               "disabled": true,
+              "subscribeEvents": [
+                {
+                  "eventId": "SHEET_IN_ACTION_UPDATED",
+                  "modelReference": "{{views.3.sheets.value}}",
+                  "rule": "updateSheetName"
+                }
+              ],
               "rendererProperties": {
                 "layout": "horizontal",
                 "dynamicMode": true,
