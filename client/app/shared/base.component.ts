@@ -11,13 +11,11 @@ export class BaseComponent implements OnInit, OnDestroy {
     builderModelSrvc;
     dynamicMode: boolean = false;
     descriptionConfig: itemSchema = new itemSchema();
-    isDisabled: Object;
     eventSrvc: Object;
     subscriptions: Array<Object>;
     constructor() {
         this.compConfig = new itemSchema();
         this.builderModelSrvc = BuilderModelObj;
-        this.isDisabled = {disabled: false};
         this.eventSrvc = EventService;
         this.subscriptions = [];
     }
@@ -127,5 +125,12 @@ export class BaseComponent implements OnInit, OnDestroy {
 
     emitEvent(eventId, data) {
         this.eventSrvc["emitEvent"](eventId, data);
+    }
+    isDisabled() {
+        let isDisabled;
+        if(this.compConfig.rendererProperties && this.compConfig.rendererProperties.disabled === true) {
+            this.modelRef["disabled"] = true;
+        }
+        return this.modelRef["disabled"];
     }
 }
