@@ -26,6 +26,6 @@ export class TextBoxComponent extends BaseComponent {
   }
 
   getData() {
-    return this.modelRef ? this.modelRef : this.builderModelSrvc.getModelRef(this.compConfig.val);
+    return this.modelRef ? this.modelRef : this.builderModelSrvc.getStateRef(this.compConfig.val);
   }
 }

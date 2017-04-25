@@ -59,7 +59,7 @@ class FileStoreController {
 
         return new Promise(function (resolve, reject) {
 
-            fse.copy(srcPath, destPath, function (error) {
+            fse.copy(srcPath, destPath, {overwrite:false}, function (error) {
                 if (!error) {
                     var resolveParam = { "filePath": relativeXmlPath + fileName, "fileType": resFileType };
                     resolve(resolveParam);
@@ -148,6 +148,7 @@ class FileStoreController {
 
             fs.readFile(absolutePath, 'utf8', function (error, data) {
                 if (error) {
+                    error.filePath = filePath;
                     reject(error);
                 }
                 else {

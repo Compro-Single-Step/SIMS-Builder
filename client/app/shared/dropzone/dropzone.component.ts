@@ -1,6 +1,6 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild, OnDestroy } from '@angular/core';
 import { BaseComponent } from '../base.component';
-import { ActivatedRoute } from '@angular/router';
+import { NavigationStart, Router, ActivatedRoute } from '@angular/router';
 import { LabelTypes } from '../enums';
 import { itemSchema } from '../UIConfig.model';
 import { AuthService } from '../../_services/auth.service';
@@ -14,18 +14,27 @@ Dropzone.autoDiscover = false;
   templateUrl: './dropzone.component.html',
   styleUrls: ['./dropzone.component.scss']
 })
-export class DropzoneComponent extends BaseComponent {
+export class DropzoneComponent extends BaseComponent implements OnDestroy {
   @ViewChild('dropzone') dropzoneContainer;
   labelConfig: itemSchema = new itemSchema();
   width: string;
   height: string;
-  constructor(private elementRef: ElementRef, private route: ActivatedRoute, private authSrvc: AuthService, private bds: BuilderDataService) {
+  makeDeleteCall: boolean;
+  constructor(private elementRef: ElementRef, private route: ActivatedRoute, private router: Router, private authSrvc: AuthService, private bds: BuilderDataService) {
     super();
+    this.makeDeleteCall = true;
   }
 
   ngOnInit() {
     super.ngOnInit();
     this.UpdateView();
+
+    this.router.events
+      .subscribe((event) => {
+        if (event instanceof NavigationStart) {
+          this.makeDeleteCall = !this.makeDeleteCall;
+        }
+      });
   }
 
   UpdateView() {
@@ -81,6 +90,7 @@ export class DropzoneComponent extends BaseComponent {
       let currModelRef = self.getData();
       self.bds.removeFile(currModelRef["path"]).subscribe(function (data) {
         if (data.status === "success") {
+          self.emitEvents(null);
           currModelRef["displayName"] = "";
           currModelRef["path"] = "";
         } else if (data.status == "error") {
@@ -101,8 +111,13 @@ export class DropzoneComponent extends BaseComponent {
       reader.readAsText(file, 'UTF8');
       reader.onload = function (e) {
         //Update Dependencies when contents have been read;
-        droppedFile = (fileType == ".json") ? JSON.parse(e.target['result']) : e.target['result'];
-        self.updateDependencies(droppedFile);
+        try{
+          droppedFile = (fileType == ".json") ? JSON.parse(e.target['result']) : e.target['result'];
+        }
+        catch (e) {
+          console.log(e);
+        }        
+        self.emitEvents(droppedFile);
       }
     }
   }
@@ -113,9 +128,10 @@ export class DropzoneComponent extends BaseComponent {
       this.bds.getResource(this.getData().path).subscribe((res) => {
         if (res.headers.get("status") == "success") {
           let file = new File([res._body], fileInfo.displayName);
-          dropzone.addFile(file);
+          dropzone.emit("addedfile", file);
+          dropzone.emit("complete", file);
         }
-        else{
+        else {
           //TODO: Handling of code when error is receiving file occurrs. 
         }
       });
@@ -123,7 +139,16 @@ export class DropzoneComponent extends BaseComponent {
   }
 
   getData() {
-    return this.modelRef ? this.modelRef : this.builderModelSrvc.getModelRef(this.compConfig.val);
+    return this.modelRef ? this.modelRef : this.builderModelSrvc.getStateRef(this.compConfig.val);
+  }
+
+  ngOnDestroy() {
+    super.ngOnDestroy();
+    if (this.makeDeleteCall && this.getData()["path"] != "") {
+      this.bds.removeFile(this.getData()["path"]).subscribe((data) => {
+        //TODO: error handling.
+      });
+    }
   }
 }
 enum MIMETYPE {
