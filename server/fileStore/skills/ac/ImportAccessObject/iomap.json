@@ -1,0 +1,228 @@
+{
+  "states": {
+    "1": {
+      "components": {
+        "1": {
+          "initial": {
+            "default-attrs": {  
+              "DOCUMENT_NAME": {
+                "function-name": "extractSingleParamVal",
+                "params": {
+                  "docTitle":"views['1'].documentTitle.value"
+                }
+              }
+            }
+          }
+        },
+        "3": {
+          "initial": {
+            "default-attrs": {
+              "PROJECT_JSON": {
+                "function-name": "extractAttrPath",
+                "params": {
+                  "navPane":"views['1'].navigationPane.path"
+                }
+              },
+              "SELECTED_DB_OBJECT_TYPE": {
+                "function-name": "extractSingleParamVal",
+                "params": {
+                  "objType":"views['1'].dbObject.selectedOption"
+                }
+              },
+              "SELECTED_DB_OBJECT": {
+                "function-name": "extractSingleParamVal",
+                "params": {
+                  "objName":"views['1'].dbObject.name"
+                }
+              }
+            }
+          }
+        },
+        "4": {
+          "initial": {
+            "default-attrs": {
+              "APP_TOOLTIP_IMAGE": {
+                "function-name": "extractAttrPath",
+                "params": {
+                  "tbPrvImage":"views['1'].taskbarPreviewImage.path"
+                }
+              },
+              "OPENWORDFILE": {
+                "function-name": "getTootlTipText",
+                "params": {
+                  "DocTitle":"views['1'].documentTitle.value"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "2": {
+      "components": {
+        "2": {
+          "final": {
+            "okEvent": {
+              "FILE_NAME": {
+                "function-name": "extractSingleParamVal",
+                "params": {
+                  "databasePath":"views['2'].dbPath.value"
+                }
+              },
+              "ACCESS_SELECTED_RADIO_OPTION": { // to be configured later
+                "function-name": "getSkillMode",
+                "params": {
+                  "sheetAction":"views['2'].sheetInAction.selectedOption.value",
+                  "wbData":"views['3'].workbookData.path",
+                  "initDocJson":"views['1'].documentData.path"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "3": {
+      "components": {
+        "7": {
+          "initial": {
+            "default-attrs": {
+              "TREE_XML_PATH": {
+                "function-name": "extractAttrPath",
+                "params": {
+                  "openFileDialogTree":"views['2'].openFileDialogXML.path"
+                }
+              },
+              "AUTO_COMPLETE_LIST": {
+                "function-name": "extractSingleParamVal",
+                "params": {
+                  "autoList":"views['2'].AutoCompleteOptions.value"
+                }
+              }
+            }
+          },
+          "final": {
+            "validateFileName": {
+              "FILE_NAME": {
+                "function-name": "getFileName",
+                "params": {
+                  "databasePath":"views['2'].dbPath.value"
+                }
+              }
+            },
+            "validateFileNameWithExtension": {
+              "FILE_NAME": {
+                "function-name": "getFileNameWithExtension",
+                "params": {
+                  "databasePath":"views['2'].dbPath.value"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "4": {
+      "components": {
+        "2": {
+          "initial": {
+            "default-attrs": {
+              "FILE_NAME": {
+                "function-name": "extractSingleParamVal",
+                "params": {
+                  "openFileDialogTree":"views['2'].dbPath.value"
+                }
+              }
+            }
+          },
+          "final": {
+            "default-attrs": {
+              "FILE_NAME": {
+                "function-name": "extractSingleParamVal",
+                "params": {
+                  "databasePath":"views['2'].dbPath.value"
+                }
+              },
+              "ACCESS_SELECTED_RADIO_OPTION": {
+                "function-name": "getSkillMode",
+                "params": {
+                  "databasePath":"views['2'].dbPath.value"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "5": {
+      "components": {
+        "6": {
+          "initial": {
+            "default-attrs": {
+              "MODE": {
+                "function-name": "getSkillMode",
+                "params": {
+                  "openFileDialogTree":"views['2'].openFileDialogXML.path"
+                }
+              },
+              "DIALOG_DATA": {
+                "function-name": "getInitialDBConfig",
+                "params": {
+                  "DBdata":"views['2'].importDBConfig.value"
+                }
+              }
+            }
+          },
+          "final": {
+            "default-attrs": {
+              "TABLE_DATA": {
+                "function-name": "getFinalDBConfig",
+                "params": {
+                  "DBdata":"views['2'].importDBConfig.value"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "6": {
+      "components": {
+        "7": {
+          "initial": {
+            "default-attrs": {
+              "TEXTBOX_SAVE_AS_TEXT": {
+                "function-name": "getSaveAsText",
+                "params": {
+                  "databasePath":"views['2'].dbPath.value"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "7": {
+      "components": {
+        "3": {
+          "initial": {
+            "default-attrs": {
+              "PROJECT_JSON": {
+                "function-name": "extractAttrPath",
+                "params": {
+                  "navPane":"views['1'].navigationPane.path"
+                }
+              },
+              "SELECTED_DB_OBJECT": {
+                "function-name": "getFinalSelectedObject",
+                "params": {
+                  "DBdata":"views['2'].importDBConfig.value"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

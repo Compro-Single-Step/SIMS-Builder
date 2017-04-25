@@ -1,0 +1,44 @@
+{
+  "model": {
+    "views": {
+      "1": {
+        "documentTitle": {
+          "value": ""
+        },
+        "navigationPane": {
+          "displayName": "",
+          "path": ""
+        },
+        "taskbarPreviewImage": {
+          "displayName": "",
+          "path": ""
+        }
+      },
+      "2": {
+        "dbPath": {
+          "value": ""
+        },
+        "importMode": {
+          "value": ""
+        },
+        "openFileDialogXML": {
+          "displayName": "",
+          "path": ""
+        },
+        "AutoCompleteOptions": {
+          "val": ""
+        },
+        "importDBConfig": {
+          "displayName": "",
+          "path": ""
+        }
+      },
+      "3": {
+        "navigationPane": {
+          "displayName": "",
+          "path": ""
+        }
+      }
+    }
+  }
+}
