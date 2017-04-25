@@ -34,7 +34,7 @@ uiTaskStepSchema.statics = {
     },
     updateStepUIData: function(taskId, stepIndex, stepUIData, callback) {
         return new Promise((resolve, reject)=> {
-            if (stepUIData == null || stepUIData == "") {
+            if (stepUIData == undefined || stepUIData == null || stepUIData == "") {
                 reject({
                     status: "error",
                     error: "null value not allowed for Step UI State"
