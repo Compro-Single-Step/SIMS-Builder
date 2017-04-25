@@ -34,20 +34,26 @@ uiTaskStepSchema.statics = {
     },
     updateStepUIData: function(taskId, stepIndex, stepUIData, callback) {
         return new Promise((resolve, reject)=> {
-            
-            let condition = {"task_id": taskId};
-            let jsonKey = "task_data.step_" + stepIndex;
-            let updateData = { $set: {}};
-            updateData.$set[jsonKey] = stepUIData;
-            let options = { upsert: true };
+            if (stepUIData == null || stepUIData == "") {
+                reject({
+                    status: "error",
+                    error: "null value not allowed for Step UI State"
+                });
+            } else {
+                let condition = {"task_id": taskId};
+                let jsonKey = "task_data.step_" + stepIndex;
+                let updateData = { $set: {}};
+                updateData.$set[jsonKey] = stepUIData;
+                let options = { upsert: true };
 
-            this.collection.update(condition, updateData, options, (error, success) => {
-                if(error) {
-                    reject(error);
-                } else {
-                    resolve(success);
-                }
-            });
+                this.collection.update(condition, updateData, options, (error, success) => {
+                    if(error) {
+                        reject(error);
+                    } else {
+                        resolve(success);
+                    }
+                });
+            }
         });
     }
 };
