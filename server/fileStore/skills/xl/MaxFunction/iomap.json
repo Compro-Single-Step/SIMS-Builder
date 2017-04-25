@@ -45,7 +45,7 @@
                 "function-name": "getCellFormulas",
                 "params": {
                   "cellContainingFormula": "views['2'].cellContainingFormula.value",
-                  "sheetInAction": "views['2'].sheetInAction.selectedOption.value",
+                  "sheetInAction": "views['2'].sheetInAction.selectedOption.value.label",
                   "formulaCellRangeReference": "views['2'].formulaCellRangeReference.value"
                 }
               }
@@ -162,7 +162,7 @@
               "CELL_TEXT": {
                 "function-name": "getMAXCellText",
                 "params": {
-                  "sheetInAction": "views['2'].sheetInAction.selectedOption.value",
+                  "sheetInAction": "views['2'].sheetInAction.selectedOption.value.label",
                   "cellContainingFormula": "views['2'].cellContainingFormula.value",
                   "formulaCellRangeReference": "views['2'].formulaCellRangeReference.value"
                 }
@@ -178,7 +178,7 @@
               "CELL_TEXT": {
                 "function-name": "getMAXACellText",
                 "params": {
-                  "sheetInAction": "views['2'].sheetInAction.selectedOption.value",
+                  "sheetInAction": "views['2'].sheetInAction.selectedOption.value.label",
                   "cellContainingFormula": "views['2'].cellContainingFormula.value",
                   "formulaCellRangeReference": "views['2'].formulaCellRangeReference.value"
                 }

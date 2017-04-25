@@ -64,20 +64,13 @@
               },
               "itemRenderer": "Dropzone",
               "itemType": "leaf",
+              "emitEvents": [
+                "DOCUMENT_DATA_UPDATED"
+              ],
               "rendererProperties": {
                 "dataType": "JSON",
                 "placeHolder": "Drop JSON file here to upload"
               },
-              "dependants": [
-                {
-                  "modelReference": "{{views.1.sheets.value}}",
-                  "rule": "getSheetNameAndSheetCountFromInitDocJSON"
-                },
-                {
-                  "modelReference": "{{views.2.sheetInAction.options.value}}",
-                  "rule": "addSheetNamesToDropdown"
-                }
-              ],
               "mandatory": true,
               "val": "{{views.1.documentData}}"
             },
@@ -91,6 +84,13 @@
               "itemRenderer": "TabGroup",
               "itemType": "child",
               "disabled": true,
+              "subscribeEvents": [
+                {
+                  "eventId": "DOCUMENT_DATA_UPDATED",
+                  "modelReference": "{{views.1.sheets.value}}",
+                  "rule": "getSheetDetails"
+                }
+              ],
               "rendererProperties": {
                 "layout": "horizontal",
                 "dynamicMode": true,
@@ -254,15 +254,19 @@
                 "detailed": "Name of the sheet on which using the Max function skill has to be performed is to be mentioned here."
               },
               "itemRenderer": "Dropdown",
+              "emitEvents": [
+                "SHEET_IN_ACTION_UPDATED"
+              ],
               "rendererProperties": {
                 "itemListRef": "{{views.2.sheetInAction.options}}"
               },
               "itemType": "leaf",
               "mandatory": true,
-              "dependants": [
+              "subscribeEvents": [
                 {
-                  "modelReference": "{{views.3.sheets.value.0}}",
-                  "rule": "updateSheetNameUsingDropdown"
+                  "eventId": "DOCUMENT_DATA_UPDATED",
+                  "modelReference": "{{views.2.sheetInAction.options.value}}",
+                  "rule": "addSheetNamesToDropdown"
                 }
               ],
               "val": "{{views.2.sheetInAction.selectedOption}}"
@@ -322,19 +326,8 @@
               "itemRenderer": "Switch",
               "itemType": "leaf",
               "mandatory": true,
-              "dependants": [
-                {
-                  "modelReference": "{{views.2.cellRange}}",
-                  "rule": "enableOrDisableOnSwitch"
-                },
-                {
-                  "modelReference": "{{views.2.cellValues}}",
-                  "rule": "enableOrDisableOnSwitch"
-                },
-                {
-                  "modelReference": "{{views.2.formulaResult}}",
-                  "rule": "enableOrDisableOnSwitch"
-                }
+              "emitEvents": [
+                "SWITCH_VALUE_TOGGLED"
               ],
               "val": "{{views.2.linkedSolutionCellSwitch.selectedOption}}"
             },
@@ -348,6 +341,13 @@
               "itemRenderer": "TextBox",
               "itemType": "leaf",
               "mandatory": false,
+              "subscribeEvents": [
+                {
+                  "eventId": "SWITCH_VALUE_TOGGLED",
+                  "modelReference": "{{views.2.cellRange}}",
+                  "rule": "enableOrDisableOnSwitch"
+                }
+              ],
               "rendererProperties": {
                 "dataType": "string"
               },
@@ -363,6 +363,13 @@
               "itemRenderer": "TextBox",
               "itemType": "leaf",
               "mandatory": false,
+              "subscribeEvents": [
+                {
+                  "eventId": "SWITCH_VALUE_TOGGLED",
+                  "modelReference": "{{views.2.cellValues}}",
+                  "rule": "enableOrDisableOnSwitch"
+                }
+              ],
               "rendererProperties": {
                 "dataType": "string"
               },
@@ -378,6 +385,13 @@
               "itemRenderer": "TextBox",
               "itemType": "leaf",
               "mandatory": false,
+              "subscribeEvents": [
+                {
+                  "eventId": "SWITCH_VALUE_TOGGLED",
+                  "modelReference": "{{views.2.formulaResult}}",
+                  "rule": "enableOrDisableOnSwitch"
+                }
+              ],
               "rendererProperties": {
                 "dataType": "string"
               },
@@ -419,6 +433,13 @@
               "itemRenderer": "TabGroup",
               "itemType": "child",
               "disabled": true,
+              "subscribeEvents": [
+                {
+                  "eventId": "SHEET_IN_ACTION_UPDATED",
+                  "modelReference": "{{views.3.sheets.value}}",
+                  "rule": "updateSheetName"
+                }
+              ],
               "rendererProperties": {
                 "layout": "horizontal",
                 "dynamicMode": true,

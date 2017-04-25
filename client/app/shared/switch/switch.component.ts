@@ -22,10 +22,11 @@ export class SwitchComponent extends BaseComponent {
     this.labelConfig.rendererProperties.text = this.compConfig.label;
     this.labelConfig.rendererProperties.type = LabelTypes.ELEMENT_HEADING;
     this.itemList = this.compConfig.items;
-    this.modelRef = this.builderModelSrvc.getModelRef(this.compConfig.val);
+    this.modelRef = this.builderModelSrvc.getStateRef(this.compConfig.val);
   }
 
   selectedItemChange() {
     this.updateDependencies(this.modelRef["value"]);
+    this.emitEvents(this.modelRef["value"]);
   }
 }
