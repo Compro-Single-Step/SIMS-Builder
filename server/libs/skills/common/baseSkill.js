@@ -5,7 +5,9 @@ module.exports = class BaseSkill {
    * @param {*} data : an object of values having certain data to be used
    */
   init (data){
-    // do nothing
+    // returning empty promise
+    // equivalent to do nothing
+    return Promise.resolve(true);
   }
   
   // This is the function of the TaskBar tooltip image path
