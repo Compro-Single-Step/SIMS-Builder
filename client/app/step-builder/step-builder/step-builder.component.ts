@@ -94,6 +94,10 @@ export class StepBuilderComponent implements OnInit {
     checkForModelChange() {
         let self = this;
         let itemDataModel = this.builderModelSrvc.getModel();
+        if(itemDataModel == null){
+            alert("UI State is null. Please check.");
+            console.log("UI State is null. Please check.");
+        }
         localForage.getItem('model').then(function (value) {
             if (JSON.stringify(value) === JSON.stringify(itemDataModel)) {
                 console.log("same Model: Do Nothing");
