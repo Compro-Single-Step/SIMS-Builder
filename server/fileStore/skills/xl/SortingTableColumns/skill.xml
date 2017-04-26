@@ -1,0 +1,148 @@
+<task>
+	<preload>
+		<comps>
+			<comp id="1" name="SIMS.Components.Excel.Ribbon" cssclass="SIMS_Ribbon_Excel" type="default"/>
+			<comp id="2" name="SIMS.Components.Excel.JSONGrid" cssclass="" type="default"/>
+			<comp id="3" name="SIMS.Components.Common.TaskBar" cssclass="SIMS_TaskBar" type="default"/>
+			<comp id="4" name="SIMS.Components.Excel.SortDialog" cssclass="SortDialog" type="modaldialog" title="Sort"/>
+		</comps>
+	</preload>
+	<states>
+		<state id="1" desc="Excel document opened" txt="1" compstack="2">
+			<comps>
+				<comp id="4" mode="remove" desc="Sort and Filter Dialog Box Closed"/>
+				<comp id="1" mode="new">
+					<sizeandpos>
+						<attr name="left" value="0"/>
+						<attr name="top" value="0"/>
+						<attr name="width" value="*"/>
+						<attr name="height" value="150"/>
+					</sizeandpos>
+					<initialattrs>
+						<attr name="APP" value="excel"/>
+						<attr name="ACTIVATE_TAB" value="Table Tools Design"/>
+						<attr name="RIBBON_PATH" value="app/comps2016/Common/Ribbon/excel-ribbon.xml"/>
+						<attr name="DOCUMENT_NAME" userDefined="true"/>
+						<attr name="SUB_XML_UPDATE" userDefined="true"/>
+						<attr name="RIBBON_SUB_XML" userDefined="true"/>
+					</initialattrs>
+					<events>
+						<event id="394" desc="Sort And Filter : A to Z">
+							<validate followup="3">
+								<comp id="2" validation-set="SelectedCells_CellRange"/>
+							</validate>
+						</event>
+						<event id="396" desc="Sort and Filter : Custom sort">
+							<validate followup="2">
+								<comp id="2" validation-set="SelectedCells_TableRange"/>
+							</validate>
+						</event>
+					</events>
+				</comp>
+				<comp id="2" mode="new">
+					<sizeandpos>
+						<attr name="left" value="0"/>
+						<attr name="top" value="147"/>
+						<attr name="width" value="*"/>
+					</sizeandpos>
+					<initialattrs>
+						<attr name="INIT_DOC_JSON" userDefined="true"/>
+						<attr name="IMAGE_JSON" userDefined="true"/>
+						<attr name="PIVOT_FILTER_BTNS" userDefined="true"/>
+						<attr name="TABLE_RANGE" userDefined="true"/>
+						<attr name="CUSTOM_CONTEXT_MENU" userDefined="true"/>
+					</initialattrs>
+					<initialattributesets>
+						<attributeset name="Cancel_clicked" inherits-default="false">
+							<attr name="IMAGE_JSON" userDefined="true"/>
+						</attributeset>
+					</initialattributesets>
+					<finalattributesets>
+						<attributeset name="SelectedCells_CellRange" inherits-default="false">
+							<attr name="SELECTED_CELLS_COMPLETE_IN_RANGE" userDefined="true"/>
+						</attributeset>
+						<attributeset name="SelectedCells_TableRange" inherits-default="false">
+							<attr name="SELECTED_CELLS_COMPLETE_IN_RANGE" userDefined="true"/>
+						</attributeset>
+						<attributeset name="Pivot_Button_" multiple-occurence="true" based-on="attr" dependency-attr='["CELL_BEHIND_FILTER_MENU"]'>
+							<attr name="CELL_BEHIND_FILTER_MENU" userDefined="true"/>
+						</attributeset>
+					</finalattributesets>
+					<events>
+						<event id="394" desc="Right click : sort a to z">
+							<validate  followup="3">
+								<comp id="2" validation-set="SelectedCells_CellRange"/>
+							</validate>
+						</event>
+						<event id="396" desc="Custom Sort clicked from context menu">
+							<validate followup="2" operator="any">
+								<comp id="2" validation-set="SelectedCells_TableRange"/>
+								<comp id="2" validation-set="" multiple-occurence="true" based-on="finalAttrSet" dependency-set="Pivot_Button_"/>
+							</validate>
+						</event>
+						<event id="106" desc="Filter menu : sort A to Z">
+							<validate followup="3">
+								<comp id="2" validation-set="Pivot_Button_Column_Header"/>
+							</validate>
+						</event>
+					</events>
+				</comp>
+				<comp id="3" mode="new">
+					<sizeandpos>
+						<attr name="left" value="0"/>
+						<attr name="bottom" value="0"/>
+						<attr name="width" value="*"/>
+						<attr name="height" value="31"/>
+					</sizeandpos>
+					<initialattrs>
+						<attr name="OPENWORDFILE" userDefined="true"/>
+						<attr name="APP_TOOLTIP_IMAGE" userDefined="true"/>
+						<attr name="APPLICATION" value="excel"/>
+					</initialattrs>
+				</comp>
+			</comps>
+		</state>
+		<state id="2" desc="Sort and Filter Dialpg Box Opened" txt="1" compstack="4">
+			<comps>
+				<comp id="4" mode="new" desc="Sort and Filter Dialog Box">
+					<sizeandpos>
+						<attr name="width" value="*"/>
+						<attr name="height" value="*"/>
+						<attr name="left" value="center"/>
+						<attr name="top" value="center"/>
+					</sizeandpos>
+					<initialattrs>
+						<attr name="NO_OF_LEVELS" value="1"/>
+						<attr name="SORTBY_ITEMS_LIST" userDefined="true"/>
+						<attr name="ITEM_ORDER_TYPE" userDefined="true"/>
+					</initialattrs>
+					<finalattrs>
+						<attr name="SORTBY_VALUE" userDefined="true"/>
+						<attr name="SORTON_VALUE" value="Values~"/>
+						<attr name="ORDERBY_VALUE" userDefined="true"/>
+					</finalattrs>
+					<events>
+						<event id="9997" followup="3" desc="OK clicked"/>
+						<event id="9998" followup="1" target-attribute-set="Cancel_clicked" desc="Cancel button clicked"/>
+					</events>
+				</comp>
+			</comps>
+		</state>
+		<state id="3" islast="true" desc="In March Data Sales_Last column is sorted in alphabetical order Item 2 strats" compstack="2">
+			<comps>
+				<comp id="4" mode="remove" desc="Sort and Filter Dialog Box Closed"/>
+				<comp id="2" mode="edit">
+					<sizeandpos>
+						<attr name="left" value="0"/>
+						<attr name="top" value="147"/>
+						<attr name="width" value="*"/>
+					</sizeandpos>
+					<initialattrs>
+						<attr name="SHEET_CELLS_DATA" userDefined="true"/>
+						<attr name="IMAGE_JSON" userDefined="true"/>
+					</initialattrs>
+				</comp>
+			</comps>
+		</state>
+	</states>
+</task>

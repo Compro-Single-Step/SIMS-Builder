@@ -21,8 +21,38 @@ const resTypeMap = {
     "html": "html",
     "xml": "xml"
 };
+const fileTypeFunctionMap = {
+    "csv": "readCsvFile"
+}
 
 class FileStoreController {
+
+    readCsvFile(absolutePath) {
+        return new Promise(function (resolve, reject) {
+            let resultArr = []
+            const csv = require('csvtojson')
+            csv().
+                fromFile(absolutePath)
+                .on('json', (jsonObj) => {
+                    console.log(jsonObj);
+                    resultArr.push(jsonObj);
+
+                    // combine csv header row and csv line to a json object 
+                    // jsonObj.a ==> 1 or 4 
+                })
+                .on('done', (error) => {
+                    if (resultArr.length == 0) {
+                        var error = new Error("Error occured while reading the csv type file at path " + absolutePath);
+                        reject(error);
+                    }
+                    else {
+                        var resolveParam = { "fileData": resultArr, "filePath": absolutePath };
+                        resolve(resolveParam);
+                    }
+                })
+        });
+    }
+
 
     getFileStoreStepFolderPath(taskId, stepIdx) {
         return config.fileStore.xmlFolder + taskId + "/" + stepIdx + "/";
@@ -59,7 +89,7 @@ class FileStoreController {
 
         return new Promise(function (resolve, reject) {
 
-            fse.copy(srcPath, destPath, {overwrite:false}, function (error) {
+            fse.copy(srcPath, destPath, { overwrite: false }, function (error) {
                 if (!error) {
                     var resolveParam = { "filePath": relativeXmlPath + fileName, "fileType": resFileType };
                     resolve(resolveParam);
@@ -73,19 +103,26 @@ class FileStoreController {
     }
 
 
-    readTaskRes(filepath) {
+    readTaskRes(filepath, readFileType) {
         var absolutePath = config.fileStore.resourceFolder + filepath;
-        return new Promise(function (resolve, reject) {
-            fs.readFile(absolutePath, 'utf8', function (error, fileData) {
-                if (!error) {
-                    var resolveParam = { "fileData": fileData, "filePath": absolutePath };
-                    resolve(resolveParam);
-                }
-                else {
-                    reject(error);
-                }
+        if (readFileType && fileTypeFunctionMap[readFileType]) {
+
+            return this[fileTypeFunctionMap[readFileType]](absolutePath);
+        }
+        else {
+            return new Promise(function (resolve, reject) {
+                fs.readFile(absolutePath, 'utf8', function (error, fileData) {
+                    if (!error) {
+                        var resolveParam = { "fileData": fileData, "filePath": absolutePath };
+                        resolve(resolveParam);
+                    }
+                    else {
+                        reject(error);
+                    }
+                });
             });
-        });
+        }
+
     }
     getTaskFolderPath(taskId) {
 

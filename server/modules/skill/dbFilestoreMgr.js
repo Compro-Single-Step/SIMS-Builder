@@ -7,8 +7,8 @@ const folderMap = FAL.fileTypeFolderMap;
 class DatabaseFileStoreManager {
 
     //dynamic sheet num 
-      readFileFromFileStore(filePath){
-          return fsc.readTaskRes(filePath);
+      readFileFromFileStore(filePath, readFileType){
+          return fsc.readTaskRes(filePath, readFileType)
      }
 
     copyTaskAssetFile(residentPath, taskParams) {
