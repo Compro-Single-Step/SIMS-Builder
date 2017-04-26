@@ -4,11 +4,11 @@
       "components": {
         "1": {
           "initial": {
-            "default-attrs": {  
+            "default-attrs": {
               "DOCUMENT_NAME": {
                 "function-name": "extractSingleParamVal",
                 "params": {
-                  "docTitle":"views['1'].documentTitle.value"
+                  "docTitle": "views['1'].documentTitle.value"
                 }
               }
             }
@@ -20,19 +20,19 @@
               "PROJECT_JSON": {
                 "function-name": "extractAttrPath",
                 "params": {
-                  "navPane":"views['1'].navigationPane.path"
+                  "navPane": "views['1'].navigationPane.path"
                 }
               },
               "SELECTED_DB_OBJECT_TYPE": {
                 "function-name": "extractSingleParamVal",
                 "params": {
-                  "objType":"views['1'].dbObject.selectedOption"
+                  "objType": "views['1'].dbObject.selectedOption"
                 }
               },
               "SELECTED_DB_OBJECT": {
                 "function-name": "extractSingleParamVal",
                 "params": {
-                  "objName":"views['1'].dbObject.name"
+                  "objName": "views['1'].dbObject.name"
                 }
               }
             }
@@ -44,13 +44,13 @@
               "APP_TOOLTIP_IMAGE": {
                 "function-name": "extractAttrPath",
                 "params": {
-                  "tbPrvImage":"views['1'].taskbarPreviewImage.path"
+                  "tbPrvImage": "views['1'].taskbarPreviewImage.path"
                 }
               },
               "OPENWORDFILE": {
                 "function-name": "getTootlTipText",
                 "params": {
-                  "DocTitle":"views['1'].documentTitle.value"
+                  "DocTitle": "views['1'].documentTitle.value"
                 }
               }
             }
@@ -66,15 +66,15 @@
               "FILE_NAME": {
                 "function-name": "extractSingleParamVal",
                 "params": {
-                  "databasePath":"views['2'].dbPath.value"
+                  "databasePath": "views['2'].dbPath.value"
                 }
               },
-              "ACCESS_SELECTED_RADIO_OPTION": { // to be configured later
+              "ACCESS_SELECTED_RADIO_OPTION": {
                 "function-name": "getSkillMode",
                 "params": {
-                  "sheetAction":"views['2'].sheetInAction.selectedOption.value",
-                  "wbData":"views['3'].workbookData.path",
-                  "initDocJson":"views['1'].documentData.path"
+                  "sheetAction": "views['2'].sheetInAction.selectedOption.value",
+                  "wbData": "views['3'].workbookData.path",
+                  "initDocJson": "views['1'].documentData.path"
                 }
               }
             }
@@ -90,13 +90,13 @@
               "TREE_XML_PATH": {
                 "function-name": "extractAttrPath",
                 "params": {
-                  "openFileDialogTree":"views['2'].openFileDialogXML.path"
+                  "openFileDialogTree": "views['2'].openFileDialogXML.path"
                 }
               },
               "AUTO_COMPLETE_LIST": {
                 "function-name": "extractSingleParamVal",
                 "params": {
-                  "autoList":"views['2'].AutoCompleteOptions.value"
+                  "autoList": "views['2'].AutoCompleteOptions.value"
                 }
               }
             }
@@ -106,7 +106,7 @@
               "FILE_NAME": {
                 "function-name": "getFileName",
                 "params": {
-                  "databasePath":"views['2'].dbPath.value"
+                  "databasePath": "views['2'].dbPath.value"
                 }
               }
             },
@@ -114,7 +114,7 @@
               "FILE_NAME": {
                 "function-name": "getFileNameWithExtension",
                 "params": {
-                  "databasePath":"views['2'].dbPath.value"
+                  "databasePath": "views['2'].dbPath.value"
                 }
               }
             }
@@ -130,7 +130,7 @@
               "FILE_NAME": {
                 "function-name": "extractSingleParamVal",
                 "params": {
-                  "openFileDialogTree":"views['2'].dbPath.value"
+                  "openFileDialogTree": "views['2'].dbPath.value"
                 }
               }
             }
@@ -140,13 +140,13 @@
               "FILE_NAME": {
                 "function-name": "extractSingleParamVal",
                 "params": {
-                  "databasePath":"views['2'].dbPath.value"
+                  "databasePath": "views['2'].dbPath.value"
                 }
               },
               "ACCESS_SELECTED_RADIO_OPTION": {
                 "function-name": "getSkillMode",
                 "params": {
-                  "databasePath":"views['2'].dbPath.value"
+                  "databasePath": "views['2'].dbPath.value"
                 }
               }
             }
@@ -162,13 +162,13 @@
               "MODE": {
                 "function-name": "getSkillMode",
                 "params": {
-                  "openFileDialogTree":"views['2'].openFileDialogXML.path"
+                  "openFileDialogTree": "views['2'].openFileDialogXML.path"
                 }
               },
               "DIALOG_DATA": {
                 "function-name": "getInitialDBConfig",
                 "params": {
-                  "DBdata":"views['2'].importDBConfig.value"
+                  "DBdata": "views['2'].importDBConfig.value"
                 }
               }
             }
@@ -178,7 +178,7 @@
               "TABLE_DATA": {
                 "function-name": "getFinalDBConfig",
                 "params": {
-                  "DBdata":"views['2'].importDBConfig.value"
+                  "DBdata": "views['2'].importDBConfig.value"
                 }
               }
             }
@@ -194,7 +194,7 @@
               "TEXTBOX_SAVE_AS_TEXT": {
                 "function-name": "getSaveAsText",
                 "params": {
-                  "databasePath":"views['2'].dbPath.value"
+                  "databasePath": "views['2'].dbPath.value"
                 }
               }
             }
@@ -210,13 +210,13 @@
               "PROJECT_JSON": {
                 "function-name": "extractAttrPath",
                 "params": {
-                  "navPane":"views['1'].navigationPane.path"
+                  "navPane": "views['1'].navigationPane.path"
                 }
               },
               "SELECTED_DB_OBJECT": {
                 "function-name": "getFinalSelectedObject",
                 "params": {
-                  "DBdata":"views['2'].importDBConfig.value"
+                  "DBdata": "views['2'].importDBConfig.value"
                 }
               }
             }

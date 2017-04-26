@@ -7,6 +7,7 @@ class importAccessobject extends baseSkill {
 
   //tooltip text to be displayed
   getTootlTipText(skillParams){
+    console.log(skillParams);
     var paramValueObj = skillParams.paramsObj
     var resolveParams = {"Access - " : paramValueObj["DocTitle"]};
     return Promise.resolve(resolveParams);
@@ -17,6 +18,22 @@ class importAccessobject extends baseSkill {
     var res = paramValueObj.split("\\");
 
   }
+ getSheetNameAndSheetCountFromInitDocJSON(initDocJSON, dependantSheetArrayInModel) {
+
+    //Add The Required Number of Sheets in Model
+    if (initDocJSON.sheetCount >= dependantSheetArrayInModel.length) {
+       let sheetCountDiff = initDocJSON.sheetCount - dependantSheetArrayInModel.length;
+       while (sheetCountDiff > 0) {
+         dependantSheetArrayInModel.push(JSON.parse(JSON.stringify(dependantSheetArrayInModel[(dependantSheetArrayInModel.length - 1)])));
+         sheetCountDiff--;
+       }
+     }
+
+     //Add Sheet Names From Init Doc JSON
+     for (let sheetNum = 0; sheetNum < initDocJSON.sheetCount; sheetNum++) {
+       dependantSheetArrayInModel[sheetNum].name = initDocJSON.sheets[sheetNum].name;
+     }
+   }
 
 
    //init DOC JSON 
