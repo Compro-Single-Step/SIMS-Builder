@@ -1,4 +1,4 @@
-import { EventEmitter } from '@angular/core';
+import { Subject } from 'rxjs/Subject';
 
 class EventSrvc {
   eventMap: Object;
@@ -10,7 +10,7 @@ class EventSrvc {
   registerEvent(eventId) {
     if (!this.getEvent(eventId)) {
       let event = {
-        emitterObj: new EventEmitter(),
+        emitterObj: new Subject(),
         subscriptions: []
       };
       this.eventMap[eventId] = event;
@@ -38,7 +38,7 @@ class EventSrvc {
 
   emitEvent(eventId, payload) {
     let event = this.getEvent(eventId);
-    event.emitterObj.emit(payload);
+    event.emitterObj.next(payload);
   }
 
   dispose() {
