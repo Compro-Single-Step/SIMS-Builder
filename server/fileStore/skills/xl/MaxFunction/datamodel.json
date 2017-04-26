@@ -52,10 +52,8 @@
         "cellContainingFormula": {
           "value": ""
         },
-        "linkedSolutionCellSwitch": {
-          "selectedOption": {
-            "value": true
-          }
+        "prefilledSelection": {
+          "value": false
         },
         "cellRange": {
           "value": "",

@@ -12,4 +12,12 @@ export const MessageMap={
     "NO_CHANGES" : "No Changes",
     "TEMPLATE_UPDATED": "Task Template Updated"
 };
-
+export enum SwitchLayoutModes {
+  RIGHT = <any>"right",
+  BELOW = <any>"below"
+}
+export enum SwitchValueOptionType {
+  BOOLEAN = <any>"boolean",
+  QUESTION = <any>"question",
+  SWITCH = <any>"switch"
+}

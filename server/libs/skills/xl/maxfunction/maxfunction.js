@@ -169,6 +169,6 @@ updateSheetName(selectedSheetName, dependentSheetArrayInModel, clonedDependentSh
     }
   }
 enableOrDisableOnSwitch(componentInput, dependentObjectInModel) {
-  dependentObjectInModel.disabled = componentInput;
+  dependentObjectInModel.disabled = !componentInput;
 }
 }

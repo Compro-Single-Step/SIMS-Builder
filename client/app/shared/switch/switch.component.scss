@@ -1,6 +1,9 @@
 @import "../styles.scss";
-label {
-  margin-left: 1rem;
+.onRight {
+  display: flex;
+  label {
+    margin: 0rem 1rem;
+  }
 }
 .switch{
   box-sizing: content-box;

@@ -127,9 +127,8 @@ export class BaseComponent implements OnInit, OnDestroy {
         this.eventSrvc["emitEvent"](eventId, data);
     }
     isDisabled() {
-        let isDisabled;
         if(this.compConfig.rendererProperties && this.compConfig.rendererProperties.disabled === true) {
-            this.modelRef["disabled"] = true;
+            return true;
         }
         return this.modelRef["disabled"];
     }

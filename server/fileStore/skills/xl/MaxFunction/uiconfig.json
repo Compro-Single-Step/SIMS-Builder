@@ -318,7 +318,7 @@
           "items": [
             {
               "id": "2.2.1",
-              "label": "Is the Cell Containing Formula just below the Reference Cell Range ?",
+              "label": "Is the Cell Containing Formula away from the Reference Cell Range ?",
               "desc": {
                 "basic": "Not Available",
                 "detailed": "Not Available"
@@ -326,10 +326,14 @@
               "itemRenderer": "Switch",
               "itemType": "leaf",
               "mandatory": true,
+              "rendererProperties": {
+                "layout_mode": "right",
+                "value_type": "question"
+              },
               "emitEvents": [
                 "SWITCH_VALUE_TOGGLED"
               ],
-              "val": "{{views.2.linkedSolutionCellSwitch.selectedOption}}"
+              "val": "{{views.2.prefilledSelection}}"
             },
             {
               "id": "2.2.2",
