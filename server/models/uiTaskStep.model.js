@@ -37,7 +37,8 @@ uiTaskStepSchema.statics = {
             if (stepUIData == undefined || stepUIData == null || stepUIData == "") {
                 reject({
                     status: "error",
-                    error: "null value not allowed for Step UI State"
+                    error: "null value not allowed for Step UI State",
+                    errcode: "DATA_NOT_PRESENT"
                 });
             } else {
                 let condition = {"task_id": taskId};

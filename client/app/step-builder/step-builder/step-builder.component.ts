@@ -94,10 +94,6 @@ export class StepBuilderComponent implements OnInit {
     checkForModelChange() {
         let self = this;
         let itemDataModel = this.builderModelSrvc.getModel();
-        if(itemDataModel == null){
-            alert("UI State is null. Please check.");
-            console.log("UI State is null. Please check.");
-        }
         localForage.getItem('model').then(function (value) {
             if (JSON.stringify(value) === JSON.stringify(itemDataModel)) {
                 console.log("same Model: Do Nothing");
@@ -111,6 +107,10 @@ export class StepBuilderComponent implements OnInit {
                         } else if (data["status"] === "error") {
                             //TODO: Try saving on server again
                             console.log("Couldn't Save Model Data on Server.");
+                            if(data["errcode"] === "DATA_NOT_PRESENT"){
+                                alert("UI State is null. Please check");
+                                console.log("UI State is null. Please check");
+                            }
                         }
                     });
                 });
