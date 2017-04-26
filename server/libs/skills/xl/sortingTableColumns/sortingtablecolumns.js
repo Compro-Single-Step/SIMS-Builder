@@ -73,13 +73,13 @@ class sortingTableColumns extends ExcelBaseSkill {
 
       if(selectedColumnHeaderType.toUpperCase() == "INT")
       {
-        dependantSheetArrayInModel.push({"label": "Sort Smallest to Largest", "data":"Sort Smallest to Largest"});
-        dependantSheetArrayInModel.push({"label": "Sort Largest to Smallest", "data":"Sort Largest to Smallest"});
+        dependantSheetArrayInModel.push({"label": "Smallest to Largest", "data":"Smallest to Largest"});
+        dependantSheetArrayInModel.push({"label": "Largest to Smallest", "data":"Largest to Smallest"});
       }
       else if(selectedColumnHeaderType.toUpperCase() == "TEXT")
       {
-        dependantSheetArrayInModel.push({"label": "Sort A to Z", "data":"Sort A to Z"});
-        dependantSheetArrayInModel.push({"label": "Sort Z to A", "data":"Sort Z to A"});
+        dependantSheetArrayInModel.push({"label": "A to Z", "data":"A to Z"});
+        dependantSheetArrayInModel.push({"label": "Z to A", "data":"Z to A"});
       }
       else if(selectedColumnHeaderType.toUpperCase() == "DATE")
       {
