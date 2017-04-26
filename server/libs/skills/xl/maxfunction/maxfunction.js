@@ -105,7 +105,9 @@ module.exports = class maxFunction extends ExcelBaseSkill {
       `(${startCell}:${endCell})`,
       `(${startCell}):(${endCell})`,
       `((${startCell}):(${endCell}))`,
-      range.toString()
+      range.toString(),
+      range.toString().replace(/,/g, '~'),
+      range.sort().toString().replace(/,/g, '~')
     ];
     let resolveParams = { "attrValue": variations };
     return Promise.resolve(resolveParams);
