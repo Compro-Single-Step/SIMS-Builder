@@ -54,7 +54,7 @@ class sortingTableColumns extends ExcelBaseSkill {
     if(columnHeadersData !== null)
     {
       var columnHeaders = columnHeadersData.split(/\r\n|\n/);
-      for (var i=0; i<columnHeaders.length; i++) {
+      for (var i=1; i<columnHeaders.length; i++) {
           var columnHeaderName = columnHeaders[i].split(',')[0];
           var columnHeaderDataType = columnHeaders[i].split(',')[1];
           if(columnHeaderName != "")
