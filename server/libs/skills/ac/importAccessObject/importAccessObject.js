@@ -12,7 +12,7 @@ class importAccessobject extends baseSkill {
     return Promise.resolve(resolveParams);
   }
   getFileName(skillParams){
-    debugger;
+   
     var paramValueObj = skillParams.paramsObj;
     var res = paramValueObj.split("\\");
 
@@ -161,4 +161,4 @@ class importAccessobject extends baseSkill {
   //       dependentSheetNameInModel.name = selectedSheetName;
   // }
 }
-module.exports = moveCellContent;
+module.exports = importAccessobject;
