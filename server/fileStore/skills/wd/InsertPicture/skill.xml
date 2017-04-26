@@ -1,0 +1,126 @@
+
+<task name="SKL16.WD.03.01.01.T1">
+	<preload>
+		<comps>
+			<comp id="1" name="SIMS.Components.Word.Ribbon" cssclass="SIMS_Ribbon_Excel" type="default"/>
+			<comp id="2" name="SIMS.Components.Word.Volume3.DocumentArea" cssclass="SIMS_DocumentArea" type="default"/>
+			<comp id="3" name="SIMS.Components.Common.TaskBar" cssclass="SIMS_TaskBar" type="default"/>
+			<comp id="4" name="SIMS.Components.Common.InsertFileDialog" cssclass="SaveAsDialog" type="modaldialog" title="Insert Picture"/>
+		</comps>
+	</preload>
+	<states>
+		<state id="1" desc="Start State" txt="1">
+			<comps>
+				<comp id="4" mode="remove"/>
+				<comp id="1" mode="new">
+					<sizeandpos>
+						<attr name="left" value="0"/>
+						<attr name="top" value="0"/>
+						<attr name="width" value="*"/>
+						<attr name="height" value="150"/>
+					</sizeandpos>
+					<initialattrs>
+						<attr name="APP" value="word"/>
+						<attr name="RIBBON_PATH" value="app/comps/Common/Ribbon/word-ribbon.xml"/>
+						<attr name="DOCUMENT_NAME" userDefined="true"/>
+					</initialattrs>
+					<events>
+						<event id="21" followup="2" desc="Ribbon Insert picutres">
+							<validate>
+								<comp id="2"/>
+							</validate>
+						</event>
+					</events>
+				</comp>
+				<comp id="2" mode="new">
+					<sizeandpos>
+						<attr name="left" value="0"/>
+						<attr name="top" value="147"/>
+						<attr name="width" value="*"/>
+					</sizeandpos>
+					<initialattrs>
+						<attr name="HTML_PATH" userDefined="true"/>
+						<attr name="CURRENT_CURSOR_POS" userDefined="true"/>
+					</initialattrs>
+					<initialattributesets>
+						<attributeset name="cancel_pos" inherits-default="false">
+							<attr name="CURRENT_CURSOR_POS" userDefined="true"/>
+						</attributeset>
+					</initialattributesets>
+					<finalattrs>
+						<attr name="CURRENT_CURSOR_POS_RELATIVE_TO" userDefined="true"/>
+					</finalattrs>
+				</comp>
+				<comp id="3" mode="new">
+					<sizeandpos>
+						<attr name="left" value="0"/>
+						<attr name="bottom" value="0"/>
+						<attr name="width" value="*"/>
+						<attr name="height" value="31"/>
+					</sizeandpos>
+					<initialattrs>
+						<attr name="APPLICATION" value="word"/>
+						<attr name="OPENWORDFILE" userDefined="true"/>
+						<attr name="APP_TOOLTIP_IMAGE" userDefined="true"/>
+					</initialattrs>
+				</comp>
+			</comps>
+		</state>
+		<state id="2" desc="Insert Picture Dialog Open" txt="1">
+			<comps>
+				<comp id="4" mode="new">
+					<sizeandpos>
+						<attr name="width" value="720"/>
+						<attr name="height" value="430"/>
+						<attr name="left" value="center"/>
+						<attr name="top" value="center"/>
+					</sizeandpos>
+					<initialattrs>
+						<attr name="TREE_XML_PATH" userDefined="true"/>
+						<attr name="APPLICATION_MODE" value="2"/>
+						<attr name="DIALOG_MODE" value="2"/>
+						<attr name="TREE_SELECTED_ITEM_ID" userDefined="true"/>
+						<attr name="INSERT_DIALOG_MODE" value="1"/>
+						<attr name="AUTO_COMPLETE_LIST" userDefined="true"/>
+						<attr name="IMG_FOLDER_PATH" userDefined="true"/>
+					</initialattrs>
+					<finalattributesets>
+						<attributeset name="state-out-1" inherits-default="false">
+							<attr name="FILE_NAME" userDefined="true"/>
+						</attributeset>
+						<attributeset name="state-out-2" inherits-default="false">
+							<attr name="FILE_NAME" userDefined="true"/>
+						</attributeset>
+					</finalattributesets>
+					<events>
+						<event id="9997" desc="Insert Button Clicked">
+							<validate followup="3" operator="any">
+								<comp id="4" validation-set="state-out-1"/>
+								<comp id="4" validation-set="state-out-2"/>
+							</validate>
+						</event>
+						<event id="9998" followup="1" target-attribute-set="cancel_pos" desc="Cancel Button Clicked"/>
+					</events>
+				</comp>
+			</comps>
+		</state>
+		<state id="3" desc="Insert image" islast="true">
+			<comps>
+				<comp id="4" mode="remove"/>
+				<comp id="3" mode="reference" ref-state="1"/>
+				<comp id="1" mode="edit">
+					<initialattrs>
+						<attr name="ACTIVATE_TAB" value="Picture Tools Format"/>
+						<attr name="SEL_TAB" value="Picture Tools Format"/>
+					</initialattrs>
+				</comp>
+				<comp id="2" mode="edit">
+					<initialattrs>
+						<attr name="HTML_PATH" userDefined="true"/>
+						<attr name="SELECTED_IMAGE" userDefined="true"/>
+					</initialattrs>
+				</comp>
+			</comps>
+		</state>
+	</states>
+</task>

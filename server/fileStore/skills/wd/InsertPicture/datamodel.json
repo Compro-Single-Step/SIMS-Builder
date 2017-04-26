@@ -1,0 +1,72 @@
+{
+    "model": {
+        "views": {
+            "1": {
+                "documentTitle": {
+                    "value": ""
+                },
+                "initialDocumentFile": {
+                    "displayName": "",
+                    "path": ""
+                },
+                "initialDocumentImages": {
+                    "value": [
+                        {
+                            "displayName": "",
+                            "path": ""
+                        }
+                    ]
+                },
+                "initialElement": {
+                    "value": ""
+                },
+                "initialCursorPosition": {
+                    "value": ""
+                },
+                "finalElement": {
+                    "value": ""
+                },
+                "finalCursorPosition": {
+                    "value": ""
+                },
+                "taskbarPreviewImage": {
+                    "displayName": "",
+                    "path": ""
+                }
+            },
+            "2": {
+                "treeXML": {
+                    "displayName": "",
+                    "path": ""
+                },
+                "treeSelectedItemID": {
+                    "value": ""
+                },
+                "thumbnailImage": {
+                    "displayName": "",
+                    "path": ""
+                },
+                "imageFileName": {
+                    "value": ""
+                }
+            },
+            "3": {
+                "finalDocumentFile": {
+                    "displayName": "",
+                    "path": ""
+                },
+                "finalDocumentImages": {
+                    "value": [
+                        {
+                            "displayName": "",
+                            "path": ""
+                        }
+                    ]
+                },
+                "selectedImageID": {
+                    "value": ""
+                }
+            }
+        }
+    }
+}

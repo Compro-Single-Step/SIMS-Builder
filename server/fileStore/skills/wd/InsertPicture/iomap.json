@@ -1,0 +1,152 @@
+{
+    "states": {
+        "1": {
+            "components": {
+                "1": {
+                    "initial": {
+                        "default-attrs": {
+                            "DOCUMENT_NAME": {
+                                "function-name": "extractSingleParamVal",
+                                "params": {
+                                    "docTitle": "views['1'].documentTitle.value"
+                                }
+                            }
+                        }
+                    }
+                },
+                "2": {
+                    "initial": {
+                        "default-attrs": {
+                            "HTML_PATH": {
+                                "function-name": "extractSingleParamVal",
+                                "params": {
+                                    "docData": "views['1'].initialDocumentFile.path"
+                                }
+                            },
+                            "CURRENT_CURSOR_POS": {
+                                "function-name": "createCursorPosition",
+                                "params": {
+                                    "elementId": "views['1'].initialElement.value",
+                                    "cursorPosition": "views['1'].initialCursorPosition.value"
+                                }
+                            }
+                        },
+                        "cancel_pos": {
+                            "CURRENT_CURSOR_POS": {
+                                "function-name": "createCursorPosition",
+                                "params": {
+                                    "elementId": "views['1'].finalElement.value",
+                                    "cursorPosition": "views['1'].finalCursorPosition.value"
+                                }
+                            }
+                        }
+                    },
+                    "final": {
+                        "default-attrs": {
+                            "CURRENT_CURSOR_POS_RELATIVE_TO": {
+                                "function-name": "createCursorPosition",
+                                "params": {
+                                    "elementId": "views['1'].finalElement.value",
+                                    "cursorPosition": "views['1'].finalCursorPosition.value"
+                                }
+                            }
+                        }
+                    }
+                },
+                "3": {
+                    "initial": {
+                        "default-attrs": {
+                            "APP_TOOLTIP_IMAGE": {
+                                "function-name": "extractSingleParamVal",
+                                "params": {
+                                    "tbPrvImage": "views['1'].taskbarPreviewImage.path"
+                                }
+                            },
+                            "OPENWORDFILE": {
+                                "function-name": "extractSingleParamVal",
+                                "params": {
+                                    "DocTitle": "views['1'].documentTitle.value"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "2": {
+            "components": {
+                "2": {
+                    "initial": {
+                        "default-attrs": {
+                            "TREE_XML_PATH": {
+                                "function-name": "extractSingleParamVal",
+                                "params": {
+                                    "treeXML": "views['2'].treeXML.path"
+                                }
+                            },
+                            "TREE_SELECTED_ITEM_ID": {
+                                "function-name": "extractSingleParamVal",
+                                "params": {
+                                    "selectedItemId": "views['2'].treeSelectedItemID.value"
+                                }
+                            },
+                            "IMG_FOLDER_PATH": {
+                                "function-name": "extractSingleParamVal",
+                                "params": {
+                                    "thumbnailImage": "views['2'].thumbnailImage.path"
+                                }
+                            },
+                            "AUTO_COMPLETE_LIST": {
+                                "function-name": "extractSingleParamVal",
+                                "params": {
+                                    "imageName": "views['2'].imageFileName.value"
+                                }
+                            }
+                        }
+                    },
+                    "final": {
+                        "state-out-1": {
+                            "FILE_NAME": {
+                                "function-name": "extractSingleParamVal",
+                                "params": {
+                                    "imageFileName": "views['2'].imageFileName.value"
+                                }
+                            }
+                        },
+                        "state-out-2": {
+                            "FILE_NAME": {
+                                "function-name": "extractSingleParamVal",
+                                "params": {
+                                    "treeXML": "views['2'].imageFileName.value"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "3": {
+            "components": {
+                "2": {
+                    "initial": {
+                        "default-attrs": {
+                            "HTML_PATH": {
+                                "function-name": "createPathWithImages",
+                                "params": {
+                                    "docData": "views['3'].finalDocumentFile.path",
+                                    "finalDocumentImages": "views['3'].finalDocumentImages.value.path"
+                                }
+                            },
+                            "SELECTED_IMAGE": {
+                                "function-name": "extractSingleParamVal",
+                                "params": {
+                                    "selectedImageID": "views['3'].selectedImageID.value"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
