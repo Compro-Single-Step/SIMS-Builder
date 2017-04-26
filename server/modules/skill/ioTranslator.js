@@ -20,7 +20,7 @@ class IOTranslator {
   genPromise(attrParams, taskParam) {
     var self = this;
     return new Promise(function (resolve, reject) {
-      iotranslatorobj.evaluateAttribute(attrParams, taskParam)
+      self.evaluateAttribute(attrParams, taskParam)
         .then(function (resolveParams) {
           resolve(resolveParams);
         }, function (error) {
