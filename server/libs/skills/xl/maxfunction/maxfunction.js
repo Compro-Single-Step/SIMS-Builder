@@ -123,7 +123,7 @@ getMAXACellText(skillParams) {
 getCellValues(skillParams) {
   let { taskParams, paramsObj } = skillParams;
   let cellValues = paramsObj.cellValues.replace(/,/g, ';');
-  let resolveParams = { "attrValue": `&#123;${cellValues}~`};
+  let resolveParams = { "attrValue": `&#123;${cellValues}&#125;~`};
 
   return Promise.resolve(resolveParams);
 }
