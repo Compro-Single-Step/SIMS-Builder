@@ -127,7 +127,7 @@
 					</initialattrs>
 					<initialattributesets>
 						<attributeset name="AutoSum_MAX" inherits-default="false">
-							<attr name="EDIT_CELL_TEXT" value="{&quot;typingText&quot;:&quot;=MAX()&quot;, &quot;selectionStart&quot;:5,&quot;selectionEnd&quot;: 5}"/>
+							<attr name="EDIT_CELL_TEXT" userDefined="true"/>
 						</attributeset>
 						<attributeset name="Cancelbutton" inherits-default="false">
 							<attr name="CANCEL_EDITING" value="true"/>

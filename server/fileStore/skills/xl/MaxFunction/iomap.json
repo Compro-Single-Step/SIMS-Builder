@@ -29,6 +29,14 @@
                   "sheets": "views['1'].sheets.value"
                 }
               }
+            },
+            "AutoSum_MAX": {
+              "EDIT_CELL_TEXT": {
+                "function-name": "getEditCellText",
+                "params": {
+                  "formulaCellRangeReference": "views['2'].cellRange.value"
+                }
+              }
             }
           },
           "final": {
@@ -122,7 +130,7 @@
                 }
               },
               "NUMBER_VALUES": {
-                "function-name": "extractSingleParamVal",
+                "function-name": "getCellValues",
                 "params": {
                   "cellValues": "views['2'].cellValues.value"
                 }

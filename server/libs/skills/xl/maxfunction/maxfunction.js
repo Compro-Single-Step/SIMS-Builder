@@ -122,7 +122,19 @@ getMAXACellText(skillParams) {
 }
 getCellValues(skillParams) {
   let { taskParams, paramsObj } = skillParams;
-  let resolveParams = { "attrValue": `{${paramsObj.cellValues.replace(/,/g, ';')}}`};
+  let cellValues = paramsObj.cellValues.replace(/,/g, ';');
+  let resolveParams = { "attrValue": `&#123;${cellValues}~`};
+
+  return Promise.resolve(resolveParams);
+}
+getEditCellText(skillParams) {
+  let { taskParams, paramsObj } = skillParams;
+  let editCellTextValue = {
+    "typingText": `=MAX(${paramsObj.formulaCellRangeReference.toUpperCase()})`,
+    "selectionStart": 5,
+    "selectionEnd": paramsObj.formulaCellRangeReference.length + 5
+  };
+  let resolveParams = { "attrValue": JSON.stringify(editCellTextValue)};
 
   return Promise.resolve(resolveParams);
 }
