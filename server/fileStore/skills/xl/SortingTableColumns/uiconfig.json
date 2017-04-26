@@ -97,7 +97,8 @@
                 "itemListRef": "{{views.1.sheets}}",
                 "style": {
                   "max-width": "450px"
-                }
+                },
+                "displayInOneLine": true
               },
               "items": [
                 {
@@ -196,8 +197,7 @@
               "rendererProperties": {
                 "layout": "horizontal",
                 "dynamicMode": true,
-                "itemListRef": "{{views.1.sheetsForTable}}",
-                "displayInOneLine": false
+                "itemListRef": "{{views.1.sheetsForTable}}"
               },
               "items": [
                 {
@@ -486,7 +486,8 @@
                 "itemListRef": "{{views.3.sheets}}",
                 "style": {
                   "max-width": "450px"
-                }
+                },
+                "displayInOneLine": true
               },
               "items": [
                 {

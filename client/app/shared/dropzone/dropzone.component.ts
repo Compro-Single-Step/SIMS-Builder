@@ -20,9 +20,11 @@ export class DropzoneComponent extends BaseComponent implements OnDestroy {
   width: string;
   height: string;
   makeDeleteCall: boolean;
+  fileTypesToRead: Array<MIMETYPE>;
   constructor(private elementRef: ElementRef, private route: ActivatedRoute, private router: Router, private authSrvc: AuthService, private bds: BuilderDataService) {
     super();
     this.makeDeleteCall = true;
+    this.fileTypesToRead = [MIMETYPE.JSON, MIMETYPE.CSV];
   }
 
   ngOnInit() {
@@ -106,13 +108,13 @@ export class DropzoneComponent extends BaseComponent implements OnDestroy {
     let reader = new FileReader();    
     let droppedFile;
     let self = this;
-    if(fileType != "image/*")
+    if(this.fileTypesToRead.indexOf(fileType) != -1)
     {
       reader.readAsText(file, 'UTF8');
       reader.onload = function (e) {
         //Update Dependencies when contents have been read;
         try{
-          droppedFile = (fileType == ".json") ? JSON.parse(e.target['result']) : e.target['result'];
+          droppedFile = (fileType == MIMETYPE.JSON) ? JSON.parse(e.target['result']) : e.target['result'];
         }
         catch (e) {
           console.log(e);

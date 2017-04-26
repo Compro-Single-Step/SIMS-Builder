@@ -11,10 +11,9 @@ import { LabelTypes } from '../enums';
 export class TextBoxComponent extends BaseComponent {
   labelConfig: itemSchema = new itemSchema();
   descriptionConfig: itemSchema = new itemSchema();
-  currModelRef: Object;
   ngOnInit() {
     super.ngOnInit();
-    this.currModelRef = this.getData();
+    this.modelRef = this.getData();
     this.UpdateView();
   }
 
