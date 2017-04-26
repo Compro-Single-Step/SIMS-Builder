@@ -68,45 +68,52 @@ class IOTranslator {
     return this.evaluateFromFunc(attrParams, evaluatedParams, taskParam);
   }
 
+  _executeIOMapFunction(attrObj, data, PromiseRequestsArr) {
+    let attrParams = new attrParam(data.keyName, data.parentObj[data.keyName], attrObj.stepUIState, attrObj.skillRef),
+      taskParam = new attrTaskParam(attrObj.taskId, attrObj.stepIndex, data.stateId, attrObj.dbFilestoreMgr);
+
+    PromiseRequestsArr.push(this.genPromise(attrParams, taskParam)
+      .then(resolveParams => {
+        data.parentObj[data.keyName] = resolveParams.attrValue;
+        if (resolveParams.preloadResArr) {
+          this.appendPreloadRes(resolveParams.preloadResArr, attrObj.IOMap);
+        }
+      }, error => {
+        return Promise.reject(error);
+      }));
+  }
 
   readIOMap(attrObj) {
+    let iomap = attrObj.IOMap;
 
-    var iomap = attrObj.IOMap;
-    var PromiseRequestsArr = [];
+    return attrObj.skillRef["init"](attrObj).then(() => {
+      
+      let self = this,
+        PromiseRequestsArr = [];
 
-    var self = this;
-    //remove this return statement below
-    return attrObj.skillRef["init"](attrObj).then(function () {
-      for (let stateNum in iomap.states) {
-        let stateObj = iomap.states[stateNum];
-        for (let componentNum in stateObj.components) {
-          let componentObj = iomap.states[stateNum].components[componentNum];
-          for (let attrType in componentObj) {
-            let attrTypeObj = iomap.states[stateNum].components[componentNum][attrType]
-            for (let attrSet in attrTypeObj) {
-              let attrSetObj = iomap.states[stateNum].components[componentNum][attrType][attrSet];
-              for (let attrName in attrSetObj) {
+      (function traverseIOMap(parentObj, keyName, stateId, compId) {
+        for (let key in parentObj[keyName]) {
 
-                var attrParams = new attrParam(attrName, attrSetObj[attrName], attrObj.stepUIState, attrObj.skillRef);
-                var taskParam = new attrTaskParam(attrObj.taskId, attrObj.stepIndex, stateNum, attrObj.dbFilestoreMgr);
+          //Get StateID and CompID
+          switch (keyName) {
+            case "states":
+              stateId = key;
+              break;
+            case "components":  
+              compId = key;
+              break;
+            default:
+              break;
+          }
 
-                PromiseRequestsArr.push(self.genPromise(attrParams, taskParam).then(function (resolveParams) {
-                  attrSetObj[attrName] = resolveParams.attrValue;
-                  if (resolveParams.preloadResArr) {
-                    self.appendPreloadRes(resolveParams.preloadResArr, attrObj.IOMap);
-                  }
-
-                }, function (error) {
-
-                  return Promise.reject(error);
-                }));
-
-              }
-            }
+          if (key === "function-name") {
+            self._executeIOMapFunction(attrObj, { parentObj, keyName, stateId, compId }, PromiseRequestsArr);
+          }
+          else if (typeof parentObj[keyName][key] === "object") {
+            traverseIOMap(parentObj[keyName], key, stateId, compId);
           }
         }
-      }
-
+      })({ "iomap": iomap }, "iomap");
 
       return Promise.all(PromiseRequestsArr).then(function (value) {
         console.log("promise all success");
@@ -136,8 +143,7 @@ class IOTranslator {
   }
 
   getAttrValueMap(attrObj) {
-    var self = this;
-    return self.readIOMap(attrObj)
+    return this.readIOMap(attrObj)
       .then(function (ioMap) {
         return Promise.resolve(ioMap);
       }
