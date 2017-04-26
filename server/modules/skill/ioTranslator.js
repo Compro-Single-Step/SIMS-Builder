@@ -68,6 +68,7 @@ class IOTranslator {
     return this.evaluateFromFunc(attrParams, evaluatedParams, taskParam);
   }
 
+  // This function returns the promise which fills the value from stepUIState in the corresponding node of IOMap
   _executeIOMapFunction(attrObj, data, PromiseRequestsArr) {
     let attrParams = new attrParam(data.keyName, data.parentObj[data.keyName], attrObj.stepUIState, attrObj.skillRef),
       taskParam = new attrTaskParam(attrObj.taskId, attrObj.stepIndex, data.stateId, attrObj.dbFilestoreMgr);
@@ -83,14 +84,15 @@ class IOTranslator {
       }));
   }
 
+  //This function is used to read the IOMap JSON and and generate Attribute value map by filling values from step UI state.
   readIOMap(attrObj) {
     let iomap = attrObj.IOMap;
 
     return attrObj.skillRef["init"](attrObj).then(() => {
-      
       let self = this,
         PromiseRequestsArr = [];
 
+      // Recursively traversing the IOMap JSON and getting the corresponding function names given in key 'function-name'
       (function traverseIOMap(parentObj, keyName, stateId, compId) {
         for (let key in parentObj[keyName]) {
 
@@ -106,7 +108,9 @@ class IOTranslator {
               break;
           }
 
+          //When function-name is found  pass its whole object to _executeIOMapFunction else if the current node is an object, again traverse it
           if (key === "function-name") {
+            // This function returns the promise which fills the value from stepUIState in the corresponding node of IOMap
             self._executeIOMapFunction(attrObj, { parentObj, keyName, stateId, compId }, PromiseRequestsArr);
           }
           else if (typeof parentObj[keyName][key] === "object") {
