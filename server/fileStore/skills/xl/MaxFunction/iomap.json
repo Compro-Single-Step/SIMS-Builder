@@ -88,19 +88,22 @@
               "NUMBER_CELLS": {
                 "function-name": "getNumberCellsWithTilde",
                 "params": {
-                  "formulaCellRangeReference": "views['2'].cellRange.value"
+                  "formulaCellRangeReference": "views['2'].cellRange.value",
+                  "prefilledSelection": "views['2'].prefilledSelection.value"
                 }
               },
               "NUMBER_VALUES": {
                 "function-name": "getCellValues",
                 "params": {
-                  "cellValues": "views['2'].cellValues.value"
+                  "cellValues": "views['2'].cellValues.value",
+                  "prefilledSelection": "views['2'].prefilledSelection.value"
                 }
               },
               "FORMULA_RESULT": {
-                "function-name": "extractSingleParamVal",
+                "function-name": "getFormulaResult",
                 "params": {
-                  "formulaResult": "views['2'].formulaResult.value"
+                  "formulaResult": "views['2'].formulaResult.value",
+                  "prefilledSelection": "views['2'].prefilledSelection.value"
                 }
               }
             }

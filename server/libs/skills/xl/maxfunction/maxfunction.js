@@ -72,8 +72,14 @@ module.exports = class maxFunction extends ExcelBaseSkill {
 
   getNumberCellsWithTilde(skillParams) {
     let { taskParams, paramsObj } = skillParams;
-    let cellRange = (paramsObj.formulaCellRangeReference).toUpperCase();
-    let resolveParams = { "attrValue": `${cellRange}~` };
+    let resolveParams;
+    if(paramsObj.prefilledSelection === true) {
+      let cellRange = (paramsObj.formulaCellRangeReference).toUpperCase();
+      resolveParams = { "attrValue": `${cellRange}~` };
+    } else {
+      resolveParams = { "attrValue": "" }
+    }
+    
     return Promise.resolve(resolveParams);
   }
   getNumberCells(skillParams) {
@@ -122,10 +128,24 @@ getMAXACellText(skillParams) {
 }
 getCellValues(skillParams) {
   let { taskParams, paramsObj } = skillParams;
-  let cellValues = paramsObj.cellValues.replace(/,/g, ';');
-  let resolveParams = { "attrValue": `&#123;${cellValues}&#125;~`};
-
+  let resolveParams;
+  if(paramsObj.prefilledSelection === true) {
+    let cellValues = paramsObj.cellValues.replace(/,/g, ';');
+    resolveParams = { "attrValue": `&#123;${cellValues}&#125;~`};  
+  } else {
+    resolveParams = { "attrValue": ""};  
+  }
   return Promise.resolve(resolveParams);
+}
+getFormulaResult(skillParams) {
+  let { taskParams, paramsObj } = skillParams;
+  let resolveParams;
+  if(paramsObj.prefilledSelection === true) {
+    resolveParams = { "attrValue": paramsObj.formulaResult};  
+  } else {
+    resolveParams = { "attrValue": ""};
+  }
+  return Promise.resolve(resolveParams);  
 }
 getEditCellText(skillParams) {
   let { taskParams, paramsObj } = skillParams;
