@@ -9,6 +9,19 @@
           "displayName": "",
           "path": ""
         },
+       "navigationPaneItems": {
+                    "options": {
+                        "value": []
+                    },
+                    "selectedOption": {
+                        "value": {}
+                    }
+                },
+        "selectedDbObjectType": {
+          "displayName": "",
+          "path": ""
+        },
+        
         "taskbarPreviewImage": {
           "displayName": "",
           "path": ""
@@ -19,7 +32,9 @@
           "value": ""
         },
         "importMode": {
-          "value": ""
+          "selectedOption": {
+            "value": true
+          }
         },
         "openFileDialogXML": {
           "displayName": "",

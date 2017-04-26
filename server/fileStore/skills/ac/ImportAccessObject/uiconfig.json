@@ -68,8 +68,35 @@
                 "dataType": "JSON",
                 "placeHolder": "Drop JSON file here to upload"
               },
-             "mandatory": true,
-              "val": "{{views.1.navigationPane}}"
+              "mandatory": true,
+               "subscribeEvents": [
+                {
+                  "eventId": "DOCUMENT_DATA_UPDATED",
+                  "modelReference": "{{views.1.navigationPaneItems.options.value}}",
+                  "rule": "addSheetNamesToDropdown"
+                }
+              ],             
+                "val": "{{views.1.navigationPane}}"
+            },
+
+            {
+              "id": "1.2.2",
+              "label": "Select Navigation Pane Item",
+              "desc": {
+                "basic": "Name of the database type to be show selected",
+                "detailed": "Name of the database type to be show selected"
+              },
+              "itemRenderer": "Dropdown",
+              "emitEvents": [
+                "SHEET_IN_ACTION_UPDATED"
+              ],
+              "rendererProperties": {
+                "itemListRef": "{{views.1.navigationPaneItems.options}}"
+              
+              },
+              "itemType": "leaf",
+              "mandatory": false,
+              "val": "{{views.1.navigationPaneItems.selectedOption}}"
             }
           ]
         },
@@ -127,7 +154,7 @@
       "items": [
         {
           "id": "2.1",
-          "label": "Get External Data - Access Database",
+          "label": "Get External Data Dialog",
           "itemRenderer": "Panel",
           "itemType": "child",
           "tags": [
@@ -163,20 +190,8 @@
                 "basic": "Mode in which the Database is to imported.",
                 "detailed": "Template Supports two modes: 1. Import Tables, Queries etc from unlinked Table, 2.Import a Linked Table"
               },
-              "itemRenderer": "Radio",
+              "itemRenderer": "Switch",
               "itemType": "leaf",
-              "rendererProperties": {
-                "itemList":[
-                  {
-                    "value":"1",
-                    "label":"Unlinked Object"
-                  },
-                  {
-                    "value":"2",
-                    "label":"Linked Table"
-                  }
-                ]
-              },
               "mandatory": true,
               "val": "{{views.2.importMode}}"
             }
@@ -184,7 +199,7 @@
         },
         {
           "id": "2.2",
-          "label": "File Open",
+          "label": "Open File Dialog",
           "itemRenderer": "Panel",
           "itemType": "child",
           "tags": [
@@ -200,11 +215,11 @@
           "items": [
             {
               "id": "2.2.1",
-              "label": "file Open Directory Tree",
+              "label": "Open File Dialog XML",
               "desc": {
                 "basic": "XML to configure navigation pane in Open File Dialog.",
                 "detailed": "XML to configure the initial settings for navigation pane in open file dialog"
-                },
+              },
               "itemRenderer": "Dropzone",
               "itemType": "leaf",
               "rendererProperties": {
@@ -212,27 +227,25 @@
                 "placeHolder": "Drop XML here to upload"
               },
               "mandatory": true,
-              
               "val": "{{views.2.openFileDialogXML}}"
-             },
-             {
+            },
+            {
               "id": "2.2.2",
               "label": "Auto Complete List Options",
               "desc": {
                 "basic": "Options to be shown for Auto Complete List.",
                 "detailed": "Comma separated values to render options for Auto Complete List"
-                },
+              },
               "itemRenderer": "TextBox",
               "itemType": "leaf",
               "mandatory": true,
-              
               "val": "{{views.2.AutoCompleteOptions}}"
-             }
+            }
           ]
         },
         {
           "id": "2.3",
-          "label": "Import Objects",
+          "label": "Import Access Objects Dialog",
           "itemRenderer": "Panel",
           "itemType": "child",
           "tags": [
@@ -246,13 +259,13 @@
             "optionalItems": false
           },
           "items": [
-             {
+            {
               "id": "2.3.1",
               "label": "Databse Config",
               "desc": {
                 "basic": "Description of the database to be imported.",
                 "detailed": "JSON Describing  all the objects of the Database (Object Type/ Whether it has to be Vsalidated)"
-                },
+              },
               "itemRenderer": "Dropzone",
               "itemType": "leaf",
               "rendererProperties": {
@@ -260,9 +273,8 @@
                 "placeHolder": "Drop JSON here to upload"
               },
               "mandatory": true,
-              
               "val": "{{views.2.importDBConfig}}"
-             }
+            }
           ]
         }
       ]
