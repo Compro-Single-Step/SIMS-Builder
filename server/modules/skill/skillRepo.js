@@ -27,6 +27,20 @@ module.exports = {
                     }
                 ]
             }
-        ]
+        ],
+        dependencySkills: []
+    },
+        "insertpicture": {
+        dependencyFiles: [
+            {
+                dependencyFiles: [
+                    {
+                        primaryFile: "common/baseSkill",
+                        dependencyFiles: []
+                    }
+                ]
+            }
+        ],
+        dependencySkills: []
     }
 }
