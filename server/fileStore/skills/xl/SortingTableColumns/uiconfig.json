@@ -257,22 +257,6 @@
                         "dataType": "JSON"
                       },
                       "relVal": "tableFilterMenuData"
-                    },
-                    {
-                      "id": "tableContextMenuData",
-                      "itemRenderer": "Dropzone",
-                      "itemType": "leaf",
-                      "label": "Table Context Menu Data",
-                      "desc": {
-                        "basic": "A JSON file, which is used to configure the menu that appears on right clicking any header cell, is to be uploaded here",
-                        "detailed": "A JSON file, which is used to configure the menu that appears on right clicking any header cell, is to be uploaded here"
-                      },
-                      "rendererProperties": {
-                        "placeHolder": "Table Context Menu Data",
-                        "dynamicMode": true,
-                        "dataType": "JSON"
-                      },
-                      "relVal": "tableContextMenuData"
                     }
                   ]
                 }
