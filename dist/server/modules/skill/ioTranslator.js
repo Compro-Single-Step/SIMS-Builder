@@ -139,7 +139,7 @@ class IOTranslator {
         return Promise.reject(err);
       });
     }).catch(error => {
-      console.log("Error in readIOMap function of IOTranslator: " + err.message);
+      console.log("Error in readIOMap function of IOTranslator: " + error.message);
       return Promise.reject(error);
     });
   }

@@ -25561,8 +25561,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var SelectComponent = (function (_super) {
     __extends(SelectComponent, _super);
     function SelectComponent() {
-        _super.apply(this, arguments);
+        _super.call(this);
         this.labelConfig = new __WEBPACK_IMPORTED_MODULE_2__UIConfig_model__["b" /* itemSchema */]();
+        this.itemList = {};
     }
     SelectComponent.prototype.ngOnInit = function () {
         _super.prototype.ngOnInit.call(this);
@@ -25572,8 +25573,8 @@ var SelectComponent = (function (_super) {
         this.labelConfig.rendererProperties.text = this.compConfig.label;
         this.labelConfig.rendererProperties.type = __WEBPACK_IMPORTED_MODULE_3__enums__["a" /* LabelTypes */].ELEMENT_HEADING;
         this.updateDescription();
-        if (this.compConfig.rendererProperties.itemListRef) {
-            this.itemList = this.builderModelSrvc.getStateRef(this.compConfig.rendererProperties.itemListRef);
+        if (this.compConfig.rendererProperties.dynamicMode === true) {
+            this.itemList = this.builderModelSrvc.getStateRef(this.compConfig.rendererProperties.itemList);
         }
         else {
             this.itemList["value"] = this.compConfig.rendererProperties.itemList;
