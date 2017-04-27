@@ -259,7 +259,8 @@
                 "SHEET_IN_ACTION_UPDATED"
               ],
               "rendererProperties": {
-                "itemListRef": "{{views.2.sheetInAction.options}}"
+                "dynamicMode": true,
+                "itemList": "{{views.2.sheetInAction.options}}"
               },
               "itemType": "leaf",
               "mandatory": true,
