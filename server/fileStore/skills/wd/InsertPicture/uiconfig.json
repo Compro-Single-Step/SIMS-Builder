@@ -68,7 +68,7 @@
                                 "INITIAL_DOCUMENT_FILE_UPDATED"
                             ],
                             "rendererProperties": {
-                                "dataType": "IMAGE",
+                                "dataType": "img",
                                 "placeHolder": "Drop HTML file here to upload"
                             },
                             "mandatory": true,
@@ -292,7 +292,7 @@
                             "itemRenderer": "Dropzone",
                             "itemType": "leaf",
                             "rendererProperties": {
-                                "dataType": "Image",
+                                "dataType": "img",
                                 "placeHolder": "Drop Image file here to upload"
                             },
                             "mandatory": true,
@@ -322,7 +322,8 @@
             "label": "Final Document Settings",
             "itemType": "root",
             "desc": {},
-            "items": {
+            "items": [
+            {
                 "id": "3.1",
                 "label": "Document Area",
                 "itemRenderer": "Panel",
@@ -351,7 +352,7 @@
                             "FINAL_DOCUMENT_FILE_UPDATED"
                         ],
                         "rendererProperties": {
-                            "dataType": "IMAGE",
+                            "dataType": "img",
                             "placeHolder": "Drop HTML file here to upload"
                         },
                         "mandatory": true,
@@ -413,6 +414,7 @@
                     }
                 ]
             }
+        ]
         }
     ]
 }
