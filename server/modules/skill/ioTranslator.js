@@ -79,6 +79,7 @@ class IOTranslator {
    * @param {*} PromiseRequestsArr : An array in which promise object has to be pushed. 
    * Later on in the execution cycle this whole array is passed to the Promise.All()
    */
+  
   _executeIOMapFunction(attrObj, data, PromiseRequestsArr) {
     let attrParams = new attrParam(data.keyName, data.parentObj[data.keyName], attrObj.stepUIState, attrObj.skillRef),
       taskParam = new attrTaskParam(attrObj.taskId, attrObj.stepIndex, data.stateId, attrObj.dbFilestoreMgr);
@@ -105,55 +106,67 @@ class IOTranslator {
   readIOMap(attrObj) {
     let iomap = attrObj.IOMap;
 
-    return attrObj.skillRef["init"](attrObj).then(() => {
-      let self = this,
-        PromiseRequestsArr = [];
+    return attrObj.skillRef["init"](attrObj)
+      .then(() => {
+        let self = this,
+          PromiseRequestsArr = [];
 
-      /**
-       * Recursive function to traverse the IO Map to translate IO Map into Attribute Value Map
-       */
-      (function traverseIOMap(parentObj, keyName, stateId, compId) {
-        for (let key in parentObj[keyName]) {
+        /**
+         * Recursive function to traverse the IO Map to translate IO Map into Attribute Value Map
+         */
+        (function traverseIOMap(parentObj, keyName, stateId, compId) {
+          for (let key in parentObj[keyName]) {
 
-          //Get StateID and CompID
-          switch (keyName) {
-            case "states":
-              stateId = key;
-              break;
-            case "components":  
-              compId = key;
-              break;
-            default:
-              break;
+            //Get StateID and CompID
+            switch (keyName) {
+              case "states":
+                stateId = key;
+                break;
+              case "components":
+                compId = key;
+                break;
+              default:
+                break;
+            }
+
+            // if check to ensure that this iteration is for an element in which some translation has to be done
+            // and not for some element in the hierarchy which doesn't need any translation for itself but has some child elements
+            if (key === "function-name") {
+              self._executeIOMapFunction(attrObj, { parentObj, keyName, stateId, compId }, PromiseRequestsArr);
+            }
+            else if (typeof parentObj[keyName][key] === "object") {
+              traverseIOMap(parentObj[keyName], key, stateId, compId);
+            }
           }
+        })({ "iomap": iomap }, "iomap");
 
-          // if check to ensure that this iteration is for an element in which some translation has to be done
-          // and not for some element in the hierarchy which doesn't need any translation for itself but has some child elements
-          if (key === "function-name") {
-            self._executeIOMapFunction(attrObj, { parentObj, keyName, stateId, compId }, PromiseRequestsArr);
-          }
-          else if (typeof parentObj[keyName][key] === "object") {
-            traverseIOMap(parentObj[keyName], key, stateId, compId);
-          }
-        }
-      })({ "iomap": iomap }, "iomap");
-
-      return Promise.all(PromiseRequestsArr).then(function (value) {
-        console.log("promise all success");
-        return Promise.resolve(iomap);
-      }, function (err) {
-        console.log("promise all rejection");
-        console.log(err.message);
-        return Promise.reject(err);
-      }).catch(function (err) {
-        console.log("promise all catch");
-        console.log(err.message);
-        return Promise.reject(err);
+        return Promise.all(PromiseRequestsArr)
+          .then(() => {
+            iomap.preloadResources = self._removeDuplicatePreloadResources(iomap.preloadResources);
+            return Promise.resolve(iomap);
+          })
+          .catch(err => {
+            console.log("Error in traverseIOMap function of IOTranslator: " + err.message);
+            return Promise.reject(err);
+          });
+      })
+      .catch(error => {
+        console.log("Error in readIOMap function of IOTranslator: " + err.message);
+        return Promise.reject(error);
       });
-    }, function (error) {
-      console.log("Init function came with an error");
-      return Promise.reject(error)
-    });
+  }
+
+  /**
+   * Input: Preload Resources Array.
+   * @param {*} preloadArray : It's an array that contains multiple objects each having file path and 
+   * file type of preload resource.
+   * Output: Array having Unique Preload Resources.
+   */
+  _removeDuplicatePreloadResources(preloadArray) {
+    let tempObj = {};
+    return preloadArray.filter((obj) => {
+      return tempObj[obj.path] ? false : tempObj[obj.path] = true;
+    })
   }
 
   appendPreloadRes(preloadResArr, IOMap) {

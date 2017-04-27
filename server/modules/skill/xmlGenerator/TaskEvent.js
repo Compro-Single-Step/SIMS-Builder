@@ -1,11 +1,11 @@
 module.exports = class TaskEvent {
 
 
-    constructor  (args, compRef){
+    constructor(args, compRef) {
         this.compRef = compRef;
         this.id = args.props.id;
         this.desc = args.props.desc;
-        if(args.props.followup){
+        if (args.props.followup) {
             this.followup = args.props.followup;
         }
         if(args.props["target-attribute-set"]){
@@ -32,37 +32,37 @@ module.exports = class TaskEvent {
             }
         ];*/
 
-        if(args.validate){
+        if (args.validate) {
             this.generateValidations(args.validate);
         }
     }
 
-    generateValidations (validations){
+    generateValidations(validations) {
         this.validations = [];
-        for(let i=0; i<validations.length; i++){
+        for (let i = 0; i < validations.length; i++) {
 
             let currValidation = {
-                "props": { },
+                "props": {},
                 "compsToValidate": []
             };
 
             let currValProps = Object.keys(validations[i]["props"]);
-            for(let j=0; j<currValProps.length; j++){
+            for (let j = 0; j < currValProps.length; j++) {
                 currValidation["props"][currValProps[j]] = validations[i]["props"][currValProps[j]];
             }
-            
+
             let currValidationComps = validations[i]["comp"];
-            for(let j=0; j<currValidationComps.length; j++){
-                if(currValidationComps[j]["props"]["multiple-occurence"]=="true"){
+            for (let j = 0; j < currValidationComps.length; j++) {
+                if (currValidationComps[j]["props"]["multiple-occurence"] == "true") {
                     let validationSet = this.getCompValidationSets(currValidationComps[j]["props"]);
-                    for(let k=0; k<validationSet.length; k++){
+                    for (let k = 0; k < validationSet.length; k++) {
                         let currValidationComp = {
                             "id": currValidationComps[j]["props"]["id"],
                             "validationSet": validationSet[k]
                         };
                         currValidation["compsToValidate"].push(currValidationComp);
                     }
-                }else{
+                } else {
                     let currValidationComp = {
                         "id": currValidationComps[j]["props"]["id"],
                         "validationSet": currValidationComps[j]["props"]["validation-set"]
@@ -75,7 +75,7 @@ module.exports = class TaskEvent {
         }
     }
 
-    getCompValidationSets (validationComp){
+    getCompValidationSets(validationComp) {
         let validationsSet = this.compRef.getCompValidationSets(validationComp["id"], validationComp["dependency-set"]);
         return validationsSet;
         /*switch(validationComp["based-on"]){
@@ -91,58 +91,60 @@ module.exports = class TaskEvent {
         }*/
     }
 
-    generateXML (){
-        let eventNode = '<event id="'+this.id+'" desc="'+this.desc+'"';
-        if(this.followup){
-            eventNode += ' followup="'+ this.followup+'"';
+    generateXML() {
+        let eventNode = '<event id="' + this.id + '" desc="' + this.desc + '"';
+        if (this.followup) {
+            eventNode += ' followup="' + this.followup + '"';
         }
+
         if(this.targetAttrSet){
             eventNode += ' target-attribute-set="'+ this.targetAttrSet+'"';
         }
         eventNode+=  ' >';
-        
+
         eventNode += this.generateValidateXMLNode();
         eventNode += '</event>';
         return eventNode;
     }
 
-    generateValidateXMLNode (){
+    generateValidateXMLNode() {
 
         let xmlString = "";
         if (this.validations) {
-            for(let idx = 0; idx<this.validations.length; idx++){
+            for (let idx = 0; idx < this.validations.length; idx++) {
                 let currValidation = this.validations[idx];
 
                 xmlString += '<validate';
 
-                if(currValidation.props.followup){
-                    xmlString += ' followup="'+ currValidation.props.followup+'"';
+                if (currValidation.props.followup) {
+                    xmlString += ' followup="' + currValidation.props.followup + '"';
                 }
 
-                if(currValidation.props.operator){
-                    xmlString += ' operator="'+currValidation.props.operator+'"';
+                if (currValidation.props.operator) {
+                    xmlString += ' operator="' + currValidation.props.operator + '"';
                 }
 
-                if(currValidation.props["target-attribute-set"]){
-                    xmlString += ' target-attribute-set="'+currValidation.props["target-attribute-set"]+'"';
+                if (currValidation.props["target-attribute-set"]) {
+                    xmlString += ' target-attribute-set="' + currValidation.props["target-attribute-set"] + '"';
                 }
 
-                xmlString +=  ' >';
-                    
-                    
+                xmlString += ' >';
+
 
                 xmlString += this.generateCompNodes(currValidation);
                 xmlString += '</validate>';
             }
         }
 
+
         return xmlString;
     }
 
-    generateCompNodes (validationNode){
+    generateCompNodes(validationNode) {
         let xmlString = "";
 
-        for(let idx=0; idx<validationNode.compsToValidate.length; idx++){
+        for (let idx = 0; idx < validationNode.compsToValidate.length; idx++) {
+
             xmlString += '<comp id="' + validationNode.compsToValidate[idx].id + '"'; 
             if(validationNode.compsToValidate[idx].validationSet){
                 xmlString += ' validation-set="' + validationNode.compsToValidate[idx].validationSet + '"';
