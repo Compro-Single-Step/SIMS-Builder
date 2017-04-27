@@ -158,7 +158,7 @@ class sortingTableColumns extends ExcelBaseSkill {
           }
           columnHeaderObj[columnName]["type"] = columnType;
           // if (index < tableRAngeArr.length) {
-            columnHeaderObj[columnName]["range"] = tableRAngeArr[index];
+          columnHeaderObj[columnName]["range"] = tableRAngeArr[index];
           // }
           // else {
           // }
@@ -356,9 +356,9 @@ class sortingTableColumns extends ExcelBaseSkill {
     let resolvParams = { "attrValue": JSON.stringify(contextMenuArr) };
     return Promise.resolve(resolvParams);
   }
-  getColumnHeaderRange(tableRange){
-    let columnHeaderArray = this.getFilterMenuCell(tableRange);
-    return (columnHeaderArray[0] + ":" + columnHeaderArray[columnHeaderArray.length-1])
+  getColumnHeaderRange(tableRange) {
+    let columnHeaderArray = this.getColumnHeaderArray(tableRange);
+    return (columnHeaderArray[0] + ":" + columnHeaderArray[columnHeaderArray.length - 1])
   }
 
   getColDataRange(range) {
@@ -428,9 +428,17 @@ class sortingTableColumns extends ExcelBaseSkill {
       var taskParams = skillParams.taskParams;
       var paramValueObj = skillParams.paramsObj;
       let tableRange = paramValueObj.tableRange;
-      let finalArr = [];
+      let finalArr = this.getColumnHeaderArray(tableRange);
 
-      //move this into a function
+      return Promise.resolve({ "attrValue": finalArr });
+    } catch (error) {
+      return Promise.reject(error);
+    }
+
+  }
+
+  getColumnHeaderArray(tableRange){
+      let finalArr = [];
       tableRange = tableRange.toUpperCase();
       let valuearray = tableRange.split(":");
       valuearray[0].trim();
@@ -444,11 +452,7 @@ class sortingTableColumns extends ExcelBaseSkill {
       for (let index = 0; index <= col2.charCodeAt(0) - col1.charCodeAt(0); ++index) {
         finalArr.push((String.fromCharCode(col1.charCodeAt(0) + index)) + row1);
       }
-
-      return Promise.resolve({ "attrValue": finalArr });
-    } catch (error) {
-      return Promise.reject(error);
-    }
+      return finalArr;
 
   }
 
