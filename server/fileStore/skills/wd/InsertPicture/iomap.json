@@ -105,19 +105,11 @@
                         }
                     },
                     "final": {
-                        "state-out-1": {
+                        "set_": {
                             "FILE_NAME": {
-                                "function-name": "extractSingleParamVal",
+                                "function-name": "getFileNameFinal",
                                 "params": {
                                     "imageFileName": "views['2'].imageFileName.value"
-                                }
-                            }
-                        },
-                        "state-out-2": {
-                            "FILE_NAME": {
-                                "function-name": "extractSingleParamVal",
-                                "params": {
-                                    "treeXML": "views['2'].imageFileName.value"
                                 }
                             }
                         }

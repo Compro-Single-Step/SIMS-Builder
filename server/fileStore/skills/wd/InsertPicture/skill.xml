@@ -85,18 +85,14 @@
 						<attr name="IMG_FOLDER_PATH" userDefined="true"/>
 					</initialattrs>
 					<finalattributesets>
-						<attributeset name="state-out-1" inherits-default="false">
-							<attr name="FILE_NAME" userDefined="true"/>
-						</attributeset>
-						<attributeset name="state-out-2" inherits-default="false">
+						<attributeset name="set_" multiple-occurence="true" dependency-attr='["FILE_NAME"]' inherits-default="false">
 							<attr name="FILE_NAME" userDefined="true"/>
 						</attributeset>
 					</finalattributesets>
 					<events>
 						<event id="9997" desc="Insert Button Clicked">
 							<validate followup="3" operator="any">
-								<comp id="4" validation-set="state-out-1"/>
-								<comp id="4" validation-set="state-out-2"/>
+								<comp id="4" validation-set="" multiple-occurence="true" dependency-set="set_"/>
 							</validate>
 						</event>
 						<event id="9998" followup="1" target-attribute-set="cancel_pos" desc="Cancel Button Clicked"/>
