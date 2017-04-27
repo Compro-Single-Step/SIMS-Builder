@@ -1,5 +1,4 @@
 {
-  "model": {
     "views": {
       "1": {
         "documentTitle": {
@@ -94,5 +93,4 @@
         }
       }
     }
-  }
 }
