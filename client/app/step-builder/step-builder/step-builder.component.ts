@@ -71,8 +71,8 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
             templateID: this.templateID
         };
         this.bds.getskilldata(params).subscribe((data) => {
-            this.builderModelSrvc.setDefaultState(data["skillmodel"].model);
-            this.builderModelSrvc.setState(data["stepuistate"] || data["skillmodel"].model);
+            this.builderModelSrvc.setDefaultState(data["skillmodel"]);
+            this.builderModelSrvc.setState(data["stepuistate"] || data["skillmodel"]);
             localForage.setItem('model', this.builderModelSrvc.getState()).catch(function (err) {
                 console.warn("Error while saving to Local Storage");
             });
