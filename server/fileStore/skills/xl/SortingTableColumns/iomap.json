@@ -45,7 +45,6 @@
               "CUSTOM_CONTEXT_MENU": {
                 "function-name": "getContextMenuData",
                 "params": {
-                  "contextMenuPath": "views['1'].sheetsForTable.value[0].tableContextMenuData.path",
                   "sheetAction":"views['2'].sheetInAction.selectedOption.value.label"
                 }
               }
