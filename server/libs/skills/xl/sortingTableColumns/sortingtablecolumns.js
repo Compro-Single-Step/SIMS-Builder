@@ -441,7 +441,7 @@ class sortingTableColumns extends ExcelBaseSkill {
       let row1 = parseInt(valuearray[0].substring(1, valuearray[0].length));
       let row2 = parseInt(valuearray[1].substring(1, valuearray[0].length));
 
-      for (let index = 0; index < col2.charCodeAt(0) - col1.charCodeAt(0); ++index) {
+      for (let index = 0; index <= col2.charCodeAt(0) - col1.charCodeAt(0); ++index) {
         finalArr.push((String.fromCharCode(col1.charCodeAt(0) + index)) + row1);
       }
 
