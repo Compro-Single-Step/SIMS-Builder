@@ -1,6 +1,12 @@
 const ExcelBaseSkill = require("../common/xlSkill");
 
 var columnHeaderObj = {}// an object with key value pairs that contain the column name as keys and thier types as values
+const columnTypeContextMenuMap = {
+  "INT": "TABLE_NUM",
+  "TEXT": "TABLE"
+}
+
+
 class sortingTableColumns extends ExcelBaseSkill {
   getSheetDetails(initDocJSON, dependantSheetArrayInModel, clonedDependantSheetArrayInModel) {
     while (dependantSheetArrayInModel.length > 0) {
@@ -30,63 +36,58 @@ class sortingTableColumns extends ExcelBaseSkill {
       //Add Sheet Names to Array From Init Doc JSON
       for (let sheetNum = 0; sheetNum < initDocJSON.sheetCount; sheetNum++) {
         var sheetName = initDocJSON.sheets[sheetNum].name;
-        dependantSheetArrayInModel.push({"label":sheetName,"data":sheetName});
+        dependantSheetArrayInModel.push({ "label": sheetName, "data": sheetName });
       }
     }
   }
 
   updateSheetName(selectedSheetName, dependentSheetArrayInModel, clonedDependentSheetArrayInModel) {
-    while(dependentSheetArrayInModel.length > 0){
+    while (dependentSheetArrayInModel.length > 0) {
       dependentSheetArrayInModel.pop();
     }
     dependentSheetArrayInModel.push(JSON.parse(JSON.stringify(clonedDependentSheetArrayInModel[0])));
-    if(selectedSheetName){
-      dependentSheetArrayInModel[0].name = selectedSheetName.label;  
+    if (selectedSheetName) {
+      dependentSheetArrayInModel[0].name = selectedSheetName.label;
     }
   }
 
-  updateColumnNamesInDropdown(columnHeadersData, dependantSheetArrayInModel){
+  updateColumnNamesInDropdown(columnHeadersData, dependantSheetArrayInModel) {
     //Empty the existing array
-    while(dependantSheetArrayInModel.length > 0) {
+    while (dependantSheetArrayInModel.length > 0) {
       dependantSheetArrayInModel.pop(); //https://jsperf.com/array-clear-methods/3
     }
     //Add column header names from Column Headers csv file
-    if(columnHeadersData !== null)
-    {
+    if (columnHeadersData !== null) {
       var columnHeaders = columnHeadersData.split(/\r\n|\n/);
-      for (var i=1; i<columnHeaders.length; i++) {
-          var columnHeaderName = columnHeaders[i].split(',')[0];
-          var columnHeaderDataType = columnHeaders[i].split(',')[1];
-          if(columnHeaderName != "")
-            dependantSheetArrayInModel.push({"label":columnHeaderName,"data":columnHeaderDataType});
+      for (var i = 1; i < columnHeaders.length; i++) {
+        var columnHeaderName = columnHeaders[i].split(',')[0];
+        var columnHeaderDataType = columnHeaders[i].split(',')[1];
+        if (columnHeaderName != "")
+          dependantSheetArrayInModel.push({ "label": columnHeaderName, "data": columnHeaderDataType });
       }
     }
   }
-  updateSortTypesInDropdown(selectedColumnHeader, dependantSheetArrayInModel){
-    if(selectedColumnHeader !== "" && selectedColumnHeader !== undefined)
-    {
+  updateSortTypesInDropdown(selectedColumnHeader, dependantSheetArrayInModel) {
+    if (selectedColumnHeader !== "" && selectedColumnHeader !== undefined) {
       var selectedColumnHeaderType = selectedColumnHeader.data;
       //Empty the existing array
-      while(dependantSheetArrayInModel.length > 0) {
+      while (dependantSheetArrayInModel.length > 0) {
         dependantSheetArrayInModel.pop(); //https://jsperf.com/array-clear-methods/3
       }
 
-      if(selectedColumnHeaderType.toUpperCase() == "INT")
-      {
-        dependantSheetArrayInModel.push({"label": "Smallest to Largest", "data":"Smallest to Largest"});
-        dependantSheetArrayInModel.push({"label": "Largest to Smallest", "data":"Largest to Smallest"});
+      if (selectedColumnHeaderType.toUpperCase() == "INT") {
+        dependantSheetArrayInModel.push({ "label": "Smallest to Largest", "data": "Smallest to Largest" });
+        dependantSheetArrayInModel.push({ "label": "Largest to Smallest", "data": "Largest to Smallest" });
       }
-      else if(selectedColumnHeaderType.toUpperCase() == "TEXT")
-      {
-        dependantSheetArrayInModel.push({"label": "A to Z", "data":"A to Z"});
-        dependantSheetArrayInModel.push({"label": "Z to A", "data":"Z to A"});
+      else if (selectedColumnHeaderType.toUpperCase() == "TEXT") {
+        dependantSheetArrayInModel.push({ "label": "A to Z", "data": "A to Z" });
+        dependantSheetArrayInModel.push({ "label": "Z to A", "data": "Z to A" });
       }
-      else if(selectedColumnHeaderType.toUpperCase() == "DATE")
-      {
-        dependantSheetArrayInModel.push({"label": "Oldest to Newest", "data":"Oldest to Newest"});
-        dependantSheetArrayInModel.push({"label": "Newest to Oldest", "data":"Newest to Oldest"});
+      else if (selectedColumnHeaderType.toUpperCase() == "DATE") {
+        dependantSheetArrayInModel.push({ "label": "Oldest to Newest", "data": "Oldest to Newest" });
+        dependantSheetArrayInModel.push({ "label": "Newest to Oldest", "data": "Newest to Oldest" });
       }
-    }    
+    }
   }
 
   getTableRangeArray(tableRange) {
@@ -120,7 +121,6 @@ class sortingTableColumns extends ExcelBaseSkill {
 
   init(data) {
 
-
     var initDocJSonPath = data.stepUIState.views["1"].documentData.path;
     var skilldata = { "initDocJSonPath": initDocJSonPath, "dbMgr": data.dbFilestoreMgr };
     let self = this;
@@ -137,48 +137,46 @@ class sortingTableColumns extends ExcelBaseSkill {
       // super.init(skilldata).then(function (resolveParams) {
       let resolveParam = resolveParamArr[1];
 
-      // let colHdrFilePath = data.stepUIState.views['1'].sheetsForTable.value[0].columnHeaders["path"];// abc is the model reference for the  csv file path
-      let tableRange = (eval("data.stepUIState." + "views['1'].sheetsForTable.value[0].tableRange.value"));
+      // making it toUpperCase as the data will be used later as well
+      let tableRange = (eval("data.stepUIState." + "views['1'].sheetsForTable.value[0].tableRange.value")).toUpperCase();
+      tableRange.trim();
 
       let tableRAngeArr = self.getTableRangeArray(tableRange);
       // let dbMgr = data.dbFilestoreMgr;
-      //reading the csv file 
-      // let readFileType = "csv";
+      // reading the csv file 
       // make the readFile call here and update the 2 variables that can be used in this skill
       // return dbMgr.readFileFromFileStore(colHdrFilePath, readFileType).then(function (resolveParam) {
-      for (let index = 0; index < resolveParam.fileData.length; ++index) {
-        let columnName = resolveParam.fileData[index].columnName
-        let columnType = resolveParam.fileData[index].columnType
+      if (tableRAngeArr.length == resolveParam.fileData.length) {
+        for (let index = 0; index < resolveParam.fileData.length; ++index) {
+          let columnName = resolveParam.fileData[index].columnName
+          let columnType = resolveParam.fileData[index].columnType.toUpperCase();
 
-        columnHeaderObj[columnName] = {};
-        if (columnType == "") {
-          columnType = "TEXT"
+          columnHeaderObj[columnName] = {};
+          // if no type for the column is given
+          if (columnType == "") {
+            columnType = "TEXT"
+          }
+          columnHeaderObj[columnName]["type"] = columnType;
+          // if (index < tableRAngeArr.length) {
+            columnHeaderObj[columnName]["range"] = tableRAngeArr[index];
+          // }
+          // else {
+          // }
         }
-        columnHeaderObj[columnName]["type"] = columnType;
-        if (index < tableRAngeArr.length) {
-          columnHeaderObj[columnName]["range"] = tableRAngeArr[index];
-        }
-        else {
-          break;
-          let error = new Error("table range and number of columns do not match")
-          return Promise.reject(error);
-        }
+
+      }
+      else {
+        let error = new Error("number of columns in the csv and the Table range are inconsistent");
+        return Promise.reject(error);
       }
       console.log("columnHeaderObj ", JSON.stringify(columnHeaderObj));
       return Promise.resolve(true);
       // read the resolveparam data here and update the new variables and create an object
 
-      // var initDocJSonPath = data.stepUIState.views["1"].documentData.path;
-      // var skilldata = { "initDocJSonPath": initDocJSonPath, "dbMgr": data.dbFilestoreMgr };
-      // super.init(skilldata);
-
     }, function (error) {
       return Promise.reject(error);
       // });
     }
-      // , function (error) {
-      //   return Promise.reject(error);
-      // }
     );
   }
 
@@ -226,7 +224,7 @@ class sortingTableColumns extends ExcelBaseSkill {
       let resolveParams = { "attrValue": JSON.stringify(sheetObj) }
       return Promise.resolve(resolveParams);
     } catch (error) {
-      return Promise.reject(error)
+      return Promise.reject(error);
 
     }
   }
@@ -240,19 +238,146 @@ class sortingTableColumns extends ExcelBaseSkill {
   // expects an array of objects
 
   // currently getting the different file , and putting the data according to that
+  // getContextMenuData(skillParams) {
+  //   var taskParams = skillParams.taskParams;
+  //   var paramValueObj = skillParams.paramsObj;
+
+
+  //   return taskParams.dbFilestoreMgr.readFileFromFileStore(paramValueObj.contextMenuPath).then(function (resolveParam) {
+  //     let attrValue = JSON.stringify(resolveParam.fileData);
+  //     return Promise.resolve({ "attrValue": attrValue });
+  //   }, function () {
+  //     return Promise.reject(error);
+  //   })
+
+  // }
+
+
+  //deducing the context menu data 
   getContextMenuData(skillParams) {
     var taskParams = skillParams.taskParams;
     var paramValueObj = skillParams.paramsObj;
 
 
-    return taskParams.dbFilestoreMgr.readFileFromFileStore(paramValueObj.contextMenuPath).then(function (resolveParam) {
-      let attrValue = JSON.stringify(resolveParam.fileData);
-      return Promise.resolve({ "attrValue": attrValue });
-    }, function () {
-      return Promise.reject(error);
-    })
+    // this is the outermost array for holding multiple sheets if present
+    let contextMenuArr = [];
+    // Object holding data for the single sheet
+    let contextMenuSheetObj = {};
+    // obtaining the dynamic sheet Number
+    contextMenuSheetObj["sheetNo"] = this.getSheetNumber(paramValueObj.sheetAction);
 
+    // empty array of objects that will hold the context menu for differenct ranges
+    contextMenuSheetObj["data"] = [];
+
+    /* ********************
+     PrimaryObject -> All the Objects that are pushed in the contextMenuSheetObj["data"]
+     SecondaryObjects -> All the Objects that are Pushed into the "desc" array of the Primary Objects
+      *********************** */
+
+    // copmulsory Object that will assign all the column Headers as the context menu notation of type TABLE
+    let columnHeaderTypePrimaryObj = {};
+    columnHeaderTypePrimaryObj["type"] = "TABLE";
+    // currently Setting the default Tag as the name of the first column
+    columnHeaderTypePrimaryObj["defaultTag"] = Object.keys(columnHeaderObj)[0];
+    // Description Array of the Primary Object that will contain the secondary objects
+    columnHeaderTypePrimaryObj["desc"] = [];
+
+    // Creating an array that will contain the dynamically created Primary Objects
+    let columnDataObjectArr = []
+
+
+    // Looping through the ColumnHeaders that will generate the mandatory as well as Dynamic primary objects
+    for (let columnName in columnHeaderObj) {
+
+      // create a column Header secondary object here 
+      let colHdrSecondaryObj = {};
+      colHdrSecondaryObj["cell"] = columnHeaderObj[columnName]["range"].split(":")[0];
+      colHdrSecondaryObj["tag"] = columnName;
+      // adding the column headers into the first mandatory object
+      columnHeaderTypePrimaryObj["desc"].push(colHdrSecondaryObj);
+
+
+      // create a column data secondary object here 
+      let colSecondaryObj = {
+        "cell": this.getColDataRange(columnHeaderObj[columnName]["range"]),
+        "tag": columnName
+      };
+
+
+      // if no Dynamic Object as been created and pushed for the Column Data
+      if (columnDataObjectArr.length == 0) {
+        // Table column Data Primary Object
+        let colPrimaryObj = {};
+        colPrimaryObj["type"] = columnTypeContextMenuMap[columnHeaderObj[columnName]["type"]];
+        colPrimaryObj["range"] = this.getColDataRange(columnHeaderObj[columnName]["range"]);
+        colPrimaryObj["defaultTag"] = columnHeaderObj[columnName];
+        colPrimaryObj["desc"] = [];
+        // Push Secondary Object into Primary Object
+        colPrimaryObj["desc"].push(colSecondaryObj);
+        // Push Primary Object into Array
+        columnDataObjectArr.push(colPrimaryObj);
+      } else {
+        /* The next Column Header is of the same type as the previous one in the Column data object,
+         then push this column header Secondary object into the last PRimary Object and merge ranges */
+        let recentPrimaryObj = columnDataObjectArr[columnDataObjectArr.length - 1];
+        if (recentPrimaryObj["type"] == columnTypeContextMenuMap[columnHeaderObj[columnName]["type"]]) {
+
+          // push the secondary object into the Primary object
+          recentPrimaryObj["desc"].push(colSecondaryObj);
+          // merging the ranges
+          recentPrimaryObj["range"] = this.getMergedRange(recentPrimaryObj["range"], colSecondaryObj["cell"]);
+        }
+        else {
+          // The current column header was different than that of the one before it
+          // create a new primary object and push it into the columnDataObjectArr
+          let colPrimaryObj = {};
+          colPrimaryObj["type"] = columnTypeContextMenuMap[columnHeaderObj[columnName]["type"]];
+          colPrimaryObj["range"] = columnHeaderObj[columnName]["range"];
+          colPrimaryObj["defaultTag"] = columnHeaderObj[columnName];
+          colPrimaryObj["desc"] = [];
+          colPrimaryObj["desc"].push(colSecondaryObj);
+          columnDataObjectArr.push(colPrimaryObj);
+        }
+
+      }
+    } // End of loop
+
+    // push the Mandatory object into the contextMenuSheetObj
+    contextMenuSheetObj["data"].push(columnHeaderTypePrimaryObj);
+    // Push the dynamically created array for the Column data Objects which contains the Dynamically created Primary objects
+    for (let index = 0; index < columnDataObjectArr.length; ++index) {
+      // add the columndataObject to the final sheet array
+      contextMenuSheetObj["data"].push(columnDataObjectArr[index]);
+    }
+    // Push the current sheet object into the Context menu final array
+    contextMenuArr.push(contextMenuSheetObj);
+    // the above code should iterate through the multiple sheets 
+    let resolvParams = { "attrValue": JSON.stringify(contextMenuArr) };
+    return Promise.resolve(resolvParams);
   }
+
+  getColDataRange(range) {
+    // range = "A3:A68"
+    let rangeArr = range.split(":");
+    let colHdr = range.split(":")[0];
+    let colRange = range.split(":")[1];
+
+    let colName = colHdr.toUpperCase().charAt(0);
+    let rowNum = parseInt(colHdr.substring(1, colHdr.length));
+    colHdr = colName + (++rowNum);
+    let colDataRange = colHdr + ":" + colRange;
+    return colDataRange;
+  }
+
+  getMergedRange(startRange, endRange) {
+    // range1 = "A4:A68"
+    // range2 = "B4:B68"
+    let colDataStart = startRange.split(":")[0];
+    let endPoint = endRange.split(":")[endRange.split(":").length - 1];
+    return colDataStart + ":" + endPoint;
+  }
+
+
 
   // SELECTED_CELLS_COMPLETE_IN_RANGE
   // expects a text value of the range
@@ -386,7 +511,7 @@ class sortingTableColumns extends ExcelBaseSkill {
 
     let finalObj = { "attrValue": paramValueObj.sortType + "~" };
     return Promise.resolve(finalObj);
-  } 
+  }
 
 
 }
