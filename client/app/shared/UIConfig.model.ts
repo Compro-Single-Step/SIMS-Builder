@@ -16,7 +16,6 @@ export class itemSchema {
   val?: string;
   relVal?: string;
   emitEvents?: Array<string>;
-  itemList: Array<Object>;
   constructor() {
     this.id = "";
     this.label = "";
@@ -35,7 +34,6 @@ export class itemSchema {
     this.style = {};
     this.relVal = "";
     this.emitEvents = [];
-    this.itemList = [{}];
   }
 }
 

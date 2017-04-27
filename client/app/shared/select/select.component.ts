@@ -25,10 +25,10 @@ export class SelectComponent extends BaseComponent {
     this.labelConfig.rendererProperties.text = this.compConfig.label;
     this.labelConfig.rendererProperties.type = LabelTypes.ELEMENT_HEADING;
     this.updateDescription();
-    if(this.compConfig.rendererProperties && this.compConfig.rendererProperties.dynamicMode === true) {
-      this.itemList = this.builderModelSrvc.getStateRef(this.compConfig.itemList);
+    if(this.compConfig.rendererProperties.dynamicMode === true) {
+      this.itemList = this.builderModelSrvc.getStateRef(this.compConfig.rendererProperties.itemList);
     } else {
-      this.itemList["value"] = this.compConfig.itemList;
+      this.itemList["value"] = this.compConfig.rendererProperties.itemList;
     }
     this.modelRef = this.builderModelSrvc.getStateRef(this.compConfig.val);
   }
