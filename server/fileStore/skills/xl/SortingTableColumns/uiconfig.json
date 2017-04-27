@@ -341,7 +341,8 @@
               },
               "itemRenderer": "Dropdown",
               "rendererProperties": {
-                "itemListRef": "{{views.2.sheetInAction.options}}"
+                "dynamicMode": true,
+                "itemList": "{{views.2.sheetInAction.options}}"
               },
               "itemType": "leaf",
               "mandatory": true,
@@ -368,7 +369,8 @@
               "itemType": "leaf",
               "mandatory": true,
               "rendererProperties": {
-                "itemListRef": "{{views.2.sortColumnName.options}}"
+                "dynamicMode": true,
+                "itemList": "{{views.2.sortColumnName.options}}"
               },
               "val": "{{views.2.sortColumnName.selectedOption}}",
               "emitEvents": [
@@ -398,7 +400,8 @@
                 }
               ],
               "rendererProperties": {
-                "itemListRef": "{{views.2.sortType.options}}"
+                "dynamicMode": true,
+                "itemList": "{{views.2.sortType.options}}"
               },
               "itemType": "leaf",
               "mandatory": true,
