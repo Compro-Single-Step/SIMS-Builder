@@ -20,22 +20,27 @@ class SkillFactory {
     getSkillFilesPath(templateID) {
         let skillfilesPathArray = [],
             rootPath = "libs/skills/",
-            self = this;;
+            self = this;
 
         (function addFilePath(skillTemplateMap, parentFileName) {
-            let primaryFileName = self._getFileName(skillTemplateMap.primaryFile);
-            skillfilesPathArray.push({ originalFileName: primaryFileName, newFileName: parentFileName ? parentFileName + "_" + primaryFileName : primaryFileName, filePath: rootPath + skillTemplateMap.primaryFile + ".js" });
+            //Checking if the skill is present in skillRepo
+            if (skillTemplateMap) {
+                let primaryFileName;
+                if (skillTemplateMap.primaryFile && skillTemplateMap.primaryFile.length !== 0) {
+                    primaryFileName = self._getFileName(skillTemplateMap.primaryFile);
+                    skillfilesPathArray.push({ originalFileName: primaryFileName, newFileName: parentFileName ? parentFileName + "_" + primaryFileName : primaryFileName, filePath: rootPath + skillTemplateMap.primaryFile + ".js" });
+                }
+                if (skillTemplateMap.dependencyFiles && skillTemplateMap.dependencyFiles.length !== 0) {
+                    skillTemplateMap.dependencyFiles.forEach(value => {
+                        addFilePath(value, primaryFileName);
+                    });
+                }
 
-            if (skillTemplateMap.dependencyFiles && skillTemplateMap.dependencyFiles.length !== 0) {
-                skillTemplateMap.dependencyFiles.forEach(value => {
-                    addFilePath(value, primaryFileName);
-                });
-            }
-
-            if (skillTemplateMap.dependencySkills && skillTemplateMap.dependencySkills.length !== 0) {
-                skillTemplateMap.dependencySkills.forEach(skillName => {
-                    addFilePath(skillRepo[skillName], primaryFileName);
-                });
+                if (skillTemplateMap.dependencySkills && skillTemplateMap.dependencySkills.length !== 0) {
+                    skillTemplateMap.dependencySkills.forEach(skillName => {
+                        addFilePath(skillRepo[skillName], primaryFileName);
+                    });
+                }
             }
         })(skillRepo[templateID], null);
 

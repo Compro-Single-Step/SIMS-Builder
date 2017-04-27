@@ -7,46 +7,62 @@ class UIHandler {
 
     getStepUIConfig(templateId, taskId, stepIndex) {
         let self = this;
-        return new Promise((resolve, reject) => {
-            Promise.all([dbFilestoreManager.getUIConfig(templateId), dbFilestoreManager.getSkillModel(templateId)]).then(([uiConfig, model]) => {
-                let data = {
-                    "uiconfig": JSON.parse(uiConfig),
-                    "skillmodel": JSON.parse(model)
-                };
 
-                self._bundleSkillHelperFiles(templateId).then(webpackBundle => {
-                    data.skillfilesbundle = webpackBundle;
+        return Promise.all([dbFilestoreManager.getUIConfig(templateId), dbFilestoreManager.getSkillModel(templateId)]).then(([uiConfig, model]) => {
+            let data = {
+                "uiconfig": JSON.parse(uiConfig),
+                "skillmodel": JSON.parse(model)
+            };
 
-                    dbFilestoreManager.getStepUIState(taskId, stepIndex).then(uiState => {
-                        data.stepuistate = uiState || null;
-                        resolve(data);
-                    }, error => {
-                        data.stepuistate = null;
-                        resolve(data);
-                    }).catch(error => {
-                        reject(error);
-                    });
+            return self._bundleSkillHelperFiles(templateId).then(webpackBundle => {
+                data.skillfilesbundle = webpackBundle;
+
+                return dbFilestoreManager.getStepUIState(taskId, stepIndex).then(uiState => {
+                    data.stepuistate = uiState || null;
+                    return Promise.resolve(data);
+                }).catch(error => {
+                    data.stepuistate = null;
+                    return Promise.resolve(data);
                 });
-            }).catch(error => {
-                reject(error);
+            }).catch(errorsArray => {
+                return Promise.reject({
+                    errorMessage: "File(s) not found",
+                    status: "error",
+                    statusCode: 404,
+                    filesPathArray: errorsArray.map(error => error.filePath)
+                });
             });
+        }).catch(error => {
+            return Promise.reject(error);
         });
     }
 
     _bundleSkillHelperFiles(templateId) {
         let skillfilesPathArray = skillFactory.getSkillFilesPath(templateId),
             promiseArray = [],
-            webpackBundleMap = {};
+            webpackBundleMap = {},
+            errorsArray = [];
 
         for (let i = 0; i < skillfilesPathArray.length; i++) {
             //Pusing each promise in a Array 
-            promiseArray.push(dbFilestoreManager.getSkillHelperFile(path.join(__dirname, "../../", skillfilesPathArray[i].filePath)));
+            promiseArray.push(dbFilestoreManager.getSkillHelperFile(skillfilesPathArray[i].filePath, path.join(__dirname, "../../")).catch(error => {
+                errorsArray.push(error);
+            }));
 
             //Adding the file in a map
             webpackBundleMap[skillfilesPathArray[i].newFileName] = i;
         };
 
         return Promise.all(promiseArray).then(files => {
+
+            //Throw error if not able to fetch any file
+            if (errorsArray.length !== 0) {
+                throw errorsArray;
+            }
+
+            //If files array is empty (No skill map found in skillRepo)
+            else if (files.length === 0) return null;
+
             let primaryFileName = skillfilesPathArray[0].originalFileName,
                 webpackBundle = `var ${templateId}Class = (function(modules) {
                     // The module cache

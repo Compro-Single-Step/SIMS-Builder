@@ -7,7 +7,9 @@ module.exports = class TaskEvent {
         if (args.props.followup) {
             this.followup = args.props.followup;
         }
-
+        if (args.props["target-attribute-set"]) {
+            this.targetAttrSet = args.props["target-attribute-set"];
+        }
         // structur of one validation/ validate node inside an event
         /*this.validations = [
             {
@@ -84,7 +86,16 @@ module.exports = class TaskEvent {
     }
 
     generateXML() {
-        let eventNode = '<event id="' + this.id + '" desc="' + this.desc + '" >';
+        let eventNode = '<event id="' + this.id + '" desc="' + this.desc + '"';
+        if (this.followup) {
+            eventNode += ' followup="' + this.followup + '"';
+        }
+
+        if (this.targetAttrSet) {
+            eventNode += ' target-attribute-set="' + this.targetAttrSet + '"';
+        }
+        eventNode += ' >';
+
         eventNode += this.generateValidateXMLNode();
         eventNode += '</event>';
         return eventNode;
@@ -93,28 +104,29 @@ module.exports = class TaskEvent {
     generateValidateXMLNode() {
 
         let xmlString = "";
+        if (this.validations) {
+            for (let idx = 0; idx < this.validations.length; idx++) {
+                let currValidation = this.validations[idx];
 
-        for (let idx = 0; idx < this.validations.length; idx++) {
-            let currValidation = this.validations[idx];
+                xmlString += '<validate';
 
-            xmlString += '<validate';
+                if (currValidation.props.followup) {
+                    xmlString += ' followup="' + currValidation.props.followup + '"';
+                }
 
-            if (currValidation.props.followup) {
-                xmlString += ' followup="' + currValidation.props.followup + '"';
+                if (currValidation.props.operator) {
+                    xmlString += ' operator="' + currValidation.props.operator + '"';
+                }
+
+                if (currValidation.props["target-attribute-set"]) {
+                    xmlString += ' target-attribute-set="' + currValidation.props["target-attribute-set"] + '"';
+                }
+
+                xmlString += ' >';
+
+                xmlString += this.generateCompNodes(currValidation);
+                xmlString += '</validate>';
             }
-
-            if (currValidation.props.operator) {
-                xmlString += ' operator="' + currValidation.props.operator + '"';
-            }
-
-            if (currValidation.props["target-attribute-set"]) {
-                xmlString += ' target-attribute-set="' + currValidation.props["target-attribute-set"] + '"';
-            }
-
-            xmlString += ' >';
-
-            xmlString += this.generateCompNodes(currValidation);
-            xmlString += '</validate>';
         }
 
         return xmlString;
@@ -124,7 +136,12 @@ module.exports = class TaskEvent {
         let xmlString = "";
 
         for (let idx = 0; idx < validationNode.compsToValidate.length; idx++) {
-            xmlString += '<comp id="' + validationNode.compsToValidate[idx].id + '" validation-set="' + validationNode.compsToValidate[idx].validationSet + '"/>';
+
+            xmlString += '<comp id="' + validationNode.compsToValidate[idx].id + '"';
+            if (validationNode.compsToValidate[idx].validationSet) {
+                xmlString += ' validation-set="' + validationNode.compsToValidate[idx].validationSet + '"';
+            }
+            xmlString += ' />';
         }
 
         return xmlString;

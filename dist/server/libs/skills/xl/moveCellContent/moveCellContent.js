@@ -32,7 +32,6 @@ var MoveCellContent = function (_ExcelBaseSkill) {
       var skilldata = { "initDocJSonPath": initDocJSonPath, "dbMgr": data.dbFilestoreMgr };
       return _get(MoveCellContent.prototype.__proto__ || Object.getPrototypeOf(MoveCellContent.prototype), "init", this).call(this, skilldata);
     }
-
     //init DOC JSON 
 
   }, {
@@ -58,7 +57,6 @@ var MoveCellContent = function (_ExcelBaseSkill) {
   }, {
     key: "getSelectedCell",
     value: function getSelectedCell(skillParams) {
-
       var paramValueObj = skillParams.paramsObj;
       paramValueObj["srcRange"] = paramValueObj["srcRange"].toUpperCase();
       var resolveParams = { "attrValue": paramValueObj["srcRange"] };
@@ -138,21 +136,23 @@ var MoveCellContent = function (_ExcelBaseSkill) {
       return Promise.resolve(resolveParams);
     }
   }, {
-    key: "getSheetNameAndSheetCountFromInitDocJSON",
-    value: function getSheetNameAndSheetCountFromInitDocJSON(initDocJSON, dependantSheetArrayInModel) {
-
-      //Add The Required Number of Sheets in Model
-      if (initDocJSON.sheetCount >= dependantSheetArrayInModel.length) {
-        var sheetCountDiff = initDocJSON.sheetCount - dependantSheetArrayInModel.length;
-        while (sheetCountDiff > 0) {
-          dependantSheetArrayInModel.push(JSON.parse(JSON.stringify(dependantSheetArrayInModel[dependantSheetArrayInModel.length - 1])));
-          sheetCountDiff--;
-        }
+    key: "getSheetDetails",
+    value: function getSheetDetails(initDocJSON, dependantSheetArrayInModel, clonedDependantSheetArrayInModel) {
+      while (dependantSheetArrayInModel.length > 0) {
+        dependantSheetArrayInModel.pop(); //https://jsperf.com/array-clear-methods/3
       }
 
-      //Add Sheet Names From Init Doc JSON
-      for (var sheetNum = 0; sheetNum < initDocJSON.sheetCount; sheetNum++) {
-        dependantSheetArrayInModel[sheetNum].name = initDocJSON.sheets[sheetNum].name;
+      if (initDocJSON === null) {
+        //initDocJSON Removed
+        dependantSheetArrayInModel.push(clonedDependantSheetArrayInModel[0]);
+      } else {
+        //initDocJSON Added
+
+        //Add Sheet Names From Init Doc JSON
+        for (var sheetNum = 0; sheetNum < initDocJSON.sheetCount; sheetNum++) {
+          dependantSheetArrayInModel.push(JSON.parse(JSON.stringify(clonedDependantSheetArrayInModel[0])));
+          dependantSheetArrayInModel[sheetNum].name = initDocJSON.sheets[sheetNum].name;
+        }
       }
     }
   }, {
@@ -163,15 +163,24 @@ var MoveCellContent = function (_ExcelBaseSkill) {
       while (dependantSheetArrayInModel.length > 0) {
         dependantSheetArrayInModel.pop(); //https://jsperf.com/array-clear-methods/3
       }
-      //Add Sheet Names to Array From Init Doc JSON
-      for (var sheetNum = 0; sheetNum < initDocJSON.sheetCount; sheetNum++) {
-        dependantSheetArrayInModel.push(initDocJSON.sheets[sheetNum].name);
+      if (initDocJSON !== null) {
+        //Add Sheet Names to Array From Init Doc JSON
+        for (var sheetNum = 0; sheetNum < initDocJSON.sheetCount; sheetNum++) {
+          var sheetName = initDocJSON.sheets[sheetNum].name;
+          dependantSheetArrayInModel.push({ "label": sheetName, "data": sheetName });
+        }
       }
     }
   }, {
-    key: "updateSheetNameUsingDropdown",
-    value: function updateSheetNameUsingDropdown(selectedSheetName, dependentSheetNameInModel) {
-      dependentSheetNameInModel.name = selectedSheetName;
+    key: "updateSheetName",
+    value: function updateSheetName(selectedSheetName, dependentSheetArrayInModel, clonedDependentSheetArrayInModel) {
+      while (dependentSheetArrayInModel.length > 0) {
+        dependentSheetArrayInModel.pop();
+      }
+      dependentSheetArrayInModel.push(JSON.parse(JSON.stringify(clonedDependentSheetArrayInModel[0])));
+      if (selectedSheetName) {
+        dependentSheetArrayInModel[0].name = selectedSheetName.label;
+      }
     }
   }]);
 

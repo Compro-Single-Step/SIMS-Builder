@@ -70,7 +70,7 @@ module.exports = function (_BaseSkill) {
             var self = this;
             for (var iterator = 0; iterator < paramValueObj["sheets"].length; ++iterator) {
 
-                promiseArr.push(self.genSheetPromise(skillParams, iterator));
+                promiseArr.push(self.copySheetImages(skillParams, iterator));
             }
 
             return Promise.all(promiseArr).then(function (resolveParam) {
@@ -95,14 +95,9 @@ module.exports = function (_BaseSkill) {
                 return Promise.reject(err);
             });
         }
-
-        /**
-         * skillParams
-         */
-
     }, {
-        key: "genSheetPromise",
-        value: function genSheetPromise(skillParams, iterator, imageName) {
+        key: "copySheetImages",
+        value: function copySheetImages(skillParams, sheetIdx) {
             var taskParams = skillParams.taskParams;
             var paramValueObj = skillParams.paramsObj;
             var self = this;
@@ -117,7 +112,7 @@ module.exports = function (_BaseSkill) {
                 };
 
                 for (var imgName in sheetImgs) {
-                    requestArr.push(self.genSheetImgPromise(skillParams, iterator, imgName));
+                    requestArr.push(self.copyImage(skillParams, sheetIdx, imgName));
                 }
 
                 Promise.all(requestArr).then(function (resultArr) {
@@ -137,7 +132,7 @@ module.exports = function (_BaseSkill) {
                     var sheetObject = {};
                     var sheetImgPresent = false;
 
-                    sheetObject["sheetNo"] = self.getSheetNumber(paramValueObj["sheets"][iterator].name);
+                    sheetObject["sheetNo"] = self.getSheetNumber(paramValueObj["sheets"][sheetIdx].name);
 
                     for (var _imgName in sheetImgs) {
                         var currImg = translatedResult[_imgName];
@@ -161,16 +156,16 @@ module.exports = function (_BaseSkill) {
             });
         }
     }, {
-        key: "genSheetImgPromise",
-        value: function genSheetImgPromise(skillParams, iterator, imgType) {
+        key: "copyImage",
+        value: function copyImage(skillParams, sheetIdx, imgType) {
 
             var taskParams = skillParams.taskParams;
             var paramValueObj = skillParams.paramsObj;
 
-            var filepath = paramValueObj["sheets"][iterator][imgType]["path"];
+            var filepath = paramValueObj["sheets"][sheetIdx][imgType]["path"];
             if (filepath != null && filepath != "") {
                 return new Promise(function (resolve, reject) {
-                    // var filepath = paramValueObj["sheets"][iterator][Object.keys(imageObj)[0]]["path"];
+                    // var filepath = paramValueObj["sheets"][sheetIdx][Object.keys(imageObj)[0]]["path"];
                     return taskParams.dbFilestoreMgr.copyTaskAssetFile(filepath, taskParams).then(function (resolveParam) {
                         var preloadResArr = [];
 

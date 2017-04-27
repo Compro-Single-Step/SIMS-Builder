@@ -250,8 +250,8 @@
               "id": "2.1.1",
               "label": "Sheet in Action",
               "desc": {
-                "basic": "Name of the sheet in which the move cell content skill is to be performed.",
-                "detailed": "Name of the sheet on which the move cell content skill has to be performed is to be mentioned here."
+                "basic": "Name of the sheet in which using the Max function skill is to be performed.",
+                "detailed": "Name of the sheet on which using the Max function skill has to be performed is to be mentioned here."
               },
               "itemRenderer": "Dropdown",
               "emitEvents": [
@@ -273,10 +273,10 @@
             },
             {
               "id": "2.1.2",
-              "label": "Source Range",
+              "label": "Formula Cell Range Reference",
               "desc": {
-                "basic": "Cell range containing the data to be moved.",
-                "detailed": "Cell range containing the data to be moved."
+                "basic": "Cell Range from which the MAX has to be calculated is to be mentioned here in the format 'StartCell:EndCell'",
+                "detailed": "Cell Range from which the MAX has to be calculated is to be mentioned here in the format 'StartCell:EndCell'"
               },
               "itemRenderer": "TextBox",
               "itemType": "leaf",
@@ -284,19 +284,122 @@
               "rendererProperties": {
                 "dataType": "string"
               },
-              "val": "{{views.2.sourceRange}}"
+              "val": "{{views.2.formulaCellRangeReference}}"
             },
             {
               "id": "2.1.3",
-              "label": "Destination Range",
+              "label": "Cell containing formula",
               "desc": {
-                "basic": "Cell Range where the data is to be placed.",
-                "detailed": "Cell range where the data has to be moved."
+                "basic": "Cell Index in which the result has to be calculated is to be mentioned here.",
+                "detailed": "Cell Index in which the result has to be calculated is to be mentioned here."
               },
               "itemRenderer": "TextBox",
               "itemType": "leaf",
               "mandatory": true,
-              "val": "{{views.2.destinationRange}}"
+              "val": "{{views.2.cellContainingFormula}}"
+            }
+          ]
+        },
+        {
+          "id": "2.2",
+          "label": "Prefilled Selection",
+          "itemRenderer": "Panel",
+          "itemType": "child",
+          "tags": [
+            {
+              "compName": "SIMS.Components.Excel.SumFuncArgDialog",
+              "type": "default"
+            }
+          ],
+          "rendererProperties": {
+            "collapsable": true,
+            "optionalItems": false
+          },
+          "items": [
+            {
+              "id": "2.2.1",
+              "label": "Is the Cell Containing Formula away from the Reference Cell Range ?",
+              "desc": {
+                "basic": "Not Available",
+                "detailed": "Not Available"
+              },
+              "itemRenderer": "Switch",
+              "itemType": "leaf",
+              "mandatory": true,
+              "rendererProperties": {
+                "layout_mode": "right",
+                "value_type": "question"
+              },
+              "emitEvents": [
+                "SWITCH_VALUE_TOGGLED"
+              ],
+              "val": "{{views.2.prefilledSelection}}"
+            },
+            {
+              "id": "2.2.2",
+              "label": "Cell Range",
+              "desc": {
+                "basic": "The default cell range that appears in the Function Arguments dialog box",
+                "detailed": "The default cell range that appears in the Function Arguments dialog box"
+              },
+              "itemRenderer": "TextBox",
+              "itemType": "leaf",
+              "mandatory": false,
+              "subscribeEvents": [
+                {
+                  "eventId": "SWITCH_VALUE_TOGGLED",
+                  "modelReference": "{{views.2.cellRange}}",
+                  "rule": "enableOrDisableOnSwitch"
+                }
+              ],
+              "rendererProperties": {
+                "dataType": "string"
+              },
+              "val": "{{views.2.cellRange}}"
+            },
+            {
+              "id": "2.2.3",
+              "label": "Cell Values",
+              "desc": {
+                "basic": "Comma separated values of each cell in the cell range which appears by default in the Function Arguments dialog box",
+                "detailed": "Comma separated values of each cell in the cell range which appears by default in the Function Arguments dialog box"
+              },
+              "itemRenderer": "TextBox",
+              "itemType": "leaf",
+              "mandatory": false,
+              "subscribeEvents": [
+                {
+                  "eventId": "SWITCH_VALUE_TOGGLED",
+                  "modelReference": "{{views.2.cellValues}}",
+                  "rule": "enableOrDisableOnSwitch"
+                }
+              ],
+              "rendererProperties": {
+                "dataType": "string"
+              },
+              "val": "{{views.2.cellValues}}"
+            },
+            {
+              "id": "2.2.4",
+              "label": "Formula Result",
+              "desc": {
+                "basic": "The result value of the formula being applied on the cell range which appears by default in the Function Arguments dialog box",
+                "detailed": "The result value of the formula being applied on the cell range which appears by default in the Function Arguments dialog box"
+              },
+              "itemRenderer": "TextBox",
+              "itemType": "leaf",
+              "mandatory": false,
+              "subscribeEvents": [
+                {
+                  "eventId": "SWITCH_VALUE_TOGGLED",
+                  "modelReference": "{{views.2.formulaResult}}",
+                  "rule": "enableOrDisableOnSwitch"
+                }
+              ],
+              "rendererProperties": {
+                "dataType": "string"
+              },
+              "val": "{{views.2.formulaResult}}"
             }
           ]
         }
@@ -325,26 +428,10 @@
           },
           "items": [
             {
-              "id": "3.1.1",
-              "label": "Workbook Data",
-              "desc": {
-                "basic": "Upload JSON file containing the changes made in the worksheet after moving the cell range.",
-                "detailed": "A JSON file is to be provided which will be utilised to display the necessary changes in the worksheet after performing the skill. This file can be generated from here(Hyperlink pointing to the JSON creation tool spec)."
-              },
-              "itemRenderer": "Dropzone",
-              "itemType": "leaf",
-              "rendererProperties": {
-                "dataType": "JSON",
-                "placeHolder": "Drop JSON file here to upload"
-              },
-              "mandatory": true,
-              "val": "{{views.3.workbookData}}"
-            },
-            {
               "id": "3.1.2",
               "label": "Worksheet Images",
               "desc": {
-                "basic": "Upload the images containing the changes made in the worksheet after moving the cell range.",
+                "basic": "Upload the images containing the changes made in the worksheet after finding the max of the reference cell range",
                 "detailed": "This section requires 4 separate images to be uploaded. These images will be used to render a worksheet in SIMS. Details on how to get these images  can be accessed from here (Hyperlink pointing to the Image creation process spec).Images for any number of sheets can be uploaded by pressing the (+) button shown in the right."
               },
               "itemRenderer": "TabGroup",
@@ -367,7 +454,7 @@
               },
               "items": [
                 {
-                  "id": "3.1.2.1",
+                  "id": "3.1.1",
                   "itemRenderer": "TabPage",
                   "itemType": "",
                   "rendererProperties": {

@@ -32,7 +32,13 @@ module.exports = class State {
         if (this.comps[comp.props.id]) {
             this.updateComp(comp);
         } else {
-            let myComp = this.createComp(comp, attrValMap.components[comp.props.id]);
+            let currAttrValMap;
+
+            if (attrValMap && attrValMap.components) {
+                currAttrValMap = attrValMap.components[comp.props.id];
+            }
+
+            let myComp = this.createComp(comp, currAttrValMap);
             this.comps[comp.props.id] = myComp;
         }
     }
