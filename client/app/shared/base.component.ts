@@ -13,14 +13,12 @@ export class BaseComponent implements OnInit, OnDestroy {
     descriptionConfig: itemSchema = new itemSchema();
     eventSrvc: Object;
     subscriptions: Array<Object>;
-
     constructor() {
         this.compConfig = new itemSchema();
         this.builderModelSrvc = BuilderModelObj;
         this.eventSrvc = EventService;
         this.subscriptions = [];
     }
-
     ngOnInit() {
         this.registerEvents();
         this.subscribeEvents();
@@ -127,5 +125,11 @@ export class BaseComponent implements OnInit, OnDestroy {
 
     emitEvent(eventId, data) {
         this.eventSrvc["emitEvent"](eventId, data);
+    }
+    isDisabled() {
+        if(this.compConfig.rendererProperties && this.compConfig.rendererProperties.disabled === true) {
+            return true;
+        }
+        return this.modelRef["disabled"];
     }
 }

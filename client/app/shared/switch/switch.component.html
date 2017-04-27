@@ -1,0 +1,10 @@
+<fieldset>
+  <div [ngClass]="{'onRight': layout_mode === 'RIGHT'}">
+    <app-label [compConfig]="labelConfig"></app-label>
+    <label for="checkbox" class="switch">
+      <input type="checkbox" [checked]="modelRef.value" id="checkbox" [(ngModel)]="modelRef.value" (change)="selectedItemChange()"><i></i>
+    </label>
+    <span [hidden]="!modelRef.value">{{valueOptions[0]}}</span>
+    <span [hidden]="modelRef.value">{{valueOptions[1]}}</span>
+  </div>
+</fieldset>
