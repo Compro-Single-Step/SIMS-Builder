@@ -227,7 +227,7 @@
                       "id": "columnHeaders",
                       "label": "Column Headers",
                       "desc": {
-                        "basic": "Upload a csv file having column 1 as Column Header Names and column 2 as Column Header Types.",
+                        "basic": "Upload a csv file having columns: \"columnName\" and \"columnType\" with first row containing these header texts.",
                         "detailed": ""
                       },
                       "itemRenderer": "Dropzone",

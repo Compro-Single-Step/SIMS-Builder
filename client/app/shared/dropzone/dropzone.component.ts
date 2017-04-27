@@ -114,7 +114,7 @@ export class DropzoneComponent extends BaseComponent implements OnDestroy {
       reader.onload = function (e) {
         //Update Dependencies when contents have been read;
         try{
-          droppedFile = (fileType == MIMETYPE.JSON) ? JSON.parse(e.target['result']) : e.target['result'];
+          droppedFile = self.fileTypeHandler(fileType, e.target['result']);
         }
         catch (e) {
           console.log(e);
@@ -122,6 +122,18 @@ export class DropzoneComponent extends BaseComponent implements OnDestroy {
         self.emitEvents(droppedFile);
       }
     }
+  }
+
+  fileTypeHandler(fileType, data) {
+    let obj = {};
+    obj[MIMETYPE.JSON] = function(data){
+      return JSON.parse(data);
+    };
+    obj[MIMETYPE.CSV] = function(data){
+      return data;
+    };
+
+    return obj[fileType](data);
   }
 
   restoreFileUI(dropzone) {
