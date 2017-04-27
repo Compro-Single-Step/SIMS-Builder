@@ -8,7 +8,9 @@ module.exports = class TaskEvent {
         if (args.props.followup) {
             this.followup = args.props.followup;
         }
-
+        if(args.props["target-attribute-set"]){
+            this.targetAttrSet = args.props["target-attribute-set"];
+        }
         // structur of one validation/ validate node inside an event
         /*this.validations = [
             {
@@ -94,7 +96,11 @@ module.exports = class TaskEvent {
         if (this.followup) {
             eventNode += ' followup="' + this.followup + '"';
         }
-        eventNode += ' >';
+
+        if(this.targetAttrSet){
+            eventNode += ' target-attribute-set="'+ this.targetAttrSet+'"';
+        }
+        eventNode+=  ' >';
 
         eventNode += this.generateValidateXMLNode();
         eventNode += '</event>';

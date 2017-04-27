@@ -1,61 +1,16 @@
 {
-    "model": {
-        "views": {
-            "1": {
-                "documentTitle": {
-                    "value": ""
-                },
-                "documentData": {
-                    "displayName": "",
-                    "path": ""
-                },
-                "sheets": {
-                    "value": [
-                        {
-                            "name": "sheet 1",
-                            "gridImage": {
-                                "displayName": "",
-                                "path": ""
-                            },
-                            "rowImage": {
-                                "displayName": "",
-                                "path": ""
-                            },
-                            "columnImage": {
-                                "displayName": "",
-                                "path": ""
-                            },
-                            "cellImage": {
-                                "displayName": "",
-                                "path": ""
-                            }
-                        }
-                    ]
-                },
-                "taskbarPreviewImage": {
-                    "displayName": "",
-                    "path": ""
-                }
+    "views": {
+        "1": {
+            "documentTitle": {
+                "value": ""
             },
-            "2": {
-                "sheetInAction": {
-                    "options": {
-                        "value": []
-                    },
-                    "selectedOption": {
-                        "value": {}
-                    }
-                },
-                "sourceRange": { "value": "" },
-                "destinationRange": { "value": "" }
+            "documentData": {
+                "displayName": "",
+                "path": ""
             },
-            "3": {
-                "workbookData": {
-                    "displayName": "",
-                    "path": ""
-                },
-                "sheets": {
-                    "value": [{
+            "sheets": {
+                "value": [
+                    {
                         "name": "sheet 1",
                         "gridImage": {
                             "displayName": "",
@@ -73,8 +28,57 @@
                             "displayName": "",
                             "path": ""
                         }
-                    }]
+                    }
+                ]
+            },
+            "taskbarPreviewImage": {
+                "displayName": "",
+                "path": ""
+            }
+        },
+        "2": {
+            "sheetInAction": {
+                "options": {
+                    "value": []
+                },
+                "selectedOption": {
+                    "value": {}
                 }
+            },
+            "sourceRange": {
+                "value": ""
+            },
+            "destinationRange": {
+                "value": ""
+            }
+        },
+        "3": {
+            "workbookData": {
+                "displayName": "",
+                "path": ""
+            },
+            "sheets": {
+                "value": [
+                    {
+                        "name": "sheet 1",
+                        "gridImage": {
+                            "displayName": "",
+                            "path": ""
+                        },
+                        "rowImage": {
+                            "displayName": "",
+                            "path": ""
+                        },
+                        "columnImage": {
+                            "displayName": "",
+                            "path": ""
+                        },
+                        "cellImage": {
+                            "displayName": "",
+                            "path": ""
+                        }
+                    }
+                ]
             }
         }
     }

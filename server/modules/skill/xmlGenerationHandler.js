@@ -23,12 +23,12 @@ module.exports.generateStepXML = function (templateId, taskId, stepIndex, stepTe
             let mapTranslationParam = new mapTranslationParams(IOMap, stepUIState, skillRef, taskId, stepIndex, dbFilestoreMgr)
             // let attrValueMap = translator.getAttrValueMap(IOMap, stepUIState, skillRef, taskId, stepIndex,dbFilestoreMgr);
             return translator.getAttrValueMap(mapTranslationParam)
-                .then(function (IOmap) {
+                .then(function (attrValMap) {
                     //XML generation
                     return dbFilestoreMgr.getSkillXML(templateId)
                         .then(skillTemplate => {
                             let xmlGenerator = new XmlGenerator();
-                            let OutputXML = xmlGenerator.generateXml(skillTemplate, IOmap, stepText);
+                            let OutputXML = xmlGenerator.generateXml(skillTemplate, attrValMap, stepText);
 
                             //Saving Step XML in File Store
                             return dbFilestoreMgr.saveStepXML(taskId, stepIndex, OutputXML)

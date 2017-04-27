@@ -1,4 +1,15 @@
 module.exports = class BaseSkill {
+  
+  /**
+   * function for some processing which is required for IO Map translation of all the applications
+   * @param {*} data : an object of values having certain data to be used
+   */
+  init (data){
+    // returning empty promise
+    // equivalent to do nothing
+    return Promise.resolve(true);
+  }
+  
   // This is the function of the TaskBar tooltip image path
   createTooltipImagePath(skillParams) {
 
