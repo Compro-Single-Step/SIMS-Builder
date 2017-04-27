@@ -57,7 +57,7 @@
                     "initial": {
                         "default-attrs": {
                             "APP_TOOLTIP_IMAGE": {
-                                "function-name": "extractSingleParamVal",
+                                "function-name": "createTooltipImagePath",
                                 "params": {
                                     "tbPrvImage": "views['1'].taskbarPreviewImage.path"
                                 }
