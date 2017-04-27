@@ -94,9 +94,10 @@ module.exports = class Step {
             let dynamicCompPropsArr = compProps.userDefined.split(',');
             for(let idx=0; idx<dynamicCompPropsArr.length; idx++){
                 try{
-                    let tempPropVal = this.attrValMap.preload.comps[compProps.id][dynamicCompPropsArr[idx]];
+                    let propName = dynamicCompPropsArr[idx];
+                    let tempPropVal = this.attrValMap.preload.comps[compProps.id][propName];
                     if (tempPropVal) {
-                        compProps[dynamicCompPropsArr[idx]] = tempPropVal;
+                        compProps[propName] = tempPropVal;
                     }
                 }catch(e){
                     console.log("ERROR: Value for property '"+dynamicCompPropsArr[idx]+"' for CompId '"+compProps.id+"' (in preload node) not found in the Attr Value Map");
