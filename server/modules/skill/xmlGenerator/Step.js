@@ -69,7 +69,7 @@ module.exports = class Step {
         xmlString += "<comps>";
         for(let idx=0; idx<this.preloadComps.length; idx++){
             let currCompProps = this.preloadComps[idx].props;
-            xmlString += '<comp id="'+currCompProps.id+'" name="'+currCompProps.name+'" cssclass="'+currCompProps.cssclass+'" type="'+currCompProps.type+'"/>';
+            xmlString += this.generatePreloadCompXML(currCompProps);
         }
         xmlString += "</comps>";
 
@@ -83,6 +83,33 @@ module.exports = class Step {
 
         xmlString += '</preload>';
         return xmlString;
+    }
+
+    /**
+     * fn to gnerate XML node of a component in preload node
+     * @param {*} compProps : properties of that comp node which are mentioned in template XML
+     */
+    generatePreloadCompXML (compProps){
+        if(compProps.userDefined){
+            let dynamicCompPropsArr = compProps.userDefined.split(',');
+            for(let idx=0; idx<dynamicCompPropsArr.length; idx++){
+                try{
+                    let tempPropVal = this.attrValMap.preload.comps[compProps.id][dynamicCompPropsArr[idx]];
+                    if (tempPropVal) {
+                        compProps[dynamicCompPropsArr[idx]] = tempPropVal;
+                    }
+                }catch(e){
+                    console.log("ERROR: Value for property '"+dynamicCompPropsArr[idx]+"' for CompId '"+compProps.id+"' (in preload node) not found in the Attr Value Map");
+                }
+            }
+        }
+        
+        let xmlStr = '<comp id="'+compProps.id+'" name="'+compProps.name+'" cssclass="'+compProps.cssclass+'" type="'+compProps.type+'"';
+        if(compProps.title){
+            xmlStr += ' title="'+compProps.title+'"';
+        }
+        xmlStr += ' />';
+        return xmlStr;
     }
 
     generateStatesXML (){
