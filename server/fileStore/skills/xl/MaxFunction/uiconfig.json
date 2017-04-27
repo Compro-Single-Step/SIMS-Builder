@@ -97,7 +97,8 @@
                 "itemListRef": "{{views.1.sheets}}",
                 "style": {
                   "max-width": "450px"
-                }
+                },
+                "displayInOneLine": true
               },
               "items": [
                 {
@@ -450,7 +451,8 @@
                 "itemListRef": "{{views.3.sheets}}",
                 "style": {
                   "max-width": "450px"
-                }
+                },
+                "displayInOneLine": true
               },
               "items": [
                 {
