@@ -5,7 +5,7 @@ const columnTypeContextMenuMap = {
   "INT": "TABLE_NUM",
   "TEXT": "TABLE"
 }
-
+let tableRange = "";
 
 class sortingTableColumns extends ExcelBaseSkill {
   getSheetDetails(initDocJSON, dependantSheetArrayInModel, clonedDependantSheetArrayInModel) {
@@ -138,7 +138,7 @@ class sortingTableColumns extends ExcelBaseSkill {
       let resolveParam = resolveParamArr[1];
 
       // making it toUpperCase as the data will be used later as well
-      let tableRange = (eval("data.stepUIState." + "views['1'].sheetsForTable.value[0].tableRange.value")).toUpperCase();
+      tableRange = (eval("data.stepUIState." + "views['1'].sheetsForTable.value[0].tableRange.value")).toUpperCase();
       tableRange.trim();
 
       let tableRAngeArr = self.getTableRangeArray(tableRange);
@@ -282,6 +282,7 @@ class sortingTableColumns extends ExcelBaseSkill {
     // Description Array of the Primary Object that will contain the secondary objects
     columnHeaderTypePrimaryObj["desc"] = [];
 
+    columnHeaderTypePrimaryObj["range"] = this.getColumnHeaderRange(tableRange);
     // Creating an array that will contain the dynamically created Primary Objects
     let columnDataObjectArr = []
 
@@ -354,6 +355,10 @@ class sortingTableColumns extends ExcelBaseSkill {
     // the above code should iterate through the multiple sheets 
     let resolvParams = { "attrValue": JSON.stringify(contextMenuArr) };
     return Promise.resolve(resolvParams);
+  }
+  getColumnHeaderRange(tableRange){
+    let columnHeaderArray = this.getFilterMenuCell(tableRange);
+    return (columnHeaderArray[0] + ":" + columnHeaderArray[columnHeaderArray.length-1])
   }
 
   getColDataRange(range) {
