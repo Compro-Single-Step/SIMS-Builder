@@ -123,7 +123,7 @@
                     "initial": {
                         "default-attrs": {
                             "HTML_PATH": {
-                                "function-name": "createPathWithImages",
+                                "function-name": "resourcePathWithImages",
                                 "params": {
                                     "docData": "views['3'].finalDocumentFile.path",
                                     "finalDocumentImages": "views['3'].finalDocumentImages.value.path"
