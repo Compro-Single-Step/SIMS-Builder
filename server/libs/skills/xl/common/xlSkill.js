@@ -22,7 +22,7 @@ module.exports = class ExcelBaseSkill extends BaseSkill {
         });
     }
 
-    generateSheetNamesMap() {   
+    generateSheetNamesMap() {
         this.sheetNameMap = {};
         for (var index = 0; index < this.initDocJson.sheets.length; ++index) {
             this.sheetNameMap[this.initDocJson.sheets[index].name] = (index + 1);
@@ -36,6 +36,24 @@ module.exports = class ExcelBaseSkill extends BaseSkill {
     genImageJsonResFolder(stateId) {
         return "state" + stateId;
     }
+
+
+
+    /**
+ * fnality
+ * for populating the attribute IMAGE_JSON
+ * This attributes takes 4 or less resources(images in this case) 
+ * and generates an attribute value with the folder path where the 
+ * images are stored along with their names
+ * return
+ * {"folderPath": "XMLs/TaskXmls2016/exp/xl/04/03.02.T1/Assets/State1",
+ * "sheetImages":[{"sheetNo":1,
+ *                  "gridImg": "March_Data_DataGrid.png",
+ *                  "rowImg": "March_Data_RowGrid.png",
+ *                  "colImg": "March_Data_ColumnGrid.png",
+ *                  "cellImg":"March_Data_CellImg.png"}]}
+ * 
+ */
 
     createImageJson(skillParams) {
 
@@ -172,49 +190,60 @@ module.exports = class ExcelBaseSkill extends BaseSkill {
     }
 
 
-//init DOC JSON 
-  createJsonPath(skillParams) {
+    /**
+     * fnality
+     * for populating the attribute INIT_DOC_JSON
+     * The function copies the asset to the required place and returns the path of the copied resource in resolveparam 
+     */
+    createJsonPath(skillParams) {
 
-    var taskParams = skillParams.taskParams;
-    var paramValueObj = skillParams.paramsObj;
+        var taskParams = skillParams.taskParams;
+        var paramValueObj = skillParams.paramsObj;
 
 
-    return taskParams.dbFilestoreMgr.copyTaskAssetFile(paramValueObj["docData"], taskParams)
-      .then(function (resolveParam) {
-        paramValueObj["docData"] = resolveParam.filePath;
-        var preloadResArr = [];
-        preloadResArr.push({ "path": "" + resolveParam.filePath, "type": "" + resolveParam.fileType })
-        resolveParam = { "attrValue": paramValueObj["docData"], "preloadResArr": preloadResArr }
-        return Promise.resolve(resolveParam);
-      }, function (error) {
-        return Promise.reject(error);
-        console.log("rejection at the movecellcontent");
-      }).catch(function (error) {
-        return Promise.reject(error);
-      });
+        return taskParams.dbFilestoreMgr.copyTaskAssetFile(paramValueObj["docData"], taskParams)
+            .then(function (resolveParam) {
+                paramValueObj["docData"] = resolveParam.filePath;
+                var preloadResArr = [];
+                preloadResArr.push({ "path": "" + resolveParam.filePath, "type": "" + resolveParam.fileType })
+                resolveParam = { "attrValue": paramValueObj["docData"], "preloadResArr": preloadResArr }
+                return Promise.resolve(resolveParam);
+            }, function (error) {
+                return Promise.reject(error);
+                console.log("rejection at the movecellcontent");
+            }).catch(function (error) {
+                return Promise.reject(error);
+            });
 
-  }
+    }
 
-createSheetCellData(skillParams) {
+    /**
+     * fnality
+     * for populating the attribute SHEET_CELLS_DATA
+     * The function copies the cell json asset to the required place and returns the path of the copied resource in resolveparam 
+     * return
+     * {"sheetNo":1, "dataJSONPath":"XMLs/TaskXmls2016/exp/xl/04/03.02.T1/Assets/State3/SheetCell.json" }
+     */
+    createSheetCellData(skillParams) {
 
-    var taskParams = skillParams.taskParams;
-    var paramValueObj = skillParams.paramsObj;
-    var finalObject = {};
-    finalObject["sheetNo"] = this.getSheetNumber(paramValueObj.sheetAction);
-    return taskParams.dbFilestoreMgr.copyTaskAssetFile(paramValueObj["wbData"], taskParams)
-      .then(function (resolaveParams) {
-        paramValueObj["wbData"] = resolaveParams.filePath
-        finalObject["dataJSONPath"] = paramValueObj["wbData"];
-        finalObject = JSON.stringify(finalObject);
-        var preloadResArr = [];
-        preloadResArr.push({ "path": "" + resolaveParams.filePath, "type": "" + resolaveParams.fileType })
-        var resolveParams = { "attrValue": finalObject, "preloadResArr": preloadResArr };
-        return Promise.resolve(resolveParams);
+        var taskParams = skillParams.taskParams;
+        var paramValueObj = skillParams.paramsObj;
+        var finalObject = {};
+        finalObject["sheetNo"] = this.getSheetNumber(paramValueObj.sheetAction);
+        return taskParams.dbFilestoreMgr.copyTaskAssetFile(paramValueObj["wbData"], taskParams)
+            .then(function (resolaveParams) {
+                paramValueObj["wbData"] = resolaveParams.filePath
+                finalObject["dataJSONPath"] = paramValueObj["wbData"];
+                finalObject = JSON.stringify(finalObject);
+                var preloadResArr = [];
+                preloadResArr.push({ "path": "" + resolaveParams.filePath, "type": "" + resolaveParams.fileType })
+                var resolveParams = { "attrValue": finalObject, "preloadResArr": preloadResArr };
+                return Promise.resolve(resolveParams);
 
-      }, function (error) {
-        return Promise.reject(error);
-      });
-  }
+            }, function (error) {
+                return Promise.reject(error);
+            });
+    }
 
 
 }
