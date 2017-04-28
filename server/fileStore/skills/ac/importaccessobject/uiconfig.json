@@ -69,12 +69,9 @@
                 "placeHolder": "Drop JSON file here to upload"
               },
               "mandatory": true,
-               "subscribeEvents": [
-                {
-                  "eventId": "DOCUMENT_DATA_UPDATED",
-                  "modelReference": "{{views.1.navigationPaneItems.options.value}}",
-                  "rule": "addSheetNamesToDropdown"
-                }
+               "emitEvents": [
+                "DOCUMENT_DATA_UPDATED"
+              
               ],             
                 "val": "{{views.1.navigationPane}}"
             },
@@ -87,8 +84,12 @@
                 "detailed": "Name of the database type to be show selected"
               },
               "itemRenderer": "Dropdown",
-              "emitEvents": [
-                "SHEET_IN_ACTION_UPDATED"
+               "subscribeEvents": [
+                {
+                  "eventId": "DOCUMENT_DATA_UPDATED",
+                  "modelReference": "{{views.1.navigationPaneItems.options.value}}",
+                  "rule": "addDatabaseObjectToDropdown"
+                }
               ],
               "rendererProperties": {
                 "itemListRef": "{{views.1.navigationPaneItems.options}}"
@@ -190,7 +191,7 @@
                 "basic": "Mode in which the Database is to imported.",
                 "detailed": "Template Supports two modes: 1. Import Tables, Queries etc from unlinked Table, 2.Import a Linked Table"
               },
-              "itemRenderer": "Switch",
+              "itemRenderer": "Radio",
               "itemType": "leaf",
               "mandatory": true,
               "val": "{{views.2.importMode}}"

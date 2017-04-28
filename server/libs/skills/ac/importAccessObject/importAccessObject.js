@@ -6,43 +6,62 @@ const xmlUtil = require("../../../../utils/xmlUtil");
 class importAccessobject extends baseSkill {
 
   //tooltip text to be displayed
-  getTootlTipText(skillParams){
+  getTootlTipText(skillParams) {
     console.log(skillParams);
     var paramValueObj = skillParams.paramsObj
-    var resolveParams = {"Access - " : paramValueObj["DocTitle"]};
+    var resolveParams = { "Access - ": paramValueObj["DocTitle"] };
     return Promise.resolve(resolveParams);
   }
-  getFileName(skillParams){
-   
+  getFileName(skillParams) {
+
     var paramValueObj = skillParams.paramsObj;
     var res = paramValueObj.split("\\");
 
   }
- getSheetNameAndSheetCountFromInitDocJSON(initDocJSON, dependantSheetArrayInModel) {
+  addDatabaseObjectToDropdown(navigationPaneJSON, navaigationPaneDatabaseObjectArray) {
+    var totDatabaseObject = Object.keys(navigationPaneJSON).length;
+    //Empty the existing array
+    while (navaigationPaneDatabaseObjectArray.length > 0) {
+      navaigationPaneDatabaseObjectArray.pop(); //https://jsperf.com/array-clear-methods/3
+    }
 
-    //Add The Required Number of Sheets in Model
-    if (initDocJSON.sheetCount >= dependantSheetArrayInModel.length) {
-       let sheetCountDiff = initDocJSON.sheetCount - dependantSheetArrayInModel.length;
-       while (sheetCountDiff > 0) {
-         dependantSheetArrayInModel.push(JSON.parse(JSON.stringify(dependantSheetArrayInModel[(dependantSheetArrayInModel.length - 1)])));
-         sheetCountDiff--;
-       }
-     }
-
-     //Add Sheet Names From Init Doc JSON
-     for (let sheetNum = 0; sheetNum < initDocJSON.sheetCount; sheetNum++) {
-       dependantSheetArrayInModel[sheetNum].name = initDocJSON.sheets[sheetNum].name;
-     }
-   }
+    for (let key in navigationPaneJSON) {
+      if (navigationPaneJSON.hasOwnProperty(key)) {
+        console.log(key + " -> " + navigationPaneJSON[key]);
+        
+      }
+    }
 
 
-   //init DOC JSON 
+
+  }
+
+
+  //  getSheetNameAndSheetCountFromInitDocJSON(initDocJSON, dependantSheetArrayInModel) {
+
+  //     //Add The Required Number of Sheets in Model
+  //     if (initDocJSON.sheetCount >= dependantSheetArrayInModel.length) {
+  //        let sheetCountDiff = initDocJSON.sheetCount - dependantSheetArrayInModel.length;
+  //        while (sheetCountDiff > 0) {
+  //          dependantSheetArrayInModel.push(JSON.parse(JSON.stringify(dependantSheetArrayInModel[(dependantSheetArrayInModel.length - 1)])));
+  //          sheetCountDiff--;
+  //        }
+  //      }
+
+  //      //Add Sheet Names From Init Doc JSON
+  //      for (let sheetNum = 0; sheetNum < initDocJSON.sheetCount; sheetNum++) {
+  //        dependantSheetArrayInModel[sheetNum].name = initDocJSON.sheets[sheetNum].name;
+  //      }
+  //    }
+
+
+  //init DOC JSON 
   // createJsonPath(skillParams, callback) {
 
   //   var taskParams = skillParams.taskParams;
   //   var paramValueObj = skillParams.paramsObj;
 
-  
+
   //     return taskParams.dbFilestoreMgr.copyTaskAssetFile(paramValueObj["docData"], taskParams)
   //       .then(function(resolveParam){
   //         paramValueObj["docData"] = resolveParam.filePath;
@@ -56,7 +75,7 @@ class importAccessobject extends baseSkill {
   //   }).catch(function(error){
   //       return Promise.reject(error);
   //   });
-    
+
   // }
 
   // getSelectedCell(skillParams, callback) {
