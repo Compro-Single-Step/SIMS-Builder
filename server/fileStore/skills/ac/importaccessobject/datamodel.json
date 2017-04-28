@@ -10,18 +10,13 @@
           "path": ""
         },
        "navigationPaneItems": {
-                    "options": {
-                        "value": []
-                    },
-                    "selectedOption": {
-                        "value": {}
-                    }
-                },
-        "selectedDbObjectType": {
-          "displayName": "",
-          "path": ""
-        },
-        
+          "options": {
+              "value": []
+          },
+          "selectedOption": {
+              "value": {}
+          }
+      },        
         "taskbarPreviewImage": {
           "displayName": "",
           "path": ""
