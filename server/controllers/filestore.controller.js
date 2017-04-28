@@ -29,10 +29,10 @@ class FileStoreController {
 
     readCsvFile(absolutePath) {
         return new Promise(function (resolve, reject) {
-            let resultArr = []
-            const csv = require('csvtojson')
-            csv().
-                fromFile(absolutePath)
+            let resultArr = [];
+            const csv = require('csvtojson');
+            csv()
+                .fromFile(absolutePath)
                 .on('json', (jsonObj) => {
                     console.log(jsonObj);
                     resultArr.push(jsonObj);
