@@ -12,4 +12,3 @@ export const MessageMap={
     "NO_CHANGES" : "No Changes",
     "TEMPLATE_UPDATED": "Task Template Updated"
 };
-
