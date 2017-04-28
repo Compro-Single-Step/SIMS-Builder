@@ -70,7 +70,7 @@
               },
               "mandatory": true,
                "emitEvents": [
-                "DOCUMENT_DATA_UPDATED"
+                "NAVPANE_DATA_UPDATED"
               
               ],             
                 "val": "{{views.1.navigationPane}}"
@@ -80,13 +80,13 @@
               "id": "1.2.2",
               "label": "Select Navigation Pane Item",
               "desc": {
-                "basic": "Name of the database type to be show selected",
-                "detailed": "Name of the database type to be show selected"
+                "basic": "Name of the database type and item to be show selected",
+                "detailed": "Name of the database type and item to be show selected"
               },
               "itemRenderer": "Dropdown",
                "subscribeEvents": [
                 {
-                  "eventId": "DOCUMENT_DATA_UPDATED",
+                  "eventId": "NAVPANE_DATA_UPDATED",
                   "modelReference": "{{views.1.navigationPaneItems.options}}",
                   "rule": "addDatabaseObjectToDropdown"
                 }
