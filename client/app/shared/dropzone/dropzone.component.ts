@@ -149,5 +149,6 @@ export class DropzoneComponent extends BaseComponent implements OnDestroy {
 }
 enum MIMETYPE {
   JSON = <any>".json",
-  img = <any>"image/*"
+  img = <any>"image/*",
+  HTML = <any>".htm"
 }

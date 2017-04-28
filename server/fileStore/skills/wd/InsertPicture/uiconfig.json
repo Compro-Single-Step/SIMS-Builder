@@ -59,7 +59,7 @@
                 "INITIAL_DOCUMENT_FILE_UPDATED"
               ],
               "rendererProperties": {
-                "dataType": "img",
+                "dataType": "HTML",
                 "placeHolder": "Drop HTML file here to upload"
               },
               "mandatory": true,
@@ -324,7 +324,7 @@
               "FINAL_DOCUMENT_FILE_UPDATED"
             ],
             "rendererProperties": {
-              "dataType": "img",
+              "dataType": "HTML",
               "placeHolder": "Drop HTML file here to upload"
             },
             "mandatory": true,
