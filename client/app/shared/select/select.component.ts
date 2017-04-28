@@ -11,7 +11,7 @@ import { LabelTypes } from '../enums';
 })
 export class SelectComponent extends BaseComponent {
   labelConfig: itemSchema = new itemSchema();
-  itemList: Object;
+  itemList: Object = new Object();
 
   ngOnInit() {
     super.ngOnInit();
