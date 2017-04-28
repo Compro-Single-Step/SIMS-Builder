@@ -1,5 +1,4 @@
 {
-  "model": {
     "views": {
       "1": {
         "documentTitle": {
@@ -14,7 +13,7 @@
               "value": []
           },
           "selectedOption": {
-              "value": {}
+              "value": ""
           }
       },        
         "taskbarPreviewImage": {
@@ -27,9 +26,7 @@
           "value": ""
         },
         "importMode": {
-          "selectedOption": {
-            "value": true
-          }
+            "value": ""
         },
         "openFileDialogXML": {
           "displayName": "",
@@ -50,5 +47,4 @@
         }
       }
     }
-  }
 }

@@ -21,7 +21,7 @@ export class RadioComponent extends BaseComponent implements OnInit {
     this.labelConfig.rendererProperties.type = LabelTypes.ELEMENT_HEADING;
     this.updateDescription();
     this.itemList = this.compConfig.rendererProperties.itemList;
-    this.modelRef = this.builderModelSrvc.getModelRef(this.compConfig.val); 
+    this.modelRef = this.builderModelSrvc.getStateRef(this.compConfig.val); 
   }
   selectedItemChange(selectedOption){
     this.modelRef["value"] = selectedOption;

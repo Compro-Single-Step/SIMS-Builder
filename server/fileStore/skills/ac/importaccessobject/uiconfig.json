@@ -192,6 +192,18 @@
                 "detailed": "Template Supports two modes: 1. Import Tables, Queries etc from unlinked Table, 2.Import a Linked Table"
               },
               "itemRenderer": "Radio",
+              "rendererProperties": {
+                "itemList": [
+                  {
+                    "value":"1",
+                    "label":"Unlinked Objects"
+                  },
+                  {
+                    "value":"2",
+                    "label":"Linked Table"
+                  }                  
+                  ]
+              },
               "itemType": "leaf",
               "mandatory": true,
               "val": "{{views.2.importMode}}"
