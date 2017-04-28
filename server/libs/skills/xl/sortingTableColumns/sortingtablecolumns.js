@@ -286,14 +286,14 @@ class sortingTableColumns extends ExcelBaseSkill {
       *********************** */
 
     // copmulsory Object that will assign all the column Headers as the context menu notation of type TABLE
-    let columnHeaderTypePrimaryObj = {};
-    columnHeaderTypePrimaryObj["type"] = "TABLE";
+    let columnHdrPrimaryObj = {};
+    columnHdrPrimaryObj["type"] = "TABLE";
     // currently Setting the default Tag as the name of the first column
-    columnHeaderTypePrimaryObj["defaultTag"] = Object.keys(columnHeaderObj)[0];
+    columnHdrPrimaryObj["defaultTag"] = Object.keys(columnHeaderObj)[0];
     // Description Array of the Primary Object that will contain the secondary objects
-    columnHeaderTypePrimaryObj["desc"] = [];
+    columnHdrPrimaryObj["desc"] = [];
 
-    columnHeaderTypePrimaryObj["range"] = this.getColumnHeaderRange(tableRange);
+    columnHdrPrimaryObj["range"] = this.getColumnHeaderRange(tableRange);
     // Creating an array that will contain the dynamically created Primary Objects
     let columnDataObjectArr = []
 
@@ -306,11 +306,11 @@ class sortingTableColumns extends ExcelBaseSkill {
       colHdrSecondaryObj["cell"] = columnHeaderObj[columnName]["range"].split(":")[0];
       colHdrSecondaryObj["tag"] = columnName;
       // adding the column headers into the first mandatory object
-      columnHeaderTypePrimaryObj["desc"].push(colHdrSecondaryObj);
+      columnHdrPrimaryObj["desc"].push(colHdrSecondaryObj);
 
 
       // create a column data secondary object here 
-      let colSecondaryObj = {
+      let colDataSecondaryObj = {
         "cell": this.getColDataRange(columnHeaderObj[columnName]["range"]),
         "tag": columnName
       };
@@ -325,7 +325,7 @@ class sortingTableColumns extends ExcelBaseSkill {
         colPrimaryObj["defaultTag"] = columnHeaderObj[columnName];
         colPrimaryObj["desc"] = [];
         // Push Secondary Object into Primary Object
-        colPrimaryObj["desc"].push(colSecondaryObj);
+        colPrimaryObj["desc"].push(colDataSecondaryObj);
         // Push Primary Object into Array
         columnDataObjectArr.push(colPrimaryObj);
       } else {
@@ -335,9 +335,9 @@ class sortingTableColumns extends ExcelBaseSkill {
         if (recentPrimaryObj["type"] == columnTypeContextMenuMap[columnHeaderObj[columnName]["type"]]) {
 
           // push the secondary object into the Primary object
-          recentPrimaryObj["desc"].push(colSecondaryObj);
+          recentPrimaryObj["desc"].push(colDataSecondaryObj);
           // merging the ranges
-          recentPrimaryObj["range"] = this.getMergedRange(recentPrimaryObj["range"], colSecondaryObj["cell"]);
+          recentPrimaryObj["range"] = this.getMergedRange(recentPrimaryObj["range"], colDataSecondaryObj["cell"]);
         }
         else {
           // The current column header was different than that of the one before it
@@ -347,7 +347,7 @@ class sortingTableColumns extends ExcelBaseSkill {
           colPrimaryObj["range"] = columnHeaderObj[columnName]["range"];
           colPrimaryObj["defaultTag"] = columnHeaderObj[columnName];
           colPrimaryObj["desc"] = [];
-          colPrimaryObj["desc"].push(colSecondaryObj);
+          colPrimaryObj["desc"].push(colDataSecondaryObj);
           columnDataObjectArr.push(colPrimaryObj);
         }
 
@@ -355,7 +355,7 @@ class sortingTableColumns extends ExcelBaseSkill {
     } // End of loop
 
     // push the Mandatory object into the contextMenuSheetObj
-    contextMenuSheetObj["data"].push(columnHeaderTypePrimaryObj);
+    contextMenuSheetObj["data"].push(columnHdrPrimaryObj);
     // Push the dynamically created array for the Column data Objects which contains the Dynamically created Primary objects
     for (let index = 0; index < columnDataObjectArr.length; ++index) {
       // add the columndataObject to the final sheet array
