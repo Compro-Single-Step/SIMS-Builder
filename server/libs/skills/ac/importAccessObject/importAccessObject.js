@@ -19,21 +19,19 @@ class importAccessobject extends baseSkill {
 
   }
   addDatabaseObjectToDropdown(navigationPaneJSON, navaigationPaneDatabaseObjectArray) {
-    var totDatabaseObject = Object.keys(navigationPaneJSON).length;
-    //Empty the existing array
-    while (navaigationPaneDatabaseObjectArray.length > 0) {
-      navaigationPaneDatabaseObjectArray.pop(); //https://jsperf.com/array-clear-methods/3
+    
+    while (navaigationPaneDatabaseObjectArray.value.length > 0) {
+      navaigationPaneDatabaseObjectArray.value.pop(); //https://jsperf.com/array-clear-methods/3
     }
 
     for (let key in navigationPaneJSON) {
-      if (navigationPaneJSON.hasOwnProperty(key)) {
+      if (navigationPaneJSON[key]) {
         console.log(key + " -> " + navigationPaneJSON[key]);
-        
+        for(let i=0; i<navigationPaneJSON[key].length;i++ ){
+            navaigationPaneDatabaseObjectArray.value.push({"label": (key + ' -> ' + navigationPaneJSON[key][i].name),"data":(key + ' -> ' + navigationPaneJSON[key][i].name)});
+        }        
       }
     }
-
-
-
   }
 
 

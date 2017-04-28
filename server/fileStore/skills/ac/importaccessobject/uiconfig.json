@@ -87,12 +87,13 @@
                "subscribeEvents": [
                 {
                   "eventId": "DOCUMENT_DATA_UPDATED",
-                  "modelReference": "{{views.1.navigationPaneItems.options.value}}",
+                  "modelReference": "{{views.1.navigationPaneItems.options}}",
                   "rule": "addDatabaseObjectToDropdown"
                 }
               ],
               "rendererProperties": {
-                "itemListRef": "{{views.1.navigationPaneItems.options}}"
+                "itemList": "{{views.1.navigationPaneItems.options}}",
+                "dynamicMode":true
               
               },
               "itemType": "leaf",
