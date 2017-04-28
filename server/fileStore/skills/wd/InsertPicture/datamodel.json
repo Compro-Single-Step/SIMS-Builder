@@ -13,6 +13,10 @@
                     {
                         "displayName": "",
                         "path": ""
+                    },
+                    {
+                        "displayName": "",
+                        "path": ""
                     }
                 ]
             },
@@ -56,6 +60,10 @@
             },
             "finalDocumentImages": {
                 "value": [
+                    {
+                        "displayName": "",
+                        "path": ""
+                    },
                     {
                         "displayName": "",
                         "path": ""

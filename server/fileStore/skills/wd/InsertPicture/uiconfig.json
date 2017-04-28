@@ -75,22 +75,15 @@
               "itemRenderer": "TabPage",
               "itemType": "child",
               "rendererProperties": {
-                "dynamicMode": true
               },
-              "subscribeEvents": [{
-                "eventId": "INITIAL_DOCUMENT_FILE_UPDATED",
-                "modelReference": "{{views.1.initialDocumentImages.value}}",
-                "rule": "getImagesInHTMLFile"
-              }],
-              "val": "{{views.1.initialDocumentImages}}",
               "items": [{
                 "id": "1.2.2.1",
-                "label":"label",
                 "itemRenderer": "Dropzone",
+                "desc": {},
                 "itemType": "leaf",
                 "rendererProperties": {
-                  "placeHolder": "Drop Document Image",
-                  "dynamicMode": true,
+                  "placeHolder": "Drop Initial Document Image 1",
+                  "dynamicMode": false,
                   "dataType": "img"
                 },
                 "pos": "x,y",
@@ -98,7 +91,24 @@
                   "height": "200px",
                   "width": "200px"
                 },
-                "relVal": "documentImage"
+              "val": "{{views.1.initialDocumentImages.value.0}}"
+              },
+              {
+                "id": "1.2.2.2",
+                "desc": {},
+                "itemRenderer": "Dropzone",
+                "itemType": "leaf",
+                "rendererProperties": {
+                  "placeHolder": "Drop Initial Document Image 2",
+                  "dynamicMode": false,
+                  "dataType": "img"
+                },
+                "pos": "x,y",
+                "dim": {
+                  "height": "200px",
+                  "width": "200px"
+                },
+              "val": "{{views.1.initialDocumentImages.value.1}}"
               }]
             }
           ]
@@ -338,23 +348,16 @@
               "detailed": "Imgaes which are part of the Final Document File are required to be uploaded here. These are obtained in a folder when Final Word Document is saved as HTML file."
             },
             "itemRenderer": "TabPage",
-            "itemType": "",
+            "itemType": "child",
             "rendererProperties": {
-              "dynamicMode": true
             },
-            "subscribeEvents": [{
-              "eventId": "FINAL_DOCUMENT_FILE_UPDATED",
-              "modelReference": "{{views.3.finalDocumentImages}}",
-              "rule": "getImagesInHTMLFile"
-            }],
-            "val": "{{views.3.finalDocumentImages}}",
             "items": [{
               "id": "3.1.2.1",
               "itemRenderer": "Dropzone",
+              "desc": {},
               "itemType": "leaf",
               "rendererProperties": {
-                "placeHolder": "Drop Document Image",
-                "dynamicMode": true,
+                "placeHolder": "Drop Final Document Image 1",
                 "dataType": "img"
               },
               "pos": "x,y",
@@ -362,7 +365,23 @@
                 "height": "200px",
                 "width": "200px"
               },
-              "relVal": "documentImage"
+              "val": "views.3.finalDocumentImages.value.0"
+            },
+            {
+              "id": "3.1.2.2",
+              "itemRenderer": "Dropzone",
+              "desc": {},
+              "itemType": "leaf",
+              "rendererProperties": {
+                "placeHolder": "Drop Final Document Image 2",
+                "dataType": "img"
+              },
+              "pos": "x,y",
+              "dim": {
+                "height": "200px",
+                "width": "200px"
+              },
+              "val": "views.3.finalDocumentImages.value.1"
             }]
           },
           {
