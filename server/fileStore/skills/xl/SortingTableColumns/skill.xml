@@ -67,6 +67,9 @@
 						<attributeset name="Pivot_Button_" multiple-occurence="true" based-on="attr" dependency-attr='["CELL_BEHIND_FILTER_MENU"]'>
 							<attr name="CELL_BEHIND_FILTER_MENU" userDefined="true"/>
 						</attributeset>
+						<attributeset name="Pivot_Button_Column_Header" inherits-default="false">
+							<attr name="CELL_BEHIND_FILTER_MENU" userDefined="true"/>
+						</attributeset>
 					</finalattributesets>
 					<events>
 						<event id="394" desc="Right click : sort a to z">

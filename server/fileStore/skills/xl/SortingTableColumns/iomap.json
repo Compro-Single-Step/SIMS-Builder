@@ -39,13 +39,13 @@
                 "function-name": "getTableRange",
                 "params": {
                   "tableRange": "views['1'].sheetsForTable.value[0].tableRange.value",
-                  "sheetAction":"views['2'].sheetInAction.selectedOption.value.label"
+                  "sheetAction": "views['2'].sheetInAction.selectedOption.value.label"
                 }
               },
               "CUSTOM_CONTEXT_MENU": {
                 "function-name": "getContextMenuData",
                 "params": {
-                  "sheetAction":"views['2'].sheetInAction.selectedOption.value.label"
+                  "sheetAction": "views['2'].sheetInAction.selectedOption.value.label"
                 }
               }
             },
@@ -71,7 +71,7 @@
               "SELECTED_CELLS_COMPLETE_IN_RANGE": {
                 "function-name": "extractSingleParamVal",
                 "params": {
-                  "tableRange":"views['1'].sheetsForTable.value[0].tableRange.value"
+                  "tableRange": "views['1'].sheetsForTable.value[0].tableRange.value"
                 }
               }
             },
@@ -80,6 +80,14 @@
                 "function-name": "getFilterMenuCell",
                 "params": {
                   "tableRange": "views['1'].sheetsForTable.value[0].tableRange.value"
+                }
+              }
+            },
+            "Pivot_Button_Column_Header": {
+              "CELL_BEHIND_FILTER_MENU": {
+                "function-name": "getColumnHdrCell",
+                "params": {
+                  "sortColName": "views[2].sortColumnName.selectedOption.value.label"
                 }
               }
             }
@@ -112,13 +120,11 @@
             "default-attrs": {
               "SORTBY_ITEMS_LIST": {
                 "function-name": "getSortedItemList",
-                "params": {
-                }
+                "params": {}
               },
               "ITEM_ORDER_TYPE": {
                 "function-name": "getItemOrderType",
-                "params": {
-                }
+                "params": {}
               }
             }
           },
@@ -127,13 +133,13 @@
               "SORTBY_VALUE": {
                 "function-name": "getSortByValue",
                 "params": {
-                  "sortColName":"views[2].sortColumnName.selectedOption.value.label"
+                  "sortColName": "views[2].sortColumnName.selectedOption.value.label"
                 }
               },
               "ORDERBY_VALUE": {
                 "function-name": "getOrderByValue",
                 "params": {
-                  "sortType":"views[2].sortType.selectedOption.value.label"
+                  "sortType": "views[2].sortType.selectedOption.value.label"
                 }
               }
             }

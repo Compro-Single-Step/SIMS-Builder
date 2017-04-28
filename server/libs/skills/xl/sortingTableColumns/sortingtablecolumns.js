@@ -230,6 +230,17 @@ class sortingTableColumns extends ExcelBaseSkill {
   }
 
 
+  getColumnHdrCell(skillParams) {
+    try {
+      let paramValueObj = skillParams.paramsObj;
+      let filterColumnName = paramValueObj.sortColName;
+      let resolveParams = { "attrValue": columnHeaderObj[filterColumnName]["range"].split(":")[0] };
+      return Promise.resolve(resolveParams);
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
+
   // CUSTOM_CONTEXT_MENU
   // this is a deducable value from 3 differenct areas
   // Table Range (known)
@@ -437,22 +448,22 @@ class sortingTableColumns extends ExcelBaseSkill {
 
   }
 
-  getColumnHeaderArray(tableRange){
-      let finalArr = [];
-      tableRange = tableRange.toUpperCase();
-      let valuearray = tableRange.split(":");
-      valuearray[0].trim();
-      valuearray[1].trim();
+  getColumnHeaderArray(tableRange) {
+    let finalArr = [];
+    tableRange = tableRange.toUpperCase();
+    let valuearray = tableRange.split(":");
+    valuearray[0].trim();
+    valuearray[1].trim();
 
-      let col1 = valuearray[0].toUpperCase().charAt(0);
-      let col2 = valuearray[1].toUpperCase().charAt(0);
-      let row1 = parseInt(valuearray[0].substring(1, valuearray[0].length));
-      let row2 = parseInt(valuearray[1].substring(1, valuearray[0].length));
+    let col1 = valuearray[0].toUpperCase().charAt(0);
+    let col2 = valuearray[1].toUpperCase().charAt(0);
+    let row1 = parseInt(valuearray[0].substring(1, valuearray[0].length));
+    let row2 = parseInt(valuearray[1].substring(1, valuearray[0].length));
 
-      for (let index = 0; index <= col2.charCodeAt(0) - col1.charCodeAt(0); ++index) {
-        finalArr.push((String.fromCharCode(col1.charCodeAt(0) + index)) + row1);
-      }
-      return finalArr;
+    for (let index = 0; index <= col2.charCodeAt(0) - col1.charCodeAt(0); ++index) {
+      finalArr.push((String.fromCharCode(col1.charCodeAt(0) + index)) + row1);
+    }
+    return finalArr;
 
   }
 
