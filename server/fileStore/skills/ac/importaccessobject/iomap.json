@@ -72,9 +72,7 @@
               "ACCESS_SELECTED_RADIO_OPTION": {
                 "function-name": "getSkillMode",
                 "params": {
-                  "sheetAction": "views['2'].sheetInAction.selectedOption.value",
-                  "wbData": "views['3'].workbookData.path",
-                  "initDocJson": "views['1'].documentData.path"
+                  "skillmode":"views['2'].importMode.value"
                 }
               }
             }
@@ -146,7 +144,7 @@
               "ACCESS_SELECTED_RADIO_OPTION": {
                 "function-name": "getSkillMode",
                 "params": {
-                  "databasePath": "views['2'].dbPath.value"
+                  "skillmode":"views['2'].importMode.value"
                 }
               }
             }
@@ -162,13 +160,13 @@
               "MODE": {
                 "function-name": "getSkillMode",
                 "params": {
-                  "openFileDialogTree": "views['2'].openFileDialogXML.path"
+                  "skillmode":"views['2'].importMode.value"
                 }
               },
               "DIALOG_DATA": {
                 "function-name": "getInitialDBConfig",
                 "params": {
-                  "DBdata": "views['2'].importDBConfig.value"
+                  "DBdata": "views['2'].importDBConfig.path"
                 }
               }
             }
@@ -176,9 +174,40 @@
           "final": {
             "default-attrs": {
               "TABLE_DATA": {
-                "function-name": "getFinalDBConfig",
+                "function-name": "getFinalTableValidation",
                 "params": {
-                  "DBdata": "views['2'].importDBConfig.value"
+                  "DBdata": "views['2'].importDBConfig.path"
+                }
+              },
+              "REPORT_DATA": {
+                "function-name": "getFinalReportValidation",
+
+                "params": {
+                  "DBdata": "views['2'].importDBConfig.path"
+                }
+              },
+              "QUERY_DATA": {
+                "function-name": "getFinalQueryValidation",
+                "params": {
+                  "DBdata": "views['2'].importDBConfig.path"
+                }
+              },
+              "FORM_DATA": {
+                "function-name": "getFinalFormValidation",
+                "params": {
+                  "DBdata": "views['2'].importDBConfig.path"
+                }
+              },
+              "MACRO_DATA": {
+                "function-name": "getFinalMacroValidation",
+                "params": {
+                  "DBdata": "views['2'].importDBConfig.path"
+                }
+              },
+              "MODULE_DATA": {
+                "function-name": "getFinalModuleValidation",
+                "params": {
+                  "DBdata": "views['2'].importDBConfig.path"
                 }
               }
             }
@@ -210,15 +239,9 @@
               "PROJECT_JSON": {
                 "function-name": "extractAttrPath",
                 "params": {
-                  "navPane": "views['1'].navigationPane.path"
+                  "navPane": "views['3'].navigationPane.path"
                 }
-              },
-              "SELECTED_DB_OBJECT": {
-                "function-name": "getFinalSelectedObject",
-                "params": {
-                  "DBdata": "views['2'].importDBConfig.value"
-                }
-              }
+              }              
             }
           }
         }

@@ -1,5 +1,4 @@
-<?xml version="1.0"?>
-<task name="EXP13.AC13.08.03.02.T1" id="1">
+<task>
 	<preload>
 		<comps>
 			<comp id="1" name="SIMS.Components.Access.Ribbon" cssclass="SIMS_Ribbon_Excel" type="default"/>
@@ -11,18 +10,7 @@
 			<comp id="7" name="SIMS.Components.Common.OpenFileDialog" cssclass="OpenFileDialog" type="modaldialog" title="File Open"/>
 			<comp id="8" name="SIMS.Components.Access.GetExternalDataCloseDialog" cssclass="GetExternalDataCloseDialog" type="modaldialog" title="Get External Data - Access Database"/>
 		</comps>
-		<resources>
-			<res path="XMLs/TaskXmls/exp/ac/08/t1projdata/0302.json" type="json"/>
-			<res path="XMLs/TaskXmls/exp/ac/08/t1projdata/0302_1.json" type="json"/>
-			<res path="XMLs/TaskXmls/exp/ac/08/03.02.t1/Assets/obj.json" type="json"/>
-			<res path="XMLs/TaskXmls/exp/ac/08/03.02.t1/Assets/tooltip.jpg" type="img"/>
-		</resources>
 	</preload>
-	<texts_formatted>
-		<txt id="1" StateStart="1">
-			<![CDATA[Import the Staffing Agents table from the <span class="keyterm">a08h3Propstaff</span> database in the Documents folder into the open database. Select the option to link to the data source.]]>
-		</txt>
-	</texts_formatted>
 	<states>
 		<state id="1" desc="Access document opened" txt="1">
 			<comps>
@@ -36,7 +24,6 @@
 						<attr name="RIBBON_PATH" value="app/comps/Common/Ribbon/access-ribbon.xml"/>
 						<attr name="DOCUMENT_NAME" userDefined="true"/>
 						<attr name="SHOW_SECTION" value="external_tab_web_linked_list"/>
-						<attr name="HANDLE_LONG_TITLE_TEXT" value="true"/>
 					</initialattrs>
 					<events>
 						<event id="2143" followup="2" desc="Access Clicked"/>
@@ -207,7 +194,6 @@
 				</comp>
 			</comps>
 		</state>
-		<!-- This State to be added if Mode =1 in previous state-->
 		<state id="6" desc="External data Save as dialog open" txt="1" optimized="1">
 			<comps>
 				<comp id="6" mode="remove"/>
@@ -242,7 +228,6 @@
 				</comp>
 			</comps>
 		</state>
-		<!--  state ends here -->
 		<state id="7" desc="Final State" islast="true">
 			<comps>
 				<comp id="3" mode="new">

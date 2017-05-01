@@ -4,195 +4,282 @@ const baseSkill = require("../../common/baseSkill");
 const xmlUtil = require("../../../../utils/xmlUtil");
 
 class importAccessobject extends baseSkill {
-
+  constructor(){
+    super();
+    this.projJSON = {};
+  }
   //tooltip text to be displayed
   getTootlTipText(skillParams) {
-    console.log(skillParams);
-    var paramValueObj = skillParams.paramsObj
-    var resolveParams = { "Access - ": paramValueObj["DocTitle"] };
+    var paramValueObj = skillParams.paramsObj;
+    var resolveParams = { "attrValue":  "Access - " + paramValueObj["DocTitle"] };
+    return Promise.resolve(resolveParams);
+  }
+  getSkillMode(skillParams){
+    var paramValueObj = skillParams.paramsObj;
+    var resolveParams = { "attrValue":paramValueObj.skillmode};
+    return Promise.resolve(resolveParams);
+  }
+  getSaveAsText(skillParams){
+    var paramValueObj = skillParams.paramsObj;
+    var resolveParams = this.splitFilename(paramValueObj.databasePath);
+    resolveParams = { "attrValue":"Import-"+resolveParams.split(".")[0]};
+    return Promise.resolve(resolveParams);
+  }
+  splitFilename(filePath){
+    var res = filePath.split("\\");
+    return res[res.length-1];
+  }
+  getFileNameWithExtension(skillParams) {
+    var paramValueObj = skillParams.paramsObj;
+    var resolveParams = { "attrValue": this.splitFilename(paramValueObj.databasePath)};
     return Promise.resolve(resolveParams);
   }
   getFileName(skillParams) {
-
     var paramValueObj = skillParams.paramsObj;
-    var res = paramValueObj.split("\\");
-
+    var resolveParams = this.splitFilename(paramValueObj.databasePath);
+    resolveParams = { "attrValue": resolveParams.split(".")[0]};
+    return Promise.resolve(resolveParams);
   }
+
   addDatabaseObjectToDropdown(navigationPaneJSON, navaigationPaneDatabaseObjectArray) {
-    
+    let objectType;
+    let objectMap = {
+      "tables" : "Table",
+      "queries" : "Query",
+      "forms" : "Form",
+      "reports" : "Report",
+      "macros" : "Macro",
+      "modules" : "Module"
+    }
+
     while (navaigationPaneDatabaseObjectArray.value.length > 0) {
       navaigationPaneDatabaseObjectArray.value.pop(); //https://jsperf.com/array-clear-methods/3
     }
 
     for (let key in navigationPaneJSON) {
       if (navigationPaneJSON[key]) {
-        console.log(key + " -> " + navigationPaneJSON[key]);
+        objectType = objectMap[key];
         for(let i=0; i<navigationPaneJSON[key].length;i++ ){
-            navaigationPaneDatabaseObjectArray.value.push({"label": (key + ' -> ' + navigationPaneJSON[key][i].name),"data":(key + ' -> ' + navigationPaneJSON[key][i].name)});
+            navaigationPaneDatabaseObjectArray.value.push({"label": (objectType + ' -> ' + navigationPaneJSON[key][i].name),"data":(objectType + ' -> ' + navigationPaneJSON[key][i].name)});
         }        
-      }
+     }
     }
   }
+  getInitialDBConfig(skillParams) {
+    var paramValueObj = skillParams.paramsObj;
+    var initialConfig = {
+    "objects": []
+    };
+    var self = this;
+    return skillParams.taskParams.dbFilestoreMgr.readFileFromFileStore(paramValueObj.DBdata).then(function (resolveParam) {
+      var DataJSON = JSON.parse(resolveParam.fileData);
 
+      self.getFinalDBConfig(DataJSON);
+      for (var objtype in DataJSON){
+        var typeObj = {
+          "objectType":objtype,
+          "names":[]
+        };
+        for(var dataObject in DataJSON[objtype])
+        {
+          typeObj.names.push(dataObject);
+        }
+        initialConfig.objects.push(typeObj);
+      }
+      console.log(initialConfig);
+      var preloadResArr = [];
+      preloadResArr.push({ "path": "" + resolveParam.filePath, "type": "" + resolveParam.fileType })
+      var resolveParams = { "attrValue": initialConfig, "preloadResArr": preloadResArr }
 
-  //  getSheetNameAndSheetCountFromInitDocJSON(initDocJSON, dependantSheetArrayInModel) {
+      return Promise.resolve(resolveParams);
+    });
+  }
+  getFinalDBConfig(DBJson){
+        var validationConfig = {};
+          var DataJSON = DBJson;
+          for (var objtype in DataJSON){
+            var names = [];
+            for(var dataObject in DataJSON[objtype])
+            {
+              if(DataJSON[objtype][dataObject])
+              names.push(dataObject);
+            }
+            if(names.length != 0)
+              validationConfig[objtype] = names;
+          }
+          this.projJSON = validationConfig;
+  }
+  getFinalTableValidation(skillParams) {
+    var paramValueObj = skillParams.paramsObj;
+    var self = this;
+    let resolveParams;
+    if(Object.keys(this.projJSON).length != 0){
+      if(this.projJSON.tables){
+        resolveParams = { "attrValue": this.projJSON.tables};
+      }
+      else
+        resolveParams = { "attrValue": null};
+       console.log(resolveParams);
+       return Promise.resolve(resolveParams);
+    }
+    else{
+      return skillParams.taskParams.dbFilestoreMgr.readFileFromFileStore(paramValueObj.DBdata).then(function (resolveParam) {
+      var DataJSON = JSON.parse(resolveParam.fileData);
+      self.getFinalDBConfig(DataJSON);
+      if(self.projJSON.tables){
+        resolveParams = { "attrValue": self.projJSON.tables};    
+      }
+      else
+        resolveParams = { "attrValue": null};
+       console.log(resolveParams);
+       return Promise.resolve(resolveParams);
+      });
+    }
+    
 
-  //     //Add The Required Number of Sheets in Model
-  //     if (initDocJSON.sheetCount >= dependantSheetArrayInModel.length) {
-  //        let sheetCountDiff = initDocJSON.sheetCount - dependantSheetArrayInModel.length;
-  //        while (sheetCountDiff > 0) {
-  //          dependantSheetArrayInModel.push(JSON.parse(JSON.stringify(dependantSheetArrayInModel[(dependantSheetArrayInModel.length - 1)])));
-  //          sheetCountDiff--;
-  //        }
-  //      }
+  }
+  getFinalReportValidation(skillParams) {
+    var paramValueObj = skillParams.paramsObj;
+    var self = this;
+    let resolveParams;
+    if(Object.keys(this.projJSON).length != 0){
+      if(this.projJSON.reports){
+        resolveParams = { "attrValue": this.projJSON.reports};    
+      }
+      else
+        resolveParams = { "attrValue": null};
+       console.log(resolveParams);
+       return Promise.resolve(resolveParams);
+    }
+    else{
+      return skillParams.taskParams.dbFilestoreMgr.readFileFromFileStore(paramValueObj.DBdata).then(function (resolveParam) {
+      var DataJSON = JSON.parse(resolveParam.fileData);
+      self.getFinalDBConfig(DataJSON);
+      if(self.projJSON.reports){
+        resolveParams = { "attrValue": self.projJSON.reports};    
+      }
+      else
+        resolveParams = { "attrValue": null};
+       console.log(resolveParams);
+       return Promise.resolve(resolveParams);
+      });
+    }
+    
 
-  //      //Add Sheet Names From Init Doc JSON
-  //      for (let sheetNum = 0; sheetNum < initDocJSON.sheetCount; sheetNum++) {
-  //        dependantSheetArrayInModel[sheetNum].name = initDocJSON.sheets[sheetNum].name;
-  //      }
-  //    }
+  }
+  getFinalQueryValidation(skillParams) {
+    var paramValueObj = skillParams.paramsObj;
+    var self = this;
+    let resolveParams;
+    if(Object.keys(this.projJSON).length != 0){
+      if(this.projJSON.queries){
+        resolveParams = { "attrValue": this.projJSON.queries};    
+      }
+      else
+        resolveParams = { "attrValue": null};
+       console.log(resolveParams);
+       return Promise.resolve(resolveParams);
+    }
+    else{
+      return skillParams.taskParams.dbFilestoreMgr.readFileFromFileStore(paramValueObj.DBdata).then(function (resolveParam) {
+      var DataJSON = JSON.parse(resolveParam.fileData);
+      self.getFinalDBConfig(DataJSON);
+      if(self.projJSON.queries){
+        resolveParams = { "attrValue": self.projJSON.queries};    
+      }
+      else
+        resolveParams = { "attrValue": null};
+       console.log(resolveParams);
+       return Promise.resolve(resolveParams);
+      });
+    }
+    
 
+  }
+  getFinalFormValidation(skillParams) {
+    var paramValueObj = skillParams.paramsObj;
+    var self = this;
+    let resolveParams;
+    if(Object.keys(this.projJSON).length != 0){
+      if(this.projJSON.forms){
+        resolveParams = { "attrValue": this.projJSON.forms};    
+      }
+      else
+        resolveParams = { "attrValue": null};
+       console.log(resolveParams);
+       return Promise.resolve(resolveParams);
+    }
+    else{
+      return skillParams.taskParams.dbFilestoreMgr.readFileFromFileStore(paramValueObj.DBdata).then(function (resolveParam) {
+      var DataJSON = JSON.parse(resolveParam.fileData);
+      self.getFinalDBConfig(DataJSON);
+      if(self.projJSON.forms){
+        resolveParams = { "attrValue": self.projJSON.forms};    
+      }
+      else
+        resolveParams = { "attrValue": null};
+       console.log(resolveParams);
+       return Promise.resolve(resolveParams);
+      });
+    }
+    
 
-  //init DOC JSON 
-  // createJsonPath(skillParams, callback) {
+  }
+  getFinalMacroValidation(skillParams) {
+    var paramValueObj = skillParams.paramsObj;
+    var self = this;
+    let resolveParams;
+    if(Object.keys(this.projJSON).length != 0){
+      if(this.projJSON.macros){
+        resolveParams = { "attrValue": this.projJSON.macros};    
+      }
+      else
+        resolveParams = { "attrValue": null};
+       console.log(resolveParams);
+       return Promise.resolve(resolveParams);
+    }
+    else{
+      return skillParams.taskParams.dbFilestoreMgr.readFileFromFileStore(paramValueObj.DBdata).then(function (resolveParam) {
+      var DataJSON = JSON.parse(resolveParam.fileData);
+      self.getFinalDBConfig(DataJSON);
+      if(self.projJSON.macros){
+        resolveParams = { "attrValue": self.projJSON.macros};    
+      }
+      else
+        resolveParams = { "attrValue": null};
+       console.log(resolveParams);
+       return Promise.resolve(resolveParams);
+      });
+    }
+    
 
-  //   var taskParams = skillParams.taskParams;
-  //   var paramValueObj = skillParams.paramsObj;
-
-
-  //     return taskParams.dbFilestoreMgr.copyTaskAssetFile(paramValueObj["docData"], taskParams)
-  //       .then(function(resolveParam){
-  //         paramValueObj["docData"] = resolveParam.filePath;
-  //         var preloadResArr = [];
-  //         preloadResArr.push({ "path": "" +  resolveParam.filePath, "type": "" + resolveParam.fileType })
-  //         resolveParam = {"attrValue":paramValueObj["docData"],"preloadResArr":preloadResArr}
-  //         return Promise.resolve(resolveParam);
-  //   },function(error){
-  //     return Promise.reject(error);
-  //     console.log("rejection at the movecellcontent");
-  //   }).catch(function(error){
-  //       return Promise.reject(error);
-  //   });
-
-  // }
-
-  // getSelectedCell(skillParams, callback) {
-
-  //   var paramValueObj = skillParams.paramsObj
-  //   var resolveParams = {"attrValue" : paramValueObj["srcRange"]};
-  //   return Promise.resolve(resolveParams);
-
-  // }
-
-  // getSelDragCell(skillParams, callback) {
-
-  //   var paramValueObj = skillParams.paramsObj
-  //   //requires sheet name using init doc json
-  //   var finalObject = {};
-  //   finalObject["sheetNo"] = this.getSheetNumber(paramValueObj.sheetAction);
-  //   finalObject["startRange"] = paramValueObj["srcRange"];
-  //   finalObject["endRange"] = paramValueObj["destRange"];
-  //   finalObject = JSON.stringify(finalObject);
-  //   var resolveParams = {"attrValue" :finalObject};
-  //   return Promise.resolve(resolveParams);
-  // }
-
-  // createHighlightJson(skillParams, callback) {
-
-  //   var paramValueObj = skillParams.paramsObj
-  //   // requires sheet number using Init Doc json
-  //   var finalObject = {};
-  //   finalObject["sheetNo"] = this.getSheetNumber(paramValueObj.sheetAction);
-  //   finalObject["range"] = paramValueObj["srcRange"];
-  //   finalObject = JSON.stringify(finalObject);
-  //   var resolveParams = {"attrValue" :finalObject};
-  //   return Promise.resolve(resolveParams);
-
-  // }
-
-
-  // createSheetCellData(skillParams, callback) {
-
-  //   var taskParams = skillParams.taskParams;
-  //   var paramValueObj = skillParams.paramsObj;
-  //   var finalObject = {};
-  //   finalObject["sheetNo"] = this.getSheetNumber(paramValueObj.sheetAction);
-  //     return taskParams.dbFilestoreMgr.copyTaskAssetFile(paramValueObj["wbData"], taskParams)
-  //     .then(function(resolaveParams){
-  //       paramValueObj["wbData"] = resolaveParams.filePath
-  //       finalObject["dataJSONPath"] = paramValueObj["wbData"];
-  //       finalObject = JSON.stringify(finalObject);
-  //       var preloadResArr = [];
-  //       preloadResArr.push({ "path": "" + resolaveParams.filePath, "type": "" + resolaveParams.fileType })
-  //       var resolveParams = {"attrValue": finalObject, "preloadResArr":preloadResArr};
-  //       return Promise.resolve(resolveParams);
-
-  //   },function(error){
-  //       return Promise.reject(error);
-  //   });
-  // }
-
-  // getSelectedCellFinal(skillParams, callback) {
-
-  //   var paramValueObj = skillParams.paramsObj
-  //   var finalArray = [];
-
-  //   var valuearray = paramValueObj["destRange"].split(":");
-  //   valuearray[0].trim();
-  //   valuearray[1].trim();
-
-  //   var col1 = valuearray[0].toUpperCase().charAt(0);
-  //   var col2 = valuearray[1].toUpperCase().charAt(0);
-  //   var row1 = parseInt(valuearray[0].substring(1, valuearray[0].length));
-  //   var row2 = parseInt(valuearray[1].substring(1, valuearray[0].length));
-
-  //   finalArray.push(valuearray[0]);
-
-  //   for (var iterator = 0; iterator <= col2.charCodeAt(0) - col1.charCodeAt(0); ++iterator) {
-  //     for (var index = 0; index <= row2 - row1; ++index) {
-  //       if (iterator != 0 || index != 0)
-  //         finalArray.push(col1 + row1 + ":" + (String.fromCharCode(col1.charCodeAt(0) + iterator)) + (row1 + index));
-  //     }
-
-  //   }
-  //   var resolveParams = {"attrValue" : finalArray};
-  //   return Promise.resolve(resolveParams);
-
-
-  // }
-
-
-
-  // getSheetNameAndSheetCountFromInitDocJSON(initDocJSON, dependantSheetArrayInModel) {
-
-  //   //Add The Required Number of Sheets in Model
-  //   if (initDocJSON.sheetCount >= dependantSheetArrayInModel.length) {
-  //     let sheetCountDiff = initDocJSON.sheetCount - dependantSheetArrayInModel.length;
-  //     while (sheetCountDiff > 0) {
-  //       dependantSheetArrayInModel.push(JSON.parse(JSON.stringify(dependantSheetArrayInModel[(dependantSheetArrayInModel.length - 1)])));
-  //       sheetCountDiff--;
-  //     }
-  //   }
-
-  //   //Add Sheet Names From Init Doc JSON
-  //   for (let sheetNum = 0; sheetNum < initDocJSON.sheetCount; sheetNum++) {
-  //     dependantSheetArrayInModel[sheetNum].name = initDocJSON.sheets[sheetNum].name;
-  //   }
-  // }
-
-  // addSheetNamesToDropdown(initDocJSON, dependantSheetArrayInModel) {
-
-  //   //Empty the existing array
-  //   while(dependantSheetArrayInModel.length > 0) {
-  //     dependantSheetArrayInModel.pop(); //https://jsperf.com/array-clear-methods/3
-  //   }
-  //   //Add Sheet Names to Array From Init Doc JSON
-  //   for (let sheetNum = 0; sheetNum < initDocJSON.sheetCount; sheetNum++) {
-  //     dependantSheetArrayInModel.push(initDocJSON.sheets[sheetNum].name);
-  //   }
-  // }
-  // updateSheetNameUsingDropdown(selectedSheetName, dependentSheetNameInModel) {
-  //       dependentSheetNameInModel.name = selectedSheetName;
-  // }
+  }
+  getFinalModuleValidation(skillParams) {
+    var paramValueObj = skillParams.paramsObj;
+    var self = this;
+    let resolveParams;
+    if(Object.keys(this.projJSON).length != 0){
+      if(this.projJSON.modules){
+        resolveParams = { "attrValue": this.projJSON.modules};    
+      }
+      else
+        resolveParams = { "attrValue": null};
+       console.log(resolveParams);
+       return Promise.resolve(resolveParams);
+    }
+    else{
+      return skillParams.taskParams.dbFilestoreMgr.readFileFromFileStore(paramValueObj.DBdata).then(function (resolveParam) {
+      var DataJSON = JSON.parse(resolveParam.fileData);
+      self.getFinalDBConfig(DataJSON);
+      if(self.projJSON.modules){
+        resolveParams = { "attrValue": self.projJSON.modules};    
+      }
+      else
+        resolveParams = { "attrValue": null};
+       console.log(resolveParams);
+       return Promise.resolve(resolveParams);
+      });
+    }
+  }
 }
 module.exports = importAccessobject;
