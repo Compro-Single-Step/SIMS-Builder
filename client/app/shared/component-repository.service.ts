@@ -11,11 +11,11 @@ export class ComponentRepositoryService {
   }
 }
 
-export function EntryComps() {
+export function getEntryComps() {
   return Comps;
 }
 
-export function CompDeclarations() {
+export function getDeclarationComps() {
   return Comps;
 }
 

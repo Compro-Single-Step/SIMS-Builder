@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { TabsModule, PopoverModule } from 'ng2-bootstrap';
 
 import { InputFactoryService } from './input-factory.service';
-import { ComponentRepositoryService, CompDeclarations, EntryComps } from './component-repository.service';
+import { ComponentRepositoryService, getDeclarationComps, getEntryComps } from './component-repository.service';
 
 @NgModule({
   imports: [
@@ -15,8 +15,8 @@ import { ComponentRepositoryService, CompDeclarations, EntryComps } from './comp
     PopoverModule.forRoot(),
     FormsModule
   ],
-  declarations: [ ...CompDeclarations() ],
-  entryComponents: [ ...EntryComps() ],
+  declarations: [ ...getDeclarationComps() ],
+  entryComponents: [ ...getEntryComps() ],
   providers: [ InputFactoryService, ComponentRepositoryService ]
 })
 export class SharedModule { }
