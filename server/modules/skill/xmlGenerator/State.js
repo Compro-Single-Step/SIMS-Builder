@@ -11,7 +11,7 @@ module.exports = class State {
         this.stepRef = parentStepRef;
         this.comps = {};
 
-        this.generateComponents(args.comps, attrValMap);
+        this.generateComponents(args.comps[0].comp, attrValMap);
 
     }
 
@@ -23,7 +23,7 @@ module.exports = class State {
 
         for(let i=0; i<comps.length; i++){
             if(comps[i].events){
-                this.comps[comps[i].props.id].addEvents(comps[i].events);
+                this.comps[comps[i].props.id].addEvents(comps[i].events[0]);
             }
 
         }
