@@ -5,6 +5,7 @@ const multer = require('multer');
 const mkdirp = require('mkdirp');
 const fse = require('fs-extra');
 const ResourceUtil = require('../utils/resourceUtil');
+const XMLUtil = require('../utils/XMLUtil');
 
 const fileTypeFolderMap = {
     "SKILL": config.fileStore.skillFolder,
@@ -26,7 +27,6 @@ const fileTypeFunctionMap = {
 }
 
 class FileStoreController {
-
     readCsvFile(absolutePath) {
         return new Promise(function (resolve, reject) {
             let resultArr = [];
@@ -53,11 +53,6 @@ class FileStoreController {
         });
     }
 
-
-    getFileStoreStepFolderPath(taskId, stepIdx) {
-        return config.fileStore.xmlFolder + taskId + "/" + stepIdx + "/";
-    }
-
     getSimsXmlStepFolderPath(taskId, stepIdx) {
         return this.getTaskFolderPath(taskId, stepIdx) + stepIdx + "/";
     }
@@ -73,7 +68,7 @@ class FileStoreController {
             resFileType = resTypeMap[fileType]
         }
         //path to save the file
-        var absFilePath = this.getFileStoreStepFolderPath(taskParams.taskId, taskParams.stepIndex);
+        var absFilePath = this.getStepXMLFolderPath(taskParams.taskId, taskParams.stepIndex);
 
         //path to return for the file
         var srcPath = config.fileStore.resourceFolder + srcPath;
@@ -102,6 +97,22 @@ class FileStoreController {
         });
     }
 
+    copyAssetToTaskFolderEnhanced(sourceFileLocation, resourceMap, taskId, stepIndex) {
+
+        let srcPath = resourceMap.resourceType === "step" ? config.fileStore.resourceFolder + sourceFileLocation : path.join(config.fileStore.skillFolder, sourceFileLocation),
+            destPath = path.join(this.getStepXMLAssetsFolderPath(taskId, stepIndex), resourceMap.customParentFolder, resourceMap.fileName);
+
+        return new Promise((resolve, reject) => {
+            fse.copy(srcPath, destPath, { overwrite: false }, error => {
+                if (!error) {
+                    resolve("success");
+                }
+                else {
+                    reject(error);
+                }
+            });
+        });
+    }
 
     readTaskRes(filepath, readFileType) {
         var absolutePath = config.fileStore.resourceFolder + filepath;
@@ -239,6 +250,10 @@ class FileStoreController {
 
     getStepXMLFolderPath(taskId, stepIndex) {
         return config.fileStore.xmlFolder + taskId + "/" + stepIndex + "/";
+    }
+
+    getStepXMLAssetsFolderPath(taskId, stepIndex) {
+        return config.fileStore.xmlFolder + taskId + "/" + stepIndex + "/Assets/";
     }
 
     getUploadedResourceFolderPath(relPath) {

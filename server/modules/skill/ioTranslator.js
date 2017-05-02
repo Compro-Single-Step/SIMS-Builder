@@ -1,18 +1,44 @@
+const path = require('path'),
+  XMLUtil = require("../../utils/xmlUtil"),
+  ResourceUtil = require("../../utils/resourceUtil");
+
+
 //this file contains the object type implementation for the parameters of an attribute
 
-var attrParam = function (attrName, attrObject, stepUIState, skillobject, IOMapRef) {
+function attrParam(attrName, attrObject, stepUIState, skillobject, IOMapRef) {
   this.attrName = attrName;
   this.attrObject = attrObject;
   this.stepUIState = stepUIState;
   this.skillobject = skillobject;
 }
 
-var attrTaskParam = function (taskId, stepIndex, stateId, dbFilestoreMgr) {
-
+function attrTaskParam(taskId, stepIndex, stateId, dbFilestoreMgr, resourceMap) {
   this.taskId = taskId;
   this.stepIndex = stepIndex;
   this.stateId = stateId;
   this.dbFilestoreMgr = dbFilestoreMgr;
+  this.resourceMap = resourceMap;
+}
+
+attrTaskParam.prototype.addResourceToMap = function (type, filePath, customParentFolder = "") {
+
+  let existingResource;
+  if (existingResource = this.resourceMap[filePath])
+    return existingResource;
+
+  let fileName = ResourceUtil.getFileNameWithExtension(filePath),
+    fileType = ResourceUtil.getFileType(fileName),
+    stepAssetsFolderPath = XMLUtil.genStepAssetsFolderPath(this.taskId, this.stepIndex);
+  absFilePath = path.join(stepAssetsFolderPath, customParentFolder, fileName).replace(/\\/g, "/");
+
+  type = type.toLowerCase();
+
+  if (type !== "skill")
+    type = "step";
+
+  //Pushing to  Resource Map so that the file can be copied asynchronously
+  this.resourceMap[filePath] = { "customParentFolder": customParentFolder, "fileName": fileName, "resourceType": type, "absFilePath": absFilePath, "fileType": fileType };
+  return { "customParentFolder": customParentFolder, "fileName": fileName, "stepAssetsFolderPath": stepAssetsFolderPath, "fileType": fileType, "absFilePath": absFilePath };
 }
 
 class IOTranslator {
@@ -27,12 +53,8 @@ class IOTranslator {
           console.log("promise rejection at genPromise");
           reject(error);
         });
-
-
-
     })
   }
-
 
   //common function for getting the param array for the passed array of params
   getEvaluatedParams(paramObj, stepUIState) {
@@ -47,15 +69,15 @@ class IOTranslator {
     return paramObj;
   }
 
-  evaluateFromFunc(attrParams, paramsObj, taskParam) {
+  evaluateFromFunc(attrParams, paramsObj, taskParams) {
 
-    var functionName = attrParams.attrObject["function-name"];
+    let functionName = attrParams.attrObject["function-name"];
 
     if (!attrParams.skillobject[functionName]) {
       functionName = "extractSingleParamVal"
     }
 
-    var skillParams = { "paramsObj": paramsObj, "taskParams": taskParam };
+    let skillParams = { paramsObj, taskParams };
     return attrParams.skillobject[functionName](skillParams);
   }
 
@@ -79,16 +101,20 @@ class IOTranslator {
    * @param {*} PromiseRequestsArr : An array in which promise object has to be pushed. 
    * Later on in the execution cycle this whole array is passed to the Promise.All()
    */
-  
-  _executeIOMapFunction(attrObj, data, PromiseRequestsArr) {
+
+  _executeIOMapFunction(attrObj, data, PromiseRequestsArr, resourceMap) {
     let attrParams = new attrParam(data.keyName, data.parentObj[data.keyName], attrObj.stepUIState, attrObj.skillRef),
-      taskParam = new attrTaskParam(attrObj.taskId, attrObj.stepIndex, data.stateId, attrObj.dbFilestoreMgr);
+      taskParam = new attrTaskParam(attrObj.taskId, attrObj.stepIndex, data.stateId, attrObj.dbFilestoreMgr, resourceMap);
 
     PromiseRequestsArr.push(this.genPromise(attrParams, taskParam)
       .then(resolveParams => {
         data.parentObj[data.keyName] = resolveParams.attrValue;
         if (resolveParams.preloadResArr) {
-          this.appendPreloadRes(resolveParams.preloadResArr, attrObj.IOMap);
+          if (!attrObj.IOMap.preload)
+            attrObj.IOMap.preload = { resource: [] };
+          else if (!attrObj.IOMap.preload.resource)
+            attrObj.IOMap.preload.resource = [];
+          attrObj.IOMap.preload.resource.push(...resolveParams.preloadResArr);
         }
       }, error => {
         return Promise.reject(error);
@@ -109,7 +135,8 @@ class IOTranslator {
     return attrObj.skillRef["init"](attrObj)
       .then(() => {
         let self = this,
-          PromiseRequestsArr = [];
+          PromiseRequestsArr = [],
+          resourceMap = {};
 
         /**
          * Recursive function to traverse the IO Map to translate IO Map into Attribute Value Map
@@ -132,7 +159,7 @@ class IOTranslator {
             // if check to ensure that this iteration is for an element in which some translation has to be done
             // and not for some element in the hierarchy which doesn't need any translation for itself but has some child elements
             if (key === "function-name") {
-              self._executeIOMapFunction(attrObj, { parentObj, keyName, stateId, compId }, PromiseRequestsArr);
+              self._executeIOMapFunction(attrObj, { parentObj, keyName, stateId, compId }, PromiseRequestsArr, resourceMap);
             }
             else if (typeof parentObj[keyName][key] === "object") {
               traverseIOMap(parentObj[keyName], key, stateId, compId);
@@ -140,10 +167,12 @@ class IOTranslator {
           }
         })({ "iomap": iomap }, "iomap");
 
+        let copyResPromiseArray = this._copyResourceFilesAndFillPreload(resourceMap, attrObj);
+
         return Promise.all(PromiseRequestsArr)
           .then(() => {
-            iomap.preloadResources = self._removeDuplicatePreloadResources(iomap.preloadResources);
-            return Promise.resolve(iomap);
+            iomap.preload.resource = self._removeDuplicatePreloadResources(iomap.preload.resource);
+            return Promise.resolve([iomap, copyResPromiseArray]);
           })
           .catch(err => {
             console.log("Error in traverseIOMap function of IOTranslator: " + err.message);
@@ -169,24 +198,29 @@ class IOTranslator {
     })
   }
 
-  appendPreloadRes(preloadResArr, IOMap) {
-    if (!(IOMap["preloadResources"])) {
-      IOMap["preloadResources"] = [];
+  _copyResourceFilesAndFillPreload(resourceMap, attrObj) {
+    let copyResPromiseArray = [];
+    for (let key in resourceMap) {
+      copyResPromiseArray.push(attrObj.dbFilestoreMgr.copyTaskAssetFileEnhanced(key, resourceMap[key], attrObj.taskId, attrObj.stepIndex));
+
+      //Adding in prload Res
+      if (!attrObj.IOMap.preload)
+        attrObj.IOMap.preload = { resource: [] };
+      else if (!attrObj.IOMap.preload.resource)
+        attrObj.IOMap.preload.resource = [];
+      attrObj.IOMap.preload.resource.push({ "path": resourceMap[key]["absFilePath"], "type": resourceMap[key]["fileType"] });
     }
-    for (var index = 0; index < preloadResArr.length; ++index) {
-      IOMap["preloadResources"].push(preloadResArr[index]);
-    }
+    return copyResPromiseArray;
   }
 
   getAttrValueMap(attrObj) {
     return this.readIOMap(attrObj)
-      .then(function (ioMap) {
-        return Promise.resolve(ioMap);
-      }
-      , function (error) {
+      .then(([ioMap, copyResPromiseArray]) => {
+        return Promise.resolve([ioMap, copyResPromiseArray]);
+      })
+      .catch(error => {
         return Promise.reject(error);
-      }
-      );
+      });
   }
 }
 var iotranslatorobj = new IOTranslator();

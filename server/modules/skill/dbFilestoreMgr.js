@@ -16,6 +16,12 @@ class DatabaseFileStoreManager {
         // this function will as it is return the promise object whether it is resolved or rejected
         return fsc.copyAssetToTaskFolder(residentPath, taskParams);
     }
+
+    copyTaskAssetFileEnhanced(sourceFileLocation, resourceMap, taskId, stepIndex) {
+        //construct a promise in filestore controller and return that promise 
+        // this function will as it is return the promise object whether it is resolved or rejected
+        return fsc.copyAssetToTaskFolderEnhanced(sourceFileLocation, resourceMap, taskId, stepIndex);
+    }
     
     getUIConfig(templateId) {
         return dbController.getSkillConfigPath(templateId, skillConfigTypes.UI_CONFIG)
