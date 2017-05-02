@@ -38,8 +38,7 @@ module.exports = {
             }
         ],
         dependencySkills: []
-    }
-},
+    },
     "sortingtablecolumns": {
         primaryFile: "xl/sortingtablecolumns/sortingtablecolumns",
         dependencyFiles: [

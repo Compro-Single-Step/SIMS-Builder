@@ -87,11 +87,15 @@ class importAccessobject extends baseSkill {
         initialConfig.objects.push(typeObj);
       }
       console.log(initialConfig);
-      var preloadResArr = [];
-      preloadResArr.push({ "path": "" + resolveParam.filePath, "type": "" + resolveParam.fileType })
-      var resolveParams = { "attrValue": initialConfig, "preloadResArr": preloadResArr }
+      return skillParams.taskParams.dbFilestoreMgr.saveXMLDynamicResource(skillParams.taskParams,JSON.stringify(initialConfig),"InitialConfig.json").then( (resolvePath)=>{
+        var preloadResArr = [];
+        var finalPath = resolvePath
+        //finalPath [finalPath.length -1] = "InitialConfig";
+        preloadResArr.push({ "path": "" + finalPath, "type": "json" })
+        var resolveParams = { "attrValue": finalPath, "preloadResArr": preloadResArr }
 
-      return Promise.resolve(resolveParams);
+        return Promise.resolve(resolveParams);
+      });
     });
   }
   getFinalDBConfig(DBJson){
@@ -109,158 +113,32 @@ class importAccessobject extends baseSkill {
           }
           this.projJSON = validationConfig;
   }
-  getFinalTableValidation(skillParams) {
-    var paramValueObj = skillParams.paramsObj;
-    var self = this;
-    let resolveParams;
-    if(Object.keys(this.projJSON).length != 0){
-      if(this.projJSON.tables){
-        resolveParams = { "attrValue": this.projJSON.tables};
-      }
-      else
-        resolveParams = { "attrValue": null};
-       console.log(resolveParams);
-       return Promise.resolve(resolveParams);
-    }
-    else{
-      return skillParams.taskParams.dbFilestoreMgr.readFileFromFileStore(paramValueObj.DBdata).then(function (resolveParam) {
-      var DataJSON = JSON.parse(resolveParam.fileData);
-      self.getFinalDBConfig(DataJSON);
-      if(self.projJSON.tables){
-        resolveParams = { "attrValue": self.projJSON.tables};    
-      }
-      else
-        resolveParams = { "attrValue": null};
-       console.log(resolveParams);
-       return Promise.resolve(resolveParams);
-      });
-    }
-    
-
+  getFinalTableValidation(skillParams) { 
+    return this.checkIfObjectExist(skillParams,"tables");
   }
   getFinalReportValidation(skillParams) {
-    var paramValueObj = skillParams.paramsObj;
-    var self = this;
-    let resolveParams;
-    if(Object.keys(this.projJSON).length != 0){
-      if(this.projJSON.reports){
-        resolveParams = { "attrValue": this.projJSON.reports};    
-      }
-      else
-        resolveParams = { "attrValue": null};
-       console.log(resolveParams);
-       return Promise.resolve(resolveParams);
-    }
-    else{
-      return skillParams.taskParams.dbFilestoreMgr.readFileFromFileStore(paramValueObj.DBdata).then(function (resolveParam) {
-      var DataJSON = JSON.parse(resolveParam.fileData);
-      self.getFinalDBConfig(DataJSON);
-      if(self.projJSON.reports){
-        resolveParams = { "attrValue": self.projJSON.reports};    
-      }
-      else
-        resolveParams = { "attrValue": null};
-       console.log(resolveParams);
-       return Promise.resolve(resolveParams);
-      });
-    }
-    
-
+    return this.checkIfObjectExist(skillParams,"reports");
   }
   getFinalQueryValidation(skillParams) {
-    var paramValueObj = skillParams.paramsObj;
-    var self = this;
-    let resolveParams;
-    if(Object.keys(this.projJSON).length != 0){
-      if(this.projJSON.queries){
-        resolveParams = { "attrValue": this.projJSON.queries};    
-      }
-      else
-        resolveParams = { "attrValue": null};
-       console.log(resolveParams);
-       return Promise.resolve(resolveParams);
-    }
-    else{
-      return skillParams.taskParams.dbFilestoreMgr.readFileFromFileStore(paramValueObj.DBdata).then(function (resolveParam) {
-      var DataJSON = JSON.parse(resolveParam.fileData);
-      self.getFinalDBConfig(DataJSON);
-      if(self.projJSON.queries){
-        resolveParams = { "attrValue": self.projJSON.queries};    
-      }
-      else
-        resolveParams = { "attrValue": null};
-       console.log(resolveParams);
-       return Promise.resolve(resolveParams);
-      });
-    }
-    
-
+    return this.checkIfObjectExist(skillParams,"queries");
   }
   getFinalFormValidation(skillParams) {
-    var paramValueObj = skillParams.paramsObj;
-    var self = this;
-    let resolveParams;
-    if(Object.keys(this.projJSON).length != 0){
-      if(this.projJSON.forms){
-        resolveParams = { "attrValue": this.projJSON.forms};    
-      }
-      else
-        resolveParams = { "attrValue": null};
-       console.log(resolveParams);
-       return Promise.resolve(resolveParams);
-    }
-    else{
-      return skillParams.taskParams.dbFilestoreMgr.readFileFromFileStore(paramValueObj.DBdata).then(function (resolveParam) {
-      var DataJSON = JSON.parse(resolveParam.fileData);
-      self.getFinalDBConfig(DataJSON);
-      if(self.projJSON.forms){
-        resolveParams = { "attrValue": self.projJSON.forms};    
-      }
-      else
-        resolveParams = { "attrValue": null};
-       console.log(resolveParams);
-       return Promise.resolve(resolveParams);
-      });
-    }
-    
-
+    return this.checkIfObjectExist(skillParams,"forms");
   }
   getFinalMacroValidation(skillParams) {
-    var paramValueObj = skillParams.paramsObj;
-    var self = this;
-    let resolveParams;
-    if(Object.keys(this.projJSON).length != 0){
-      if(this.projJSON.macros){
-        resolveParams = { "attrValue": this.projJSON.macros};    
-      }
-      else
-        resolveParams = { "attrValue": null};
-       console.log(resolveParams);
-       return Promise.resolve(resolveParams);
-    }
-    else{
-      return skillParams.taskParams.dbFilestoreMgr.readFileFromFileStore(paramValueObj.DBdata).then(function (resolveParam) {
-      var DataJSON = JSON.parse(resolveParam.fileData);
-      self.getFinalDBConfig(DataJSON);
-      if(self.projJSON.macros){
-        resolveParams = { "attrValue": self.projJSON.macros};    
-      }
-      else
-        resolveParams = { "attrValue": null};
-       console.log(resolveParams);
-       return Promise.resolve(resolveParams);
-      });
-    }
-    
-
+    return this.checkIfObjectExist(skillParams,"macros");
   }
-  getFinalModuleValidation(skillParams) {
-    var paramValueObj = skillParams.paramsObj;
-    var self = this;
+  getFinalModuleValidation(skillParams) {    
+    return this.checkIfObjectExist(skillParams,"modules");
+  }
+  checkIfObjectExist(skillParams,objType){
+    let paramValueObj = skillParams.paramsObj;
     let resolveParams;
+    let self = this;
     if(Object.keys(this.projJSON).length != 0){
-      if(this.projJSON.modules){
-        resolveParams = { "attrValue": this.projJSON.modules};    
+      if(this.projJSON[objType]){
+        
+        resolveParams = { "attrValue": this.projJSON[objType]};
       }
       else
         resolveParams = { "attrValue": null};
@@ -271,8 +149,8 @@ class importAccessobject extends baseSkill {
       return skillParams.taskParams.dbFilestoreMgr.readFileFromFileStore(paramValueObj.DBdata).then(function (resolveParam) {
       var DataJSON = JSON.parse(resolveParam.fileData);
       self.getFinalDBConfig(DataJSON);
-      if(self.projJSON.modules){
-        resolveParams = { "attrValue": self.projJSON.modules};    
+      if(self.projJSON[objType]){
+        resolveParams = { "attrValue": self.projJSON[objType]};    
       }
       else
         resolveParams = { "attrValue": null};

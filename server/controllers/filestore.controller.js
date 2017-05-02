@@ -154,10 +154,18 @@ class FileStoreController {
     saveStepXML(taskId, stepIndex, OutputXML) {
 
         let folderPath = this.getStepXMLFolderPath(taskId, stepIndex);
-        let fileName = "task.xml";  //this will come from out side.
+        let fileName = "task.xml";//this will come from out side.
         return this.saveFileToFileStore(folderPath, fileName, OutputXML);
     }
-
+    saveXMLResources(taskParams, File, FileName) {
+        let destPath = this.getStepXMLFolderPath(taskParams.taskId, taskParams.stepIndex);
+        let relativeXmlPath = this.getSimsXmlStepFolderPath(taskParams.taskId, taskParams.stepIndex);
+        let fileName = FileName; //this will come from out side.
+        return this.saveFileToFileStore(destPath, fileName, File).then(()=>{
+            var relativeResourcePath = relativeXmlPath+fileName;
+            return relativeResourcePath;
+        });
+    }
     saveResourceFile() {
         return this.uploadFileHandler();
     }
@@ -177,7 +185,7 @@ class FileStoreController {
 
     getFileFromFileStore(filePath, folder) {
         return new Promise((resolve, reject) => {
-            let absolutePath = filePath;;
+            let absolutePath = filePath;
 
             if (folder) {
                 absolutePath = folder + filePath;
