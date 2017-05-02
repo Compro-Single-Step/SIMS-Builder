@@ -99,8 +99,12 @@ class FileStoreController {
 
     copyAssetToTaskFolderEnhanced(sourceFileLocation, resourceMap, taskId, stepIndex) {
 
-        let srcPath = resourceMap.resourceType === "step" ? config.fileStore.resourceFolder + sourceFileLocation : path.join(config.fileStore.skillFolder, sourceFileLocation),
-            destPath = path.join(this.getStepXMLAssetsFolderPath(taskId, stepIndex), resourceMap.customParentFolder, resourceMap.fileName);
+        if (resourceMap.resourceType === "step")
+            let srcPath = config.fileStore.resourceFolder + sourceFileLocation;
+        else
+            let srcPath = path.join(config.fileStore.skillFolder, sourceFileLocation);
+
+        let destPath = path.join(this.getStepXMLAssetsFolderPath(taskId, stepIndex), resourceMap.customParentFolder, resourceMap.fileName);
 
         return new Promise((resolve, reject) => {
             fse.copy(srcPath, destPath, { overwrite: false }, error => {
