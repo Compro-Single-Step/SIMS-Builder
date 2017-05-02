@@ -13,7 +13,7 @@ export class TextBoxComponent extends BaseComponent {
   descriptionConfig: itemSchema = new itemSchema();
   ngOnInit() {
     super.ngOnInit();
-    this.modelRef = this.builderModelSrvc.getStateRef(this.compConfig.val);
+    this.modelRef = this.getData();
     this.UpdateView();
   }
 
@@ -21,5 +21,9 @@ export class TextBoxComponent extends BaseComponent {
     this.labelConfig.rendererProperties.text = this.compConfig.label;
     this.labelConfig.rendererProperties.type = LabelTypes.ELEMENT_HEADING;
     this.updateDescription();
+  }
+
+  getData() {
+    return this.modelRef ? this.modelRef : this.builderModelSrvc.getStateRef(this.compConfig.val);
   }
 }

@@ -108,14 +108,20 @@ module.exports = class Comp {
         for (let attrSet in comp){
             if(this.xmlAttrToObjFnMap[attrSet]){
                 let fnMap = this.xmlAttrToObjFnMap[attrSet];
-                this.attributeSets[attrSet] = this[fnMap.fnName](comp[attrSet], fnMap.attrType);
+                this.attributeSets[attrSet] = this[fnMap.fnName](comp[attrSet][0], fnMap.attrType);
             }
         }
     }
 
-    createAttrSets (attrSets, attrType){
+    /**
+     * creating attribute sets
+     * @param {*} attrSetsObj 
+     * @param {*} attrType 
+     */
+    createAttrSets (attrSetsObj, attrType){
         let result = {};
 
+        let attrSets = attrSetsObj.attributeset;
         for(let i=0; i<attrSets.length; i++){
 
             if(attrSets[i].props["multiple-occurence"]=="true"){
@@ -136,7 +142,7 @@ module.exports = class Comp {
                         attrSet["inherits-default"] = attrSets[i].props["inherits-default"];
                     }
 
-                    attrSet["attrs"] = this.createAttrs(attrSets[i].attr, attrType, attrSetName, dependencyValSetsArr[j-1]);
+                    attrSet["attrs"] = this.createAttrs(attrSets[i], attrType, attrSetName, dependencyValSetsArr[j-1]);
 
                 }
             }else{
@@ -144,7 +150,7 @@ module.exports = class Comp {
                 if(attrSets[i].props["inherits-default"]){
                     attrSet["inherits-default"] = attrSets[i].props["inherits-default"];
                 }
-                attrSet["attrs"] = this.createAttrs(attrSets[i].attr, attrType, attrSets[i].props.name);
+                attrSet["attrs"] = this.createAttrs(attrSets[i], attrType, attrSets[i].props.name);
             }
         }
         return result;
@@ -203,15 +209,22 @@ module.exports = class Comp {
         }, [[]])
     }
 
+    /**
+     * use this.createAttr to create attributes' objects
+     */
     createAttrs (attrs, attrType, attrSetName, attrsVal){
         let result = [];
-        for(let i=0; i<attrs.length; i++){
-            let myAttr = this.createAttr(attrs[i].props, attrType, attrSetName, attrsVal);
+        let attrArr = attrs.attr;
+        for(let i=0; i<attrArr.length; i++){
+            let myAttr = this.createAttr(attrArr[i].props, attrType, attrSetName, attrsVal);
             result.push(myAttr);
         }
         return result;
     }
 
+    /**
+     * creating single attribute object
+     */
     createAttr  (args, attrType, attrSetName, attrsVal){
         let myAttr = new TaskAttr(args);
 
@@ -234,15 +247,23 @@ module.exports = class Comp {
         return myAttr;
     }
 
+    /**
+     * Adding event objects
+     * @param {*} events : arr of events
+     */
     addEvents (events){
         this.events = [];
-
-        for(let i=0; i<events.length; i++){
-            this.events.push(this.createEvt(events[i]));
+        let eventArr = events.event;
+        for(let i=0; i<eventArr.length; i++){
+            this.events.push(this.createEvt(eventArr[i]));
         }
 
     }
 
+    /**
+     * creating single event object
+     * @param {*} evt : event data used in object creation
+     */
     createEvt  (evt){
         let myEvt = new TaskEvent(evt, this);
         return myEvt;
