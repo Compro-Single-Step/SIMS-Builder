@@ -27,6 +27,7 @@ import { SwitchComponent } from './switch/switch.component';
     PopoverModule.forRoot(),
     FormsModule
   ],
+  exports: [LabelComponent],
   declarations: [TextBoxComponent, PanelComponent, LabelComponent, TagComponent, SelectComponent, TabComponent, ButtonComponent, DropzoneComponent, TabPageComponent, SwitchComponent],
   entryComponents: [TextBoxComponent, PanelComponent, SelectComponent, TabComponent, ButtonComponent, DropzoneComponent, SwitchComponent],
   providers: [InputFactoryService]
