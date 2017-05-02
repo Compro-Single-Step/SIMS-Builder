@@ -64,13 +64,13 @@
               },
               "itemRenderer": "Dropzone",
               "itemType": "leaf",
-              "emitEvents": [
-                "DOCUMENT_DATA_UPDATED"
-              ],
               "rendererProperties": {
                 "dataType": "JSON",
                 "placeHolder": "Drop JSON file here to upload"
               },
+              "emitEvents": [
+                "DOCUMENT_DATA_UPDATED"
+              ],              
               "mandatory": true,
               "val": "{{views.1.documentData}}"
             },
@@ -104,7 +104,7 @@
                 {
                   "id": "1.2.2.1",
                   "itemRenderer": "TabPage",
-                  "itemType": "",
+                  "itemType": "child",
                   "rendererProperties": {
                     "dynamicMode": true
                   },
@@ -172,6 +172,91 @@
                         "width": "200px"
                       },
                       "relVal": "cellImage"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "1.2.3",
+              "label": "Table Properties",
+              "desc": {
+                "basic": "Metadata of the tables to be inserted in the excel workbook is to be mentioned here",
+                "detailed": "Metadata of the tables to be inserted in the excel workbook is to be mentioned here"
+              },
+              "itemRenderer": "TabGroup",
+              "itemType": "child",
+              "disabled": true,
+              "subscribeEvents": [
+                {
+                  "eventId": "DOCUMENT_DATA_UPDATED",
+                  "modelReference": "{{views.1.sheetsForTable.value}}",
+                  "rule": "getSheetDetails"
+                }
+              ],
+              "rendererProperties": {
+                "layout": "horizontal",
+                "dynamicMode": true,
+                "itemListRef": "{{views.1.sheetsForTable}}"
+              },
+              "items": [
+                {
+                  "id": "1.2.3.1",
+                  "itemRenderer": "TabPage",
+                  "itemType": "child",
+                  "rendererProperties": {
+                    "dynamicMode": true
+                  },
+                  "items": [
+                    {
+                      "id": "tableRange",
+                      "label": "Table Range",
+                      "desc": {
+                        "basic": "Range of cells where this table would be formed",
+                        "detailed": "Range of cells where this table would be formed"
+                      },
+                      "itemRenderer": "TextBox",
+                      "itemType": "leaf",
+                      "rendererProperties": {
+                        "dynamicMode": true,
+                        "dataType": "string"
+                      },
+                      "relVal": "tableRange"
+                    },
+                    {
+                      "id": "columnHeaders",
+                      "label": "Column Headers",
+                      "desc": {
+                        "basic": "Upload a csv file having columns: \"columnName\" and \"columnType\" with first row containing these header texts.",
+                        "detailed": ""
+                      },
+                      "itemRenderer": "Dropzone",
+                      "itemType": "leaf",
+                      "rendererProperties": {
+                        "dataType": "CSV",
+                        "placeHolder": "Drop CSV file here to upload",
+                        "dynamicMode": true
+                      },
+                      "emitEvents": [
+                        "COLUMN_HEADERS_UPDATED"
+                      ],
+                      "relVal": "columnHeaders"
+                    },
+                    {
+                      "id": "tableFilterMenuData",
+                      "itemRenderer": "Dropzone",
+                      "itemType": "leaf",
+                      "label": "Table Filter Menu Data",
+                      "desc": {
+                        "basic": "A JSON file, which is used to configure the filter menu data for column header cells, is to be uploaded here",
+                        "detailed": "A JSON file, which is used to configure the filter menu data for column header cells, is to be uploaded here"
+                      },
+                      "rendererProperties": {
+                        "placeHolder": "Drop Table Filter Menu Data",
+                        "dynamicMode": true,
+                        "dataType": "JSON"
+                      },
+                      "relVal": "tableFilterMenuData"
                     }
                   ]
                 }
@@ -251,19 +336,19 @@
               "id": "2.1.1",
               "label": "Sheet in Action",
               "desc": {
-                "basic": "Name of the sheet in which using the Max function skill is to be performed.",
-                "detailed": "Name of the sheet on which using the Max function skill has to be performed is to be mentioned here."
+                "basic": "Name of the sheet in which sorting is to be done is to be mentioned here",
+                "detailed": "Name of the sheet in which sorting is to be done is to be mentioned here"
               },
               "itemRenderer": "Dropdown",
-              "emitEvents": [
-                "SHEET_IN_ACTION_UPDATED"
-              ],
               "rendererProperties": {
                 "dynamicMode": true,
                 "itemList": "{{views.2.sheetInAction.options}}"
               },
               "itemType": "leaf",
               "mandatory": true,
+              "emitEvents": [
+                "SHEET_IN_ACTION_UPDATED"
+              ],
               "subscribeEvents": [
                 {
                   "eventId": "DOCUMENT_DATA_UPDATED",
@@ -275,133 +360,53 @@
             },
             {
               "id": "2.1.2",
-              "label": "Formula Cell Range Reference",
+              "label": "Sort Column Name",
               "desc": {
-                "basic": "Cell Range from which the MAX has to be calculated is to be mentioned here in the format 'StartCell:EndCell'",
-                "detailed": "Cell Range from which the MAX has to be calculated is to be mentioned here in the format 'StartCell:EndCell'"
+                "basic": "Name of the column which is to be sorted is to be mentioned here",
+                "detailed": "Name of the column which is to be sorted is to be mentioned here"
               },
-              "itemRenderer": "TextBox",
+              "itemRenderer": "Dropdown",
               "itemType": "leaf",
               "mandatory": true,
               "rendererProperties": {
-                "dataType": "string"
+                "dynamicMode": true,
+                "itemList": "{{views.2.sortColumnName.options}}"
               },
-              "val": "{{views.2.formulaCellRangeReference}}"
+              "val": "{{views.2.sortColumnName.selectedOption}}",
+              "emitEvents": [
+                "SORT_COLUMN_NAME_UPDATED"
+              ],
+              "subscribeEvents": [
+                {
+                  "eventId": "COLUMN_HEADERS_UPDATED",
+                  "modelReference": "{{views.2.sortColumnName.options.value}}",
+                  "rule": "updateColumnNamesInDropdown"
+                }
+              ]
             },
             {
               "id": "2.1.3",
-              "label": "Cell containing formula",
+              "label": "Sort Type",
               "desc": {
-                "basic": "Cell Index in which the result has to be calculated is to be mentioned here.",
-                "detailed": "Cell Index in which the result has to be calculated is to be mentioned here."
+                "basic": "Type of sorting done in this skill is to be mentioned here",
+                "detailed": "Type of sorting done in this skill is to be mentioned here"
               },
-              "itemRenderer": "TextBox",
+              "itemRenderer": "Dropdown",
+              "subscribeEvents": [
+                {
+                  "eventId": "SORT_COLUMN_NAME_UPDATED",
+                  "modelReference": "{{views.2.sortType.options.value}}",
+                  "rule": "updateSortTypesInDropdown"
+                }
+              ],
+              "rendererProperties": {
+                "dynamicMode": true,
+                "itemList": "{{views.2.sortType.options}}"
+              },
               "itemType": "leaf",
               "mandatory": true,
-              "val": "{{views.2.cellContainingFormula}}"
-            }
-          ]
-        },
-        {
-          "id": "2.2",
-          "label": "Prefilled Selection",
-          "itemRenderer": "Panel",
-          "itemType": "child",
-          "tags": [
-            {
-              "compName": "SIMS.Components.Excel.SumFuncArgDialog",
-              "type": "default"
-            }
-          ],
-          "rendererProperties": {
-            "collapsable": true,
-            "optionalItems": false
-          },
-          "items": [
-            {
-              "id": "2.2.1",
-              "label": "Is the Cell Containing Formula away from the Reference Cell Range ?",
-              "desc": {
-                "basic": "Not Available",
-                "detailed": "Not Available"
-              },
-              "itemRenderer": "Switch",
-              "itemType": "leaf",
-              "mandatory": true,
-              "rendererProperties": {
-                "layout_mode": "right",
-                "value_type": "question"
-              },
-              "emitEvents": [
-                "SWITCH_VALUE_TOGGLED"
-              ],
-              "val": "{{views.2.prefilledSelection}}"
-            },
-            {
-              "id": "2.2.2",
-              "label": "Cell Range",
-              "desc": {
-                "basic": "The default cell range that appears in the Function Arguments dialog box",
-                "detailed": "The default cell range that appears in the Function Arguments dialog box"
-              },
-              "itemRenderer": "TextBox",
-              "itemType": "leaf",
-              "mandatory": false,
-              "subscribeEvents": [
-                {
-                  "eventId": "SWITCH_VALUE_TOGGLED",
-                  "modelReference": "{{views.2.cellRange}}",
-                  "rule": "enableOrDisableOnSwitch"
-                }
-              ],
-              "rendererProperties": {
-                "dataType": "string"
-              },
-              "val": "{{views.2.cellRange}}"
-            },
-            {
-              "id": "2.2.3",
-              "label": "Cell Values",
-              "desc": {
-                "basic": "Comma separated values of each cell in the cell range which appears by default in the Function Arguments dialog box",
-                "detailed": "Comma separated values of each cell in the cell range which appears by default in the Function Arguments dialog box"
-              },
-              "itemRenderer": "TextBox",
-              "itemType": "leaf",
-              "mandatory": false,
-              "subscribeEvents": [
-                {
-                  "eventId": "SWITCH_VALUE_TOGGLED",
-                  "modelReference": "{{views.2.cellValues}}",
-                  "rule": "enableOrDisableOnSwitch"
-                }
-              ],
-              "rendererProperties": {
-                "dataType": "string"
-              },
-              "val": "{{views.2.cellValues}}"
-            },
-            {
-              "id": "2.2.4",
-              "label": "Formula Result",
-              "desc": {
-                "basic": "The result value of the formula being applied on the cell range which appears by default in the Function Arguments dialog box",
-                "detailed": "The result value of the formula being applied on the cell range which appears by default in the Function Arguments dialog box"
-              },
-              "itemRenderer": "TextBox",
-              "itemType": "leaf",
-              "mandatory": false,
-              "subscribeEvents": [
-                {
-                  "eventId": "SWITCH_VALUE_TOGGLED",
-                  "modelReference": "{{views.2.formulaResult}}",
-                  "rule": "enableOrDisableOnSwitch"
-                }
-              ],
-              "rendererProperties": {
-                "dataType": "string"
-              },
-              "val": "{{views.2.formulaResult}}"
+              "dependants": [],
+              "val": "{{views.2.sortType.selectedOption}}"
             }
           ]
         }
@@ -430,10 +435,26 @@
           },
           "items": [
             {
+              "id": "3.1.1",
+              "label": "Workbook Data",
+              "desc": {
+                "basic": "Upload JSON file containing the changes made in the worksheet after moving the cell range.",
+                "detailed": "A JSON file is to be provided which will be utilised to display the necessary changes in the worksheet after performing the skill. This file can be generated from here(Hyperlink pointing to the JSON creation tool spec)."
+              },
+              "itemRenderer": "Dropzone",
+              "itemType": "leaf",
+              "rendererProperties": {
+                "dataType": "JSON",
+                "placeHolder": "Drop JSON file here to upload"
+              },
+              "mandatory": true,
+              "val": "{{views.3.documentData}}"
+            },
+            {
               "id": "3.1.2",
               "label": "Worksheet Images",
               "desc": {
-                "basic": "Upload the images containing the changes made in the worksheet after finding the max of the reference cell range",
+                "basic": "Upload the images containing the changes made in the worksheet after moving the cell range.",
                 "detailed": "This section requires 4 separate images to be uploaded. These images will be used to render a worksheet in SIMS. Details on how to get these images  can be accessed from here (Hyperlink pointing to the Image creation process spec).Images for any number of sheets can be uploaded by pressing the (+) button shown in the right."
               },
               "itemRenderer": "TabGroup",
@@ -457,9 +478,9 @@
               },
               "items": [
                 {
-                  "id": "3.1.1",
+                  "id": "3.1.2.1",
                   "itemRenderer": "TabPage",
-                  "itemType": "",
+                  "itemType": "child",
                   "rendererProperties": {
                     "dynamicMode": true
                   },

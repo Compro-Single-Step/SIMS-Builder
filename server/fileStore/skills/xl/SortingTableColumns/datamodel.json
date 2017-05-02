@@ -1,0 +1,113 @@
+{
+  "views": {
+    "1": {
+      "documentTitle": {
+        "value": ""
+      },
+      "documentData": {
+        "displayName": "",
+        "path": ""
+      },
+      "sheets": {
+        "value": [
+          {
+            "name": "sheet 1",
+            "gridImage": {
+              "displayName": "",
+              "path": ""
+            },
+            "rowImage": {
+              "displayName": "",
+              "path": ""
+            },
+            "columnImage": {
+              "displayName": "",
+              "path": ""
+            },
+            "cellImage": {
+              "displayName": "",
+              "path": ""
+            }
+          }
+        ]
+      },
+      "taskbarPreviewImage": {
+        "displayName": "",
+        "path": ""
+      },
+      "sheetsForTable": {
+        "value": [
+          {
+            "name": "Sheet 1",
+            "tableRange": {
+              "value": ""
+            },
+            "columnHeaders": {
+              "displayName": "",
+              "path": ""
+            },
+            "tableFilterMenuData": {
+              "displayName": "",
+              "path": ""
+            }
+          }
+        ]
+      }
+    },
+    "2": {
+      "sheetInAction": {
+        "options": {
+          "value": []
+        },
+        "selectedOption": {
+          "value": ""
+        }
+      },
+      "sortColumnName": {
+        "options": {
+          "value": []
+        },
+        "selectedOption": {
+          "value": ""
+        }
+      },
+      "sortType": {
+        "options": {
+          "value": []
+        },
+        "selectedOption": {
+          "value": ""
+        }
+      }
+    },
+    "3": {
+      "documentData": {
+        "displayName": "",
+        "path": ""
+      },
+      "sheets": {
+        "value": [
+          {
+            "name": "sheet 1",
+            "gridImage": {
+              "displayName": "",
+              "path": ""
+            },
+            "rowImage": {
+              "displayName": "",
+              "path": ""
+            },
+            "columnImage": {
+              "displayName": "",
+              "path": ""
+            },
+            "cellImage": {
+              "displayName": "",
+              "path": ""
+            }
+          }
+        ]
+      }
+    }
+  }
+}
