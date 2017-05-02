@@ -29,6 +29,17 @@ module.exports = {
             }
         ]
     },
+  
+    "importaccessobject": {
+        primaryFile: "ac/importaccessobject/importAccessObject",
+        dependencyFiles: [
+            {
+                primaryFile: "common/baseSkill"
+            }
+        ],
+        dependencySkills: []
+    }
+},
     "sortingtablecolumns": {
         primaryFile: "xl/sortingtablecolumns/sortingtablecolumns",
         dependencyFiles: [
@@ -44,3 +55,5 @@ module.exports = {
         ]
     }    
 }
+
+
