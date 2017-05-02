@@ -35,10 +35,12 @@ export class SelectComponent extends BaseComponent {
   }
 
   setSelectedOption() {
-    let selectedOptionString = JSON.stringify(this.modelRef["value"]);
-    for (let itemIndex = 0; itemIndex < this.itemList["value"].length; itemIndex++) {
-      if (selectedOptionString == JSON.stringify(this.itemList["value"][itemIndex])) {
-        this.modelRef["value"] = this.itemList["value"][itemIndex];
+    if (this.modelRef["value"].label) {
+      for (let itemIndex = 0; itemIndex < this.itemList["value"].length; itemIndex++) {
+        if (this.modelRef["value"].label == this.itemList["value"][itemIndex].label) {
+          this.modelRef["value"] = this.itemList["value"][itemIndex];
+          break;
+        }        
       }
     }
   }
