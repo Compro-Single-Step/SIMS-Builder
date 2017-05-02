@@ -185,15 +185,38 @@
 						<attr name="DIALOG_DATA" userDefined="true"/>
 					</initialattrs>
 					<finalattrs>
+						{{#if states.5.components.6.final.default-attrs.TABLE_DATA}}
 						<attr name="TABLE_DATA" userDefined="true"/>
+						{{/if}}
+						{{#if states.5.components.6.final.default-attrs.REPORT_DATA}}
+						<attr name="REPORT_DATA" userDefined="true"/>
+						{{/if}}
+						{{#if states.5.components.6.final.default-attrs.QUERY_DATA}}
+						<attr name="QUERY_DATA" userDefined="true"/>
+						{{/if}}
+						{{#if states.5.components.6.final.default-attrs.FORM_DATA}}
+						<attr name="FORM_DATA" userDefined="true"/>
+						{{/if}}
+						{{#if states.5.components.6.final.default-attrs.MACRO_DATA}}
+						<attr name="MACRO_DATA" userDefined="true"/>
+						{{/if}}
+						{{#if states.5.components.6.final.default-attrs.MODULE_DATA}}
+						<attr name="MODULE_DATA" userDefined="true"/>
+						{{/if}}
 					</finalattrs>
 					<events>
+						{{#ifCond states.5.components.6.initial.default-attrs.MODE "1"}}
+						<event id="9997" desc="ok button clicked" followup="6"/>
+						{{/ifCond}}
+						{{#ifCond states.5.components.6.initial.default-attrs.MODE "2"}}
 						<event id="9997" desc="ok button clicked" followup="7"/>
+						{{/ifCond}}
 						<event id="9998" desc="cancel button clicked" target-attribute-set="cancel" followup="1"/>
 					</events>
 				</comp>
 			</comps>
 		</state>
+		{{#ifCond states.5.components.6.initial.default-attrs.MODE "1"}}
 		<state id="6" desc="External data Save as dialog open" txt="1" optimized="1">
 			<comps>
 				<comp id="6" mode="remove"/>
@@ -228,6 +251,7 @@
 				</comp>
 			</comps>
 		</state>
+		{{/ifCond}}
 		<state id="7" desc="Final State" islast="true">
 			<comps>
 				<comp id="3" mode="new">

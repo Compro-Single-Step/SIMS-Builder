@@ -7,11 +7,20 @@
 
 const DOMParser = require('xmldom').DOMParser;
 const Step = require('./Step');
+const handlebars =require('handlebars');
 
 module.exports = class StepXMLGenerator {
 
     generateXml (skillTemplate, attrValueMap, stepText){
-
+        
+        handlebars.registerHelper('ifCond', function(v1, v2, options) {
+            if(v1 == v2) {
+                return options.fn(this);
+            }
+            return options.inverse(this);
+        });
+        var template = handlebars.compile(skillTemplate);
+        var skillTemplate = template(attrValueMap);
         let parser = new DOMParser();
         let xmlDoc = parser.parseFromString(skillTemplate,"text/xml");
         let stepJson = this.xmlToJson(xmlDoc);
