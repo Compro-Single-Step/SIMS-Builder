@@ -18,6 +18,7 @@ declare var localForage;
     templateUrl: './step-builder.component.html',
     styleUrls: ['./step-builder.component.scss']
 })
+
 export class StepBuilderComponent implements OnInit, OnDestroy {
     uiConfig: UIConfig;
     $el: any;
@@ -63,6 +64,39 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
             });
             this.fetchSkillData();
         })
+
+        this.bindShowMoreButtonClick();
+    }
+
+    bindShowMoreButtonClick() {
+        var self = this;
+        jQuery(".show-more a").on("click", function() {
+            var $link = jQuery(this);
+            var linkText = $link.text();
+
+            var $content = $link.parents().find(".stepText");            
+            $content.toggleClass("stepTextOverflowHidden");
+
+            var $header = $link.parents().find("#header");
+            $header.toggleClass("removeFixedHeight");
+
+            var $stepText = $link.parents().find(".stepTextHeading");
+            $stepText.toggleClass("hideEllipsis");
+
+            $link.text(self.getShowLinkText(linkText));
+
+            return false;
+        });
+    }
+
+    getShowLinkText(currentText) {
+        var newText = '';
+        if (currentText.toUpperCase() === "SHOW MORE") {
+            newText = "Show less";
+        } else {
+            newText = "Show more";
+        }
+        return newText;
     }
 
     fetchSkillData() {
