@@ -6,13 +6,13 @@ module.exports = class Step {
         /*this.id = data.stepId;   // step number 1|2|3...
         this.sText = data.stepText;*/
 
-        this.preloadEntities = stepJson[0];
-        this.preloadComps = this.preloadEntities[0];
+        this.preloadEntities = stepJson.preload[0];
+        this.preloadComps = this.preloadEntities.comps[0].comp;
         
         this.attrValMap = attrValMap;
         this.states = {}; // object holding state objects with state id as key
         this.stateOrderIdMap = {};
-        this.generateStates(stepJson[1], attrValMap);
+        this.generateStates(stepJson.states[0].state, attrValMap);
     }
 
     generateStates (states, attrValueMap){
