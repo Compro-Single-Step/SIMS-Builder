@@ -20,9 +20,11 @@ export class DropzoneComponent extends BaseComponent implements OnDestroy {
   width: string;
   height: string;
   makeDeleteCall: boolean;
+  fileTypesToRead: Array<MIMETYPE>;
   constructor(private elementRef: ElementRef, private route: ActivatedRoute, private router: Router, private authSrvc: AuthService, private bds: BuilderDataService) {
     super();
     this.makeDeleteCall = true;
+    this.fileTypesToRead = [MIMETYPE.JSON, MIMETYPE.CSV];
   }
 
   ngOnInit() {
@@ -72,29 +74,13 @@ export class DropzoneComponent extends BaseComponent implements OnDestroy {
   }
 
   dropzoneInitializer(dropzone) {
-    var reader = new FileReader();
     var self = this;
-    var droppedFile;
-
     dropzone.on("success", function (file, response) {
       if (file.status === "success") {
         let currModelRef = self.getData();
         currModelRef["displayName"] = file.name;
         currModelRef["path"] = response.filePath;
-
-        if (MIMETYPE[self.compConfig.rendererProperties.dataType] === ".json") {
-          reader.readAsText(file, 'UTF8');
-          reader.onload = function (e) {
-            //Update Dependencies when contents have been read;
-            try {
-              droppedFile = JSON.parse(e.target['result']);
-            }
-            catch (e) {
-              console.log(e);
-            }
-            self.emitEvents(droppedFile);
-          }
-        }
+        self.readFile(file, MIMETYPE[self.compConfig.rendererProperties.dataType]);        
       }
     });
     dropzone.on("maxfilesexceeded", function (file) {
@@ -116,6 +102,38 @@ export class DropzoneComponent extends BaseComponent implements OnDestroy {
     })
 
     this.restoreFileUI(dropzone);
+  }
+
+  readFile(file,fileType){    
+    let reader = new FileReader();    
+    let droppedFile;
+    let self = this;
+    if(this.fileTypesToRead.indexOf(fileType) != -1)
+    {
+      reader.readAsText(file, 'UTF8');
+      reader.onload = function (e) {
+        //Update Dependencies when contents have been read;
+        try{
+          droppedFile = self.fileTypeHandler(fileType, e.target['result']);
+        }
+        catch (e) {
+          console.log(e);
+        }        
+        self.emitEvents(droppedFile);
+      }
+    }
+  }
+
+  fileTypeHandler(fileType, data) {
+    let obj = {};
+    obj[MIMETYPE.JSON] = function(data){
+      return JSON.parse(data);
+    };
+    obj[MIMETYPE.CSV] = function(data){
+      return data;
+    };
+
+    return obj[fileType](data);
   }
 
   restoreFileUI(dropzone) {
@@ -149,5 +167,6 @@ export class DropzoneComponent extends BaseComponent implements OnDestroy {
 }
 enum MIMETYPE {
   JSON = <any>".json",
-  img = <any>"image/*"
+  img = <any>"image/*",
+  CSV = <any>".csv"
 }

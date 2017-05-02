@@ -69,7 +69,7 @@
               ],
               "rendererProperties": {
                 "dataType": "JSON",
-                "placeHolder": "Drop JSON file here to upload"
+                "placeholder": "Drop JSON file here to upload"
               },
               "mandatory": true,
               "val": "{{views.1.documentData}}"
@@ -97,7 +97,8 @@
                 "itemListRef": "{{views.1.sheets}}",
                 "style": {
                   "max-width": "450px"
-                }
+                },
+                "displayInOneLine": true
               },
               "items": [
                 {
@@ -113,7 +114,7 @@
                       "itemRenderer": "Dropzone",
                       "itemType": "leaf",
                       "rendererProperties": {
-                        "placeHolder": "Drop Grid Image",
+                        "placeholder": "Drop Grid Image",
                         "dynamicMode": true,
                         "dataType": "img"
                       },
@@ -129,7 +130,7 @@
                       "itemRenderer": "Dropzone",
                       "itemType": "leaf",
                       "rendererProperties": {
-                        "placeHolder": "Drop Row Image",
+                        "placeholder": "Drop Row Image",
                         "dynamicMode": true,
                         "dataType": "img"
                       },
@@ -145,7 +146,7 @@
                       "itemRenderer": "Dropzone",
                       "itemType": "leaf",
                       "rendererProperties": {
-                        "placeHolder": "Drop Column Image",
+                        "placeholder": "Drop Column Image",
                         "dynamicMode": true,
                         "dataType": "img"
                       },
@@ -161,7 +162,7 @@
                       "itemRenderer": "Dropzone",
                       "itemType": "leaf",
                       "rendererProperties": {
-                        "placeHolder": "Drop Cell Image",
+                        "placeholder": "Drop Cell Image",
                         "dynamicMode": true,
                         "dataType": "img"
                       },
@@ -205,7 +206,7 @@
               "itemType": "leaf",
               "rendererProperties": {
                 "dataType": "img",
-                "placeHolder": "Drop image here to upload"
+                "placeholder": "Drop image here to upload"
               },
               "mandatory": false,
               "val": "{{views.1.taskbarPreviewImage}}"
@@ -336,7 +337,7 @@
               "itemType": "leaf",
               "rendererProperties": {
                 "dataType": "JSON",
-                "placeHolder": "Drop JSON file here to upload"
+                "placeholder": "Drop JSON file here to upload"
               },
               "mandatory": true,
               "val": "{{views.3.workbookData}}"
@@ -364,7 +365,8 @@
                 "itemListRef": "{{views.3.sheets}}",
                 "style": {
                   "max-width": "450px"
-                }
+                },
+                "displayInOneLine": true
               },
               "items": [
                 {
@@ -380,7 +382,7 @@
                       "itemRenderer": "Dropzone",
                       "itemType": "leaf",
                       "rendererProperties": {
-                        "placeHolder": "Drop Grid Image",
+                        "placeholder": "Drop Grid Image",
                         "dynamicMode": true,
                         "dataType": "img"
                       },
@@ -396,7 +398,7 @@
                       "itemRenderer": "Dropzone",
                       "itemType": "leaf",
                       "rendererProperties": {
-                        "placeHolder": "Drop Row Image",
+                        "placeholder": "Drop Row Image",
                         "dynamicMode": true,
                         "dataType": "img"
                       },
@@ -412,7 +414,7 @@
                       "itemRenderer": "Dropzone",
                       "itemType": "leaf",
                       "rendererProperties": {
-                        "placeHolder": "Drop Column Image",
+                        "placeholder": "Drop Column Image",
                         "dynamicMode": true,
                         "dataType": "img"
                       },
@@ -428,7 +430,7 @@
                       "itemRenderer": "Dropzone",
                       "itemType": "leaf",
                       "rendererProperties": {
-                        "placeHolder": "Drop Cell Image",
+                        "placeholder": "Drop Cell Image",
                         "dynamicMode": true,
                         "dataType": "img"
                       },
