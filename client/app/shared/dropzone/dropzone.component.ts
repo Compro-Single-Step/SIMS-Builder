@@ -57,7 +57,7 @@ export class DropzoneComponent extends BaseComponent implements OnDestroy {
     let dropzone = new Dropzone(this.dropzoneContainer.nativeElement, {
       url: "/api/skill/resource",
       paramName: "dzfile",
-      maxFiles: 1,
+      maxFiles: (self.compConfig.rendererProperties.multipleFiles) ? null : 1,
       addRemoveLinks: true,
 
       acceptedFiles: MIMETYPE[self.compConfig.rendererProperties.dataType],
@@ -79,9 +79,13 @@ export class DropzoneComponent extends BaseComponent implements OnDestroy {
     dropzone.on("success", function (file, response) {
       if (file.status === "success") {
         let currModelRef = self.getData();
-        currModelRef["displayName"] = file.name;
-        currModelRef["path"] = response.filePath;
-        self.readFile(file, MIMETYPE[self.compConfig.rendererProperties.dataType]);        
+        if (self.compConfig.rendererProperties.multipleFiles) {
+          currModelRef.push({ displayName: file.name, path: response.filePath });
+        } else {
+          currModelRef["displayName"] = file.name;
+          currModelRef["path"] = response.filePath;
+        }
+        self.readFile(file, MIMETYPE[self.compConfig.rendererProperties.dataType]);
       }
     });
     dropzone.on("maxfilesexceeded", function (file) {
@@ -105,21 +109,20 @@ export class DropzoneComponent extends BaseComponent implements OnDestroy {
     this.restoreFileUI(dropzone);
   }
 
-  readFile(file,fileType){    
-    let reader = new FileReader();    
+  readFile(file, fileType) {
+    let reader = new FileReader();
     let droppedFile;
     let self = this;
-    if(this.fileTypesToRead.indexOf(fileType) != -1)
-    {
+    if (this.fileTypesToRead.indexOf(fileType) != -1) {
       reader.readAsText(file, 'UTF8');
       reader.onload = function (e) {
         //Update Dependencies when contents have been read;
-        try{
+        try {
           droppedFile = self.fileTypeHandler(fileType, e.target['result']);
         }
         catch (e) {
           console.log(e);
-        }        
+        }
         self.emitEvents(droppedFile);
       }
     }
@@ -133,33 +136,29 @@ export class DropzoneComponent extends BaseComponent implements OnDestroy {
     return obj[fileType](data);
   }
 
-  parseJsonData(data){
+  parseJsonData(data) {
     return JSON.parse(data);
   }
 
-  parseCsvDataToJson(data){
+  parseCsvDataToJson(data) {
     var config = {
       "header": true,
       "skipEmptyLines": true
     }
     var output = Papa.parse(data, config);
-    if(output.errors.length != 0)
-    {
+    if (output.errors.length != 0) {
       //TODO: Error Handling
-      for(let i = 0; i < output.errors.length; i++)
-      {
+      for (let i = 0; i < output.errors.length; i++) {
         console.log("Error in parsing csv: " + output.errors[i].message + (output.errors[i].row !== undefined ? " => at row: " + output.errors[i].row : ""));
       }
     }
     return output.data;
   }
-
-  restoreFileUI(dropzone) {
-    let fileInfo = this.getData();
-    if (fileInfo.path != "") {
-      this.bds.getResource(this.getData().path).subscribe((res) => {
+  addFileToDropzone(dropzone, el) {
+    if (el.path != "") {
+      this.bds.getResource(el.path).subscribe((res) => {
         if (res.headers.get("status") == "success") {
-          let file = new File([res._body], fileInfo.displayName);
+          let file = new File([res._body], el.displayName);
           dropzone.emit("addedfile", file);
           dropzone.emit("complete", file);
         }
@@ -167,6 +166,17 @@ export class DropzoneComponent extends BaseComponent implements OnDestroy {
           //TODO: Handling of code when error is receiving file occurrs. 
         }
       });
+    }
+  }
+  restoreFileUI(dropzone) {
+    let self = this;
+    let fileInfo = this.getData();
+    if (this.compConfig.rendererProperties.multipleFiles) {
+      fileInfo.forEach(el => {
+        this.addFileToDropzone(dropzone, el);
+      });
+    } else {
+      this.addFileToDropzone(dropzone, fileInfo);
     }
   }
 
