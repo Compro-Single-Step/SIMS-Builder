@@ -26,6 +26,14 @@
                     }
                 ]
             },
+            "initialSelectedSlide": {
+                "options": {
+                    "value": []
+                },
+                "selectedSlide": {
+                    "value": ""
+                }
+            },
             "taskbarPreviewImage": {
                 "displayName": "",
                 "path": ""

@@ -8,15 +8,8 @@
 			<comp id="4" name="SIMS.Components.PPT.VideoPlaceholderV2" cssclass="VideoPlaceholder" type="default"/>
 			<comp id="5" name="SIMS.Components.Common.InsertFileDialog" cssclass="SaveAsDialog" type="modaldialog" title="Insert Audio"/>
 		</comps>
-		<resources>
-			<res path="XMLs/TaskXmls2016/exp/pp/04/03.01.t1/Assets/SlideRes1.xml" type="xml"/>
-		</resources>
 	</preload>
-	<texts_formatted>
-		<txt id="1" StateStart="1">
-			<![CDATA[Insert the <i>Beethoven&rsquo;s_Symphony_No_9.wma</i> audio file from the Documents folder onto Slide 1 of the PowerPoint Presentation.]]>
-		</txt>
-	</texts_formatted>
+
 	<states>
 		<state id="1" desc="MS PowerPoint File" txt="1">
 			<comps>
@@ -29,10 +22,8 @@
 						<attr name="height" value="150"/>
 					</sizeandpos>
 					<initialattrs>
-						<attr name="RIBBON_PATH" value="app/comps2016/Common/Ribbon/ppt-ribbon.xml"/> // fixed
-						<attr name="DOCUMENT_NAME" value="p04h3Memory - PowerPoint"/> // mandatory input - text
-						<attr name="LEFT_ALIGN" value="true"/> // cosmetic
-						<attr name="FONT_NAME" value="Trebuchet MS (Headings)"/> // cosmetic
+						<attr name="RIBBON_PATH" value="app/comps2016/Common/Ribbon/ppt-ribbon.xml"/>
+						<attr name="DOCUMENT_NAME" userDefined="true"/>
 					</initialattrs>
 					<events>
 						<event id="5140" followup="2" desc="insert audio clicked from ribbon">
@@ -49,15 +40,15 @@
 						<attr name="width" value="*"/>
 					</sizeandpos>
 					<initialattrs>
-						<attr name="XML_PATH" value="XMLs/TaskXmls2016/exp/pp/04/03.01.t1/Assets/SlideRes1.xml"/> // input -   dropzone  -  based on this no. of no. of dropzones will be created in which images will be uploaded.
-						<attr name="SELECTED_SLIDE" value="1"/>  // optional input or cosmetic  -  initial selected slide
+						<attr name="XML_PATH" userDefined="true"/>
+						<attr name="SELECTED_SLIDE" userDefined="true"/>  
 					</initialattrs>
 					<initialattributesets>
 						<attributeset name="cancel" inherits-default="false">
 						</attributeset>
 					</initialattributesets>
 					<finalattrs>
-						<attr name="SELECTED_SLIDE" value="1"/>  //  mandatory input - dropdown input - slide where audio is inserted
+						<attr name="SELECTED_SLIDE" userDefined="true"/>
 					</finalattrs>
 				</comp>
 				<comp id="3" mode="new">
@@ -68,9 +59,9 @@
 						<attr name="height" value="31"/>
 					</sizeandpos>
 					<initialattrs>
-						<attr name="OPENWORDFILE" value="p04h3Memory - PowerPoint"/> // already taken in ribbon
-						<attr name="APPLICATION" value="ppt"/> // fixed
-						<attr name="APP_TOOLTIP_IMAGE" value="XMLs/TaskXmls/exp/pp/04/03.01.t1/Assets/page_preview.png"/> // mandatory input - dropzone - preview image
+						<attr name="OPENWORDFILE" userDefined="true"/>
+						<attr name="APPLICATION" value="ppt"/>
+						<attr name="APP_TOOLTIP_IMAGE" userDefined="true"/>
 					</initialattrs>
 				</comp>
 			</comps>
@@ -85,19 +76,19 @@
 						<attr name="top" value="center"/>
 					</sizeandpos>
 					<initialattrs>
-						<attr name="APPLICATION_MODE" value="4"/> // fixed
-						<attr name="TREE_XML_PATH" value="XMLs/TaskXmls2016/exp/pp/04/03.01.t1/Assets/treeContent.xml"/> // mandatory input - dropzone - xml for painting // needs discussion
-						<attr name="TREE_SELECTED_ITEM_ID" value="documents"/>  // mandatory input - textbox / dropdown discussion
-						<attr name="INSERT_DIALOG_MODE" value="4"/> // fixed 
-						<attr name="DIALOG_MODE" value="2"/> // fixed
-						<attr name="AUTO_COMPLETE_LIST" value="Beethoven's_Symphony_No_9.wma"/> // can be filled from uploaded xml for tree content.
+						<attr name="APPLICATION_MODE" value="4"/>
+						<attr name="TREE_XML_PATH" userDefined="true"/> 
+						<attr name="TREE_SELECTED_ITEM_ID" value="documents"/>
+						<attr name="INSERT_DIALOG_MODE" value="4"/>
+						<attr name="DIALOG_MODE" value="2"/>
+						<attr name="AUTO_COMPLETE_LIST" userDefined="true"/>
 					</initialattrs>
 					<finalattributesets>
 						<attributeset name="set_1" inherits-default="false">
-							<attr name="FILE_NAME" value="Beethoven's_Symphony_No_9.wma"/> // mandatory input -  1 inputs -   dropdown  -  for file name with extension.
+							<attr name="FILE_NAME" userDefined="true"/> 
 						</attributeset>
 						<attributeset name="set_2" inherits-default="false">
-							<attr name="FILE_NAME" value="Beethoven's_Symphony_No_9"/>  // already covered in above attribute set
+							<attr name="FILE_NAME" userDefined="true"/>  
 						</attributeset>
 					</finalattributesets>
 					<events>
@@ -117,29 +108,29 @@
 				<comp id="5" mode="remove"/>
 				<comp id="1" mode="edit">
 					<initialattrs>
-						<attr name="ACTIVATE_TAB" value="Audio Tools Format"/>  //fixed
-						<attr name="ACTIVATE_TAB" value="Audio Tools Playback"/> //fixed
-						<attr name="SEL_TAB" value="Audio Tools Playback"/>  //fixed
-						<attr name="HIGHLIGHT_AUDIO_NO_STYLE" value="true"/>  //fixed
+						<attr name="ACTIVATE_TAB" value="Audio Tools Format"/>  
+						<attr name="ACTIVATE_TAB" value="Audio Tools Playback"/> 
+						<attr name="SEL_TAB" value="Audio Tools Playback"/>  
+						<attr name="HIGHLIGHT_AUDIO_NO_STYLE" value="true"/> 
 					</initialattrs>
 				</comp>
 				<comp id="2" mode="edit">
 					<initialattrs>
-						<attr name="PARTIAL_SLIDES_DATA" value="[{&quot;Number&quot;:&quot;1&quot;,&quot;ThumbHtml&quot;:&quot;&lt;img src='XMLs/TaskXmls2016/go/pp/05/5A.08.T1/Assets/Slides/Slide7.jpg'/&gt;&quot;}]"/> // mandatory input -  dropzone - for uploading changes slide image
+						<attr name="PARTIAL_SLIDES_DATA" userDefined="true"/>
 					</initialattrs>
 				</comp>
 				<comp id="4" mode="new" subcomp="true" hostid="2" 
-					hostparam='{"Mode":"VideoPlaceHolder","HostParams":{"slide":"1"}}'>
+					hostparam=''>
 					<sizeandpos>
-						<attr name="left" value="6.3"/>
-						<attr name="top" value="3.4"/>
+						<attr name="left" userDefined="true"/>
+						<attr name="top" userDefined="true"/>
 						<attr name="width" value="0.67"/>
 						<attr name="height" value="0.67"/>
 					</sizeandpos>
 					<initialattrs>
-						<attr name="MODE" value="AUDIO"/>  // fixed
-						<attr name="IS_SELECTED" value="true"/>  // fixed
-						<attr name="RESIZE_HANDLES_NEW" value="[[&quot;0px&quot;,&quot;0px&quot;],[&quot;50%&quot;,&quot;0px&quot;],[&quot;100%&quot;,&quot;0px&quot;],[&quot;0px&quot;,&quot;50%&quot;],[&quot;100%&quot;,&quot;50%&quot;],[&quot;0px&quot;,&quot;100%&quot;],[&quot;50%&quot;,&quot;100%&quot;],[&quot;100%&quot;,&quot;100%&quot;]]"/>  // fixed
+						<attr name="MODE" value="AUDIO"/> 
+						<attr name="IS_SELECTED" value="true"/>  
+						<attr name="RESIZE_HANDLES_NEW" value="[[&quot;0px&quot;,&quot;0px&quot;],[&quot;50%&quot;,&quot;0px&quot;],[&quot;100%&quot;,&quot;0px&quot;],[&quot;0px&quot;,&quot;50%&quot;],[&quot;100%&quot;,&quot;50%&quot;],[&quot;0px&quot;,&quot;100%&quot;],[&quot;50%&quot;,&quot;100%&quot;],[&quot;100%&quot;,&quot;100%&quot;]]"/> 
 					</initialattrs>
 				</comp>
 			</comps>

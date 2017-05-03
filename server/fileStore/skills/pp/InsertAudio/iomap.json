@@ -111,6 +111,30 @@
               }
             }
           }
+        },
+        "4": {
+          "sizeandpos": {
+            "left": {
+              "function-name": "getSubCompLeftPosition",
+              "params": {
+                "xmlPath":"views['1'].slideViewData.path",
+              }
+            },
+            "top": {
+              "function-name": "getSubCompTopPosition",
+              "params": {
+                "xmlPath":"views['1'].slideViewData.path",
+              }
+            }
+          },
+          "props": {
+              "hostparam": {
+                "function-name": "getSubCompHostParam",
+                "params": {
+                  "selectedSlide":"views['2'].slideInAction.selectedSlide.value"
+              }
+            }
+          }
         }
       }
     }
