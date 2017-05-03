@@ -5,6 +5,10 @@ const path = require('path'),
 
 //this file contains the object type implementation for the parameters of an attribute
 
+/**
+* attrParam is used in IOMap Translation into Attribute Value Map
+* it has info user uploadde values
+*/
 function attrParam(attrName, attrObject, stepUIState, skillobject, IOMapRef) {
   this.attrName = attrName;
   this.attrObject = attrObject;
@@ -12,6 +16,10 @@ function attrParam(attrName, attrObject, stepUIState, skillobject, IOMapRef) {
   this.skillobject = skillobject;
 }
 
+/**
+* attrTaskParam is used in IOMap Translation into Attribute Value Map
+* it has info pertaining to task and step
+*/
 function attrTaskParam(taskId, stepIndex, stateId, dbFilestoreMgr, resourceMap) {
   this.taskId = taskId;
   this.stepIndex = stepIndex;
