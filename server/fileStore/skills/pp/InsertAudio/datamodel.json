@@ -1,0 +1,81 @@
+{
+    "views": {
+        "1": {
+            "documentTitle": {
+                "value": ""
+            },
+            "slideViewData": {
+                "displayName": "",
+                "path": ""
+            },
+            "slides": {
+                "value": [
+                    {
+                        "name": "Slide 1",
+                        "slideImage": {
+                            "displayName": "",
+                            "path": ""
+                        }
+                    },
+                    {
+                        "name": "Slide 2",
+                        "slideImage": {
+                            "displayName": "",
+                            "path": ""
+                        }
+                    }
+                ]
+            },
+            "taskbarPreviewImage": {
+                "displayName": "",
+                "path": ""
+            }
+        },
+        "2": {
+            "slideInAction": {
+                "options": {
+                    "value": []
+                },
+                "selectedSlide": {
+                    "value": ""
+                }
+            },
+            "audioToBeAdded": {
+                "value": [
+                    {
+                        "name": "Audio 1",
+                        "audioImage": {
+                            "displayName": "",
+                            "path": ""
+                        },
+                        "audioFolder": {
+                            "options": {
+                                "value": []
+                            },
+                            "selectedAudio": {
+                                "value": ""
+                            }
+                        },
+                        "audioName": {
+                            "value": ""
+                        }
+                    }
+                ]
+            },
+            "audioTobeInserted": {
+                "options": {
+                    "value": []
+                },
+                "selectedAudio": {
+                    "value": ""
+                }
+            }
+        },
+        "3": {
+            "updatedSlideData": {
+                "displayName": "",
+                "path": ""
+            }
+        }
+    }
+}
