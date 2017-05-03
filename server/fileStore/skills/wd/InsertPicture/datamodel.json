@@ -22,18 +22,18 @@
             "initialCursorPosition": {
                 "value": ""
             },
-            "finalElement": {
-                "value": ""
-            },
-            "finalCursorPosition": {
-                "value": ""
-            },
             "taskbarPreviewImage": {
                 "displayName": "",
                 "path": ""
             }
         },
         "2": {
+            "finalElement": {
+                "value": ""
+            },
+            "finalCursorPosition": {
+                "value": ""
+            },
             "treeXML": {
                 "displayName": "",
                 "path": ""
