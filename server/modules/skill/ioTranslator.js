@@ -128,6 +128,9 @@ class IOTranslator {
     PromiseRequestsArr.push(this.genPromise(attrParams, taskParam)
       .then(resolveParams => {
         data.parentObj[data.keyName] = resolveParams.attrValue;
+        // this if check here is for backward compatibility
+        // in the new implementation skill class need not send this preload resource array here
+        // this code will become obsolete once all the present templates start using new approach
         if (resolveParams.preloadResArr) {
           if (!attrObj.IOMap.preload)
             attrObj.IOMap.preload = { resource: [] };
