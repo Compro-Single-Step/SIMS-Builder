@@ -21,7 +21,8 @@
       "styles": [
         "styles.css"
       ],
-      "scripts": ["client/libs/papaparse.min.js"
+      "scripts": ["client/libs/papaparse.min.js",
+      "client/libs/marked.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {
