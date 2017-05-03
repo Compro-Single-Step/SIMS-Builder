@@ -18,17 +18,13 @@ class DatabaseFileStoreManager {
     }
 
      /**
-     * @param {*} sourceFileLocation : Location from which file to be copied 
-     * Ex: "GO16.WD.12.12B.02.T1/1/1493790231823.DocumentData.json"
-     * @param {*} resourceMap : It's an object which contains following key-value pairs:
-     *   absFilePath:"XMLs/TaskXmls/go16/wd/12/12b.02.t1/1/Assets/1493790231823.DocumentData.json"
-     *   customParentFolder: Any custom folder hierarchy
-     *   fileName: "1493790231823.DocumentData.json"
-     *   fileType: "json"
-     *   resourceType: "step"
-     * @param {*} taskId : Task ID
-     * @param {*} stepIndex : Step Index
-     * OUTPUT : This function calls the 'copyAssetToTaskFolderEnhanced' function of file store controller 
+     * This function has beedn added to provide an enhanced fnality over copyTaskAssetFile
+     * As part of enhanced functionality this fn will be able to copy skill psecifc resources also based on resourceType value in resourceMap
+     *
+     *
+     *  todo: remove "copyTaskAssetFile" fn when all the templates start working as per new implementation
+     *
+     * This function calls the 'copyAssetToTaskFolderEnhanced' function of file store controller 
      * which copies the resource file from a source location to corresponding destination and 
      * returns the promise for same
      */
