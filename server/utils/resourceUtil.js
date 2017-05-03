@@ -4,6 +4,11 @@ class ResourceUtil{
         return taskId + "/" + stepIndex + "/";
     }
 
+    /**
+    * Map for file types
+    * similar map is present in filestore controller also which will be removed 
+    * when all the templates start following new approach
+    */
     getFileType(fileName) {
         let fileExtension = fileName.substring(fileName.lastIndexOf(".") + 1);
         return {
