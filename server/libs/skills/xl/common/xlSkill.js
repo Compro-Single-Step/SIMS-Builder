@@ -201,6 +201,7 @@ module.exports = class ExcelBaseSkill extends BaseSkill {
         var paramValueObj = skillParams.paramsObj;
 
         var attrValue = skillParams.taskParams.addResourceToMap("step", paramValueObj["docData"]).absFilePath;
+        // { attrValue } is new syntax of ES6 which means => { 'attrValue': attrValue }
         return Promise.resolve({ attrValue });
     }
 

@@ -47,6 +47,7 @@ attrTaskParam.prototype.addResourceToMap = function (resourceType, filePath, cus
   let fileName = ResourceUtil.getFileNameWithExtension(filePath),
     fileType = ResourceUtil.getFileType(fileName),
     stepAssetsFolderPath = XMLUtil.genStepAssetsFolderPath(this.taskId, this.stepIndex),
+    // Replacing all occurance of '\' with '/' because '\' is used as an escape character in Javascript
     absFilePath = path.join(stepAssetsFolderPath, customParentFolder, fileName).replace(/\\/g, "/");
 
   resourceType = resourceType.toLowerCase();
