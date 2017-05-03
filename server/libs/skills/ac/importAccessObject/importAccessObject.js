@@ -40,10 +40,27 @@ class importAccessobject extends baseSkill {
     resolveParams = { "attrValue": resolveParams.split(".")[0]};
     return Promise.resolve(resolveParams);
   }
-
-  addDatabaseObjectToDropdown(navigationPaneJSON, navaigationPaneDatabaseObjectArray) {
-    let objectType;
+  getSelectedObject(skillParams){
+    var paramValueObj = skillParams.paramsObj;
+    var resolveParams = { "attrValue": paramValueObj.selectedObj.data.split(".")[1]};
+    return Promise.resolve(resolveParams);
+  }
+  getSelectedObjectType(skillParams){
+    var paramValueObj = skillParams.paramsObj;
     let objectMap = {
+      "Table":"Tables",
+      "Query":"Queries",
+      "Form":"Forms",
+      "Report":"Reports",
+      "Macro":"Macros",
+      "Module":"Modules"
+    }
+    var resolveParams = { "attrValue": objectMap[paramValueObj.selectedObj.data.split(".")[0]]};
+    return Promise.resolve(resolveParams);
+  }
+  addDatabaseObjectToDropdown(navigationPaneJSON, navaigationPaneDatabaseObjectArray) {
+    var objectType;
+    var objectMap = {
       "tables" : "Table",
       "queries" : "Query",
       "forms" : "Form",
@@ -60,7 +77,7 @@ class importAccessobject extends baseSkill {
       if (navigationPaneJSON[key]) {
         objectType = objectMap[key];
         for(let i=0; i<navigationPaneJSON[key].length;i++ ){
-            navaigationPaneDatabaseObjectArray.value.push({"label": (objectType + ' -> ' + navigationPaneJSON[key][i].name),"data":(objectType + ' -> ' + navigationPaneJSON[key][i].name)});
+            navaigationPaneDatabaseObjectArray.value.push({"label": (objectType + ' : ' + navigationPaneJSON[key][i].name),"data":(objectType + '.' + navigationPaneJSON[key][i].name)});
         }        
      }
     }
@@ -82,11 +99,10 @@ class importAccessobject extends baseSkill {
         };
         for(var dataObject in DataJSON[objtype])
         {
-          typeObj.names.push(dataObject);
+          typeObj.names.push(DataJSON[objtype][dataObject].name);
         }
         initialConfig.objects.push(typeObj);
       }
-      console.log(initialConfig);
       return skillParams.taskParams.dbFilestoreMgr.saveXMLDynamicResource(skillParams.taskParams,JSON.stringify(initialConfig),"InitialConfig.json").then( (resolvePath)=>{
         var preloadResArr = [];
         var finalPath = resolvePath
@@ -105,14 +121,20 @@ class importAccessobject extends baseSkill {
             var names = [];
             for(var dataObject in DataJSON[objtype])
             {
-              if(DataJSON[objtype][dataObject])
-              names.push(dataObject);
+              if(DataJSON[objtype][dataObject]["import"] == "true")
+              names.push(DataJSON[objtype][dataObject]["name"]);
             }
             if(names.length != 0)
               validationConfig[objtype] = names;
           }
           this.projJSON = validationConfig;
   }
+  
+  // generateTreeXML(skillParams){
+  //   var path = "ac/importAccessObject/Resources/tree.xml";
+  //   skillParams.taskParams.dbFilestoreMgrgetSkillResources(path);
+
+  // }
   getFinalTableValidation(skillParams) { 
     return this.checkIfObjectExist(skillParams,"tables");
   }
@@ -137,8 +159,12 @@ class importAccessobject extends baseSkill {
     let self = this;
     if(Object.keys(this.projJSON).length != 0){
       if(this.projJSON[objType]){
-        
-        resolveParams = { "attrValue": this.projJSON[objType]};
+        let finalString = "["+this.projJSON[objType][0];
+        for(let index=1;index<this.projJSON[objType].length;index++){
+          finalString+=","+this.projJSON[objType][index];
+        }
+        finalString+="]";
+        resolveParams = { "attrValue": finalString};
       }
       else
         resolveParams = { "attrValue": null};
@@ -150,7 +176,12 @@ class importAccessobject extends baseSkill {
       var DataJSON = JSON.parse(resolveParam.fileData);
       self.getFinalDBConfig(DataJSON);
       if(self.projJSON[objType]){
-        resolveParams = { "attrValue": self.projJSON[objType]};    
+        let finalString = "["+self.projJSON[objType][0];
+        for(let index=1;index<self.projJSON[objType].length;index++){
+          finalString+=","+self.projJSON[objType][index];
+        }
+        finalString+="]";
+        resolveParams = { "attrValue": finalString};    
       }
       else
         resolveParams = { "attrValue": null};

@@ -57,7 +57,7 @@
           "items": [
             {
               "id": "1.2.1",
-              "label": "Navigation Pane Configuration",
+              "label": "Initial Configuration",
               "desc": {
                 "basic": "Upload a JSON file which is used to configure the Navigation Pane for Access in SIMS.",
                 "detailed": "A JSON file, which will be used to configure the Navigation Pane for Access in SIMS, is required to be uploaded here. This file can be generated from here(Hyperlink pointing to the JSON creation tool spec)."
@@ -71,17 +71,16 @@
               "mandatory": true,
                "emitEvents": [
                 "NAVPANE_DATA_UPDATED"
-              
               ],             
                 "val": "{{views.1.navigationPane}}"
             },
 
             {
               "id": "1.2.2",
-              "label": "Select Navigation Pane Item",
+              "label": "Selected Access Object",
               "desc": {
-                "basic": "Name of the database type and item to be show selected",
-                "detailed": "Name of the database type and item to be show selected"
+                "basic": "Select the database object to be selecetd initiallly.",
+                "detailed": "Describe the type and name of the database object to be shown selected initially when the task is renedered"
               },
               "itemRenderer": "Dropdown",
                "subscribeEvents": [
@@ -156,7 +155,7 @@
       "items": [
         {
           "id": "2.1",
-          "label": "Get External Data Dialog",
+          "label": "Get External Data - Access Database",
           "itemRenderer": "Panel",
           "itemType": "child",
           "tags": [
@@ -172,7 +171,7 @@
           "items": [
             {
               "id": "2.1.1",
-              "label": "Database Path",
+              "label": "Source of Access Database",
               "desc": {
                 "basic": "Path of the Database to be Imported.",
                 "detailed": "Root path of the Database, objects (Tables/Reports/Queries etc) from which are to be imported."
@@ -197,11 +196,11 @@
                 "itemList": [
                   {
                     "value":"1",
-                    "label":"Unlinked Objects"
+                    "label":"Import database objects into current database"
                   },
                   {
                     "value":"2",
-                    "label":"Linked Table"
+                    "label":"Linked to the data source by creating a linked table"
                   }                  
                   ]
               },
@@ -213,7 +212,7 @@
         },
         {
           "id": "2.2",
-          "label": "Open File Dialog",
+          "label": "File Open",
           "itemRenderer": "Panel",
           "itemType": "child",
           "tags": [
@@ -248,7 +247,7 @@
               "label": "Auto Complete List Options",
               "desc": {
                 "basic": "Options to be shown for Auto Complete List.",
-                "detailed": "Comma separated values to render options for Auto Complete List"
+                "detailed": "Comma separated values to render options for Auto Complete List example:- Option1,Option2,etc"
               },
               "itemRenderer": "TextBox",
               "itemType": "leaf",
@@ -259,7 +258,7 @@
         },
         {
           "id": "2.3",
-          "label": "Import Access Objects Dialog",
+          "label": "Import Access Objects",
           "itemRenderer": "Panel",
           "itemType": "child",
           "tags": [
@@ -275,7 +274,7 @@
           "items": [
             {
               "id": "2.3.1",
-              "label": "Databse Config",
+              "label": "Database Configuration",
               "desc": {
                 "basic": "Description of the database to be imported.",
                 "detailed": "JSON Describing  all the objects of the Database (Object Type/ Whether it has to be Vsalidated)"
@@ -317,7 +316,7 @@
           "items": [
             {
               "id": "3.1.1",
-              "label": "Navigation Pane Configuration",
+              "label": "Final Configuration",
               "desc": {
                 "basic": "Upload a JSON file which is used to configure the Navigation Pane for Access in SIMS.",
                 "detailed": "A JSON file, which will be used to configure the Navigation Pane for Access in SIMS, is required to be uploaded here. This file can be generated from here(Hyperlink pointing to the JSON creation tool spec)."

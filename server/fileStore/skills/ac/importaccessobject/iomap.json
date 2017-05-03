@@ -24,15 +24,15 @@
                 }
               },
               "SELECTED_DB_OBJECT_TYPE": {
-                "function-name": "extractSingleParamVal",
+                "function-name": "getSelectedObjectType",
                 "params": {
-                  "objType": "views['1'].navigationPaneItems.selectedOption"
+                  "selectedObj": "views['1'].navigationPaneItems.selectedOption.value"
                 }
               },
               "SELECTED_DB_OBJECT": {
-                "function-name": "extractSingleParamVal",
+                "function-name": "getSelectedObject",
                 "params": {
-                  "objName": "views['1'].navigationPaneItems.name"
+                  "selectedObj": "views['1'].navigationPaneItems.selectedOption.value"
                 }
               }
             }
