@@ -103,11 +103,11 @@ class FileStoreController {
      * @param {*} sourceFileLocation : Location from which file to be copied 
      * Ex: "GO16.WD.12.12B.02.T1/1/1493790231823.DocumentData.json"
      * @param {*} resourceMap : It's an object which contains following key-value pairs:
-     *   absFilePath:"XMLs/TaskXmls/go16/wd/12/12b.02.t1/1/Assets/1493790231823.DocumentData.json"
      *   customParentFolder: Any custom folder hierarchy
      *   fileName: "1493790231823.DocumentData.json"
-     *   fileType: "json"
-     *   resourceType: "step"
+     *   resourceType: "step | skill" => 
+     *          skill means that it's a skill resource and has to be copied from "filestore/skills/" folder
+     *          step means that it's a user uploaded resource and has to be copied from "filestore/resources/" folder
      * @param {*} taskId : Task ID
      * @param {*} stepIndex : Step Index
      * OUTPUT : This function copies the resource file from a source location to corresponding 
