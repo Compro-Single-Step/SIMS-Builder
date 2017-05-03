@@ -13,7 +13,7 @@ const { CommonsChunkPlugin } = require('webpack').optimize;
 const { AotPlugin } = require('@ngtools/webpack');
 
 const nodeModules = path.join(process.cwd(), 'node_modules');
-const entryPoints = ["inline","polyfills","sw-register","styles","vendor","main"];
+const entryPoints = ["inline","polyfills","sw-register","scripts","styles","vendor","main"];
 
 
 
@@ -40,6 +40,9 @@ module.exports = {
     ],
     "polyfills": [
       "./client\\polyfills.ts"
+    ],
+    "scripts": [
+      "script-loader!./client\\libs\\papaparse.min.js"
     ],
     "styles": [
       "./client\\styles.css",

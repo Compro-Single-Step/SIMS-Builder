@@ -21,7 +21,7 @@
       "styles": [
         "styles.css"
       ],
-      "scripts": [
+      "scripts": ["client/libs/papaparse.min.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {
