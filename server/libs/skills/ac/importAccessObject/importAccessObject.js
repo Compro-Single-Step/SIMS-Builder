@@ -159,9 +159,9 @@ class importAccessobject extends baseSkill {
     let self = this;
     if(Object.keys(this.projJSON).length != 0){
       if(this.projJSON[objType]){
-        let finalString = "["+this.projJSON[objType][0];
-        for(let index=1;index<this.projJSON[objType].length;index++){
-          finalString+=","+this.projJSON[objType][index];
+        let finalString = "[";
+        for(let index=0;index<this.projJSON[objType].length;index++){
+          finalString+=this.projJSON[objType][index];
         }
         finalString+="]";
         resolveParams = { "attrValue": finalString};
@@ -176,9 +176,9 @@ class importAccessobject extends baseSkill {
       var DataJSON = JSON.parse(resolveParam.fileData);
       self.getFinalDBConfig(DataJSON);
       if(self.projJSON[objType]){
-        let finalString = "["+self.projJSON[objType][0];
-        for(let index=1;index<self.projJSON[objType].length;index++){
-          finalString+=","+self.projJSON[objType][index];
+        let finalString = "[";
+        for(let index=0;index<self.projJSON[objType].length;index++){
+          finalString+=self.projJSON[objType][index];
         }
         finalString+="]";
         resolveParams = { "attrValue": finalString};    
