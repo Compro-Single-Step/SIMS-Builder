@@ -229,7 +229,7 @@
         },
         {
           "id": "2.2",
-          "label": "Insert File Dialog",
+          "label": "Insert Picture",
           "itemRenderer": "Panel",
           "itemType": "child",
           "tags": [
@@ -340,9 +340,6 @@
               },
               "itemRenderer": "Dropzone",
               "itemType": "leaf",
-              "emitEvents": [
-                "FINAL_DOCUMENT_FILE_UPDATED"
-              ],
               "rendererProperties": {
                 "dataType": "HTML",
                 "placeHolder": "Drop HTML file here to upload"
