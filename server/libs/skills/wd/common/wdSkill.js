@@ -1,3 +1,4 @@
+const replace = require('replace-in-file');
 const BaseSkill = require("../../common/baseSkill");
 //Wrod based Common Functionality goes here 
 
@@ -18,12 +19,22 @@ module.exports = class WordSkill extends BaseSkill {
     resourcePathWithImages(skillParams) {
         try {
             let paramValueObj = skillParams.paramsObj;
+            let resourcePath = paramValueObj["docData"];
+            let options = {
+                files: resourcePath,
+                from: [/<rootpath>/g],
+                to: ["xmls/abc/sjflsf/kkklk/abc.png"],
+                encoding: 'utf8'
+            };
 
-            /**Before returnig below promise we need to update resourse file by replaceing place holders by respective images.
-             * 
-             */
-            let resolveParams = { "attrValue": paramValueObj["docData"] };
-            return Promise.resolve(resolveParams);
+            return replace(options)
+                .then(changedFiles => {
+                    let resolveParams = { "attrValue": resourcePath };
+                    return Promise.resolve(resolveParams);
+                })
+                .catch(error => {
+                    return Promise.reject(error);
+                });
         } catch (error) {
             return Promise.reject(error);
         }
