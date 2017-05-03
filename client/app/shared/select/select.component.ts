@@ -40,7 +40,7 @@ export class SelectComponent extends BaseComponent {
         if (this.modelRef["value"].label == this.itemList["value"][itemIndex].label) {
           this.modelRef["value"] = this.itemList["value"][itemIndex];
           break;
-        }        
+        }
       }
     }
   }
@@ -51,5 +51,9 @@ export class SelectComponent extends BaseComponent {
 
   getEventPayload() {
     return this.modelRef["value"];
+  }
+
+  getData() {
+    return this.modelRef ? this.modelRef : this.builderModelSrvc.getStateRef(this.compConfig.val);
   }
 }
