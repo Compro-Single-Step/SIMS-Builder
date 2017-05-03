@@ -52,6 +52,9 @@ class FileStoreController {
                 })
         });
     }
+    // Below function was a duplicate. Use 'getStepXMLFolderPath' instead.
+    // getFileStoreStepFolderPath(taskId, stepIdx) {
+    //  }
 
     getSimsXmlStepFolderPath(taskId, stepIdx) {
         return this.getTaskFolderPath(taskId, stepIdx) + stepIdx + "/";
@@ -96,15 +99,29 @@ class FileStoreController {
 
         });
     }
-
+    /**
+     * @param {*} sourceFileLocation : Location from which file to be copied 
+     * Ex: "GO16.WD.12.12B.02.T1/1/1493790231823.DocumentData.json"
+     * @param {*} resourceMap : It's an object which contains following key-value pairs:
+     *   absFilePath:"XMLs/TaskXmls/go16/wd/12/12b.02.t1/1/Assets/1493790231823.DocumentData.json"
+     *   customParentFolder: Any custom folder hierarchy
+     *   fileName: "1493790231823.DocumentData.json"
+     *   fileType: "json"
+     *   resourceType: "step"
+     * @param {*} taskId : Task ID
+     * @param {*} stepIndex : Step Index
+     * OUTPUT : This function copies the resource file from a source location to corresponding 
+     * destination and returns the promise for same
+     */
     copyAssetToTaskFolderEnhanced(sourceFileLocation, resourceMap, taskId, stepIndex) {
 
+        let srcPath;
         if (resourceMap.resourceType === "step")
-            let srcPath = config.fileStore.resourceFolder + sourceFileLocation;
+            srcPath = config.fileStore.resourceFolder + sourceFileLocation;
         else
-            let srcPath = path.join(config.fileStore.skillFolder, sourceFileLocation);
+            srcPath = path.join(config.fileStore.skillFolder, sourceFileLocation);
 
-        let destPath = path.join(this.getStepXMLAssetsFolderPath(taskId, stepIndex), resourceMap.customParentFolder, resourceMap.fileName);
+        let destPath = path.join(this.getStepAssetsFolderPath(taskId, stepIndex), resourceMap.customParentFolder, resourceMap.fileName);
 
         return new Promise((resolve, reject) => {
             fse.copy(srcPath, destPath, { overwrite: false }, error => {
@@ -255,9 +272,14 @@ class FileStoreController {
     getStepXMLFolderPath(taskId, stepIndex) {
         return config.fileStore.xmlFolder + taskId + "/" + stepIndex + "/";
     }
-
-    getStepXMLAssetsFolderPath(taskId, stepIndex) {
-        return config.fileStore.xmlFolder + taskId + "/" + stepIndex + "/Assets/";
+    
+    /**
+     * @param {*} taskId : Task ID
+     * @param {*} stepIndex : Step Number
+     * OUTPUT : Absolute Folder Path of the corresponding Task till the Assets folder
+     */
+    getStepAssetsFolderPath(taskId, stepIndex) {
+        return this.getStepXMLFolderPath(taskId, stepIndex) + "Assets/";
     }
 
     getUploadedResourceFolderPath(relPath) {

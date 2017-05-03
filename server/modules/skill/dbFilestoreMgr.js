@@ -17,6 +17,21 @@ class DatabaseFileStoreManager {
         return fsc.copyAssetToTaskFolder(residentPath, taskParams);
     }
 
+     /**
+     * @param {*} sourceFileLocation : Location from which file to be copied 
+     * Ex: "GO16.WD.12.12B.02.T1/1/1493790231823.DocumentData.json"
+     * @param {*} resourceMap : It's an object which contains following key-value pairs:
+     *   absFilePath:"XMLs/TaskXmls/go16/wd/12/12b.02.t1/1/Assets/1493790231823.DocumentData.json"
+     *   customParentFolder: Any custom folder hierarchy
+     *   fileName: "1493790231823.DocumentData.json"
+     *   fileType: "json"
+     *   resourceType: "step"
+     * @param {*} taskId : Task ID
+     * @param {*} stepIndex : Step Index
+     * OUTPUT : This function calls the 'copyAssetToTaskFolderEnhanced' function of file store controller 
+     * which copies the resource file from a source location to corresponding destination and 
+     * returns the promise for same
+     */
     copyTaskAssetFileEnhanced(sourceFileLocation, resourceMap, taskId, stepIndex) {
         //construct a promise in filestore controller and return that promise 
         // this function will as it is return the promise object whether it is resolved or rejected
