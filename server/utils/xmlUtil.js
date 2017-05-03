@@ -31,7 +31,7 @@ class XMLUtil{
     }
 
     genStepAssetsFolderPath(taskId, stepIndex){
-        return this.generateTaskFolderPath(taskId) + stepIndex + "/Assets/";
+        return this.generateStepFolderPath(taskId, stepIndex) + "Assets/";
     }
 }
 
