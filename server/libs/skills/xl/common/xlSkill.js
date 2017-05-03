@@ -192,8 +192,9 @@ module.exports = class ExcelBaseSkill extends BaseSkill {
 
     /**
      * fnality
-     * for populating the attribute INIT_DOC_JSON
-     * The function copies the asset to the required place and returns the path of the copied resource in resolveparam 
+     * for populating the attribute INIT_DOC_JSON and
+     * adding the asset path to resource map
+     * Resources added to this resource map are later copied to step asset folder
      */
     createJsonPath(skillParams) {
         var taskParams = skillParams.taskParams;
@@ -206,7 +207,8 @@ module.exports = class ExcelBaseSkill extends BaseSkill {
     /**
      * fnality
      * for populating the attribute SHEET_CELLS_DATA
-     * The function copies the cell json asset to the required place and returns the path of the copied resource in resolveparam 
+     * adding the asset path to resource map
+     * Resources added to this resource map are later copied to step asset folder
      * return
      * {"sheetNo":1, "dataJSONPath":"XMLs/TaskXmls2016/exp/xl/04/03.02.T1/Assets/State3/SheetCell.json" }
      */
