@@ -8,6 +8,7 @@ import { BuilderDataService } from '../../step-builder/shared/builder-data.servi
 
 
 declare var Dropzone: any;
+declare var Papa;
 Dropzone.autoDiscover = false;
 @Component({
   selector: 'app-dropzone',
@@ -126,14 +127,31 @@ export class DropzoneComponent extends BaseComponent implements OnDestroy {
 
   fileTypeHandler(fileType, data) {
     let obj = {};
-    obj[MIMETYPE.JSON] = function(data){
-      return JSON.parse(data);
-    };
-    obj[MIMETYPE.CSV] = function(data){
-      return data;
-    };
+    obj[MIMETYPE.JSON] = this.parseJsonData;
+    obj[MIMETYPE.CSV] = this.parseCsvDataToJson;
 
     return obj[fileType](data);
+  }
+
+  parseJsonData(data){
+    return JSON.parse(data);
+  }
+
+  parseCsvDataToJson(data){
+    var config = {
+      "header": true,
+      "skipEmptyLines": true
+    }
+    var output = Papa.parse(data, config);
+    if(output.errors.length != 0)
+    {
+      //TODO: Error Handling
+      for(let i = 0; i < output.errors.length; i++)
+      {
+        console.log("Error in parsing csv: " + output.errors[i].message + (output.errors[i].row !== undefined ? " => at row: " + output.errors[i].row : ""));
+      }
+    }
+    return output.data;
   }
 
   restoreFileUI(dropzone) {
