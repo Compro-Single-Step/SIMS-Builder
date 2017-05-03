@@ -33,7 +33,9 @@ function attrTaskParam(taskId, stepIndex, stateId, dbFilestoreMgr, resourceMap) 
  * from which the file needs to be copied from is evaluated 
  *    skill: Means that the resource is skill specific and has to be copied from "filestore/skills/" folder
  *    step: Means that the resource is task specific and has to be copied from "filestore/resources/" folder
- * @param {*} filePath : The file path fetched from IOMap JSON Ex: "GO16.WD.12.12B.02.T1/1/1493790231823.DocumentData.json"
+ * @param {*} filePath : The file path fetched from IOMap JSON 
+ * when resourcetype is step => Ex: "GO16.WD.12.12B.02.T1/1/1493790231823.DocumentData.json"
+ * when resourcetype is skill => Ex: "xl/movecellcontent/resources/tree.xml"
  * @param {*} customParentFolder : Any custom parent folder hierarchy after the 'Assets' folder
  */
 attrTaskParam.prototype.addResourceToMap = function (resourceType, filePath, customParentFolder = "") {
