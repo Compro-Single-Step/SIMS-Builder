@@ -127,10 +127,10 @@ export class DropzoneComponent extends BaseComponent implements OnDestroy {
 
   fileTypeHandler(fileType, data) {
     let obj = {};
-    obj[MIMETYPE.JSON] = "parseJsonData";
-    obj[MIMETYPE.CSV] = "parseCsvDataToJson";
+    obj[MIMETYPE.JSON] = this.parseJsonData;
+    obj[MIMETYPE.CSV] = this.parseCsvDataToJson;
 
-    return this[obj[fileType]](data);
+    return obj[fileType](data);
   }
 
   parseJsonData(data){
