@@ -126,14 +126,18 @@ export class DropzoneComponent extends BaseComponent implements OnDestroy {
 
   fileTypeHandler(fileType, data) {
     let obj = {};
-    obj[MIMETYPE.JSON] = function(data){
-      return JSON.parse(data);
-    };
-    obj[MIMETYPE.CSV] = function(data){
-      return data;
-    };
+    obj[MIMETYPE.JSON] = "parseJSONData";
+    obj[MIMETYPE.CSV] = "returnData";
 
-    return obj[fileType](data);
+    return this[obj[fileType]](data);
+  }
+
+  parseJSONData(data){
+    return JSON.parse(data);
+  }
+
+  returnData(data){
+    return data;
   }
 
   restoreFileUI(dropzone) {
