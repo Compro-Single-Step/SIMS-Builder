@@ -212,8 +212,8 @@
                       "id": "tableRange",
                       "label": "Table Range",
                       "desc": {
-                        "basic": "Range of cells where this table would be formed. Sample value- A3:K68",
-                        "detailed": "Range of cells where this table would be formed. Sample value- A3:K68"
+                        "basic": "Range of cells where this table would be formed. [e.g. A3:K68]",
+                        "detailed": "Range of cells where this table would be formed. [e.g. A3:K68]"
                       },
                       "itemRenderer": "TextBox",
                       "itemType": "leaf",
