@@ -31,8 +31,8 @@ function attrTaskParam(taskId, stepIndex, stateId, dbFilestoreMgr, resourceMap) 
 /**
  * @param {*} resourceType : It can have following two values and according to that the source folder 
  * from which the file needs to be copied from is evaluated 
- *    skill: Means that the resource is skill specific
- *    step: Means that the resource is task specific
+ *    skill: Means that the resource is skill specific and has to be copied from "filestore/skills/" folder
+ *    step: Means that the resource is task specific and has to be copied from "filestore/resources/" folder
  * @param {*} filePath : The file path fetched from IOMap JSON Ex: "GO16.WD.12.12B.02.T1/1/1493790231823.DocumentData.json"
  * @param {*} customParentFolder : Any custom parent folder hierarchy after the 'Assets' folder
  */
