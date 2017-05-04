@@ -102,7 +102,7 @@ export class DropzoneComponent extends BaseComponent implements OnDestroy {
       if (self.isMultipleFiles) {
         for (let i = 0; i < currModelRef["value"].length; i++) {
            if (currModelRef["value"][i].displayName === file.name) {
-            self.removeFileFromServer(currModelRef["value"][i], currModelRef, i);
+            self.removeFileFromServer(currModelRef, i);
             break;
           }
         }
@@ -113,7 +113,8 @@ export class DropzoneComponent extends BaseComponent implements OnDestroy {
 
     this.restoreFileUI(dropzone);
   }
-  removeFileFromServer(el, model?, index?) {
+  removeFileFromServer(model, index?) {
+    let el = this.isMultipleFiles ? model["value"][index] : model;
     if (el["path"] != "") {
       this.bds.removeFile(el["path"]).subscribe((data) => {
         if (data.status === "success") {
@@ -121,8 +122,8 @@ export class DropzoneComponent extends BaseComponent implements OnDestroy {
           if (this.isMultipleFiles) {
             model["value"].splice(index, 1);
           } else {
-            el["displayName"] = "";
-            el["path"] = "";
+            model["displayName"] = "";
+            model["path"] = "";
           }
         } else if (data.status == "error") {
           // TODO: Code for handling - File Doesn't Exist Error
