@@ -49,34 +49,11 @@
                 }
             },
             "audioToBeAdded": {
-                "value": [
-                    {
-                        "name": "Audio 1",
-                        "audioImage": {
-                            "displayName": "",
-                            "path": ""
-                        },
-                        "audioFolder": {
-                            "options": {
-                                "value": []
-                            },
-                            "selectedAudio": {
-                                "value": ""
-                            }
-                        },
-                        "audioName": {
-                            "value": ""
-                        }
-                    }
-                ]
+                "displayName": "",
+                "path": ""
             },
             "audioTobeInserted": {
-                "options": {
-                    "value": []
-                },
-                "selectedAudio": {
-                    "value": ""
-                }
+                "value": ""
             }
         },
         "3": {

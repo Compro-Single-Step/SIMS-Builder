@@ -65,13 +65,13 @@
               "TREE_XML_PATH": {
                 "function-name": "generateSaveAsDialogTreeXML",
                 "params": {
-                  "resAdded":"views['2'].audioToBeAdded.value",
+                  "resAdded":"views['2'].audioToBeAdded.path",
                 }
               },
               "AUTO_COMPLETE_LIST": {
                 "function-name": "generateAutoCompleteList",
                 "params": {
-                  "resAdded":"views['2'].audioToBeAdded.value",
+                  "resAdded":"views['2'].audioToBeAdded.path",
                 }
               }
             }
@@ -81,7 +81,7 @@
               "FILE_NAME": {
                 "function-name": "getAudioTobeInserted",
                 "params": {
-                  "resAdded":"views['2'].audioTobeInserted.selectedAudio.value",
+                  "resAdded":"views['2'].audioTobeInserted.value",
                 }
               }
             },
@@ -89,7 +89,7 @@
               "FILE_NAME": {
                 "function-name": "getAudioTobeInsertedWithoutExt",
                 "params": {
-                  "resAdded":"views['2'].audioTobeInserted.selectedAudio.value",
+                  "resAdded":"views['2'].audioTobeInserted.value",
                 }
               }
             }
