@@ -34,7 +34,13 @@ module.exports = {
         primaryFile: "ac/importaccessobject/importAccessObject",
         dependencyFiles: [
             {
-                primaryFile: "common/baseSkill"
+                primaryFile: "ac/common/acSkill",
+                dependencyFiles: [
+                    {
+                        primaryFile: "common/baseSkill",
+                        dependencyFiles: []
+                    }
+                ]
             }
         ],
         dependencySkills: []
