@@ -22,6 +22,7 @@ export class DropzoneComponent extends BaseComponent implements OnDestroy {
   height: string;
   makeDeleteCall: boolean;
   fileTypesToRead: Array<MIMETYPE>;
+  isMultipleFiles: boolean;
   constructor(private elementRef: ElementRef, private route: ActivatedRoute, private router: Router, private authSrvc: AuthService, private bds: BuilderDataService) {
     super();
     this.makeDeleteCall = true;
@@ -30,8 +31,12 @@ export class DropzoneComponent extends BaseComponent implements OnDestroy {
 
   ngOnInit() {
     super.ngOnInit();
+    if (this.compConfig.rendererProperties) {
+      this.isMultipleFiles = (this.compConfig.rendererProperties.multipleFiles) ? true : false;
+    } else {
+      this.isMultipleFiles = false;
+    }
     this.UpdateView();
-
     this.router.events
       .subscribe((event) => {
         if (event instanceof NavigationStart) {
@@ -57,7 +62,7 @@ export class DropzoneComponent extends BaseComponent implements OnDestroy {
     let dropzone = new Dropzone(this.dropzoneContainer.nativeElement, {
       url: "/api/skill/resource",
       paramName: "dzfile",
-      maxFiles: (self.compConfig.rendererProperties.multipleFiles) ? null : 1,
+      maxFiles: (self.isMultipleFiles) ? null : 1,
       addRemoveLinks: true,
 
       acceptedFiles: MIMETYPE[self.compConfig.rendererProperties.dataType],
@@ -79,8 +84,8 @@ export class DropzoneComponent extends BaseComponent implements OnDestroy {
     dropzone.on("success", function (file, response) {
       if (file.status === "success") {
         let currModelRef = self.getData();
-        if (self.compConfig.rendererProperties.multipleFiles) {
-          currModelRef.push({ displayName: file.name, path: response.filePath });
+        if (self.isMultipleFiles) {
+          currModelRef["value"].push({ displayName: file.name, path: response.filePath });
         } else {
           currModelRef["displayName"] = file.name;
           currModelRef["path"] = response.filePath;
@@ -95,20 +100,39 @@ export class DropzoneComponent extends BaseComponent implements OnDestroy {
     });
     dropzone.on("removedfile", function (file) {
       let currModelRef = self.getData();
-      self.bds.removeFile(currModelRef["path"]).subscribe(function (data) {
-        if (data.status === "success") {
-          self.emitEvents(null);
-          currModelRef["displayName"] = "";
-          currModelRef["path"] = "";
-        } else if (data.status == "error") {
-          // TODO: Code for handling - File Doesn't Exist Error
-        }
-      });
+      let updatedModel = [];
+      if (self.isMultipleFiles) {
+        currModelRef["value"].forEach(element => {
+          if (element.displayName === file.name) {
+            self.removeFileFromServer(element);
+          } else {
+            updatedModel.push(element);
+          }
+        });
+        currModelRef["value"] = updatedModel;
+      } else {
+        self.removeFileFromServer(currModelRef)
+      }
     })
 
     this.restoreFileUI(dropzone);
   }
-
+  removeFileFromServer(el) {
+    let currModelRef = this.getData();
+    if (el["path"] != "") {
+      this.bds.removeFile(el["path"]).subscribe((data) => {
+        if (data.status === "success") {
+          this.emitEvents(null);
+          if (!this.isMultipleFiles) {
+            el["displayName"] = "";
+            el["path"] = "";
+          }
+        } else if (data.status == "error") {
+          // TODO: Code for handling - File Doesn't Exist Error
+        }
+      });
+    }
+  }
   readFile(file, fileType) {
     let reader = new FileReader();
     let droppedFile;
@@ -155,7 +179,7 @@ export class DropzoneComponent extends BaseComponent implements OnDestroy {
     return output.data;
   }
   addFileToDropzone(dropzone, el) {
-    if (el.path != "") {
+    if (el.path && el.path != "") {
       this.bds.getResource(el.path).subscribe((res) => {
         if (res.headers.get("status") == "success") {
           let file = new File([res._body], el.displayName);
@@ -169,10 +193,9 @@ export class DropzoneComponent extends BaseComponent implements OnDestroy {
     }
   }
   restoreFileUI(dropzone) {
-    let self = this;
     let fileInfo = this.getData();
-    if (this.compConfig.rendererProperties.multipleFiles) {
-      fileInfo.forEach(el => {
+    if (this.isMultipleFiles) {
+      fileInfo["value"].forEach(el => {
         this.addFileToDropzone(dropzone, el);
       });
     } else {
