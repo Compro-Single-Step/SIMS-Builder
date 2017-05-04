@@ -27,14 +27,13 @@ export class DropzoneComponent extends BaseComponent implements OnDestroy {
     super();
     this.makeDeleteCall = true;
     this.fileTypesToRead = [MIMETYPE.JSON, MIMETYPE.CSV];
+    this.isMultipleFiles = false;
   }
 
   ngOnInit() {
     super.ngOnInit();
     if (this.compConfig.rendererProperties) {
       this.isMultipleFiles = (this.compConfig.rendererProperties.multipleFiles) ? true : false;
-    } else {
-      this.isMultipleFiles = false;
     }
     this.UpdateView();
     this.router.events
