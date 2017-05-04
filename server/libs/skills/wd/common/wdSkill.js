@@ -1,5 +1,10 @@
-const replace = require('replace-in-file');
+const xmldom = require('xmldom');
+const DOMParser = xmldom.DOMParser;
+const XMLSerializer = xmldom.XMLSerializer;
+const Promise = require('bluebird');
+const fs = Promise.promisifyAll(require('fs'));
 const BaseSkill = require("../../common/baseSkill");
+const config = require('../../../../config/config');
 //Wrod based Common Functionality goes here 
 
 const xmlUtil = require("../../../../utils/xmlUtil");
@@ -19,22 +24,35 @@ module.exports = class WordSkill extends BaseSkill {
     resourcePathWithImages(skillParams) {
         try {
             let paramValueObj = skillParams.paramsObj;
-            let resourcePath = paramValueObj["docData"];
-            let options = {
-                files: resourcePath,
-                from: [/<rootpath>/g],
-                to: ["xmls/abc/sjflsf/kkklk/abc.png"],
-                encoding: 'utf8'
-            };
+            let resourcePath = paramValueObj["resourcePath"];
+            let docImages = paramValueObj["docImages"];
+            let absolutePath = config.fileStore.resourceFolder + resourcePath;
 
-            return replace(options)
-                .then(changedFiles => {
-                    let resolveParams = { "attrValue": resourcePath };
-                    return Promise.resolve(resolveParams);
-                })
-                .catch(error => {
+
+            return fs.readFileAsync(absolutePath, "utf8")
+                .then((htmlResource) => {
+                    let doc = new DOMParser().parseFromString(htmlResource);
+                    let imgTagArray = doc.getElementsByTagName('img');
+
+                    for (let i = 0; i < imgTagArray.length; i++) {
+                        let imageName = imgTagArray[i].getAttribute('approot');
+
+                        docImages.forEach(function (imgObject) {
+                            if (imageName === imgObject.displayName) {
+                                let imagePathArray = imgObject.path.split('/');
+                                imageName = imagePathArray[imagePathArray.length - 1];
+                                imgTagArray[i].setAttribute('src', 'Assets/' + imageName);
+                            }
+                        });
+                    };
+
+                    return fs.writeFileAsync(absolutePath, new XMLSerializer().serializeToString(doc));
+                }).then((data) => {
+                    return Promise.resolve({ "attrValue": resourcePath });
+                }).catch((error) => {
                     return Promise.reject(error);
                 });
+
         } catch (error) {
             return Promise.reject(error);
         }
