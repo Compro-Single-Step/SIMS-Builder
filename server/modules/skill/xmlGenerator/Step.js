@@ -75,8 +75,8 @@ module.exports = class Step {
 
         // adding preload resources
         xmlString += "<resources>";
-        for(let idx=0; idx<this.attrValMap.preloadResources.length; idx++){
-            let currRes = this.attrValMap.preloadResources[idx];
+        for(let idx=0; idx<this.attrValMap.preload.resource.length; idx++){
+            let currRes = this.attrValMap.preload.resource[idx];
             xmlString += '<res path="'+currRes.path+'" type="'+currRes.type+'"/>';
         }
         xmlString += "</resources>";
