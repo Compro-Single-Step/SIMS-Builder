@@ -41,4 +41,15 @@ module.exports = class BaseSkill {
     return Promise.resolve(resolveParam);
 
   }
+
+  getSubribbon(skillParams){
+    var skillParamsObj = skillParams.skillParamsObj,
+      pathArray = [skillParamsObj["subribbonPath"], skillParamsObj["subribbonPath_1024"]],
+      config = {
+        resourceType: "skill",
+        addToPreload: "false"
+      },
+      attrValue = skillParams.taskParams.addResourceToMap(pathArray, config)[pathArray[0]]["absFilePath"];
+    return Promise.resolve({ attrValue });
+  }
 }

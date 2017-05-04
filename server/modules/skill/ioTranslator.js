@@ -32,32 +32,52 @@ function attrTaskParam(taskId, stepIndex, stateId, dbFilestoreMgr, resourceMap) 
  * @param {*} resourceType : It can have following two values and according to that the source folder 
  * from which the file needs to be copied from is evaluated 
  *    skill: Means that the resource is skill specific and has to be copied from "filestore/skills/" folder
- *    step: Means that the resource is task specific and has to be copied from "filestore/resources/" folder
+ *    step: Means that the resource is task specific and has to be copied from "filestore/Resources/" folder
  * @param {*} filePath : The file path fetched from IOMap JSON 
  * when resourcetype is step => Ex: "GO16.WD.12.12B.02.T1/1/1493790231823.DocumentData.json"
- * when resourcetype is skill => Ex: "xl/movecellcontent/resources/tree.xml"
+ * when resourcetype is skill => Ex: "xl/MoveCellContent/Resources/tree.xml"
  * @param {*} customParentFolder : Any custom parent folder hierarchy after the 'Assets' folder
  */
-attrTaskParam.prototype.addResourceToMap = function (resourceType, filePath, customParentFolder = "") {
+attrTaskParam.prototype.addResourceToMap = function (filePath, config = {}) {
 
-  let existingResource = this.resourceMap[filePath];
-  if (existingResource)
+  config.resourceType = config.resourceType ? (config.resourceType.toLowerCase() !== "skill" ? "step" : "skill") : "step";
+  config.customParentFolder = config.customParentFolder || "";
+  config.addToPreload = !(config.addToPreload === "false" || config.addToPreload === false);
+
+  let returnObject = {};
+
+  if (!(filePath instanceof Array)) {
+    return this._addToResMap(filePath, config);
+  }
+
+  else {
+    for (let value of filePath) {
+      returnObject[value] = this._addToResMap(value, config);
+    }
+  }
+  return returnObject;
+}
+
+attrTaskParam.prototype._addToResMap = function (filePath, config) {
+  let existingResource = this.resourceMap[filePath],
+    resourceType = config.resourceType,
+    customParentFolder = config.customParentFolder,
+    addToPreload = config.addToPreload;
+
+  if (existingResource) {
     return existingResource;
+  }
+  else {
+    let fileName = ResourceUtil.getFileNameWithExtension(filePath),
+      fileType = ResourceUtil.getFileType(fileName),
+      stepAssetsFolderPath = XMLUtil.genStepAssetsFolderPath(this.taskId, this.stepIndex),
+      // Replacing all occurance of '\' with '/' because '\' is used as an escape character in Javascript
+      absFilePath = path.join(stepAssetsFolderPath, customParentFolder, fileName).replace(/\\/g, "/");
 
-  let fileName = ResourceUtil.getFileNameWithExtension(filePath),
-    fileType = ResourceUtil.getFileType(fileName),
-    stepAssetsFolderPath = XMLUtil.genStepAssetsFolderPath(this.taskId, this.stepIndex),
-    // Replacing all occurance of '\' with '/' because '\' is used as an escape character in Javascript
-    absFilePath = path.join(stepAssetsFolderPath, customParentFolder, fileName).replace(/\\/g, "/");
-
-  resourceType = resourceType.toLowerCase();
-
-  if (resourceType !== "skill")
-    resourceType = "step";
-
-  //Pushing to  Resource Map so that the file can be copied asynchronously
-  this.resourceMap[filePath] = { customParentFolder, fileName, resourceType, absFilePath, fileType };
-  return { customParentFolder, fileName, stepAssetsFolderPath, fileType, absFilePath };
+    //Adding to Resource Map so that the file can be copied asynchronously
+    this.resourceMap[filePath] = { customParentFolder, fileName, resourceType, absFilePath, fileType, addToPreload };
+    return { customParentFolder, fileName, stepAssetsFolderPath, fileType, absFilePath }
+  }
 }
 
 class IOTranslator {
@@ -104,7 +124,7 @@ class IOTranslator {
 
     let evaluatedParams = {};
     //the attr params currently contains the string values , the LOC below converts it into values from the Step UI Json 
-    if(attrParams.attrObject.params)
+    if (attrParams.attrObject.params)
       evaluatedParams = this.getEvaluatedParams(attrParams.attrObject.params, attrParams.stepUIState);
     return this.evaluateFromFunc(attrParams, evaluatedParams, attrParams.attrObject.skillParams, taskParam);
   }
@@ -241,12 +261,14 @@ class IOTranslator {
     for (let key in resourceMap) {
       copyResPromiseArray.push(attrObj.dbFilestoreMgr.copyTaskAssetFileEnhanced(key, resourceMap[key], attrObj.taskId, attrObj.stepIndex));
 
-      //Adding in prload Res
+      //Adding in preload Res
       if (!attrObj.IOMap.preload)
         attrObj.IOMap.preload = { resource: [] };
       else if (!attrObj.IOMap.preload.resource)
         attrObj.IOMap.preload.resource = [];
-      attrObj.IOMap.preload.resource.push({ "path": resourceMap[key]["absFilePath"], "type": resourceMap[key]["fileType"] });
+
+      if(resourceMap[key]["addToPreload"])
+        attrObj.IOMap.preload.resource.push({ "path": resourceMap[key]["absFilePath"], "type": resourceMap[key]["fileType"] });
     }
     return copyResPromiseArray;
   }
