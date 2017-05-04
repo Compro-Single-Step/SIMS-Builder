@@ -1,5 +1,8 @@
 p {
   margin-bottom: 0.5rem;
+  &.ViewHeading {
+    font-size: 2.2rem;
+  }
   &.PanelHeading {
     font-size: 2rem;
   }
@@ -10,5 +13,4 @@ p {
     font-size: 1rem;
     margin-bottom: 1.5rem;
   }
-
 }

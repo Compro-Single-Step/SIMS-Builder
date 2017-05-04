@@ -16,7 +16,6 @@ export class itemSchema {
   val?: string;
   relVal?: string;
   emitEvents?: Array<string>;
-
   constructor() {
     this.id = "";
     this.label = "";

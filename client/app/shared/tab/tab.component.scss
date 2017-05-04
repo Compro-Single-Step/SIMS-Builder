@@ -4,6 +4,8 @@
 app-tab-page {
 	border: 1px solid $pre-border-color;
 	padding-left: 1rem;
+	padding-right: 1rem;
+	display: block;
 }
 :host /deep/ .customClass {
  	height: 2.5rem;

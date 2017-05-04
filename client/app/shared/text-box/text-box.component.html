@@ -4,7 +4,7 @@
 		<button class="glyphicon glyphicon-info-sign info-icon" [popover]="compConfig.desc.detailed" [popoverTitle]="compConfig.label" placement="right" triggers="focus"></button>
 	</div>
 	<div class="form-group">
-	    <input class="form-control input-max-width" [(ngModel)] = "modelRef.value" [disabled]="isDisabled()"/>
+	    <input class="form-control input-max-width" [(ngModel)] = "modelRef.value" [disabled]="isDisabled()" [placeholder]="placeholder"/>
 	</div>
 	<app-label [compConfig]="descriptionConfig"></app-label>
 </fieldset>
