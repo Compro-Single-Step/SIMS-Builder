@@ -96,8 +96,8 @@ class IOTranslator {
       functionName = "extractSingleParamVal"
     }
 
-    let skillParams = { paramsObj, skillParamsObj, taskParams };
-    return attrParams.skillobject[functionName](skillParams);
+    let params = { paramsObj, skillParamsObj, taskParams };
+    return attrParams.skillobject[functionName](params);
   }
 
   evaluateAttribute(attrParams, taskParam) {
