@@ -99,16 +99,13 @@ export class DropzoneComponent extends BaseComponent implements OnDestroy {
     });
     dropzone.on("removedfile", function (file) {
       let currModelRef = self.getData();
-      let updatedModel = [];
       if (self.isMultipleFiles) {
-        currModelRef["value"].forEach(element => {
-          if (element.displayName === file.name) {
-            self.removeFileFromServer(element);
-          } else {
-            updatedModel.push(element);
+        for (let i = 0; i < currModelRef["value"].length; i++) {
+           if (currModelRef["value"][i].displayName === file.name) {
+            self.removeFileFromServer(currModelRef["value"][i], currModelRef, i);
+            break;
           }
-        });
-        currModelRef["value"] = updatedModel;
+        }
       } else {
         self.removeFileFromServer(currModelRef)
       }
@@ -116,13 +113,14 @@ export class DropzoneComponent extends BaseComponent implements OnDestroy {
 
     this.restoreFileUI(dropzone);
   }
-  removeFileFromServer(el) {
-    let currModelRef = this.getData();
+  removeFileFromServer(el, model?, index?) {
     if (el["path"] != "") {
       this.bds.removeFile(el["path"]).subscribe((data) => {
         if (data.status === "success") {
           this.emitEvents(null);
-          if (!this.isMultipleFiles) {
+          if (this.isMultipleFiles) {
+            model["value"].splice(index, 1);
+          } else {
             el["displayName"] = "";
             el["path"] = "";
           }
