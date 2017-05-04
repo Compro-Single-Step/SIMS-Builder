@@ -38,6 +38,14 @@
                 "displayName": "",
                 "path": ""
             },
+            "treeXMLImages": {
+                "value": [
+                    {
+                        "displayName": "",
+                        "path": ""
+                    }
+                ]
+            },
             "treeSelectedItemID": {
                 "value": ""
             },
