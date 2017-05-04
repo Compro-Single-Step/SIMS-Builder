@@ -260,7 +260,7 @@
 					<initialattrs>
 						<attr name="PROJECT_JSON" userDefined="true"/>
 						<attr name="IS_COLLAPSED" value="false"/>
-						<attr name="SELECTED_DB_OBJECT_TYPE" value="Tables"/>
+						<attr name="SELECTED_DB_OBJECT_TYPE" userDefined="true"/>
 						<attr name="SELECTED_DB_OBJECT" userDefined="true"/>
 					</initialattrs>
 				</comp>
@@ -271,6 +271,7 @@
 					</initialattrs>
 				</comp>
 				<comp id="6" mode="remove"/>
+				<comp id="8"mode="remove"/>
 			</comps>
 		</state>
 	</states>

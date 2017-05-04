@@ -217,7 +217,7 @@
     },
     "6": {
       "components": {
-        "7": {
+        "8": {
           "initial": {
             "default-attrs": {
               "TEXTBOX_SAVE_AS_TEXT": {
@@ -240,6 +240,21 @@
                 "function-name": "extractAttrPath",
                 "params": {
                   "navPane": "views['3'].navigationPane.path"
+                }
+              },
+              "SELECTED_DB_OBJECT_TYPE": {
+                "function-name": "getFinalSelectedObjectType",
+                "params": {
+                  "skillmode":"views['2'].importMode.value",
+                  "selectedObj": "views['1'].navigationPaneItems.selectedOption.value"
+                }
+              },
+              "SELECTED_DB_OBJECT": {
+                "function-name": "getFinalSelectedObject",
+                "params": {
+                  "skillmode":"views['2'].importMode.value",
+                  "selectedObj": "views['1'].navigationPaneItems.selectedOption.value",
+                  "DBdata": "views['2'].importDBConfig.path"
                 }
               }              
             }

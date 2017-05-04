@@ -1,18 +1,10 @@
-// this file contains all the functions for the MovecellContent with the object implementation of the parameterArray
-const baseSkill = require("../../common/baseSkill");
+// this file contains all the functions for the IMPORT ACCESS OBJECT with the object implementation of the parameterArray
+const AccessBaseSkill = require("../common/acSkill");
 
-const xmlUtil = require("../../../../utils/xmlUtil");
-
-class importAccessobject extends baseSkill {
+class importAccessobject extends AccessBaseSkill {
   constructor(){
     super();
     this.projJSON = {};
-  }
-  //tooltip text to be displayed
-  getTootlTipText(skillParams) {
-    var paramValueObj = skillParams.paramsObj;
-    var resolveParams = { "attrValue":  "Access - " + paramValueObj["DocTitle"] };
-    return Promise.resolve(resolveParams);
   }
   getSkillMode(skillParams){
     var paramValueObj = skillParams.paramsObj;
@@ -39,48 +31,6 @@ class importAccessobject extends baseSkill {
     var resolveParams = this.splitFilename(paramValueObj.databasePath);
     resolveParams = { "attrValue": resolveParams.split(".")[0]};
     return Promise.resolve(resolveParams);
-  }
-  getSelectedObject(skillParams){
-    var paramValueObj = skillParams.paramsObj;
-    var resolveParams = { "attrValue": paramValueObj.selectedObj.data.split(".")[1]};
-    return Promise.resolve(resolveParams);
-  }
-  getSelectedObjectType(skillParams){
-    var paramValueObj = skillParams.paramsObj;
-    let objectMap = {
-      "Table":"Tables",
-      "Query":"Queries",
-      "Form":"Forms",
-      "Report":"Reports",
-      "Macro":"Macros",
-      "Module":"Modules"
-    }
-    var resolveParams = { "attrValue": objectMap[paramValueObj.selectedObj.data.split(".")[0]]};
-    return Promise.resolve(resolveParams);
-  }
-  addDatabaseObjectToDropdown(navigationPaneJSON, navaigationPaneDatabaseObjectArray) {
-    var objectType;
-    var objectMap = {
-      "tables" : "Table",
-      "queries" : "Query",
-      "forms" : "Form",
-      "reports" : "Report",
-      "macros" : "Macro",
-      "modules" : "Module"
-    }
-
-    while (navaigationPaneDatabaseObjectArray.value.length > 0) {
-      navaigationPaneDatabaseObjectArray.value.pop(); //https://jsperf.com/array-clear-methods/3
-    }
-
-    for (let key in navigationPaneJSON) {
-      if (navigationPaneJSON[key]) {
-        objectType = objectMap[key];
-        for(let i=0; i<navigationPaneJSON[key].length;i++ ){
-            navaigationPaneDatabaseObjectArray.value.push({"label": (objectType + ' : ' + navigationPaneJSON[key][i].name),"data":(objectType + '.' + navigationPaneJSON[key][i].name)});
-        }        
-     }
-    }
   }
   getInitialDBConfig(skillParams) {
     var paramValueObj = skillParams.paramsObj;
@@ -115,6 +65,9 @@ class importAccessobject extends baseSkill {
     });
   }
   getFinalDBConfig(DBJson){
+        if(Object.keys(this.projJSON).length != 0){
+          return;
+        }
         var validationConfig = {};
           var DataJSON = DBJson;
           for (var objtype in DataJSON){
@@ -128,6 +81,7 @@ class importAccessobject extends baseSkill {
               validationConfig[objtype] = names;
           }
           this.projJSON = validationConfig;
+          return;
   }
   
   // generateTreeXML(skillParams){
@@ -168,7 +122,6 @@ class importAccessobject extends baseSkill {
       }
       else
         resolveParams = { "attrValue": null};
-       console.log(resolveParams);
        return Promise.resolve(resolveParams);
     }
     else{
@@ -185,8 +138,45 @@ class importAccessobject extends baseSkill {
       }
       else
         resolveParams = { "attrValue": null};
-       console.log(resolveParams);
        return Promise.resolve(resolveParams);
+      });
+    }
+  }
+  getFinalSelectedObjectType(skillParams){
+    var resolveParams;
+    var paramValueObj = skillParams.paramsObj;
+    if(paramValueObj.skillmode == "2"){
+      resolveParams = { "attrValue":"Tables"};
+      return Promise.resolve(resolveParams);
+    }
+    else{
+      return super.getSelectedObjectType(skillParams);
+    } 
+  }
+  getFinalSelectedObject(skillParams){
+    var paramValueObj = skillParams.paramsObj;
+    var resolveParams = { "attrValue":paramValueObj.skillmode};
+    if(paramValueObj.skillmode == "2"){
+      return this.getLastTableSelected(skillParams);
+    }
+    else{
+      return super.getSelectedObject(skillParams); 
+    } 
+  }
+  getLastTableSelected(skillParams){
+    let paramValueObj = skillParams.paramsObj;
+    let resolveParams;
+    let self = this;
+    if(Object.keys(this.projJSON).length != 0){
+      resolveParams = { "attrValue": this.projJSON["tables"][this.projJSON["tables"].length-1]};
+      return Promise.resolve(resolveParams);
+    }
+    else{
+      return skillParams.taskParams.dbFilestoreMgr.readFileFromFileStore(paramValueObj.DBdata).then(function (resolveParam) {
+        var DataJSON = JSON.parse(resolveParam.fileData);
+        self.getFinalDBConfig(DataJSON);
+        resolveParams = { "attrValue": self.projJSON["tables"][self.projJSON["tables"].length-1]};
+        return Promise.resolve(resolveParams);
       });
     }
   }
