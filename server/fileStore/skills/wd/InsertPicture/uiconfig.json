@@ -82,10 +82,11 @@
               "itemType": "leaf",
               "rendererProperties": {
                 "dataType": "img",
-                "placeHolder": "Drop Document Images"
+                "placeHolder": "Drop Document Images",
+                "multipleFiles": true
               },
               "mandatory": true,
-              "val": "{{views.1.initialDocumentImages.value.0}}"
+              "val": "{{views.1.initialDocumentImages}}"
             }
           ]
         },
@@ -270,10 +271,11 @@
               "itemType": "leaf",
               "rendererProperties": {
                 "dataType": "img",
-                "placeHolder": "Drop Tree Images"
+                "placeHolder": "Drop Tree Images",
+                "multipleFiles": true
               },
               "mandatory": true,
-              "val": "{{views.2.treeXMLImages.value.0}}"
+              "val": "{{views.2.treeXMLImages}}"
             },
             {
               "id": "2.2.3",
@@ -374,10 +376,11 @@
               "itemType": "leaf",
               "rendererProperties": {
                 "dataType": "img",
-                "placeHolder": "Drop Document Images"
+                "placeHolder": "Drop Document Images",
+                "multipleFiles": true
               },
               "mandatory": true,
-              "val": "{{views.3.finalDocumentImages.value.0}}"
+              "val": "{{views.3.finalDocumentImages}}"
             },
             {
               "id": "3.1.3",

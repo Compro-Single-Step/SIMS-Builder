@@ -10,10 +10,6 @@
             },
             "initialDocumentImages": {
                 "value": [
-                    {
-                        "displayName": "",
-                        "path": ""
-                    }
                 ]
             },
             "initialElement": {
@@ -40,10 +36,6 @@
             },
             "treeXMLImages": {
                 "value": [
-                    {
-                        "displayName": "",
-                        "path": ""
-                    }
                 ]
             },
             "treeSelectedItemID": {
@@ -64,10 +56,6 @@
             },
             "finalDocumentImages": {
                 "value": [
-                    {
-                        "displayName": "",
-                        "path": ""
-                    }
                 ]
             },
             "selectedImageID": {
