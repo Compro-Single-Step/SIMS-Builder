@@ -76,7 +76,7 @@
               "label": "Document Images",
               "desc": {
                 "basic": "Images which are part of the HTML file used to configure the initial state of Word Document Area.",
-                "detailed": "Image(s) which will be used to configure the Word Doc Area in SIMS, is/are required to be uploaded here. These iamges are generated while exporting the original word document as HTML file."
+                "detailed": "Image(s) which will be used to configure the Word Doc Area in SIMS, is/are required to be uploaded here. These images are generated while exporting the original word document as HTML file."
               },
               "itemRenderer": "Dropzone",
               "itemType": "leaf",
@@ -352,7 +352,7 @@
               "label": "Document Images",
               "desc": {
                 "basic": "Images which are part of the HTML file used to configure the final state of Word Document Area.",
-                "detailed": "Image(s) which will be used to configure the Word Doc Area in SIMS, is/are required to be uploaded here. These iamges are generated while exporting the final word document as HTML file."
+                "detailed": "Image(s) which will be used to configure the Word Doc Area in SIMS, is/are required to be uploaded here. These images are generated while exporting the final word document as HTML file."
               },
               "itemRenderer": "Dropzone",
               "itemType": "leaf",
