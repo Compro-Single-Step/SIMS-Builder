@@ -88,7 +88,7 @@ class IOTranslator {
     return paramObj;
   }
 
-  evaluateFromFunc(attrParams, paramsObj, taskParams) {
+  evaluateFromFunc(attrParams, paramsObj, skillParamsObj, taskParams) {
 
     let functionName = attrParams.attrObject["function-name"];
 
@@ -96,17 +96,17 @@ class IOTranslator {
       functionName = "extractSingleParamVal"
     }
 
-    let skillParams = { paramsObj, taskParams };
-    return attrParams.skillobject[functionName](skillParams);
+    let params = { paramsObj, skillParamsObj, taskParams };
+    return attrParams.skillobject[functionName](params);
   }
 
   evaluateAttribute(attrParams, taskParam) {
 
-    var evaluatedParams = [];
-    var attrObjectValue = "";
-    //the attr params currentky contains the string values , the LOC below converts it into values from the Step UI Json 
-    evaluatedParams = this.getEvaluatedParams(attrParams.attrObject.params, attrParams.stepUIState);
-    return this.evaluateFromFunc(attrParams, evaluatedParams, taskParam);
+    let evaluatedParams = {};
+    //the attr params currently contains the string values , the LOC below converts it into values from the Step UI Json 
+    if(attrParams.attrObject.params)
+      evaluatedParams = this.getEvaluatedParams(attrParams.attrObject.params, attrParams.stepUIState);
+    return this.evaluateFromFunc(attrParams, evaluatedParams, attrParams.attrObject.skillParams, taskParam);
   }
 
   /**
