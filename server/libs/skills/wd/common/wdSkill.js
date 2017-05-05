@@ -2,7 +2,7 @@ const Promise = require('bluebird');
 const fs = Promise.promisifyAll(require('fs'));
 const BaseSkill = require("../../common/baseSkill");
 const config = require('../../../../config/config');
-const replace = require('replace-in-file');
+
 //Wrod based Common Functionality goes here 
 
 const xmlUtil = require("../../../../utils/xmlUtil");
@@ -38,7 +38,7 @@ module.exports = class WordSkill extends BaseSkill {
                     imgNameArray.forEach(function (imageName) {
                         docImages.forEach(function (imgObject) {
                             if (imageName === imgObject.displayName) {
-                                fromArray.push(new RegExp(`{#${imageName}#}`, 'g'));
+                                fromArray.push(`{#${imageName}#}`);
                                 let imagePathArray = imgObject.path.split('/');
                                 imageName = imagePathArray[imagePathArray.length - 1];
                                 toArray.push(`{#approot#}/Assets/${imageName}`);
@@ -46,14 +46,10 @@ module.exports = class WordSkill extends BaseSkill {
                         });
                     });
 
-                    let options = {
-                        files: absolutePath,
-                        from: fromArray,
-                        to: toArray,
-                        encoding: 'utf8'
-                    };
-
-                    return replace(options);
+                    for (let index = 0; index < fromArray.length; index++) {
+                        htmlResource = htmlResource.replace(fromArray[index], toArray[index]);
+                    }
+                    // Need to write this string in directory.
                 }).then((changedFiles) => {
                     return Promise.resolve({ "attrValue": resourcePath });
                 }).catch((error) => {
