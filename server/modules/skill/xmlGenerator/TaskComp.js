@@ -16,13 +16,13 @@ module.exports = class Comp {
      * @param {*} comp : template XML related data for this component
      * @param {*} attrValMap : AttributeValueMap pertaining to this component only 
      * @param {*} parentStateRef : obj reference of parent state class
-     * @param {*} addValMap : AddionalData which was present in full Attribute Value Map
+     * @param {*} additionalValues : AddionalData which was present in full Attribute Value Map
      */
-    constructor (comp, attrValMap, parentStateRef, addValMap){
+    constructor (comp, attrValMap, parentStateRef, additionalValues){
 
         // to check if the existence of this component node in XML is conditional
         if(comp.props.sbRule == "conditional-occurrence"){
-            if (addValMap[comp.props.dependencyName] != comp.props.dependencyValue){
+            if (additionalValues[comp.props.dependencyName] != comp.props.dependencyValue){
                 this.ignoreThisNode = true;
                 return;
             }
@@ -39,7 +39,7 @@ module.exports = class Comp {
         this.stateRef = parentStateRef;
 
         this.attrValMap = attrValMap;
-        this.addValMap = addValMap;
+        this.additionalValues = additionalValues;
         
         // this object will be having references of attributes according to their sets
         // this is to be used in XML formation
@@ -309,7 +309,7 @@ module.exports = class Comp {
      * @param {*} evt : event data used in object creation
      */
     createEvt  (evt){
-        let myEvt = new TaskEvent(evt, this, this.addValMap);
+        let myEvt = new TaskEvent(evt, this, this.additionalValues);
         return myEvt;
     }
 

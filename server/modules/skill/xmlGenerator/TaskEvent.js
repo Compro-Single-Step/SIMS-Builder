@@ -3,13 +3,13 @@ module.exports = class TaskEvent {
     /**
      * @param {*} args : template XML related data for this event node
      * @param {*} compRef : obj reference of parent comp class
-     * @param {*} addValMap : AddionalData which was present in full Attribute Value Map
+     * @param {*} additionalValues : AddionalData which was present in full Attribute Value Map
      */
-    constructor(args, compRef, addValMap) {
+    constructor(args, compRef, additionalValues) {
         
         // to check if the existence of this node is conditional
         if(args.props.sbRule == "conditional-occurrence"){
-            if (addValMap[args.props.dependencyName] != args.props.dependencyValue){
+            if (additionalValues[args.props.dependencyName] != args.props.dependencyValue){
                 this.ignoreThisNode = true;
                 return;
             }

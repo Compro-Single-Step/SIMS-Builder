@@ -7,13 +7,13 @@ module.exports = class State {
      * @param {*} args : template XML related data for this state
      * @param {*} attrValMap : AttributeValueMap pertaining to this state only 
      * @param {*} parentStepRef : obj reference of step class
-     * @param {*} addValMap : AddionalData which was present in full Attribute Value Map
+     * @param {*} additionalValues : AddionalData which was present in full Attribute Value Map
      */
-    constructor (args, attrValMap, parentStepRef, addValMap){
+    constructor (args, attrValMap, parentStepRef, additionalValues){
         
         // to check if the existence of this node is conditional
         if(args.props.sbRule == "conditional-occurrence"){
-            if (addValMap[args.props.dependencyName] != args.props.dependencyValue){
+            if (additionalValues[args.props.dependencyName] != args.props.dependencyValue){
                 this.ignoreThisNode = true;
                 return;
             }
@@ -25,7 +25,7 @@ module.exports = class State {
         this.txt = args.props.txt;
         this.islast = args.props.islast;
         this.stepRef = parentStepRef;
-        this.addValMap = addValMap;
+        this.additionalValues = additionalValues;
         this.comps = {};
 
         this.generateComponents(args.comps[0].comp, attrValMap);
@@ -64,7 +64,7 @@ module.exports = class State {
     }
 
     createComp (comp, attrValMap) {
-        let myComp = new TaskComp(comp, attrValMap, this, this.addValMap);
+        let myComp = new TaskComp(comp, attrValMap, this, this.additionalValues);
         return myComp;
     }
 
