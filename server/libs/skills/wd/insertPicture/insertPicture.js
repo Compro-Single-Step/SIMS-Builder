@@ -14,4 +14,18 @@ module.exports = class InsertPicture extends WordSkill {
             return Promise.reject(error);
         }
     }
+
+    htmlFileUpload(inputFile, dependantDropzoneModel){
+        if(inputFile == null){
+            dependantDropzoneModel.disabled = true;
+        }
+        else{
+            let htmlFile = document.createElement("html");
+            htmlFile.innerHTML = inputFile;
+            let imgTags = htmlFile.getElementsByTagName('img');
+            if(imgTags.length > 0){
+                dependantDropzoneModel.disabled = false;
+            }
+        }
+    }
 };

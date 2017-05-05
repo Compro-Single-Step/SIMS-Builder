@@ -68,6 +68,9 @@
                 "dataType": "HTML",
                 "placeholder": "Drop HTML file here to upload"
               },
+              "emitEvents": [
+                "INITIAL_HTML_FILE_UPLOADED"
+              ],
               "mandatory": true,
               "val": "{{views.1.initialDocumentFile}}"
             },
@@ -78,6 +81,13 @@
                 "basic": "Images which are part of the HTML file used to configure the initial state of Word Document Area.",
                 "detailed": "Image(s) which will be used to configure the Word Doc Area in SIMS, is/are required to be uploaded here. These images are generated while exporting the original word document as HTML file."
               },
+              "subscribeEvents": [
+                {
+                  "eventId": "INITIAL_HTML_FILE_UPLOADED",
+                  "modelReference": "{{views.1.initialDocumentImages}}",
+                  "rule": "htmlFileUpload"
+                }
+              ],
               "itemRenderer": "Dropzone",
               "itemType": "leaf",
               "rendererProperties": {
@@ -362,6 +372,9 @@
                 "dataType": "HTML",
                 "placeholder": "Drop HTML file here to upload"
               },
+              "emitEvents": [
+                "FINAL_HTML_FILE_UPLOADED"
+              ],
               "mandatory": true,
               "val": "{{views.3.finalDocumentFile}}"
             },
@@ -372,6 +385,13 @@
                 "basic": "Images which are part of the HTML file used to configure the final state of Word Document Area.",
                 "detailed": "Image(s) which will be used to configure the Word Doc Area in SIMS, is/are required to be uploaded here. These images are generated while exporting the final word document as HTML file."
               },
+              "subscribeEvents": [
+                {
+                  "eventId": "FINAL_HTML_FILE_UPLOADED",
+                  "modelReference": "{{views.3.finalDocumentImages}}",
+                  "rule": "htmlFileUpload"
+                }
+              ],
               "itemRenderer": "Dropzone",
               "itemType": "leaf",
               "rendererProperties": {
