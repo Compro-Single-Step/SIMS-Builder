@@ -262,5 +262,13 @@
         }
       }
     }
+  },
+  "templateRulesData":{
+    "MODE":{
+      "function-name": "getSkillMode",
+      "params": {
+        "skillmode": "views['2'].importMode.value"
+      }              
+    }
   }
 }
