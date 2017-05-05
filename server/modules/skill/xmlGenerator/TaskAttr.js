@@ -10,6 +10,12 @@ module.exports = class TaskAttr {
     }
 
     generateXML (){
-        return "<attr name='"+this.name+"' value='"+this.val+"'/>";
+        let result = "";
+        // check to exlude the attribute node from the generated XML 
+        // if there was no value for this attribute
+        if(this.val != null){
+            result = "<attr name='"+this.name+"' value='"+this.val+"'/>";
+        }
+        return result;
     }
 }

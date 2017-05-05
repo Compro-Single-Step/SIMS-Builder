@@ -2,13 +2,30 @@ const TaskComp = require('./TaskComp')
 
 module.exports = class State {
 
-    constructor (args, attrValMap, parentStepRef){
+    /**
+     * 
+     * @param {*} args : template XML related data for this state
+     * @param {*} attrValMap : AttributeValueMap pertaining to this state only 
+     * @param {*} parentStepRef : obj reference of step class
+     * @param {*} additionalValues : AddionalData which was present in full Attribute Value Map
+     */
+    constructor (args, attrValMap, parentStepRef, additionalValues){
+        
+        // to check if the existence of this node is conditional
+        if(args.props.sbRule == "conditional-occurrence"){
+            if (additionalValues[args.props.dependencyName] != args.props.dependencyValue){
+                this.ignoreThisNode = true;
+                return;
+            }
+        }
+        
         this.id = args.props.id; // state id
         this.description = args.props.desc;
         this.compstack = args.props.compstack;
         this.txt = args.props.txt;
         this.islast = args.props.islast;
         this.stepRef = parentStepRef;
+        this.additionalValues = additionalValues;
         this.comps = {};
 
         this.generateComponents(args.comps[0].comp, attrValMap);
@@ -47,7 +64,7 @@ module.exports = class State {
     }
 
     createComp (comp, attrValMap) {
-        let myComp = new TaskComp(comp, attrValMap, this);
+        let myComp = new TaskComp(comp, attrValMap, this, this.additionalValues);
         return myComp;
     }
 
@@ -60,30 +77,31 @@ module.exports = class State {
     }
 
     generateXML (){
-        
-        let xml = '<state id="'+ this.id +'" desc="'+ this.description +'" ';
+        let xml = "";
+        if(this.ignoreThisNode != true){
+            xml = '<state id="'+ this.id +'" desc="'+ this.description +'" ';
 
-        if(this.compstack){
-            xml += 'compstack="'+this.compstack+'" ';
+            if(this.compstack){
+                xml += 'compstack="'+this.compstack+'" ';
+            }
+
+            if(this.txt){
+                xml += 'txt="'+this.txt+'" ';
+            }
+
+            if(this.islast){
+                xml += 'islast="'+this.islast+'" ';
+            }
+
+            xml += '><comps>';
+
+            for (let currComp in this.comps) {
+                xml += this.comps[currComp].generateXML();
+            }
+            xml += '</comps></state>';
         }
-
-        if(this.txt){
-            xml += 'txt="'+this.txt+'" ';
-        }
-
-        if(this.islast){
-            xml += 'islast="'+this.islast+'" ';
-        }
-
-        xml += '><comps>';
-
-        for (let currComp in this.comps) {
-            xml += this.comps[currComp].generateXML();
-        }
-        xml += '</comps></state>';
 
         return xml;
-
     }
 
     /**
