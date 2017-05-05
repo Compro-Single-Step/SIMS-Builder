@@ -18,6 +18,7 @@ import { ButtonComponent } from './button/button.component';
 import { InputFactoryService } from './input-factory.service';
 import { DropzoneComponent } from './dropzone/dropzone.component';
 import { TabPageComponent } from './tab-page/tab-page.component';
+import { ExceptionHandlerService } from './exception-handler.service';
 
 @NgModule({
   imports: [
@@ -28,6 +29,6 @@ import { TabPageComponent } from './tab-page/tab-page.component';
   ],
   declarations: [TextBoxComponent, PanelComponent, LabelComponent, TagComponent, SelectComponent, TabComponent, ButtonComponent, DropzoneComponent, TabPageComponent],
   entryComponents: [TextBoxComponent, PanelComponent, SelectComponent, TabComponent, ButtonComponent, DropzoneComponent],
-  providers: [InputFactoryService]
+  providers: [InputFactoryService, ExceptionHandlerService]
 })
 export class SharedModule { }
