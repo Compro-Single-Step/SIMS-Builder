@@ -9,7 +9,7 @@ module.exports = class InsertPicture extends WordSkill {
         try {
             let paramValueObj = skillParams.paramsObj;
             let imgName = paramValueObj["imageFileName"];
-            return Promise.resolve([imgName, imgName + ".jpg"]);
+            return Promise.resolve([imgName, imgName.split('.')[0]]);
         } catch (error) {
             return Promise.reject(error);
         }

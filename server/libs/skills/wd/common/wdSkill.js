@@ -1,10 +1,11 @@
 const xmldom = require('xmldom');
 const DOMParser = xmldom.DOMParser;
 const XMLSerializer = xmldom.XMLSerializer;
-const Promise = require('bluebird');
-const fs = Promise.promisifyAll(require('fs'));
+//const Promise = require('bluebird');
+const fs = require('fs');
 const BaseSkill = require("../../common/baseSkill");
 const config = require('../../../../config/config');
+const findInFiles = require('find-in-files');
 //Wrod based Common Functionality goes here 
 
 const xmlUtil = require("../../../../utils/xmlUtil");
@@ -27,7 +28,10 @@ module.exports = class WordSkill extends BaseSkill {
             let resourcePath = paramValueObj["resourcePath"];
             let docImages = paramValueObj["docImages"];
             let absolutePath = config.fileStore.resourceFolder + resourcePath;
+            let fromArray = [];
+            let toArray = [];
 
+            findInFiles
 
             return fs.readFileAsync(absolutePath, "utf8")
                 .then((htmlResource) => {
@@ -39,9 +43,10 @@ module.exports = class WordSkill extends BaseSkill {
 
                         docImages.forEach(function (imgObject) {
                             if (imageName === imgObject.displayName) {
+                                fromArray.push(new RegExp('imageName', 'g'));
                                 let imagePathArray = imgObject.path.split('/');
                                 imageName = imagePathArray[imagePathArray.length - 1];
-                                imgTagArray[i].setAttribute('src', 'Assets/' + imageName);
+                                toArray.push('{#approot#}/Assets/' + imageName);
                             }
                         });
                     };
