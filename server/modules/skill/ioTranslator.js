@@ -79,7 +79,9 @@ attrTaskParam.prototype._addToResMap = function (filePath, config) {
       // Replacing all occurance of '\' with '/' because '\' is used as an escape character in Javascript
       absFilePath = path.join(stepAssetsFolderPath, customParentFolder, fileName).replace(/\\/g, "/");
 
-    //Adding to Resource Map so that the file can be copied asynchronously
+    // Adding to Resource Map so that the file can be copied asynchronously
+    // stepAssetsFolderPath is not used in copying files, it's been put here so that it can be sent back in the return statement in line 68 
+    // i.e. if the requested resource is already existing in the map
     this.resourceMap[filePath] = { customParentFolder, fileName, stepAssetsFolderPath, resourceType, absFilePath, fileType, addToPreload };
     return { customParentFolder, fileName, stepAssetsFolderPath, fileType, absFilePath }
   }
