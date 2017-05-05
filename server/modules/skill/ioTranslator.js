@@ -65,7 +65,12 @@ attrTaskParam.prototype._addToResMap = function (filePath, config) {
     addToPreload = config.addToPreload;
 
   if (existingResource) {
-    return existingResource;
+    return { 
+      "customParentFolder": existingResource.customParentFolder, 
+      "fileName":existingResource.fileName,
+      "stepAssetsFolderPath": existingResource.stepAssetsFolderPath, 
+      "fileType": existingResource.fileType,
+      "absFilePath": existingResource.absFilePath };
   }
   else {
     let fileName = ResourceUtil.getFileNameWithExtension(filePath),
@@ -75,7 +80,7 @@ attrTaskParam.prototype._addToResMap = function (filePath, config) {
       absFilePath = path.join(stepAssetsFolderPath, customParentFolder, fileName).replace(/\\/g, "/");
 
     //Adding to Resource Map so that the file can be copied asynchronously
-    this.resourceMap[filePath] = { customParentFolder, fileName, resourceType, absFilePath, fileType, addToPreload };
+    this.resourceMap[filePath] = { customParentFolder, fileName, stepAssetsFolderPath, resourceType, absFilePath, fileType, addToPreload };
     return { customParentFolder, fileName, stepAssetsFolderPath, fileType, absFilePath }
   }
 }
