@@ -7,10 +7,16 @@
 
 const DOMParser = require('xmldom').DOMParser;
 const Step = require('./Step');
+const hbUtils = require('../../../utils/handlebar/hbUtils');
 
 module.exports = class StepXMLGenerator {
 
     generateXml (skillTemplate, attrValueMap, stepText){
+        
+        /////// handlebar modifications ////////////////////////////////
+        var hbTemplate = hbUtils.getHBTemplate(skillTemplate);
+        var skillTemplate = hbTemplate(attrValueMap.templateRulesData);
+        ////////////////////////////////////////////////////////////////
 
         let parser = new DOMParser();
         let xmlDoc = parser.parseFromString(skillTemplate,"text/xml");
