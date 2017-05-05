@@ -8,7 +8,7 @@ module.exports = class PPTBaseSkill extends BaseSkill {
         var dbMgr = data.dbMgr;
 
 
-        return dbMgr.readFileFromFileStore(initDocJSonPath).then(function (resolveParam) {
+    return dbMgr.readFileFromFileStore(initDocJSonPath).then(function (resolveParam) {
 
             self.initDocJson = JSON.parse(resolveParam.fileData);
             self.generateSheetNamesMap();

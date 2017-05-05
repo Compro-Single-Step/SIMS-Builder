@@ -50,8 +50,7 @@ module.exports = {
                 primaryFile: "pp/common/ppSkill",
                 dependencyFiles: [
                     {
-                        primaryFile: "common/baseSkill",
-                        dependencyFiles: []
+                        primaryFile: "common/baseSkill"
                     }
                 ]
             }
