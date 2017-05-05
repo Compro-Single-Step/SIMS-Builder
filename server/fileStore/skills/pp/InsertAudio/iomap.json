@@ -19,9 +19,14 @@
             "default-attrs": {
               "XML_PATH": {
                 "function-name": "createResXMLPath",
-                "type": "skill_Resource",
                 "params": {
                   "xmlPath":"views['1'].slideViewData.path"
+                }
+              },
+              "SELECTED_SLIDE": {
+                "function-name": "extractSingleParamVal",
+                "params": {
+                  "xmlPath":"views['1'].initialSelectedSlide.selectedSlide.value"
                 }
               }
             }
@@ -29,7 +34,7 @@
           "final": {
             "default-attrs": {
               "SELECTED_SLIDE": {
-                "function-name": "getSelectedSheet",
+                "function-name": "extractSingleParamVal",
                 "params": {
                   "selectedSlide":"views['2'].slideInAction.selectedSlide.value"
                 }
@@ -70,16 +75,13 @@
               },
               "AUTO_COMPLETE_LIST": {
                 "function-name": "generateAutoCompleteList",
-                "params": {
-                  "resAdded":"views['2'].audioToBeAdded.path"
-                }
               }
             }
           },
           "final": {
             "set_1": {
               "FILE_NAME": {
-                "function-name": "getAudioTobeInserted",
+                "function-name": "extractSingleParamVal",
                 "params": {
                   "resAdded":"views['2'].audioTobeInserted.value"
                 }
@@ -116,15 +118,9 @@
           "sizeandpos": {
             "left": {
               "function-name": "getSubCompLeftPosition",
-              "params": {
-                "xmlPath":"views['1'].slideViewData.path"
-              }
             },
             "top": {
               "function-name": "getSubCompTopPosition",
-              "params": {
-                "xmlPath":"views['1'].slideViewData.path"
-              }
             }
           },
           "props": {
