@@ -38,7 +38,6 @@
     "dropzone": "^4.3.0",
     "express": "^4.14.1",
     "file-system": "^2.2.2",
-    "find-in-files": "^0.4.0",
     "font-awesome": "4.7.0",
     "fs-extra": "^2.1.2",
     "glyphicons-halflings": "1.9.0",

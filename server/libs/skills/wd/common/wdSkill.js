@@ -1,11 +1,7 @@
-const xmldom = require('xmldom');
-const DOMParser = xmldom.DOMParser;
-const XMLSerializer = xmldom.XMLSerializer;
 const Promise = require('bluebird');
 const fs = Promise.promisifyAll(require('fs'));
 const BaseSkill = require("../../common/baseSkill");
 const config = require('../../../../config/config');
-const findInFiles = require('find-in-files');
 const replace = require('replace-in-file');
 //Wrod based Common Functionality goes here 
 
