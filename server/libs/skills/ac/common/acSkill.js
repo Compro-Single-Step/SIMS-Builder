@@ -4,18 +4,34 @@ const BaseSkill = require("../../common/baseSkill");
 const xmlUtil = require("../../../../utils/xmlUtil");
 
 module.exports = class AccessBaseSkill extends BaseSkill {
-//tooltip text to be displayed
-  getTootlTipText(skillParams) {
+/**
+ * 
+ * @param {*} skillParams : Contains taskParams (it contains data such as taskid, stepNo etc and refrence to dbFileStoreManager ) and paramsObj (it contains the parameters passed to function when called in iomap).
+ * Same definition of skill params is being used for all the function in tis file.
+ * paramsOBj: It contains doctitile 
+ * Output:Document name to be shown in access ribbon
+ */
+  getTaskbarTooltipText(skillParams) {
     var paramValueObj = skillParams.paramsObj;
     var resolveParams = { "attrValue":  "Access - " + paramValueObj["DocTitle"] };
     return Promise.resolve(resolveParams);
   }
-   getSelectedObject(skillParams){
+  /**
+   * 
+   * @param {*} paramsObj: selectedObj: navigation pane selected object
+   * output: Name of the DB Object to be shown selected
+   */
+   getSelectedDBObjectName(skillParams){
     var paramValueObj = skillParams.paramsObj;
     var resolveParams = { "attrValue": paramValueObj.selectedObj.data.split(".")[1]};
     return Promise.resolve(resolveParams);
   }
-  getSelectedObjectType(skillParams){
+  /**
+   * 
+   * @param {*} paramsObj: selectedObj: navigation pane selected object
+   * output: Type of the DB Object to be shown selected
+   */
+  getSelectedDBObjectType(skillParams){
     var paramValueObj = skillParams.paramsObj;
     let objectMap = {
       "Table":"Tables",
@@ -28,6 +44,7 @@ module.exports = class AccessBaseSkill extends BaseSkill {
     var resolveParams = { "attrValue": objectMap[paramValueObj.selectedObj.data.split(".")[0]]};
     return Promise.resolve(resolveParams);
   }
+  // Front End Function use to populate the dropdown list items from project json.
   addDatabaseObjectToDropdown(navigationPaneJSON, navaigationPaneDatabaseObjectArray) {
     var objectType;
     var objectMap = {
