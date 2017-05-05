@@ -1,0 +1,351 @@
+{
+  "views": [
+    {
+      "id": "1",
+      "label": "Initial Document Settings",
+      "itemType": "root",
+      "desc": {},
+      "items": [
+        {
+          "id": "1.1",
+          "label": "Ribbon",
+          "itemRenderer": "Panel",
+          "itemType": "child",
+          "tags": [
+            {
+              "compName": "SIMS.Components.PPT.Ribbon",
+              "type": "default"
+            }
+          ],
+          "rendererProperties": {
+            "collapsable": true,
+            "optionalItems": true
+          },
+          "items": [
+            {
+              "id": "1.1.1",
+              "label": "Document Title",
+              "desc": {
+                "basic": "Name of the document to be displayed in Ribbon.",
+                "detailed": "Document Name which is shown in the central top area in the Ribbon is to be mentioned here."
+              },
+              "itemRenderer": "TextBox",
+              "itemType": "leaf",
+              "mandatory": false,
+              "rendererProperties": {
+                "dataType": "string"
+              },
+              "val": "{{views.1.documentTitle}}"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "label": "Slide View",
+          "itemRenderer": "Panel",
+          "itemType": "child",
+          "tags": [
+            {
+              "compName": "SIMS.Components.PPT.SlideView",
+              "type": "default"
+            }
+          ],
+          "rendererProperties": {
+            "collapsable": true,
+            "optionalItems": true
+          },
+          "items": [
+            {
+              "id": "1.2.1",
+              "label": "Slide View Data",
+              "desc": {
+                "basic": "Upload a XML file which is used to configure the Slide View Area in SIMS.",
+                "detailed": "A XML file, which will be used to configure the Slide View Area in SIMS, is required to be uploaded here."
+              },
+              "itemRenderer": "Dropzone",
+              "itemType": "leaf",
+              "emitEvents": [
+                "SLIDE_VIEW_DATA_UPDATED"
+              ],
+              "rendererProperties": {
+                "dataType": "XML",
+                "placeHolder": "Drop XML file here to upload"
+              },
+              "mandatory": true,
+              "val": "{{views.1.slideViewData}}"
+            },
+            {
+              "id": "1.2.2",
+              "label": "Slide Images",
+              "desc": {
+                "basic": "Upload the images which are used to render slides in SIMS.",
+                "detailed": "This section requires the images of the slides which we can get by saving presentation in .jpg format."
+              },
+              "itemRenderer": "TabGroup",
+              "itemType": "child",
+              "disabled": true,
+              "subscribeEvents": [
+                {
+                  "eventId": "SLIDE_VIEW_DATA_UPDATED",
+                  "modelReference": "{{views.1.slides.value}}",
+                  "rule": "getSheetDetails"
+                }
+              ],
+              "rendererProperties": {
+                "layout": "horizontal",
+                "dynamicMode": true,
+                "itemListRef": "{{views.1.slides}}",
+                "style": {
+                  "max-width": "450px"
+                }
+              },
+              "items": [
+                {
+                  "id": "1.2.2.1",
+                  "itemRenderer": "TabPage",
+                  "itemType": "",
+                  "rendererProperties": {
+                    "dynamicMode": true
+                  },
+                  "items": [
+                    {
+                      "id": "1.2.2.1.1",
+                      "itemRenderer": "Dropzone",
+                      "itemType": "leaf",
+                      "rendererProperties": {
+                        "placeHolder": "Drop slide Image",
+                        "dynamicMode": true,
+                        "dataType": "img"
+                      },
+                      "pos": "x,y",
+                      "dim": {
+                        "height": "200px",
+                        "width": "200px"
+                      },
+                      "relVal": "slideImage"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "1.2.3",
+              "label": "Inital Selected Slide",
+              "desc": {
+                "basic": "Index of the slide which is selected initially.",
+                "detailed": "Index of the slide which is selected initially."
+              },
+              "itemRenderer": "Dropdown",
+              "rendererProperties": {
+                "itemList": [
+                  {
+                    "label": "a",
+                    "data": "a"
+                  },
+                  {
+                    "label": "a",
+                    "data": "a"
+                  }
+                ]
+              },
+              "itemType": "leaf",
+              "mandatory": true,
+              "val": "{{views.1.initialSelectedSlide.selectedSlide}}"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "label": "Taskbar",
+          "itemRenderer": "Panel",
+          "itemType": "child",
+          "tags": [
+            {
+              "compName": "SIMS.Components.Common.TaskBar",
+              "type": "default"
+            }
+          ],
+          "rendererProperties": {
+            "collapsable": true,
+            "optionalItems": true
+          },
+          "items": [
+            {
+              "id": "1.3.1",
+              "label": "Taskbar Preview Image",
+              "desc": {
+                "basic": "Upload taskbar preview image.",
+                "detailed": "When a user hovers mouse over the application iconm show in the task bar an image gets opened in the tool tip. That image has to be uploaded here."
+              },
+              "itemRenderer": "Dropzone",
+              "itemType": "leaf",
+              "rendererProperties": {
+                "dataType": "img",
+                "placeHolder": "Drop image here to upload"
+              },
+              "mandatory": false,
+              "val": "{{views.1.taskbarPreviewImage}}"
+            }
+          ]
+        },
+        {
+          "id": "1.4",
+          "label": "Add Component(s)",
+          "itemRenderer": "Button",
+          "itemType": "leaf",
+          "rendererProperties": {
+            "click": {},
+            "disabled": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "label": "Skill Specific Inputs",
+      "itemType": "root",
+      "desc": {},
+      "items": [
+        {
+          "id": "2.1",
+          "label": "Slide View",
+          "itemRenderer": "Panel",
+          "itemType": "child",
+          "tags": [
+            {
+              "compName": "SIMS.Components.PPT.SlideView",
+              "type": "default"
+            }
+          ],
+          "rendererProperties": {
+            "collapsable": true,
+            "optionalItems": false
+          },
+          "items": [
+            {
+              "id": "2.1.1",
+              "label": "Slide in Action",
+              "desc": {
+                "basic": "Index of the slide in which the audio is to be inserted.",
+                "detailed": "Index of the slide on which the audio has to be inserted is to be mentioned here."
+              },
+              "itemRenderer": "Dropdown",
+              "emitEvents": [
+                "SLIDE_IN_ACTION_UPDATED"
+              ],
+              "rendererProperties": {
+                "itemList": [
+                  {
+                    "label": "a",
+                    "data": "a"
+                  },
+                  {
+                    "label": "a",
+                    "data": "a"
+                  }
+                ]
+              },
+              "itemType": "leaf",
+              "mandatory": true,
+              "val": "{{views.2.slideInAction.selectedSlide}}"
+            }
+          ]
+        },
+        {
+          "id": "2.2",
+          "label": "Insert File",
+          "itemRenderer": "Panel",
+          "itemType": "child",
+          "tags": [
+            {
+              "compName": "SIMS.Components.Common.InsertFileDialog",
+              "type": "default"
+            }
+          ],
+          "rendererProperties": {
+            "collapsable": true,
+            "optionalItems": false
+          },
+          "items": [
+            {
+              "id": "2.2.1",
+              "label": "Insert File Dialog XML",
+              "desc": {
+                "basic": "Upload a XML file which is used to configure the Insert File Dialog in SIMS.",
+                "detailed": "Upload a XML file which is used to configure the Insert File Dialog in SIMS."
+              },
+              "itemRenderer": "Dropzone",
+              "itemType": "leaf",
+              "emitEvents": [
+                "INSERT_FILE_DATA_UPDATED"
+              ],
+              "rendererProperties": {
+                "dataType": "XML",
+                "placeHolder": "Drop XML file here to upload"
+              },
+              "mandatory": true,
+              "val": "{{views.2.audioToBeAdded}}"
+            },
+            {
+              "id": "2.2.2",
+              "label": "Audio to be Inserted",
+              "desc": {
+                "basic": "Select the audio which is to be inserted in the Slide.",
+                "detailed": "Select the audio which is to be inserted in the Slide."
+              },
+              "itemRenderer": "TextBox",
+              "itemType": "leaf",
+              "mandatory": false,
+              "rendererProperties": {
+                "dataType": "string"
+              },
+              "val": "{{views.2.audioTobeInserted}}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "label": "Final Document Settings",
+      "itemType": "root",
+      "desc": {},
+      "items": [
+        {
+          "id": "3.1",
+          "label": "Slide View",
+          "itemRenderer": "Panel",
+          "itemType": "child",
+          "tags": [
+            {
+              "compName": "SIMS.Components.PPT.SlideView",
+              "type": "default"
+            }
+          ],
+          "rendererProperties": {
+            "collapsable": true,
+            "optionalItems": false
+          },
+          "items": [
+            {
+              "id": "3.1.1",
+              "label": "Slide View Data",
+              "desc": {
+                "basic": "Upload the updated image for the slide where audio has been inserted.",
+                "detailed": "Upload the updated image for the slide where audio has been inserted."
+              },
+              "itemRenderer": "Dropzone",
+              "itemType": "leaf",
+              "rendererProperties": {
+                "placeHolder": "Drop Updated Slide Image",
+                "dataType": "img"
+              },
+              "mandatory": true,
+              "val": "{{views.3.updatedSlideData}}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

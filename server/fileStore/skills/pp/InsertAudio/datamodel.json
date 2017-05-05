@@ -1,0 +1,66 @@
+{
+    "views": {
+        "1": {
+            "documentTitle": {
+                "value": ""
+            },
+            "slideViewData": {
+                "displayName": "",
+                "path": ""
+            },
+            "slides": {
+                "value": [
+                    {
+                        "name": "Slide 1",
+                        "slideImage": {
+                            "displayName": "",
+                            "path": ""
+                        }
+                    },
+                    {
+                        "name": "Slide 2",
+                        "slideImage": {
+                            "displayName": "",
+                            "path": ""
+                        }
+                    }
+                ]
+            },
+            "initialSelectedSlide": {
+                "options": {
+                    "value": []
+                },
+                "selectedSlide": {
+                    "value": ""
+                }
+            },
+            "taskbarPreviewImage": {
+                "displayName": "",
+                "path": ""
+            }
+        },
+        "2": {
+            "slideInAction": {
+                "options": {
+                    "value": []
+                },
+                "selectedSlide": {
+                    "value": ""
+                }
+            },
+            "audioToBeAdded": {
+                "displayName": "",
+                "path": ""
+            },
+            "audioTobeInserted": {
+                "value": ""
+            }
+        },
+        "3": {
+            "updatedSlideData": {
+                "displayName": "",
+                "path": ""
+            }
+        }
+    }
+}

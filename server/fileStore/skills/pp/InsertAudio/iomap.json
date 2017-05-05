@@ -1,0 +1,142 @@
+{
+  "states": {
+    "1": {
+      "components": {
+        "1": {
+          "initial": {
+            "default-attrs": {  
+              "DOCUMENT_NAME": {
+                "function-name": "extractSingleParamVal",
+                "params": {
+                  "docTitle":"views['1'].documentTitle.value"
+                }
+              }
+            }
+          }
+        },
+        "2": {
+          "initial": {
+            "default-attrs": {
+              "XML_PATH": {
+                "function-name": "createResXMLPath",
+                "type": "skill_Resource",
+                "params": {
+                  "xmlPath":"views['1'].slideViewData.path"
+                }
+              }
+            }
+          },
+          "final": {
+            "default-attrs": {
+              "SELECTED_SLIDE": {
+                "function-name": "getSelectedSheet",
+                "params": {
+                  "selectedSlide":"views['2'].slideInAction.selectedSlide.value"
+                }
+              }
+            }
+          }
+        },
+        "3": {
+          "initial": {
+            "default-attrs": {
+              "APP_TOOLTIP_IMAGE": {
+                "function-name": "createTooltipImagePath",
+                "params": {
+                  "tbPrvImage":"views['1'].taskbarPreviewImage.path"
+                }
+              },
+              "OPENWORDFILE": {
+                "function-name": "extractSingleParamVal",
+                "params": {
+                  "DocTitle":"views['1'].documentTitle.value"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "2": {
+      "components": {
+        "5": {
+          "initial": {
+            "default-attrs": {
+              "TREE_XML_PATH": {
+                "function-name": "generateSaveAsDialogTreeXML",
+                "params": {
+                  "resAdded":"views['2'].audioToBeAdded.path",
+                }
+              },
+              "AUTO_COMPLETE_LIST": {
+                "function-name": "generateAutoCompleteList",
+                "params": {
+                  "resAdded":"views['2'].audioToBeAdded.path",
+                }
+              }
+            }
+          },
+          "final": {
+            "set_1": {
+              "FILE_NAME": {
+                "function-name": "getAudioTobeInserted",
+                "params": {
+                  "resAdded":"views['2'].audioTobeInserted.value",
+                }
+              }
+            },
+            "set_2": {
+              "FILE_NAME": {
+                "function-name": "getAudioTobeInsertedWithoutExt",
+                "params": {
+                  "resAdded":"views['2'].audioTobeInserted.value",
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "3": {
+      "components": {
+        "2": {
+          "initial": {
+            "default-attrs": {
+              "PARTIAL_SLIDES_DATA": {
+                "function-name": "getUpdatedSlideData",
+                "params": {
+                  "selectedSlide":"views['2'].slideInAction.selectedSlide.value",
+                  "imgPath":"views['3'].updatedSlideData.path"
+                }
+              }
+            }
+          }
+        },
+        "4": {
+          "sizeandpos": {
+            "left": {
+              "function-name": "getSubCompLeftPosition",
+              "params": {
+                "xmlPath":"views['1'].slideViewData.path",
+              }
+            },
+            "top": {
+              "function-name": "getSubCompTopPosition",
+              "params": {
+                "xmlPath":"views['1'].slideViewData.path",
+              }
+            }
+          },
+          "props": {
+              "hostparam": {
+                "function-name": "getSubCompHostParam",
+                "params": {
+                  "selectedSlide":"views['2'].slideInAction.selectedSlide.value"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
