@@ -4,11 +4,11 @@
       "components": {
         "1": {
           "initial": {
-            "default-attrs": {  
+            "default-attrs": {
               "DOCUMENT_NAME": {
                 "function-name": "extractSingleParamVal",
                 "params": {
-                  "docTitle":"views['1'].documentTitle.value"
+                  "docTitle": "views['1'].documentTitle.value"
                 }
               }
             }
@@ -20,13 +20,13 @@
               "XML_PATH": {
                 "function-name": "createResXMLPath",
                 "params": {
-                  "xmlPath":"views['1'].slideViewData.path"
+                  "xmlPath": "views['1'].slideViewData.path"
                 }
               },
               "SELECTED_SLIDE": {
                 "function-name": "extractSingleParamVal",
                 "params": {
-                  "xmlPath":"views['1'].initialSelectedSlide.selectedSlide.value"
+                  "xmlPath": "views['1'].initialSelectedSlide.selectedSlide.value"
                 }
               }
             }
@@ -36,7 +36,7 @@
               "SELECTED_SLIDE": {
                 "function-name": "extractSingleParamVal",
                 "params": {
-                  "selectedSlide":"views['2'].slideInAction.selectedSlide.value"
+                  "selectedSlide": "views['2'].slideInAction.selectedSlide.value"
                 }
               }
             }
@@ -48,13 +48,13 @@
               "APP_TOOLTIP_IMAGE": {
                 "function-name": "createTooltipImagePath",
                 "params": {
-                  "tbPrvImage":"views['1'].taskbarPreviewImage.path"
+                  "tbPrvImage": "views['1'].taskbarPreviewImage.path"
                 }
               },
               "OPENWORDFILE": {
                 "function-name": "extractSingleParamVal",
                 "params": {
-                  "DocTitle":"views['1'].documentTitle.value"
+                  "DocTitle": "views['1'].documentTitle.value"
                 }
               }
             }
@@ -70,11 +70,11 @@
               "TREE_XML_PATH": {
                 "function-name": "generateSaveAsDialogTreeXML",
                 "params": {
-                  "resAdded":"views['2'].audioToBeAdded.path"
+                  "resAdded": "views['2'].audioToBeAdded.path"
                 }
               },
               "AUTO_COMPLETE_LIST": {
-                "function-name": "generateAutoCompleteList",
+                "function-name": "generateAutoCompleteList"
               }
             }
           },
@@ -83,7 +83,7 @@
               "FILE_NAME": {
                 "function-name": "extractSingleParamVal",
                 "params": {
-                  "resAdded":"views['2'].audioTobeInserted.value"
+                  "resAdded": "views['2'].audioTobeInserted.value"
                 }
               }
             },
@@ -91,7 +91,7 @@
               "FILE_NAME": {
                 "function-name": "getAudioTobeInsertedWithoutExt",
                 "params": {
-                  "resAdded":"views['2'].audioTobeInserted.value"
+                  "resAdded": "views['2'].audioTobeInserted.value"
                 }
               }
             }
@@ -107,8 +107,8 @@
               "PARTIAL_SLIDES_DATA": {
                 "function-name": "getUpdatedSlideData",
                 "params": {
-                  "selectedSlide":"views['2'].slideInAction.selectedSlide.value",
-                  "imgPath":"views['3'].updatedSlideData.path"
+                  "selectedSlide": "views['2'].slideInAction.selectedSlide.value",
+                  "imgPath": "views['3'].updatedSlideData.path"
                 }
               }
             }
@@ -117,17 +117,17 @@
         "4": {
           "sizeandpos": {
             "left": {
-              "function-name": "getSubCompLeftPosition",
+              "function-name": "getSubCompLeftPosition"
             },
             "top": {
-              "function-name": "getSubCompTopPosition",
+              "function-name": "getSubCompTopPosition"
             }
           },
           "props": {
-              "hostparam": {
-                "function-name": "getSubCompHostParam",
-                "params": {
-                  "selectedSlide":"views['2'].slideInAction.selectedSlide.value"
+            "hostparam": {
+              "function-name": "getSubCompHostParam",
+              "params": {
+                "selectedSlide": "views['2'].slideInAction.selectedSlide.value"
               }
             }
           }

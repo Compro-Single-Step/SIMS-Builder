@@ -41,7 +41,8 @@ module.exports = class InsertAudio extends PPTBaseSkill {
     }
 
     createResXMLPath(skillParams) {
-        var paramValueObj = skillParams.paramsObj;
+        var attrValue = skillParams.paramsObj.xmlPath;
+        return Promise.resolve({ attrValue });
     }
 
     getSubCompTopPosition() {
@@ -59,7 +60,7 @@ module.exports = class InsertAudio extends PPTBaseSkill {
     }
 
     getAudioTobeInsertedWithoutExt(skillParams) {
-        var resName = skillParams.resAdded;
+        var resName = skillParams.paramsObj.resAdded;
         var regExpToRemoveFileExt = /(.+?)\.[^.]*$|$/g;
         var match = regExpToRemoveFileExt.exec(resName);
         var resolveParam = { "attrValue": match[1] };
@@ -67,15 +68,15 @@ module.exports = class InsertAudio extends PPTBaseSkill {
     }
 
     getSubCompHostParam(skillParams) {
-        var selectedSlide = skillParams.selectedSlide;
+        var selectedSlide = skillParams.paramsObj.selectedSlide;
         var hostParam = '{"Mode":"VideoPlaceHolder","HostParams":{"slide":' + selectedSlide + '}}';
         var resolveParam = { "attrValue": hostParam };
         return Promise.resolve(resolveParam);
     }
 
     getUpdatedSlideData(skillParams) {
-        var selectedSlide = skillParams.selectedSlide;
-        var imgPath = skillParams.imgPath;
+        var selectedSlide = skillParams.paramsObj.selectedSlide;
+        var imgPath = skillParams.paramsObj.imgPath;
         var hostParam = '[{"Number":' + selectedSlide + ',"ThumbHtml":"<img src=' + imgPath + '/>"}]';
         var resolveParam = { "attrValue": hostParam };
         return Promise.resolve(resolveParam);
