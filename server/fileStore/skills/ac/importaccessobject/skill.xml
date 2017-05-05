@@ -185,9 +185,7 @@
 						<attr name="DIALOG_DATA" userDefined="true"/>
 					</initialattrs>
 					<finalattrs>
-						{{#if states.5.components.6.final.default-attrs.TABLE_DATA}}
 								<attr name="TABLE_DATA" userDefined="true"/>
-						{{/if}}
 						{{#ifCond MODE "1"}}
 									<attr name="REPORT_DATA" userDefined="true"/>
 									<attr name="QUERY_DATA" userDefined="true"/>
@@ -208,7 +206,7 @@
 				</comp>
 			</comps>
 		</state>
-		{{#ifCond MODE "2"}}
+		{{#ifCond MODE "1"}}
 		<state id="6" desc="External data Save as dialog open" txt="1" optimized="1">
 			<comps>
 				<comp id="6" mode="remove"/>
