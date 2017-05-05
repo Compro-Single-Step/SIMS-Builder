@@ -24,7 +24,7 @@ module.exports = class Step {
                 currAttrValMap = attrValueMap.states[states[idx].props.id];
             }
 
-            let state = new State (states[idx], currAttrValMap, this);
+            let state = new State (states[idx], currAttrValMap, this, attrValueMap.additionalData);
 
             this.states[states[idx].props.id] = state;
             this.stateOrderIdMap[idx] = states[idx].props.id;

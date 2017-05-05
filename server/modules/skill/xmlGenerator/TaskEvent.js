@@ -1,7 +1,20 @@
 module.exports = class TaskEvent {
 
-
-    constructor(args, compRef) {
+    /**
+     * @param {*} args : template XML related data for this event node
+     * @param {*} compRef : obj reference of parent comp class
+     * @param {*} addValMap : AddionalData which was present in full Attribute Value Map
+     */
+    constructor(args, compRef, addValMap) {
+        
+        // to check if the existence of this node is conditional
+        if(args.props.sbRule == "conditional-occurrence"){
+            if (addValMap[args.props.dependencyName] != args.props.dependencyValue){
+                this.ignoreThisNode = true;
+                return;
+            }
+        }
+        
         this.compRef = compRef;
         this.id = args.props.id;
         this.desc = args.props.desc;
@@ -92,18 +105,21 @@ module.exports = class TaskEvent {
     }
 
     generateXML() {
-        let eventNode = '<event id="' + this.id + '" desc="' + this.desc + '"';
-        if (this.followup) {
-            eventNode += ' followup="' + this.followup + '"';
-        }
+        let eventNode = "";
+        if(this.ignoreThisNode != true){
+            eventNode = '<event id="' + this.id + '" desc="' + this.desc + '"';
+            if (this.followup) {
+                eventNode += ' followup="' + this.followup + '"';
+            }
 
-        if(this.targetAttrSet){
-            eventNode += ' target-attribute-set="'+ this.targetAttrSet+'"';
-        }
-        eventNode+=  ' >';
+            if(this.targetAttrSet){
+                eventNode += ' target-attribute-set="'+ this.targetAttrSet+'"';
+            }
+            eventNode+=  ' >';
 
-        eventNode += this.generateValidateXMLNode();
-        eventNode += '</event>';
+            eventNode += this.generateValidateXMLNode();
+            eventNode += '</event>';
+        }
         return eventNode;
     }
 

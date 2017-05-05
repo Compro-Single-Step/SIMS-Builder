@@ -12,7 +12,21 @@ const TaskEvent = require('./TaskEvent');
 
 module.exports = class Comp {
 
-    constructor (comp, attrValMap, parentStateRef){
+    /**
+     * @param {*} comp : template XML related data for this component
+     * @param {*} attrValMap : AttributeValueMap pertaining to this component only 
+     * @param {*} parentStateRef : obj reference of parent state class
+     * @param {*} addValMap : AddionalData which was present in full Attribute Value Map
+     */
+    constructor (comp, attrValMap, parentStateRef, addValMap){
+
+        // to check if the existence of this component node in XML is conditional
+        if(comp.props.sbRule == "conditional-occurrence"){
+            if (addValMap[comp.props.dependencyName] != comp.props.dependencyValue){
+                this.ignoreThisNode = true;
+                return;
+            }
+        }
 
         // map holding poperties which are to be mentioned in this comp's node in generated step XML
         this.XMLProps = {
@@ -25,6 +39,7 @@ module.exports = class Comp {
         this.stateRef = parentStateRef;
 
         this.attrValMap = attrValMap;
+        this.addValMap = addValMap;
         
         // this object will be having references of attributes according to their sets
         // this is to be used in XML formation
@@ -294,7 +309,7 @@ module.exports = class Comp {
      * @param {*} evt : event data used in object creation
      */
     createEvt  (evt){
-        let myEvt = new TaskEvent(evt, this);
+        let myEvt = new TaskEvent(evt, this, this.addValMap);
         return myEvt;
     }
 
@@ -348,31 +363,34 @@ module.exports = class Comp {
     }
 
     generateXML (){
-
-        let xmlString = "<comp ";
-        for (let propName in this.XMLProps){
-            let propVal = this.XMLProps[propName];
-            if(propVal){
-                xmlString += propName+"='"+propVal+"' ";
+        let xmlString = "";
+        if(this.ignoreThisNode != true){
+            xmlString = "<comp ";
+            for (let propName in this.XMLProps){
+                let propVal = this.XMLProps[propName];
+                if(propVal){
+                    xmlString += propName+"='"+propVal+"' ";
+                }
             }
-        }
-        xmlString += ">";
+            xmlString += ">";
 
-        // adding attribute XML
-        for (let attrSet in this.attributeSets){
-            xmlString += this[this.attrXMLGenerationMap[attrSet]["fnName"]](this.attributeSets[attrSet], attrSet);
-        }
-
-        // adding event XML
-        if(this.events){
-            xmlString += "<events>";
-            for(let evtIdx = 0; evtIdx<this.events.length; evtIdx++){
-                xmlString += this.events[evtIdx].generateXML();
+            // adding attribute XML
+            for (let attrSet in this.attributeSets){
+                xmlString += this[this.attrXMLGenerationMap[attrSet]["fnName"]](this.attributeSets[attrSet], attrSet);
             }
-            xmlString += "</events>";
+
+            // adding event XML
+            if(this.events){
+                xmlString += "<events>";
+                for(let evtIdx = 0; evtIdx<this.events.length; evtIdx++){
+                    xmlString += this.events[evtIdx].generateXML();
+                }
+                xmlString += "</events>";
+            }
+
+            xmlString += '</comp>';
         }
 
-        xmlString += '</comp>';
         return xmlString;
     }
 
