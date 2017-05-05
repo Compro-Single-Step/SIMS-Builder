@@ -4,9 +4,10 @@ import { FormsModule } from '@angular/forms';
 
 // Imports from External Libraries
 import { TabsModule, PopoverModule } from 'ng2-bootstrap';
-
+import {LabelComponent } from './label/label.component';
 import { InputFactoryService } from './input-factory.service';
 import { ComponentRepositoryService, getDeclarationComps, getEntryComps } from './component-repository.service';
+import { ExceptionHandlerService } from './exception-handler.service';
 
 @NgModule({
   imports: [
@@ -15,8 +16,9 @@ import { ComponentRepositoryService, getDeclarationComps, getEntryComps } from '
     PopoverModule.forRoot(),
     FormsModule
   ],
+  exports: [LabelComponent],
   declarations: [ ...getDeclarationComps() ],
   entryComponents: [ ...getEntryComps() ],
-  providers: [ InputFactoryService, ComponentRepositoryService ]
+  providers: [ InputFactoryService, ComponentRepositoryService, ExceptionHandlerService ]
 })
 export class SharedModule { }

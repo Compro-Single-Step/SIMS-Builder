@@ -9,8 +9,9 @@ module.exports = class TaskAttr {
         this.val = val;
     }
 
-    generateXML (){
+     generateXML (){
         let result = "";
+        // ignore attr node in XML if value is NULL
         if(this.val != null){
             result = "<attr name='"+this.name+"' value='"+this.val+"'/>";
         }
