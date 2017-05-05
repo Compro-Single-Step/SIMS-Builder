@@ -11,6 +11,10 @@
         {
             "name":"Sorting Table Columns",
             "id":"sortingtablecolumns"
+        },
+        {
+            "name":"Insert Picture",
+            "id":"insertpicture"
         }
 
     ]
