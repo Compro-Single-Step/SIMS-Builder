@@ -2,6 +2,7 @@ const Promise = require('bluebird');
 const fs = Promise.promisifyAll(require('fs'));
 const BaseSkill = require("../../common/baseSkill");
 const config = require('../../../../config/config');
+const dbfileStoreManager = require('../../../../modules/skill/dbFilestoreMgr');
 
 //Wrod based Common Functionality goes here 
 
@@ -34,7 +35,7 @@ module.exports = class WordSkill extends BaseSkill {
                     while (matches = regex.exec(htmlResource)) {
                         imgNameArray.push(matches[1]);
                     }
-
+                    
                     imgNameArray.forEach(function (imageName) {
                         docImages.forEach(function (imgObject) {
                             if (imageName === imgObject.displayName) {
@@ -49,9 +50,11 @@ module.exports = class WordSkill extends BaseSkill {
                     for (let index = 0; index < fromArray.length; index++) {
                         htmlResource = htmlResource.replace(fromArray[index], toArray[index]);
                     }
-                    // Need to write this string in directory.
-                }).then((changedFiles) => {
-                    return Promise.resolve({ "attrValue": resourcePath });
+                    let resourcePathArray = resourcePath.split('/');
+                    let fileName = resourcePathArray[resourcePathArray.length - 1];
+                    return dbfileStoreManager.saveTaskDynamicResource(skillParams.taskParams, htmlResource, fileName);
+                }).then((filePath) => {
+                    return Promise.resolve({ "attrValue": filePath });
                 }).catch((error) => {
                     return Promise.reject(error);
                 });
