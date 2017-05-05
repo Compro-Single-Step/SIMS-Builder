@@ -1,21 +1,29 @@
-const BaseSkill = require("../../common/baseSkill");
-const xmlUtil = require("../../../../utils/xmlUtil");
+const BaseSkill = require("../../common/baseSkill"),
+    xmlUtil = require("../../../../utils/xmlUtil"),
+    DOMParser = require("xmldom").DOMParser;
 
 module.exports = class PPTBaseSkill extends BaseSkill {
-    init(data) {
-        var self = this;
-        var initDocJSonPath = data.initDocJSonPath;
-        var dbMgr = data.dbMgr;
+    init(attrObj) {
+        let slideViewDataPath = attrObj.stepUIState.views[1].slideViewData.path;
 
+        return attrObj.dbFilestoreMgr.readFileFromFileStore(slideViewDataPath)
+            .then(response => {
+                let slideViewData = new DOMParser().parseFromString(response.fileData, 'text/xml');
+                let slideNodes = slideViewData.getElementsByTagName("Slide");
+                this.slideNumberArray = [];
 
-    return dbMgr.readFileFromFileStore(initDocJSonPath).then(function (resolveParam) {
+                for (let i = 0; i < slideNodes.$$length; i++) {
+                    this.slideNumberArray.push(slideNodes[i].getAttribute("number"));
+                }
 
-            self.initDocJson = JSON.parse(resolveParam.fileData);
-            self.generateSheetNamesMap();
-            return Promise.resolve(true);
+                this.numberOfSlides = slideNodes.$$length;
+                this.slideHeight = slideViewData.getElementsByTagName("height")[0].textContent;
+                this.slideWidth = slideViewData.getElementsByTagName("width")[0].textContent;
+                return Promise.resolve(true);
 
-        }, function (error) {
-            return Promise.reject(error)
-        });
+            })
+            .catch(error => {
+                return Promise.reject(error)
+            });
     }
 }
