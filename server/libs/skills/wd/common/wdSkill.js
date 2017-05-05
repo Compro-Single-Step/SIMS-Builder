@@ -39,18 +39,16 @@ module.exports = class WordSkill extends BaseSkill {
                         imgNameArray.push(matches[1]);
                     }
 
-                    for (let i = 0; i < imgNameArray.length; i++) {
-                        let imageName = imgNameArray[i];
-
+                    imgNameArray.forEach(function (imageName) {
                         docImages.forEach(function (imgObject) {
                             if (imageName === imgObject.displayName) {
                                 fromArray.push(new RegExp(`{#${imageName}#}`, 'g'));
                                 let imagePathArray = imgObject.path.split('/');
                                 imageName = imagePathArray[imagePathArray.length - 1];
-                                toArray.push('{#approot#}/Assets/' + imageName);
+                                toArray.push(`{#approot#}/Assets/${imageName}`);
                             }
                         });
-                    }
+                    });
 
                     let options = {
                         files: absolutePath,
