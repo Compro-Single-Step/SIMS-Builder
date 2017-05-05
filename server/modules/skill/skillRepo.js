@@ -14,5 +14,33 @@ module.exports = {
             }
         ],
         dependencySkills: []
-    }
+    },
+    "maxfunction": {
+        primaryFile: "xl/maxfunction/maxfunction",
+        dependencyFiles: [
+            {
+                primaryFile: "xl/common/xlSkill",
+                dependencyFiles: [
+                    {
+                        primaryFile: "common/baseSkill",
+                        dependencyFiles: []
+                    }
+                ]
+            }
+        ]
+    },
+    "sortingtablecolumns": {
+        primaryFile: "xl/sortingtablecolumns/sortingtablecolumns",
+        dependencyFiles: [
+            {
+                primaryFile: "xl/common/xlSkill",
+                dependencyFiles: [
+                    {
+                        primaryFile: "common/baseSkill",
+                        dependencyFiles: []
+                    }
+                ]
+            }
+        ]
+    }    
 }

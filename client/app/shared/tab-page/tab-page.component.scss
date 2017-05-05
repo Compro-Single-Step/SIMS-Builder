@@ -1,4 +1,5 @@
-:host {
+:host(.displayInOneLine) {
   display: flex;
   flex-wrap: wrap;
+  padding-right: 0px;
 }

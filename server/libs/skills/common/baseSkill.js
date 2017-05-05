@@ -1,5 +1,19 @@
 module.exports = class BaseSkill {
-  // This is the function of the TaskBar tooltip image path
+  
+  /**
+   * function for some processing which is required for IO Map translation of all the applications
+   * @param {*} data : an object of values having certain data to be used
+   */
+  init (data){
+    // returning empty promise
+    // equivalent to do nothing
+    return Promise.resolve(true);
+  }
+  
+    /**
+ * fnality
+ * function takes the path of the taskkbar preview image and moves the image resource and returns its new path
+ */
   createTooltipImagePath(skillParams) {
 
     var taskParams = skillParams.taskParams;
@@ -14,6 +28,11 @@ module.exports = class BaseSkill {
         return Promise.reject(error);
       });
   }
+
+     /**
+ * if any attribute is not given any function value then this function is called 
+ * it takes the value fo the first key in the params value and returns its value as the resolveParam
+ */
 
   extractSingleParamVal(skillParams) {
 

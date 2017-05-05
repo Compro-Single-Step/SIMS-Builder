@@ -8,13 +8,14 @@ export class itemSchema {
   pos?: string;
   dim?: Object;
   mandatory?: boolean;
-  dependants?: Array<Object>;
+  subscribeEvents?: Array<Object>;
   items?: Array<itemSchema>;
   itemRenderer?: string;
   rendererProperties?: any;
   style?: Object;
   val?: string;
-
+  relVal?: string;
+  emitEvents?: Array<string>;
   constructor() {
     this.id = "";
     this.label = "";
@@ -25,12 +26,14 @@ export class itemSchema {
     this.pos = "";
     this.dim = {};
     this.mandatory = true;
-    this.dependants = [{}];
+    this.subscribeEvents = [];
     this.items = [];
     this.itemRenderer = "";
     this.rendererProperties = {};
     this.val = "";
     this.style = {};
+    this.relVal = "";
+    this.emitEvents = [];
   }
 }
 

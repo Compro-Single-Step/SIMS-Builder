@@ -13,31 +13,12 @@ class MoveCellContent extends ExcelBaseSkill {
     return super.init(skilldata);
   }
 
-  //init DOC JSON 
-  createJsonPath(skillParams) {
-
-    var taskParams = skillParams.taskParams;
-    var paramValueObj = skillParams.paramsObj;
-
-
-    return taskParams.dbFilestoreMgr.copyTaskAssetFile(paramValueObj["docData"], taskParams)
-      .then(function (resolveParam) {
-        paramValueObj["docData"] = resolveParam.filePath;
-        var preloadResArr = [];
-        preloadResArr.push({ "path": "" + resolveParam.filePath, "type": "" + resolveParam.fileType })
-        resolveParam = { "attrValue": paramValueObj["docData"], "preloadResArr": preloadResArr }
-        return Promise.resolve(resolveParam);
-      }, function (error) {
-        return Promise.reject(error);
-        console.log("rejection at the movecellcontent");
-      }).catch(function (error) {
-        return Promise.reject(error);
-      });
-
-  }
+  // function moved to XLskill
+  // init DOC JSON 
+  // createJsonPath(skillParams) {
+  // }
 
   getSelectedCell(skillParams) {
-
     var paramValueObj = skillParams.paramsObj;
     paramValueObj["srcRange"] = paramValueObj["srcRange"].toUpperCase();
     var resolveParams = { "attrValue": paramValueObj["srcRange"] };
@@ -71,27 +52,9 @@ class MoveCellContent extends ExcelBaseSkill {
 
   }
 
-
-  createSheetCellData(skillParams) {
-
-    var taskParams = skillParams.taskParams;
-    var paramValueObj = skillParams.paramsObj;
-    var finalObject = {};
-    finalObject["sheetNo"] = this.getSheetNumber(paramValueObj.sheetAction);
-    return taskParams.dbFilestoreMgr.copyTaskAssetFile(paramValueObj["wbData"], taskParams)
-      .then(function (resolaveParams) {
-        paramValueObj["wbData"] = resolaveParams.filePath
-        finalObject["dataJSONPath"] = paramValueObj["wbData"];
-        finalObject = JSON.stringify(finalObject);
-        var preloadResArr = [];
-        preloadResArr.push({ "path": "" + resolaveParams.filePath, "type": "" + resolaveParams.fileType })
-        var resolveParams = { "attrValue": finalObject, "preloadResArr": preloadResArr };
-        return Promise.resolve(resolveParams);
-
-      }, function (error) {
-        return Promise.reject(error);
-      });
-  }
+  // Moved to Xlskill
+  // createSheetCellData(skillParams) {
+  // }
 
   getSelectedCellFinal(skillParams) {
 
@@ -124,20 +87,21 @@ class MoveCellContent extends ExcelBaseSkill {
 
 
 
-  getSheetNameAndSheetCountFromInitDocJSON(initDocJSON, dependantSheetArrayInModel) {
-
-    //Add The Required Number of Sheets in Model
-    if (initDocJSON.sheetCount >= dependantSheetArrayInModel.length) {
-      let sheetCountDiff = initDocJSON.sheetCount - dependantSheetArrayInModel.length;
-      while (sheetCountDiff > 0) {
-        dependantSheetArrayInModel.push(JSON.parse(JSON.stringify(dependantSheetArrayInModel[(dependantSheetArrayInModel.length - 1)])));
-        sheetCountDiff--;
-      }
+  getSheetDetails(initDocJSON, dependantSheetArrayInModel, clonedDependantSheetArrayInModel) {
+    while (dependantSheetArrayInModel.length > 0) {
+      dependantSheetArrayInModel.pop(); //https://jsperf.com/array-clear-methods/3
     }
 
-    //Add Sheet Names From Init Doc JSON
-    for (let sheetNum = 0; sheetNum < initDocJSON.sheetCount; sheetNum++) {
-      dependantSheetArrayInModel[sheetNum].name = initDocJSON.sheets[sheetNum].name;
+    if (initDocJSON === null) { //initDocJSON Removed
+      dependantSheetArrayInModel.push(clonedDependantSheetArrayInModel[0]);
+    }
+    else {  //initDocJSON Added
+
+      //Add Sheet Names From Init Doc JSON
+      for (let sheetNum = 0; sheetNum < initDocJSON.sheetCount; sheetNum++) {
+        dependantSheetArrayInModel.push(JSON.parse(JSON.stringify(clonedDependantSheetArrayInModel[0])));
+        dependantSheetArrayInModel[sheetNum].name = initDocJSON.sheets[sheetNum].name;
+      }
     }
   }
 
@@ -147,14 +111,23 @@ class MoveCellContent extends ExcelBaseSkill {
     while (dependantSheetArrayInModel.length > 0) {
       dependantSheetArrayInModel.pop(); //https://jsperf.com/array-clear-methods/3
     }
-    //Add Sheet Names to Array From Init Doc JSON
-    for (let sheetNum = 0; sheetNum < initDocJSON.sheetCount; sheetNum++) {
-      var sheetName = initDocJSON.sheets[sheetNum].name;
-      dependantSheetArrayInModel.push({"label":sheetName,"data":sheetName});
+    if (initDocJSON !== null) {
+      //Add Sheet Names to Array From Init Doc JSON
+      for (let sheetNum = 0; sheetNum < initDocJSON.sheetCount; sheetNum++) {
+        var sheetName = initDocJSON.sheets[sheetNum].name;
+        dependantSheetArrayInModel.push({ "label": sheetName, "data": sheetName });
+      }
     }
   }
-  updateSheetNameUsingDropdown(selectedSheetName, dependentSheetNameInModel) {
-    dependentSheetNameInModel.name = selectedSheetName;
+
+  updateSheetName(selectedSheetName, dependentSheetArrayInModel, clonedDependentSheetArrayInModel) {
+    while (dependentSheetArrayInModel.length > 0) {
+      dependentSheetArrayInModel.pop();
+    }
+    dependentSheetArrayInModel.push(JSON.parse(JSON.stringify(clonedDependentSheetArrayInModel[0])));
+    if (selectedSheetName) {
+      dependentSheetArrayInModel[0].name = selectedSheetName.label;
+    }
   }
 }
 module.exports = MoveCellContent;

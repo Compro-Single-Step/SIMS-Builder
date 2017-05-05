@@ -23,24 +23,33 @@ module.exports.generateStepXML = function (templateId, taskId, stepIndex, stepTe
             let mapTranslationParam = new mapTranslationParams(IOMap, stepUIState, skillRef, taskId, stepIndex, dbFilestoreMgr)
             // let attrValueMap = translator.getAttrValueMap(IOMap, stepUIState, skillRef, taskId, stepIndex,dbFilestoreMgr);
             return translator.getAttrValueMap(mapTranslationParam)
-                .then(function (IOmap) {
+                .then(([attrValMap, copyResPromiseArray]) => {
                     //XML generation
-                    return dbFilestoreMgr.getSkillXML(templateId)
-                        .then(skillTemplate => {
-                            let xmlGenerator = new XmlGenerator();
-                            let OutputXML = xmlGenerator.generateXml(skillTemplate, IOmap, stepText);
+                    return Promise.all([
+                        dbFilestoreMgr.getSkillXML(templateId)
+                            .then(skillTemplate => {
+                                let xmlGenerator = new XmlGenerator();
+                                let OutputXML = xmlGenerator.generateXml(skillTemplate, attrValMap, stepText);
 
-                            //Saving Step XML in File Store
-                            return dbFilestoreMgr.saveStepXML(taskId, stepIndex, OutputXML)
-                                .then(msg => {
-                                    return Promise.resolve(msg);
-                                }, (error) => {
-                                    return Promise.reject(error);
-                                });
-                        }, (error) => {
+                                //Saving Step XML in File Store
+                                return dbFilestoreMgr.saveStepXML(taskId, stepIndex, OutputXML)
+                                    .then(msg => {
+                                        return Promise.resolve(msg);
+                                    }, (error) => {
+                                        return Promise.reject(error);
+                                    });
+                            }, (error) => {
+                                return Promise.reject(error);
+                            }),
+                        ...copyResPromiseArray
+                    ])
+                        .then(([msg, ...copyResMsg]) => {
+                            return Promise.resolve(msg);
+                        })
+                        .catch((error) => {
                             return Promise.reject(error);
-                        });
-                }, function (error) {
+                        })
+                }, (error) => {
                     return Promise.reject(error)
                 });
         }, (error) => {

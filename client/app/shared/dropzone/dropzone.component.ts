@@ -1,6 +1,6 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild, OnDestroy } from '@angular/core';
 import { BaseComponent } from '../base.component';
-import { ActivatedRoute } from '@angular/router';
+import { NavigationStart, Router, ActivatedRoute } from '@angular/router';
 import { LabelTypes } from '../enums';
 import { itemSchema } from '../UIConfig.model';
 import { AuthService } from '../../_services/auth.service';
@@ -8,24 +8,40 @@ import { BuilderDataService } from '../../step-builder/shared/builder-data.servi
 
 
 declare var Dropzone: any;
+declare var Papa;
 Dropzone.autoDiscover = false;
 @Component({
   selector: 'app-dropzone',
   templateUrl: './dropzone.component.html',
   styleUrls: ['./dropzone.component.scss']
 })
-export class DropzoneComponent extends BaseComponent {
+export class DropzoneComponent extends BaseComponent implements OnDestroy {
   @ViewChild('dropzone') dropzoneContainer;
   labelConfig: itemSchema = new itemSchema();
   width: string;
   height: string;
-  constructor(private elementRef: ElementRef, private route: ActivatedRoute, private authSrvc: AuthService, private bds: BuilderDataService) {
+  makeDeleteCall: boolean;
+  fileTypesToRead: Array<MIMETYPE>;
+  isMultipleFiles: boolean;
+  constructor(private elementRef: ElementRef, private route: ActivatedRoute, private router: Router, private authSrvc: AuthService, private bds: BuilderDataService) {
     super();
+    this.makeDeleteCall = true;
+    this.fileTypesToRead = [MIMETYPE.JSON, MIMETYPE.CSV];
+    this.isMultipleFiles = false;
   }
 
   ngOnInit() {
     super.ngOnInit();
+    if (this.compConfig.rendererProperties) {
+      this.isMultipleFiles = (this.compConfig.rendererProperties.multipleFiles) ? true : false;
+    }
     this.UpdateView();
+    this.router.events
+      .subscribe((event) => {
+        if (event instanceof NavigationStart) {
+          this.makeDeleteCall = !this.makeDeleteCall;
+        }
+      });
   }
 
   UpdateView() {
@@ -45,7 +61,7 @@ export class DropzoneComponent extends BaseComponent {
     let dropzone = new Dropzone(this.dropzoneContainer.nativeElement, {
       url: "/api/skill/resource",
       paramName: "dzfile",
-      maxFiles: 1,
+      maxFiles: (self.isMultipleFiles) ? null : 1,
       addRemoveLinks: true,
 
       acceptedFiles: MIMETYPE[self.compConfig.rendererProperties.dataType],
@@ -63,24 +79,17 @@ export class DropzoneComponent extends BaseComponent {
   }
 
   dropzoneInitializer(dropzone) {
-    var reader = new FileReader();
     var self = this;
-    var droppedFile;
-
     dropzone.on("success", function (file, response) {
       if (file.status === "success") {
         let currModelRef = self.getData();
-        currModelRef["displayName"] = file.name;
-        currModelRef["path"] = response.filePath;
-
-        if (MIMETYPE[self.compConfig.rendererProperties.dataType] === ".json") {
-          reader.readAsText(file, 'UTF8');
-          reader.onload = function (e) {
-            //Update Dependencies when contents have been read;
-            droppedFile = JSON.parse(e.target['result']);
-            self.updateDependencies(droppedFile);
-          }
+        if (self.isMultipleFiles) {
+          currModelRef["value"].push({ displayName: file.name, path: response.filePath });
+        } else {
+          currModelRef["displayName"] = file.name;
+          currModelRef["path"] = response.filePath;
         }
+        self.readFile(file, MIMETYPE[self.compConfig.rendererProperties.dataType]);
       }
     });
     dropzone.on("maxfilesexceeded", function (file) {
@@ -90,39 +99,123 @@ export class DropzoneComponent extends BaseComponent {
     });
     dropzone.on("removedfile", function (file) {
       let currModelRef = self.getData();
-      self.bds.removeFile(currModelRef["path"]).subscribe(function (data) {
-        if (data.status === "success") {
-          currModelRef["displayName"] = "";
-          currModelRef["path"] = "";
-        } else if (data.status == "error") {
-          // TODO: Code for handling - File Doesn't Exist Error
+      if (self.isMultipleFiles) {
+        for (let i = 0; i < currModelRef["value"].length; i++) {
+           if (currModelRef["value"][i].displayName === file.name) {
+            self.removeFileFromServer(currModelRef, i);
+            break;
+          }
         }
-      });
+      } else {
+        self.removeFileFromServer(currModelRef)
+      }
     })
 
     this.restoreFileUI(dropzone);
   }
-
-  restoreFileUI(dropzone) {
-    let fileInfo = this.getData();
-    if (fileInfo.path != "") {
-      this.bds.getResource(this.getData().path).subscribe((res) => {
-        if (res.headers.get("status") == "success") {
-          let file = new File([res._body], fileInfo.displayName);
-          dropzone.addFile(file);
+  removeFileFromServer(model, index?) {
+    let el = this.isMultipleFiles ? model["value"][index] : model;
+    if (el["path"] != "") {
+      this.bds.removeFile(el["path"]).subscribe((data) => {
+        if (data.status === "success") {
+          this.emitEvents(null);
+          if (this.isMultipleFiles) {
+            model["value"].splice(index, 1);
+          } else {
+            model["displayName"] = "";
+            model["path"] = "";
+          }
+        } else if (data.status == "error") {
+          // TODO: Code for handling - File Doesn't Exist Error
         }
-        else{
+      });
+    }
+  }
+  readFile(file, fileType) {
+    let reader = new FileReader();
+    let droppedFile;
+    let self = this;
+    if (this.fileTypesToRead.indexOf(fileType) != -1) {
+      reader.readAsText(file, 'UTF8');
+      reader.onload = function (e) {
+        //Update Dependencies when contents have been read;
+        try {
+          droppedFile = self.fileTypeHandler(fileType, e.target['result']);
+        }
+        catch (e) {
+          console.log(e);
+        }
+        self.emitEvents(droppedFile);
+      }
+    }
+  }
+
+  fileTypeHandler(fileType, data) {
+    let obj = {};
+    obj[MIMETYPE.JSON] = this.parseJsonData;
+    obj[MIMETYPE.CSV] = this.parseCsvDataToJson;
+
+    return obj[fileType](data);
+  }
+
+  parseJsonData(data) {
+    return JSON.parse(data);
+  }
+
+  parseCsvDataToJson(data) {
+    var config = {
+      "header": true,
+      "skipEmptyLines": true
+    }
+    var output = Papa.parse(data, config);
+    if (output.errors.length != 0) {
+      //TODO: Error Handling
+      for (let i = 0; i < output.errors.length; i++) {
+        console.log("Error in parsing csv: " + output.errors[i].message + (output.errors[i].row !== undefined ? " => at row: " + output.errors[i].row : ""));
+      }
+    }
+    return output.data;
+  }
+  addFileToDropzone(dropzone, el) {
+    if (el.path && el.path != "") {
+      this.bds.getResource(el.path).subscribe((res) => {
+        if (res.headers.get("status") == "success") {
+          let file = new File([res._body], el.displayName);
+          dropzone.emit("addedfile", file);
+          dropzone.emit("complete", file);
+        }
+        else {
           //TODO: Handling of code when error is receiving file occurrs. 
         }
       });
     }
   }
+  restoreFileUI(dropzone) {
+    let fileInfo = this.getData();
+    if (this.isMultipleFiles) {
+      fileInfo["value"].forEach(el => {
+        this.addFileToDropzone(dropzone, el);
+      });
+    } else {
+      this.addFileToDropzone(dropzone, fileInfo);
+    }
+  }
 
   getData() {
-    return this.modelRef ? this.modelRef : this.builderModelSrvc.getModelRef(this.compConfig.val);
+    return this.modelRef ? this.modelRef : this.builderModelSrvc.getStateRef(this.compConfig.val);
+  }
+
+  ngOnDestroy() {
+    super.ngOnDestroy();
+    if (this.makeDeleteCall && this.getData()["path"] != "") {
+      this.bds.removeFile(this.getData()["path"]).subscribe((data) => {
+        //TODO: error handling.
+      });
+    }
   }
 }
 enum MIMETYPE {
   JSON = <any>".json",
-  img = <any>"image/*"
+  img = <any>"image/*",
+  CSV = <any>".csv"
 }

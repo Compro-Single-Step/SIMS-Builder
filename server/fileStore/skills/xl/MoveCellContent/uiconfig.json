@@ -64,20 +64,13 @@
               },
               "itemRenderer": "Dropzone",
               "itemType": "leaf",
+              "emitEvents": [
+                "DOCUMENT_DATA_UPDATED"
+              ],
               "rendererProperties": {
                 "dataType": "JSON",
-                "placeHolder": "Drop JSON file here to upload"
+                "placeholder": "Drop JSON file here to upload"
               },
-              "dependants": [
-                {
-                  "modelReference": "{{views.1.sheets.value}}",
-                  "rule": "getSheetNameAndSheetCountFromInitDocJSON"
-                },
-                {
-                  "modelReference": "{{views.2.sheetInAction.options.value}}",
-                  "rule": "addSheetNamesToDropdown"
-                }
-              ],
               "mandatory": true,
               "val": "{{views.1.documentData}}"
             },
@@ -91,13 +84,21 @@
               "itemRenderer": "TabGroup",
               "itemType": "child",
               "disabled": true,
+              "subscribeEvents": [
+                {
+                  "eventId": "DOCUMENT_DATA_UPDATED",
+                  "modelReference": "{{views.1.sheets.value}}",
+                  "rule": "getSheetDetails"
+                }
+              ],
               "rendererProperties": {
                 "layout": "horizontal",
                 "dynamicMode": true,
                 "itemListRef": "{{views.1.sheets}}",
                 "style": {
                   "max-width": "450px"
-                }
+                },
+                "displayInOneLine": true
               },
               "items": [
                 {
@@ -113,7 +114,7 @@
                       "itemRenderer": "Dropzone",
                       "itemType": "leaf",
                       "rendererProperties": {
-                        "placeHolder": "Drop Grid Image",
+                        "placeholder": "Drop Grid Image",
                         "dynamicMode": true,
                         "dataType": "img"
                       },
@@ -129,7 +130,7 @@
                       "itemRenderer": "Dropzone",
                       "itemType": "leaf",
                       "rendererProperties": {
-                        "placeHolder": "Drop Row Image",
+                        "placeholder": "Drop Row Image",
                         "dynamicMode": true,
                         "dataType": "img"
                       },
@@ -145,7 +146,7 @@
                       "itemRenderer": "Dropzone",
                       "itemType": "leaf",
                       "rendererProperties": {
-                        "placeHolder": "Drop Column Image",
+                        "placeholder": "Drop Column Image",
                         "dynamicMode": true,
                         "dataType": "img"
                       },
@@ -161,7 +162,7 @@
                       "itemRenderer": "Dropzone",
                       "itemType": "leaf",
                       "rendererProperties": {
-                        "placeHolder": "Drop Cell Image",
+                        "placeholder": "Drop Cell Image",
                         "dynamicMode": true,
                         "dataType": "img"
                       },
@@ -205,7 +206,7 @@
               "itemType": "leaf",
               "rendererProperties": {
                 "dataType": "img",
-                "placeHolder": "Drop image here to upload"
+                "placeholder": "Drop image here to upload"
               },
               "mandatory": false,
               "val": "{{views.1.taskbarPreviewImage}}"
@@ -254,15 +255,20 @@
                 "detailed": "Name of the sheet on which the move cell content skill has to be performed is to be mentioned here."
               },
               "itemRenderer": "Dropdown",
+              "emitEvents": [
+                "SHEET_IN_ACTION_UPDATED"
+              ],
               "rendererProperties": {
-                "itemListRef": "{{views.2.sheetInAction.options}}"
+                "dynamicMode":true,
+                "itemList": "{{views.2.sheetInAction.options}}"
               },
               "itemType": "leaf",
               "mandatory": true,
-              "dependants": [
+              "subscribeEvents": [
                 {
-                  "modelReference": "{{views.3.sheets.value.0}}",
-                  "rule": "updateSheetNameUsingDropdown"
+                  "eventId": "DOCUMENT_DATA_UPDATED",
+                  "modelReference": "{{views.2.sheetInAction.options.value}}",
+                  "rule": "addSheetNamesToDropdown"
                 }
               ],
               "val": "{{views.2.sheetInAction.selectedOption}}"
@@ -331,7 +337,7 @@
               "itemType": "leaf",
               "rendererProperties": {
                 "dataType": "JSON",
-                "placeHolder": "Drop JSON file here to upload"
+                "placeholder": "Drop JSON file here to upload"
               },
               "mandatory": true,
               "val": "{{views.3.workbookData}}"
@@ -346,13 +352,21 @@
               "itemRenderer": "TabGroup",
               "itemType": "child",
               "disabled": true,
+              "subscribeEvents": [
+                {
+                  "eventId": "SHEET_IN_ACTION_UPDATED",
+                  "modelReference": "{{views.3.sheets.value}}",
+                  "rule": "updateSheetName"
+                }
+              ],
               "rendererProperties": {
                 "layout": "horizontal",
                 "dynamicMode": true,
                 "itemListRef": "{{views.3.sheets}}",
                 "style": {
                   "max-width": "450px"
-                }
+                },
+                "displayInOneLine": true
               },
               "items": [
                 {
@@ -368,7 +382,7 @@
                       "itemRenderer": "Dropzone",
                       "itemType": "leaf",
                       "rendererProperties": {
-                        "placeHolder": "Drop Grid Image",
+                        "placeholder": "Drop Grid Image",
                         "dynamicMode": true,
                         "dataType": "img"
                       },
@@ -384,7 +398,7 @@
                       "itemRenderer": "Dropzone",
                       "itemType": "leaf",
                       "rendererProperties": {
-                        "placeHolder": "Drop Row Image",
+                        "placeholder": "Drop Row Image",
                         "dynamicMode": true,
                         "dataType": "img"
                       },
@@ -400,7 +414,7 @@
                       "itemRenderer": "Dropzone",
                       "itemType": "leaf",
                       "rendererProperties": {
-                        "placeHolder": "Drop Column Image",
+                        "placeholder": "Drop Column Image",
                         "dynamicMode": true,
                         "dataType": "img"
                       },
@@ -416,7 +430,7 @@
                       "itemRenderer": "Dropzone",
                       "itemType": "leaf",
                       "rendererProperties": {
-                        "placeHolder": "Drop Cell Image",
+                        "placeholder": "Drop Cell Image",
                         "dynamicMode": true,
                         "dataType": "img"
                       },

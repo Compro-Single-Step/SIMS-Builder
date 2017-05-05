@@ -1,7 +1,8 @@
 export const LabelTypes =  {
   ELEMENT_HEADING: "ElementHeading",
   PANEL_HEADING: "PanelHeading",
-  DESCRIPTION: "Description"
+  DESCRIPTION: "Description",
+  VIEW_HEADING: "ViewHeading"
 };
 export const MessageMap={
     'USER_ADDED' : "User Added",
@@ -12,4 +13,3 @@ export const MessageMap={
     "NO_CHANGES" : "No Changes",
     "TEMPLATE_UPDATED": "Task Template Updated"
 };
-
