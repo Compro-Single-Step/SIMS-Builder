@@ -189,21 +189,11 @@
 								<attr name="TABLE_DATA" userDefined="true"/>
 						{{/if}}
 						{{#ifCond states.5.components.6.initial.default-attrs.MODE "1"}}
-							{{#if states.5.components.6.final.default-attrs.REPORT_DATA}}
 									<attr name="REPORT_DATA" userDefined="true"/>
-							{{/if}}
-							{{#if states.5.components.6.final.default-attrs.QUERY_DATA}}
 									<attr name="QUERY_DATA" userDefined="true"/>
-							{{/if}}
-							{{#if states.5.components.6.final.default-attrs.FORM_DATA}}
 									<attr name="FORM_DATA" userDefined="true"/>
-							{{/if}}
-							{{#if states.5.components.6.final.default-attrs.MACRO_DATA}}
 									<attr name="MACRO_DATA" userDefined="true"/>
-							{{/if}}
-							{{#if states.5.components.6.final.default-attrs.MODULE_DATA}}
-									<attr name="MODULE_DATA" userDefined="true"/>
-							{{/if}}
+									<attr name="MODULE_DATA" userDefined="true"/>				
 						{{/ifCond}}
 					</finalattrs>
 					<events>

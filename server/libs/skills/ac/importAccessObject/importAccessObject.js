@@ -4,15 +4,15 @@ const AccessBaseSkill = require("../common/acSkill");
 class importAccessobject extends AccessBaseSkill {
   constructor(){
     super();
-    this.projJSON = {};
-    this.IntialDataJSON ={};
+    this.importedObjectJSON = {};
+    this.importDialogInputJSON ={};
   }
   // This function reads a file from filestore to be used by multiple functions in this class. Also it populates a json object to be used by multiple functions 
   init(data) {
     var self = this;
     return data.dbFilestoreMgr.readFileFromFileStore(data.stepUIState.views["2"].importDBConfig.path).then(function (resolveParam) {
-      self.IntialDataJSON = JSON.parse(resolveParam.fileData);
-      self.projJSON = self.getFinalDBConfig(self.IntialDataJSON);
+      self.importDialogInputJSON = JSON.parse(resolveParam.fileData);
+      self.importedObjectJSON = self.getFinalDBConfig(self.importDialogInputJSON);
       return Promise.resolve();
     });
   }
@@ -29,31 +29,34 @@ class importAccessobject extends AccessBaseSkill {
   //This function return a string to be used for an atrribute of Get External Data to demonstrate the name with which the nam eof the step have to be saved.
   getSaveAsText(skillParams){
     var paramValueObj = skillParams.paramsObj;
-    var fileName = this.splitFilename(paramValueObj.databasePath);
-    //this code replaces the extension with empty string, effectively removing the File Extension
-    var resolveParams = fileName.replace("."+fileName.split(".")[fileName.split(".").length-1],"")
-    // splitting in "." might end the file name before it gets completed -done
-    resolveParams = { "attrValue":"Import-"+resolveParams};
+    var fileName = this.getFileNameFromFilePath(paramValueObj.databasePath);
+    fileName = "Import-"+this.removeExtFromFileName(fileName);
+    var resolveParams = { "attrValue": fileName};
     return Promise.resolve(resolveParams);
   }
   //This function splits the document name and returns the access database file name.
-  splitFilename(filePath){
+  getFileNameFromFilePath(filePath){
     var res = filePath.split("\\");
     return res[res.length-1];
   }
   //It returns the name of the database file along with extension.
   getFileNameWithExtension(skillParams) {
     var paramValueObj = skillParams.paramsObj;
-    var resolveParams = { "attrValue": this.splitFilename(paramValueObj.databasePath)};
+    var resolveParams = { "attrValue": this.getFileNameFromFilePath(paramValueObj.databasePath)};
     return Promise.resolve(resolveParams);
   }
   //It returns the name of the dtabase file without extension.
   getFileName(skillParams) {
     var paramValueObj = skillParams.paramsObj;
-    var fileName = this.splitFilename(paramValueObj.databasePath);
-    var resolveParams = fileName.replace("."+fileName.split(".")[fileName.split(".").length-1],"")
-    resolveParams = { "attrValue": resolveParams};
+    var fileName = this.getFileNameFromFilePath(paramValueObj.databasePath);
+    fileName = this.removeExtFromFileName(fileName);
+    var resolveParams = { "attrValue": fileName};
     return Promise.resolve(resolveParams);
+  }
+  removeExtFromFileName(fileName){
+    var temp = fileName.split(".");
+    var fileExt = "." + temp[temp.length - 1]
+    return fileName.replace(fileExt, "");
   }
   //This function stores a JSON in filestore to render Import Objects component and returns the path of the JSON. 
   getInitialDBConfig(skillParams) {
@@ -61,7 +64,7 @@ class importAccessobject extends AccessBaseSkill {
     var initialConfig = {
     "objects": []
     };
-    var DataJSON = this.IntialDataJSON
+    var DataJSON = this.importDialogInputJSON
       // change objType name - done
       for (var objtype in DataJSON){
         var DBObj = {
@@ -125,11 +128,11 @@ class importAccessobject extends AccessBaseSkill {
     let paramValueObj = skillParams.paramsObj;
     let resolveParams;
     let self = this;
-    if(this.projJSON[objType]){
+    if(this.importedObjectJSON[objType]){
       // It is not made and stringified as there are no comma between file names in attr value..
       let finalString = "[";
-      for(let index=0;index<this.projJSON[objType].length;index++){
-        finalString+=this.projJSON[objType][index];
+      for(let index=0;index<this.importedObjectJSON[objType].length;index++){
+        finalString+=this.importedObjectJSON[objType][index];
       }
       finalString+="]";
       resolveParams = { "attrValue": finalString};
@@ -152,7 +155,7 @@ class importAccessobject extends AccessBaseSkill {
     } 
   }
   //This function returns the name of the DB object to be shown selecetd in the final state.
-  getFinalSelectedObject(skillParams){
+  getFinalSelectedObjectName(skillParams){
     var paramValueObj = skillParams.paramsObj;
     var resolveParams = { "attrValue":paramValueObj.skillmode};
     if(paramValueObj.skillmode == "2"){
@@ -167,7 +170,7 @@ class importAccessobject extends AccessBaseSkill {
     let paramValueObj = skillParams.paramsObj;
     let resolveParams;
     let self = this;
-    let tableObj = this.projJSON["tables"];
+    let tableObj = this.importedObjectJSON["tables"];
     resolveParams = { "attrValue": tableObj[tableObj.length-1]};
     return Promise.resolve(resolveParams);
   }

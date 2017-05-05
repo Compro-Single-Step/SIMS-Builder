@@ -23,7 +23,7 @@ module.exports = class AccessBaseSkill extends BaseSkill {
    */
    getSelectedDBObjectName(skillParams){
     var paramValueObj = skillParams.paramsObj;
-    var resolveParams = { "attrValue": paramValueObj.selectedObj.data.split(".")[1]};
+    var resolveParams = { "attrValue": paramValueObj.selectedObj.data.objectName};
     return Promise.resolve(resolveParams);
   }
   /**
@@ -41,7 +41,7 @@ module.exports = class AccessBaseSkill extends BaseSkill {
       "Macro":"Macros",
       "Module":"Modules"
     }
-    var resolveParams = { "attrValue": objectMap[paramValueObj.selectedObj.data.split(".")[0]]};
+    var resolveParams = { "attrValue": objectMap[paramValueObj.selectedObj.data.objectType]};
     return Promise.resolve(resolveParams);
   }
   // Front End Function use to populate the dropdown list items from project json.
@@ -64,7 +64,7 @@ module.exports = class AccessBaseSkill extends BaseSkill {
       if (navigationPaneJSON[key]) {
         objectType = objectMap[key];
         for(let i=0; i<navigationPaneJSON[key].length;i++ ){
-            navaigationPaneDatabaseObjectArray.value.push({"label": (objectType + ' : ' + navigationPaneJSON[key][i].name),"data":(objectType + '.' + navigationPaneJSON[key][i].name)});
+            navaigationPaneDatabaseObjectArray.value.push({"label": (objectType + ': ' + navigationPaneJSON[key][i].name),"data":({"objectType":objectType,"objectName":navigationPaneJSON[key][i].name})});
         }        
      }
     }

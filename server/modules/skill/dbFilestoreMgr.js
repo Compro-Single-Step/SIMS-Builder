@@ -88,8 +88,8 @@ class DatabaseFileStoreManager {
     saveStepXML(taskId, stepIndex, OutputXML){
         return fsc.saveStepXML(taskId, stepIndex, OutputXML);
 	}
-    saveXMLDynamicResource(taskParams, File, FileName){
-        return fsc.saveXMLResources(taskParams, File, FileName);
+    saveTaskDynamicResource(taskParams, File, FileName){
+        return fsc.saveTaskResources(taskParams, File, FileName);
 	}
 
     saveResourceFile() {

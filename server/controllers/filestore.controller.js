@@ -157,15 +157,24 @@ class FileStoreController {
         let fileName = "task.xml";//this will come from out side.
         return this.saveFileToFileStore(folderPath, fileName, OutputXML);
     }
-    saveXMLResources(taskParams, File, FileName) {
+
+    /**
+     * 
+     * @param {*} taskParams TaskParamas contains task metadata.
+     * @param {*} File The data that is to be stored in the File
+     * @param {*} FileName Name for the File to be stored
+     * Output: Relative Path of the File saved in File Store to be added in Task XML
+     */
+    saveTaskResources(taskParams, File, FileName) {
         let destPath = this.getStepXMLFolderPath(taskParams.taskId, taskParams.stepIndex);
         let relativeXmlPath = this.getSimsXmlStepFolderPath(taskParams.taskId, taskParams.stepIndex);
         let fileName = FileName; //this will come from out side.
         return this.saveFileToFileStore(destPath, fileName, File).then(()=>{
             var relativeResourcePath = relativeXmlPath+fileName;
-            return relativeResourcePath;
+            return Promise.resolve(relativeResourcePath);
         });
     }
+
     saveResourceFile() {
         return this.uploadFileHandler();
     }

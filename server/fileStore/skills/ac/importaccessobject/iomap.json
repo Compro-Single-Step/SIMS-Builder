@@ -24,13 +24,13 @@
                 }
               },
               "SELECTED_DB_OBJECT_TYPE": {
-                "function-name": "getSelectedObjectType",
+                "function-name": "getSelectedDBObjectType",
                 "params": {
                   "selectedObj": "views['1'].navigationPaneItems.selectedOption.value"
                 }
               },
               "SELECTED_DB_OBJECT": {
-                "function-name": "getSelectedObject",
+                "function-name": "getSelectedDBObjectName",
                 "params": {
                   "selectedObj": "views['1'].navigationPaneItems.selectedOption.value"
                 }
@@ -48,7 +48,7 @@
                 }
               },
               "OPENWORDFILE": {
-                "function-name": "getTootlTipText",
+                "function-name": "getTaskbarTooltipText",
                 "params": {
                   "DocTitle": "views['1'].documentTitle.value"
                 }
@@ -250,7 +250,7 @@
                 }
               },
               "SELECTED_DB_OBJECT": {
-                "function-name": "getFinalSelectedObject",
+                "function-name": "getFinalSelectedObjectName",
                 "params": {
                   "skillmode":"views['2'].importMode.value",
                   "selectedObj": "views['1'].navigationPaneItems.selectedOption.value",

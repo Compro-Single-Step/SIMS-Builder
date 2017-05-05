@@ -10,6 +10,10 @@ module.exports = class TaskAttr {
     }
 
     generateXML (){
-        return "<attr name='"+this.name+"' value='"+this.val+"'/>";
+        let result = "";
+        if(this.val != null){
+            result = "<attr name='"+this.name+"' value='"+this.val+"'/>";
+        }
+        return result;
     }
 }
