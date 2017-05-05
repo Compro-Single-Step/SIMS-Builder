@@ -10,8 +10,7 @@
             },
             "initialDocumentImages": {
                 "disabled": true,
-                "value": [
-                ]
+                "value": []
             },
             "initialElement": {
                 "value": ""
@@ -36,8 +35,7 @@
                 "path": ""
             },
             "treeXMLImages": {
-                "value": [
-                ]
+                "value": []
             },
             "treeSelectedItemID": {
                 "value": ""
@@ -57,8 +55,7 @@
             },
             "finalDocumentImages": {
                 "disabled": true,
-                "value": [
-                ]
+                "value": []
             },
             "selectedImageID": {
                 "value": ""
