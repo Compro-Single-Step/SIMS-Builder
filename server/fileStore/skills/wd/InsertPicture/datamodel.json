@@ -9,7 +9,7 @@
                 "path": ""
             },
             "initialDocumentImages": {
-                "disabled": false,
+                "disabled": true,
                 "value": []
             },
             "initialElement": {

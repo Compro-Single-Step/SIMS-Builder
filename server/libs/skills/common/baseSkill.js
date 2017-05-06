@@ -1,5 +1,5 @@
-const Promise = require('bluebird');
-const fs = Promise.promisifyAll(require('fs'));
+
+const fs = require('fs');
 const config = require('../../../config/config');
 const dbfileStoreManager = require('../../../modules/skill/dbFilestoreMgr');
 const resourceUtil = require('../../../utils/resourceUtil');
@@ -73,43 +73,47 @@ module.exports = class BaseSkill {
             let absolutePath = config.fileStore.resourceFolder + resourcePath;
             let fromArray = [];
             let toArray = [];
+            return new Promise((resolve, reject) => {
+                fs.readFile(absolutePath, 'utf8', (error, htmlResource) => {
+                    if (error) {
+                        return reject(error);
+                    } else {
+                        var regex = /{#([^}]*)#}/g;
+                        let matches,
+                            imgNameArray = [];
+                        while (matches = regex.exec(htmlResource)) {
+                            imgNameArray.push(matches[1]);
+                        }
 
-            return fs.readFileAsync(absolutePath, 'utf8')
-                .then((htmlResource) => {
-                    var regex = /{#([^}]*)#}/g;
-                    let matches,
-                        imgNameArray = [];
-                    while (matches = regex.exec(htmlResource)) {
-                        imgNameArray.push(matches[1]);
-                    }
-
-                    let modifiedPathArr = [];
-                    docImages.forEach(function (imgObject) {
-                        modifiedPathArr.push(skillParams.taskParams.addResourceToMap("step", imgObject.path).absFilePath);
-                    });
-
-                    imgNameArray.forEach(function (imageName) {
-                        modifiedPathArr.forEach(function (path) {
-                            let imagePathArray = path.split('/');
-                            let modifiedImageName = imagePathArray[imagePathArray.length - 1].split('.').slice(1).join('.');
-                            if (imageName === modifiedImageName) {
-                                fromArray.push(`{#${imageName}#}`);
-                                toArray.push(path);
-                            }
+                        let modifiedPathArr = [];
+                        docImages.forEach(function (imgObject) {
+                            modifiedPathArr.push(skillParams.taskParams.addResourceToMap("step", imgObject.path).absFilePath);
                         });
-                    });
 
-                    for (let index = 0; index < fromArray.length; index++) {
-                        htmlResource = htmlResource.replace(fromArray[index], toArray[index]);
+                        imgNameArray.forEach(function (imageName) {
+                            modifiedPathArr.forEach(function (path) {
+                                let imagePathArray = path.split('/');
+                                let modifiedImageName = imagePathArray[imagePathArray.length - 1].split('.').slice(1).join('.');
+                                if (imageName === modifiedImageName) {
+                                    fromArray.push(`{#${imageName}#}`);
+                                    toArray.push(path);
+                                }
+                            });
+                        });
+
+                        for (let index = 0; index < fromArray.length; index++) {
+                            htmlResource = htmlResource.replace(fromArray[index], toArray[index]);
+                        }
+                        let resourcePathArray = resourcePath.split('/');
+                        let fileName = resourcePathArray[resourcePathArray.length - 1];
+                        return dbfileStoreManager.saveTaskDynamicResource(skillParams.taskParams, htmlResource, fileName);
                     }
-                    let resourcePathArray = resourcePath.split('/');
-                    let fileName = resourcePathArray[resourcePathArray.length - 1];
-                    return dbfileStoreManager.saveTaskDynamicResource(skillParams.taskParams, htmlResource, fileName);
-                }).then((filePath) => {
-                    return Promise.resolve({ "attrValue": filePath, 'preloadResArr': [{path: filePath, type: resourceUtil.getFileType(filePath)}] });
-                }).catch((error) => {
-                    return Promise.reject(error);
-                });
+                })
+            }).then((filePath) => {
+                return Promise.resolve({ "attrValue": filePath, 'preloadResArr': [{ path: filePath, type: resourceUtil.getFileType(filePath) }] });
+            }).catch((error) => {
+                return Promise.reject(error);
+            });
         } catch (error) {
             return Promise.reject(error);
         }
