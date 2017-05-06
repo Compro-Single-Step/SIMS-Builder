@@ -1,4 +1,5 @@
 import { Injectable, ViewContainerRef, ReflectiveInjector, ComponentFactoryResolver, ComponentRef } from '@angular/core';
+import { ComponentRepositoryService } from './component-repository.service';
 
 @Injectable()
 export class InputFactoryService {
