@@ -25,8 +25,8 @@
 						<attr name="DOCUMENT_NAME" userDefined="true"/>
 					</initialattrs>
 					<events>
-						<event id="21" followup="2" desc="Ribbon Insert picutres">
-							<validate>
+						<event id="21" desc="Ribbon Insert picutres">
+							<validate followup="2">
 								<comp id="2"/>
 							</validate>
 						</event>

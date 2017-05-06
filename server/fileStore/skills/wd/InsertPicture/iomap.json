@@ -76,11 +76,11 @@
         },
         "2": {
             "components": {
-                "2": {
+                "4": {
                     "initial": {
                         "default-attrs": {
                             "TREE_XML_PATH": {
-                                "function-name": "extractSingleParamVal",
+                                "function-name": "createTreeXMLPath",
                                 "params": {
                                     "treeXML": "views['2'].treeXML.path"
                                 }
@@ -92,7 +92,7 @@
                                 }
                             },
                             "IMG_FOLDER_PATH": {
-                                "function-name": "extractSingleParamVal",
+                                "function-name": "createThumbnailImagePath",
                                 "params": {
                                     "thumbnailImage": "views['2'].thumbnailImage.path"
                                 }
