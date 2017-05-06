@@ -30,7 +30,7 @@ module.exports = class InsertAudio extends PPTBaseSkill {
                     return Promise.resolve(true);
 
                 }),
-            super.init(attrObj)
+            super.init(attrObj.stepUIState.views[1].slideViewData.path, attrObj.dbFilestoreMgr)
         ])
             .then(() => {
                 return Promise.resolve(true)
@@ -41,22 +41,20 @@ module.exports = class InsertAudio extends PPTBaseSkill {
     }
 
     createResXMLPath(skillParams) {
-        var attrValue = skillParams.paramsObj.xmlPath;
+        var attrValue = skillParams.taskParams.addResourceToMap("step", skillParams.paramsObj["xmlPath"]).absFilePath;
         return Promise.resolve({ attrValue });
     }
 
     getSubCompTopPosition() {
-        var defaultAudioHeight = 0.67;
-        var top = parseInt(this.slideHeight) / 2 - parseInt(defaultAudioHeight) / 2;
-        var resolveParam = { "attrValue": top };
-        return Promise.resolve(resolveParam);
+        var defaultAudioHeight = 0.67,
+            attrValue = (parseFloat(this.slideHeight) / 2 - defaultAudioHeight / 2).toFixed(1);
+        return Promise.resolve({ attrValue });
     }
 
     getSubCompLeftPosition() {
-        var defaultAudioWidth = 0.67;
-        var left = parseInt(this.slideWidth) / 2 - parseInt(defaultAudioWidth) / 2;
-        var resolveParam = { "attrValue": left };
-        return Promise.resolve(resolveParam);
+        var defaultAudioWidth = 0.67,
+            attrValue = (parseFloat(this.slideWidth) / 2 - defaultAudioWidth / 2).toFixed(1);
+        return Promise.resolve({ attrValue });
     }
 
     getAudioTobeInsertedWithoutExt(skillParams) {
@@ -68,17 +66,29 @@ module.exports = class InsertAudio extends PPTBaseSkill {
     }
 
     getSubCompHostParam(skillParams) {
-        var selectedSlide = skillParams.paramsObj.selectedSlide;
-        var hostParam = '{"Mode":"VideoPlaceHolder","HostParams":{"slide":' + selectedSlide + '}}';
-        var resolveParam = { "attrValue": hostParam };
-        return Promise.resolve(resolveParam);
+        var selectedSlide = skillParams.paramsObj.selectedSlide.data,
+            attrValue = '{"Mode":"VideoPlaceHolder","HostParams":{"slide":' + selectedSlide + '}}';
+        return Promise.resolve({ attrValue });
     }
 
     getUpdatedSlideData(skillParams) {
-        var selectedSlide = skillParams.paramsObj.selectedSlide;
-        var imgPath = skillParams.paramsObj.imgPath;
-        var hostParam = '[{"Number":' + selectedSlide + ',"ThumbHtml":"<img src=' + imgPath + '/>"}]';
-        var resolveParam = { "attrValue": hostParam };
-        return Promise.resolve(resolveParam);
+        var selectedSlide = skillParams.paramsObj.selectedSlide.data,
+            slidePath = skillParams.taskParams.addResourceToMap("step", skillParams.paramsObj["imgPath"]).absFilePath,
+            attrValue = '[{"Number":' + selectedSlide + ',"ThumbHtml":"<img src=' + slidePath + '/>"}]';
+        return Promise.resolve({ attrValue });
+    }
+
+    generateSaveAsDialogTreeXML(skillParams) {
+        var insertFileDialogXML = skillParams.paramsObj.resAdded;
+        //TO DO...
+        return Promise.resolve({ "attrValue": insertFileDialogXML });
+        
+    }
+
+    generateAutoCompleteList(skillParams){
+        var attrValue = this.fileNameArray.reduce( (acc,nxtValue) => {
+            return acc + '~' + nxtValue;
+        });
+        return Promise.resolve({ attrValue })
     }
 }

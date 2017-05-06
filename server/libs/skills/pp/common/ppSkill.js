@@ -3,10 +3,9 @@ const BaseSkill = require("../../common/baseSkill"),
     DOMParser = require("xmldom").DOMParser;
 
 module.exports = class PPTBaseSkill extends BaseSkill {
-    init(attrObj) {
-        let slideViewDataPath = attrObj.stepUIState.views[1].slideViewData.path;
+    init(slideViewDataPath, dbFilestoreMgr) {
 
-        return attrObj.dbFilestoreMgr.readFileFromFileStore(slideViewDataPath)
+        return dbFilestoreMgr.readFileFromFileStore(slideViewDataPath)
             .then(response => {
                 let slideViewData = new DOMParser().parseFromString(response.fileData, 'text/xml');
                 let slideNodes = slideViewData.getElementsByTagName("Slide");
