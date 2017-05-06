@@ -106,13 +106,14 @@ module.exports = class BaseSkill {
                         }
                         let resourcePathArray = resourcePath.split('/');
                         let fileName = resourcePathArray[resourcePathArray.length - 1];
-                        return dbfileStoreManager.saveTaskDynamicResource(skillParams.taskParams, htmlResource, fileName);
+                        dbfileStoreManager.saveTaskDynamicResource(skillParams.taskParams, htmlResource, fileName)
+                            .then((filePath) => {
+                                resolve({ "attrValue": filePath, 'preloadResArr': [{ path: filePath, type: resourceUtil.getFileType(filePath) }] });
+                            }).catch((error) => {
+                                reject(error);
+                            });
                     }
                 })
-            }).then((filePath) => {
-                return Promise.resolve({ "attrValue": filePath, 'preloadResArr': [{ path: filePath, type: resourceUtil.getFileType(filePath) }] });
-            }).catch((error) => {
-                return Promise.reject(error);
             });
         } catch (error) {
             return Promise.reject(error);
