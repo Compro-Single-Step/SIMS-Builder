@@ -36,8 +36,8 @@
                             "CURRENT_CURSOR_POS": {
                                 "function-name": "createCursorPosition",
                                 "params": {
-                                    "elementId": "views['1'].finalElement.value",
-                                    "cursorPosition": "views['1'].finalCursorPosition.value"
+                                    "elementId": "views['2'].finalElement.value",
+                                    "cursorPosition": "views['2'].finalCursorPosition.value"
                                 }
                             }
                         }
@@ -47,8 +47,8 @@
                             "CURRENT_CURSOR_POS_RELATIVE_TO": {
                                 "function-name": "createCursorPosition",
                                 "params": {
-                                    "elementId": "views['1'].finalElement.value",
-                                    "cursorPosition": "views['1'].finalCursorPosition.value"
+                                    "elementId": "views['2'].finalElement.value",
+                                    "cursorPosition": "views['2'].finalCursorPosition.value"
                                 }
                             }
                         }
