@@ -36,54 +36,50 @@ function attrTaskParam(taskId, stepIndex, stateId, dbFilestoreMgr, resourceMap) 
  * @param {*} filePath : The file path fetched from IOMap JSON 
  * when resourcetype is step => Ex: "GO16.WD.12.12B.02.T1/1/1493790231823.DocumentData.json"
  * when resourcetype is skill => Ex: "xl/MoveCellContent/Resources/tree.xml"
- * @param {*} customParentFolder : Any custom parent folder hierarchy after the 'Assets' folder
+ * @param {*} AssetFolderHierarchy : Any custom parent folder hierarchy after the 'Assets' folder
  */
-attrTaskParam.prototype.addResourceToMap = function (filePath, config = {}) {
+attrTaskParam.prototype.addResourceToMap = function (filePathArray) {
 
-  config.resourceType = config.resourceType ? (config.resourceType.toLowerCase() !== "skill" ? "step" : "skill") : "step";
-  config.customParentFolder = config.customParentFolder || "";
-  config.addToPreload = !(config.addToPreload === "false" || config.addToPreload === false);
+  let returnArray = [];
 
-  let returnObject = {};
-
-  if (!(filePath instanceof Array)) {
-    return this._addToResMap(filePath, config);
+  if (!(filePathArray instanceof Array)) {
+    return this._addToResMap(filePathArray);
   }
 
   else {
-    for (let value of filePath) {
-      returnObject[value] = this._addToResMap(value, config);
+    for (let obj of filePathArray) {
+      returnArray.push(this._addToResMap(obj));
     }
   }
-  return returnObject;
+  return returnArray;
 }
 
-attrTaskParam.prototype._addToResMap = function (filePath, config) {
-  let existingResource = this.resourceMap[filePath],
-    resourceType = config.resourceType,
-    customParentFolder = config.customParentFolder,
-    addToPreload = config.addToPreload;
+attrTaskParam.prototype._addToResMap = function (filePathObj, config) {
+
+  let resourceType = filePathObj.resourceType ? (filePathObj.resourceType.toLowerCase() !== "skill" ? "step" : "skill") : "step";
+  let AssetFolderHierarchy = filePathObj.AssetFolderHierarchy || "";
+  let addToPreload = !(filePathObj.addToPreload === "false" || filePathObj.addToPreload === false);
+
+  let existingResource = this.resourceMap[filePathObj.path];
 
   if (existingResource) {
     return { 
-      "customParentFolder": existingResource.customParentFolder, 
-      "fileName":existingResource.fileName,
       "stepAssetsFolderPath": existingResource.stepAssetsFolderPath, 
-      "fileType": existingResource.fileType,
+      "fileName":existingResource.fileName,
       "absFilePath": existingResource.absFilePath };
   }
   else {
-    let fileName = ResourceUtil.getFileNameWithExtension(filePath),
+    let fileName = ResourceUtil.getFileNameWithExtension(filePathObj.path),
       fileType = ResourceUtil.getFileType(fileName),
       stepAssetsFolderPath = XMLUtil.genStepAssetsFolderPath(this.taskId, this.stepIndex),
       // Replacing all occurance of '\' with '/' because '\' is used as an escape character in Javascript
-      absFilePath = path.join(stepAssetsFolderPath, customParentFolder, fileName).replace(/\\/g, "/");
+      absFilePath = path.join(stepAssetsFolderPath, AssetFolderHierarchy, fileName).replace(/\\/g, "/");
 
     // Adding to Resource Map so that the file can be copied asynchronously
     // stepAssetsFolderPath is not used in copying files, it's been put here so that it can be sent back in the return statement in line 68 
     // i.e. if the requested resource is already existing in the map
-    this.resourceMap[filePath] = { customParentFolder, fileName, stepAssetsFolderPath, resourceType, absFilePath, fileType, addToPreload };
-    return { customParentFolder, fileName, stepAssetsFolderPath, fileType, absFilePath }
+    this.resourceMap[filePathObj.path] = { AssetFolderHierarchy, fileName, stepAssetsFolderPath, resourceType, absFilePath, fileType, addToPreload };
+    return { stepAssetsFolderPath, fileName, absFilePath }
   }
 }
 
@@ -251,7 +247,7 @@ class IOTranslator {
    * 
    * @param {*} resourceMap : It's an object which contains following key-value pairs:
    *   absFilePath:"XMLs/TaskXmls/go16/wd/12/12b.02.t1/1/Assets/1493790231823.DocumentData.json"
-   *   customParentFolder: Any custom folder hierarchy
+   *   AssetFolderHierarchy: Any custom folder hierarchy
    *   fileName: "1493790231823.DocumentData.json"
    *   fileType: "json"
    *   resourceType: "step"
