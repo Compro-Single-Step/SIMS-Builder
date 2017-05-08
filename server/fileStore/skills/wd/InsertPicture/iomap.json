@@ -18,7 +18,7 @@
                     "initial": {
                         "default-attrs": {
                             "HTML_PATH": {
-                                "function-name": "resourcePathWithImages",
+                                "function-name": "resourcePathWithUpdatedReferences",
                                 "params": {
                                     "resourcePath": "views['1'].initialDocumentFile.path",
                                     "docImages": "views['1'].initialDocumentImages.value"
@@ -44,13 +44,20 @@
                     },
                     "final": {
                         "default-attrs": {
-                            "CURRENT_CURSOR_POS_RELATIVE_TO": {
-                                "function-name": "createCursorPosition",
+                            "CURRENT_CURSOR_POS_RELATIVE_TO":{
+                                "value": {
+                                    "function-name": "extractSingleParamVal",
+                                    "params": {
+                                        "cursorPosition": "views['2'].finalCursorPosition.value"
+                                    }
+                                },
                                 "params": {
-                                    "elementId": "views['2'].finalElement.value",
-                                    "cursorPosition": "views['2'].finalCursorPosition.value"
+                                    "function-name": "extractSingleParamVal",
+                                    "params": {
+                                        "elementId": "views['2'].finalElement.value"
+                                    }
                                 }
-                            }
+                            } 
                         }
                     }
                 },

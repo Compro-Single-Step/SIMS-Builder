@@ -67,7 +67,7 @@ module.exports = class BaseSkill {
         }
     }
 
-    resourcePathWithImages(skillParams) {
+    resourcePathWithUpdatedReferences(skillParams) {
         try {
             let { resourcePath, docImages } = skillParams.paramsObj;
             let absolutePath = config.fileStore.resourceFolder + resourcePath;
