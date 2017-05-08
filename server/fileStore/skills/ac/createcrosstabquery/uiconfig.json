@@ -336,6 +336,37 @@
                 "dataType": "string"
               },
               "val": "{{views.2.defaultCrossTabQueryName}}"
+            },
+            {
+              "id": "2.1.10",
+              "label": "Cross Tab Query final name",
+              "desc": {
+                "basic": "Provide final name of the cross tab query if needed ",
+                "detailed": ""
+              },
+              "itemRenderer": "TextBox",
+              "itemType": "leaf",
+              "mandatory": true,
+              "rendererProperties": {
+                "dataType": "string"
+              },
+              "val": "{{views.2.finalCrossTabQueryName}}"
+            },
+            {
+              "id": "2.1.11",
+              "label": "Available function for screen 4",
+              "desc": {
+                "basic": "Provide all list of function related to each table/query",
+                "detailed": "Provide all list of function related to each table/query"
+              },
+              "itemRenderer": "Dropzone",
+              "itemType": "leaf",
+              "rendererProperties": {
+                "dataType": "JSON",
+                "placeholder": "Drop JSON file here to upload"
+              },
+              "mandatory": false,
+              "val": "{{views.2.screen4Function}}"
             }
           ]
         }
@@ -374,7 +405,7 @@
               "itemType": "leaf",
               "rendererProperties": {
                 "dataType": "JSON",
-                "placeHolder": "Drop JSON file here to upload"
+                "placeholder": "Drop JSON file here to upload"
               },
               "mandatory": true,
               "val": "{{views.3.navigationPane}}"

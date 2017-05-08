@@ -70,7 +70,14 @@
         "defaultCrossTabQueryName": {
           "value": ""
         },
+        "finalCrossTabQueryName": {
+          "value": ""
+        },
         "importDBConfig": {
+          "displayName": "",
+          "path": ""
+        },
+        "screen4Function": {
           "displayName": "",
           "path": ""
         }
