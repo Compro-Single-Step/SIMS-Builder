@@ -103,7 +103,7 @@ class FileStoreController {
      * @param {*} sourceFileLocation : Location from which file to be copied 
      * Ex: "GO16.WD.12.12B.02.T1/1/1493790231823.DocumentData.json"
      * @param {*} resourceMap : It's an object which contains following key-value pairs:
-     *   customParentFolder: Any custom folder hierarchy
+     *   AssetFolderHierarchy: Any custom folder hierarchy
      *   fileName: "1493790231823.DocumentData.json"
      *   resourceType: "step | skill" => 
      *          skill means that it's a skill resource and has to be copied from "filestore/skills/" folder
@@ -121,7 +121,7 @@ class FileStoreController {
         else
             srcPath = path.join(config.fileStore.skillFolder, sourceFileLocation);
 
-        let destPath = path.join(this.getStepAssetsFolderPath(taskId, stepIndex), resourceMap.customParentFolder, resourceMap.fileName);
+        let destPath = path.join(this.getStepAssetsFolderPath(taskId, stepIndex), resourceMap.AssetFolderHierarchy, resourceMap.fileName);
 
         return new Promise((resolve, reject) => {
             fse.copy(srcPath, destPath, { overwrite: false }, error => {
