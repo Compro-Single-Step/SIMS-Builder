@@ -29,25 +29,33 @@ function attrTaskParam(taskId, stepIndex, stateId, dbFilestoreMgr, resourceMap) 
 }
 
 /**
- * @param {*} resourceType : It can have following two values and according to that the source folder 
- * from which the file needs to be copied from is evaluated 
- *    skill: Means that the resource is skill specific and has to be copied from "filestore/skills/" folder
- *    step: Means that the resource is task specific and has to be copied from "filestore/Resources/" folder
- * @param {*} filePath : The file path fetched from IOMap JSON 
- * when resourcetype is step => Ex: "GO16.WD.12.12B.02.T1/1/1493790231823.DocumentData.json"
- * when resourcetype is skill => Ex: "xl/MoveCellContent/Resources/tree.xml"
- * @param {*} AssetFolderHierarchy : Any custom parent folder hierarchy after the 'Assets' folder
+ * @param {*} fileInfo : It can be a single Object or an Array of Objects which contain below key-value pairs:
+ *  path: It's the file path from where the resource has to be copied
+ *    it's fetched from IOMap JSON.
+ *        when resourcetype is step => Ex: "GO16.WD.12.12B.02.T1/1/1493790231823.DocumentData.json"
+ *        when resourcetype is skill => Ex: "xl/MoveCellContent/Resources/tree.xml"
+ *  resourceType: It can have following two values and according to that the source folder 
+ *      from which the file needs to be copied from is evaluated 
+ *        skill: Means that the resource is skill specific and has to be copied from "filestore/skills/" folder
+ *        step: Means that the resource is task specific and has to be copied from "filestore/Resources/" folder
+ *  AssetFolderHierarchy: Any custom parent folder hierarchy after the 'Assets' folder
+ *  addToPreload: (true | false) true means that the file needs to be added to preload Resources as well
+ * 
+ * OUTPUT: The Output will be an Object or an Array of Objects which contain following key-values:
+ *    stepAssetsFolderPath: It's the folder path till 'Assets' folder.
+ *    fileName: File name along with extension
+ *    absFilePath: Absolute folder path which needs to be added (in attribute value and preload map) in the task XML. Ex:
  */
-attrTaskParam.prototype.addResourceToMap = function (filePathArray) {
+attrTaskParam.prototype.addResourceToMap = function (fileInfo) {
 
   let returnArray = [];
 
-  if (!(filePathArray instanceof Array)) {
-    return this._addToResMap(filePathArray);
+  if (!(fileInfo instanceof Array)) {
+    return this._addToResMap(fileInfo);
   }
 
   else {
-    for (let obj of filePathArray) {
+    for (let obj of fileInfo) {
       returnArray.push(this._addToResMap(obj));
     }
   }
