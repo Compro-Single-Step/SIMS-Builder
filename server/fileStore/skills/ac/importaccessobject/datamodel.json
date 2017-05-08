@@ -8,34 +8,74 @@
           "displayName": "",
           "path": ""
         },
-       "navigationPaneItems": {
-          "options": {
-              "value": []
-          },
-          "selectedOption": {
-              "value": ""
-          }
-      },        
+             
         "taskbarPreviewImage": {
           "displayName": "",
-          "path": ""
+          "path":"" 
         }
       },
       "2": {
-        "dbPath": {
-          "value": ""
+        "crossTabNavigation": {
+        "displayName": "",
+          "path": ""
         },
-        "importMode": {
+        "stage1SelectItems": {
             "value": ""
         },
-        "openFileDialogXML": {
+        "stage2List": {
+          "value": ""
+        },
+        "stage3Header": {
+          "options": {
+              "value" : ""
+            },
+            "selectedOption":{
+              "value":""
+            }
+        },
+        "stageColumn3Header": {
+          "options": {
+              "value" : ""
+            },
+            "selectedOption":{
+              "value":""
+            }
+        },
+        "calculationFunction": {
+          "options": {
+              "value" : ""
+            },
+            "selectedOption":{
+              "value":""
+            }
+        },
+        "fieldToBecalculated": {
+          "options": {
+              "value" : ""
+            },
+            "selectedOption":{
+              "value":""
+            }
+        },
+         "includeSumOfRows": {
+          "options": {
+              "value" : ""
+            },
+            "selectedOption":{
+              "value":""
+            }
+        },
+        "defaultCrossTabQueryName": {
+          "value": ""
+        },
+        "finalCrossTabQueryName": {
+          "value": ""
+        },
+        "importDBConfig": {
           "displayName": "",
           "path": ""
         },
-        "AutoCompleteOptions": {
-          "val": ""
-        },
-        "importDBConfig": {
+        "screen4Function": {
           "displayName": "",
           "path": ""
         }
