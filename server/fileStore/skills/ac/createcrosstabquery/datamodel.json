@@ -22,10 +22,20 @@
           "path": ""
         },
         "stage1SelectItems": {
-            "value": ""
+           "options": {
+              "value" : ""
+            },
+            "selectedOption":{
+              "value":""
+            }
         },
         "stage2List": {
-          "value": ""
+          "options": {
+              "value" : ""
+            },
+            "selectedOption":{
+              "value":""
+            }
         },
         "stage3Header": {
           "options": {
@@ -72,11 +82,7 @@
         },
         "finalCrossTabQueryName": {
           "value": ""
-        },
-        "importDBConfig": {
-          "displayName": "",
-          "path": ""
-        },
+        },        
         "screen4Function": {
           "displayName": "",
           "path": ""
@@ -86,6 +92,13 @@
         "navigationPane": {
           "displayName": "",
           "path": ""
+        },
+        "datasheet": {
+          "displayName": "",
+          "path": ""
+        },
+        "recordNavigator": {
+          "value": ""
         }
       }
     }

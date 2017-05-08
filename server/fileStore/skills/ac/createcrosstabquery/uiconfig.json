@@ -410,6 +410,56 @@
               "mandatory": true,
               "val": "{{views.3.navigationPane}}"
             }
+            
+          ]
+        },
+        {
+          "id": "3.2",
+          "label": "Datasheet",
+          "itemRenderer": "Panel",
+          "itemType": "child",
+          "tags": [
+            {
+              "compName": "SIMS.Components.Access.DataSheetView",
+              "type": "default"
+            }
+          ],
+          "rendererProperties": {
+            "collapsable": true,
+            "optionalItems": true
+          },
+          "items": [
+            {
+              "id": "3.2.1",
+              "label": "Datasheet Configuration",
+              "desc": {
+                "basic": "Upload a JSON file which is used to configure the Navigation Pane for Access in SIMS.",
+                "detailed": "A JSON file, which will be used to configure the Navigation Pane for Access in SIMS, is required to be uploaded here. This file can be generated from here(Hyperlink pointing to the JSON creation tool spec)."
+              },
+              "itemRenderer": "Dropzone",
+              "itemType": "leaf",
+              "rendererProperties": {
+                "dataType": "JSON",
+                "placeholder": "Drop JSON file here to upload"
+              },
+              "mandatory": true,
+              "val": "{{views.3.datasheet}}"
+            },
+            {
+              "id": "3.2.2",
+              "label": "Record Navigator specification",
+              "desc": {
+                "basic": "Record Navigator mode data",
+                "detailed": ""
+              },
+              "itemRenderer": "TextBox",
+              "itemType": "leaf",
+              "mandatory": true,
+              "rendererProperties": {
+                "dataType": "string"
+              },
+              "val": "{{views.3.recordNavigator}}"
+            }
           ]
         }
       ]
