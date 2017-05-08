@@ -8,28 +8,67 @@
           "displayName": "",
           "path": ""
         },
-       "prefilledSelection": {
+      "prefilledSelection": {
           "value": false
-        },
-      },        
+        },        
         "taskbarPreviewImage": {
           "displayName": "",
-          "path": ""
+          "path":"" 
         }
       },
       "2": {
-        "dbPath": {
-          "value": ""
-        },
-        "importMode": {
-            "value": ""
-        },
-        "openFileDialogXML": {
-          "displayName": "",
+        "crossTabNavigation": {
+        "displayName": "",
           "path": ""
         },
-        "AutoCompleteOptions": {
-          "val": ""
+        "stage1SelectItems": {
+            "value": ""
+        },
+        "stage2List": {
+          "value": ""
+        },
+        "stage3Header": {
+          "options": {
+              "value" : ""
+            },
+            "selectedOption":{
+              "value":""
+            }
+        },
+        "stageColumn3Header": {
+          "options": {
+              "value" : ""
+            },
+            "selectedOption":{
+              "value":""
+            }
+        },
+        "calculationFunction": {
+          "options": {
+              "value" : ""
+            },
+            "selectedOption":{
+              "value":""
+            }
+        },
+        "fieldToBecalculated": {
+          "options": {
+              "value" : ""
+            },
+            "selectedOption":{
+              "value":""
+            }
+        },
+         "includeSumOfRows": {
+          "options": {
+              "value" : ""
+            },
+            "selectedOption":{
+              "value":""
+            }
+        },
+        "defaultCrossTabQueryName": {
+          "value": ""
         },
         "importDBConfig": {
           "displayName": "",
