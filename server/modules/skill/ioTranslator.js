@@ -221,10 +221,9 @@ class IOTranslator {
           }
         })({ "iomap": iomap }, "iomap");
 
-        let copyResPromiseArray = this._copyResourceFilesAndFillPreload(resourceMap, attrObj);
-
         return Promise.all(PromiseRequestsArr)
           .then(() => {
+            let copyResPromiseArray = this._copyResourceFilesAndFillPreload(resourceMap, attrObj);
             iomap.preload.resource = self._removeDuplicatePreloadResources(iomap.preload.resource);
             return Promise.resolve([iomap, copyResPromiseArray]);
           })

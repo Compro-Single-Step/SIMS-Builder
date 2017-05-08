@@ -7,6 +7,7 @@ import { TabsModule, PopoverModule } from 'ng2-bootstrap';
 import {LabelComponent } from './label/label.component';
 import { InputFactoryService } from './input-factory.service';
 import { ComponentRepositoryService, getDeclarationComps, getEntryComps } from './component-repository.service';
+import { ExceptionHandlerService } from './exception-handler.service';
 
 @NgModule({
   imports: [
@@ -18,6 +19,6 @@ import { ComponentRepositoryService, getDeclarationComps, getEntryComps } from '
   exports: [LabelComponent],
   declarations: [ ...getDeclarationComps() ],
   entryComponents: [ ...getEntryComps() ],
-  providers: [ InputFactoryService, ComponentRepositoryService ]
+  providers: [ InputFactoryService, ComponentRepositoryService, ExceptionHandlerService ]
 })
 export class SharedModule { }

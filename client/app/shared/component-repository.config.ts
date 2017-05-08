@@ -9,6 +9,7 @@ import { TabPageComponent } from './tab-page/tab-page.component';
 import { TagComponent } from './tag/tag.component';
 import { LabelComponent } from './label/label.component';
 import { SwitchComponent } from './switch/switch.component';
+import { RadioComponent } from './radio/radio.component';
 
 export const CompRepo = {
   "Panel": PanelComponent,
@@ -20,5 +21,6 @@ export const CompRepo = {
   "TabPage": TabPageComponent,
   "Tag": TagComponent,
   "Label": LabelComponent,
-  "Switch": SwitchComponent
+  "Switch": SwitchComponent,
+  "Radio": RadioComponent,
 };
