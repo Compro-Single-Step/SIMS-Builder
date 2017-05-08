@@ -131,7 +131,7 @@
                     "initial": {
                         "default-attrs": {
                             "HTML_PATH": {
-                                "function-name": "resourcePathWithImages",
+                                "function-name": "resourcePathWithUpdatedReferences",
                                 "params": {
                                     "resourcePath": "views['3'].finalDocumentFile.path",
                                     "docImages": "views['3'].finalDocumentImages.value"

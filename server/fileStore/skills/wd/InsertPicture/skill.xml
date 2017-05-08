@@ -48,7 +48,7 @@
 						</attributeset>
 					</initialattributesets>
 					<finalattrs>
-						<attr name="CURRENT_CURSOR_POS_RELATIVE_TO" userDefined="true"/>
+						<attr name="CURRENT_CURSOR_POS_RELATIVE_TO" userDefined="value,params"/>
 					</finalattrs>
 				</comp>
 				<comp id="3" mode="new">
