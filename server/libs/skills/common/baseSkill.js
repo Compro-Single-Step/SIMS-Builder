@@ -59,4 +59,5 @@ module.exports = class BaseSkill {
     let attrValue = skillParams.taskParams.addResourceToMap(pathArray)[0]["absFilePath"];
     return Promise.resolve({ attrValue });
   }
+  
 }
