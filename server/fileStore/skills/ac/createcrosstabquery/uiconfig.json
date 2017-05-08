@@ -174,7 +174,7 @@
                 "dataType": "json",
                 "placeholder": "Drop json here to upload"
               },
-              "val": "{{views.2.crossTabNavigation}}"
+              "val": "{{views.2.crossTabInputJson}}"
             },
             {
               "id": "2.1.2",
