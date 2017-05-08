@@ -44,7 +44,7 @@ class createcrosstabquery extends AccessBaseSkill {
                             // then update the path in the project json
                             currQueryObj["dataPath"] = resolveParam.filePath;
                             // return the resolve param with 2 preload resources
-                            let resolveParams = { "fileData" : projJson,"Tabledatapath": resolveParam.filePath }
+                            let resolveParams = { "fileData": projJson, "Tabledatapath": resolveParam.filePath }
                             return Promise.resolve(resolveParams)
                         }, function (error) {
                             return Promise.reject(error);
@@ -70,6 +70,22 @@ class createcrosstabquery extends AccessBaseSkill {
         });
         // update the path in it
         // save the new json file to a new place
+    }
+    updateRowAxisDropdown(crossTabInputJson, crosstabInputArray) {
+        var objectType;
+
+        while (crosstabInputArray.length > 0) {
+            crosstabInputArray.pop(); //https://jsperf.com/array-clear-methods/3
+        }
+        for (let key in crossTabInputJson) {
+            if (key == 'Tables') {
+                //objectType = crossTabInputJson[key];
+                for (let i = 0; i < crossTabInputJson[key].length; i++) {
+                    crosstabInputArray.push({ "label": crossTabInputJson[key][i].table_name, "data": crossTabInputJson[key][i].table_name });
+                }
+                console.log(crosstabInputArray);
+            }
+        }
     }
 
 }

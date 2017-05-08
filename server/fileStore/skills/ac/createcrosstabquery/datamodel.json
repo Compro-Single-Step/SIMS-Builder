@@ -20,7 +20,7 @@
         },
         "stage1SelectItems": {
            "options": {
-              "value" : ""
+              "value" : []
             },
             "selectedOption":{
               "value":""
@@ -28,7 +28,7 @@
         },
         "stage2List": {
           "options": {
-              "value" : ""
+              "value" : []
             },
             "selectedOption":{
               "value":""
@@ -36,7 +36,7 @@
         },
         "stage3Header": {
           "options": {
-              "value" : ""
+              "value" : []
             },
             "selectedOption":{
               "value":""
@@ -44,7 +44,7 @@
         },
         "stageColumn3Header": {
           "options": {
-              "value" : ""
+             "value" : []
             },
             "selectedOption":{
               "value":""
@@ -60,7 +60,7 @@
         },
         "fieldToBecalculated": {
           "options": {
-              "value" : ""
+               "value" : []
             },
             "selectedOption":{
               "value":""
@@ -68,7 +68,7 @@
         },
          "includeSumOfRows": {
           "options": {
-              "value" : ""
+             "value" : []
             },
             "selectedOption":{
               "value":""
