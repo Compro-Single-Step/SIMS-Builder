@@ -74,7 +74,7 @@
           "final": {
             "stage1": {
               "STAGE1_SEL_ITEM": {
-                "function-name": "getInitialSelItem",
+                "function-name": "extractSingleParamVal",
                 "params": {
                    "selSrc" :"views[2].stage1SelectItems.selectedOption.value"
                 }
@@ -82,7 +82,7 @@
             },
             "stage1_2": {
               "STAGE1_SEL_ITEM": {
-                "function-name": "getInitialSelItem",
+                "function-name": "extractSingleParamVal",
                 "params": {
                   "selSrc" :"views[2].stage1SelectItems.selectedOption.value"
                 }
@@ -90,7 +90,7 @@
             },
             "stage2": {
               "STAGE2_LIST": {
-                "function-name": "getRowSelection",
+                "function-name": "extractSingleParamVal",
                 "params": {
                   "rowHeading": "views[2].stage2List.selectedOption.value"
                 }
@@ -98,7 +98,7 @@
             },
             "stage3": {
               "STAGE3_HEADER": {
-                "function-name": "getColSelection",
+                "function-name": "extractSingleParamVal",
                 "params": {
                   "colSel":"views[2].stageColumn3Header.selectedOption.value"
                 }
@@ -106,13 +106,13 @@
             },
             "stage4": {
               "STAGE4_SEL1": {
-                "function-name": "getCalcField",
+                "function-name": "extractSingleParamVal",
                 "params": {
                   "calcField": "views[2].fieldToBecalculated.selectedOption.value"
                 }
               },
               "STAGE4_SEL2": {
-                "function-name": "getCalFunction",
+                "function-name": "extractSingleParamVal",
                 "params": {
                   "calcFun": "views[2].calculationFunction.selectedOption.value"
                 }
@@ -142,9 +142,9 @@
           "initial": {
             "default-attrs": {
               "PROJECT_JSON": {
-                "function-name": "createFinalProjectJson",
+                "function-name": "extractAttrPath",
                 "params": {
-                  
+
                 }
               }
             }
@@ -161,7 +161,11 @@
               },
               "PROJECT_JSON": {
                 "function-name": "getDatasheetProjectJSon",
-                "params": {}
+                "params": {
+                  "datasheetProjJsnPath":"views[3].datasheet.path",
+                  "datasheetdataJsnPath": "",
+                  "finalQueryName" : "views[2].finalCrossTabQueryName.value"
+                  }
               }
             }
           }
