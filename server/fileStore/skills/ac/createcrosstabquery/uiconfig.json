@@ -160,20 +160,32 @@
               },
               "val": "{{views.2.crossTabInputJson}}"
             },
+            
             {
               "id": "2.1.2",
               "label": "Name of the Query or Table To make Cross Tab wizard from",
               "desc": {
-                "basic": "Name of the Query or Table To make Cross Tab wizard from",
+                "basic": "Name of the Query or Table To make Cross Tab wizard from.",
                 "detailed": ""
               },
-              "itemRenderer": "TextBox",
-              "itemType": "leaf",
-              "mandatory": true,
+              "itemRenderer": "Dropdown",
+               "emitEvents": [
+                "STAGE1_SELECTED_ITEMS"
+              ],
+              "subscribeEvents": [
+                {
+                  "eventId": "CROSS_TAB_DATA_UPDATED",
+                  "modelReference": "{{views.2.stage1SelectItems.options.value}}",
+                  "rule": "stage1SelectedItems"
+                }
+              ],
               "rendererProperties": {
-                "dataType": "string"
+                "itemList": "{{views.2.stage1SelectItems.options}}",
+                "dynamicMode": true
               },
-              "val": "{{views.2.stage1SelectItems}}"
+              "itemType": "leaf",
+              "mandatory": false,
+              "val": "{{views.2.stage1SelectItems.selectedOption}}"
             },
             
             {
@@ -186,7 +198,7 @@
               "itemRenderer": "Dropdown",
               "subscribeEvents": [
                 {
-                  "eventId": "CROSS_TAB_DATA_UPDATED",
+                  "eventId": "STAGE1_SELECTED_ITEMS",
                   "modelReference": "{{views.2.stage3Header.options.value}}",
                   "rule": "updateRowAxisDropdown"
                 }

@@ -1,7 +1,12 @@
 const AccessBaseSkill = require("../common/acSkill");
 
 class createcrosstabquery extends AccessBaseSkill {
-
+constructor(){
+    super();
+    this.crossTabInputJson = {};
+    this.crossTabInputJsonArray = [];
+    
+  }
     getCrossTabJsonInput(skillParams) {
         let paramValueObj = skillParams.paramsObj;
         return taskParams.dbFilestoreMgr.readFileFromFileStore(paramValueObj.inputJsonPath).then(function (resolveParam) {
@@ -71,21 +76,30 @@ class createcrosstabquery extends AccessBaseSkill {
         // update the path in it
         // save the new json file to a new place
     }
-    updateRowAxisDropdown(crossTabInputJson, crosstabInputArray) {
-        var objectType;
+    updateRowAxisDropdown(stage1SelectedItem, crossTableRowAxisArray) {
+
+    	/*var filteredObj = this.crossTabInputJson[stage1SelectedItem.data.category].find(function(obj){
+    		obj.table_name === stage1SelectedItem.data.table_name;
+    	});*/
+       
+    }
+      stage1SelectedItems(inputJson, crosstabInputArray) {
+     
+        this.crossTabInputJson = inputJson;        
 
         while (crosstabInputArray.length > 0) {
-            crosstabInputArray.pop(); //https://jsperf.com/array-clear-methods/3
+            crosstabInputArray.pop(); 
         }
-        for (let key in crossTabInputJson) {
-            if (key == 'Tables') {
-                //objectType = crossTabInputJson[key];
-                for (let i = 0; i < crossTabInputJson[key].length; i++) {
-                    crosstabInputArray.push({ "label": crossTabInputJson[key][i].table_name, "data": crossTabInputJson[key][i].table_name });
+        for (let key in inputJson) {
+           // if (key == 'Tables') {
+                
+                for (let i = 0; i < inputJson[key].length; i++) {
+                    crosstabInputArray.push({ "label": inputJson[key][i].table_name, "data": {'category':key, 'table_name':inputJson[key][i].table_name}});
                 }
                 console.log(crosstabInputArray);
-            }
+            //}
         }
+        this.crossTabInputJsonArray = crosstabInputArray;
     }
 
 }

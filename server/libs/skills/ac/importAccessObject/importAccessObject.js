@@ -5,7 +5,7 @@ class importAccessobject extends AccessBaseSkill {
   constructor(){
     super();
     this.importedObjectJSON = {};
-    this.importDialogInputJSON ={};
+   
   }
   // This function reads a file from filestore to be used by multiple functions in this class. Also it populates a json object to be used by multiple functions 
   init(data) {
