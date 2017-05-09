@@ -85,7 +85,7 @@
                 {
                   "eventId": "INITIAL_HTML_FILE_UPLOADED",
                   "modelReference": "{{views.1.initialDocumentImages}}",
-                  "rule": "htmlFileUpload"
+                  "rule": "feHtmlFileUpload"
                 }
               ],
               "itemRenderer": "Dropzone",
@@ -389,7 +389,7 @@
                 {
                   "eventId": "FINAL_HTML_FILE_UPLOADED",
                   "modelReference": "{{views.3.finalDocumentImages}}",
-                  "rule": "htmlFileUpload"
+                  "rule": "feHtmlFileUpload"
                 }
               ],
               "itemRenderer": "Dropzone",
