@@ -1,0 +1,129 @@
+{
+    "states": {
+        "1": {
+            "components": {
+                "1": {
+                    "initial": {
+                        "default-attrs": {
+                            "DOCUMENT_NAME": {
+                                "function-name": "extractSingleParamVal",
+                                "params": {
+                                    "docTitle": "views['1'].documentTitle.value"
+                                }
+                            }
+                        }
+                    }
+                },
+                "2": {
+                    "initial": {
+                        "default-attrs": {
+                            "HTML_PATH": {
+                                "function-name": "resourcePathWithUpdatedReferences",
+                                "params": {
+                                    "resourcePath": "views['1'].initialDocumentFile.path",
+                                    "docImages": "views['1'].initialDocumentImages.value"
+                                }
+                            },
+                            "SELECTED_SHAPE": {
+                                "function-name": "extractSingleParamVal",
+                                "params": {
+                                    "shapeId": "views['1'].shapeId.value"
+                                }
+                            }
+                        }
+                    },
+                    "final": {
+                        "default-attrs": {
+                            "SELECTED_SHAPE": {
+                                "function-name": "extractSingleParamVal",
+                                "params": {
+                                    "shapeId": "views['1'].shapeId.value"
+                                }
+                            } 
+                        }
+                    }
+                },
+                "3": {
+                    "initial": {
+                        "default-attrs": {
+                            "APP_TOOLTIP_IMAGE": {
+                                "function-name": "createTooltipImagePath",
+                                "params": {
+                                    "tbPrvImage": "views['1'].taskbarPreviewImage.path"
+                                }
+                            },
+                            "OPENWORDFILE": {
+                                "function-name": "extractSingleParamVal",
+                                "params": {
+                                    "DocTitle": "views['1'].documentTitle.value"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "2": {
+            "components": {
+                "4": {
+                    "final": {
+                        "default-attrs": {
+                            "SEL_SHAPE_SHADOW_PRESET": {
+                                "function-name": "getShapeEffectPreset",
+                                "params": {
+                                    "shapeEffectCategory": "views['2'].shapeEffectCategory.selectedOption.value",
+                                    "shapeEffectName": "views['2'].shapeEffectName.selectedOption.value"
+                                }
+                            }
+                        }
+                    }
+                },
+                "2": {
+                    "initial": {
+                        "default-attrs": {
+                            "SELECTED_SHAPE": {
+                                "function-name": "extractSingleParamVal",
+                                "params": {
+                                    "shapeId": "views['1'].shapeId.value"
+                                }
+                            }
+                        }
+                    },
+                    "final": {
+                        "default-attrs": {
+                            "SELECTED_SHAPE": {
+                                "function-name": "extractSingleParamVal",
+                                "params": {
+                                    "shapeId": "views['1'].shapeId.value"
+                                }
+                            } 
+                        }
+                    }
+                }
+            }
+        },
+        "4": {
+            "components": {
+                "2": {
+                    "initial": {
+                        "default-attrs": {
+                            "HTML_PATH": {
+                                "function-name": "resourcePathWithUpdatedReferences",
+                                "params": {
+                                    "resourcePath": "views['3'].finalDocumentFile.path",
+                                    "docImages": "views['3'].finalDocumentImages.value"
+                                }
+                            },
+                             "SELECTED_SHAPE": {
+                                "function-name": "extractSingleParamVal",
+                                "params": {
+                                    "shapeId": "views['1'].shapeId.value"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -19,7 +19,10 @@
         {
             "name":"Import Access Object",
             "id":"importaccessobject"
+        },
+        {
+            "name":"Apply Shape Effect to a Text Box",
+            "id":"applyshapeeffect"
         }
-
     ]
 }

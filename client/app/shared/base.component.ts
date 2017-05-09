@@ -22,6 +22,20 @@ export class BaseComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.registerEvents();
         this.subscribeEvents();
+        this.updateModel();
+    }
+
+    updateModel() {      
+        if(this.compConfig.rendererProperties && this.compConfig.rendererProperties.updateModel)
+        {
+            let updateModels = this.compConfig.rendererProperties.updateModel || [];
+            for (let i = 0; i < updateModels.length; i++) {
+                let dependantModelReference = updateModels[i]['modelReference'];
+                let dependantRule = updateModels[i]['rule'];
+                let dependentObjectInModel = this.builderModelSrvc.getStateRef(dependantModelReference);
+                skillManager.skillTranslator[dependantRule](dependentObjectInModel);
+            }
+        }
     }
 
     ngOnDestroy() {

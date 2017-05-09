@@ -54,7 +54,7 @@ module.exports = {
                     {
                         primaryFile: "common/baseSkill",
                         dependencyFiles: []
-                    }
+                    }                    
                 ]
             }
         ],
@@ -74,6 +74,22 @@ module.exports = {
             }
         ],
         dependencySkills: []
+    },
+    "applyshapeeffect": {
+        primaryFile: "wd/ApplyShapeEffect/ApplyShapeEffect",
+        dependencyFiles: [
+            {
+                primaryFile: "wd/common/wordRibbonEventMap"
+            },
+            {
+                primaryFile: "wd/common/wdSkill",
+                dependencyFiles: [
+                    {
+                        primaryFile: "common/baseSkill"
+                    }
+                ]
+            }
+        ]
     }    
 }
 
