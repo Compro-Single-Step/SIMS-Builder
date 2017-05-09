@@ -91,4 +91,18 @@ module.exports = class InsertAudio extends PPTBaseSkill {
         });
         return Promise.resolve({ attrValue })
     }
+
+    configureSlidesDropdown(inputFile, dependantDropzoneModel) {debugger;
+        if (inputFile == null) {
+            dependantDropzoneModel.disabled = true;
+        }
+        else {
+            var slideXML = $(inputFile);
+            var slideNumberArray = [];
+            slideXML.find("Slide").each( slideNode => {
+                slideNumberArray.push(slideNode.attr("number"));
+            })
+            dependantDropzoneModel;
+        }
+    }
 }
