@@ -222,12 +222,16 @@
                 "detailed": ""
               },
               "itemRenderer": "Dropdown",
+              "emitEvents": [
+                "COLUMN_AXIS_UPDATED"
+              ],
               "subscribeEvents": [
                 {
                   "eventId": "ROW_AXIS_DROPDOWN_UPDATED",
                   "modelReference": "{{views.2.stageColumn3Header.options}}",
                   "rule": "updateRowColumnAxisDropdown"
                 }
+
               ],
               "rendererProperties": {
                 "itemList": "{{views.2.stageColumn3Header.options}}",
@@ -263,9 +267,9 @@
               "itemRenderer": "Dropdown",
               "subscribeEvents": [
                 {
-                  "eventId": "CROSS_TAB_DATA_UPDATED",
+                  "eventId": "COLUMN_AXIS_UPDATED",
                   "modelReference": "{{views.2.fieldToBecalculated.options}}",
-                  "rule": "createDropdownFunctions"
+                  "rule": "fieldsToBecalculated"
                 }
               ],
               "rendererProperties": {
@@ -295,6 +299,7 @@
                 "itemList": "{{views.2.calculationFunction.options}}",
                 "dynamicMode": true
               },
+
               "itemType": "leaf",
               "mandatory": false,
               "val": "{{views.2.calculationFunction.selectedOption}}"

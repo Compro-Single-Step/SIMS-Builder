@@ -97,6 +97,7 @@ class createcrosstabquery extends AccessBaseSkill {
 
     }
     updateRowColumnAxisDropdown(rowAxisSelectedDropdown, columnAxisSelectedItems) {
+    	 this.crossTabColumnAxisArray = [];
          while (columnAxisSelectedItems.length > 0) {
             columnAxisSelectedItems.pop();
         }
@@ -106,8 +107,24 @@ class createcrosstabquery extends AccessBaseSkill {
                 columnAxisSelectedItems.value.push({ "label": filteredAray[i].label, "data": filteredAray[i].data});
             }
         }
+          this.crossTabColumnAxisArray = filteredAray;
 
     }
+    
+     fieldsToBecalculated(columnAxisSelectedDropdown, fieldsToBecalculatedItem) {
+         while (fieldsToBecalculatedItem.length > 0) {
+            fieldsToBecalculatedItem.pop();
+        }
+        if (this.isEmptyObject(columnAxisSelectedDropdown) === false) {
+            var filteredAray = this.crossTabColumnAxisArray.filter((item) => item.data !== columnAxisSelectedDropdown.data);
+            for (let i = 0; i < filteredAray.length; i++) {
+                fieldsToBecalculatedItem.value.push({ "label": filteredAray[i].label, "data": filteredAray[i].data});
+            }
+        }
+
+    }
+
+    
     isEmptyObject(obj) {
         for (var prop in obj) {
             if (obj.hasOwnProperty(prop))
