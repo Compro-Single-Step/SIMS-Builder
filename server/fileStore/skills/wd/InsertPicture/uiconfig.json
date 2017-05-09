@@ -316,7 +316,7 @@
                 "placeholder": "Drop Image file here to upload"
               },
               "mandatory": true,
-              "val": "{{views.2.thumbnailImage}}"
+              "val": "{{views.2.addressBarImage}}"
             },
             {
               "id": "2.2.5",

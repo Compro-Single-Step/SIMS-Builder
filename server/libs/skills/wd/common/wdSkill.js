@@ -26,8 +26,8 @@ module.exports = class WordSkill extends BaseSkill {
             });
     }
 
-    createThumbnailImagePath(skillParams) {
-        return dbfileStoreManager.copyTaskAssetFile(skillParams.paramsObj.thumbnailImage, skillParams.taskParams)
+    createAddressBarImagePath(skillParams) {
+        return dbfileStoreManager.copyTaskAssetFile(skillParams.paramsObj.addressBarImage, skillParams.taskParams)
             .then((resolveParam) => {
                 return Promise.resolve({ "attrValue": resolveParam.filePath });
             }).catch((error) => {

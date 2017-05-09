@@ -99,9 +99,9 @@
                                 }
                             },
                             "IMG_FOLDER_PATH": {
-                                "function-name": "createThumbnailImagePath",
+                                "function-name": "createAddressBarImagePath",
                                 "params": {
-                                    "thumbnailImage": "views['2'].thumbnailImage.path"
+                                    "addressBarImage": "views['2'].addressBarImage.path"
                                 }
                             },
                             "AUTO_COMPLETE_LIST": {
