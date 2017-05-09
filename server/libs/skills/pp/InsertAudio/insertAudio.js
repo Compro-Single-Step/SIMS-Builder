@@ -1,5 +1,5 @@
 const PPTBaseSkill = require("../common/ppSkill"),
-    DOMParser = require("xmldom").DOMParser;
+    DOMParse = require("xmldom").DOMParser;
 
 module.exports = class InsertAudio extends PPTBaseSkill {
 
@@ -9,7 +9,7 @@ module.exports = class InsertAudio extends PPTBaseSkill {
         return Promise.all([
             attrObj.dbFilestoreMgr.readFileFromFileStore(insertFileDialogXMLPath)
                 .then(response => {
-                    let treeXML = new DOMParser().parseFromString(response.fileData, 'text/xml');
+                    let treeXML = new DOMParse().parseFromString(response.fileData, 'text/xml');
                     let textNodes = treeXML.getElementsByTagName("text");
                     this.fileNameArray = [];
 
@@ -92,17 +92,19 @@ module.exports = class InsertAudio extends PPTBaseSkill {
         return Promise.resolve({ attrValue })
     }
 
-    configureSlidesDropdown(inputFile, dependantDropzoneModel) {debugger;
+    configureSlidesDropdown(inputFile, dependantDropzoneModel) {
+        dependantDropzoneModel.options.value = [];
         if (inputFile == null) {
             dependantDropzoneModel.disabled = true;
         }
         else {
-            var slideXML = $(inputFile);
-            var slideNumberArray = [];
-            slideXML.find("Slide").each( slideNode => {
-                slideNumberArray.push(slideNode.attr("number"));
-            })
-            dependantDropzoneModel;
+            var parser = new DOMParser();
+            var slideXML = parser.parseFromString(inputFile, "application/xml");
+            var SlidesNodes = slideXML.getElementsByTagName("Slide");
+            for(let slideNode of SlidesNodes){
+                var slideNumber = slideNode.getAttribute("number");
+                dependantDropzoneModel.options.value.push({"label": slideNumber, "data": slideNumber});
+            }
         }
     }
 }

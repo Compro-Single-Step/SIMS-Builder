@@ -107,7 +107,8 @@
               ],
               "itemRenderer": "Dropdown",
               "rendererProperties": {
-                "itemList": []
+                "dynamicMode":true,
+                "itemList": "{{views.1.initialSelectedSlide.options}}"
               },
               "itemType": "leaf",
               "mandatory": true,
@@ -199,7 +200,8 @@
               ],
               "itemRenderer": "Dropdown",
               "rendererProperties": {
-                "itemList": []
+                "dynamicMode":true,
+                "itemList": "{{views.2.slideInAction.options}}"
               },
               "itemType": "leaf",
               "mandatory": true,
