@@ -58,7 +58,20 @@ module.exports = {
                 ]
             }
         ]
-    }    
+    },
+    "insertaudio": {
+        primaryFile: "pp/insertAudio/insertAudio",
+        dependencyFiles: [
+            {
+                primaryFile: "pp/common/ppSkill",
+                dependencyFiles: [
+                    {
+                        primaryFile: "common/baseSkill"
+                    }
+                ]
+            }
+        ]
+    }   
 }
 
 
