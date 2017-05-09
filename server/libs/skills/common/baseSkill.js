@@ -79,7 +79,7 @@ module.exports = class BaseSkill {
         }
     }
 
-    resourcePathWithUpdatedReferences(skillParams) {
+    handleEmbededResources(skillParams) {
         try {
             let dbfileStoreManager = skillParams.taskParams.dbFilestoreMgr;
             let resourceUtil = skillParams.taskParams.resourceUtil;
@@ -105,7 +105,7 @@ module.exports = class BaseSkill {
                         imgNameArray.forEach(function (imageName) {
                             modifiedPathArr.forEach(function (path) {
                                 let modifiedImageName = resourceUtil.getFileNameWithExtension(path).split('.').slice(1).join('.');
-                                if (imageName === modifiedImageName) {
+                                if (imageName.toLowerCase() === modifiedImageName.toLowerCase()) {
                                     fromArray.push(`{#${imageName}#}`);
                                     toArray.push(path);
                                 }

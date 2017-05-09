@@ -18,7 +18,7 @@
                     "initial": {
                         "default-attrs": {
                             "HTML_PATH": {
-                                "function-name": "resourcePathWithUpdatedReferences",
+                                "function-name": "handleEmbededResources",
                                 "params": {
                                     "resourcePath": "views['1'].initialDocumentFile.path",
                                     "embedableResources": "views['1'].initialDocumentImages.value"
@@ -87,7 +87,7 @@
                     "initial": {
                         "default-attrs": {
                             "TREE_XML_PATH": {
-                                "function-name": "resourcePathWithUpdatedReferences",
+                                "function-name": "handleEmbededResources",
                                 "params": {
                                     "resourcePath": "views['2'].treeXML.path",
                                     "embedableResources": "views['2'].treeXMLImages.value"
@@ -132,7 +132,7 @@
                     "initial": {
                         "default-attrs": {
                             "HTML_PATH": {
-                                "function-name": "resourcePathWithUpdatedReferences",
+                                "function-name": "handleEmbededResources",
                                 "params": {
                                     "resourcePath": "views['3'].finalDocumentFile.path",
                                     "embedableResources": "views['3'].finalDocumentImages.value"
