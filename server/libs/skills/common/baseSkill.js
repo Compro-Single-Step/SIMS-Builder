@@ -45,8 +45,26 @@ module.exports = class BaseSkill {
         var paramValueObj = skillParams.paramsObj;
         var resolveParam = { "attrValue": paramValueObj[Object.keys(paramValueObj)[0]] };
         return Promise.resolve(resolveParam);
-
     }
+
+    getSubribbon(skillParams) {
+        var skillParamsObj = skillParams.skillParamsObj;
+        var pathArray = [
+            {
+                "path": skillParamsObj["subribbonPath"],
+                "resourceType": "skill",
+                "addToPreload": "false"
+            },
+            {
+                "path": skillParamsObj["subribbonPath_1024"],
+                "resourceType": "skill",
+                "addToPreload": "false"
+            }
+        ];
+        let attrValue = skillParams.taskParams.addResourceToMap(pathArray)[0]["absFilePath"];
+        return Promise.resolve({ attrValue });
+    }
+
     extractAttrPath(skillParams) {  //Use this function instead of createTooltipImagePath for tooltip in next iteration of Move Cell Content 
         var taskParams = skillParams.taskParams;
         var paramValueObj = skillParams.paramsObj;

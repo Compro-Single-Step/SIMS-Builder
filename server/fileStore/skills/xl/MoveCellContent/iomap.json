@@ -106,6 +106,19 @@
     },
     "3": {
       "components": {
+        "1": {
+          "initial": {
+            "default-attrs": {
+              "RIBBON_SUB_XML": {
+                "function-name": "getSubribbon",
+                "skillParams": {
+                  "subribbonPath":"xl/MoveCellContent/Resources/Subribbon/sub_ribbon.xml",
+                  "subribbonPath_1024":"xl/MoveCellContent/Resources/Subribbon/sub_ribbon_1024.xml"
+                }
+              }
+            }
+          }
+        },
         "2": {
           "initial": {
             "cut1": {
