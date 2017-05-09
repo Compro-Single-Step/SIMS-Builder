@@ -1,5 +1,5 @@
 
-<task name="SKL16.WD.03.01.01.T1">
+<task>
 	<preload>
 		<comps>
 			<comp id="1" name="SIMS.Components.Word.Ribbon" cssclass="SIMS_Ribbon_Excel" type="default"/>
