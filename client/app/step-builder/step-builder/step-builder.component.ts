@@ -59,7 +59,7 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
                 let stepData = taskData.stepData[parseInt(this.stepIndex) - 1];
                 this.skillName = stepData.SkillName;
                 this.templateName = stepData.TemplateName;
-                this.stepText = stepData.Text;
+                this.stepText = "Step "+ this.stepIndex+ ": " +stepData.Text;
             });
             this.fetchSkillData();
         })

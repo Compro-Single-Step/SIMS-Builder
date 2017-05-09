@@ -4,19 +4,20 @@
       <div class="row">
         <div class="col-md-10">
           <div class="row">
-            <h4><strong>STEP {{stepIndex}}</strong>&nbsp;</h4><h4 #stepTextContainer [innerHTML]="stepText"></h4>
+            <span class="stepTextContainer" #stepTextContainer [innerHTML]="stepText"></span>
           </div>
           <div class="row">
             <span class="tag tag-primary"><span>Task ID:&nbsp;</span> {{taskID}}  </span>&nbsp;<span class="tag tagFontNormal tag-primary"><span >Skill:&nbsp;</span> {{skillName}}</span> &nbsp; <span class="tag tag-primary"><span>Template:&nbsp;</span> {{templateName}} </span>
           </div>
         </div>
         <div class="col-md-2">
-          <ul class="nav navbar-nav navbar-right">
-            <li><button class="btn btn-inverse pull-right" (click)="onClose()">Close</button></li>
-          </ul>
+          <div class="nav navbar-nav navbar-right">
+            <button class="btn header-icon" style="border-right-style: ridge"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
+            <button class="btn header-icon" (click)="onClose()"><i class="fa fa-times" aria-hidden="true"></i></button>
+          </div>
         </div>
       </div>
-    </div>
+  </div>
   </div>
 </nav>
 <div class="body-container">
@@ -31,7 +32,6 @@
 <div id="footer">
   <div class="col-md-12">
     <button class="btn btn-inverse" (click)='lauchPreviewTask()'>Preview Step</button>
-    <button class="btn btn-inverse">Save</button>
     <div class="pull-right">
       <button class="btn btn-inverse width-100" (click)="setSelectedView(selectedView-1)" [disabled]="selectedView == 1">Previous</button>
       <button class="btn btn-inverse width-100" *ngIf="selectedView < uiConfig.views.length" (click)="setSelectedView(selectedView+1)">Next</button>

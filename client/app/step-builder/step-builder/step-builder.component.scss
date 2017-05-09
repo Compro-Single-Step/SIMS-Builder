@@ -8,9 +8,20 @@ $lightgray: #d3d3d3;
 }
 #header {
   height: 6rem;
-  padding-top: $spacer;
-  background-color: $body-bg;
+  padding: 10px;
+  background-color: #005A8E;
+  color: #FFFFFF;
   border-bottom: 3px solid $lightgray;
+  .stepTextContainer {
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+  .header-icon{
+    background-color: #005A8E;
+    border: none;
+    color: #FFFFFF;
+    font-size: 25px;
+  }
 }
 .body-container {
   height: calc(100% - 10rem);
