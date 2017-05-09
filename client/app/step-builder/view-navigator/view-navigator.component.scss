@@ -1,6 +1,8 @@
 $progressbar-connector: #C1C1C1;
-$brand-info: #5dc4bf;
-$gray-dark: #343434;
+$success-green: #5dc4bf;
+$theme-blue: #343434;
+$success-green: #00B551;
+$theme-blue: #005A8E;
 .progressbar {
     counter-reset: step;
 
@@ -39,8 +41,8 @@ $gray-dark: #343434;
         }
         &.active {
             span.stepNumber {
-              border-color: $gray-dark;
-              background-color: $gray-dark;
+              border-color: $theme-blue;
+              background-color: $theme-blue;
               color: white;
             }
         }
@@ -51,15 +53,15 @@ $gray-dark: #343434;
         }
         &.visited {
           span.stepNumber {
-            border-color: $brand-info;
-            background-color: $brand-info;
+            border-color: $success-green;
+            background-color: $success-green;
             color: white;
           }
         }
         &.visited {
           span.separator {
-            border-color: $brand-info;
-            background-color: $brand-info;
+            border-color: $success-green;
+            background-color: $success-green;
           }
         }
     }
