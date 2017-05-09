@@ -26,6 +26,7 @@ function attrTaskParam(taskId, stepIndex, stateId, dbFilestoreMgr, resourceMap) 
   this.stateId = stateId;
   this.dbFilestoreMgr = dbFilestoreMgr;
   this.resourceMap = resourceMap;
+  this.resourceUtil = ResourceUtil;
 }
 
 /**

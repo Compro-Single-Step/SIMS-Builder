@@ -1,5 +1,3 @@
-const resourceUtil = require('../../../utils/resourceUtil');
-
 module.exports = class BaseSkill {
 
     /**
@@ -84,12 +82,11 @@ module.exports = class BaseSkill {
     resourcePathWithUpdatedReferences(skillParams) {
         try {
             let dbfileStoreManager = skillParams.taskParams.dbFilestoreMgr;
+            let resourceUtil = skillParams.taskParams.resourceUtil;
             let { resourcePath, embedableResources } = skillParams.paramsObj;
-            //let absolutePath = config.fileStore.resourceFolder + resourcePath;
             let fromArray = [];
             let toArray = [];
             let modifiedPathArr = [];
-            //let path = dbfileStoreManager.getResourcePath(resourcePath);
 
             embedableResources.forEach(function (imgObject) {
                 modifiedPathArr.push(skillParams.taskParams.addResourceToMap({"path": imgObject.path}).absFilePath);
