@@ -1,12 +1,12 @@
 const AccessBaseSkill = require("../common/acSkill");
 
 class createcrosstabquery extends AccessBaseSkill {
-constructor(){
-    super();
-    this.crossTabInputJson = {};
-    this.crossTabInputJsonArray = [];
-    
-  }
+    constructor() {
+        super();
+        this.crossTabInputJson = {};
+        this.crossTabRowAxisArray = [];
+
+    }
     getCrossTabJsonInput(skillParams) {
         let paramValueObj = skillParams.paramsObj;
         return taskParams.dbFilestoreMgr.readFileFromFileStore(paramValueObj.inputJsonPath).then(function (resolveParam) {
@@ -74,29 +74,62 @@ constructor(){
             return Promise.reject(error);
         });
         // update the path in it
-        // save the new json file to a new place
+        // save the new Object.prototype.hasOwnProperty;json file to a new place
     }
-    updateRowAxisDropdown(stage1SelectedItem, crossTableRowAxisArray) {
 
-    	/*var filteredObj = this.crossTabInputJson[stage1SelectedItem.data.category].find(function(obj){
-    		obj.table_name === stage1SelectedItem.data.table_name;
-    	});*/
-       
+    updateRowAxisDropdown(stage1SelectedItem, crossTableRowAxisArray) {
+        this.crossTabRowAxisArray = [];
+        while (crossTableRowAxisArray.length > 0) {
+            crossTableRowAxisArray.pop();
+        }
+        if (this.isEmptyObject(stage1SelectedItem) === false) {
+            var filteredObj = this.crossTabInputJson[stage1SelectedItem.data.category].find(function (obj) {
+                return obj.table_name === stage1SelectedItem.data.table_name
+
+            });
+            if (filteredObj.table_fields.length > 0) {
+                for (let i = 0; i < filteredObj.table_fields.length; i++) {
+                    crossTableRowAxisArray.push({ "label": filteredObj.table_fields[i], "data": filteredObj.table_fields[i] });
+                }
+            }
+            this.crossTabRowAxisArray = crossTableRowAxisArray;
+        }
+
     }
-      stage1SelectedItems(inputJson, crosstabInputArray) {
-     
-        this.crossTabInputJson = inputJson;        
+    updateRowColumnAxisDropdown(rowAxisSelectedDropdown, columnAxisSelectedItems) {
+         while (columnAxisSelectedItems.length > 0) {
+            columnAxisSelectedItems.pop();
+        }
+        if (this.isEmptyObject(rowAxisSelectedDropdown) === false) {
+            var filteredAray = this.crossTabRowAxisArray.filter((item) => item.data !== rowAxisSelectedDropdown.data);
+            for (let i = 0; i < filteredAray.length; i++) {
+                columnAxisSelectedItems.value.push({ "label": filteredAray[i].label, "data": filteredAray[i].data});
+            }
+        }
+
+    }
+    isEmptyObject(obj) {
+        for (var prop in obj) {
+            if (obj.hasOwnProperty(prop))
+                return false;
+        }
+
+        return true;
+    }
+    stage1SelectedItems(inputJson, crosstabInputArray) {
+
+        this.crossTabInputJson = inputJson;
 
         while (crosstabInputArray.length > 0) {
-            crosstabInputArray.pop(); 
+            crosstabInputArray.pop();
         }
         for (let key in inputJson) {
-           // if (key == 'Tables') {
-                
-                for (let i = 0; i < inputJson[key].length; i++) {
-                    crosstabInputArray.push({ "label": inputJson[key][i].table_name, "data": {'category':key, 'table_name':inputJson[key][i].table_name}});
-                }
-                console.log(crosstabInputArray);
+            // if (key == 'Tables') {
+
+            for (let i = 0; i < inputJson[key].length; i++) {
+                crosstabInputArray.push({ "label": inputJson[key][i].table_name, "data": { 'category': key, 'table_fields': inputJson[key][i].table_fields, 'table_name': inputJson[key][i].table_name } });
+            }
+            console.log(crosstabInputArray);
             //}
         }
         this.crossTabInputJsonArray = crosstabInputArray;

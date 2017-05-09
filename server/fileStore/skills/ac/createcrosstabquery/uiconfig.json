@@ -196,6 +196,9 @@
                 "detailed": ""
               },
               "itemRenderer": "Dropdown",
+              "emitEvents": [
+                "ROW_AXIS_DROPDOWN_UPDATED"
+              ],
               "subscribeEvents": [
                 {
                   "eventId": "STAGE1_SELECTED_ITEMS",
@@ -221,9 +224,9 @@
               "itemRenderer": "Dropdown",
               "subscribeEvents": [
                 {
-                  "eventId": "CROSS_TAB_DATA_UPDATED",
+                  "eventId": "ROW_AXIS_DROPDOWN_UPDATED",
                   "modelReference": "{{views.2.stageColumn3Header.options}}",
-                  "rule": "createDropdownColumn"
+                  "rule": "updateRowColumnAxisDropdown"
                 }
               ],
               "rendererProperties": {
