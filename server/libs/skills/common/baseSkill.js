@@ -41,4 +41,44 @@ module.exports = class BaseSkill {
     return Promise.resolve(resolveParam);
 
   }
+
+  getSubribbon(skillParams) {
+    var skillParamsObj = skillParams.skillParamsObj;
+    var pathArray = [
+      {
+        "path": skillParamsObj["subribbonPath"],
+        "resourceType": "skill",
+        "addToPreload": "false"
+      },
+      {
+        "path": skillParamsObj["subribbonPath_1024"],
+        "resourceType": "skill",
+        "addToPreload": "false"
+      }
+    ];
+    let attrValue = skillParams.taskParams.addResourceToMap(pathArray)[0]["absFilePath"];
+    return Promise.resolve({ attrValue });
+  }
+  
+  extractAttrPath(skillParams){  //Use this function instead of createTooltipImagePath for tooltip in next iteration of Move Cell Content 
+      var taskParams = skillParams.taskParams;
+      var paramValueObj = skillParams.paramsObj;
+      if(paramValueObj[Object.keys(paramValueObj)[0]] != "")
+      {
+        return taskParams.dbFilestoreMgr.copyTaskAssetFile(paramValueObj[Object.keys(paramValueObj)[0]], taskParams)
+          .then(function (resolveParam) {
+            var preloadResArr = [];
+            preloadResArr.push({ "path": "" + resolveParam.filePath, "type": resolveParam.fileType });
+            var resolveParams = { "attrValue": resolveParam.filePath, "preloadResArr": preloadResArr };
+            return Promise.resolve(resolveParams);
+          }, function (error) {
+            return Promise.reject(error);
+          });
+      }
+      else{
+        var resolveParams = { "attrValue": "" };
+        return Promise.resolve(resolveParams);
+      }
+  }
+  
 }
