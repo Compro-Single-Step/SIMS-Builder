@@ -425,7 +425,7 @@
               "id": "3.2.1",
               "label": "Datasheet Configuration",
               "desc": {
-                "basic": "Upload a JSON file which is used to configure the Navigation Pane for Access in SIMS.",
+                "basic": "Upload a JSON file which is used to configure the Datasheet for Access in SIMS.",
                 "detailed": "A JSON file, which will be used to configure the Navigation Pane for Access in SIMS, is required to be uploaded here. This file can be generated from here(Hyperlink pointing to the JSON creation tool spec)."
               },
               "itemRenderer": "Dropzone",
@@ -436,6 +436,22 @@
               },
               "mandatory": true,
               "val": "{{views.3.datasheet}}"
+            },
+             {
+              "id": "3.2.2",
+              "label": "Datasheet Integrated Resource",
+              "desc": {
+                "basic": "Upload a JSON file which is used to configure the Datsheet for Access in SIMS.",
+                "detailed": "A JSON file, which will be used to configure the Datsheet for Access for Access in SIMS, is required to be uploaded here. This file can be generated from here(Hyperlink pointing to the JSON creation tool spec)."
+              },
+              "itemRenderer": "Dropzone",
+              "itemType": "leaf",
+              "rendererProperties": {
+                "dataType": "JSON",
+                "placeholder": "Drop JSON file here to upload"
+              },
+              "mandatory": true,
+              "val": "{{views.3.datasheetIntegratedResource}}"
             },
             {
               "id": "3.2.2",
