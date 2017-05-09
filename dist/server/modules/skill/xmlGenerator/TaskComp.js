@@ -13,12 +13,12 @@ module.exports = class Comp {
 
     constructor(comp, attrValMap, parentStateRef) {
 
-        this.id = comp.props.id;
-        this.mode = comp.props.mode;
-
-        // this var holds the state id (a string) to be mentioned in the xml 
-        // so that the attribute of this same comp from that state can be refered by the SIMS engine
-        this.xmlStateRef = comp.props["ref-state"];
+        // map holding poperties which are to be mentioned in this comp's node in generated step XML
+        this.XMLProps = {
+            "id": comp.props.id,
+            "mode": comp.props.mode,
+            "ref-state": comp.props["ref-state"]
+        };
 
         // this var holds the reference of state object of which this comp object is child
         this.stateRef = parentStateRef;
@@ -93,7 +93,36 @@ module.exports = class Comp {
             }
         };
 
+        if (comp.props.userDefined) {
+            this.generateUserDefinedProps(comp.props.userDefined);
+        }
+
         this.addAttrs(comp);
+    }
+
+    /**
+     * fn reads property names given in comp node of template XML and 
+     * add these properties in the comp node of the generated XML with the values coming from AttrValueMap
+     * @param {*} propNames : string having comma separated names of properties
+     * whose values are user defined and have to be fetched from the AttrValueMap : Eg "hostparam,mode,ref-state"
+     */
+    generateUserDefinedProps(propNames) {
+
+        let dynamicCompPropsArr = propNames.split(',');
+        for (let idx = 0; idx < dynamicCompPropsArr.length; idx++) {
+            let propName = dynamicCompPropsArr[idx];
+            try {
+                let tempPropVal = this.attrValMap.props[propName];
+                if (tempPropVal) {
+                    this.XMLProps[propName] = tempPropVal;
+                } else {
+                    throw "error";
+                }
+            } catch (e) {
+                let msg = "ERROR: Value for property '" + propName + "' for CompId '" + this.XMLProps.id + "' " + "in StateId '" + this.stateRef.getId() + "' not found in the AttrValueMap";
+                console.log(msg);
+            }
+        }
     }
 
     addAttrs(comp) {
@@ -103,14 +132,20 @@ module.exports = class Comp {
         for (let attrSet in comp) {
             if (this.xmlAttrToObjFnMap[attrSet]) {
                 let fnMap = this.xmlAttrToObjFnMap[attrSet];
-                this.attributeSets[attrSet] = this[fnMap.fnName](comp[attrSet], fnMap.attrType);
+                this.attributeSets[attrSet] = this[fnMap.fnName](comp[attrSet][0], fnMap.attrType);
             }
         }
     }
 
-    createAttrSets(attrSets, attrType) {
+    /**
+     * creating attribute sets
+     * @param {*} attrSetsObj 
+     * @param {*} attrType 
+     */
+    createAttrSets(attrSetsObj, attrType) {
         let result = {};
 
+        let attrSets = attrSetsObj.attributeset;
         for (let i = 0; i < attrSets.length; i++) {
 
             if (attrSets[i].props["multiple-occurence"] == "true") {
@@ -131,14 +166,14 @@ module.exports = class Comp {
                         attrSet["inherits-default"] = attrSets[i].props["inherits-default"];
                     }
 
-                    attrSet["attrs"] = this.createAttrs(attrSets[i].attr, attrType, attrSetName, dependencyValSetsArr[j - 1]);
+                    attrSet["attrs"] = this.createAttrs(attrSets[i], attrType, attrSetName, dependencyValSetsArr[j - 1]);
                 }
             } else {
                 let attrSet = result[attrSets[i].props.name] = {};
                 if (attrSets[i].props["inherits-default"]) {
                     attrSet["inherits-default"] = attrSets[i].props["inherits-default"];
                 }
-                attrSet["attrs"] = this.createAttrs(attrSets[i].attr, attrType, attrSets[i].props.name);
+                attrSet["attrs"] = this.createAttrs(attrSets[i], attrType, attrSets[i].props.name);
             }
         }
         return result;
@@ -199,44 +234,58 @@ module.exports = class Comp {
         }, [[]]);
     }
 
+    /**
+     * use this.createAttr to create attributes' objects
+     */
     createAttrs(attrs, attrType, attrSetName, attrsVal) {
         let result = [];
-        for (let i = 0; i < attrs.length; i++) {
-            let myAttr = this.createAttr(attrs[i].props, attrType, attrSetName, attrsVal);
+        let attrArr = attrs.attr;
+        for (let i = 0; i < attrArr.length; i++) {
+            let myAttr = this.createAttr(attrArr[i].props, attrType, attrSetName, attrsVal);
             result.push(myAttr);
         }
         return result;
     }
 
+    /**
+     * creating single attribute object
+     */
     createAttr(args, attrType, attrSetName, attrsVal) {
-        let myAttr = new TaskAttr(args);
 
         let val = args.value;
-        if (args.userDefined == "true") {
+        if (args.userDefined) {
             if (attrsVal) {
                 if (attrsVal[args.name]) {
                     val = attrsVal[args.name];
                 }
             } else {
-                let tempVal = this.getAttrValByNameTypeSet(myAttr.name, attrType, attrSetName, this.id);
+                let tempVal = this.getAttrValByNameTypeSet(args.name, attrType, attrSetName, this.XMLProps.id);
                 if (tempVal) {
                     val = tempVal;
                 }
             }
         }
 
-        myAttr.setValue(val);
+        let myAttr = new TaskAttr(args, val, this);
         return myAttr;
     }
 
+    /**
+     * Adding event objects
+     * @param {*} events : arr of events
+     */
     addEvents(events) {
         this.events = [];
-
-        for (let i = 0; i < events.length; i++) {
-            this.events.push(this.createEvt(events[i]));
+        let eventArr = events.event;
+        for (let i = 0; i < eventArr.length; i++) {
+            this.events.push(this.createEvt(eventArr[i]));
         }
     }
 
+    /**
+     * creating single event object
+     * @param {*} evt : event data used in object creation
+     */
     createEvt(evt) {
         let myEvt = new TaskEvent(evt, this);
         return myEvt;
@@ -246,7 +295,7 @@ module.exports = class Comp {
 
         let result;
 
-        if (compId == this.id) {
+        if (compId == this.XMLProps.id) {
             result = this.getDependencySetByName(dependencyName);
         } else {
             result = this.stateRef.getCompValidationSets(compId, dependencyName);;
@@ -291,13 +340,15 @@ module.exports = class Comp {
     }
 
     generateXML() {
-        let xmlString = '<comp id="' + this.id + '" mode="' + this.mode + '" ';
 
-        if (this.xmlStateRef) {
-            xmlString += 'ref-state="' + this.xmlStateRef + '" ';
+        let xmlString = "<comp ";
+        for (let propName in this.XMLProps) {
+            let propVal = this.XMLProps[propName];
+            if (propVal) {
+                xmlString += propName + "='" + propVal + "' ";
+            }
         }
-
-        xmlString += '>';
+        xmlString += ">";
 
         // adding attribute XML
         for (let attrSet in this.attributeSets) {
@@ -317,4 +368,13 @@ module.exports = class Comp {
         return xmlString;
     }
 
+    // returning Id of this component
+    getId() {
+        return this.XMLProps.id;
+    }
+
+    // fetching parent state's ID of this component
+    getStateId() {
+        return this.stateRef.getId();
+    }
 };
