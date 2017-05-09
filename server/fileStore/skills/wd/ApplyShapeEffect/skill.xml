@@ -8,7 +8,7 @@
 		</comps>
 	</preload>
 	<states>
-		<state id="1" desc="Start State" optimized="1" txt="1">
+		<state id="1" desc="Start State" txt="1">
 			<comps>
 				<comp id="4" mode="remove"/>
 				<comp id="1" mode="new">
@@ -85,7 +85,7 @@
 				</comp>
 			</comps>
 		</state>
-		<state id="2" desc="Format shape pane opens" optimized="1" txt="1">
+		<state id="2" desc="Format shape pane opens" txt="1">
 			<comps>
 				<comp id="1" mode="edit"/>
 				<comp id="2" mode="edit">
@@ -155,7 +155,7 @@
 				</comp>
 			</comps>
 		</state>
-		<state id="3" desc="Format shape closing" optimized="1" txt="1">
+		<state id="3" desc="Format shape closing" txt="1">
 			<comps>
 				<comp id="1" mode="edit"/>
 				<comp id="2" mode="edit">
@@ -171,7 +171,7 @@
 				</comp>
 			</comps>
 		</state>
-		<state id="4" desc="Changing font size to 20" optimized="1" islast="true">
+		<state id="4" desc="Changing font size to 20" islast="true">
 			<comps>
 				<comp id="4" mode="remove"/>
 				<comp id="1" mode="edit"/>
