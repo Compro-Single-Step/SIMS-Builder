@@ -8,23 +8,9 @@
                 "displayName": "",
                 "path": ""
             },
-            "slides": {
-                "value": [
-                    {
-                        "name": "Slide 1",
-                        "slideImage": {
-                            "displayName": "",
-                            "path": ""
-                        }
-                    },
-                    {
-                        "name": "Slide 2",
-                        "slideImage": {
-                            "displayName": "",
-                            "path": ""
-                        }
-                    }
-                ]
+            "slideImages": {
+                "disabled": true,
+                "value": []
             },
             "initialSelectedSlide": {
                 "options": {

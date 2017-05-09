@@ -81,52 +81,15 @@
                 "basic": "Upload the images which are used to render slides in SIMS.",
                 "detailed": "This section requires the images of the slides which we can get by saving presentation in .jpg format."
               },
-              "itemRenderer": "TabGroup",
-              "itemType": "child",
-              "disabled": true,
-              "subscribeEvents": [
-                {
-                  "eventId": "SLIDE_VIEW_DATA_UPDATED",
-                  "modelReference": "{{views.1.slides.value}}",
-                  "rule": "getSheetDetails"
-                }
-              ],
+              "itemRenderer": "Dropzone",
+              "itemType": "leaf",
               "rendererProperties": {
-                "layout": "horizontal",
-                "dynamicMode": true,
-                "itemListRef": "{{views.1.slides}}",
-                "style": {
-                  "max-width": "450px"
-                }
+                "placeHolder": "Drop slide Image",
+                "dataType": "img",
+                "multipleFiles": true
               },
-              "items": [
-                {
-                  "id": "1.2.2.1",
-                  "itemRenderer": "TabPage",
-                  "itemType": "",
-                  "rendererProperties": {
-                    "dynamicMode": true
-                  },
-                  "items": [
-                    {
-                      "id": "1.2.2.1.1",
-                      "itemRenderer": "Dropzone",
-                      "itemType": "leaf",
-                      "rendererProperties": {
-                        "placeHolder": "Drop slide Image",
-                        "dynamicMode": true,
-                        "dataType": "img"
-                      },
-                      "pos": "x,y",
-                      "dim": {
-                        "height": "200px",
-                        "width": "200px"
-                      },
-                      "relVal": "slideImage"
-                    }
-                  ]
-                }
-              ]
+              "mandatory": true,
+              "val": "{{views.1.slideImages}}"
             },
             {
               "id": "1.2.3",
