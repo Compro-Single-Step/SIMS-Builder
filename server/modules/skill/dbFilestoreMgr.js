@@ -120,6 +120,10 @@ class DatabaseFileStoreManager {
     getResourcePath(filePath){
         return fsc.getResourcePath(filePath, folderMap.RESOURCE);
     }
+
+    getFileFromFileStore(filePath) {
+        return fsc.getFileFromFileStore(filePath);
+    }
 }
 
 module.exports = new DatabaseFileStoreManager();

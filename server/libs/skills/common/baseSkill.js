@@ -1,7 +1,3 @@
-
-const fs = require('fs');
-const config = require('../../../config/config');
-const dbfileStoreManager = require('../../../modules/skill/dbFilestoreMgr');
 const resourceUtil = require('../../../utils/resourceUtil');
 
 module.exports = class BaseSkill {
@@ -87,62 +83,64 @@ module.exports = class BaseSkill {
 
     resourcePathWithUpdatedReferences(skillParams) {
         try {
-            let { resourcePath, docImages } = skillParams.paramsObj;
-            let absolutePath = config.fileStore.resourceFolder + resourcePath;
+            let dbfileStoreManager = skillParams.taskParams.dbFilestoreMgr;
+            let { resourcePath, embedableResources } = skillParams.paramsObj;
+            //let absolutePath = config.fileStore.resourceFolder + resourcePath;
             let fromArray = [];
             let toArray = [];
             let modifiedPathArr = [];
+            //let path = dbfileStoreManager.getResourcePath(resourcePath);
 
-            docImages.forEach(function (imgObject) {
-                modifiedPathArr.push(skillParams.taskParams.addResourceToMap("step", imgObject.path).absFilePath);
+            embedableResources.forEach(function (imgObject) {
+                modifiedPathArr.push(skillParams.taskParams.addResourceToMap({"path": imgObject.path}).absFilePath);
             });
-            return new Promise((resolve, reject) => {
-                fs.readFile(absolutePath, 'utf8', (error, htmlResource) => {
-                    if (error) {
-                        return reject(error);
-                    } else {
-                        if (docImages.length) {
-                            var regex = /{#([^}]*)#}/g;
-                            let matches,
-                                imgNameArray = [];
-                            while (matches = regex.exec(htmlResource)) {
-                                imgNameArray.push(matches[1]);
-                            }
 
-                            imgNameArray.forEach(function (imageName) {
-                                modifiedPathArr.forEach(function (path) {
-                                    let imagePathArray = path.split('/');
-                                    let modifiedImageName = imagePathArray[imagePathArray.length - 1].split('.').slice(1).join('.');
-                                    if (imageName === modifiedImageName) {
-                                        fromArray.push(`{#${imageName}#}`);
-                                        toArray.push(path);
-                                    }
-                                });
+            return dbfileStoreManager.getFileFromFileStore(dbfileStoreManager.getResourcePath(resourcePath))
+                .then((fileContent) => {
+                    if (embedableResources.length) {
+                        let regex = /{#([^}]*)#}/g;
+                        let matches,
+                            imgNameArray = [];
+                        while (matches = regex.exec(fileContent)) {
+                            imgNameArray.push(matches[1]);
+                        }
+
+                        imgNameArray.forEach(function (imageName) {
+                            modifiedPathArr.forEach(function (path) {
+                                let modifiedImageName = resourceUtil.getFileNameWithExtension(path).split('.').slice(1).join('.');
+                                if (imageName === modifiedImageName) {
+                                    fromArray.push(`{#${imageName}#}`);
+                                    toArray.push(path);
+                                }
+                            });
+                        });
+
+                        for (let index = 0; index < fromArray.length; index++) {
+                            fileContent = fileContent.replace(fromArray[index], toArray[index]);
+                        }
+
+                        let fileName = resourceUtil.getFileNameWithExtension(resourcePath);
+                        return dbfileStoreManager.saveTaskDynamicResource(skillParams.taskParams, fileContent, fileName)
+                            .then((filePath) => {
+                                return Promise.resolve({ "attrValue": filePath, 'preloadResArr': [{ path: filePath, type: resourceUtil.getFileType(filePath) }] });
+                            })
+                            .catch((error) => {
+                                return Promise.reject(error);
                             });
 
-                            for (let index = 0; index < fromArray.length; index++) {
-                                htmlResource = htmlResource.replace(fromArray[index], toArray[index]);
-                            }
-                            let resourcePathArray = resourcePath.split('/');
-                            let fileName = resourcePathArray[resourcePathArray.length - 1];
-                            dbfileStoreManager.saveTaskDynamicResource(skillParams.taskParams, htmlResource, fileName)
-                                .then((filePath) => {
-                                    resolve({ "attrValue": filePath, 'preloadResArr': [{ path: filePath, type: resourceUtil.getFileType(filePath) }] });
-                                }).catch((error) => {
-                                    reject(error);
-                                });
-
-                        } else {
-                            dbfileStoreManager.copyTaskAssetFile(resourcePath, skillParams.taskParams)
-                                .then((resolveParam) => {
-                                    resolve({ "attrValue": resolveParam.filePath, 'preloadResArr': [{ path: resolveParam.filePath, type: resolveParam.fileType }] });
-                                }).catch((error) => {
-                                    reject(error);
-                                });
-                        }
+                    } else {
+                        return dbfileStoreManager.copyTaskAssetFile(resourcePath, skillParams.taskParams)
+                            .then((resolveParam) => {
+                                return Promise.resolve({ "attrValue": resolveParam.filePath, 'preloadResArr': [{ path: resolveParam.filePath, type: resolveParam.fileType }] });
+                            })
+                            .catch((error) => {
+                                return Promise.reject(error);
+                            });
                     }
                 })
-            });
+                .catch((error) => {
+                    return Promise.reject(error);
+                });
         } catch (error) {
             return Promise.reject(error);
         }
