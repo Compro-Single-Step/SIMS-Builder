@@ -87,9 +87,10 @@
                     "initial": {
                         "default-attrs": {
                             "TREE_XML_PATH": {
-                                "function-name": "createTreeXMLPath",
+                                "function-name": "resourcePathWithUpdatedReferences",
                                 "params": {
-                                    "treeXML": "views['2'].treeXML.path"
+                                    "resourcePath": "views['2'].treeXML.path",
+                                    "embedableResources": "views['2'].treeXMLImages.value"
                                 }
                             },
                             "TREE_SELECTED_ITEM_ID": {
