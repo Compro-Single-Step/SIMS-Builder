@@ -186,13 +186,13 @@
     },
     {
       "id": "2",
-      "label": "Picture Insertion Settings",
+      "label": "Skill Specific Settings",
       "itemType": "root",
       "desc": {},
       "items": [
         {
           "id": "2.1",
-          "label": "Insertion Point",
+          "label": "Picture Insertion Point",
           "itemRenderer": "Panel",
           "itemType": "child",
           "tags": [
@@ -289,7 +289,7 @@
             },
             {
               "id": "2.2.3",
-              "label": "Navigation Pane Selected Item ID",
+              "label": "Navigation Pane - Selected Item ID",
               "desc": {
                 "basic": "ID of the item to be displayed selected in navigation pane of Dialog.",
                 "detailed": "ID of the item in the left pane of the Insert File Dialog to be displayed as selected. This ID is present in the Tree XML."
