@@ -40,11 +40,6 @@ module.exports = class InsertAudio extends PPTBaseSkill {
             });
     }
 
-    createResXMLPath(skillParams) {
-        var attrValue = skillParams.taskParams.addResourceToMap("step", skillParams.paramsObj["xmlPath"]).absFilePath;
-        return Promise.resolve({ attrValue });
-    }
-
     getSubCompTopPosition() {
         var defaultAudioHeight = 0.67,
             attrValue = (parseFloat(this.slideHeight) / 2 - defaultAudioHeight / 2).toFixed(1);

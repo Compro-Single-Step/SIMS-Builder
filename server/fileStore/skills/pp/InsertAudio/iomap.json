@@ -18,9 +18,10 @@
           "initial": {
             "default-attrs": {
               "XML_PATH": {
-                "function-name": "createResXMLPath",
+                "function-name": "resourcePathWithUpdatedReferences",
                 "params": {
-                  "xmlPath": "views['1'].slideViewData.path"
+                    "resourcePath": "views['1'].slideViewData.path",
+                    "docImages": "views['1'].slideImages.value"
                 }
               },
               "SELECTED_SLIDE": {
