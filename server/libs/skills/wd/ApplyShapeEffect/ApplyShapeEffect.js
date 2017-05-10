@@ -42,14 +42,49 @@ module.exports = class ApplyShapeEffect extends WordSkill {
         }
     }
 
-    getShapeEffectPreset(skillParams){
-        
+    getShapeEffectPresetIndex(skillParams){
         try {
             let paramValueObj = skillParams.paramsObj;
             let shapeEffectCategory = paramValueObj["shapeEffectCategory"];
             let shapeEffectName = paramValueObj["shapeEffectName"];
             let shapeEffectPreset = RibbonData["Drawing Tools Format"]["Shape Styles"]["Shape Effects"][shapeEffectCategory.label][shapeEffectName.label]["Format Shape Pane Preset Index"];
             return Promise.resolve({ attrValue: shapeEffectPreset});
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
+
+    getShapeEffectPresetAttr(skillParams){
+        try {
+            let paramValueObj = skillParams.paramsObj;
+            let shapeEffectCategory = paramValueObj["shapeEffectCategory"];
+            let shapeEffectName = paramValueObj["shapeEffectName"];
+            let attrName = RibbonData["Drawing Tools Format"]["Shape Styles"]["Shape Effects"][shapeEffectCategory.label][shapeEffectName.label]["Format Shape Pane Attribute"];
+            return Promise.resolve({ attrValue: attrName});
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
+
+    getShapeEffectRibbonEventId(skillParams){
+        try {
+            let paramValueObj = skillParams.paramsObj;
+            let shapeEffectCategory = paramValueObj["shapeEffectCategory"];
+            let shapeEffectName = paramValueObj["shapeEffectName"];
+            let shapeEffectRibbonEventId = RibbonData["Drawing Tools Format"]["Shape Styles"]["Shape Effects"][shapeEffectCategory.label][shapeEffectName.label]["Ribbon Event ID"];
+            return Promise.resolve({ attrValue: shapeEffectRibbonEventId});
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
+
+    getShapeEffectPaneEventId(skillParams){
+        try {
+            let paramValueObj = skillParams.paramsObj;
+            let shapeEffectCategory = paramValueObj["shapeEffectCategory"];
+            let shapeEffectName = paramValueObj["shapeEffectName"];
+            let shapeEffectRibbonEventId = RibbonData["Drawing Tools Format"]["Shape Styles"]["Shape Effects"][shapeEffectCategory.label][shapeEffectName.label]["Format Shape Pane Event ID"];
+            return Promise.resolve({ attrValue: shapeEffectRibbonEventId});
         } catch (error) {
             return Promise.reject(error);
         }

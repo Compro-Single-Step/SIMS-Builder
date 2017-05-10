@@ -68,11 +68,20 @@
                 "4": {
                     "final": {
                         "default-attrs": {
-                            "SEL_SHAPE_SHADOW_PRESET": {
-                                "function-name": "getShapeEffectPreset",
-                                "params": {
-                                    "shapeEffectCategory": "views['2'].shapeEffectCategory.selectedOption.value",
-                                    "shapeEffectName": "views['2'].shapeEffectName.selectedOption.value"
+                            "shapeEffectValidationAttr": {
+                                "value": {
+                                    "function-name": "getShapeEffectPresetIndex",
+                                    "params": {
+                                        "shapeEffectCategory": "views['2'].shapeEffectCategory.selectedOption.value",
+                                        "shapeEffectName": "views['2'].shapeEffectName.selectedOption.value"
+                                    }
+                                },
+                                "name": {
+                                    "function-name": "getShapeEffectPresetAttr",
+                                    "params": {
+                                        "shapeEffectCategory": "views['2'].shapeEffectCategory.selectedOption.value",
+                                        "shapeEffectName": "views['2'].shapeEffectName.selectedOption.value"
+                                    }
                                 }
                             }
                         }
@@ -123,6 +132,22 @@
                         }
                     }
                 }
+            }
+        }
+    },
+    "templateRulesData": {
+        "shapeEffectRibbonEventId":{
+            "function-name": "getShapeEffectRibbonEventId",
+            "params": {
+                "shapeEffectCategory": "views['2'].shapeEffectCategory.selectedOption.value",
+                "shapeEffectName": "views['2'].shapeEffectName.selectedOption.value"
+            }
+        },
+        "shapeEffectPaneEventId":{
+            "function-name": "getShapeEffectPaneEventId",
+            "params": {
+                "shapeEffectCategory": "views['2'].shapeEffectCategory.selectedOption.value",
+                "shapeEffectName": "views['2'].shapeEffectName.selectedOption.value"
             }
         }
     }

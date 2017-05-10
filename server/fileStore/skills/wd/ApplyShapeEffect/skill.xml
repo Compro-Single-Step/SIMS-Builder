@@ -25,7 +25,7 @@
 						<attr name="ACTIVATE_TAB" value="Drawing Tools Format"/>
 					</initialattrs>
 					<events>
-						<event id="7057" followup="4" desc="shape effects - shadow">
+						<event id="{{shapeEffectRibbonEventId}}" followup="4" desc="shape effects - shadow">
 							<validate>
 								<comp id="2"/>
 							</validate>
@@ -140,12 +140,12 @@
 						</attributeset>
 					</initialattributesets>
 					<finalattrs>
-						<attr name="SEL_SHAPE_SHADOW_PRESET" userDefined="true"/>
+						<attr name="shapeEffectValidationAttr" userDefined="value,name"/>
 						<attr name="SEL_L1_TAB" value="1"/>
 					</finalattrs>
 					<events>
 						<event id="9998" followup="1" desc="Click Close"/>
-						<event id="7" followup="3" desc="In shape options, Shadow preset selected">
+						<event id="{{shapeEffectPaneEventId}}" followup="3" desc="In shape options, Shadow preset selected">
 							<validate>
 								<comp id="4"/>
 								<comp id="2"/>
@@ -171,7 +171,7 @@
 				</comp>
 			</comps>
 		</state>
-		<state id="4" desc="Changing font size to 20" islast="true">
+		<state id="4" desc="Final State" islast="true">
 			<comps>
 				<comp id="4" mode="remove"/>
 				<comp id="1" mode="edit"/>
