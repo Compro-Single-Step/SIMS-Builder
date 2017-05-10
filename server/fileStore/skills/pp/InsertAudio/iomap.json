@@ -18,10 +18,10 @@
           "initial": {
             "default-attrs": {
               "XML_PATH": {
-                "function-name": "resourcePathWithUpdatedReferences",
+                "function-name": "handleEmbededResources",
                 "params": {
                     "resourcePath": "views['1'].slideViewData.path",
-                    "docImages": "views['1'].slideImages.value"
+                    "embedableResources": "views['1'].slideImages.value"
                 }
               },
               "SELECTED_SLIDE": {
@@ -69,10 +69,10 @@
           "initial": {
             "default-attrs": {
               "TREE_XML_PATH": {
-                "function-name": "resourcePathWithUpdatedReferences",
+                "function-name": "handleEmbededResources",
                 "params": {
                     "resourcePath": "views['2'].audioToBeAdded.path",
-                    "docImages": "views['2'].treeContentXMLImages.value"
+                    "embedableResources": "views['2'].treeContentXMLImages.value"
                 }
               },
               "AUTO_COMPLETE_LIST": {
