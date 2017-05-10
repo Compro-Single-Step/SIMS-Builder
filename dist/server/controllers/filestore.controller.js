@@ -5,7 +5,6 @@ const multer = require('multer');
 const mkdirp = require('mkdirp');
 const fse = require('fs-extra');
 const ResourceUtil = require('../utils/resourceUtil');
-const XMLUtil = require('../utils/XMLUtil');
 
 const fileTypeFolderMap = {
     "SKILL": config.fileStore.skillFolder,
@@ -22,35 +21,12 @@ const resTypeMap = {
     "html": "html",
     "xml": "xml"
 };
-const fileTypeFunctionMap = {
-    "csv": "readCsvFile"
-};
 
 class FileStoreController {
-    readCsvFile(absolutePath) {
-        return new Promise(function (resolve, reject) {
-            let resultArr = [];
-            const csv = require('csvtojson');
-            csv().fromFile(absolutePath).on('json', jsonObj => {
-                console.log(jsonObj);
-                resultArr.push(jsonObj);
 
-                // combine csv header row and csv line to a json object 
-                // jsonObj.a ==> 1 or 4 
-            }).on('done', error => {
-                if (resultArr.length == 0) {
-                    var error = new Error("Error occured while reading the csv type file at path " + absolutePath);
-                    reject(error);
-                } else {
-                    var resolveParam = { "fileData": resultArr, "filePath": absolutePath };
-                    resolve(resolveParam);
-                }
-            });
-        });
+    getFileStoreStepFolderPath(taskId, stepIdx) {
+        return config.fileStore.xmlFolder + taskId + "/" + stepIdx + "/";
     }
-    // Below function was a duplicate. Use 'getStepXMLFolderPath' instead.
-    // getFileStoreStepFolderPath(taskId, stepIdx) {
-    //  }
 
     getSimsXmlStepFolderPath(taskId, stepIdx) {
         return this.getTaskFolderPath(taskId, stepIdx) + stepIdx + "/";
@@ -67,7 +43,7 @@ class FileStoreController {
             resFileType = resTypeMap[fileType];
         }
         //path to save the file
-        var absFilePath = this.getStepXMLFolderPath(taskParams.taskId, taskParams.stepIndex);
+        var absFilePath = this.getFileStoreStepFolderPath(taskParams.taskId, taskParams.stepIndex);
 
         //path to return for the file
         var srcPath = config.fileStore.resourceFolder + srcPath;
@@ -93,59 +69,43 @@ class FileStoreController {
             });
         });
     }
-    /**
-     * @param {*} sourceFileLocation : Location from which file to be copied 
-     * Ex: "GO16.WD.12.12B.02.T1/1/1493790231823.DocumentData.json"
-     * @param {*} resourceMap : It's an object which contains following key-value pairs:
-     *   AssetFolderHierarchy: Any custom folder hierarchy
-     *   fileName: "1493790231823.DocumentData.json"
-     *   resourceType: "step | skill" => 
-     *          skill means that it's a skill resource and has to be copied from "filestore/skills/" folder
-     *          step means that it's a user uploaded resource and has to be copied from "filestore/resources/" folder
-     * @param {*} taskId : Task ID
-     * @param {*} stepIndex : Step Index
-     * OUTPUT : This function copies the resource file from a source location to corresponding 
-     * destination and returns the promise for same
-     */
-    copyAssetToTaskFolderEnhanced(sourceFileLocation, resourceMap, taskId, stepIndex) {
 
-        let srcPath;
-        if (resourceMap.resourceType === "step") srcPath = config.fileStore.resourceFolder + sourceFileLocation;else srcPath = path.join(config.fileStore.skillFolder, sourceFileLocation);
-
-        let destPath = path.join(this.getStepAssetsFolderPath(taskId, stepIndex), resourceMap.AssetFolderHierarchy, resourceMap.fileName);
-
-        return new Promise((resolve, reject) => {
-            fse.copy(srcPath, destPath, { overwrite: false }, error => {
+    readTaskRes(filepath) {
+        var absolutePath = config.fileStore.resourceFolder + filepath;
+        return new Promise(function (resolve, reject) {
+            fs.readFile(absolutePath, 'utf8', function (error, fileData) {
                 if (!error) {
-                    resolve("success");
+                    var resolveParam = { "fileData": fileData, "filePath": absolutePath };
+                    resolve(resolveParam);
                 } else {
                     reject(error);
                 }
             });
         });
     }
-
-    readTaskRes(filepath, readFileType) {
-        var absolutePath = config.fileStore.resourceFolder + filepath;
-        if (readFileType && fileTypeFunctionMap[readFileType]) {
-
-            return this[fileTypeFunctionMap[readFileType]](absolutePath);
-        } else {
-            return new Promise(function (resolve, reject) {
-                fs.readFile(absolutePath, 'utf8', function (error, fileData) {
-                    if (!error) {
-                        var resolveParam = { "fileData": fileData, "filePath": absolutePath };
-                        resolve(resolveParam);
-                    } else {
-                        reject(error);
-                    }
-                });
-            });
-        }
-    }
-
     getTaskFolderPath(taskId) {
-        return '{#approot#}/';
+
+        let taskIdArr = taskId.toLowerCase().split('.');
+        // if(taskIdArr[0].length > 3) {
+        //     taskIdArr[0] = taskIdArr[0].slice(0, taskIdArr[0].length - 2);
+        // }
+
+        let taskIdPath = "";
+        let taskFolder = "";
+
+        for (let i = 0; i < taskIdArr.length; i++) {
+            if (i < taskIdArr.length - 3) {
+                taskIdPath += taskIdArr[i] + "/";
+            } else if (i == taskIdArr.length - 1) {
+                taskFolder += taskIdArr[i] + "/";
+            } else {
+                taskFolder += taskIdArr[i] + ".";
+            }
+        }
+
+        // let filePath = config.fileStore.xmlFolder + "XMLs/TaskXmls/" + taskIdPath + taskFolder;
+        let filePath = "XMLs/TaskXmls/" + taskIdPath + taskFolder;
+        return filePath;
     }
 
     saveStepXML(taskId, stepIndex, OutputXML) {
@@ -153,23 +113,6 @@ class FileStoreController {
         let folderPath = this.getStepXMLFolderPath(taskId, stepIndex);
         let fileName = "task.xml"; //this will come from out side.
         return this.saveFileToFileStore(folderPath, fileName, OutputXML);
-    }
-
-    /**
-     * 
-     * @param {*} taskParams TaskParamas contains task metadata.
-     * @param {*} File The data that is to be stored in the File
-     * @param {*} FileName Name for the File to be stored
-     * Output: Relative Path of the File saved in File Store to be added in Task XML
-     */
-    saveTaskResources(taskParams, File, FileName) {
-        let destPath = this.getStepXMLFolderPath(taskParams.taskId, taskParams.stepIndex);
-        let relativeXmlPath = this.getSimsXmlStepFolderPath(taskParams.taskId, taskParams.stepIndex);
-        let fileName = FileName; //this will come from out side.
-        return this.saveFileToFileStore(destPath, fileName, File).then(() => {
-            var relativeResourcePath = relativeXmlPath + fileName;
-            return Promise.resolve(relativeResourcePath);
-        });
     }
 
     saveResourceFile() {
@@ -191,7 +134,7 @@ class FileStoreController {
 
     getFileFromFileStore(filePath, folder) {
         return new Promise((resolve, reject) => {
-            let absolutePath = filePath;
+            let absolutePath = filePath;;
 
             if (folder) {
                 absolutePath = folder + filePath;
@@ -250,15 +193,6 @@ class FileStoreController {
 
     getStepXMLFolderPath(taskId, stepIndex) {
         return config.fileStore.xmlFolder + taskId + "/" + stepIndex + "/";
-    }
-
-    /**
-     * @param {*} taskId : Task ID
-     * @param {*} stepIndex : Step Number
-     * OUTPUT : Absolute Folder Path of the corresponding Task till the Assets folder
-     */
-    getStepAssetsFolderPath(taskId, stepIndex) {
-        return this.getStepXMLFolderPath(taskId, stepIndex) + "Assets/";
     }
 
     getUploadedResourceFolderPath(relPath) {

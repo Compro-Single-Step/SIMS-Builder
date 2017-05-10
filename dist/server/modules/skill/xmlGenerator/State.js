@@ -11,7 +11,7 @@ module.exports = class State {
         this.stepRef = parentStepRef;
         this.comps = {};
 
-        this.generateComponents(args.comps[0].comp, attrValMap);
+        this.generateComponents(args.comps, attrValMap);
     }
 
     generateComponents(comps, attrValMap) {
@@ -22,7 +22,7 @@ module.exports = class State {
 
         for (let i = 0; i < comps.length; i++) {
             if (comps[i].events) {
-                this.comps[comps[i].props.id].addEvents(comps[i].events[0]);
+                this.comps[comps[i].props.id].addEvents(comps[i].events);
             }
         }
     }
@@ -80,13 +80,5 @@ module.exports = class State {
         xml += '</comps></state>';
 
         return xml;
-    }
-
-    /**
-     * return id of this state mentioned in template XML
-     * currently this fn is being called by children components
-     */
-    getId() {
-        return this.id;
     }
 };

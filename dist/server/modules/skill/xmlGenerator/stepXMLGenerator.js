@@ -7,21 +7,15 @@
 
 const DOMParser = require('xmldom').DOMParser;
 const Step = require('./Step');
-const hbUtils = require('../../../utils/handlebar/hbUtils');
 
 module.exports = class StepXMLGenerator {
 
     generateXml(skillTemplate, attrValueMap, stepText) {
 
-        /////// handlebar modifications ////////////////////////////////
-        var hbTemplate = hbUtils.getHBTemplate(skillTemplate);
-        var skillTemplate = hbTemplate(attrValueMap.templateRulesData);
-        ////////////////////////////////////////////////////////////////
-
         let parser = new DOMParser();
         let xmlDoc = parser.parseFromString(skillTemplate, "text/xml");
         let stepJson = this.xmlToJson(xmlDoc);
-        let step = new Step(stepJson.task[0], attrValueMap, this);
+        let step = new Step(stepJson[0], attrValueMap, this);
         let xmlString = step.generateXML(stepText);
         return xmlString;
     }
@@ -49,19 +43,35 @@ module.exports = class StepXMLGenerator {
 
         // do children
         if (xml.hasChildNodes()) {
+            if (obj.props == undefined) {
+                obj = [];
+                for (let i = 0; i < xml.childNodes.length; i++) {
+                    let item = xml.childNodes[i];
+                    if (item.nodeType == 3) {
+                        // text
+                        continue;
+                    }
+                    obj.push(this.xmlToJson(item));
+                }
+            } else {
+                let nodeName = xml.nodeName;
 
-            let nodeName = xml.nodeName;
-            for (let i = 0; i < xml.childNodes.length; i++) {
-                let item = xml.childNodes[i];
-                if (item.nodeType == 3) {
-                    // text
-                    continue;
+                for (let i = 0; i < xml.childNodes.length; i++) {
+                    let item = xml.childNodes[i];
+                    if (item.nodeType == 3) {
+                        // text
+                        continue;
+                    }
+                    let child = this.xmlToJson(item);
+                    if (child.props == undefined) {
+                        obj[xml.childNodes[i].nodeName] = child;
+                    } else {
+                        if (!obj[xml.childNodes[i].nodeName]) {
+                            obj[xml.childNodes[i].nodeName] = [];
+                        }
+                        obj[xml.childNodes[i].nodeName].push(child);
+                    }
                 }
-                let child = this.xmlToJson(item);
-                if (!obj[xml.childNodes[i].nodeName]) {
-                    obj[xml.childNodes[i].nodeName] = [];
-                }
-                obj[xml.childNodes[i].nodeName].push(child);
             }
         }
         return obj;

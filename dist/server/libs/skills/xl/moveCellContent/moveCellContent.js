@@ -32,12 +32,28 @@ var MoveCellContent = function (_ExcelBaseSkill) {
       var skilldata = { "initDocJSonPath": initDocJSonPath, "dbMgr": data.dbFilestoreMgr };
       return _get(MoveCellContent.prototype.__proto__ || Object.getPrototypeOf(MoveCellContent.prototype), "init", this).call(this, skilldata);
     }
+    //init DOC JSON 
 
-    // function moved to XLskill
-    // init DOC JSON 
-    // createJsonPath(skillParams) {
-    // }
+  }, {
+    key: "createJsonPath",
+    value: function createJsonPath(skillParams) {
 
+      var taskParams = skillParams.taskParams;
+      var paramValueObj = skillParams.paramsObj;
+
+      return taskParams.dbFilestoreMgr.copyTaskAssetFile(paramValueObj["docData"], taskParams).then(function (resolveParam) {
+        paramValueObj["docData"] = resolveParam.filePath;
+        var preloadResArr = [];
+        preloadResArr.push({ "path": "" + resolveParam.filePath, "type": "" + resolveParam.fileType });
+        resolveParam = { "attrValue": paramValueObj["docData"], "preloadResArr": preloadResArr };
+        return Promise.resolve(resolveParam);
+      }, function (error) {
+        return Promise.reject(error);
+        console.log("rejection at the movecellcontent");
+      }).catch(function (error) {
+        return Promise.reject(error);
+      });
+    }
   }, {
     key: "getSelectedCell",
     value: function getSelectedCell(skillParams) {
@@ -73,11 +89,26 @@ var MoveCellContent = function (_ExcelBaseSkill) {
       var resolveParams = { "attrValue": finalObject };
       return Promise.resolve(resolveParams);
     }
+  }, {
+    key: "createSheetCellData",
+    value: function createSheetCellData(skillParams) {
 
-    // Moved to Xlskill
-    // createSheetCellData(skillParams) {
-    // }
-
+      var taskParams = skillParams.taskParams;
+      var paramValueObj = skillParams.paramsObj;
+      var finalObject = {};
+      finalObject["sheetNo"] = this.getSheetNumber(paramValueObj.sheetAction);
+      return taskParams.dbFilestoreMgr.copyTaskAssetFile(paramValueObj["wbData"], taskParams).then(function (resolaveParams) {
+        paramValueObj["wbData"] = resolaveParams.filePath;
+        finalObject["dataJSONPath"] = paramValueObj["wbData"];
+        finalObject = JSON.stringify(finalObject);
+        var preloadResArr = [];
+        preloadResArr.push({ "path": "" + resolaveParams.filePath, "type": "" + resolaveParams.fileType });
+        var resolveParams = { "attrValue": finalObject, "preloadResArr": preloadResArr };
+        return Promise.resolve(resolveParams);
+      }, function (error) {
+        return Promise.reject(error);
+      });
+    }
   }, {
     key: "getSelectedCellFinal",
     value: function getSelectedCellFinal(skillParams) {

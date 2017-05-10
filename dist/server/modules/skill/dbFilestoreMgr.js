@@ -7,31 +7,14 @@ const folderMap = FAL.fileTypeFolderMap;
 class DatabaseFileStoreManager {
 
     //dynamic sheet num 
-    readFileFromFileStore(filePath, readFileType) {
-        return fsc.readTaskRes(filePath, readFileType);
+    readFileFromFileStore(filePath) {
+        return fsc.readTaskRes(filePath);
     }
 
     copyTaskAssetFile(residentPath, taskParams) {
         //construct a promise in filestore controller and return that promise 
         // this function will as it is return the promise object whether it is resolved or rejected
         return fsc.copyAssetToTaskFolder(residentPath, taskParams);
-    }
-
-    /**
-    * This function has beedn added to provide an enhanced fnality over copyTaskAssetFile
-    * As part of enhanced functionality this fn will be able to copy skill psecifc resources also based on resourceType value in resourceMap
-    *
-    *
-    *  todo: remove "copyTaskAssetFile" fn when all the templates start working as per new implementation
-    *
-    * This function calls the 'copyAssetToTaskFolderEnhanced' function of file store controller 
-    * which copies the resource file from a source location to corresponding destination and 
-    * returns the promise for same
-    */
-    copyTaskAssetFileEnhanced(sourceFileLocation, resourceMap, taskId, stepIndex) {
-        //construct a promise in filestore controller and return that promise 
-        // this function will as it is return the promise object whether it is resolved or rejected
-        return fsc.copyAssetToTaskFolderEnhanced(sourceFileLocation, resourceMap, taskId, stepIndex);
     }
 
     getUIConfig(templateId) {
@@ -97,9 +80,6 @@ class DatabaseFileStoreManager {
     saveStepXML(taskId, stepIndex, OutputXML) {
         return fsc.saveStepXML(taskId, stepIndex, OutputXML);
     }
-    saveTaskDynamicResource(taskParams, File, FileName) {
-        return fsc.saveTaskResources(taskParams, File, FileName);
-    }
 
     saveResourceFile() {
         return fsc.saveResourceFile();
@@ -111,10 +91,6 @@ class DatabaseFileStoreManager {
 
     getResourcePath(filePath) {
         return fsc.getResourcePath(filePath, folderMap.RESOURCE);
-    }
-
-    getFileFromFileStore(filePath) {
-        return fsc.getFileFromFileStore(filePath);
     }
 }
 
