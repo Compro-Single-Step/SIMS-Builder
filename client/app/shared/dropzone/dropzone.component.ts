@@ -26,7 +26,7 @@ export class DropzoneComponent extends BaseComponent implements OnDestroy {
   constructor(private elementRef: ElementRef, private route: ActivatedRoute, private router: Router, private authSrvc: AuthService, private bds: BuilderDataService) {
     super();
     this.makeDeleteCall = true;
-    this.fileTypesToRead = [MIMETYPE.JSON, MIMETYPE.CSV, MIMETYPE.XML];
+    this.fileTypesToRead = [MIMETYPE.JSON, MIMETYPE.CSV, MIMETYPE.HTML, MIMETYPE.XML];
     this.isMultipleFiles = false;
   }
 
@@ -156,6 +156,7 @@ export class DropzoneComponent extends BaseComponent implements OnDestroy {
     obj[MIMETYPE.JSON] = this.parseJsonData;
     obj[MIMETYPE.CSV] = this.parseCsvDataToJson;
     obj[MIMETYPE.XML] = this.parseAsText;
+    obj[MIMETYPE.HTML] = this.parseAsText;
 
     return obj[fileType](data);
   }
@@ -224,6 +225,7 @@ export class DropzoneComponent extends BaseComponent implements OnDestroy {
 enum MIMETYPE {
   JSON = <any>".json",
   img = <any>"image/*",
+  HTML = <any>".htm",
   CSV = <any>".csv",
   XML = <any>".xml"
 }

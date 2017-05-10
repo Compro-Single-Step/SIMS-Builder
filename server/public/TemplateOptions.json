@@ -13,6 +13,10 @@
             "id":"sortingtablecolumns"
         },
         {
+            "name":"Insert Picture",
+            "id":"insertpicture"
+        },
+        {
             "name":"Import Access Object",
             "id":"importaccessobject"
         },

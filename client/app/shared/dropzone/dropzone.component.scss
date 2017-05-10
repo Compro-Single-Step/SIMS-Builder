@@ -18,3 +18,10 @@ $dropzoneTextColor: #aaa;
 .dz-message {
   margin-top: 4.5rem;
 }
+.disabled {
+  cursor: not-allowed;
+ .dropzone {
+   pointer-events: none;
+   cursor: not-allowed;
+ }
+}

@@ -27,6 +27,21 @@ module.exports = {
                     }
                 ]
             }
+        ],
+        dependencySkills: []
+    },
+    "insertpicture": {
+        primaryFile: "wd/insertPicture/insertPicture",
+        dependencyFiles: [
+            {
+                primaryFile: "wd/common/wdSkill",
+                dependencyFiles: [
+                    {
+                        primaryFile: "common/baseSkill",
+                        dependencyFiles: []
+                    }
+                ]
+            }
         ]
     },
   
@@ -71,7 +86,8 @@ module.exports = {
                 ]
             }
         ]
-    }   
+    }
+      
 }
 
 
