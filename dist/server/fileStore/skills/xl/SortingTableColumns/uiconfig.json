@@ -212,8 +212,8 @@
                       "id": "tableRange",
                       "label": "Table Range",
                       "desc": {
-                        "basic": "Range of cells where this table would be formed. [e.g. A3:K68]",
-                        "detailed": "Range of cells where this table would be formed. [e.g. A3:K68]"
+                        "basic": "Range of cells where this table would be formed",
+                        "detailed": "Range of cells where this table would be formed"
                       },
                       "itemRenderer": "TextBox",
                       "itemType": "leaf",
@@ -225,7 +225,7 @@
                     },
                     {
                       "id": "columnHeaders",
-                      "label": "Table Column Headers Data",
+                      "label": "Column Headers",
                       "desc": {
                         "basic": "Upload a csv file having columns: \"columnName\" and \"columnType\" with first row containing these header texts.",
                         "detailed": ""
