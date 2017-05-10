@@ -209,27 +209,35 @@ module.exports = function (_BaseSkill) {
 
         /**
          * fnality
-         * for populating the attribute INIT_DOC_JSON and
-         * adding the asset path to resource map
-         * Resources added to this resource map are later copied to step asset folder
+         * for populating the attribute INIT_DOC_JSON
+         * The function copies the asset to the required place and returns the path of the copied resource in resolveparam 
          */
 
     }, {
         key: "createJsonPath",
         value: function createJsonPath(skillParams) {
+
             var taskParams = skillParams.taskParams;
             var paramValueObj = skillParams.paramsObj;
 
-            var attrValue = skillParams.taskParams.addResourceToMap("step", paramValueObj["docData"]).absFilePath;
-            // { attrValue } is new syntax of ES6 which means => { 'attrValue': attrValue }
-            return Promise.resolve({ attrValue: attrValue });
+            return taskParams.dbFilestoreMgr.copyTaskAssetFile(paramValueObj["docData"], taskParams).then(function (resolveParam) {
+                paramValueObj["docData"] = resolveParam.filePath;
+                var preloadResArr = [];
+                preloadResArr.push({ "path": "" + resolveParam.filePath, "type": "" + resolveParam.fileType });
+                resolveParam = { "attrValue": paramValueObj["docData"], "preloadResArr": preloadResArr };
+                return Promise.resolve(resolveParam);
+            }, function (error) {
+                return Promise.reject(error);
+                console.log("rejection at the movecellcontent");
+            }).catch(function (error) {
+                return Promise.reject(error);
+            });
         }
 
         /**
          * fnality
          * for populating the attribute SHEET_CELLS_DATA
-         * adding the asset path to resource map
-         * Resources added to this resource map are later copied to step asset folder
+         * The function copies the cell json asset to the required place and returns the path of the copied resource in resolveparam 
          * return
          * {"sheetNo":1, "dataJSONPath":"XMLs/TaskXmls2016/exp/xl/04/03.02.T1/Assets/State3/SheetCell.json" }
          */
@@ -238,14 +246,21 @@ module.exports = function (_BaseSkill) {
         key: "createSheetCellData",
         value: function createSheetCellData(skillParams) {
 
-            var attrValue = {},
-                filePath = skillParams.taskParams.addResourceToMap("step", skillParams.paramsObj["wbData"]).absFilePath;
-
-            attrValue["sheetNo"] = this.getSheetNumber(skillParams.paramsObj.sheetAction);
-            attrValue["dataJSONPath"] = filePath;
-            attrValue = JSON.stringify(attrValue);
-
-            return Promise.resolve({ attrValue: attrValue });
+            var taskParams = skillParams.taskParams;
+            var paramValueObj = skillParams.paramsObj;
+            var finalObject = {};
+            finalObject["sheetNo"] = this.getSheetNumber(paramValueObj.sheetAction);
+            return taskParams.dbFilestoreMgr.copyTaskAssetFile(paramValueObj["wbData"], taskParams).then(function (resolaveParams) {
+                paramValueObj["wbData"] = resolaveParams.filePath;
+                finalObject["dataJSONPath"] = paramValueObj["wbData"];
+                finalObject = JSON.stringify(finalObject);
+                var preloadResArr = [];
+                preloadResArr.push({ "path": "" + resolaveParams.filePath, "type": "" + resolaveParams.fileType });
+                var resolveParams = { "attrValue": finalObject, "preloadResArr": preloadResArr };
+                return Promise.resolve(resolveParams);
+            }, function (error) {
+                return Promise.reject(error);
+            });
         }
     }]);
 

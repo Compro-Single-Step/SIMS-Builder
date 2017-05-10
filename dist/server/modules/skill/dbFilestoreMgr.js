@@ -17,23 +17,6 @@ class DatabaseFileStoreManager {
         return fsc.copyAssetToTaskFolder(residentPath, taskParams);
     }
 
-    /**
-    * This function has beedn added to provide an enhanced fnality over copyTaskAssetFile
-    * As part of enhanced functionality this fn will be able to copy skill psecifc resources also based on resourceType value in resourceMap
-    *
-    *
-    *  todo: remove "copyTaskAssetFile" fn when all the templates start working as per new implementation
-    *
-    * This function calls the 'copyAssetToTaskFolderEnhanced' function of file store controller 
-    * which copies the resource file from a source location to corresponding destination and 
-    * returns the promise for same
-    */
-    copyTaskAssetFileEnhanced(sourceFileLocation, resourceMap, taskId, stepIndex) {
-        //construct a promise in filestore controller and return that promise 
-        // this function will as it is return the promise object whether it is resolved or rejected
-        return fsc.copyAssetToTaskFolderEnhanced(sourceFileLocation, resourceMap, taskId, stepIndex);
-    }
-
     getUIConfig(templateId) {
         return dbController.getSkillConfigPath(templateId, skillConfigTypes.UI_CONFIG).then(filePath => {
             if (filePath === undefined || filePath === null) {
