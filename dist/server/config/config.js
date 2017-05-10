@@ -80,8 +80,8 @@ const config = {
                 server: {
                     poolsize: 20
                 },
-                user: 'sims-builder',
-                pass: 'sims-builder'
+                user: 'sims_builder',
+                pass: 'sims_builder'
             }
         },
         root: serverRootPath,
