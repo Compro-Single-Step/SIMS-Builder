@@ -100,9 +100,10 @@ class createcrosstabquery extends AccessBaseSkill {
 
     }
     updateRowColumnAxisDropdown(rowAxisSelectedDropdown, columnAxisSelectedItems) {
-        this.crossTabColumnAxisArray = [];
-        while (columnAxisSelectedItems.length > 0) {
-            columnAxisSelectedItems.pop();
+
+    	 this.crossTabColumnAxisArray = [];
+         while (columnAxisSelectedItems.value.length > 0) {
+            columnAxisSelectedItems.value.pop();
         }
         if (this.isEmptyObject(rowAxisSelectedDropdown) === false) {
             var filteredAray = this.crossTabRowAxisArray.filter((item) => item.data !== rowAxisSelectedDropdown.data);
@@ -113,10 +114,11 @@ class createcrosstabquery extends AccessBaseSkill {
         this.crossTabColumnAxisArray = filteredAray;
 
     }
+    
+     fieldsToBecalculated(columnAxisSelectedDropdown, fieldsToBecalculatedItem) {
+         while (fieldsToBecalculatedItem.value.length > 0) {
+            fieldsToBecalculatedItem.value.pop();
 
-    fieldsToBecalculated(columnAxisSelectedDropdown, fieldsToBecalculatedItem) {
-        while (fieldsToBecalculatedItem.length > 0) {
-            fieldsToBecalculatedItem.pop();
         }
         if (this.isEmptyObject(columnAxisSelectedDropdown) === false) {
             var filteredAray = this.crossTabColumnAxisArray.filter((item) => item.data !== columnAxisSelectedDropdown.data);
