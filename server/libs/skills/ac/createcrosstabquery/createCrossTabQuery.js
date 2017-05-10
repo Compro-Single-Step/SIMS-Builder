@@ -138,7 +138,7 @@ class createcrosstabquery extends AccessBaseSkill {
         return true;
     }
     stage1SelectedItems(inputJson, crosstabInputArray) {
-
+    	 if (this.isEmptyObject(inputJson) === false && !inputJson) {
         this.crossTabInputJson = inputJson;
 
         while (crosstabInputArray.length > 0) {
@@ -154,6 +154,7 @@ class createcrosstabquery extends AccessBaseSkill {
             //}
         }
         this.crossTabInputJsonArray = crosstabInputArray;
+    }
     }
 
     updateCalcFunctionList(selectedField, updateValue) {
