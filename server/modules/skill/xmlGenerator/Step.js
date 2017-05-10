@@ -33,7 +33,7 @@ module.exports = class Step {
     }
 
     generateXML (stepText){
-        let xmlString = '<task>';
+        let xmlString = '<?xml version="1.0"?><task>';
 
         xmlString += this.generatePreloadNodeXML();
         xmlString += this.addStepTextToXML(stepText);
