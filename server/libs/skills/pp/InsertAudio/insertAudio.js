@@ -69,7 +69,7 @@ module.exports = class InsertAudio extends PPTBaseSkill {
     getUpdatedSlideData(skillParams) {
         var selectedSlide = skillParams.paramsObj.selectedSlide.data,
             slidePath = skillParams.taskParams.addResourceToMap({"path": skillParams.paramsObj["imgPath"]}).absFilePath,
-            attrValue = '[{"Number":' + selectedSlide + ',"ThumbHtml":"<img src=' + slidePath + '/>"}]';
+            attrValue = `[{"Number":"${selectedSlide}","ThumbHtml":"<img src='${slidePath}'/>"}]`;
         return Promise.resolve({ attrValue });
     }
 
