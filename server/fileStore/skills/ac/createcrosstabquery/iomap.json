@@ -76,7 +76,7 @@
               "STAGE1_SEL_ITEM": {
                 "function-name": "extractSingleParamVal",
                 "params": {
-                   "selSrc" :"views[2].stage1SelectItems.selectedOption.value"
+                   "selSrc" :"views[2].stage1SelectItems.selectedOption.value.label"
                 }
               }
             },
@@ -84,7 +84,7 @@
               "STAGE1_SEL_ITEM": {
                 "function-name": "extractSingleParamVal",
                 "params": {
-                  "selSrc" :"views[2].stage1SelectItems.selectedOption.value"
+                  "selSrc" :"views[2].stage1SelectItems.selectedOption.value.label"
                 }
               }
             },
@@ -92,7 +92,7 @@
               "STAGE2_LIST": {
                 "function-name": "extractSingleParamVal",
                 "params": {
-                  "rowHeading": "views[2].stage2List.selectedOption.value"
+                  "rowHeading": "views[2].stage2List.selectedOption.value.label"
                 }
               }
             },
@@ -100,7 +100,7 @@
               "STAGE3_HEADER": {
                 "function-name": "extractSingleParamVal",
                 "params": {
-                  "colSel":"views[2].stageColumn3Header.selectedOption.value"
+                  "colSel":"views[2].stage3ColumnHeader.selectedOption.value.label"
                 }
               }
             },
@@ -108,19 +108,19 @@
               "STAGE4_SEL1": {
                 "function-name": "extractSingleParamVal",
                 "params": {
-                  "calcField": "views[2].fieldToBecalculated.selectedOption.value"
+                  "calcField": "views[2].fieldToBecalculated.selectedOption.value.label"
                 }
               },
               "STAGE4_SEL2": {
                 "function-name": "extractSingleParamVal",
                 "params": {
-                  "calcFun": "views[2].calculationFunction.selectedOption.value"
+                  "calcFun": "views[2].calculationFunction.selectedOption.value.label"
                 }
               },
               "STAGE4_CHECK": {
                 "function-name": "getSumRow",
                 "params": {
-                  "includeSum" : "views[2].includeSumOfRows.selectedOption.value"
+                  "includeSum" : "views[2].includeSumOfRows.value"
                 }
               }
             },

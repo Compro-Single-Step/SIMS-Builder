@@ -200,17 +200,17 @@
               "subscribeEvents": [
                 {
                   "eventId": "STAGE1_SELECTED_ITEMS",
-                  "modelReference": "{{views.2.stage3Header.options.value}}",
+                  "modelReference": "{{views.2.stage2List.options.value}}",
                   "rule": "updateRowAxisDropdown"
                 }
               ],
               "rendererProperties": {
-                "itemList": "{{views.2.stage3Header.options}}",
+                "itemList": "{{views.2.stage2List.options}}",
                 "dynamicMode": true
               },
               "itemType": "leaf",
               "mandatory": false,
-              "val": "{{views.2.stage3Header.selectedOption}}"
+              "val": "{{views.2.stage2List.selectedOption}}"
             },
             {
               "id": "2.1.5",
@@ -226,17 +226,17 @@
               "subscribeEvents": [
                 {
                   "eventId": "ROW_AXIS_DROPDOWN_UPDATED",
-                  "modelReference": "{{views.2.stageColumn3Header.options}}",
+                  "modelReference": "{{views.2.stage3ColumnHeader.options}}",
                   "rule": "updateRowColumnAxisDropdown"
                 }
               ],
               "rendererProperties": {
-                "itemList": "{{views.2.stageColumn3Header.options}}",
+                "itemList": "{{views.2.stage3ColumnHeader.options}}",
                 "dynamicMode": true
               },
               "itemType": "leaf",
               "mandatory": false,
-              "val": "{{views.2.stageColumn3Header.selectedOption}}"
+              "val": "{{views.2.stage3ColumnHeader.selectedOption}}"
             },
             {
               "id": "2.1.11",
@@ -322,18 +322,18 @@
               "rendererProperties": {
                 "itemList": [
                   {
-                    "value": "1",
+                    "value": "true",
                     "label": "yes"
                   },
                   {
-                    "value": "2",
+                    "value": "false",
                     "label": "No"
                   }
                 ]
               },
               "itemType": "leaf",
               "mandatory": true,
-              "val": "{{views.2.includeSumOfRows}}"
+              "val": "{{views.2.includeSumOfRows.value}}"
             },
             {
               "id": "2.1.9",

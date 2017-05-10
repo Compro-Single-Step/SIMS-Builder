@@ -85,7 +85,7 @@ class createcrosstabquery extends AccessBaseSkill {
         while (crossTableRowAxisArray.length > 0) {
             crossTableRowAxisArray.pop();
         }
-        if( typeof stage1SelectedItem !== null && this.crossTabInputJson !=null ) {
+        if (typeof stage1SelectedItem !== null && this.crossTabInputJson != null) {
             var filteredObj = this.crossTabInputJson[stage1SelectedItem.data.category].find(function (obj) {
                 return obj.table_name === stage1SelectedItem.data.table_name
 
@@ -101,11 +101,11 @@ class createcrosstabquery extends AccessBaseSkill {
     }
     updateRowColumnAxisDropdown(rowAxisSelectedDropdown, columnAxisSelectedItems) {
 
-    	 this.crossTabColumnAxisArray = [];
-         while (columnAxisSelectedItems.value.length > 0) {
+        this.crossTabColumnAxisArray = [];
+        while (columnAxisSelectedItems.value.length > 0) {
             columnAxisSelectedItems.value.pop();
         }
-        if( typeof rowAxisSelectedDropdown !== null ) {
+        if (typeof rowAxisSelectedDropdown !== null) {
             var filteredAray = this.crossTabRowAxisArray.filter((item) => item.data !== rowAxisSelectedDropdown.data);
             for (let i = 0; i < filteredAray.length; i++) {
                 columnAxisSelectedItems.value.push({ "label": filteredAray[i].label, "data": filteredAray[i].data });
@@ -114,13 +114,13 @@ class createcrosstabquery extends AccessBaseSkill {
         this.crossTabColumnAxisArray = filteredAray;
 
     }
-    
-     fieldsToBecalculated(columnAxisSelectedDropdown, fieldsToBecalculatedItem) {
-         while (fieldsToBecalculatedItem.value.length > 0) {
+
+    fieldsToBecalculated(columnAxisSelectedDropdown, fieldsToBecalculatedItem) {
+        while (fieldsToBecalculatedItem.value.length > 0) {
             fieldsToBecalculatedItem.value.pop();
 
         }
-        if( typeof columnAxisSelectedDropdown !== null ) {
+        if (typeof columnAxisSelectedDropdown !== null) {
             var filteredAray = this.crossTabColumnAxisArray.filter((item) => item.data !== columnAxisSelectedDropdown.data);
             for (let i = 0; i < filteredAray.length; i++) {
                 fieldsToBecalculatedItem.value.push({ "label": filteredAray[i].label, "data": filteredAray[i].data });
@@ -138,52 +138,65 @@ class createcrosstabquery extends AccessBaseSkill {
         return true;
     }
     stage1SelectedItems(inputJson, crosstabInputArray) {
-    	 this.crossTabInputJson = inputJson;
-    	 if( typeof stage1SelectedItem !== null ) {
-        
+        this.crossTabInputJson = inputJson;
+        if (typeof stage1SelectedItem !== null) {
 
-        while (crosstabInputArray.length > 0) {
-            crosstabInputArray.pop();
-        }
-        for (let key in inputJson) {
-            // if (key == 'Tables') {
 
-            for (let i = 0; i < inputJson[key].length; i++) {
-                crosstabInputArray.push({ "label": inputJson[key][i].table_name, "data": { 'category': key, 'table_fields': inputJson[key][i].table_fields, 'table_name': inputJson[key][i].table_name } });
+            while (crosstabInputArray.length > 0) {
+                crosstabInputArray.pop();
             }
-            console.log(crosstabInputArray);
-            //}
+            for (let key in inputJson) {
+                // if (key == 'Tables') {
+
+                for (let i = 0; i < inputJson[key].length; i++) {
+                    crosstabInputArray.push({ "label": inputJson[key][i].table_name, "data": { 'category': key, 'table_fields': inputJson[key][i].table_fields, 'table_name': inputJson[key][i].table_name } });
+                }
+                console.log(crosstabInputArray);
+                //}
+            }
+            this.crossTabInputJsonArray = crosstabInputArray;
         }
-        this.crossTabInputJsonArray = crosstabInputArray;
-    }
     }
 
     updateCalcFunctionList(selectedField, updateValue) {
 
-        let defaultCalcArray = ["Avg", "Count", "First", "Last", "Max", "Min", "StDev", "Sum", "Var"];
+        let defaultCalcArray = [{ "label": "Avg", "data": "Avg" },
+        { "label": "Count", "data": "Count" },
+        { "label": "First", "data": "First" },
+        { "label": "Last", "data": "Last" },
+        { "label": "Max", "data": "Max" },
+        { "label": "Min", "data": "Min" },
+        { "label": "StDev", "data": "StDev" },
+        { "label": "Sum", "data": "Sum" },
+        { "label": "Var", "data": "Var" }
+        ]
         let fieldFound = false;
-        if (selectedField != "") {
+        if (selectedField != "" && selectedField != null) {
             if (Object.keys(this.calcFunctionJson).length != 0) {
-                for (field in this.calcFunctionJson) {
-                    if (field == selectedField) {
+                for (let field in this.calcFunctionJson) {
+                    if (field == selectedField.data) {
                         fieldFound = true;
-                        updateValue = this.calcFunctionJson[field]
+                        for (let index = 0; index < this.calcFunctionJson[field].length; ++index) {
+                            updateValue.value.push({
+                                "label": this.calcFunctionJson[field][index],
+                                "data": this.calcFunctionJson[field][index]
+                            });
+                        }
                         break;
                     }
                 }
             }
             if (fieldFound == false) {
-                updateValue = defaultCalcArray;
+                updateValue.value = defaultCalcArray;
             }
         }
         else {
-            updateValue = [];
+            updateValue.value = [];
         }
     }
 
-    populateFieldCalculated(inputObj, param2) {
-
-        if(inputObj){
+    populateFieldCalculated(inputObj, updateValue) {
+        if (inputObj && inputObj != "") {
             this.calcFunctionJson = inputObj;
         }
     }

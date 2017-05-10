@@ -34,15 +34,7 @@
               "value":{}
             }
         },
-        "stage3Header": {
-          "options": {
-              "value" : []
-            },
-            "selectedOption":{
-             "value":{}
-            }
-        },
-        "stageColumn3Header": {
+        "stage3ColumnHeader": {
           "options": {
              "value" : []
             },
@@ -52,7 +44,16 @@
         },
         "calculationFunction": {
           "options": {
-              "value" : []
+              "value" : [{ "label": "Avg", "data": "Avg" },
+        { "label": "Count", "data": "Count" },
+        { "label": "First", "data": "First" },
+        { "label": "Last", "data": "Last" },
+        { "label": "Max", "data": "Max" },
+        { "label": "Min", "data": "Min" },
+        { "label": "StDev", "data": "StDev" },
+        { "label": "Sum", "data": "Sum" },
+        { "label": "Var", "data": "Var" }
+        ]
             },
             "selectedOption":{
               "value":{}
@@ -67,12 +68,7 @@
             }
         },
          "includeSumOfRows": {
-          "options": {
-             "value" : []
-            },
-            "selectedOption":{
-              "value":""
-            }
+          "value":"true"
         },
         "defaultCrossTabQueryName": {
           "value": ""
