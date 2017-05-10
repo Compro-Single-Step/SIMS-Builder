@@ -97,6 +97,9 @@ class DatabaseFileStoreManager {
     saveStepXML(taskId, stepIndex, OutputXML) {
         return fsc.saveStepXML(taskId, stepIndex, OutputXML);
     }
+    saveTaskDynamicResource(taskParams, File, FileName) {
+        return fsc.saveTaskResources(taskParams, File, FileName);
+    }
 
     saveResourceFile() {
         return fsc.saveResourceFile();
@@ -108,6 +111,10 @@ class DatabaseFileStoreManager {
 
     getResourcePath(filePath) {
         return fsc.getResourcePath(filePath, folderMap.RESOURCE);
+    }
+
+    getFileFromFileStore(filePath) {
+        return fsc.getFileFromFileStore(filePath);
     }
 }
 
