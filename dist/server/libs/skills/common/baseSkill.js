@@ -21,7 +21,10 @@ module.exports = function () {
       return Promise.resolve(true);
     }
 
-    // This is the function of the TaskBar tooltip image path
+    /**
+    * fnality
+    * function takes the path of the taskkbar preview image and moves the image resource and returns its new path
+    */
 
   }, {
     key: "createTooltipImagePath",
@@ -38,6 +41,12 @@ module.exports = function () {
         return Promise.reject(error);
       });
     }
+
+    /**
+    * if any attribute is not given any function value then this function is called 
+    * it takes the value fo the first key in the params value and returns its value as the resolveParam
+    */
+
   }, {
     key: "extractSingleParamVal",
     value: function extractSingleParamVal(skillParams) {

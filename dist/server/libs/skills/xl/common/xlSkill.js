@@ -23,7 +23,7 @@ module.exports = function (_BaseSkill) {
     _createClass(ExcelBaseSkill, [{
         key: "init",
 
-        //dynamic sheet changes   
+        //dynamic sheet changes
         value: function init(data) {
             var self = this;
             var initDocJSonPath = data.initDocJSonPath;
@@ -56,6 +56,23 @@ module.exports = function (_BaseSkill) {
         value: function genImageJsonResFolder(stateId) {
             return "state" + stateId;
         }
+
+        /**
+        * fnality
+        * for populating the attribute IMAGE_JSON
+        * This attributes takes 4 or less resources(images in this case) 
+        * and generates an attribute value with the folder path where the 
+        * images are stored along with their names
+        * return
+        * {"folderPath": "XMLs/TaskXmls2016/exp/xl/04/03.02.T1/Assets/State1",
+        * "sheetImages":[{"sheetNo":1,
+        *                  "gridImg": "March_Data_DataGrid.png",
+        *                  "rowImg": "March_Data_RowGrid.png",
+        *                  "colImg": "March_Data_ColumnGrid.png",
+        *                  "cellImg":"March_Data_CellImg.png"}]}
+        * 
+        */
+
     }, {
         key: "createImageJson",
         value: function createImageJson(skillParams) {
@@ -188,6 +205,47 @@ module.exports = function (_BaseSkill) {
                     };
                     return Promise.resolve(resolveParams);
                 }
+        }
+
+        /**
+         * fnality
+         * for populating the attribute INIT_DOC_JSON and
+         * adding the asset path to resource map
+         * Resources added to this resource map are later copied to step asset folder
+         */
+
+    }, {
+        key: "createJsonPath",
+        value: function createJsonPath(skillParams) {
+            var taskParams = skillParams.taskParams;
+            var paramValueObj = skillParams.paramsObj;
+
+            var attrValue = skillParams.taskParams.addResourceToMap("step", paramValueObj["docData"]).absFilePath;
+            // { attrValue } is new syntax of ES6 which means => { 'attrValue': attrValue }
+            return Promise.resolve({ attrValue: attrValue });
+        }
+
+        /**
+         * fnality
+         * for populating the attribute SHEET_CELLS_DATA
+         * adding the asset path to resource map
+         * Resources added to this resource map are later copied to step asset folder
+         * return
+         * {"sheetNo":1, "dataJSONPath":"XMLs/TaskXmls2016/exp/xl/04/03.02.T1/Assets/State3/SheetCell.json" }
+         */
+
+    }, {
+        key: "createSheetCellData",
+        value: function createSheetCellData(skillParams) {
+
+            var attrValue = {},
+                filePath = skillParams.taskParams.addResourceToMap("step", skillParams.paramsObj["wbData"]).absFilePath;
+
+            attrValue["sheetNo"] = this.getSheetNumber(skillParams.paramsObj.sheetAction);
+            attrValue["dataJSONPath"] = filePath;
+            attrValue = JSON.stringify(attrValue);
+
+            return Promise.resolve({ attrValue: attrValue });
         }
     }]);
 
