@@ -72,10 +72,22 @@ module.exports = {
                     }
                 ]
             }
-        ],
-        dependencySkills: []
+        ]
     },
-    "applyshapeeffect": {
+    "insertaudio": {
+        primaryFile: "pp/insertAudio/insertAudio",
+        dependencyFiles: [
+            {
+                primaryFile: "pp/common/ppSkill",
+                dependencyFiles: [
+                    {
+                        primaryFile: "common/baseSkill"
+                    }
+                ]
+            }
+        ]
+    },
+     "applyshapeeffect": {
         primaryFile: "wd/ApplyShapeEffect/ApplyShapeEffect",
         dependencyFiles: [
             {
@@ -90,7 +102,7 @@ module.exports = {
                 ]
             }
         ]
-    }    
+     }
 }
 
 

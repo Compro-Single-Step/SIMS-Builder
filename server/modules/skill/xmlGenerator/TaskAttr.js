@@ -50,12 +50,30 @@ module.exports = class TaskAttr {
             for (let propName in this.XMLProps){
                 let propVal = this.XMLProps[propName];
                 if(propVal){
+                    if(propName === "value"){
+                        propVal = this.serialiseXMLVal(propVal);
+                    }
                     xmlString += propName+"='"+propVal+"' ";
                 }
             }
             xmlString += "/>";
         }
         return xmlString;
+    }
+
+    /**
+     * fn to serialise XML value
+     * it converts:
+     * ' to &#39;
+     * < to &lt;
+     *
+     */
+    serialiseXMLVal (val){
+        val = val.replace(/'/g, "&#39;");
+        val = val.replace(/’/g, "&#39;");
+        val = val.replace(/</g, "&lt;");
+        val = val.replace(/>/g, "&gt;");
+        return val;
     }
 
 }
