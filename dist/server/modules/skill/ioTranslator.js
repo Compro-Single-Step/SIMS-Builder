@@ -1,18 +1,92 @@
+const path = require('path'),
+      XMLUtil = require("../../utils/xmlUtil"),
+      ResourceUtil = require("../../utils/resourceUtil");
+
 //this file contains the object type implementation for the parameters of an attribute
 
-var attrParam = function (attrName, attrObject, stepUIState, skillobject, IOMapRef) {
+/**
+* attrParam is used in IOMap Translation into Attribute Value Map
+* it has info user uploadde values
+*/
+function attrParam(attrName, attrObject, stepUIState, skillobject, IOMapRef) {
   this.attrName = attrName;
   this.attrObject = attrObject;
   this.stepUIState = stepUIState;
   this.skillobject = skillobject;
-};
+}
 
-var attrTaskParam = function (taskId, stepIndex, stateId, dbFilestoreMgr) {
-
+/**
+* attrTaskParam is used in IOMap Translation into Attribute Value Map
+* it has info pertaining to task and step
+*/
+function attrTaskParam(taskId, stepIndex, stateId, dbFilestoreMgr, resourceMap) {
   this.taskId = taskId;
   this.stepIndex = stepIndex;
   this.stateId = stateId;
   this.dbFilestoreMgr = dbFilestoreMgr;
+  this.resourceMap = resourceMap;
+  this.resourceUtil = ResourceUtil;
+}
+
+/**
+ * @param {*} fileInfo : It can be a single Object or an Array of Objects which contain below key-value pairs:
+ *  path: It's the file path from where the resource has to be copied
+ *    it's fetched from IOMap JSON.
+ *        when resourcetype is step => Ex: "GO16.WD.12.12B.02.T1/1/1493790231823.DocumentData.json"
+ *        when resourcetype is skill => Ex: "xl/MoveCellContent/Resources/tree.xml"
+ *  resourceType: It can have following two values and according to that the source folder 
+ *      from which the file needs to be copied from is evaluated 
+ *        skill: Means that the resource is skill specific and has to be copied from "filestore/skills/" folder
+ *        step: Means that the resource is task specific and has to be copied from "filestore/Resources/" folder
+ *  AssetFolderHierarchy: Any custom parent folder hierarchy after the 'Assets' folder
+ *  addToPreload: (true | false) true means that the file needs to be added to preload Resources as well
+ * 
+ * OUTPUT: The Output will be an Object or an Array of Objects which contain following key-values:
+ *    stepAssetsFolderPath: It's the folder path till 'Assets' folder.
+ *    fileName: File name along with extension
+ *    absFilePath: Absolute folder path which needs to be added (in attribute value and preload map) in the task XML. Ex:
+ */
+attrTaskParam.prototype.addResourceToMap = function (fileInfo) {
+
+  let returnArray = [];
+
+  if (!(fileInfo instanceof Array)) {
+    return this._addToResMap(fileInfo);
+  } else {
+    for (let obj of fileInfo) {
+      returnArray.push(this._addToResMap(obj));
+    }
+  }
+  return returnArray;
+};
+
+attrTaskParam.prototype._addToResMap = function (filePathObj, config) {
+
+  let resourceType = filePathObj.resourceType ? filePathObj.resourceType.toLowerCase() !== "skill" ? "step" : "skill" : "step";
+  let AssetFolderHierarchy = filePathObj.AssetFolderHierarchy || "";
+  let addToPreload = !(filePathObj.addToPreload === "false" || filePathObj.addToPreload === false);
+
+  let existingResource = this.resourceMap[filePathObj.path];
+
+  if (existingResource) {
+    return {
+      "stepAssetsFolderPath": existingResource.stepAssetsFolderPath,
+      "fileName": existingResource.fileName,
+      "absFilePath": existingResource.absFilePath };
+  } else {
+    let fileName = ResourceUtil.getFileNameWithExtension(filePathObj.path),
+        fileType = ResourceUtil.getFileType(fileName),
+        stepAssetsFolderPath = XMLUtil.genStepAssetsFolderPath(this.taskId, this.stepIndex),
+
+    // Replacing all occurance of '\' with '/' because '\' is used as an escape character in Javascript
+    absFilePath = path.join(stepAssetsFolderPath, AssetFolderHierarchy, fileName).replace(/\\/g, "/");
+
+    // Adding to Resource Map so that the file can be copied asynchronously
+    // stepAssetsFolderPath is not used in copying files, it's been put here so that it can be sent back in the return statement in line 68 
+    // i.e. if the requested resource is already existing in the map
+    this.resourceMap[filePathObj.path] = { AssetFolderHierarchy, fileName, stepAssetsFolderPath, resourceType, absFilePath, fileType, addToPreload };
+    return { stepAssetsFolderPath, fileName, absFilePath };
+  }
 };
 
 class IOTranslator {
@@ -41,25 +115,24 @@ class IOTranslator {
     return paramObj;
   }
 
-  evaluateFromFunc(attrParams, paramsObj, taskParam) {
+  evaluateFromFunc(attrParams, paramsObj, skillParamsObj, taskParams) {
 
-    var functionName = attrParams.attrObject["function-name"];
+    let functionName = attrParams.attrObject["function-name"];
 
     if (!attrParams.skillobject[functionName]) {
       functionName = "extractSingleParamVal";
     }
 
-    var skillParams = { "paramsObj": paramsObj, "taskParams": taskParam };
-    return attrParams.skillobject[functionName](skillParams);
+    let params = { paramsObj, skillParamsObj, taskParams };
+    return attrParams.skillobject[functionName](params);
   }
 
   evaluateAttribute(attrParams, taskParam) {
 
-    var evaluatedParams = [];
-    var attrObjectValue = "";
-    //the attr params currentky contains the string values , the LOC below converts it into values from the Step UI Json 
-    evaluatedParams = this.getEvaluatedParams(attrParams.attrObject.params, attrParams.stepUIState);
-    return this.evaluateFromFunc(attrParams, evaluatedParams, taskParam);
+    let evaluatedParams = {};
+    //the attr params currently contains the string values , the LOC below converts it into values from the Step UI Json 
+    if (attrParams.attrObject.params) evaluatedParams = this.getEvaluatedParams(attrParams.attrObject.params, attrParams.stepUIState);
+    return this.evaluateFromFunc(attrParams, evaluatedParams, attrParams.attrObject.skillParams, taskParam);
   }
 
   /**
@@ -72,16 +145,21 @@ class IOTranslator {
    * @param {*} data : it's an object having four values which are parentObj, keyName, stateId and compId
    * @param {*} PromiseRequestsArr : An array in which promise object has to be pushed. 
    * Later on in the execution cycle this whole array is passed to the Promise.All()
+   * @param {*} resourceMap : An Object which contains the info of the Resources that will to be copied
+   * to corresponding folder and added in the preload Resources Array which will be used in XML generation
    */
-
-  _executeIOMapFunction(attrObj, data, PromiseRequestsArr) {
+  _executeIOMapFunction(attrObj, data, PromiseRequestsArr, resourceMap) {
     let attrParams = new attrParam(data.keyName, data.parentObj[data.keyName], attrObj.stepUIState, attrObj.skillRef),
-        taskParam = new attrTaskParam(attrObj.taskId, attrObj.stepIndex, data.stateId, attrObj.dbFilestoreMgr);
+        taskParam = new attrTaskParam(attrObj.taskId, attrObj.stepIndex, data.stateId, attrObj.dbFilestoreMgr, resourceMap);
 
     PromiseRequestsArr.push(this.genPromise(attrParams, taskParam).then(resolveParams => {
       data.parentObj[data.keyName] = resolveParams.attrValue;
+      // this if check here is for backward compatibility
+      // in the new implementation skill class need not send this preload resource array here
+      // this code will become obsolete once all the present templates start using new approach
       if (resolveParams.preloadResArr) {
-        this.appendPreloadRes(resolveParams.preloadResArr, attrObj.IOMap);
+        if (!attrObj.IOMap.preload) attrObj.IOMap.preload = { resource: [] };else if (!attrObj.IOMap.preload.resource) attrObj.IOMap.preload.resource = [];
+        attrObj.IOMap.preload.resource.push(...resolveParams.preloadResArr);
       }
     }, error => {
       return Promise.reject(error);
@@ -101,7 +179,8 @@ class IOTranslator {
 
     return attrObj.skillRef["init"](attrObj).then(() => {
       let self = this,
-          PromiseRequestsArr = [];
+          PromiseRequestsArr = [],
+          resourceMap = {};
 
       /**
        * Recursive function to traverse the IO Map to translate IO Map into Attribute Value Map
@@ -124,7 +203,7 @@ class IOTranslator {
           // if check to ensure that this iteration is for an element in which some translation has to be done
           // and not for some element in the hierarchy which doesn't need any translation for itself but has some child elements
           if (key === "function-name") {
-            self._executeIOMapFunction(attrObj, { parentObj, keyName, stateId, compId }, PromiseRequestsArr);
+            self._executeIOMapFunction(attrObj, { parentObj, keyName, stateId, compId }, PromiseRequestsArr, resourceMap);
           } else if (typeof parentObj[keyName][key] === "object") {
             traverseIOMap(parentObj[keyName], key, stateId, compId);
           }
@@ -132,8 +211,9 @@ class IOTranslator {
       })({ "iomap": iomap }, "iomap");
 
       return Promise.all(PromiseRequestsArr).then(() => {
-        iomap.preloadResources = self._removeDuplicatePreloadResources(iomap.preloadResources);
-        return Promise.resolve(iomap);
+        let copyResPromiseArray = this._copyResourceFilesAndFillPreload(resourceMap, attrObj);
+        iomap.preload.resource = self._removeDuplicatePreloadResources(iomap.preload.resource);
+        return Promise.resolve([iomap, copyResPromiseArray]);
       }).catch(err => {
         console.log("Error in traverseIOMap function of IOTranslator: " + err.message);
         return Promise.reject(err);
@@ -156,20 +236,39 @@ class IOTranslator {
       return tempObj[obj.path] ? false : tempObj[obj.path] = true;
     });
   }
+  /**
+   * 
+   * @param {*} resourceMap : It's an object which contains following key-value pairs:
+   *   absFilePath:"XMLs/TaskXmls/go16/wd/12/12b.02.t1/1/Assets/1493790231823.DocumentData.json"
+   *   AssetFolderHierarchy: Any custom folder hierarchy
+   *   fileName: "1493790231823.DocumentData.json"
+   *   fileType: "json"
+   *   resourceType: "step"
+   * @param {*} attrObj : it's an object having the following
+   * IOMap, stepUIState, 
+   * skillRef (object of skill specific class. It was generated by skill factory), 
+   * taskId, stepIndex and reference of dbFilestoreMgr 
+   * 
+   * Output: It returns an Array of promises for copying the resource files and also add these resources to
+   * Preload Array which will be used for XML generation
+   */
+  _copyResourceFilesAndFillPreload(resourceMap, attrObj) {
+    let copyResPromiseArray = [];
+    for (let key in resourceMap) {
+      copyResPromiseArray.push(attrObj.dbFilestoreMgr.copyTaskAssetFileEnhanced(key, resourceMap[key], attrObj.taskId, attrObj.stepIndex));
 
-  appendPreloadRes(preloadResArr, IOMap) {
-    if (!IOMap["preloadResources"]) {
-      IOMap["preloadResources"] = [];
+      //Adding in preload Res
+      if (!attrObj.IOMap.preload) attrObj.IOMap.preload = { resource: [] };else if (!attrObj.IOMap.preload.resource) attrObj.IOMap.preload.resource = [];
+
+      if (resourceMap[key]["addToPreload"]) attrObj.IOMap.preload.resource.push({ "path": resourceMap[key]["absFilePath"], "type": resourceMap[key]["fileType"] });
     }
-    for (var index = 0; index < preloadResArr.length; ++index) {
-      IOMap["preloadResources"].push(preloadResArr[index]);
-    }
+    return copyResPromiseArray;
   }
 
   getAttrValueMap(attrObj) {
-    return this.readIOMap(attrObj).then(function (ioMap) {
-      return Promise.resolve(ioMap);
-    }, function (error) {
+    return this.readIOMap(attrObj).then(([ioMap, copyResPromiseArray]) => {
+      return Promise.resolve([ioMap, copyResPromiseArray]);
+    }).catch(error => {
       return Promise.reject(error);
     });
   }
