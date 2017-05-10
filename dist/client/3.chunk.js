@@ -8,11 +8,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__(115);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(404);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__home_routes__ = __webpack_require__(1038);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__home_routes__ = __webpack_require__(1037);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ng2_bootstrap__ = __webpack_require__(949);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__layout_component__ = __webpack_require__(1004);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__sidebar_sidebar_component__ = __webpack_require__(1040);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__navbar_navbar_component__ = __webpack_require__(1039);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__sidebar_sidebar_component__ = __webpack_require__(1039);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__navbar_navbar_component__ = __webpack_require__(1038);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -24921,7 +24921,7 @@ var Layout = (function () {
     Layout = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'layout',
-            template: __webpack_require__(1097),
+            template: __webpack_require__(1094),
             host: {
                 '[class.nav-static]': 'config.state["nav-static"]',
                 '[class.chat-sidebar-opened]': 'chatOpened',
@@ -24971,8 +24971,7 @@ var Layout = (function () {
 /* 1034 */,
 /* 1035 */,
 /* 1036 */,
-/* 1037 */,
-/* 1038 */
+/* 1037 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -24997,7 +24996,7 @@ var ROUTES = __WEBPACK_IMPORTED_MODULE_0__angular_router__["a" /* RouterModule *
 //# sourceMappingURL=E:/SIMS-Builder/client/home.routes.js.map
 
 /***/ }),
-/* 1039 */
+/* 1038 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -25074,7 +25073,7 @@ var Navbar = (function () {
     Navbar = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: '[navbar]',
-            template: __webpack_require__(1098),
+            template: __webpack_require__(1095),
             styles: ['.brand_logo, .baloo_icon{height:20px;}']
         }), 
         __metadata('design:paramtypes', [(typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__app_config__["a" /* AppConfig */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__app_config__["a" /* AppConfig */]) === 'function' && _c) || Object, (typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__services_auth_service__["a" /* AuthService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_3__services_auth_service__["a" /* AuthService */]) === 'function' && _d) || Object, (typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["d" /* Router */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_router__["d" /* Router */]) === 'function' && _e) || Object, (typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_4__services_user_service__["a" /* UserService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_4__services_user_service__["a" /* UserService */]) === 'function' && _f) || Object])
@@ -25086,7 +25085,7 @@ var Navbar = (function () {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(169)))
 
 /***/ }),
-/* 1040 */
+/* 1039 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -25154,7 +25153,7 @@ var Sidebar = (function () {
     Sidebar = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: '[sidebar]',
-            template: __webpack_require__(1099)
+            template: __webpack_require__(1096)
         }), 
         __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3__app_config__["a" /* AppConfig */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_3__app_config__["a" /* AppConfig */]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["d" /* Router */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_router__["d" /* Router */]) === 'function' && _c) || Object, (typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2__angular_common__["Location"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__angular_common__["Location"]) === 'function' && _d) || Object])
     ], Sidebar);
@@ -25164,6 +25163,7 @@ var Sidebar = (function () {
 //# sourceMappingURL=E:/SIMS-Builder/client/sidebar.component.js.map
 
 /***/ }),
+/* 1040 */,
 /* 1041 */,
 /* 1042 */,
 /* 1043 */,
@@ -25217,22 +25217,19 @@ var Sidebar = (function () {
 /* 1091 */,
 /* 1092 */,
 /* 1093 */,
-/* 1094 */,
-/* 1095 */,
-/* 1096 */,
-/* 1097 */
+/* 1094 */
 /***/ (function(module, exports) {
 
 module.exports = "<nav sidebar id=\"sidebar\" role=\"navigation\" class=\"sidebar\"></nav>\r\n<nav navbar (toggleSidebarEvent)=\"toggleSidebarListener($event)\" class=\"page-controls navbar navbar-dashboard\"></nav>\r\n<!--add fixed_navbar class if needed-->\r\n<div class=\"content-wrap\" id=\"content-wrap\">\r\n  <main id=\"content\" class=\"content view-animate fade-up\" role=\"main\">\r\n    <router-outlet></router-outlet>\r\n  </main>\r\n</div>\r\n"
 
 /***/ }),
-/* 1098 */
+/* 1095 */
 /***/ (function(module, exports) {
 
 module.exports = "<div class=\"container-fluid\">\r\n  <!-- .navbar-header contains links seen on xs & sm screens -->\r\n  <div class=\"navbar-header\">\r\n    <ul class=\"nav navbar-nav\">\r\n      <li class=\"nav-item\">\r\n        <template #sidebarToggleTooltip>\r\n          Turn on/off <br> sidebar <br>collapsing\r\n        </template>\r\n        <!-- whether to automatically collapse sidebar on mouseleave. If activated acts more like usual admin templates -->\r\n        <a (click)=\"toggleSidebar('static')\"  class=\"nav-link hidden-md-down\" [tooltip]=\"sidebarToggleTooltip\"\r\n          placement=\"bottom\">\r\n          <i class=\"fa fa-bars fa-lg\"></i>\r\n        </a>\r\n        <!-- shown on xs & sm screen. collapses and expands navigation -->\r\n        <a (click)=\"toggleSidebar('collapse')\" class=\"hidden-lg-up nav-link\" href=\"#\" data-html=\"true\" title=\"Show/hide<br>sidebar\" data-placement=\"bottom\">\r\n          <span class=\"rounded rounded-lg bg-gray text-white hidden-md-up\"><i class=\"fa fa-bars fa-lg\"></i></span>\r\n          <i class=\"fa fa-bars fa-lg hidden-sm-down\"></i>\r\n        </a>\r\n      </li>\r\n      <li class=\"nav-item ml-sm hidden-sm-down\"><a class=\"nav-link\" href=\"#\"><img class=\"brand_logo\" src=\"assets/images/builder_logo.png\"/></a></li>\r\n      <li class=\"nav-item ml-sm hidden-sm-down\"><a class=\"nav-link\" href=\"#\"><h4 class=\"fw-semi-bold hidden-sm-down\">SIMS Builder</h4></a></li>\r\n    </ul>\r\n    <a class=\"navbar-brand hidden-md-up\">\r\n      &nbsp;\r\n      SIMS Builder\r\n      &nbsp;\r\n    </a>\r\n  </div>\r\n\r\n  <!-- this part is hidden for xs screens -->\r\n  <div class=\"collapse navbar-collapse\">\r\n    <!-- search form! link it to your search server -->\r\n    <ul class=\"nav navbar-nav float-xs-right\" (click)=\"$event.preventDefault()\">\r\n      <li class=\"nav-item dropdown\">\r\n        <a class=\"nav-link dropdown-toggle dropdown-toggle-notifications\"\r\n           id=\"notifications-dropdown-toggle\" data-toggle=\"dropdown\">\r\n                <span class=\"thumb-sm avatar float-xs-left\">\r\n                    <img class=\"rounded-circle\" src=\"assets/images/avatar.png\" alt=\"...\">\r\n                </span>\r\n          &nbsp;\r\n          {{currentUser.firstname+\" \"+currentUser.lastname}}&nbsp;\r\n        </a>\r\n        <!-- ready to use notifications dropdown. inspired by smartadmin template.\r\n                     consists of three components:\r\n                     notifications, messages, progress. leave or add what's important for you.\r\n                     uses Sing's ajax-load plugin for async content loading. See #load-notifications-btn -->\r\n       \r\n      </li>\r\n      <li class=\"nav-item dropdown\" (click)=\"toggledropdown($event)\">\r\n        <a href class=\"nav-link dropdown-toggle\" data-toggle=\"dropdown\">\r\n          <i class=\"fa fa-cog fa-lg\"></i>\r\n        </a>\r\n        <ul class=\"dropdown-menu dropdown-menu-right\">\r\n          <li><a class=\"dropdown-item\" href=\"#\"><i class=\"glyphicon glyphicon-user\"></i> &nbsp; My Account</a></li>\r\n          <li class=\"dropdown-divider\"></li>\r\n          <li *ngIf=\"adminUser\" ><a class=\"dropdown-item\" [routerLink]=\" ['/admin']\"><i class=\"glyphicon glyphicon-user\"></i> &nbsp; Administration</a></li>\r\n          <li *ngIf=\"adminUser\" class=\"dropdown-divider\"></li>\r\n          <li><a class=\"dropdown-item\" (click)=\"logout()\"><i class=\"fa fa-sign-out\"></i> &nbsp; Log Out</a></li>\r\n        </ul>\r\n      </li>\r\n    </ul>\r\n    <form action=\"\" class=\"navbar-form float-xs-right searchForm\" *ngIf=\"showSearchform\" role=\"search\" #f=\"ngForm\" (ngSubmit)=\"onDashboardSearch(f)\">\r\n      <div class=\"form-group\">\r\n        <div class=\"input-group input-group-no-border\">\r\n          <span class=\"input-group-addon\">\r\n              <i class=\"fa fa-search\"></i>\r\n          </span>\r\n          <input class=\"form-control\" name=\"search\" ngModel type=\"text\" placeholder=\"Search Task\">\r\n        </div>\r\n      </div>\r\n    </form>\r\n  </div>\r\n</div>\r\n"
 
 /***/ }),
-/* 1099 */
+/* 1096 */
 /***/ (function(module, exports) {
 
 module.exports = "<div class=\"js-sidebar-content\">\r\n  <header class=\"logo hidden-sm-down\">\r\n    <a>{{config.name}}</a>\r\n  </header>\r\n  <div class=\"sidebar-status hidden-md-up\">\r\n    <header class=\"logo\">\r\n      <a>{{config.name}}</a>\r\n    </header>\r\n    <!-- #notifications-dropdown-menu goes here when screen collapsed to xs or sm -->\r\n  </div>\r\n  <!-- main notification links are placed inside of .sidebar-nav -->\r\n  <ul class=\"sidebar-nav\">\r\n    <li>\r\n       <a [routerLink]=\" ['/']\">\r\n      <span class=\"icon\">\r\n          <i class=\"fa fa-search\"></i>\r\n      </span>\r\n        Find My task\r\n      </a>\r\n    </li>\r\n    <li>\r\n      <a>\r\n      <span class=\"icon\">\r\n          <i class=\"fa fa-clock-o\"></i>\r\n      </span>\r\n        Recently Completed Tasks\r\n      </a>\r\n    </li>\r\n    <!-- <li>\r\n      <a [routerLink]=\" ['another-page'] \">\r\n      <span class=\"icon\">\r\n          <i class=\"fa fa-tree\"></i>\r\n      </span>\r\n        Another Page\r\n      <span class=\"tag tag-danger\">\r\n          9\r\n      </span>\r\n      </a>\r\n    </li> -->\r\n  </ul>\r\n</div>\r\n"

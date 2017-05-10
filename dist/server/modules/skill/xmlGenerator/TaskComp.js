@@ -13,12 +13,12 @@ module.exports = class Comp {
 
     constructor(comp, attrValMap, parentStateRef) {
 
-        // map holding poperties which are to be mentioned in this comp's node in generated step XML
-        this.XMLProps = {
-            "id": comp.props.id,
-            "mode": comp.props.mode,
-            "ref-state": comp.props["ref-state"]
-        };
+        this.id = comp.props.id;
+        this.mode = comp.props.mode;
+
+        // this var holds the state id (a string) to be mentioned in the xml 
+        // so that the attribute of this same comp from that state can be refered by the SIMS engine
+        this.xmlStateRef = comp.props["ref-state"];
 
         // this var holds the reference of state object of which this comp object is child
         this.stateRef = parentStateRef;
@@ -93,36 +93,7 @@ module.exports = class Comp {
             }
         };
 
-        if (comp.props.userDefined) {
-            this.generateUserDefinedProps(comp.props.userDefined);
-        }
-
         this.addAttrs(comp);
-    }
-
-    /**
-     * fn reads property names given in comp node of template XML and 
-     * add these properties in the comp node of the generated XML with the values coming from AttrValueMap
-     * @param {*} propNames : string having comma separated names of properties
-     * whose values are user defined and have to be fetched from the AttrValueMap : Eg "hostparam,mode,ref-state"
-     */
-    generateUserDefinedProps(propNames) {
-
-        let dynamicCompPropsArr = propNames.split(',');
-        for (let idx = 0; idx < dynamicCompPropsArr.length; idx++) {
-            let propName = dynamicCompPropsArr[idx];
-            try {
-                let tempPropVal = this.attrValMap.props[propName];
-                if (tempPropVal) {
-                    this.XMLProps[propName] = tempPropVal;
-                } else {
-                    throw "error";
-                }
-            } catch (e) {
-                let msg = "ERROR: Value for property '" + propName + "' for CompId '" + this.XMLProps.id + "' " + "in StateId '" + this.stateRef.getId() + "' not found in the AttrValueMap";
-                console.log(msg);
-            }
-        }
     }
 
     addAttrs(comp) {
@@ -251,22 +222,23 @@ module.exports = class Comp {
      * creating single attribute object
      */
     createAttr(args, attrType, attrSetName, attrsVal) {
+        let myAttr = new TaskAttr(args);
 
         let val = args.value;
-        if (args.userDefined) {
+        if (args.userDefined == "true") {
             if (attrsVal) {
                 if (attrsVal[args.name]) {
                     val = attrsVal[args.name];
                 }
             } else {
-                let tempVal = this.getAttrValByNameTypeSet(args.name, attrType, attrSetName, this.XMLProps.id);
+                let tempVal = this.getAttrValByNameTypeSet(myAttr.name, attrType, attrSetName, this.id);
                 if (tempVal) {
                     val = tempVal;
                 }
             }
         }
 
-        let myAttr = new TaskAttr(args, val, this);
+        myAttr.setValue(val);
         return myAttr;
     }
 
@@ -295,7 +267,7 @@ module.exports = class Comp {
 
         let result;
 
-        if (compId == this.XMLProps.id) {
+        if (compId == this.id) {
             result = this.getDependencySetByName(dependencyName);
         } else {
             result = this.stateRef.getCompValidationSets(compId, dependencyName);;
@@ -340,15 +312,13 @@ module.exports = class Comp {
     }
 
     generateXML() {
+        let xmlString = '<comp id="' + this.id + '" mode="' + this.mode + '" ';
 
-        let xmlString = "<comp ";
-        for (let propName in this.XMLProps) {
-            let propVal = this.XMLProps[propName];
-            if (propVal) {
-                xmlString += propName + "='" + propVal + "' ";
-            }
+        if (this.xmlStateRef) {
+            xmlString += 'ref-state="' + this.xmlStateRef + '" ';
         }
-        xmlString += ">";
+
+        xmlString += '>';
 
         // adding attribute XML
         for (let attrSet in this.attributeSets) {
@@ -368,13 +338,4 @@ module.exports = class Comp {
         return xmlString;
     }
 
-    // returning Id of this component
-    getId() {
-        return this.XMLProps.id;
-    }
-
-    // fetching parent state's ID of this component
-    getStateId() {
-        return this.stateRef.getId();
-    }
 };

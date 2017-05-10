@@ -25,68 +25,37 @@ function attrTaskParam(taskId, stepIndex, stateId, dbFilestoreMgr, resourceMap) 
   this.stateId = stateId;
   this.dbFilestoreMgr = dbFilestoreMgr;
   this.resourceMap = resourceMap;
-  this.resourceUtil = ResourceUtil;
 }
 
 /**
- * @param {*} fileInfo : It can be a single Object or an Array of Objects which contain below key-value pairs:
- *  path: It's the file path from where the resource has to be copied
- *    it's fetched from IOMap JSON.
- *        when resourcetype is step => Ex: "GO16.WD.12.12B.02.T1/1/1493790231823.DocumentData.json"
- *        when resourcetype is skill => Ex: "xl/MoveCellContent/Resources/tree.xml"
- *  resourceType: It can have following two values and according to that the source folder 
- *      from which the file needs to be copied from is evaluated 
- *        skill: Means that the resource is skill specific and has to be copied from "filestore/skills/" folder
- *        step: Means that the resource is task specific and has to be copied from "filestore/Resources/" folder
- *  AssetFolderHierarchy: Any custom parent folder hierarchy after the 'Assets' folder
- *  addToPreload: (true | false) true means that the file needs to be added to preload Resources as well
- * 
- * OUTPUT: The Output will be an Object or an Array of Objects which contain following key-values:
- *    stepAssetsFolderPath: It's the folder path till 'Assets' folder.
- *    fileName: File name along with extension
- *    absFilePath: Absolute folder path which needs to be added (in attribute value and preload map) in the task XML. Ex:
+ * @param {*} resourceType : It can have following two values and according to that the source folder 
+ * from which the file needs to be copied from is evaluated 
+ *    skill: Means that the resource is skill specific and has to be copied from "filestore/skills/" folder
+ *    step: Means that the resource is task specific and has to be copied from "filestore/resources/" folder
+ * @param {*} filePath : The file path fetched from IOMap JSON 
+ * when resourcetype is step => Ex: "GO16.WD.12.12B.02.T1/1/1493790231823.DocumentData.json"
+ * when resourcetype is skill => Ex: "xl/movecellcontent/resources/tree.xml"
+ * @param {*} customParentFolder : Any custom parent folder hierarchy after the 'Assets' folder
  */
-attrTaskParam.prototype.addResourceToMap = function (fileInfo) {
+attrTaskParam.prototype.addResourceToMap = function (resourceType, filePath, customParentFolder = "") {
 
-  let returnArray = [];
+  let existingResource = this.resourceMap[filePath];
+  if (existingResource) return existingResource;
 
-  if (!(fileInfo instanceof Array)) {
-    return this._addToResMap(fileInfo);
-  } else {
-    for (let obj of fileInfo) {
-      returnArray.push(this._addToResMap(obj));
-    }
-  }
-  return returnArray;
-};
+  let fileName = ResourceUtil.getFileNameWithExtension(filePath),
+      fileType = ResourceUtil.getFileType(fileName),
+      stepAssetsFolderPath = XMLUtil.genStepAssetsFolderPath(this.taskId, this.stepIndex),
 
-attrTaskParam.prototype._addToResMap = function (filePathObj, config) {
+  // Replacing all occurance of '\' with '/' because '\' is used as an escape character in Javascript
+  absFilePath = path.join(stepAssetsFolderPath, customParentFolder, fileName).replace(/\\/g, "/");
 
-  let resourceType = filePathObj.resourceType ? filePathObj.resourceType.toLowerCase() !== "skill" ? "step" : "skill" : "step";
-  let AssetFolderHierarchy = filePathObj.AssetFolderHierarchy || "";
-  let addToPreload = !(filePathObj.addToPreload === "false" || filePathObj.addToPreload === false);
+  resourceType = resourceType.toLowerCase();
 
-  let existingResource = this.resourceMap[filePathObj.path];
+  if (resourceType !== "skill") resourceType = "step";
 
-  if (existingResource) {
-    return {
-      "stepAssetsFolderPath": existingResource.stepAssetsFolderPath,
-      "fileName": existingResource.fileName,
-      "absFilePath": existingResource.absFilePath };
-  } else {
-    let fileName = ResourceUtil.getFileNameWithExtension(filePathObj.path),
-        fileType = ResourceUtil.getFileType(fileName),
-        stepAssetsFolderPath = XMLUtil.genStepAssetsFolderPath(this.taskId, this.stepIndex),
-
-    // Replacing all occurance of '\' with '/' because '\' is used as an escape character in Javascript
-    absFilePath = path.join(stepAssetsFolderPath, AssetFolderHierarchy, fileName).replace(/\\/g, "/");
-
-    // Adding to Resource Map so that the file can be copied asynchronously
-    // stepAssetsFolderPath is not used in copying files, it's been put here so that it can be sent back in the return statement in line 68 
-    // i.e. if the requested resource is already existing in the map
-    this.resourceMap[filePathObj.path] = { AssetFolderHierarchy, fileName, stepAssetsFolderPath, resourceType, absFilePath, fileType, addToPreload };
-    return { stepAssetsFolderPath, fileName, absFilePath };
-  }
+  //Pushing to  Resource Map so that the file can be copied asynchronously
+  this.resourceMap[filePath] = { customParentFolder, fileName, resourceType, absFilePath, fileType };
+  return { customParentFolder, fileName, stepAssetsFolderPath, fileType, absFilePath };
 };
 
 class IOTranslator {
@@ -115,7 +84,7 @@ class IOTranslator {
     return paramObj;
   }
 
-  evaluateFromFunc(attrParams, paramsObj, skillParamsObj, taskParams) {
+  evaluateFromFunc(attrParams, paramsObj, taskParams) {
 
     let functionName = attrParams.attrObject["function-name"];
 
@@ -123,16 +92,17 @@ class IOTranslator {
       functionName = "extractSingleParamVal";
     }
 
-    let params = { paramsObj, skillParamsObj, taskParams };
-    return attrParams.skillobject[functionName](params);
+    let skillParams = { paramsObj, taskParams };
+    return attrParams.skillobject[functionName](skillParams);
   }
 
   evaluateAttribute(attrParams, taskParam) {
 
-    let evaluatedParams = {};
-    //the attr params currently contains the string values , the LOC below converts it into values from the Step UI Json 
-    if (attrParams.attrObject.params) evaluatedParams = this.getEvaluatedParams(attrParams.attrObject.params, attrParams.stepUIState);
-    return this.evaluateFromFunc(attrParams, evaluatedParams, attrParams.attrObject.skillParams, taskParam);
+    var evaluatedParams = [];
+    var attrObjectValue = "";
+    //the attr params currentky contains the string values , the LOC below converts it into values from the Step UI Json 
+    evaluatedParams = this.getEvaluatedParams(attrParams.attrObject.params, attrParams.stepUIState);
+    return this.evaluateFromFunc(attrParams, evaluatedParams, taskParam);
   }
 
   /**
@@ -210,8 +180,9 @@ class IOTranslator {
         }
       })({ "iomap": iomap }, "iomap");
 
+      let copyResPromiseArray = this._copyResourceFilesAndFillPreload(resourceMap, attrObj);
+
       return Promise.all(PromiseRequestsArr).then(() => {
-        let copyResPromiseArray = this._copyResourceFilesAndFillPreload(resourceMap, attrObj);
         iomap.preload.resource = self._removeDuplicatePreloadResources(iomap.preload.resource);
         return Promise.resolve([iomap, copyResPromiseArray]);
       }).catch(err => {
@@ -240,7 +211,7 @@ class IOTranslator {
    * 
    * @param {*} resourceMap : It's an object which contains following key-value pairs:
    *   absFilePath:"XMLs/TaskXmls/go16/wd/12/12b.02.t1/1/Assets/1493790231823.DocumentData.json"
-   *   AssetFolderHierarchy: Any custom folder hierarchy
+   *   customParentFolder: Any custom folder hierarchy
    *   fileName: "1493790231823.DocumentData.json"
    *   fileType: "json"
    *   resourceType: "step"
@@ -257,10 +228,9 @@ class IOTranslator {
     for (let key in resourceMap) {
       copyResPromiseArray.push(attrObj.dbFilestoreMgr.copyTaskAssetFileEnhanced(key, resourceMap[key], attrObj.taskId, attrObj.stepIndex));
 
-      //Adding in preload Res
+      //Adding in prload Res
       if (!attrObj.IOMap.preload) attrObj.IOMap.preload = { resource: [] };else if (!attrObj.IOMap.preload.resource) attrObj.IOMap.preload.resource = [];
-
-      if (resourceMap[key]["addToPreload"]) attrObj.IOMap.preload.resource.push({ "path": resourceMap[key]["absFilePath"], "type": resourceMap[key]["fileType"] });
+      attrObj.IOMap.preload.resource.push({ "path": resourceMap[key]["absFilePath"], "type": resourceMap[key]["fileType"] });
     }
     return copyResPromiseArray;
   }

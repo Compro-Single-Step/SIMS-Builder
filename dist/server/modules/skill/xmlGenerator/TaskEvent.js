@@ -45,11 +45,9 @@ module.exports = class TaskEvent {
                 "compsToValidate": []
             };
 
-            if (validations[i]["props"]) {
-                let currValProps = Object.keys(validations[i]["props"]);
-                for (let j = 0; j < currValProps.length; j++) {
-                    currValidation["props"][currValProps[j]] = validations[i]["props"][currValProps[j]];
-                }
+            let currValProps = Object.keys(validations[i]["props"]);
+            for (let j = 0; j < currValProps.length; j++) {
+                currValidation["props"][currValProps[j]] = validations[i]["props"][currValProps[j]];
             }
 
             let currValidationComps = validations[i]["comp"];
