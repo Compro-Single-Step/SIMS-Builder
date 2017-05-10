@@ -80,12 +80,11 @@ var sortingTableColumns = function (_ExcelBaseSkill) {
       while (dependantSheetArrayInModel.length > 0) {
         dependantSheetArrayInModel.pop(); //https://jsperf.com/array-clear-methods/3
       }
-      //Add column header names from Column Headers csv file
-      if (columnHeadersData !== null) {
-        var columnHeaders = columnHeadersData.split(/\r\n|\n/);
-        for (var i = 1; i < columnHeaders.length; i++) {
-          var columnHeaderName = columnHeaders[i].split(',')[0];
-          var columnHeaderDataType = columnHeaders[i].split(',')[1];
+      //Add column header names from Column Headers data json
+      if (columnHeadersData != null) {
+        for (var i = 0; i < columnHeadersData.length; i++) {
+          var columnHeaderName = columnHeadersData[i].columnName;
+          var columnHeaderDataType = columnHeadersData[i].columnType;
           if (columnHeaderName != "") dependantSheetArrayInModel.push({ "label": columnHeaderName, "data": columnHeaderDataType });
         }
       }
