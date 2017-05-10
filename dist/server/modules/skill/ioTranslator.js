@@ -25,37 +25,68 @@ function attrTaskParam(taskId, stepIndex, stateId, dbFilestoreMgr, resourceMap) 
   this.stateId = stateId;
   this.dbFilestoreMgr = dbFilestoreMgr;
   this.resourceMap = resourceMap;
+  this.resourceUtil = ResourceUtil;
 }
 
 /**
- * @param {*} resourceType : It can have following two values and according to that the source folder 
- * from which the file needs to be copied from is evaluated 
- *    skill: Means that the resource is skill specific and has to be copied from "filestore/skills/" folder
- *    step: Means that the resource is task specific and has to be copied from "filestore/resources/" folder
- * @param {*} filePath : The file path fetched from IOMap JSON 
- * when resourcetype is step => Ex: "GO16.WD.12.12B.02.T1/1/1493790231823.DocumentData.json"
- * when resourcetype is skill => Ex: "xl/movecellcontent/resources/tree.xml"
- * @param {*} customParentFolder : Any custom parent folder hierarchy after the 'Assets' folder
+ * @param {*} fileInfo : It can be a single Object or an Array of Objects which contain below key-value pairs:
+ *  path: It's the file path from where the resource has to be copied
+ *    it's fetched from IOMap JSON.
+ *        when resourcetype is step => Ex: "GO16.WD.12.12B.02.T1/1/1493790231823.DocumentData.json"
+ *        when resourcetype is skill => Ex: "xl/MoveCellContent/Resources/tree.xml"
+ *  resourceType: It can have following two values and according to that the source folder 
+ *      from which the file needs to be copied from is evaluated 
+ *        skill: Means that the resource is skill specific and has to be copied from "filestore/skills/" folder
+ *        step: Means that the resource is task specific and has to be copied from "filestore/Resources/" folder
+ *  AssetFolderHierarchy: Any custom parent folder hierarchy after the 'Assets' folder
+ *  addToPreload: (true | false) true means that the file needs to be added to preload Resources as well
+ * 
+ * OUTPUT: The Output will be an Object or an Array of Objects which contain following key-values:
+ *    stepAssetsFolderPath: It's the folder path till 'Assets' folder.
+ *    fileName: File name along with extension
+ *    absFilePath: Absolute folder path which needs to be added (in attribute value and preload map) in the task XML. Ex:
  */
-attrTaskParam.prototype.addResourceToMap = function (resourceType, filePath, customParentFolder = "") {
+attrTaskParam.prototype.addResourceToMap = function (fileInfo) {
 
-  let existingResource = this.resourceMap[filePath];
-  if (existingResource) return existingResource;
+  let returnArray = [];
 
-  let fileName = ResourceUtil.getFileNameWithExtension(filePath),
-      fileType = ResourceUtil.getFileType(fileName),
-      stepAssetsFolderPath = XMLUtil.genStepAssetsFolderPath(this.taskId, this.stepIndex),
+  if (!(fileInfo instanceof Array)) {
+    return this._addToResMap(fileInfo);
+  } else {
+    for (let obj of fileInfo) {
+      returnArray.push(this._addToResMap(obj));
+    }
+  }
+  return returnArray;
+};
 
-  // Replacing all occurance of '\' with '/' because '\' is used as an escape character in Javascript
-  absFilePath = path.join(stepAssetsFolderPath, customParentFolder, fileName).replace(/\\/g, "/");
+attrTaskParam.prototype._addToResMap = function (filePathObj, config) {
 
-  resourceType = resourceType.toLowerCase();
+  let resourceType = filePathObj.resourceType ? filePathObj.resourceType.toLowerCase() !== "skill" ? "step" : "skill" : "step";
+  let AssetFolderHierarchy = filePathObj.AssetFolderHierarchy || "";
+  let addToPreload = !(filePathObj.addToPreload === "false" || filePathObj.addToPreload === false);
 
-  if (resourceType !== "skill") resourceType = "step";
+  let existingResource = this.resourceMap[filePathObj.path];
 
-  //Pushing to  Resource Map so that the file can be copied asynchronously
-  this.resourceMap[filePath] = { customParentFolder, fileName, resourceType, absFilePath, fileType };
-  return { customParentFolder, fileName, stepAssetsFolderPath, fileType, absFilePath };
+  if (existingResource) {
+    return {
+      "stepAssetsFolderPath": existingResource.stepAssetsFolderPath,
+      "fileName": existingResource.fileName,
+      "absFilePath": existingResource.absFilePath };
+  } else {
+    let fileName = ResourceUtil.getFileNameWithExtension(filePathObj.path),
+        fileType = ResourceUtil.getFileType(fileName),
+        stepAssetsFolderPath = XMLUtil.genStepAssetsFolderPath(this.taskId, this.stepIndex),
+
+    // Replacing all occurance of '\' with '/' because '\' is used as an escape character in Javascript
+    absFilePath = path.join(stepAssetsFolderPath, AssetFolderHierarchy, fileName).replace(/\\/g, "/");
+
+    // Adding to Resource Map so that the file can be copied asynchronously
+    // stepAssetsFolderPath is not used in copying files, it's been put here so that it can be sent back in the return statement in line 68 
+    // i.e. if the requested resource is already existing in the map
+    this.resourceMap[filePathObj.path] = { AssetFolderHierarchy, fileName, stepAssetsFolderPath, resourceType, absFilePath, fileType, addToPreload };
+    return { stepAssetsFolderPath, fileName, absFilePath };
+  }
 };
 
 class IOTranslator {
@@ -179,9 +210,8 @@ class IOTranslator {
         }
       })({ "iomap": iomap }, "iomap");
 
-      let copyResPromiseArray = this._copyResourceFilesAndFillPreload(resourceMap, attrObj);
-
       return Promise.all(PromiseRequestsArr).then(() => {
+        let copyResPromiseArray = this._copyResourceFilesAndFillPreload(resourceMap, attrObj);
         iomap.preload.resource = self._removeDuplicatePreloadResources(iomap.preload.resource);
         return Promise.resolve([iomap, copyResPromiseArray]);
       }).catch(err => {
@@ -210,7 +240,7 @@ class IOTranslator {
    * 
    * @param {*} resourceMap : It's an object which contains following key-value pairs:
    *   absFilePath:"XMLs/TaskXmls/go16/wd/12/12b.02.t1/1/Assets/1493790231823.DocumentData.json"
-   *   customParentFolder: Any custom folder hierarchy
+   *   AssetFolderHierarchy: Any custom folder hierarchy
    *   fileName: "1493790231823.DocumentData.json"
    *   fileType: "json"
    *   resourceType: "step"
@@ -227,9 +257,10 @@ class IOTranslator {
     for (let key in resourceMap) {
       copyResPromiseArray.push(attrObj.dbFilestoreMgr.copyTaskAssetFileEnhanced(key, resourceMap[key], attrObj.taskId, attrObj.stepIndex));
 
-      //Adding in prload Res
+      //Adding in preload Res
       if (!attrObj.IOMap.preload) attrObj.IOMap.preload = { resource: [] };else if (!attrObj.IOMap.preload.resource) attrObj.IOMap.preload.resource = [];
-      attrObj.IOMap.preload.resource.push({ "path": resourceMap[key]["absFilePath"], "type": resourceMap[key]["fileType"] });
+
+      if (resourceMap[key]["addToPreload"]) attrObj.IOMap.preload.resource.push({ "path": resourceMap[key]["absFilePath"], "type": resourceMap[key]["fileType"] });
     }
     return copyResPromiseArray;
   }
