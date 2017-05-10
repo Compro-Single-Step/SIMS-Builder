@@ -174,5 +174,17 @@ class importAccessobject extends AccessBaseSkill {
     resolveParams = { "attrValue": tableObj[tableObj.length-1]};
     return Promise.resolve(resolveParams);
   }
+  getImportObjectCompTitle(skillParams){
+    let paramValueObj = skillParams.paramsObj;
+    let compTitle = "";
+    if(paramValueObj.mode == "1"){
+      compTitle = "Import Objects"
+    }
+    else{
+      compTitle = "Link Tables"
+    }
+    let resolveParams = { "attrValue": compTitle};
+    return Promise.resolve(resolveParams);
+  }
 }
 module.exports = importAccessobject;

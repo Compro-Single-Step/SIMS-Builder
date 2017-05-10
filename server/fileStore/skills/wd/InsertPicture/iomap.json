@@ -18,10 +18,10 @@
                     "initial": {
                         "default-attrs": {
                             "HTML_PATH": {
-                                "function-name": "resourcePathWithUpdatedReferences",
+                                "function-name": "handleEmbededResources",
                                 "params": {
                                     "resourcePath": "views['1'].initialDocumentFile.path",
-                                    "docImages": "views['1'].initialDocumentImages.value"
+                                    "embedableResources": "views['1'].initialDocumentImages.value"
                                 }
                             },
                             "CURRENT_CURSOR_POS": {
@@ -87,9 +87,10 @@
                     "initial": {
                         "default-attrs": {
                             "TREE_XML_PATH": {
-                                "function-name": "createTreeXMLPath",
+                                "function-name": "handleEmbededResources",
                                 "params": {
-                                    "treeXML": "views['2'].treeXML.path"
+                                    "resourcePath": "views['2'].treeXML.path",
+                                    "embedableResources": "views['2'].treeXMLImages.value"
                                 }
                             },
                             "TREE_SELECTED_ITEM_ID": {
@@ -131,10 +132,10 @@
                     "initial": {
                         "default-attrs": {
                             "HTML_PATH": {
-                                "function-name": "resourcePathWithUpdatedReferences",
+                                "function-name": "handleEmbededResources",
                                 "params": {
                                     "resourcePath": "views['3'].finalDocumentFile.path",
-                                    "docImages": "views['3'].finalDocumentImages.value"
+                                    "embedableResources": "views['3'].finalDocumentImages.value"
                                 }
                             },
                             "SELECTED_IMAGE": {

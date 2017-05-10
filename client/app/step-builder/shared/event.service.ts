@@ -38,7 +38,7 @@ class EventSrvc {
 
   emitEvent(eventId, payload) {
     let event = this.getEvent(eventId);
-    event.emitterObj.next(payload);
+    event.emitterObj.next({eventId, payload});
   }
 
   dispose() {

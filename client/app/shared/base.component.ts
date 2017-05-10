@@ -53,14 +53,16 @@ export class BaseComponent implements OnInit, OnDestroy {
         return pathStr && (pathStr.indexOf("{{") != -1);
     }
 
-    updateDependencies(componentInput) {
+    updateDependencies(eventId, componentInput) {
         var subscribeEvents = this.compConfig.subscribeEvents || [];
         for (let i = 0; i < subscribeEvents.length; i++) {
-            let dependantModelReference = subscribeEvents[i]['modelReference'];
-            let dependantRule = subscribeEvents[i]['rule'];
-            let dependentObjectInModel = this.builderModelSrvc.getStateRef(dependantModelReference);
-            let clonedDependentObjectInModel = this.builderModelSrvc.getDefaultState(dependantModelReference);
-            this.invokeSkillManager(dependantRule, componentInput, dependentObjectInModel, clonedDependentObjectInModel);
+            if (subscribeEvents[i]['eventId'] === eventId) {
+                let dependantModelReference = subscribeEvents[i]['modelReference'];
+                let dependantRule = subscribeEvents[i]['rule'];
+                let dependentObjectInModel = this.builderModelSrvc.getStateRef(dependantModelReference);
+                let clonedDependentObjectInModel = this.builderModelSrvc.getDefaultState(dependantModelReference);
+                this.invokeSkillManager(dependantRule, componentInput, dependentObjectInModel, clonedDependentObjectInModel);
+            }
         }
     }
 
@@ -101,8 +103,8 @@ export class BaseComponent implements OnInit, OnDestroy {
         }
     }
 
-    eventCallback(callbackData) {
-        this.updateDependencies(callbackData);
+    eventCallback({eventId, payload: callbackData}) {
+        this.updateDependencies(eventId, callbackData);
         this.emitEvents(this.getEventPayload());
     }
 
@@ -141,7 +143,7 @@ export class BaseComponent implements OnInit, OnDestroy {
         this.eventSrvc["emitEvent"](eventId, data);
     }
     isDisabled() {
-        if(this.compConfig.rendererProperties && this.compConfig.rendererProperties.disabled === true) {
+        if (this.compConfig.rendererProperties && this.compConfig.rendererProperties.disabled === true) {
             return true;
         }
         return this.modelRef["disabled"];

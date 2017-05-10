@@ -15,7 +15,7 @@ module.exports = class InsertPicture extends WordSkill {
         }
     }
 
-    htmlFileUpload(inputFile, dependantDropzoneModel) {
+    feHtmlFileUpload(inputFile, dependantDropzoneModel) {
         if (inputFile == null) {
             dependantDropzoneModel.disabled = true;
         }

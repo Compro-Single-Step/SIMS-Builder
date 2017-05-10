@@ -1,4 +1,16 @@
 {
+  "preload": {
+    "comps":{
+      "6":{
+        "title": {
+          "function-name": "getImportObjectCompTitle",
+          "params": {
+            "mode": "views['2'].importMode.value"
+          }
+        }
+      }
+    }    
+  },
   "states": {
     "1": {
       "components": {

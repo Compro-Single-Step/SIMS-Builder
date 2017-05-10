@@ -81,7 +81,7 @@
                 <comp id="1" mode="edit">
                     <initialattrs>
                         <attr name="RIBBON_SUB_XML" userDefined="true"/>
-                        <attr name="SUB_XML_UPDATE" value="false"/>
+                        <attr name="SUB_XML_UPDATE" value="true"/>
                     </initialattrs>
                     <events>
                         <event id="148" desc="Paste Sel Clipboard">

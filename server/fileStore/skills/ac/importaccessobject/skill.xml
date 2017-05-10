@@ -6,7 +6,7 @@
 			<comp id="3" name="SIMS.Components.Access.AccessNavigationPane" cssclass="AccessNavigationPane" type="default"/>
 			<comp id="4" name="SIMS.Components.Common.TaskBar" cssclass="SIMS_TaskBar" type="default"/>
 			<comp id="5" name="SIMS.Components.Access.AccessStatusBar" cssclass="AccessStatusBar" type="default"/>
-			<comp id="6" name="SIMS.Components.Access.AccessImportObjectsDialog" cssclass="AccessImportObjectsDialog" type="modaldialog" title="Link Tables"/>
+			<comp id="6" name="SIMS.Components.Access.AccessImportObjectsDialog" cssclass="AccessImportObjectsDialog" type="modaldialog" userDefined = "title"/>
 			<comp id="7" name="SIMS.Components.Common.OpenFileDialog" cssclass="OpenFileDialog" type="modaldialog" title="File Open"/>
 			<comp id="8" name="SIMS.Components.Access.GetExternalDataCloseDialog" cssclass="GetExternalDataCloseDialog" type="modaldialog" title="Get External Data - Access Database"/>
 		</comps>
