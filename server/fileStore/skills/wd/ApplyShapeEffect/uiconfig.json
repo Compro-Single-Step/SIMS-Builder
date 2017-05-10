@@ -78,7 +78,7 @@
               "id": "1.2.2",
               "label": "Document Images",
               "desc": {
-                "basic": "Images which are part of the HTML file used to configure the initial state of Word Document Area.",
+                "basic": "Images (if any) which are part of the HTML file used to configure the initial state of Word Document Area.",
                 "detailed": "Image(s) which will be used to configure the Word Doc Area in SIMS, is/are required to be uploaded here. These images are generated while exporting the original word document as HTML file."
               },
               "subscribeEvents": [
@@ -103,7 +103,7 @@
               "label": "Shape ID",
               "desc": {
                 "basic": "ID of the Shape HTML element on which effect is to be applied. This should be same throughout all the resources used for this task.",
-                "detailed": "ID of the Shape HTML element on which effect is to be applied. This should be same throughout all the resources used for this task.14"
+                "detailed": "ID of the Shape HTML element on which effect is to be applied. This should be same throughout all the resources used for this task."
               },
               "itemRenderer": "TextBox",
               "itemType": "leaf",
@@ -270,7 +270,7 @@
               "id": "3.1.2",
               "label": "Document Images",
               "desc": {
-                "basic": "Images which are part of the HTML file used to configure the final state of Word Document Area.",
+                "basic": "Images (if any) which are part of the HTML file used to configure the final state of Word Document Area.",
                 "detailed": "Image(s) which will be used to configure the Word Doc Area in SIMS, is/are required to be uploaded here. These images are generated while exporting the final word document as HTML file."
               },
               "subscribeEvents": [
