@@ -65,6 +65,8 @@ class createcrosstabquery extends AccessBaseSkill {
                                 preloadResArr.push({ "path": resolvePath, "type": "json" });
                                 let resolveParams = { "attrValue": resolvePath, "preloadResArr": preloadResArr };
                                 return Promise.resolve(resolveParams);
+                            }, function (error) {
+                                return Promise.reject(error);
                             })
                         }, function (error) {
                             return Promise.reject(error)
