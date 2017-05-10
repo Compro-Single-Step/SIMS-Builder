@@ -251,22 +251,23 @@ module.exports = class Comp {
      * creating single attribute object
      */
     createAttr(args, attrType, attrSetName, attrsVal) {
+        let myAttr = new TaskAttr(args);
 
         let val = args.value;
-        if (args.userDefined) {
+        if (args.userDefined == "true") {
             if (attrsVal) {
                 if (attrsVal[args.name]) {
                     val = attrsVal[args.name];
                 }
             } else {
-                let tempVal = this.getAttrValByNameTypeSet(args.name, attrType, attrSetName, this.XMLProps.id);
+                let tempVal = this.getAttrValByNameTypeSet(myAttr.name, attrType, attrSetName, this.XMLProps.id);
                 if (tempVal) {
                     val = tempVal;
                 }
             }
         }
 
-        let myAttr = new TaskAttr(args, val, this);
+        myAttr.setValue(val);
         return myAttr;
     }
 
@@ -368,13 +369,4 @@ module.exports = class Comp {
         return xmlString;
     }
 
-    // returning Id of this component
-    getId() {
-        return this.XMLProps.id;
-    }
-
-    // fetching parent state's ID of this component
-    getStateId() {
-        return this.stateRef.getId();
-    }
 };
