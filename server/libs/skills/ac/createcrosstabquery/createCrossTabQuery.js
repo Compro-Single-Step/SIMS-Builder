@@ -85,7 +85,7 @@ class createcrosstabquery extends AccessBaseSkill {
         while (crossTableRowAxisArray.length > 0) {
             crossTableRowAxisArray.pop();
         }
-        if (this.isEmptyObject(stage1SelectedItem) === false) {
+        if (this.isEmptyObject(stage1SelectedItem) === false && !stage1SelectedItem) {
             var filteredObj = this.crossTabInputJson[stage1SelectedItem.data.category].find(function (obj) {
                 return obj.table_name === stage1SelectedItem.data.table_name
 
