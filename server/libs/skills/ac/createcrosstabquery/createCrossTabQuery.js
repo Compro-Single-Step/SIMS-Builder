@@ -5,10 +5,12 @@ class createcrosstabquery extends AccessBaseSkill {
         super();
         this.crossTabInputJson = {};
         this.crossTabRowAxisArray = [];
+        this.calcFunctionJson = {};
 
     }
     getCrossTabJsonInput(skillParams) {
         let paramValueObj = skillParams.paramsObj;
+        let taskParams = skillParams.taskParams;
         return taskParams.dbFilestoreMgr.readFileFromFileStore(paramValueObj.inputJsonPath).then(function (resolveParam) {
             var finalValue = JSON.parse(resolveParam.fileData);
             var resolveParams = { "attrValue": JSON.stringify(finalValue) };
@@ -20,6 +22,7 @@ class createcrosstabquery extends AccessBaseSkill {
 
     getCalcFnsMapJson(skillParams) {
         let paramValueObj = skillParams.paramsObj;
+        let taskParams = skillParams.taskParams;
         return taskParams.dbFilestoreMgr.readFileFromFileStore(paramValueObj.calcMapJson).then(function (resolveParam) {
             var finalValue = JSON.parse(resolveParam.fileData);
             var resolveParams = { "attrValue": JSON.stringify(finalValue) };
@@ -97,34 +100,33 @@ class createcrosstabquery extends AccessBaseSkill {
 
     }
     updateRowColumnAxisDropdown(rowAxisSelectedDropdown, columnAxisSelectedItems) {
-    	 this.crossTabColumnAxisArray = [];
-         while (columnAxisSelectedItems.length > 0) {
+        this.crossTabColumnAxisArray = [];
+        while (columnAxisSelectedItems.length > 0) {
             columnAxisSelectedItems.pop();
         }
         if (this.isEmptyObject(rowAxisSelectedDropdown) === false) {
             var filteredAray = this.crossTabRowAxisArray.filter((item) => item.data !== rowAxisSelectedDropdown.data);
             for (let i = 0; i < filteredAray.length; i++) {
-                columnAxisSelectedItems.value.push({ "label": filteredAray[i].label, "data": filteredAray[i].data});
+                columnAxisSelectedItems.value.push({ "label": filteredAray[i].label, "data": filteredAray[i].data });
             }
         }
-          this.crossTabColumnAxisArray = filteredAray;
+        this.crossTabColumnAxisArray = filteredAray;
 
     }
-    
-     fieldsToBecalculated(columnAxisSelectedDropdown, fieldsToBecalculatedItem) {
-         while (fieldsToBecalculatedItem.length > 0) {
+
+    fieldsToBecalculated(columnAxisSelectedDropdown, fieldsToBecalculatedItem) {
+        while (fieldsToBecalculatedItem.length > 0) {
             fieldsToBecalculatedItem.pop();
         }
         if (this.isEmptyObject(columnAxisSelectedDropdown) === false) {
             var filteredAray = this.crossTabColumnAxisArray.filter((item) => item.data !== columnAxisSelectedDropdown.data);
             for (let i = 0; i < filteredAray.length; i++) {
-                fieldsToBecalculatedItem.value.push({ "label": filteredAray[i].label, "data": filteredAray[i].data});
+                fieldsToBecalculatedItem.value.push({ "label": filteredAray[i].label, "data": filteredAray[i].data });
             }
         }
 
     }
 
-    
     isEmptyObject(obj) {
         for (var prop in obj) {
             if (obj.hasOwnProperty(prop))
@@ -152,5 +154,34 @@ class createcrosstabquery extends AccessBaseSkill {
         this.crossTabInputJsonArray = crosstabInputArray;
     }
 
+    updateCalcFunctionList(selectedField, updateValue) {
+
+        let defaultCalcArray = ["Avg", "Count", "First", "Last", "Max", "Min", "StDev", "Sum", "Var"];
+        let fieldFound = false;
+        if (selectedField != "") {
+            if (Object.keys(this.calcFunctionJson).length != 0) {
+                for (field in this.calcFunctionJson) {
+                    if (field == selectedField) {
+                        fieldFound = true;
+                        updateValue = this.calcFunctionJson[field]
+                        break;
+                    }
+                }
+            }
+            if (fieldFound == false) {
+                updateValue = defaultCalcArray;
+            }
+        }
+        else {
+            updateValue = [];
+        }
+    }
+
+    populateFieldCalculated(inputObj, param2) {
+
+        if(inputObj){
+            this.calcFunctionJson = inputObj;
+        }
+    }
 }
 module.exports = createcrosstabquery;

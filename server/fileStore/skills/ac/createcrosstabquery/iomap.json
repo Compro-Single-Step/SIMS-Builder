@@ -144,7 +144,7 @@
               "PROJECT_JSON": {
                 "function-name": "extractAttrPath",
                 "params": {
-
+                  "projJsonPath":"views['3'].navigationPane.path"
                 }
               }
             }
@@ -163,7 +163,7 @@
                 "function-name": "getDatasheetProjectJSon",
                 "params": {
                   "datasheetProjJsnPath":"views[3].datasheet.path",
-                  "datasheetdataJsnPath": "",
+                  "datasheetdataJsnPath": "views[3].datasheetIntegratedResource.path",
                   "finalQueryName" : "views[2].finalCrossTabQueryName.value"
                   }
               }

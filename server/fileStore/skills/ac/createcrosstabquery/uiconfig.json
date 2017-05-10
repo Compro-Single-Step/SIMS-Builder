@@ -160,7 +160,6 @@
               },
               "val": "{{views.2.crossTabInputJson}}"
             },
-            
             {
               "id": "2.1.2",
               "label": "Name of the Query or Table To make Cross Tab wizard from",
@@ -169,7 +168,7 @@
                 "detailed": ""
               },
               "itemRenderer": "Dropdown",
-               "emitEvents": [
+              "emitEvents": [
                 "STAGE1_SELECTED_ITEMS"
               ],
               "subscribeEvents": [
@@ -187,7 +186,6 @@
               "mandatory": false,
               "val": "{{views.2.stage1SelectItems.selectedOption}}"
             },
-            
             {
               "id": "2.1.4",
               "label": "Row axis for the query",
@@ -231,7 +229,6 @@
                   "modelReference": "{{views.2.stageColumn3Header.options}}",
                   "rule": "updateRowColumnAxisDropdown"
                 }
-
               ],
               "rendererProperties": {
                 "itemList": "{{views.2.stageColumn3Header.options}}",
@@ -250,6 +247,9 @@
               },
               "itemRenderer": "Dropzone",
               "itemType": "leaf",
+              "emitEvents": [
+                "STAGE4_FUNCTION_UPDATED"
+              ],
               "rendererProperties": {
                 "dataType": "JSON",
                 "placeholder": "Drop JSON file here to upload"
@@ -259,9 +259,9 @@
             },
             {
               "id": "2.1.7",
-              "label": "Feild to be calculated",
+              "label": "Field to be calculated",
               "desc": {
-                "basic": "SSelect the feild to be selected to be performed operation on.",
+                "basic": "Select the feild to be selected to be performed operation on.",
                 "detailed": ""
               },
               "itemRenderer": "Dropdown",
@@ -271,6 +271,9 @@
                   "modelReference": "{{views.2.fieldToBecalculated.options}}",
                   "rule": "fieldsToBecalculated"
                 }
+              ],
+              "emitEvents": [
+                "CALC_FIELD_SELECTED"
               ],
               "rendererProperties": {
                 "itemList": "{{views.2.fieldToBecalculated.options}}",
@@ -290,21 +293,24 @@
               "itemRenderer": "Dropdown",
               "subscribeEvents": [
                 {
-                  "eventId": "CROSS_TAB_DATA_UPDATED",
+                  "eventId": "STAGE4_FUNCTION_UPDATED",
                   "modelReference": "{{views.2.calculationFunction.options}}",
-                  "rule": "createDropdownDefaultFunctionList"
+                  "rule": "populateFieldCalculated"
+                },
+                {
+                  "eventId": "CALC_FIELD_SELECTED",
+                  "modelReference": "{{views.2.calculationFunction.options}}",
+                  "rule": "updateCalcFunctionList"
                 }
               ],
               "rendererProperties": {
                 "itemList": "{{views.2.calculationFunction.options}}",
                 "dynamicMode": true
               },
-
               "itemType": "leaf",
               "mandatory": false,
               "val": "{{views.2.calculationFunction.selectedOption}}"
             },
-            
             {
               "id": "2.1.8",
               "label": "whether to Include Sum of rows",
@@ -316,14 +322,14 @@
               "rendererProperties": {
                 "itemList": [
                   {
-                    "value":"1",
-                    "label":"yes"
+                    "value": "1",
+                    "label": "yes"
                   },
                   {
-                    "value":"2",
-                    "label":"No"
-                  }                  
-                  ]
+                    "value": "2",
+                    "label": "No"
+                  }
+                ]
               },
               "itemType": "leaf",
               "mandatory": true,
@@ -359,7 +365,6 @@
               },
               "val": "{{views.2.finalCrossTabQueryName}}"
             }
-            
           ]
         }
       ]
@@ -402,7 +407,6 @@
               "mandatory": true,
               "val": "{{views.3.navigationPane}}"
             }
-            
           ]
         },
         {
@@ -437,7 +441,7 @@
               "mandatory": true,
               "val": "{{views.3.datasheet}}"
             },
-             {
+            {
               "id": "3.2.2",
               "label": "Datasheet Integrated Resource",
               "desc": {

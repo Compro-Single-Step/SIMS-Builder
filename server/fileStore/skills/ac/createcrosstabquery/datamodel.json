@@ -52,10 +52,10 @@
         },
         "calculationFunction": {
           "options": {
-              "value" : ""
+              "value" : []
             },
             "selectedOption":{
-              "value":""
+              "value":{}
             }
         },
         "fieldToBecalculated": {
