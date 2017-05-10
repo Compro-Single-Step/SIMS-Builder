@@ -85,7 +85,7 @@ class createcrosstabquery extends AccessBaseSkill {
         while (crossTableRowAxisArray.length > 0) {
             crossTableRowAxisArray.pop();
         }
-        if (this.isEmptyObject(stage1SelectedItem) === false && !stage1SelectedItem) {
+        if( typeof stage1SelectedItem !== null ) {
             var filteredObj = this.crossTabInputJson[stage1SelectedItem.data.category].find(function (obj) {
                 return obj.table_name === stage1SelectedItem.data.table_name
 
@@ -105,7 +105,7 @@ class createcrosstabquery extends AccessBaseSkill {
          while (columnAxisSelectedItems.value.length > 0) {
             columnAxisSelectedItems.value.pop();
         }
-        if (this.isEmptyObject(rowAxisSelectedDropdown) === false) {
+        if( typeof rowAxisSelectedDropdown !== null ) {
             var filteredAray = this.crossTabRowAxisArray.filter((item) => item.data !== rowAxisSelectedDropdown.data);
             for (let i = 0; i < filteredAray.length; i++) {
                 columnAxisSelectedItems.value.push({ "label": filteredAray[i].label, "data": filteredAray[i].data });
@@ -120,7 +120,7 @@ class createcrosstabquery extends AccessBaseSkill {
             fieldsToBecalculatedItem.value.pop();
 
         }
-        if (this.isEmptyObject(columnAxisSelectedDropdown) === false) {
+        if( typeof columnAxisSelectedDropdown !== null ) {
             var filteredAray = this.crossTabColumnAxisArray.filter((item) => item.data !== columnAxisSelectedDropdown.data);
             for (let i = 0; i < filteredAray.length; i++) {
                 fieldsToBecalculatedItem.value.push({ "label": filteredAray[i].label, "data": filteredAray[i].data });
@@ -138,8 +138,9 @@ class createcrosstabquery extends AccessBaseSkill {
         return true;
     }
     stage1SelectedItems(inputJson, crosstabInputArray) {
-    	 if (this.isEmptyObject(inputJson) === false && !inputJson) {
-        this.crossTabInputJson = inputJson;
+    	 this.crossTabInputJson = inputJson;
+    	 if( typeof stage1SelectedItem !== null ) {
+        
 
         while (crosstabInputArray.length > 0) {
             crosstabInputArray.pop();
