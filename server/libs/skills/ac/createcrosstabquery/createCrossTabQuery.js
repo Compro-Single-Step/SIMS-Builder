@@ -83,11 +83,12 @@ class createcrosstabquery extends AccessBaseSkill {
     }
 
     updateRowAxisDropdown(stage1SelectedItem, crossTableRowAxisArray) {
+    	
         this.crossTabRowAxisArray = [];
         while (crossTableRowAxisArray.length > 0) {
             crossTableRowAxisArray.pop();
         }
-        if (typeof stage1SelectedItem !== null && this.crossTabInputJson != null) {
+        if (((typeof stage1SelectedItem!= null && this.isEmptyObject(stage1SelectedItem) == false) && (this.crossTabInputJson != null))) {
             var filteredObj = this.crossTabInputJson[stage1SelectedItem.data.category].find(function (obj) {
                 return obj.table_name === stage1SelectedItem.data.table_name
 
