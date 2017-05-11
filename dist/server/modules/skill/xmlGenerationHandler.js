@@ -20,7 +20,7 @@ module.exports.generateStepXML = function (templateId, taskId, stepIndex, stepTe
         // let attrValueMap = translator.getAttrValueMap(IOMap, stepUIState, skillRef, taskId, stepIndex,dbFilestoreMgr);
         return translator.getAttrValueMap(mapTranslationParam).then(([attrValMap, copyResPromiseArray]) => {
             //XML generation
-            return Promise.all([dbFilestoreMgr.getSkillXML(templateId).then(skillTemplate => {
+            return dbFilestoreMgr.getSkillXML(templateId).then(skillTemplate => {
                 let xmlGenerator = new XmlGenerator();
                 let OutputXML = xmlGenerator.generateXml(skillTemplate, attrValMap, stepText);
 
@@ -32,11 +32,7 @@ module.exports.generateStepXML = function (templateId, taskId, stepIndex, stepTe
                 });
             }, error => {
                 return Promise.reject(error);
-            })]).then((msg) => {
-                return Promise.resolve(msg);
-            }).catch(error => {
-                return Promise.reject(error);
-            });
+            })
         }, error => {
             return Promise.reject(error);
         });
