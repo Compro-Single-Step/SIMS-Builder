@@ -185,6 +185,7 @@ class createcrosstabquery extends AccessBaseSkill {
                 for (let field in this.calcFunctionJson) {
                     if (field == selectedField.data) {
                         fieldFound = true;
+                        updateValue.value = [];
                         for (let index = 0; index < this.calcFunctionJson[field].length; ++index) {
                             updateValue.value.push({
                                 "label": this.calcFunctionJson[field][index],
