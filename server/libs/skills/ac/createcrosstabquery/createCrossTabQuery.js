@@ -48,9 +48,11 @@ class createcrosstabquery extends AccessBaseSkill {
             // after reading it, copy the data json path to the xml file folder path 
             // check if the certain query object exists or not 
             let projJson = JSON.parse(resolveParam.fileData);
+            let fieldFound = false;
             for (let index = 0; index < projJson["queries"].length; ++index) {
                 let currQueryObj = projJson["queries"][index];
                 if (currQueryObj["name"] == queryName) {
+                    fieldFound = true;
                     let tableDatafilepath = paramValueObj.datasheetdataJsnPath;
                     return taskParams.dbFilestoreMgr.copyTaskAssetFile(tableDatafilepath, taskParams)
                         .then(function (resolveParam) {
@@ -80,6 +82,10 @@ class createcrosstabquery extends AccessBaseSkill {
 
                 } // end of queryname check
             }
+            if (fieldFound == false) {
+                let errObj = new Error("Final Query Name Given does not exist in the Datasheet Project Json");
+                return Promise.reject(errObj);
+            }
         }, function (error) {
             console.log("" + error.message);
             return Promise.reject(error);
@@ -89,12 +95,12 @@ class createcrosstabquery extends AccessBaseSkill {
     }
 
     updateRowAxisDropdown(stage1SelectedItem, crossTableRowAxisArray) {
-    	
+
         this.crossTabRowAxisArray = [];
         while (crossTableRowAxisArray.length > 0) {
             crossTableRowAxisArray.pop();
         }
-        if (((typeof stage1SelectedItem!= null && this.isEmptyObject(stage1SelectedItem) == false) && (this.crossTabInputJson != null))) {
+        if (((typeof stage1SelectedItem != null && this.isEmptyObject(stage1SelectedItem) == false) && (this.crossTabInputJson != null))) {
             var filteredObj = this.crossTabInputJson[stage1SelectedItem.data.category].find(function (obj) {
                 return obj.table_name === stage1SelectedItem.data.table_name
 
