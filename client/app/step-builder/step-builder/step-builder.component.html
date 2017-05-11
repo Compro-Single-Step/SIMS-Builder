@@ -31,11 +31,11 @@
 </div>
 <div id="footer">
   <div class="col-md-12">
-    <button class="btn btn-inverse" (click)='lauchPreviewTask()'>Preview Step</button>
     <div class="pull-right">
-      <button class="btn btn-inverse width-100" (click)="setSelectedView(selectedView-1)" [disabled]="selectedView == 1">Previous</button>
-      <button class="btn btn-inverse width-100" *ngIf="selectedView < uiConfig.views.length" (click)="setSelectedView(selectedView+1)">Next</button>
-      <button class="btn btn-inverse width-100" *ngIf="selectedView == uiConfig.views.length" (click)="onFinish()">Finish</button>
+      <button class="btn btn-dark" (click)='lauchPreviewTask()'>Preview Step</button>
+      <button class="btn btn-dark width-100" (click)="setSelectedView(selectedView-1)" [disabled]="selectedView == 1">Previous</button>
+      <button class="btn btn-dark width-100" *ngIf="selectedView < uiConfig.views.length" (click)="setSelectedView(selectedView+1)">Next</button>
+      <button class="btn btn-dark width-100" *ngIf="selectedView == uiConfig.views.length" (click)="onFinish()">Finish</button>
     </div>
   </div>
 </div>

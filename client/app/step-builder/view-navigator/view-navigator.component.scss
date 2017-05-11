@@ -1,8 +1,13 @@
 $progressbar-connector: #C1C1C1;
-$success-green: #5dc4bf;
-$theme-blue: #343434;
-$success-green: #00B551;
+
+// *******************Temporary declarations************
 $theme-blue: #005A8E;
+$pure-white: #FFFFFF;
+$success-green: #00B551;
+$hover-blue: #383E4B;
+// ************To be Moved to variables.scss*****************
+
+
 .progressbar {
     counter-reset: step;
 
@@ -26,9 +31,9 @@ $theme-blue: #005A8E;
             text-align: center;
             margin: 0 auto 10px auto;
             border-radius: 50%;
-            background-color: white;
+            background-color: $pure-white;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 20px;
             font-weight: 900;
         }
         span.separator {
@@ -44,7 +49,7 @@ $theme-blue: #005A8E;
             span.stepNumber {
               border-color: $theme-blue;
               background-color: $theme-blue;
-              color: white;
+              color: $pure-white;
             }
         }
         &:last-child{
@@ -56,7 +61,7 @@ $theme-blue: #005A8E;
           span.stepNumber {
             border-color: $success-green;
             background-color: $success-green;
-            color: white;
+            color: $pure-white;
           }
         }
         &.visited {

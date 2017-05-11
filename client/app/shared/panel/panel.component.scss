@@ -1,3 +1,4 @@
+$card-border-blue:#5876B9;
 .heading {
   display: flex;
 }
@@ -16,5 +17,5 @@ app-label {
 }
 
 .widget{
-  border-left: 5px solid #5876B9;
+  border-left: 5px solid $card-border-blue;
 }

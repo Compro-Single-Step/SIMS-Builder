@@ -1,5 +1,12 @@
 @import "../../../../node_modules/bootstrap/scss/variables";
-$lightgray: #d3d3d3;
+
+// *******************Temporary declarations************
+$theme-blue: #005A8E;
+$pure-white: #FFFFFF;
+$success-green: #00B551;
+$hover-blue: #383E4B;
+// ************To be Moved to variables.scss*****************
+
 .row {
   margin: {
     left: $spacer;
@@ -9,17 +16,17 @@ $lightgray: #d3d3d3;
 #header {
   height: 6rem;
   padding: 10px;
-  background-color: #005A8E;
-  color: #FFFFFF;
+  background-color: $theme-blue;
+  color:$pure-white;
   border-bottom: 3px solid $lightgray;
   .stepTextContainer {
     font-size: 1.2rem;
     font-weight: 600;
   }
   .header-icon{
-    background-color: #005A8E;
+    background-color: $theme-blue;
     border: none;
-    color: #FFFFFF;
+    color:$pure-white;
     font-size: 25px;
   }
 }
@@ -38,4 +45,12 @@ $lightgray: #d3d3d3;
   padding-top: 1rem;
   border-top: 3px solid $lightgray;
   background-color: $body-bg;
+}
+
+.btn-dark{
+  background-color: $theme-blue;
+  color: $pure-white;
+  &:hover{
+    background-color: $hover-blue;
+  }
 }
