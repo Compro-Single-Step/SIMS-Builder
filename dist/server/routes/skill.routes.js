@@ -5,7 +5,7 @@ const skillController = require('../controllers/skill.controller');
 router.get('/stepuiconfig/uiconfig/:templateId', (req, res) => {
     let templateId = req.params.templateId;
 
-    skillController.getUIConfig(templateId).then(uiConfig fghgfhfghfghfhcvbnvn=sdct> {
+    skillController.getUIConfig(templateId).then(uiConfig => {
         res.send(uiConfig);
     }, error => {
         res.send(error);
