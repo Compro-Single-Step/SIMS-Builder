@@ -105,7 +105,6 @@
                     <finalattributesets>
                         <attributeset name="set1_" multiple-occurence="true" based-on="attr" dependency-attr='["SELECTED_CELLS"]'>
                             <attr name="SELECTED_CELLS" userDefined="true"/>
-                            <attr name="COPY_HIGHLIGHT_CELLS" value="true"/>
                         </attributeset>
                     </finalattributesets>
                     <events>

@@ -197,7 +197,10 @@ module.exports = class Comp {
     getAttrValByNameTypeSet(attrName, attrType, attrSetName="default-attrs"){
         let val = null;
         try{
-            val = this.attrValMap[attrType][attrSetName][attrName]
+            if(attrType === "sizeandpos")
+                val = this.attrValMap[attrType][attrName]
+            else
+                val = this.attrValMap[attrType][attrSetName][attrName]
         }catch(e){
             console.log("ERROR: Value for attribute "+attrName+" not found in the Attr Value Map");
         }
@@ -255,24 +258,22 @@ module.exports = class Comp {
      * creating single attribute object
      */
     createAttr  (args, attrType, attrSetName, attrsVal){
-        let myAttr = new TaskAttr(args);
 
         let val = args.value;
-        if(args.userDefined == "true"){
+        if(args.userDefined){
             if(attrsVal){
                 if(attrsVal[args.name]){
                     val = attrsVal[args.name];
                 }
             }else{
-                let tempVal = this.getAttrValByNameTypeSet(myAttr.name, attrType, attrSetName, this.XMLProps.id);
+                let tempVal = this.getAttrValByNameTypeSet(args.name, attrType, attrSetName, this.XMLProps.id);
                 if(tempVal){
                     val = tempVal;
                 }
             }
-
-        }
+        }       
         
-        myAttr.setValue(val);
+        let myAttr = new TaskAttr(args, val, this);
         return myAttr;
     }
 
@@ -376,4 +377,13 @@ module.exports = class Comp {
         return xmlString;
     }
 
+    // returning Id of this component
+    getId (){
+        return this.XMLProps.id;
+    }
+
+    // fetching parent state's ID of this component
+    getStateId (){
+        return this.stateRef.getId();
+    }
 }

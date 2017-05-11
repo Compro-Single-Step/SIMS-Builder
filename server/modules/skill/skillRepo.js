@@ -27,6 +27,21 @@ module.exports = {
                     }
                 ]
             }
+        ],
+        dependencySkills: []
+    },
+    "insertpicture": {
+        primaryFile: "wd/insertPicture/insertPicture",
+        dependencyFiles: [
+            {
+                primaryFile: "wd/common/wdSkill",
+                dependencyFiles: [
+                    {
+                        primaryFile: "common/baseSkill",
+                        dependencyFiles: []
+                    }
+                ]
+            }
         ]
     },
   
@@ -39,7 +54,7 @@ module.exports = {
                     {
                         primaryFile: "common/baseSkill",
                         dependencyFiles: []
-                    }
+                    }                    
                 ]
             }
         ],
@@ -58,21 +73,45 @@ module.exports = {
                 ]
             }
         ]
-    },    
-    "createcrosstabquery": {
-        primaryFile: "ac/createcrosstabquery/createCrossTabQuery",
+
+    },
+    "insertaudio": {
+        primaryFile: "pp/insertAudio/insertAudio",
         dependencyFiles: [
-            {   
-                primaryFile: "ac/common/acSkill",
+            {
+                primaryFile: "pp/common/ppSkill",
                 dependencyFiles: [
                     {
-                        primaryFile: "common/baseSkill",
-                        dependencyFiles: []
+                        primaryFile: "common/baseSkill"
+
+    },    
+   
+
                     }
                 ]
             }
         ]
+
+    },
+     "applyshapeeffect": {
+        primaryFile: "wd/ApplyShapeEffect/ApplyShapeEffect",
+        dependencyFiles: [
+            {
+                primaryFile: "wd/common/wordRibbonEventMap"
+            },
+            {
+                primaryFile: "wd/common/wdSkill",
+                dependencyFiles: [
+                    {
+                        primaryFile: "common/baseSkill"
+                    }
+                ]
+            }
+        ]
+     }
+
     }
+
 }
 
 

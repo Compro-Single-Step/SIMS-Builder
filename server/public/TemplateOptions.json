@@ -13,13 +13,22 @@
             "id":"sortingtablecolumns"
         },
         {
+            "name":"Insert Picture",
+            "id":"insertpicture"
+        },
+        {
             "name":"Import Access Object",
             "id":"importaccessobject"
         },
         {
-            "name":"create cross Tab Query",
-            "id":"createcrosstabquery"
-        }
 
+            "name":"Insert Audio From a File",
+            "id":"insertaudio"
+        },
+        {
+            "name":"Apply Shape Effect to a Text Box",
+            "id":"applyshapeeffect"
+
+        }
     ]
 }
