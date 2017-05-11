@@ -23,14 +23,20 @@ class createcrosstabquery extends AccessBaseSkill {
     getCalcFnsMapJson(skillParams) {
         let paramValueObj = skillParams.paramsObj;
         let taskParams = skillParams.taskParams;
-        return taskParams.dbFilestoreMgr.readFileFromFileStore(paramValueObj.calcMapJson).then(function (resolveParam) {
-            var finalValue = JSON.parse(resolveParam.fileData);
-            var resolveParams = { "attrValue": JSON.stringify(finalValue) };
+        if (paramValueObj.calcMapJson != "") {
+            return taskParams.dbFilestoreMgr.readFileFromFileStore(paramValueObj.calcMapJson).then(function (resolveParam) {
+                var finalValue = JSON.parse(resolveParam.fileData);
+                var resolveParams = { "attrValue": JSON.stringify(finalValue) };
+                return Promise.resolve(resolveParams);
+            }, function (error) {
+                return Promise.reject(error);
+            });
+        } else {
+            let resolveParams = { "attrValue": null };
             return Promise.resolve(resolveParams);
-        }, function (error) {
-            return Promise.reject(error);
-        });
+        }
     }
+
     getDatasheetProjectJSon(skillParams) {
 
         // read the datasheet view project json
