@@ -1,4 +1,4 @@
-<task name="GO16.WD.06.6A.01.T1">
+<task name="ApplyShapeEffectToATextbox">
 	<preload>
 		<comps>
 			<comp id="1" name="SIMS.Components.Word.Ribbon" cssclass="SIMS_Ribbon_Excel" type="default"/>

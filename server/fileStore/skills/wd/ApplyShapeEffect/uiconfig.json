@@ -85,7 +85,7 @@
                 {
                   "eventId": "INITIAL_HTML_FILE_UPLOADED",
                   "modelReference": "{{views.1.initialDocumentImages}}",
-                  "rule": "htmlFileUpload"
+                  "rule": "feHtmlFileUpload"
                 }
               ],
               "itemRenderer": "Dropzone",
@@ -102,8 +102,8 @@
               "id": "1.2.3",
               "label": "Shape ID",
               "desc": {
-                "basic": "ID of the Shape HTML element on which effect is to be applied. This should be same throughout all the resources used for this task.",
-                "detailed": "ID of the Shape HTML element on which effect is to be applied. This should be same throughout all the resources used for this task."
+                "basic": "ID of the Shape HTML element on which effect is to be applied. This should be same throughout all the resources used for this task. [e.g. shape1 - id attribute of shape tag in html - <shape id=\"shape1\">]",
+                "detailed": "ID of the Shape HTML element on which effect is to be applied. This should be same throughout all the resources used for this task. [e.g. shape1 - id attribute of shape tag in html - <shape id=\"shape1\">]"
               },
               "itemRenderer": "TextBox",
               "itemType": "leaf",
@@ -187,7 +187,7 @@
                 "updateModel": [
                   {
                     "modelReference": "{{views.2.shapeEffectCategory.options.value}}",
-                    "rule": "updateShapeEffectCategoryDropdown"
+                    "rule": "feUpdateShapeEffectCategoryDropdown"
                   }
                 ]
               },
@@ -217,7 +217,7 @@
                 {
                   "eventId": "SHAPE_EFFECT_CATEGORY_UPDATED",
                   "modelReference": "{{views.2.shapeEffectName.options.value}}",
-                  "rule": "updateShapeEffectNamesInDropdown"
+                  "rule": "feUpdateShapeEffectNamesInDropdown"
                 }
               ]
             }
@@ -277,7 +277,7 @@
                 {
                   "eventId": "FINAL_HTML_FILE_UPLOADED",
                   "modelReference": "{{views.3.finalDocumentImages}}",
-                  "rule": "htmlFileUpload"
+                  "rule": "feHtmlFileUpload"
                 }
               ],
               "itemRenderer": "Dropzone",

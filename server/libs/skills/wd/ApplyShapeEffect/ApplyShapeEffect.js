@@ -3,7 +3,7 @@ const RibbonData = require("../common/wordRibbonEventMap");
 
 module.exports = class ApplyShapeEffect extends WordSkill {
 
-    updateShapeEffectCategoryDropdown(dependentObjectInModel) {
+    feUpdateShapeEffectCategoryDropdown(dependentObjectInModel) {
         while (dependentObjectInModel.length > 0) {
             dependentObjectInModel.pop(); //https://jsperf.com/array-clear-methods/3
         }
@@ -15,7 +15,7 @@ module.exports = class ApplyShapeEffect extends WordSkill {
         }
     }
 
-    updateShapeEffectNamesInDropdown(shapeEffectCategory, dependentObjectInModel) {
+    feUpdateShapeEffectNamesInDropdown(shapeEffectCategory, dependentObjectInModel) {
         while (dependentObjectInModel.length > 0) {
             dependentObjectInModel.pop(); //https://jsperf.com/array-clear-methods/3
         }
@@ -27,7 +27,7 @@ module.exports = class ApplyShapeEffect extends WordSkill {
         }
     }
 
-    htmlFileUpload(inputFile, dependantDropzoneModel){
+    feHtmlFileUpload(inputFile, dependantDropzoneModel){
         if(inputFile == null){
             dependantDropzoneModel.disabled = true;
         }
