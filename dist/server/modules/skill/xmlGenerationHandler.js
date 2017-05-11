@@ -1,5 +1,4 @@
 const dbFilestoreMgr = require('./dbFilestoreMgr');
-const translator = require("./ioTranslator.js");
 const XmlGenerator = require("./xmlGenerator/stepXMLGenerator");
 
 var mapTranslationParams = function (IOMap, stepUIState, skillRef, taskId, stepIndex, dbFilestoreMgr) {
