@@ -1,6 +1,6 @@
-const dbFilestoreMgr = require('./dbFilestoreMgr');
-const XmlGenerator = require("./xmlGenerator/stepXMLGenerator");
-
+var dbFilestoreMgr = require('./dbFilestoreMgr');
+var translator = require("./ioTranslator.js");
+var XmlGenerator = require("./xmlGenerator/stepXMLGenerator");
 var mapTranslationParams = function (IOMap, stepUIState, skillRef, taskId, stepIndex, dbFilestoreMgr) {
     this.IOMap = IOMap;
     this.stepUIState = stepUIState;
@@ -9,33 +9,37 @@ var mapTranslationParams = function (IOMap, stepUIState, skillRef, taskId, stepI
     this.stepIndex = stepIndex;
     this.dbFilestoreMgr = dbFilestoreMgr;
 };
-
 module.exports.generateStepXML = function (templateId, taskId, stepIndex, stepText, skillRef) {
-
-    return Promise.all([dbFilestoreMgr.getStepUIState(taskId, stepIndex), dbFilestoreMgr.getIOMap(templateId)]).then(([stepUIState, IOMapJson]) => {
+    return Promise.all([dbFilestoreMgr.getStepUIState(taskId, stepIndex), dbFilestoreMgr.getIOMap(templateId)]).then(function (_a) {
+        var stepUIState = _a[0], IOMapJson = _a[1];
         //IO Translator
-        let IOMap = JSON.parse(IOMapJson);
-        let mapTranslationParam = new mapTranslationParams(IOMap, stepUIState, skillRef, taskId, stepIndex, dbFilestoreMgr);
+        var IOMap = JSON.parse(IOMapJson);
+        var mapTranslationParam = new mapTranslationParams(IOMap, stepUIState, skillRef, taskId, stepIndex, dbFilestoreMgr);
         // let attrValueMap = translator.getAttrValueMap(IOMap, stepUIState, skillRef, taskId, stepIndex,dbFilestoreMgr);
-        return translator.getAttrValueMap(mapTranslationParam).then(([attrValMap, copyResPromiseArray]) => {
+        return translator.getAttrValueMap(mapTranslationParam).then(function (_a) {
+            var attrValMap = _a[0], copyResPromiseArray = _a[1];
             //XML generation
-            return dbFilestoreMgr.getSkillXML(templateId).then(skillTemplate => {
-                let xmlGenerator = new XmlGenerator();
-                let OutputXML = xmlGenerator.generateXml(skillTemplate, attrValMap, stepText);
-
-                //Saving Step XML in File Store
-                return dbFilestoreMgr.saveStepXML(taskId, stepIndex, OutputXML).then(msg => {
-                    return Promise.resolve(msg);
-                }, error => {
+            return Promise.all([dbFilestoreMgr.getSkillXML(templateId).then(function (skillTemplate) {
+                    var xmlGenerator = new XmlGenerator();
+                    var OutputXML = xmlGenerator.generateXml(skillTemplate, attrValMap, stepText);
+                    //Saving Step XML in File Store
+                    return dbFilestoreMgr.saveStepXML(taskId, stepIndex, OutputXML).then(function (msg) {
+                        return Promise.resolve(msg);
+                    }, function (error) {
+                        return Promise.reject(error);
+                    });
+                }, function (error) {
                     return Promise.reject(error);
-                });
-            }, error => {
+                })].concat(copyResPromiseArray)).then(function (_a) {
+                var msg = _a[0], copyResMsg = _a.slice(1);
+                return Promise.resolve(msg);
+            })["catch"](function (error) {
                 return Promise.reject(error);
-            })
-        }, error => {
+            });
+        }, function (error) {
             return Promise.reject(error);
         });
-    }, error => {
+    }, function (error) {
         return Promise.reject(error);
     });
 };
