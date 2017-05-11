@@ -63,14 +63,42 @@
                 "detailed": "A JSON file, which will be used to configure the Navigation Pane for Access in SIMS, is required to be uploaded here. This file can be generated from here(Hyperlink pointing to the JSON creation tool spec)."
               },
               "itemRenderer": "Dropzone",
+               "emitEvents": [
+                "NAVPANE_DATA_UPDATED"
+              ],             
               "itemType": "leaf",
               "rendererProperties": {
                 "dataType": "JSON",
-                "placeHolder": "Drop JSON file here to upload"
+                "placeholder": "Drop JSON file here to upload"
               },
               "mandatory": true,
               "val": "{{views.1.navigationPane}}"
+            },
+            {
+              "id": "1.2.2",
+              "label": "Selected Access Object",
+              "desc": {
+                "basic": "Select the database object to be selecetd initiallly.",
+                "detailed": "Describe the type and name of the database object to be shown selected initially when the task is renedered"
+              },
+              "itemRenderer": "Dropdown",
+               "subscribeEvents": [
+                {
+                  "eventId": "NAVPANE_DATA_UPDATED",
+                  "modelReference": "{{views.1.navigationPaneItems.options}}",
+                  "rule": "addDatabaseObjectToDropdown"
+                }
+              ],
+              "rendererProperties": {
+                "itemList": "{{views.1.navigationPaneItems.options}}",
+                "dynamicMode":true
+              
+              },
+              "itemType": "leaf",
+              "mandatory": false,
+              "val": "{{views.1.navigationPaneItems.selectedOption}}"
             }
+
           ]
         },
         {

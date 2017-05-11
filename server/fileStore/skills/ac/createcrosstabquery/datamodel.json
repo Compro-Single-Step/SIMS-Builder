@@ -7,7 +7,16 @@
         "navigationPane": {
           "displayName": "",
           "path": ""
-        },              
+        }, 
+        "navigationPaneItems": {
+          "options": {
+              "value": []
+          },
+          "selectedOption": {
+              "value": ""
+          }
+      },
+                
         "taskbarPreviewImage": {
           "displayName": "",
           "path":"" 
