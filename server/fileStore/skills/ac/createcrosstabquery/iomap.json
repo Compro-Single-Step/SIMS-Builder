@@ -40,8 +40,20 @@
                 "params": {
                   "projJsonPath":"views['1'].navigationPane.path"
                 }
-              }
+              },
+              "SELECTED_DB_OBJECT_TYPE": {
+                "function-name": "getSelectedDBObjectType",
+                "params": {
+                  "selectedObj": "views['1'].navigationPaneItems.selectedOption.value"
+                }
+            },
+              "SELECTED_DB_OBJECT": {
+                "function-name": "getSelectedDBObjectName",
+                "params": {
+                  "selectedObj": "views['1'].navigationPaneItems.selectedOption.value"
+                }
             }
+            }             
           }
         }
       }

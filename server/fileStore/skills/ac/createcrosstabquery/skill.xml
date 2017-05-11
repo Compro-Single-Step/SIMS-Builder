@@ -54,6 +54,8 @@
 					</sizeandpos>
 					<initialattrs>
 						<attr name="PROJECT_JSON" userDefined="true"/>
+						<attr name="SELECTED_DB_OBJECT_TYPE" userDefined="true"/>
+						<attr name="SELECTED_DB_OBJECT" userDefined="true"/>
 					</initialattrs>
 				</comp>
 				<comp id="4" mode="new">
