@@ -46,6 +46,14 @@
   padding-top: 1rem;
   border-top: 3px solid $lightgray;
   background-color: $body-bg;
+  .seperator{
+    background-color:#C4C4C4;
+    color: #C4C4C4;
+    display: inline-block;
+    width: 2px;
+    height: 100%;
+    margin: 0px 5px;
+  }
 }
 
 .btn-dark{

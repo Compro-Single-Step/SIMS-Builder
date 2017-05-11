@@ -33,6 +33,7 @@
   <div class="col-md-12">
     <div class="pull-right">
       <button class="btn btn-dark" (click)='lauchPreviewTask()'>Preview Step</button>
+      <div class="seperator">.</div>
       <button class="btn btn-dark width-100" (click)="setSelectedView(selectedView-1)" [disabled]="selectedView == 1">Previous</button>
       <button class="btn btn-dark width-100" *ngIf="selectedView < uiConfig.views.length" (click)="setSelectedView(selectedView+1)">Next</button>
       <button class="btn btn-dark width-100" *ngIf="selectedView == uiConfig.views.length" (click)="onFinish()">Finish</button>
