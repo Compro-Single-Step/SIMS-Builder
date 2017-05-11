@@ -84,7 +84,7 @@ module.exports = {
                     {
                         primaryFile: "common/baseSkill"
 
-    },    
+
    
 
                     }
@@ -108,7 +108,21 @@ module.exports = {
                 ]
             }
         ]
-     }
+     },
+         "createcrosstabquery": {
+        primaryFile: "ac/createcrosstabquery/createCrossTabQuery",
+        dependencyFiles: [
+            {   
+                primaryFile: "ac/common/acSkill",
+                dependencyFiles: [
+                    {
+                        primaryFile: "common/baseSkill",
+                        dependencyFiles: []
+
+                    }
+                ]
+            }
+        ]
 
     }
 
