@@ -1,0 +1,508 @@
+{
+  "views": [
+    {
+      "id": "1",
+      "label": "Initial Document Settings",
+      "itemType": "root",
+      "desc": {},
+      "items": [
+        {
+          "id": "1.1",
+          "label": "Ribbon",
+          "itemRenderer": "Panel",
+          "itemType": "child",
+          "tags": [
+            {
+              "compName": "SIMS.Components.Access.Ribbon",
+              "type": "default"
+            }
+          ],
+          "rendererProperties": {
+            "collapsable": true,
+            "optionalItems": true
+          },
+          "items": [
+            {
+              "id": "1.1.1",
+              "label": "Document Title",
+              "desc": {
+                "basic": "Name of the document to be displayed in Ribbon.",
+                "detailed": "Document Name which is shown in the central top area in the Ribbon is to be mentioned here."
+              },
+              "itemRenderer": "TextBox",
+              "itemType": "leaf",
+              "mandatory": false,
+              "rendererProperties": {
+                "dataType": "string"
+              },
+              "val": "{{views.1.documentTitle}}"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "label": "Navigation Pane",
+          "itemRenderer": "Panel",
+          "itemType": "child",
+          "tags": [
+            {
+              "compName": "SIMS.Components.Access.AccessNavigationPane",
+              "type": "default"
+            }
+          ],
+          "rendererProperties": {
+            "collapsable": true,
+            "optionalItems": true
+          },
+          "items": [
+            {
+              "id": "1.2.1",
+              "label": "Initial Configuration",
+              "desc": {
+                "basic": "Upload a JSON file which is used to configure the Navigation Pane for Access in SIMS.",
+                "detailed": "A JSON file, which will be used to configure the Navigation Pane for Access in SIMS, is required to be uploaded here. This file can be generated from here(Hyperlink pointing to the JSON creation tool spec)."
+              },
+              "itemRenderer": "Dropzone",
+               "emitEvents": [
+                "NAVPANE_DATA_UPDATED"
+              ],             
+              "itemType": "leaf",
+              "rendererProperties": {
+                "dataType": "JSON",
+                "placeholder": "Drop JSON file here to upload"
+              },
+              "mandatory": true,
+              "val": "{{views.1.navigationPane}}"
+            },
+            {
+              "id": "1.2.2",
+              "label": "Selected Access Object",
+              "desc": {
+                "basic": "Select the database object to be selecetd initiallly.",
+                "detailed": "Describe the type and name of the database object to be shown selected initially when the task is renedered"
+              },
+              "itemRenderer": "Dropdown",
+               "subscribeEvents": [
+                {
+                  "eventId": "NAVPANE_DATA_UPDATED",
+                  "modelReference": "{{views.1.navigationPaneItems.options}}",
+                  "rule": "addDatabaseObjectToDropdown"
+                }
+              ],
+              "rendererProperties": {
+                "itemList": "{{views.1.navigationPaneItems.options}}",
+                "dynamicMode":true
+              
+              },
+              "itemType": "leaf",
+              "mandatory": false,
+              "val": "{{views.1.navigationPaneItems.selectedOption}}"
+            }
+
+          ]
+        },
+        {
+          "id": "1.3",
+          "label": "Taskbar",
+          "itemRenderer": "Panel",
+          "itemType": "child",
+          "tags": [
+            {
+              "compName": "SIMS.Components.Common.TaskBar",
+              "type": "default"
+            }
+          ],
+          "rendererProperties": {
+            "collapsable": true,
+            "optionalItems": true
+          },
+          "items": [
+            {
+              "id": "1.3.1",
+              "label": "Taskbar Preview Image",
+              "desc": {
+                "basic": "Upload taskbar preview image.",
+                "detailed": "When a user hovers mouse over the application icon show in the task bar an image gets opened in the tool tip. That image has to be uploaded here."
+              },
+              "itemRenderer": "Dropzone",
+              "itemType": "leaf",
+              "rendererProperties": {
+                "dataType": "img",
+                "placeholder": "Drop image here to upload"
+              },
+              "mandatory": false,
+              "val": "{{views.1.taskbarPreviewImage}}"
+            }
+          ]
+        },
+        {
+          "id": "1.4",
+          "label": "Add Component(s)",
+          "itemRenderer": "Button",
+          "itemType": "leaf",
+          "rendererProperties": {
+            "click": {},
+            "disabled": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "label": "Skill Specific Inputs",
+      "itemType": "root",
+      "desc": {},
+      "items": [
+        {
+          "id": "2.1",
+          "label": "Crsoss Tab Query Wizard - Access Database",
+          "itemRenderer": "Panel",
+          "itemType": "child",
+          "tags": [
+            {
+              "compName": "SIMS.Components.Access.CrosstabQueryWizard",
+              "type": "default"
+            }
+          ],
+          "rendererProperties": {
+            "collapsable": true,
+            "optionalItems": false
+          },
+          "items": [
+            {
+              "id": "2.1.1",
+              "label": "Crsoss Tab Query Wizard Json",
+              "desc": {
+                "basic": "Provide Json to configure cross tab query wizard",
+                "detailed": "Provide Json to configure cross tab query wizard"
+              },
+              "itemRenderer": "Dropzone",
+              "itemType": "leaf",
+              "mandatory": true,
+              "emitEvents": [
+                "CROSS_TAB_DATA_UPDATED"
+              ],
+              "rendererProperties": {
+                "dataType": "JSON",
+                "placeholder": "Drop json here to upload"
+              },
+              "val": "{{views.2.crossTabInputJson}}"
+            },
+            {
+              "id": "2.1.2",
+              "label": "Name of the Query or Table To make Cross Tab wizard from",
+              "desc": {
+                "basic": "Name of the Query or Table To make Cross Tab wizard from.",
+                "detailed": ""
+              },
+              "itemRenderer": "Dropdown",
+              "emitEvents": [
+                "STAGE1_SELECTED_ITEMS"
+              ],
+              "subscribeEvents": [
+                {
+                  "eventId": "CROSS_TAB_DATA_UPDATED",
+                  "modelReference": "{{views.2.stage1SelectItems.options.value}}",
+                  "rule": "stage1SelectedItems"
+                }
+              ],
+              "rendererProperties": {
+                "itemList": "{{views.2.stage1SelectItems.options}}",
+                "dynamicMode": true
+              },
+              "itemType": "leaf",
+              "mandatory": false,
+              "val": "{{views.2.stage1SelectItems.selectedOption}}"
+            },
+            {
+              "id": "2.1.4",
+              "label": "Row axis for the query",
+              "desc": {
+                "basic": "The row side of the query.",
+                "detailed": ""
+              },
+              "itemRenderer": "Dropdown",
+              "emitEvents": [
+                "ROW_AXIS_DROPDOWN_UPDATED"
+              ],
+              "subscribeEvents": [
+                {
+                  "eventId": "STAGE1_SELECTED_ITEMS",
+                  "modelReference": "{{views.2.stage2List.options.value}}",
+                  "rule": "updateRowAxisDropdown"
+                }
+              ],
+              "rendererProperties": {
+                "itemList": "{{views.2.stage2List.options}}",
+                "dynamicMode": true
+              },
+              "itemType": "leaf",
+              "mandatory": false,
+              "val": "{{views.2.stage2List.selectedOption}}"
+            },
+            {
+              "id": "2.1.5",
+              "label": "Column axis selection fro the crossTab",
+              "desc": {
+                "basic": "The column side of the query.",
+                "detailed": ""
+              },
+              "itemRenderer": "Dropdown",
+              "emitEvents": [
+                "COLUMN_AXIS_UPDATED"
+              ],
+              "subscribeEvents": [
+                {
+                  "eventId": "ROW_AXIS_DROPDOWN_UPDATED",
+                  "modelReference": "{{views.2.stage3ColumnHeader.options}}",
+                  "rule": "updateRowColumnAxisDropdown"
+                }
+              ],
+              "rendererProperties": {
+                "itemList": "{{views.2.stage3ColumnHeader.options}}",
+                "dynamicMode": true
+              },
+              "itemType": "leaf",
+              "mandatory": false,
+              "val": "{{views.2.stage3ColumnHeader.selectedOption}}"
+            },
+            {
+              "id": "2.1.11",
+              "label": "Available function for screen 4",
+              "desc": {
+                "basic": "Provide all list of function related to each table/query",
+                "detailed": "Provide all list of function related to each table/query"
+              },
+              "itemRenderer": "Dropzone",
+              "itemType": "leaf",
+              "emitEvents": [
+                "STAGE4_FUNCTION_UPDATED"
+              ],
+              "rendererProperties": {
+                "dataType": "JSON",
+                "placeholder": "Drop JSON file here to upload"
+              },
+              "mandatory": false,
+              "val": "{{views.2.screen4Function}}"
+            },
+            {
+              "id": "2.1.7",
+              "label": "Field to be calculated",
+              "desc": {
+                "basic": "Select the feild to be selected to be performed operation on.",
+                "detailed": ""
+              },
+              "itemRenderer": "Dropdown",
+              "subscribeEvents": [
+                {
+                  "eventId": "COLUMN_AXIS_UPDATED",
+                  "modelReference": "{{views.2.fieldToBecalculated.options}}",
+                  "rule": "fieldsToBecalculated"
+                }
+              ],
+              "emitEvents": [
+                "CALC_FIELD_SELECTED"
+              ],
+              "rendererProperties": {
+                "itemList": "{{views.2.fieldToBecalculated.options}}",
+                "dynamicMode": true
+              },
+              "itemType": "leaf",
+              "mandatory": false,
+              "val": "{{views.2.fieldToBecalculated.selectedOption}}"
+            },
+            {
+              "id": "2.1.6",
+              "label": "Calculations available for the feilds",
+              "desc": {
+                "basic": "Select the calculation to be performed.",
+                "detailed": ""
+              },
+              "itemRenderer": "Dropdown",
+              "subscribeEvents": [
+                {
+                  "eventId": "STAGE4_FUNCTION_UPDATED",
+                  "modelReference": "{{views.2.calculationFunction.options}}",
+                  "rule": "populateFieldCalculated"
+                },
+                {
+                  "eventId": "CALC_FIELD_SELECTED",
+                  "modelReference": "{{views.2.calculationFunction.options}}",
+                  "rule": "updateCalcFunctionList"
+                }
+              ],
+              "rendererProperties": {
+                "itemList": "{{views.2.calculationFunction.options}}",
+                "dynamicMode": true
+              },
+              "itemType": "leaf",
+              "mandatory": false,
+              "val": "{{views.2.calculationFunction.selectedOption}}"
+            },
+            {
+              "id": "2.1.8",
+              "label": "whether to Include Sum of rows",
+              "desc": {
+                "basic": "Select if the feild row to be summarized or not",
+                "detailed": "Select if the feild row to be summarized or not"
+              },
+              "itemRenderer": "Radio",
+              "rendererProperties": {
+                "itemList": [
+                  {
+                    "value": "true",
+                    "label": "yes"
+                  },
+                  {
+                    "value": "false",
+                    "label": "No"
+                  }
+                ]
+              },
+              "itemType": "leaf",
+              "mandatory": true,
+              "val": "{{views.2.includeSumOfRows}}"
+            },
+            {
+              "id": "2.1.9",
+              "label": "Cross Tab Query Default Name",
+              "desc": {
+                "basic": "Provide default name for the fifth screen of wizard",
+                "detailed": ""
+              },
+              "itemRenderer": "TextBox",
+              "itemType": "leaf",
+              "mandatory": true,
+              "rendererProperties": {
+                "dataType": "string"
+              },
+              "val": "{{views.2.defaultCrossTabQueryName}}"
+            },
+            {
+              "id": "2.1.10",
+              "label": "Cross Tab Query final name",
+              "desc": {
+                "basic": "Provide final name of the cross tab query if needed ",
+                "detailed": ""
+              },
+              "itemRenderer": "TextBox",
+              "itemType": "leaf",
+              "mandatory": true,
+              "rendererProperties": {
+                "dataType": "string"
+              },
+              "val": "{{views.2.finalCrossTabQueryName}}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "label": "Final Document Settings",
+      "itemType": "root",
+      "desc": {},
+      "items": [
+        {
+          "id": "3.1",
+          "label": "Navigation Pane",
+          "itemRenderer": "Panel",
+          "itemType": "child",
+          "tags": [
+            {
+              "compName": "SIMS.Components.Access.AccessNavigationPane",
+              "type": "default"
+            }
+          ],
+          "rendererProperties": {
+            "collapsable": true,
+            "optionalItems": true
+          },
+          "items": [
+            {
+              "id": "3.1.1",
+              "label": "Final Configuration",
+              "desc": {
+                "basic": "Upload a JSON file which is used to configure the Navigation Pane for Access in SIMS.",
+                "detailed": "A JSON file, which will be used to configure the Navigation Pane for Access in SIMS, is required to be uploaded here. This file can be generated from here(Hyperlink pointing to the JSON creation tool spec)."
+              },
+              "itemRenderer": "Dropzone",
+              "itemType": "leaf",
+              "rendererProperties": {
+                "dataType": "JSON",
+                "placeholder": "Drop JSON file here to upload"
+              },
+              "mandatory": true,
+              "val": "{{views.3.navigationPane}}"
+            }
+          ]
+        },
+        {
+          "id": "3.2",
+          "label": "Datasheet",
+          "itemRenderer": "Panel",
+          "itemType": "child",
+          "tags": [
+            {
+              "compName": "SIMS.Components.Access.DataSheetView",
+              "type": "default"
+            }
+          ],
+          "rendererProperties": {
+            "collapsable": true,
+            "optionalItems": true
+          },
+          "items": [
+            {
+              "id": "3.2.1",
+              "label": "Datasheet Configuration",
+              "desc": {
+                "basic": "Upload a JSON file which is used to configure the Datasheet for Access in SIMS.",
+                "detailed": "A JSON file, which will be used to configure the Navigation Pane for Access in SIMS, is required to be uploaded here. This file can be generated from here(Hyperlink pointing to the JSON creation tool spec)."
+              },
+              "itemRenderer": "Dropzone",
+              "itemType": "leaf",
+              "rendererProperties": {
+                "dataType": "JSON",
+                "placeholder": "Drop JSON file here to upload"
+              },
+              "mandatory": true,
+              "val": "{{views.3.datasheet}}"
+            },
+            {
+              "id": "3.2.2",
+              "label": "Datasheet Integrated Resource",
+              "desc": {
+                "basic": "Upload a JSON file which is used to configure the Datsheet for Access in SIMS.",
+                "detailed": "A JSON file, which will be used to configure the Datsheet for Access for Access in SIMS, is required to be uploaded here. This file can be generated from here(Hyperlink pointing to the JSON creation tool spec)."
+              },
+              "itemRenderer": "Dropzone",
+              "itemType": "leaf",
+              "rendererProperties": {
+                "dataType": "JSON",
+                "placeholder": "Drop JSON file here to upload"
+              },
+              "mandatory": true,
+              "val": "{{views.3.datasheetIntegratedResource}}"
+            },
+            {
+              "id": "3.2.2",
+              "label": "Record Navigator specification",
+              "desc": {
+                "basic": "Record Navigator mode data",
+                "detailed": ""
+              },
+              "itemRenderer": "TextBox",
+              "itemType": "leaf",
+              "mandatory": true,
+              "rendererProperties": {
+                "dataType": "string"
+              },
+              "val": "{{views.3.recordNavigator}}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
