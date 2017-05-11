@@ -92,7 +92,7 @@ var MoveCellContent = function (_ExcelBaseSkill) {
       var col1 = valuearray[0].toUpperCase().charAt(0);
       var col2 = valuearray[1].toUpperCase().charAt(0);
       var row1 = parseInt(valuearray[0].substring(1, valuearray[0].length));
-      var row2 = parseInt(valuearray[1].substring(1, valuearray[1].length));
+      var row2 = parseInt(valuearray[1].substring(1, valuearray[0].length));
 
       finalArray.push(valuearray[0]);
 

@@ -81,12 +81,4 @@ module.exports = class State {
 
         return xml;
     }
-
-    /**
-     * return id of this state mentioned in template XML
-     * currently this fn is being called by children components
-     */
-    getId() {
-        return this.id;
-    }
 };

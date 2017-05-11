@@ -32,7 +32,7 @@ module.exports = class Step {
     }
 
     generateXML(stepText) {
-        let xmlString = '<?xml version="1.0"?><task>';
+        let xmlString = '<task>';
 
         xmlString += this.generatePreloadNodeXML();
         xmlString += this.addStepTextToXML(stepText);
@@ -70,8 +70,8 @@ module.exports = class Step {
 
         // adding preload resources
         xmlString += "<resources>";
-        for (let idx = 0; idx < this.attrValMap.preload.resource.length; idx++) {
-            let currRes = this.attrValMap.preload.resource[idx];
+        for (let idx = 0; idx < this.attrValMap.preloadResources.length; idx++) {
+            let currRes = this.attrValMap.preloadResources[idx];
             xmlString += '<res path="' + currRes.path + '" type="' + currRes.type + '"/>';
         }
         xmlString += "</resources>";
