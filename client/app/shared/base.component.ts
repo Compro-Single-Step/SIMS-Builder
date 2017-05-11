@@ -25,6 +25,7 @@ export class BaseComponent implements OnInit, OnDestroy {
         this.updateModel();
     }
 
+    //function to call a skill specific function to update model from an external file while it is being painted.
     updateModel() {      
         if(this.compConfig.rendererProperties && this.compConfig.rendererProperties.updateModel)
         {
