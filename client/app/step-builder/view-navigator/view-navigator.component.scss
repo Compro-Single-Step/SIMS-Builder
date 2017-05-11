@@ -1,12 +1,5 @@
+@import "../../scss/variables";
 $progressbar-connector: #C1C1C1;
-
-// *******************Temporary declarations************
-$theme-blue: #005A8E;
-$pure-white: #FFFFFF;
-$success-green: #00B551;
-$hover-blue: #383E4B;
-// ************To be Moved to variables.scss*****************
-
 
 .progressbar {
     counter-reset: step;
