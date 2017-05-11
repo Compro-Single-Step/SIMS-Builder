@@ -1,4 +1,5 @@
 const dbFilestoreMgr = require('./dbFilestoreMgr');
+const translator = require("./ioTranslator.js");
 const XmlGenerator = require("./xmlGenerator/stepXMLGenerator");
 
 var mapTranslationParams = function (IOMap, stepUIState, skillRef, taskId, stepIndex, dbFilestoreMgr) {
@@ -31,7 +32,7 @@ module.exports.generateStepXML = function (templateId, taskId, stepIndex, stepTe
                 });
             }, error => {
                 return Promise.reject(error);
-            }), ...copyResPromiseArray]).then(([msg, ...copyResMsg]) => {
+            })]).then((msg) => {
                 return Promise.resolve(msg);
             }).catch(error => {
                 return Promise.reject(error);
