@@ -54,8 +54,7 @@ attrTaskParam.prototype.addResourceToMap = function (resourceType, filePath, cus
   if (resourceType !== "skill") resourceType = "step";
 
   //Pushing to  Resource Map so that the file can be copied asynchronously
-  this.resourceMap[filePath] = { customParentFolder, fileName, resourceType, absFilePath, fileType };
-  return { customParentFolder, fileName, stepAssetsFolderPath, fileType, absFilePath };
+  return { "absFilePath": absFilePath };
 };
 
 class IOTranslator {
@@ -184,7 +183,7 @@ class IOTranslator {
 
       return Promise.all(PromiseRequestsArr).then(() => {
         iomap.preload.resource = self._removeDuplicatePreloadResources(iomap.preload.resource);
-        return Promise.resolve([iomap, copyResPromiseArray]);
+        return Promise.resolve(iomap);
       }).catch(err => {
         console.log("Error in traverseIOMap function of IOTranslator: " + err.message);
         return Promise.reject(err);
@@ -236,8 +235,8 @@ class IOTranslator {
   }
 
   getAttrValueMap(attrObj) {
-    return this.readIOMap(attrObj).then(([ioMap, copyResPromiseArray]) => {
-      return Promise.resolve([ioMap, copyResPromiseArray]);
+    return this.readIOMap(attrObj).then((ioMap) => {
+      return Promise.resolve(ioMap);
     }).catch(error => {
       return Promise.reject(error);
     });
