@@ -5,7 +5,6 @@ const multer = require('multer');
 const mkdirp = require('mkdirp');
 const fse = require('fs-extra');
 const ResourceUtil = require('../utils/resourceUtil');
-const XMLUtil = require('../utils/XMLUtil');
 
 const fileTypeFolderMap = {
     "SKILL": config.fileStore.skillFolder,
