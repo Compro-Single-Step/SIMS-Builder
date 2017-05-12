@@ -3,6 +3,7 @@ const mkdirp = require('mkdirp');
 
 const uiHandler = require('../modules/skill/uiHandler');
 const dbFilestoreMgr = require('../modules/skill/dbFilestoreMgr');
+const xmlGenerationHandler = require('../modules/skill/xmlGenerationHandler');
 const skillFactory = require("../modules/skill/skillFactory");
 
 class SkillController {
