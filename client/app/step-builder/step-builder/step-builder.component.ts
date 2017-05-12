@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { BuilderDataService } from '../shared/builder-data.service';
 import { EventService } from '../shared/event.service';
@@ -34,7 +34,7 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
     eventSrvc: Object;
     @ViewChild('stepTextContainer') stepTextContainer;
 
-    constructor(el: ElementRef, private route: ActivatedRoute, private router: Router, private bds: BuilderDataService, private previewService: PreviewService, private tds: TaskDataService, private exceptionHandlerSrvc: ExceptionHandlerService) {
+    constructor(el: ElementRef, private route: ActivatedRoute, private router: Router, private bds: BuilderDataService, private previewService: PreviewService, private tds: TaskDataService, private exceptionHandlerSrvc: ExceptionHandlerService, private cdRef:ChangeDetectorRef) {
         this.$el = jQuery(el.nativeElement);
         this.uiConfig = new UIConfig();
         this.selectedView = 1;
@@ -61,12 +61,30 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
                 this.skillName = stepData.SkillName;
                 this.templateName = stepData.TemplateName;
                 this.stepText = stepData.Text;
+                this.cdRef.detectChanges();
+                this.checkForStepTextOverflow();
             });
             this.fetchSkillData();
         })
 
         this.bindShowMoreButtonClick();
     }
+
+    checkForStepTextOverflow() {
+        jQuery(".show-more a").each(function() {
+            var $link = jQuery(this);
+            var $content = $link.parents().find(".stepText");
+
+            var visibleHeight = $content[0].clientHeight;
+            var actualHeight = $content[0].scrollHeight - 5;
+
+            if (actualHeight > visibleHeight) {
+                $link.show();
+            } else {
+                $link.hide();
+            }
+        });
+    }    
 
     bindShowMoreButtonClick() {
         var self = this;
@@ -84,7 +102,6 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
             $stepText.toggleClass("hideEllipsis");
 
             $link.text(self.getShowLinkText(linkText));
-
             return false;
         });
     }

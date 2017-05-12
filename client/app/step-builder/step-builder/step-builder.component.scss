@@ -7,11 +7,12 @@ $lightgray: #d3d3d3;
   }
 }
 #header {
-  height: 6rem;
+  height: 6.3rem;
   padding-top: $spacer;
   background-color: $body-bg;
   border-bottom: 3px solid $lightgray;
   z-index: 2;
+  padding-bottom: 0.3rem;
 }
 .body-container {
   height: calc(100% - 4rem);
@@ -43,7 +44,11 @@ $lightgray: #d3d3d3;
 
 #header.removeFixedHeight {
   height: auto;
-  padding-bottom: 3px;
+  padding-bottom: 0.4rem;
+}
+
+.stepTextHeading{
+  font-size: 1.3rem;
 }
 
 .stepTextHeading:after{
