@@ -2,6 +2,7 @@
 @import "../scss/variables";
 
 .widget-invoice{
+  border-left: 5px solid $card-border-blue;
   padding: 40px;
 }
 ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
@@ -15,7 +16,7 @@
 }
 .taskHeadingFont{
   border: 0;
-  color: $black;
+  color: $gray-dark;
   font-size: 20px;
   font-weight: bold;
 }
@@ -24,7 +25,7 @@
 }
 .pageHead{
   font-weight: bold;
-  color: $black;
+  color: $theme-blue;
   font-size: 23px;
 }
 .tempPadding{
@@ -51,4 +52,14 @@
 }
 .searchForm{
   display: none;
+}
+.login-form{
+  margin-top: 75px;
+}
+.btn-dark{
+  background-color: $theme-blue;
+  color: $pure-white;
+  &:hover{
+    background-color: $deepdark-blue;
+  }
 }
