@@ -5,6 +5,7 @@ const multer = require('multer');
 const mkdirp = require('mkdirp');
 const fse = require('fs-extra');
 const ResourceUtil = require('../utils/resourceUtil');
+const XMLUtil = require('../utils/XMLUtil');
 
 const fileTypeFolderMap = {
     "SKILL": config.fileStore.skillFolder,
@@ -26,7 +27,6 @@ const fileTypeFunctionMap = {
 };
 
 class FileStoreController {
-
     readCsvFile(absolutePath) {
         return new Promise(function (resolve, reject) {
             let resultArr = [];
@@ -48,10 +48,9 @@ class FileStoreController {
             });
         });
     }
-
-    getFileStoreStepFolderPath(taskId, stepIdx) {
-        return config.fileStore.xmlFolder + taskId + "/" + stepIdx + "/";
-    }
+    // Below function was a duplicate. Use 'getStepXMLFolderPath' instead.
+    // getFileStoreStepFolderPath(taskId, stepIdx) {
+    //  }
 
     getSimsXmlStepFolderPath(taskId, stepIdx) {
         return this.getTaskFolderPath(taskId, stepIdx) + stepIdx + "/";
@@ -68,7 +67,7 @@ class FileStoreController {
             resFileType = resTypeMap[fileType];
         }
         //path to save the file
-        var absFilePath = this.getFileStoreStepFolderPath(taskParams.taskId, taskParams.stepIndex);
+        var absFilePath = this.getStepXMLFolderPath(taskParams.taskId, taskParams.stepIndex);
 
         //path to return for the file
         var srcPath = config.fileStore.resourceFolder + srcPath;
@@ -88,6 +87,37 @@ class FileStoreController {
                 if (!error) {
                     var resolveParam = { "filePath": relativeXmlPath + fileName, "fileType": resFileType };
                     resolve(resolveParam);
+                } else {
+                    reject(error);
+                }
+            });
+        });
+    }
+    /**
+     * @param {*} sourceFileLocation : Location from which file to be copied 
+     * Ex: "GO16.WD.12.12B.02.T1/1/1493790231823.DocumentData.json"
+     * @param {*} resourceMap : It's an object which contains following key-value pairs:
+     *   customParentFolder: Any custom folder hierarchy
+     *   fileName: "1493790231823.DocumentData.json"
+     *   resourceType: "step | skill" => 
+     *          skill means that it's a skill resource and has to be copied from "filestore/skills/" folder
+     *          step means that it's a user uploaded resource and has to be copied from "filestore/resources/" folder
+     * @param {*} taskId : Task ID
+     * @param {*} stepIndex : Step Index
+     * OUTPUT : This function copies the resource file from a source location to corresponding 
+     * destination and returns the promise for same
+     */
+    copyAssetToTaskFolderEnhanced(sourceFileLocation, resourceMap, taskId, stepIndex) {
+
+        let srcPath;
+        if (resourceMap.resourceType === "step") srcPath = config.fileStore.resourceFolder + sourceFileLocation;else srcPath = path.join(config.fileStore.skillFolder, sourceFileLocation);
+
+        let destPath = path.join(this.getStepAssetsFolderPath(taskId, stepIndex), resourceMap.customParentFolder, resourceMap.fileName);
+
+        return new Promise((resolve, reject) => {
+            fse.copy(srcPath, destPath, { overwrite: false }, error => {
+                if (!error) {
+                    resolve("success");
                 } else {
                     reject(error);
                 }
@@ -223,6 +253,15 @@ class FileStoreController {
 
     getStepXMLFolderPath(taskId, stepIndex) {
         return config.fileStore.xmlFolder + taskId + "/" + stepIndex + "/";
+    }
+
+    /**
+     * @param {*} taskId : Task ID
+     * @param {*} stepIndex : Step Number
+     * OUTPUT : Absolute Folder Path of the corresponding Task till the Assets folder
+     */
+    getStepAssetsFolderPath(taskId, stepIndex) {
+        return this.getStepXMLFolderPath(taskId, stepIndex) + "Assets/";
     }
 
     getUploadedResourceFolderPath(relPath) {
