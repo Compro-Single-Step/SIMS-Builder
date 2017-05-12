@@ -26604,13 +26604,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var StepBuilderComponent = (function () {
-    function StepBuilderComponent(el, route, router, bds, previewService, tds, exceptionHandlerSrvc) {
+    function StepBuilderComponent(el, route, router, bds, previewService, tds, exceptionHandlerSrvc, cdRef) {
         this.route = route;
         this.router = router;
         this.bds = bds;
         this.previewService = previewService;
         this.tds = tds;
         this.exceptionHandlerSrvc = exceptionHandlerSrvc;
+        this.cdRef = cdRef;
         this.$el = jQuery(el.nativeElement);
         this.uiConfig = new __WEBPACK_IMPORTED_MODULE_4__shared_UIConfig_model__["a" /* UIConfig */]();
         this.selectedView = 1;
@@ -26627,6 +26628,7 @@ var StepBuilderComponent = (function () {
         });
         jQuery(window).on('sn:resize', this.initScroll.bind(this));
         this.initScroll();
+        this.bindShowMoreButtonClick();
         this.modelChecker = __WEBPACK_IMPORTED_MODULE_8_rxjs_observable_IntervalObservable__["IntervalObservable"].create(5000).subscribe(function () { return _this.checkForModelChange(); });
         this.route.params.subscribe(function (params) {
             _this.taskID = params["taskId"];
@@ -26637,9 +26639,50 @@ var StepBuilderComponent = (function () {
                 _this.skillName = stepData.SkillName;
                 _this.templateName = stepData.TemplateName;
                 _this.stepText = stepData.Text;
+                _this.cdRef.detectChanges();
+                _this.checkForStepTextOverflow();
             });
             _this.fetchSkillData();
         });
+    };
+    StepBuilderComponent.prototype.checkForStepTextOverflow = function () {
+        jQuery(".show-more a").each(function () {
+            var $link = jQuery(this);
+            var $content = $link.parents().find(".stepText");
+            var visibleHeight = $content[0].clientHeight;
+            var actualHeight = $content[0].scrollHeight - 5;
+            if (actualHeight > visibleHeight) {
+                $link.show();
+            }
+            else {
+                $link.hide();
+            }
+        });
+    };
+    StepBuilderComponent.prototype.bindShowMoreButtonClick = function () {
+        var self = this;
+        jQuery(".show-more a").on("click", function () {
+            var $link = jQuery(this);
+            var linkText = $link.text();
+            var $content = $link.parents().find(".stepText");
+            $content.toggleClass("stepTextOverflowHidden");
+            var $header = $link.parents().find("#header");
+            $header.toggleClass("removeFixedHeight");
+            var $stepText = $link.parents().find(".stepTextHeading");
+            $stepText.toggleClass("hideEllipsis");
+            $link.text(self.getShowLinkText(linkText));
+            return false;
+        });
+    };
+    StepBuilderComponent.prototype.getShowLinkText = function (currentText) {
+        var newText = '';
+        if (currentText.toUpperCase() === "SHOW MORE") {
+            newText = "Show less";
+        }
+        else {
+            newText = "Show more";
+        }
+        return newText;
     };
     StepBuilderComponent.prototype.fetchSkillData = function () {
         var _this = this;
@@ -26730,10 +26773,10 @@ var StepBuilderComponent = (function () {
             template: __webpack_require__(1115),
             styles: [__webpack_require__(1085)]
         }), 
-        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* ActivatedRoute */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* ActivatedRoute */]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["d" /* Router */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_router__["d" /* Router */]) === 'function' && _c) || Object, (typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2__shared_builder_data_service__["a" /* BuilderDataService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__shared_builder_data_service__["a" /* BuilderDataService */]) === 'function' && _d) || Object, (typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_7__services_preview_service__["a" /* PreviewService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_7__services_preview_service__["a" /* PreviewService */]) === 'function' && _e) || Object, (typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_9__services_taskData_service__["a" /* TaskDataService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_9__services_taskData_service__["a" /* TaskDataService */]) === 'function' && _f) || Object, (typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_10__shared_exception_handler_service__["a" /* ExceptionHandlerService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_10__shared_exception_handler_service__["a" /* ExceptionHandlerService */]) === 'function' && _g) || Object])
+        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* ActivatedRoute */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* ActivatedRoute */]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["d" /* Router */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_router__["d" /* Router */]) === 'function' && _c) || Object, (typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2__shared_builder_data_service__["a" /* BuilderDataService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__shared_builder_data_service__["a" /* BuilderDataService */]) === 'function' && _d) || Object, (typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_7__services_preview_service__["a" /* PreviewService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_7__services_preview_service__["a" /* PreviewService */]) === 'function' && _e) || Object, (typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_9__services_taskData_service__["a" /* TaskDataService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_9__services_taskData_service__["a" /* TaskDataService */]) === 'function' && _f) || Object, (typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_10__shared_exception_handler_service__["a" /* ExceptionHandlerService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_10__shared_exception_handler_service__["a" /* ExceptionHandlerService */]) === 'function' && _g) || Object, (typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["ChangeDetectorRef"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__angular_core__["ChangeDetectorRef"]) === 'function' && _h) || Object])
     ], StepBuilderComponent);
     return StepBuilderComponent;
-    var _a, _b, _c, _d, _e, _f, _g;
+    var _a, _b, _c, _d, _e, _f, _g, _h;
 }());
 //# sourceMappingURL=E:/Sim-Builder-Packaging/checkout/develop/client/step-builder.component.js.map
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(169), __webpack_require__(1127)))
@@ -27219,7 +27262,7 @@ exports = module.exports = __webpack_require__(47)();
 
 
 // module
-exports.push([module.i, ".row {\n  margin-left: 1rem;\n  margin-right: 1rem; }\n\n#header {\n  height: 6rem;\n  padding-top: 1rem;\n  background-color: #fff;\n  border-bottom: 3px solid #d3d3d3; }\n\n.body-container {\n  height: calc(100% - 10rem); }\n  .body-container #body {\n    overflow-y: scroll;\n    padding-top: 1rem;\n    padding-bottom: 1rem; }\n\n#footer {\n  height: 4rem;\n  padding-top: 1rem;\n  border-top: 3px solid #d3d3d3;\n  background-color: #fff; }\n", ""]);
+exports.push([module.i, ".row {\n  margin-left: 1rem;\n  margin-right: 1rem; }\n\n#header {\n  position: fixed;\n  width: 100%;\n  height: 6.3rem;\n  padding-top: 1rem;\n  background-color: #fff;\n  border-bottom: 3px solid #d3d3d3;\n  z-index: 2;\n  padding-bottom: 0.3rem; }\n\n.body-container {\n  height: calc(100% - 4rem);\n  position: relative;\n  padding-top: 6rem; }\n  .body-container #body {\n    overflow-y: scroll;\n    padding-top: 1rem;\n    padding-bottom: 1rem; }\n\n#footer {\n  height: 4rem;\n  padding-top: 1rem;\n  border-top: 3px solid #d3d3d3;\n  background-color: #fff;\n  position: fixed;\n  bottom: 0;\n  width: 100%; }\n\n.stepText.stepTextOverflowHidden {\n  overflow: hidden;\n  height: 3rem; }\n\n#header.removeFixedHeight {\n  height: auto;\n  padding-bottom: 0.4rem; }\n\n.stepTextHeading {\n  font-size: 1.3rem; }\n\n.stepTextHeading:after {\n  content: '';\n  position: absolute;\n  bottom: 0;\n  right: 0;\n  width: 30%;\n  height: 64%;\n  background-image: linear-gradient(left, rgba(255, 255, 255, 0) 0%, white 80%, white 100%);\n  pointer-events: none; }\n\n.stepTextHeading.hideEllipsis:after {\n  display: none; }\n\n.show-more {\n  position: absolute;\n  bottom: 25px;\n  right: 0px; }\n", ""]);
 
 // exports
 
@@ -27399,7 +27442,7 @@ module.exports = "<p>\r\n  scenario-files-viewer works!\r\n</p>\r\n"
 /* 1115 */
 /***/ (function(module, exports) {
 
-module.exports = "<nav class=\"navbar navbar-default\" id=\"header\">\r\n  <div class=\"container-fluid\">\r\n    <div class=\"navbar-header\">\r\n      <div class=\"row\">\r\n        <div class=\"col-md-10\">\r\n          <div class=\"row\">\r\n            <h4><strong>STEP {{stepIndex}}</strong>&nbsp;</h4><h4 #stepTextContainer [innerHTML]=\"stepText\"></h4>\r\n          </div>\r\n          <div class=\"row\">\r\n            <span class=\"tag tag-primary\"><span>Task ID:&nbsp;</span> {{taskID}}  </span>&nbsp;<span class=\"tag tagFontNormal tag-primary\"><span >Skill:&nbsp;</span> {{skillName}}</span> &nbsp; <span class=\"tag tag-primary\"><span>Template:&nbsp;</span> {{templateName}} </span>\r\n          </div>\r\n        </div>\r\n        <div class=\"col-md-2\">\r\n          <ul class=\"nav navbar-nav navbar-right\">\r\n            <li><button class=\"btn btn-inverse pull-right\" (click)=\"onClose()\">Close</button></li>\r\n          </ul>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</nav>\r\n<div class=\"body-container\">\r\n  <div id=\"body\">\r\n    <div class=\"row\">\r\n      <div class=\"col-lg-12 col-md-12\">\r\n        <app-step-input-area [stepConfig]=\"uiConfig\" (viewChanged)=\"setSelectedView($event.viewNumber)\" [selectedView]=\"selectedView\"></app-step-input-area>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n<div id=\"footer\">\r\n  <div class=\"col-md-12\">\r\n    <button class=\"btn btn-inverse\" (click)='lauchPreviewTask()'>Preview Step</button>\r\n    <button class=\"btn btn-inverse\">Save</button>\r\n    <div class=\"pull-right\">\r\n      <button class=\"btn btn-inverse width-100\" (click)=\"setSelectedView(selectedView-1)\" [disabled]=\"selectedView == 1\">Previous</button>\r\n      <button class=\"btn btn-inverse width-100\" *ngIf=\"selectedView < uiConfig.views.length\" (click)=\"setSelectedView(selectedView+1)\">Next</button>\r\n      <button class=\"btn btn-inverse width-100\" *ngIf=\"selectedView == uiConfig.views.length\" (click)=\"onFinish()\">Finish</button>\r\n    </div>\r\n  </div>\r\n</div>\r\n"
+module.exports = "<nav class=\"navbar navbar-default\" id=\"header\">\r\n  <div class=\"container-fluid\">\r\n    <div class=\"navbar-header\">\r\n      <div class=\"row\">\r\n        <div class=\"col-md-10\">\r\n          <div class=\"row stepText stepTextOverflowHidden\">\r\n            <h4 class=\"stepTextHeading\"><strong>STEP {{stepIndex}}</strong>&nbsp;<span #stepTextContainer [innerHTML]=\"stepText\"></span></h4>\r\n            <span class=\"show-more\"><a href=\"#\">Show more</a></span>\r\n          </div>\r\n          <div class=\"row\">\r\n            <span class=\"tag tag-primary\"><span>Task ID:&nbsp;</span> {{taskID}}  </span>&nbsp;<span class=\"tag tagFontNormal tag-primary\"><span >Skill:&nbsp;</span> {{skillName}}</span> &nbsp; <span class=\"tag tag-primary\"><span>Template:&nbsp;</span> {{templateName}} </span>\r\n          </div>\r\n        </div>\r\n        <div class=\"col-md-2\">\r\n          <ul class=\"nav navbar-nav navbar-right\">\r\n            <li><button class=\"btn btn-inverse pull-right\" (click)=\"onClose()\">Close</button></li>\r\n          </ul>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</nav>\r\n<div class=\"body-container\">\r\n  <div id=\"body\">\r\n    <div class=\"row\">\r\n      <div class=\"col-lg-12 col-md-12\">\r\n        <app-step-input-area [stepConfig]=\"uiConfig\" (viewChanged)=\"setSelectedView($event.viewNumber)\" [selectedView]=\"selectedView\"></app-step-input-area>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n<div id=\"footer\">\r\n  <div class=\"col-md-12\">\r\n    <button class=\"btn btn-inverse\" (click)='lauchPreviewTask()'>Preview Step</button>\r\n    <button class=\"btn btn-inverse\">Save</button>\r\n    <div class=\"pull-right\">\r\n      <button class=\"btn btn-inverse width-100\" (click)=\"setSelectedView(selectedView-1)\" [disabled]=\"selectedView == 1\">Previous</button>\r\n      <button class=\"btn btn-inverse width-100\" *ngIf=\"selectedView < uiConfig.views.length\" (click)=\"setSelectedView(selectedView+1)\">Next</button>\r\n      <button class=\"btn btn-inverse width-100\" *ngIf=\"selectedView == uiConfig.views.length\" (click)=\"onFinish()\">Finish</button>\r\n    </div>\r\n  </div>\r\n</div>\r\n"
 
 /***/ }),
 /* 1116 */
