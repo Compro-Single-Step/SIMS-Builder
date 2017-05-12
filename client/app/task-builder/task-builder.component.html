@@ -21,7 +21,7 @@
 </div>
 <div class="row">
    <div class="col-md-12">
-      <taskbuilder-taskstep *ngFor="let step of StepData; let stepIndex = index " [stepData]="step" (stepNavigationEvent)="stepNavigationListner($event,stepIndex)"></taskbuilder-taskstep>
+      <taskbuilder-taskstep class="taskstep-number-{{stepIndex+1}}" *ngFor="let step of StepData; let stepIndex = index " [stepData]="step" (stepNavigationEvent)="stepNavigationListner($event,stepIndex)"></taskbuilder-taskstep>
    </div>
 </div>
 <div class="row" >
