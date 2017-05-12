@@ -34,6 +34,16 @@
   margin-top: 35%;
 }
 
+.step_number{
+  font-weight: bold;
+  font-size: 16px;
+    & .stepText{
+      font-weight: normal;
+  }
+}
+.verticalRule{
+  padding: 0px 5px;
+}
 :host-context(.taskstep-number-1) #stepList{
   border-left: 5px solid #0A819C;
 }
