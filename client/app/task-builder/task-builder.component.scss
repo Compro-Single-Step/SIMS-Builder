@@ -44,3 +44,10 @@
 .page-title{
   color: $theme-blue;
 }
+.btn-dark{
+  background-color: $theme-blue;
+  color: $pure-white;
+  &:hover{
+    background-color: $hover-blue;
+  }
+}
