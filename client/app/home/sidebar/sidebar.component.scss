@@ -5,3 +5,12 @@
   font-family: cambria;
   color:$pure-white;
 }
+.sidebar-nav > li:last-child > a {
+  border-color: #AAAAAA;
+}
+.sidebar-nav > li > a{
+  border-top-color: #AAAAAA;
+}
+.sidebar-nav > li > a:hover{
+  background-color: #484E5B;
+}
