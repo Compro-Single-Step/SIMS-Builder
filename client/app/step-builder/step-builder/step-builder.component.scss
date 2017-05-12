@@ -7,6 +7,8 @@ $lightgray: #d3d3d3;
   }
 }
 #header {
+  position: fixed;
+  width: 100%;
   height: 6.3rem;
   padding-top: $spacer;
   background-color: $body-bg;
@@ -16,8 +18,7 @@ $lightgray: #d3d3d3;
 }
 .body-container {
   height: calc(100% - 4rem);
-  position: absolute;
-  top: 0px;
+  position: relative;
   padding-top: 6rem;
   #body {
     overflow-y: scroll;
@@ -32,7 +33,7 @@ $lightgray: #d3d3d3;
   padding-top: 1rem;
   border-top: 3px solid $lightgray;
   background-color: $body-bg;
-  position: absolute;
+  position: fixed;
   bottom: 0;
   width: 100%;
 }
