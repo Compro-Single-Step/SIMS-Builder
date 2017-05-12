@@ -4,30 +4,30 @@
     placement="right" triggers="focus"></button>
 </div>
 <div *ngIf="!dynamicMode" [ngStyle]="compConfig.rendererProperties.style">
-  <ul class="nav nav-tabs" (click)="$event.preventDefault()">
+  <ul class="nav nav-tabs tabs" (click)="$event.preventDefault()">
     <li *ngFor="let tabConfig of compConfig.items; let i = index" [ngClass]="['nav-item']" [class.active]="activeTabIndex == i">
       <a href="javascript:void(0);" class="nav-link" [class.active]="activeTabIndex == i" (click)="activeTabIndex = i">
         <span>{{tabConfig.label}}</span>
       </a>
     </li>
   </ul>
-  <div>
+  <div class="tabPageContainer">
     <div *ngFor="let tabConfig of compConfig.items; let i = index">
-      <app-tab-page [hidden]="activeTabIndex != i" [compConfig]="tabConfig"></app-tab-page>
+      <app-tab-page [hidden]="activeTabIndex != i" [compConfig]="tabConfig" [ngClass]="{'displayInOneLine': displayInOneLine}"></app-tab-page>
     </div>
   </div>
 </div>
 <div *ngIf="dynamicMode" [ngStyle]="compConfig.rendererProperties.style">
-  <ul class="nav nav-tabs" (click)="$event.preventDefault()">
+  <ul class="nav nav-tabs tabs" (click)="$event.preventDefault()">
     <li *ngFor="let tab of tabs.value; let i = index" [ngClass]="['nav-item']" [class.active]="activeTabIndex == i">
       <a href="javascript:void(0);" class="nav-link" [class.active]="activeTabIndex == i" (click)="activeTabIndex = i">
         <span>{{tab.name}}</span>
       </a>
     </li>
   </ul>
-  <div>
+  <div class="tabPageContainer">
     <div *ngFor="let tab of tabs.value; let i = index">
-      <app-tab-page [hidden]="activeTabIndex != i" [compConfig]="compConfig.items[0]" [modelRef]="tab"></app-tab-page>
+      <app-tab-page [hidden]="activeTabIndex != i" [compConfig]="compConfig.items[0]" [modelRef]="tab" [ngClass]="{'displayInOneLine': displayInOneLine}"></app-tab-page>
     </div>
   </div>
 </div>

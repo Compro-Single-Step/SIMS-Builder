@@ -1,17 +1,10 @@
 import { Injectable, ViewContainerRef, ReflectiveInjector, ComponentFactoryResolver, ComponentRef } from '@angular/core';
-import { TextBoxComponent } from './text-box/text-box.component';
-import { PanelComponent } from './panel/panel.component';
-import { SelectComponent } from './select/select.component';
-import { TabComponent } from './tab/tab.component';
-import { ButtonComponent } from './button/button.component';
-import { DropzoneComponent } from './dropzone/dropzone.component';
-import { SwitchComponent }from './switch/switch.component';
-
+import { ComponentRepositoryService } from './component-repository.service';
 
 @Injectable()
 export class InputFactoryService {
 
-  constructor(private componentFactoryResolver: ComponentFactoryResolver) { }
+  constructor(private componentFactoryResolver: ComponentFactoryResolver, private compRepoSrvc: ComponentRepositoryService) { }
 
   public createComp(vcref: ViewContainerRef, itemConfig, modelRef?) {
 
@@ -20,7 +13,7 @@ export class InputFactoryService {
      * @param  [Component Class Name]
      * @return {[ComponentFactory]}
      */
-    let component = this.componentFactoryResolver.resolveComponentFactory(this.DynamicCompMap(itemConfig.itemRenderer));
+    let component = this.componentFactoryResolver.resolveComponentFactory(this.compRepoSrvc.getDynamicCompClass(itemConfig.itemRenderer));
 
     // ReflectiveInjector: A ReflectiveDependency injection container used for instantiating objects and resolving dependencies.
     // Creates an injector from previously resolved providers..
@@ -45,19 +38,5 @@ export class InputFactoryService {
     // Run the Lifecycle hooks of the newly added Component
     comp.changeDetectorRef.detectChanges();
     return comp;
-  }
-
-  // Map that Maps itemRenderer property with the Component CLass
-  //TODO: Error handling.
-  private DynamicCompMap(type) {
-    return {
-      "Panel": PanelComponent,
-      "TextBox": TextBoxComponent,
-      "Dropdown": SelectComponent,
-      "TabGroup": TabComponent,
-      "Button": ButtonComponent,
-      "Dropzone": DropzoneComponent,
-      "Switch": SwitchComponent
-    }[type];
   }
 }

@@ -12,28 +12,11 @@ class MoveCellContent extends ExcelBaseSkill {
     var skilldata = { "initDocJSonPath": initDocJSonPath, "dbMgr": data.dbFilestoreMgr };
     return super.init(skilldata);
   }
-  //init DOC JSON 
-  createJsonPath(skillParams) {
 
-    var taskParams = skillParams.taskParams;
-    var paramValueObj = skillParams.paramsObj;
-
-
-    return taskParams.dbFilestoreMgr.copyTaskAssetFile(paramValueObj["docData"], taskParams)
-      .then(function (resolveParam) {
-        paramValueObj["docData"] = resolveParam.filePath;
-        var preloadResArr = [];
-        preloadResArr.push({ "path": "" + resolveParam.filePath, "type": "" + resolveParam.fileType })
-        resolveParam = { "attrValue": paramValueObj["docData"], "preloadResArr": preloadResArr }
-        return Promise.resolve(resolveParam);
-      }, function (error) {
-        return Promise.reject(error);
-        console.log("rejection at the movecellcontent");
-      }).catch(function (error) {
-        return Promise.reject(error);
-      });
-
-  }
+  // function moved to XLskill
+  // init DOC JSON 
+  // createJsonPath(skillParams) {
+  // }
 
   getSelectedCell(skillParams) {
     var paramValueObj = skillParams.paramsObj;
@@ -69,27 +52,9 @@ class MoveCellContent extends ExcelBaseSkill {
 
   }
 
-
-  createSheetCellData(skillParams) {
-
-    var taskParams = skillParams.taskParams;
-    var paramValueObj = skillParams.paramsObj;
-    var finalObject = {};
-    finalObject["sheetNo"] = this.getSheetNumber(paramValueObj.sheetAction);
-    return taskParams.dbFilestoreMgr.copyTaskAssetFile(paramValueObj["wbData"], taskParams)
-      .then(function (resolaveParams) {
-        paramValueObj["wbData"] = resolaveParams.filePath
-        finalObject["dataJSONPath"] = paramValueObj["wbData"];
-        finalObject = JSON.stringify(finalObject);
-        var preloadResArr = [];
-        preloadResArr.push({ "path": "" + resolaveParams.filePath, "type": "" + resolaveParams.fileType })
-        var resolveParams = { "attrValue": finalObject, "preloadResArr": preloadResArr };
-        return Promise.resolve(resolveParams);
-
-      }, function (error) {
-        return Promise.reject(error);
-      });
-  }
+  // Moved to Xlskill
+  // createSheetCellData(skillParams) {
+  // }
 
   getSelectedCellFinal(skillParams) {
 
@@ -103,7 +68,7 @@ class MoveCellContent extends ExcelBaseSkill {
     var col1 = valuearray[0].toUpperCase().charAt(0);
     var col2 = valuearray[1].toUpperCase().charAt(0);
     var row1 = parseInt(valuearray[0].substring(1, valuearray[0].length));
-    var row2 = parseInt(valuearray[1].substring(1, valuearray[0].length));
+    var row2 = parseInt(valuearray[1].substring(1, valuearray[1].length));
 
     finalArray.push(valuearray[0]);
 
@@ -150,18 +115,18 @@ class MoveCellContent extends ExcelBaseSkill {
       //Add Sheet Names to Array From Init Doc JSON
       for (let sheetNum = 0; sheetNum < initDocJSON.sheetCount; sheetNum++) {
         var sheetName = initDocJSON.sheets[sheetNum].name;
-        dependantSheetArrayInModel.push({"label":sheetName,"data":sheetName});
+        dependantSheetArrayInModel.push({ "label": sheetName, "data": sheetName });
       }
     }
   }
 
   updateSheetName(selectedSheetName, dependentSheetArrayInModel, clonedDependentSheetArrayInModel) {
-    while(dependentSheetArrayInModel.length > 0){
+    while (dependentSheetArrayInModel.length > 0) {
       dependentSheetArrayInModel.pop();
     }
     dependentSheetArrayInModel.push(JSON.parse(JSON.stringify(clonedDependentSheetArrayInModel[0])));
-    if(selectedSheetName){
-      dependentSheetArrayInModel[0].name = selectedSheetName.label;  
+    if (selectedSheetName) {
+      dependentSheetArrayInModel[0].name = selectedSheetName.label;
     }
   }
 }

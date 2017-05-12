@@ -8,6 +8,7 @@ import { BuilderModelObj } from '../shared/builder-model.service';
 import { PreviewService } from '../../_services/preview.service';
 import { IntervalObservable } from 'rxjs/observable/IntervalObservable';
 import { TaskDataService } from '../../_services/taskData.service';
+import { ExceptionHandlerService } from '../../shared/exception-handler.service';
 
 declare var jQuery;
 declare var localForage;
@@ -33,7 +34,7 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
     eventSrvc: Object;
     @ViewChild('stepTextContainer') stepTextContainer;
 
-    constructor(el: ElementRef, private route: ActivatedRoute, private router: Router, private bds: BuilderDataService, private previewService: PreviewService, private tds: TaskDataService) {
+    constructor(el: ElementRef, private route: ActivatedRoute, private router: Router, private bds: BuilderDataService, private previewService: PreviewService, private tds: TaskDataService, private exceptionHandlerSrvc: ExceptionHandlerService) {
         this.$el = jQuery(el.nativeElement);
         this.uiConfig = new UIConfig();
         this.selectedView = 1;
@@ -105,10 +106,11 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
             templateID: this.templateID
         };
         this.bds.getskilldata(params).subscribe((data) => {
+            var self = this;
             this.builderModelSrvc.setDefaultState(data["skillmodel"]);
             this.builderModelSrvc.setState(data["stepuistate"] || data["skillmodel"]);
             localForage.setItem('model', this.builderModelSrvc.getState()).catch(function (err) {
-                console.warn("Error while saving to Local Storage");
+                self.exceptionHandlerSrvc.globalConsole("Error while saving to Local Storage");
             });
             this.uiConfig = data["uiconfig"];
             skillManager.getSkillTranslator(data["skillfilesbundle"], this.templateID);
@@ -134,17 +136,20 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
         let itemDataModel = this.builderModelSrvc.getState();
         localForage.getItem('model').then(function (value) {
             if (JSON.stringify(value) === JSON.stringify(itemDataModel)) {
-                console.log("same Model: Do Nothing");
+                self.exceptionHandlerSrvc.globalConsole("same Model: Do Nothing");
             } else {
-                console.log("Different Model: Update LocalStorage and Send to Sever");
+                self.exceptionHandlerSrvc.globalConsole("Different Model: Update LocalStorage and Send to Sever");
                 localForage.setItem('model', itemDataModel).then(function () {
                     self.bds.saveSkillData({ stepUIState: itemDataModel }, self.taskID, self.stepIndex).subscribe(function (data) {
                         if (data["status"] === "success") {
                             //TODO: Notify user of the draft save
-                            console.log("Model Data Sent to Server");
+                            self.exceptionHandlerSrvc.globalConsole("Model Data Sent to Server");
                         } else if (data["status"] === "error") {
                             //TODO: Try saving on server again
-                            console.log("Couldn't Save Model Data on Server.");
+                            self.exceptionHandlerSrvc.globalConsole("Couldn't Save Model Data on Server.");
+                            if(data["errcode"] === "DATA_NOT_PRESENT"){
+                                self.exceptionHandlerSrvc.globalLog("UI State is null. Please check");
+                            }
                         }
                     });
                 });

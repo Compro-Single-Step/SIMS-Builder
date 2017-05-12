@@ -1,8 +1,11 @@
-<div class="heading">
-	<app-label [compConfig]="labelConfig" *ngIf="compConfig.label"></app-label>
-	<button class="glyphicon glyphicon-info-sign info-icon" *ngIf="compConfig.label" [popover]="compConfig.desc.detailed" [popoverTitle]="compConfig.label" placement="right" triggers="focus"></button>
+<div [ngClass]="{'disabled': isDisabled()}">
+	<div class="heading">
+		<app-label [compConfig]="labelConfig" *ngIf="compConfig.label"></app-label>
+		<button class="glyphicon glyphicon-info-sign info-icon" *ngIf="compConfig.label" [popover]="compConfig.desc.detailed" [popoverTitle]="compConfig.label"
+		 placement="right" triggers="focus"></button>
+	</div>
+	<div #dropzone class="dropzone input-max-width" [ngStyle]="{'height':height,'width':width}">
+		<p class="dz-message">{{compConfig.rendererProperties.placeholder}}</p>
+	</div>
+	<app-label [compConfig]="descriptionConfig"></app-label>
 </div>
-<div #dropzone class="dropzone input-max-width" [ngStyle]="{'height':height,'width':width}">
-  <p class="dz-message">{{compConfig.rendererProperties.placeHolder}}</p>
-</div>
-<app-label [compConfig]="descriptionConfig"></app-label>

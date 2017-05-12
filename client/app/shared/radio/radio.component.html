@@ -1,0 +1,15 @@
+<fieldset>
+	<div class="heading">
+	  	<app-label [compConfig]="labelConfig"></app-label>
+		<button class="glyphicon glyphicon-info-sign info-icon" [popover]="compConfig.desc.detailed" [popoverTitle]="compConfig.label" placement="right" triggers="focus"></button>
+	</div>
+	  <div class="form-group input-max-width">
+      <div class="sim-radio" *ngFor="let item of itemList">
+        <input type="radio" name="radioElement" [checked]="item.value === modelRef.value" (click)="selectedItemChange(item.value)">
+        <label [for]="radioElement">
+          {{item.label}}
+        </label>
+      </div>		
+	  </div>
+		<app-label [compConfig]="descriptionConfig"></app-label>
+</fieldset>

@@ -3,7 +3,9 @@
 @import "../styles.scss";
 app-tab-page {
 	border: 1px solid $pre-border-color;
-	padding-left: 1rem;
+	padding: 0.5rem 1rem;
+	display: block;
+	margin-bottom: 1rem;
 }
 :host /deep/ .customClass {
  	height: 2.5rem;
@@ -13,4 +15,12 @@ app-tab-page {
 	display: block;
 	max-width: 1000px;
 	margin-bottom: 1rem;
+}
+
+.tabPageContainer {
+	margin-top: -1px;
+}
+
+.nav.nav-tabs.tabs {
+	font-size: 1.1rem;
 }
