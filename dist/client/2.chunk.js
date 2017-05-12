@@ -11,9 +11,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_router__ = __webpack_require__(117);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_messenger_build_js_messenger_js__ = __webpack_require__(995);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_messenger_build_js_messenger_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_messenger_build_js_messenger_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__task_builder_component__ = __webpack_require__(1061);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__taskstep_taskstep_component__ = __webpack_require__(1062);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__task_builder_shared_taskDataResolver_service__ = __webpack_require__(1060);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__task_builder_component__ = __webpack_require__(1063);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__taskstep_taskstep_component__ = __webpack_require__(1064);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__task_builder_shared_taskDataResolver_service__ = __webpack_require__(1062);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -26034,7 +26034,9 @@ window.Messenger.Events = (function() {
 /* 1057 */,
 /* 1058 */,
 /* 1059 */,
-/* 1060 */
+/* 1060 */,
+/* 1061 */,
+/* 1062 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -26069,7 +26071,7 @@ var TaskDataResolver = (function () {
 //# sourceMappingURL=E:/Sim-Builder-Packaging/checkout/develop/client/taskDataResolver.service.js.map
 
 /***/ }),
-/* 1061 */
+/* 1063 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -26188,8 +26190,8 @@ var TaskBuilderComponent = (function () {
         // for template selection bnx, can be renmoved later
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'app-task-builder',
-            template: __webpack_require__(1116),
-            styles: [__webpack_require__(1087)]
+            template: __webpack_require__(1120),
+            styles: [__webpack_require__(1090)]
         }), 
         __metadata('design:paramtypes', [(typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* ActivatedRoute */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* ActivatedRoute */]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__services_preview_service__["a" /* PreviewService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__services_preview_service__["a" /* PreviewService */]) === 'function' && _c) || Object, (typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__services_taskData_service__["a" /* TaskDataService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_3__services_taskData_service__["a" /* TaskDataService */]) === 'function' && _d) || Object, (typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["d" /* Router */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_router__["d" /* Router */]) === 'function' && _e) || Object])
     ], TaskBuilderComponent);
@@ -26200,7 +26202,7 @@ var TaskBuilderComponent = (function () {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(169)))
 
 /***/ }),
-/* 1062 */
+/* 1064 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -26249,8 +26251,8 @@ var TaskstepComponent = (function () {
     TaskstepComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'taskbuilder-taskstep',
-            template: __webpack_require__(1117),
-            styles: [__webpack_require__(1088)]
+            template: __webpack_require__(1121),
+            styles: [__webpack_require__(1091)]
         }), 
         __metadata('design:paramtypes', [(typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* ActivatedRoute */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* ActivatedRoute */]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["d" /* Router */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_router__["d" /* Router */]) === 'function' && _c) || Object, (typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2__services_taskData_service__["a" /* TaskDataService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__services_taskData_service__["a" /* TaskDataService */]) === 'function' && _d) || Object])
     ], TaskstepComponent);
@@ -26260,8 +26262,6 @@ var TaskstepComponent = (function () {
 //# sourceMappingURL=E:/Sim-Builder-Packaging/checkout/develop/client/taskstep.component.js.map
 
 /***/ }),
-/* 1063 */,
-/* 1064 */,
 /* 1065 */,
 /* 1066 */,
 /* 1067 */,
@@ -26284,7 +26284,10 @@ var TaskstepComponent = (function () {
 /* 1084 */,
 /* 1085 */,
 /* 1086 */,
-/* 1087 */
+/* 1087 */,
+/* 1088 */,
+/* 1089 */,
+/* 1090 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(47)();
@@ -26301,7 +26304,7 @@ exports.push([module.i, ".skill-container {\n  margin-left: 28px;\n  margin-top:
 module.exports = module.exports.toString();
 
 /***/ }),
-/* 1088 */
+/* 1091 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(47)();
@@ -26318,9 +26321,6 @@ exports.push([module.i, "#stepList {\n  padding-top: 25px;\n  padding-left: 25px
 module.exports = module.exports.toString();
 
 /***/ }),
-/* 1089 */,
-/* 1090 */,
-/* 1091 */,
 /* 1092 */,
 /* 1093 */,
 /* 1094 */,
@@ -26345,13 +26345,17 @@ module.exports = module.exports.toString();
 /* 1113 */,
 /* 1114 */,
 /* 1115 */,
-/* 1116 */
+/* 1116 */,
+/* 1117 */,
+/* 1118 */,
+/* 1119 */,
+/* 1120 */
 /***/ (function(module, exports) {
 
 module.exports = "<div id=\"TaskMetadata\">\r\n   <div class=\"row\">\r\n      <div class=\"col-md-6\">\r\n         <h3 class=\"page-title\">\r\n            <span><strong>TASK ID:</strong> &nbsp;</span>\r\n            <span>\r\n            <img [src]=\"AppImage\"/>\r\n            </span>\r\n            <span class=\"fw-semi-bold\">\r\n            {{TaskData.id}}\r\n            </span>\r\n         </h3>\r\n      </div>\r\n      <!--<div class=\"col-md-6\">\r\n        <h3 class=\"taskbadges pull-right\">\r\n          <span class=\"badge badge-pill badge-success align-middle\">Task Commit Status : {{TaskData.testStatus}}</span>\r\n          <span class=\"badge badge-pill badge-info align-middle\">Task Tested : {{TaskData.commitStatus}}</span>\r\n        </h3>\r\n      </div>-->\r\n   </div>\r\n</div>\r\n<div class=\"row\">\r\n   <div class=\"col-md-12\">\r\n      <taskbuilder-taskstep *ngFor=\"let step of StepData; let stepIndex = index \" [stepData]=\"step\" (stepNavigationEvent)=\"stepNavigationListner($event,stepIndex)\"></taskbuilder-taskstep>\r\n   </div>\r\n</div>\r\n<div class=\"row\" >\r\n   <div class=\"col-md-12\">\r\n\t\t\t<button class=\"btn btn-inverse mr-1\">\r\n          Test Task\r\n        </button>\r\n      <div class=\"pull-right\">\r\n\t\t\t\t<button (click) = \"lauchPreviewTask()\"class=\"btn btn-inverse mr-1\">\r\n\t\t\t\t\tPreview Task\r\n\t\t\t\t</button>\r\n\t\t\t\t<button class=\"btn btn-inverse width-100\">\r\n\t\t\t\t\tGenerate\r\n\t\t\t\t</button>\r\n\t\t\t</div>\r\n   </div>\r\n</div>\r\n<div bsModal #selectTemplateDialog=\"bs-modal\" class=\"modal fade\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"mySmallModalLabel\" aria-hidden=\"true\">\r\n  <div class=\"modal-dialog\">\r\n    <div class=\"modal-content\">\r\n      <div class=\"modal-header\">\r\n        <button (click)=\"selectTemplateDialog.hide()\" aria-label=\"Close\" class=\"close\" type=\"button\">\r\n          <span aria-hidden=\"true\">×</span>\r\n        </button>\r\n        <h4 class=\"modal-title text-xs-center fw-bold mt\" id=\"myModalLabel18\">Select the Template</h4>\r\n      </div>\r\n      <div class=\"modal-body\">\r\n        <ul class=\"list-group templateList\">\r\n          <li class=\"list-group-item\" *ngFor=\"let template of templateOptions\" (dblclick)=\"setTempalateMap(template)\" (click)=\"selectTemplate($event,template)\">{{template.name}}</li>\r\n        </ul>\r\n      </div>\r\n      <div class=\"modal-footer\">\r\n         <div class=\"pull-right\">\r\n          <button (click) = \"callSetTemplate()\"class=\"btn btn-inverse mr-1\">\r\n            OK\r\n          </button>\r\n\t\t\t  </div>\r\n      </div>\r\n    </div>\r\n  </div>  \r\n</div>\r\n"
 
 /***/ }),
-/* 1117 */
+/* 1121 */
 /***/ (function(module, exports) {
 
 module.exports = "<div id=\"stepList\" class=\"widget-body\" (click)=\"navigateToStepBuilder()\">\r\n    <div class=\"row\">\r\n      <div class=\"col-md-10\" >\r\n          <div class=\"text-color row\">\r\n            <div class=\"col col-md-auto\">\r\n                <span class=\"fw-bold step_number\">Step {{step.Index}}</span>\r\n            </div>\r\n            <div class=\"col-md-10 step_text\">\r\n                <span [innerHTML]=\"step.Text\"></span>\r\n                <div class=\"row col-md-12\">\r\n                  <span class=\"skill_metadata\">Skill :&nbsp;{{step.TemplateName}}</span>\r\n                  <span>|</span>\r\n                  <span class=\"method-count skill_metadata\">Method Count: <span>{{step.MethodCount}}</span></span>\r\n                  <span>|</span>\r\n                  <span class=\"template_label\">Template: {{step.TemplateName}}</span>\r\n                </div>\r\n            </div>\r\n          </div>       \r\n      </div>\r\n      <div class=\"col-md-2\">\r\n          <div class=\"row\">\r\n            <!--<div class=\"col-md-5\">\r\n                <div class=\"row col-md-12 text-center\">\r\n                  <span class=\"icon_label\">Attributes Filled</span>\r\n                </div>\r\n                <div class=\"row col-md-12\">\r\n                  <div class=\"progress\">\r\n                    <div class=\"progress-bar bg-info\" [ngStyle]=\"{'width':step.stepProgress}\" role=\"progressbar\" aria-valuenow=\"25\" aria-valuemin=\"0\" aria-valuemax=\"100\">{{step.stepProgress}}</div>\r\n                  </div>\r\n                </div>\r\n            </div>-->\r\n            <div class=\"col-md-8\">\r\n                <!--<div class=\"row\">\r\n                  <span class=\"icon_label text-center\">Test Status</span>\r\n                </div>\r\n                <div class=\"row testSymbol\">\r\n                  <div class=\"col-md-8 offset-md-2\">\r\n                      <span *ngIf=\"step.TestStatus\" class=\"glyphicon glyphicon-ok greenText\" aria-hidden=\"true\"></span>\r\n                      <span *ngIf=\"!step.TestStatus\" class=\"glyphicon glyphicon-remove redText\" aria-hidden=\"true\"></span>\r\n                  </div>\r\n                </div>-->\r\n            </div>\r\n            <div class=\"col-md-1\">\r\n              <div class=\"row\">\r\n                <span class=\"glyphicon glyphicon-menu-right right_arrow\" aria-hidden=\"true\" tooltip=\"Build\"></span>\r\n              </div>\r\n            </div>\r\n            </div>\r\n      </div>\r\n    </div>\r\n</div>"

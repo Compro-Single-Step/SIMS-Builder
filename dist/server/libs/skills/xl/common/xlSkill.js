@@ -220,7 +220,7 @@ module.exports = function (_BaseSkill) {
             var taskParams = skillParams.taskParams;
             var paramValueObj = skillParams.paramsObj;
 
-            var attrValue = skillParams.taskParams.addResourceToMap("step", paramValueObj["docData"]).absFilePath;
+            var attrValue = skillParams.taskParams.addResourceToMap({ path: paramValueObj["docData"] }).absFilePath;
             // { attrValue } is new syntax of ES6 which means => { 'attrValue': attrValue }
             return Promise.resolve({ attrValue: attrValue });
         }
@@ -239,7 +239,7 @@ module.exports = function (_BaseSkill) {
         value: function createSheetCellData(skillParams) {
 
             var attrValue = {},
-                filePath = skillParams.taskParams.addResourceToMap("step", skillParams.paramsObj["wbData"]).absFilePath;
+                filePath = skillParams.taskParams.addResourceToMap({ "path": skillParams.paramsObj["wbData"] }).absFilePath;
 
             attrValue["sheetNo"] = this.getSheetNumber(skillParams.paramsObj.sheetAction);
             attrValue["dataJSONPath"] = filePath;
