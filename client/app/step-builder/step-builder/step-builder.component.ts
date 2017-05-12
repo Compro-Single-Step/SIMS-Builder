@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { BuilderDataService } from '../shared/builder-data.service';
 import { EventService } from '../shared/event.service';
@@ -18,6 +18,7 @@ declare var localForage;
     templateUrl: './step-builder.component.html',
     styleUrls: ['./step-builder.component.scss']
 })
+
 export class StepBuilderComponent implements OnInit, OnDestroy {
     uiConfig: UIConfig;
     $el: any;
@@ -33,7 +34,7 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
     eventSrvc: Object;
     @ViewChild('stepTextContainer') stepTextContainer;
 
-    constructor(el: ElementRef, private route: ActivatedRoute, private router: Router, private bds: BuilderDataService, private previewService: PreviewService, private tds: TaskDataService, private exceptionHandlerSrvc: ExceptionHandlerService) {
+    constructor(el: ElementRef, private route: ActivatedRoute, private router: Router, private bds: BuilderDataService, private previewService: PreviewService, private tds: TaskDataService, private exceptionHandlerSrvc: ExceptionHandlerService, private cdRef:ChangeDetectorRef) {
         this.$el = jQuery(el.nativeElement);
         this.uiConfig = new UIConfig();
         this.selectedView = 1;
@@ -50,6 +51,7 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
         });
         jQuery(window).on('sn:resize', this.initScroll.bind(this));
         this.initScroll();
+        this.bindShowMoreButtonClick();
         this.modelChecker = IntervalObservable.create(5000).subscribe(() => this.checkForModelChange());
         this.route.params.subscribe((params: Params) => {
             this.taskID = params["taskId"];
@@ -60,9 +62,57 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
                 this.skillName = stepData.SkillName;
                 this.templateName = stepData.TemplateName;
                 this.stepText = stepData.Text;
+                this.cdRef.detectChanges();
+                this.checkForStepTextOverflow();
             });
             this.fetchSkillData();
-        })
+        })        
+    }
+
+    checkForStepTextOverflow() {
+        jQuery(".show-more a").each(function() {
+            var $link = jQuery(this);
+            var $content = $link.parents().find(".stepText");
+
+            var visibleHeight = $content[0].clientHeight;
+            var actualHeight = $content[0].scrollHeight - 5;
+
+            if (actualHeight > visibleHeight) {
+                $link.show();
+            } else {
+                $link.hide();
+            }
+        });
+    }    
+
+    bindShowMoreButtonClick() {
+        var self = this;
+        jQuery(".show-more a").on("click", function() {
+            var $link = jQuery(this);
+            var linkText = $link.text();
+
+            var $content = $link.parents().find(".stepText");            
+            $content.toggleClass("stepTextOverflowHidden");
+
+            var $header = $link.parents().find("#header");
+            $header.toggleClass("removeFixedHeight");
+
+            var $stepText = $link.parents().find(".stepTextHeading");
+            $stepText.toggleClass("hideEllipsis");
+
+            $link.text(self.getShowLinkText(linkText));
+            return false;
+        });
+    }
+
+    getShowLinkText(currentText) {
+        var newText = '';
+        if (currentText.toUpperCase() === "SHOW MORE") {
+            newText = "Show less";
+        } else {
+            newText = "Show more";
+        }
+        return newText;
     }
 
     fetchSkillData() {

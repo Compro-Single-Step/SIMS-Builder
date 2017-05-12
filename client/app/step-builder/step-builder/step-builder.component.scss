@@ -7,13 +7,19 @@ $lightgray: #d3d3d3;
   }
 }
 #header {
-  height: 6rem;
+  position: fixed;
+  width: 100%;
+  height: 6.3rem;
   padding-top: $spacer;
   background-color: $body-bg;
   border-bottom: 3px solid $lightgray;
+  z-index: 2;
+  padding-bottom: 0.3rem;
 }
 .body-container {
-  height: calc(100% - 10rem);
+  height: calc(100% - 4rem);
+  position: relative;
+  padding-top: 6rem;
   #body {
     overflow-y: scroll;
     padding: {
@@ -27,4 +33,42 @@ $lightgray: #d3d3d3;
   padding-top: 1rem;
   border-top: 3px solid $lightgray;
   background-color: $body-bg;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+.stepText.stepTextOverflowHidden {
+  overflow: hidden;
+  height: 3rem;
+}
+
+#header.removeFixedHeight {
+  height: auto;
+  padding-bottom: 0.4rem;
+}
+
+.stepTextHeading{
+  font-size: 1.3rem;
+}
+
+.stepTextHeading:after{
+  content: '';
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 30%;
+  height: 64%;
+  background-image: linear-gradient(left, rgba(255,255,255,0) 0%, white 80%, white 100%);
+  pointer-events: none;
+}
+
+.stepTextHeading.hideEllipsis:after{
+  display: none;
+}
+
+.show-more{
+  position: absolute;
+  bottom: 25px;
+  right: 0px;
 }
