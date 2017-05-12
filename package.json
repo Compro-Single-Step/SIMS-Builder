@@ -13,6 +13,9 @@
     "test": "karma start ./karma.conf.js",
     "e2e": "protractor ./protractor.conf.js"
   },
+  "engines": {
+    "node": "7.5.0"
+  },
   "private": true,
   "dependencies": {
     "@angular/common": "^2.3.1",
