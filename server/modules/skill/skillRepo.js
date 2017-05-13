@@ -75,7 +75,7 @@ module.exports = {
         ]
     },
     "insertaudio": {
-        primaryFile: "pp/insertAudio/insertAudio",
+        primaryFile: "pp/InsertAudio/insertAudio",
         dependencyFiles: [
             {
                 primaryFile: "pp/common/ppSkill",
