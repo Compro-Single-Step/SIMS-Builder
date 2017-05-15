@@ -19,3 +19,34 @@ app-label {
 .widget{
   border-left: 5px solid $card-border-blue;
 }
+
+:host-context(.taskstep-number-1) .widget{
+  border-left: 5px solid #0A819C;
+}
+:host-context(.taskstep-number-2) .widget{
+  border-left: 5px solid #CCA32F;
+}
+:host-context(.taskstep-number-3) .widget{
+  border-left-color:#D1293A;
+}
+:host-context(.taskstep-number-4) .widget{
+  border-left-color:#9351AD;
+}
+:host-context(.taskstep-number-5) .widget{
+  border-left-color:#488C6C;
+}
+:host-context(.taskstep-number-6) .widget{
+  border-left-color:#945f38;
+}
+:host-context(.taskstep-number-7) .widget{
+  border-left-color:#ff6c00;
+}
+:host-context(.taskstep-number-8) .widget{
+  border-left-color:#c33bbb;
+}
+:host-context(.taskstep-number-9) .widget{
+  border-left-color:#00c6a8;
+}
+:host-context(.taskstep-number-10) .widget{
+  border-left-color:#808000;
+}
