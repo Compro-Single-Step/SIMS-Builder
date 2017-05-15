@@ -197,7 +197,10 @@ module.exports = class Comp {
     getAttrValByNameTypeSet(attrName, attrType, attrSetName="default-attrs"){
         let val = null;
         try{
-            val = this.attrValMap[attrType][attrSetName][attrName]
+            if(attrType === "sizeandpos")
+                val = this.attrValMap[attrType][attrName]
+            else
+                val = this.attrValMap[attrType][attrSetName][attrName]
         }catch(e){
             console.log("ERROR: Value for attribute "+attrName+" not found in the Attr Value Map");
         }

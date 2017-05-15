@@ -40,7 +40,7 @@
 			</div>
    </div>
 </div>
-<div bsModal #selectTemplateDialog="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+<div bsModal #selectTemplateDialog="bs-modal" id="selectTemplateDialog" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -56,7 +56,7 @@
       </div>
       <div class="modal-footer">
          <div class="pull-right">
-          <button (click) = "callSetTemplate()"class="btn btn-dark mr-1">
+          <button (click) = "callSetTemplate()"class="btn btn-dark mr-1" [disabled] = "disableOkBtn">
             OK
           </button>
 			  </div>

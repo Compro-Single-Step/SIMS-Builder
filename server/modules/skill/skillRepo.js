@@ -54,7 +54,7 @@ module.exports = {
                     {
                         primaryFile: "common/baseSkill",
                         dependencyFiles: []
-                    }
+                    }                    
                 ]
             }
         ],
@@ -72,9 +72,37 @@ module.exports = {
                     }
                 ]
             }
-        ],
-        dependencySkills: []
-    }    
+        ]
+    },
+    "insertaudio": {
+        primaryFile: "pp/InsertAudio/insertAudio",
+        dependencyFiles: [
+            {
+                primaryFile: "pp/common/ppSkill",
+                dependencyFiles: [
+                    {
+                        primaryFile: "common/baseSkill"
+                    }
+                ]
+            }
+        ]
+    },
+     "applyshapeeffect": {
+        primaryFile: "wd/ApplyShapeEffect/ApplyShapeEffect",
+        dependencyFiles: [
+            {
+                primaryFile: "wd/common/wordRibbonEventMap"
+            },
+            {
+                primaryFile: "wd/common/wdSkill",
+                dependencyFiles: [
+                    {
+                        primaryFile: "common/baseSkill"
+                    }
+                ]
+            }
+        ]
+     }
 }
 
 

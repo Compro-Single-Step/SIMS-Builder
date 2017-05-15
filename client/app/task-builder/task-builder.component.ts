@@ -22,6 +22,7 @@ export class TaskBuilderComponent implements OnInit {
  SelectedTemplate="";
  SelectedStep ;
  selectedTemplateOption="";
+ disableOkBtn = true;
  @ViewChild('selectTemplateDialog') public SelectTemplateDialog:ModalDirective;
  constructor(private route: ActivatedRoute,private previewService:PreviewService ,private taskDataService:TaskDataService, 
     private router: Router) { 
@@ -35,6 +36,7 @@ export class TaskBuilderComponent implements OnInit {
 	// 	});
  }
  selectTemplate($event,selectedTemplate){
+	 this.disableOkBtn = false;
 	 jQuery($event.currentTarget).addClass("selected").siblings().removeClass("selected");
 	 this.selectedTemplateOption = selectedTemplate;
  }
@@ -72,9 +74,15 @@ initialiseTaskData() {
 	}
 	stepNavigationListner(steptemplate,stepIndex){
 		this.SelectedStep = this.TaskData["stepData"][stepIndex];
-		if(steptemplate!= "NotSelected")
+		if (steptemplate != "NotSelected" && steptemplate != null) {
 			this.router.navigate(["task",this.TaskData["id"],"step",this.SelectedStep.Index,"template",steptemplate]);
+		}
 		else{
+			this.selectedTemplateOption = "";
+			// syntax needs to be improved
+			// children should be found from parent elem ref "this.SelectTemplateDialog"
+			jQuery("#selectTemplateDialog .list-group-item").removeClass("selected");
+			this.disableOkBtn = true;
 			this.SelectTemplateDialog.show();
 		}
 	}
@@ -94,7 +102,12 @@ initialiseTaskData() {
 				});
 	}
 	callSetTemplate(){
-		this.setTempalateMap(this.selectedTemplateOption);
+		if (this.selectedTemplateOption != "") {
+			this.setTempalateMap(this.selectedTemplateOption);
+		}
+		else {
+			this.displayMessage("Please select a template");
+		}
 	}
 	displayMessage(messageText){
 		Messenger.options = { extraClasses: 'messenger-fixed messenger-on-top',

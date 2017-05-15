@@ -3,8 +3,9 @@
     <div class="navbar-header">
       <div class="row">
         <div class="col-md-10">
-          <div class="row">
-            <span class="stepTextContainer" #stepTextContainer [innerHTML]="stepText"></span>
+          <div class="row stepText stepTextOverflowHidden">
+            <h4 class="stepTextHeading"><strong>STEP {{stepIndex}}</strong>&nbsp;<span #stepTextContainer [innerHTML]="stepText"></span></h4>
+            <span class="show-more"><a href="#">Show more</a></span>
           </div>
           <div class="row">
             <span class="tag tag-primary"><span>Task ID:&nbsp;</span> {{taskID}}  </span>&nbsp;<span class="tag tagFontNormal tag-primary"><span >Skill:&nbsp;</span> {{skillName}}</span> &nbsp; <span class="tag tag-primary"><span>Template:&nbsp;</span> {{templateName}} </span>
