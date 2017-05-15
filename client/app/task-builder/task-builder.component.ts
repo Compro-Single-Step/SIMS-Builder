@@ -79,7 +79,9 @@ initialiseTaskData() {
 		}
 		else{
 			this.selectedTemplateOption = "";
-			jQuery(".list-group-item").removeClass("selected");
+			// syntax needs to be improved
+			// children should be found from parent elem ref "this.SelectTemplateDialog"
+			jQuery("#selectTemplateDialog .list-group-item").removeClass("selected");
 			this.disableOkBtn = true;
 			this.SelectTemplateDialog.show();
 		}
