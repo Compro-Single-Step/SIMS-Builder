@@ -191,6 +191,7 @@ export class DropzoneComponent extends BaseComponent implements OnDestroy {
           let file = new File([res._body], el.displayName);
           dropzone.emit("addedfile", file);
           dropzone.emit("complete", file);
+          dropzone.files.push(file);
         }
         else {
           //TODO: Handling of code when error is receiving file occurrs. 
