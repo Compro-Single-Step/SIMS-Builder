@@ -110,13 +110,7 @@ export class DropzoneComponent extends BaseComponent implements OnDestroy {
         }
         if(currModelRef["value"].length === 1)
         {
-          if (self.compConfig.dim != undefined) {
-            self.height = `${self.compConfig.dim['height']}`;
-          }
-          else
-          {
-            self.height = "200px";
-          }
+            self.height = self.compConfig.dim ? `${self.compConfig.dim['height']}` : "";
         }
       } else {
         self.removeFileFromServer(currModelRef)
