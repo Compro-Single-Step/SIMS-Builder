@@ -56,7 +56,13 @@ module.exports = class InsertAudio extends PPTBaseSkill {
         var resName = skillParams.paramsObj.resAdded;
         var regExpToRemoveFileExt = /(.+?)\.[^.]*$|$/g;
         var match = regExpToRemoveFileExt.exec(resName);
-        var resolveParam = { "attrValue": match[1] };
+        var resolveParam = null;
+        if(match && match[1]){
+            resolveParam = { "attrValue": match[1] };
+        }
+        else{
+            resolveParam = { "attrValue": resName };
+        }
         return Promise.resolve(resolveParam);
     }
 
