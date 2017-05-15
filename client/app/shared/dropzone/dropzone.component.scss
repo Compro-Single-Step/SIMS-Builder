@@ -12,11 +12,11 @@ $dropzoneTextColor: #aaa;
   	bottom: $spacer;
   }
   color: $dropzoneTextColor;
-  height: 200px;
+  height: auto;
   width: 100%;
 }
 .dz-message {
-  margin-top: 4.5rem;
+  margin: 0rem;
 }
 .disabled {
   cursor: not-allowed;
