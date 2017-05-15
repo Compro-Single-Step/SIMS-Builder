@@ -86,6 +86,7 @@ export class DropzoneComponent extends BaseComponent implements OnDestroy {
         let currModelRef = self.getData();
         if (self.isMultipleFiles) {
           currModelRef["value"].push({ displayName: file.name, path: response.filePath });
+          self.height = "auto";
         } else {
           currModelRef["displayName"] = file.name;
           currModelRef["path"] = response.filePath;
@@ -105,6 +106,16 @@ export class DropzoneComponent extends BaseComponent implements OnDestroy {
            if (currModelRef["value"][i].displayName === file.name) {
             self.removeFileFromServer(currModelRef, i);
             break;
+          }
+        }
+        if(currModelRef["value"].length === 1)
+        {
+          if (self.compConfig.dim != undefined) {
+            self.height = `${self.compConfig.dim['height']}`;
+          }
+          else
+          {
+            self.height = "200px";
           }
         }
       } else {
@@ -191,6 +202,7 @@ export class DropzoneComponent extends BaseComponent implements OnDestroy {
           let file = new File([res._body], el.displayName);
           dropzone.emit("addedfile", file);
           dropzone.emit("complete", file);
+          dropzone.files.push(file);
         }
         else {
           //TODO: Handling of code when error is receiving file occurrs. 
@@ -204,6 +216,10 @@ export class DropzoneComponent extends BaseComponent implements OnDestroy {
       fileInfo["value"].forEach(el => {
         this.addFileToDropzone(dropzone, el);
       });
+      if(fileInfo["value"].length > 0)
+      {
+        this.height = "auto";
+      }
     } else {
       this.addFileToDropzone(dropzone, fileInfo);
     }
