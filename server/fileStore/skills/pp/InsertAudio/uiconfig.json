@@ -211,7 +211,7 @@
         },
         {
           "id": "2.2",
-          "label": "Insert File",
+          "label": "Insert Audio Dialog Box",
           "itemRenderer": "Panel",
           "itemType": "child",
           "tags": [
@@ -227,10 +227,10 @@
           "items": [
             {
               "id": "2.2.1",
-              "label": "Insert File Dialog XML",
+              "label": "Dialog Configuration",
               "desc": {
-                "basic": "Upload a XML file which is used to configure the Insert File Dialog in SIMS.",
-                "detailed": "Upload a XML file which is used to configure the Insert File Dialog in SIMS."
+                "basic": "Upload a XML file which is used to configure the Insert Audio Dialog in SIMS.",
+                "detailed": "Upload a XML file which is used to configure the Insert Audio Dialog in SIMS."
               },
               "itemRenderer": "Dropzone",
               "itemType": "leaf",
@@ -246,7 +246,7 @@
             },
                         {
               "id": "2.2.2",
-              "label": "Tree Content XML Images",
+              "label": "Dialog Configuration Images",
               "desc": {
                 "basic": "Upload the images which are used to render Audio Images in Dialog.",
                 "detailed": "Upload the images which are used to render Audio Images in Dialog."
