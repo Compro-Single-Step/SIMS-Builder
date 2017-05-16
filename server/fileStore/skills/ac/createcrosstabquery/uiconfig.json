@@ -218,7 +218,7 @@
               "id": "2.1.4",
               "label": "Row heading for the query",
               "desc": {
-                "basic": "The row heading of the query.",
+                "basic": "Row heading for the query.",
                 "detailed": ""
               },
               "itemRenderer": "Dropdown",
@@ -242,9 +242,9 @@
             },
             {
               "id": "2.1.5",
-              "label": "The column heading of the query",
+              "label": "The column heading for the query",
               "desc": {
-                "basic": "The column heading of the query.",
+                "basic": "The column heading for the query.",
                 "detailed": ""
               },
               "itemRenderer": "Dropdown",
@@ -268,7 +268,7 @@
             },
             {
               "id": "2.1.11",
-              "label": "Customized list of function",
+              "label": "Customized list of function with respect to query/table",
               "desc": {
                 "basic": "Provide all list of function related to each table/query",
                 "detailed": "Provide all list of function related to each table/query"
@@ -313,7 +313,7 @@
             },
             {
               "id": "2.1.6",
-              "label": "Calculations available for the feilds",
+              "label": "Calculations available for the feild",
               "desc": {
                 "basic": "Select the calculation to be performed.",
                 "detailed": ""
