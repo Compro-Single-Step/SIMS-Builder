@@ -190,9 +190,9 @@
             },
             {
               "id": "2.1.2",
-              "label": "Name of the Query or Table To make Cross Tab wizard from",
+              "label": "Name of the Query to make Cross Tab wizard from",
               "desc": {
-                "basic": "Name of the Query or Table To make Cross Tab wizard from.",
+                "basic": "Name of the Query to make Cross Tab wizard from.",
                 "detailed": ""
               },
               "itemRenderer": "Dropdown",
@@ -216,9 +216,9 @@
             },
             {
               "id": "2.1.4",
-              "label": "Row axis for the query",
+              "label": "Row heading for the query",
               "desc": {
-                "basic": "The row side of the query.",
+                "basic": "The row heading of the query.",
                 "detailed": ""
               },
               "itemRenderer": "Dropdown",
@@ -242,9 +242,9 @@
             },
             {
               "id": "2.1.5",
-              "label": "Column axis selection fro the crossTab",
+              "label": "The column heading of the query",
               "desc": {
-                "basic": "The column side of the query.",
+                "basic": "The column heading of the query.",
                 "detailed": ""
               },
               "itemRenderer": "Dropdown",
@@ -268,7 +268,7 @@
             },
             {
               "id": "2.1.11",
-              "label": "Available function for screen 4",
+              "label": "Customized list of function",
               "desc": {
                 "basic": "Provide all list of function related to each table/query",
                 "detailed": "Provide all list of function related to each table/query"
