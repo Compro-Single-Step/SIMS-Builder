@@ -458,7 +458,7 @@
               "label": "Datasheet Configuration",
               "desc": {
                 "basic": "Upload a JSON file which is used to configure the Datasheet for Access in SIMS.",
-                "detailed": "A JSON file, which will be used to configure the Navigation Pane for Access in SIMS, is required to be uploaded here. This file can be generated from here(Hyperlink pointing to the JSON creation tool spec)."
+                "detailed": "A JSON file, which will be used to configure the Datasheet for Access in SIMS, is required to be uploaded here. This file can be generated from here(Hyperlink pointing to the JSON creation tool spec)."
               },
               "itemRenderer": "Dropzone",
               "itemType": "leaf",
