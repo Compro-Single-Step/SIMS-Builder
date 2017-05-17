@@ -212,7 +212,7 @@
         },
         {
           "id": "2.2",
-          "label": "File Open",
+          "label": "Open File Dialog Box",
           "itemRenderer": "Panel",
           "itemType": "child",
           "tags": [
@@ -228,7 +228,7 @@
           "items": [
             {
               "id": "2.2.1",
-              "label": "Open File Dialog XML",
+              "label": "Dialog Configuration",
               "desc": {
                 "basic": "XML to configure navigation pane in Open File Dialog.",
                 "detailed": "XML to configure the initial settings for navigation pane in open file dialog"
