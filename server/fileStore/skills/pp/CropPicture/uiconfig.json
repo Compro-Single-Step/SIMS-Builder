@@ -285,7 +285,7 @@
                             "val": "{{views.2.croppedViewImageConfiguration}}"
                         },
                         {
-                            "id": "2.1.1",
+                            "id": "2.1.3",
                             "label": "Crop View Image Border Configuration",
                             "desc": {
                                 "basic": "A JSON having the configuration for the image position and dimensions.",
@@ -295,7 +295,8 @@
                             "itemType": "leaf",
                             "mandatory": false,
                             "rendererProperties": {
-                                "dataType": "string"
+                                "dataType": "string",
+                                "disabled": true
                             },
                             "val": "{{views.2.cropViewImageBorderConfiguration}}"
                         }
