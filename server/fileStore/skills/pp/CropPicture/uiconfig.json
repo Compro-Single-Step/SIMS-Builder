@@ -240,12 +240,12 @@
             "items": [
                 {
                     "id": "2.1",
-                    "label": "Slide View",
+                    "label": "Crop View Settings",
                     "itemRenderer": "Panel",
                     "itemType": "child",
                     "tags": [
                         {
-                            "compName": "SIMS.Components.PPT.SlideView",
+                            "compName": "SIMS.Components.PPT.ImagePlaceHolder",
                             "type": "default"
                         }
                     ],
@@ -256,87 +256,10 @@
                     "items": [
                         {
                             "id": "2.1.1",
-                            "label": "Slide in Action",
+                            "label": "Crop View Image Configuration",
                             "desc": {
-                                "basic": "Index of the slide in which the audio is to be inserted.",
-                                "detailed": "Index of the slide on which the audio has to be inserted is to be mentioned here."
-                            },
-                            "subscribeEvents": [
-                                {
-                                    "eventId": "SLIDE_VIEW_DATA_UPDATED",
-                                    "modelReference": "{{views.2.slideInAction}}",
-                                    "rule": "configureSlidesDropdown"
-                                }
-                            ],
-                            "itemRenderer": "Dropdown",
-                            "rendererProperties": {
-                                "dynamicMode": true,
-                                "itemList": "{{views.2.slideInAction.options}}"
-                            },
-                            "itemType": "leaf",
-                            "mandatory": true,
-                            "val": "{{views.2.slideInAction.selectedSlide}}"
-                        }
-                    ]
-                },
-                {
-                    "id": "2.2",
-                    "label": "Insert Audio Dialog Box",
-                    "itemRenderer": "Panel",
-                    "itemType": "child",
-                    "tags": [
-                        {
-                            "compName": "SIMS.Components.Common.InsertFileDialog",
-                            "type": "default"
-                        }
-                    ],
-                    "rendererProperties": {
-                        "collapsable": true,
-                        "optionalItems": false
-                    },
-                    "items": [
-                        {
-                            "id": "2.2.1",
-                            "label": "Dialog Configuration",
-                            "desc": {
-                                "basic": "Upload a XML file which is used to configure the Insert Audio Dialog in SIMS.",
-                                "detailed": "Upload a XML file which is used to configure the Insert Audio Dialog in SIMS."
-                            },
-                            "itemRenderer": "Dropzone",
-                            "itemType": "leaf",
-                            "emitEvents": [
-                                "INSERT_FILE_DATA_UPDATED"
-                            ],
-                            "rendererProperties": {
-                                "dataType": "XML",
-                                "placeHolder": "Drop XML file here to upload"
-                            },
-                            "mandatory": true,
-                            "val": "{{views.2.audioToBeAdded}}"
-                        },
-                        {
-                            "id": "2.2.2",
-                            "label": "Dialog Configuration Images",
-                            "desc": {
-                                "basic": "Upload the images which are used to render Audio Images in Dialog.",
-                                "detailed": "Upload the images which are used to render Audio Images in Dialog."
-                            },
-                            "itemRenderer": "Dropzone",
-                            "itemType": "leaf",
-                            "rendererProperties": {
-                                "placeholder": "Drop Tree Content XML Image",
-                                "dataType": "img",
-                                "multipleFiles": true
-                            },
-                            "mandatory": true,
-                            "val": "{{views.2.treeContentXMLImages}}"
-                        },
-                        {
-                            "id": "2.2.3",
-                            "label": "Audio to be Inserted",
-                            "desc": {
-                                "basic": "Select the audio which is to be inserted in the Slide.",
-                                "detailed": "Select the audio which is to be inserted in the Slide."
+                                "basic": "A JSON having the configuration for the border that appears on the image while cropping.",
+                                "detailed": "A JSON having the configuration for the border that appears on the image while cropping."
                             },
                             "itemRenderer": "TextBox",
                             "itemType": "leaf",
@@ -344,7 +267,37 @@
                             "rendererProperties": {
                                 "dataType": "string"
                             },
-                            "val": "{{views.2.audioTobeInserted}}"
+                            "val": "{{views.2.cropViewImageConfiguration}}"
+                        },
+                        {
+                            "id": "2.1.2",
+                            "label": "Cropped View Image Configuration",
+                            "desc": {
+                                "basic": "A JSON having the configuration for the cropped image position and dimensions.",
+                                "detailed": "A JSON having the configuration for the cropped image position and dimensions."
+                            },
+                            "itemRenderer": "TextBox",
+                            "itemType": "leaf",
+                            "mandatory": false,
+                            "rendererProperties": {
+                                "dataType": "string"
+                            },
+                            "val": "{{views.2.croppedViewImageConfiguration}}"
+                        },
+                        {
+                            "id": "2.1.1",
+                            "label": "Crop View Image Border Configuration",
+                            "desc": {
+                                "basic": "A JSON having the configuration for the image position and dimensions.",
+                                "detailed": "A JSON having the configuration for the image position and dimensions."
+                            },
+                            "itemRenderer": "TextBox",
+                            "itemType": "leaf",
+                            "mandatory": false,
+                            "rendererProperties": {
+                                "dataType": "string"
+                            },
+                            "val": "{{views.2.cropViewImageBorderConfiguration}}"
                         }
                     ]
                 }
@@ -374,10 +327,26 @@
                     "items": [
                         {
                             "id": "3.1.1",
-                            "label": "Slide View Data",
+                            "label": "Updated Slide Thumbnail",
                             "desc": {
-                                "basic": "Upload the updated image for the slide where audio has been inserted.",
-                                "detailed": "Upload the updated image for the slide where audio has been inserted."
+                                "basic": "Upload the updated image of the slide for the thumbnail in the slide navigation area.",
+                                "detailed": "Upload the updated image of the slide for the thumbnail in the slide navigation area."
+                            },
+                            "itemRenderer": "Dropzone",
+                            "itemType": "leaf",
+                            "rendererProperties": {
+                                "placeHolder": "Drop Updated Slide Thumbnail Image",
+                                "dataType": "img"
+                            },
+                            "mandatory": true,
+                            "val": "{{views.3.updatedSlideThumbnail}}"
+                        },
+                        {
+                            "id": "3.1.2",
+                            "label": "Updated Slide Image",
+                            "desc": {
+                                "basic": "Upload the updated image of the slide.",
+                                "detailed": "Upload the updated image of the slide."
                             },
                             "itemRenderer": "Dropzone",
                             "itemType": "leaf",
@@ -386,7 +355,56 @@
                                 "dataType": "img"
                             },
                             "mandatory": true,
-                            "val": "{{views.3.updatedSlideData}}"
+                            "val": "{{views.3.updatedSlideImage}}"
+                        }
+                    ]
+                },
+                {
+                    "id": "3.2",
+                    "label": "Cropped Image Placeholder",
+                    "itemRenderer": "Panel",
+                    "itemType": "child",
+                    "tags": [
+                        {
+                            "compName": "SIMS.Components.PPT.ImagePlaceHolder",
+                            "type": "default"
+                        }
+                    ],
+                    "rendererProperties": {
+                        "collapsable": true,
+                        "optionalItems": false
+                    },
+                    "items": [
+                        {
+                            "id": "3.2.1",
+                            "label": "Cropped Image",
+                            "desc": {
+                                "basic": "Upload the cropped image file.",
+                                "detailed": "Upload the cropped image file."
+                            },
+                            "itemRenderer": "Dropzone",
+                            "itemType": "leaf",
+                            "rendererProperties": {
+                                "placeHolder": "Drop Cropped Image",
+                                "dataType": "img"
+                            },
+                            "mandatory": true,
+                            "val": "{{views.3.croppedImage}}"
+                        },
+                        {
+                            "id": "3.2.2",
+                            "label": "Cropped Image Configuration",
+                            "desc": {
+                                "basic": "A JSON having the configuration for the cropped image position and dimensions.",
+                                "detailed": "A JSON having the configuration for the cropped image position and dimensions."
+                            },
+                            "itemRenderer": "TextBox",
+                            "itemType": "leaf",
+                            "mandatory": false,
+                            "rendererProperties": {
+                                "dataType": "string"
+                            },
+                            "val": "{{views.2.croppedImageConfiguration}}"
                         }
                     ]
                 }
