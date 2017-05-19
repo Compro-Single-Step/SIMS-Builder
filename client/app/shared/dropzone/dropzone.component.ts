@@ -26,18 +26,17 @@ export class DropzoneComponent extends BaseComponent implements OnDestroy {
   fileTypesToRead: Array<MIMETYPE>;
   isMultipleFiles: boolean;
   builderModelSrvc;
-  routeParams;
-  taskId;
-  stepIndex;
+  taskId: string;
+  stepIndex: string;
   constructor(private elementRef: ElementRef, private route: ActivatedRoute, private router: Router, private authSrvc: AuthService, private bds: BuilderDataService, private exceptionHandlerSrvc: ExceptionHandlerService) {
     super();
     this.makeDeleteCall = true;
     this.fileTypesToRead = [MIMETYPE.JSON, MIMETYPE.CSV, MIMETYPE.HTML, MIMETYPE.XML];
     this.isMultipleFiles = false;
     this.builderModelSrvc = BuilderModelObj;
-    this.routeParams = this.route.snapshot.params;
-    this.taskId = this.routeParams["taskId"];
-    this.stepIndex = this.routeParams["stepIndex"];
+    let routeParams = this.route.snapshot.params;
+    this.taskId = routeParams["taskId"];
+    this.stepIndex = routeParams["stepIndex"];
   }
 
   ngOnInit() {
@@ -155,7 +154,7 @@ export class DropzoneComponent extends BaseComponent implements OnDestroy {
     if (path != "") {
       this.bds.removeFile(path).subscribe((data) => {
         if (data.status === "success") {
-          console.log("File removed from server.");
+          self.exceptionHandlerSrvc.globalConsole("File removed from server.");
         } else if (data.status == "error") {
           // TODO: Code for handling - File Doesn't Exist Error
         }
