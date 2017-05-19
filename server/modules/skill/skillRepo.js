@@ -73,6 +73,7 @@ module.exports = {
                 ]
             }
         ]
+
     },
     "insertaudio": {
         primaryFile: "pp/InsertAudio/insertAudio",
@@ -82,10 +83,15 @@ module.exports = {
                 dependencyFiles: [
                     {
                         primaryFile: "common/baseSkill"
+
+
+   
+
                     }
                 ]
             }
         ]
+
     },
      "applyshapeeffect": {
         primaryFile: "wd/ApplyShapeEffect/ApplyShapeEffect",
@@ -102,7 +108,24 @@ module.exports = {
                 ]
             }
         ]
-     }
+     },
+         "createcrosstabquery": {
+        primaryFile: "ac/createcrosstabquery/createCrossTabQuery",
+        dependencyFiles: [
+            {   
+                primaryFile: "ac/common/acSkill",
+                dependencyFiles: [
+                    {
+                        primaryFile: "common/baseSkill",
+                        dependencyFiles: []
+
+                    }
+                ]
+            }
+        ]
+
+    }
+
 }
 
 
