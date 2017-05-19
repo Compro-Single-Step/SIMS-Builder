@@ -102,6 +102,19 @@ module.exports = {
                 ]
             }
         ]
+     },
+     "croppicture": {
+        primaryFile: "pp/CropPicture/CropPicture",
+        dependencyFiles: [
+            {
+                primaryFile: "pp/common/ppSkill",
+                dependencyFiles: [
+                    {
+                        primaryFile: "common/baseSkill"
+                    }
+                ]
+            }
+        ]
      }
 }
 
