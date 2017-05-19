@@ -375,22 +375,6 @@
                     "items": [
                         {
                             "id": "3.1.1",
-                            "label": "Updated Slide Thumbnail",
-                            "desc": {
-                                "basic": "Upload the updated image of the slide for the thumbnail in the slide navigation area.",
-                                "detailed": "Upload the updated image of the slide for the thumbnail in the slide navigation area."
-                            },
-                            "itemRenderer": "Dropzone",
-                            "itemType": "leaf",
-                            "rendererProperties": {
-                                "placeHolder": "Drop Updated Slide Thumbnail Image",
-                                "dataType": "img"
-                            },
-                            "mandatory": true,
-                            "val": "{{views.3.updatedSlideThumbnail}}"
-                        },
-                        {
-                            "id": "3.1.2",
                             "label": "Updated Slide Image",
                             "desc": {
                                 "basic": "Upload the updated image of the slide.",
