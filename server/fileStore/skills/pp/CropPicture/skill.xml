@@ -1,0 +1,140 @@
+<?xml version="1.0"?>
+<task name="Insert audio from a file">
+	<preload>
+		<comps>
+			<comp id="1" name="SIMS.Components.PPT.Ribbon" cssclass="SIMS_Ribbon_PPT" type="default"/>
+			<comp id="2" name="SIMS.Components.PPT.SlideView" cssclass="SlideViewComponent" type="default"/>
+			<comp id="3" name="SIMS.Components.Common.TaskBar" cssclass="SIMS_TaskBar" type="default"/>
+			<comp id="4" name="SIMS.Components.PPT.VideoPlaceholderV2" cssclass="VideoPlaceholder" type="default"/>
+			<comp id="5" name="SIMS.Components.Common.InsertFileDialog" cssclass="SaveAsDialog" type="modaldialog" title="Insert Audio"/>
+		</comps>
+	</preload>
+
+	<states>
+		<state id="1" desc="MS PowerPoint File" txt="1">
+			<comps>
+				<comp id="5" mode="remove"/>
+				<comp id="1" mode="new">
+					<sizeandpos>
+						<attr name="left" value="0"/>
+						<attr name="top" value="0"/>
+						<attr name="width" value="*"/>
+						<attr name="height" value="150"/>
+					</sizeandpos>
+					<initialattrs>
+						<attr name="RIBBON_PATH" value="app/comps2016/Common/Ribbon/ppt-ribbon.xml"/>
+						<attr name="DOCUMENT_NAME" userDefined="true"/>
+					</initialattrs>
+					<events>
+						<event id="5140" desc="insert audio clicked from ribbon">
+							<validate followup="2">
+								<comp id="2"/>
+							</validate>
+						</event>
+					</events>
+				</comp>
+				<comp id="2" mode="new">
+					<sizeandpos>
+						<attr name="left" value="0"/>
+						<attr name="top" value="145"/>
+						<attr name="width" value="*"/>
+					</sizeandpos>
+					<initialattrs>
+						<attr name="XML_PATH" userDefined="true"/>
+						<attr name="SELECTED_SLIDE" userDefined="true"/>  
+					</initialattrs>
+					<initialattributesets>
+						<attributeset name="cancel" inherits-default="false">
+							<attr name="STATUS_BAR_LEFT_LABEL_MODE" value="0"/>
+						</attributeset>
+					</initialattributesets>
+					<finalattrs>
+						<attr name="SELECTED_SLIDE" userDefined="true"/>
+					</finalattrs>
+				</comp>
+				<comp id="3" mode="new">
+					<sizeandpos>
+						<attr name="left" value="0"/>
+						<attr name="bottom" value="0"/>
+						<attr name="width" value="*"/>
+						<attr name="height" value="31"/>
+					</sizeandpos>
+					<initialattrs>
+						<attr name="OPENWORDFILE" userDefined="true"/>
+						<attr name="APPLICATION" value="ppt"/>
+						<attr name="APP_TOOLTIP_IMAGE" userDefined="true"/>
+					</initialattrs>
+				</comp>
+			</comps>
+		</state>
+		<state id="2" desc="insert audio dialog opened" txt="1">
+			<comps>
+				<comp id="5" mode="new">
+					<sizeandpos>
+						<attr name="width" value="720"/>
+						<attr name="height" value="393"/>
+						<attr name="left" value="center"/>
+						<attr name="top" value="center"/>
+					</sizeandpos>
+					<initialattrs>
+						<attr name="APPLICATION_MODE" value="4"/>
+						<attr name="TREE_XML_PATH" userDefined="true"/> 
+						<attr name="TREE_SELECTED_ITEM_ID" value="documents"/>
+						<attr name="INSERT_DIALOG_MODE" value="4"/>
+						<attr name="DIALOG_MODE" value="2"/>
+						<attr name="AUTO_COMPLETE_LIST" userDefined="true"/>
+					</initialattrs>
+					<finalattributesets>
+						<attributeset name="set_1" inherits-default="false">
+							<attr name="FILE_NAME" userDefined="true"/> 
+						</attributeset>
+						<attributeset name="set_2" inherits-default="false">
+							<attr name="FILE_NAME" userDefined="true"/>  
+						</attributeset>
+					</finalattributesets>
+					<events>
+						<event id="9997" desc="OK_BUTTON_CLICKED">
+							<validate followup="3" operator="any">
+								<comp id="5" validation-set="set_1"/>
+								<comp id="5" validation-set="set_2"/>
+							</validate>
+						</event>
+						<event id="9998" followup="1" desc="CANCEL_BUTTON_CLICKED" target-attribute-set="cancel"/>
+					</events>
+				</comp>
+			</comps>
+		</state>
+		<state id="3" desc="audio place holder inserted" islast="true">
+			<comps>
+				<comp id="5" mode="remove"/>
+				<comp id="1" mode="edit">
+					<initialattrs>
+						<attr name="ACTIVATE_TAB" value="Audio Tools Format"/>  
+						<attr name="ACTIVATE_TAB" value="Audio Tools Playback"/> 
+						<attr name="SEL_TAB" value="Audio Tools Playback"/>  
+						<attr name="HIGHLIGHT_AUDIO_NO_STYLE" value="true"/> 
+					</initialattrs>
+				</comp>
+				<comp id="2" mode="edit">
+					<initialattrs>
+						<attr name="PARTIAL_SLIDES_DATA" userDefined="true"/>
+					</initialattrs>
+				</comp>
+				<comp id="4" mode="new" subcomp="true" hostid="2" 
+					hostparam=''>
+					<sizeandpos>
+						<attr name="left" userDefined="true"/>
+						<attr name="top" userDefined="true"/>
+						<attr name="width" value="0.67"/>
+						<attr name="height" value="0.67"/>
+					</sizeandpos>
+					<initialattrs>
+						<attr name="MODE" value="AUDIO"/> 
+						<attr name="IS_SELECTED" value="true"/>  
+						<attr name="RESIZE_HANDLES_NEW" value="[[&quot;0px&quot;,&quot;0px&quot;],[&quot;50%&quot;,&quot;0px&quot;],[&quot;100%&quot;,&quot;0px&quot;],[&quot;0px&quot;,&quot;50%&quot;],[&quot;100%&quot;,&quot;50%&quot;],[&quot;0px&quot;,&quot;100%&quot;],[&quot;50%&quot;,&quot;100%&quot;],[&quot;100%&quot;,&quot;100%&quot;]]"/> 
+					</initialattrs>
+				</comp>
+			</comps>
+		</state>
+	</states>
+</task>
