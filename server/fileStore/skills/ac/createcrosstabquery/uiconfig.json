@@ -449,7 +449,7 @@
               "id": "3.2.1",
               "label": "Datasheet view configuration",
               "desc": {
-                "basic": "Upload a JSON file which is used to configure the Datasheet for Access in SIMS.",
+                "basic": "Upload a JSON file which is used to configure the Datasheet view for Access in SIMS.",
                 "detailed": "A JSON file, which will be used to configure the Datasheet structure for Access in SIMS"
               },
               "itemRenderer": "Dropzone",
