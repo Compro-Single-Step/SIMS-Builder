@@ -216,10 +216,10 @@
             },
             {
               "id": "2.1.4",
-              "label": "Field for Row heading",
+              "label": "Field for row heading",
               "desc": {
-                "basic": "Select the field for the Row heading of the query.",
-                "detailed": "Select the field for the Row heading of the query."
+                "basic": "Select the field for the row heading of the query.",
+                "detailed": "Select the field for the row heading of the query."
               },
               "itemRenderer": "Dropdown",
               "emitEvents": [
@@ -244,8 +244,8 @@
               "id": "2.1.5",
               "label": "Field for column heading",
               "desc": {
-                "basic": "Select the field for the Column heading of the query.",
-                "detailed": "Select the field for the Column heading of the query."
+                "basic": "Select the field for the column heading of the query.",
+                "detailed": "Select the field for the column heading of the query."
               },
               "itemRenderer": "Dropdown",
               "emitEvents": [
@@ -431,7 +431,7 @@
         },
         {
           "id": "3.2",
-          "label": "Datasheet",
+          "label": "Datasheet View",
           "itemRenderer": "Panel",
           "itemType": "child",
           "tags": [
@@ -447,10 +447,10 @@
           "items": [
             {
               "id": "3.2.1",
-              "label": "Datasheet Configuration",
+              "label": "Datasheet view configuration",
               "desc": {
                 "basic": "Upload a JSON file which is used to configure the Datasheet for Access in SIMS.",
-                "detailed": "A JSON file, which will be used to configure the Datasheet for Access in SIMS, is required to be uploaded here. This file can be generated from here(Hyperlink pointing to the JSON creation tool spec)."
+                "detailed": "A JSON file, which will be used to configure the Datasheet structure for Access in SIMS"
               },
               "itemRenderer": "Dropzone",
               "itemType": "leaf",
@@ -463,10 +463,10 @@
             },
             {
               "id": "3.2.2",
-              "label": "Datasheet Integrated Resource",
+              "label": "Datasheet view Data",
               "desc": {
-                "basic": "Upload a JSON file which is used to configure the Datsheet for Access in SIMS.",
-                "detailed": "A JSON file, which will be used to configure the Datsheet for Access for Access in SIMS, is required to be uploaded here. This file can be generated from here(Hyperlink pointing to the JSON creation tool spec)."
+                "basic": "Upload a JSON file which is used to fill the data for the datasheet view in Access",
+                "detailed": "Upload a JSON file which is used to fill the data for the datasheet view in Access."
               },
               "itemRenderer": "Dropzone",
               "itemType": "leaf",
