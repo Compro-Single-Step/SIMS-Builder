@@ -39,29 +39,31 @@
             }
         },
         "2": {
-            "slideInAction": {
-                "options": {
-                    "value": []
-                },
-                "selectedSlide": {
-                    "value": ""
-                }
+            "cropViewImageConfiguration": {
+                "value": ""
             },
-            "audioToBeAdded": {
-                "displayName": "",
-                "path": ""
+            "croppedViewImageConfiguration": {
+                "value": ""
             },
-            "treeContentXMLImages": {
-                "value": []
-            },
-            "audioTobeInserted": {
+            "cropViewImageBorderConfiguration": {
                 "value": ""
             }
         },
         "3": {
-            "updatedSlideData": {
+            "updatedSlideThumbnail": {
                 "displayName": "",
                 "path": ""
+            },
+            "updatedSlideImage": {
+                "displayName": "",
+                "path": ""
+            },
+            "croppedImage": {
+                "displayName": "",
+                "path": ""
+            },
+            "croppedImageConfiguration": {
+                "value": ""
             }
         }
     }

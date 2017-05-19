@@ -404,7 +404,7 @@
                             "rendererProperties": {
                                 "dataType": "string"
                             },
-                            "val": "{{views.2.croppedImageConfiguration}}"
+                            "val": "{{views.3.croppedImageConfiguration}}"
                         }
                     ]
                 }
