@@ -201,14 +201,14 @@
                             "PARTIAL_SLIDES_DATA": {
                                 "function-name": "getUpdatedSlideData",
                                 "params": {
-                                    "selectedSlide": "views['2'].slideInAction.selectedSlide.value",
-                                    "imgPath": "views['3'].updatedSlideData.path"
+                                    "selectedSlide": "views['1'].slideInAction.selectedSlide.value",
+                                    "imgPath": "views['3'].updatedSlideImage.path"
                                 }
                             },
                             "SELECTED_SLIDE": {
                                 "function-name": "extractSingleParamVal",
                                 "params": {
-                                    "selectedSlide": "views['2'].slideInAction.selectedSlide.value"
+                                    "selectedSlide": "views['1'].slideInAction.selectedSlide.value"
                                 }
                             }
                         }
@@ -217,7 +217,7 @@
                         "SELECTED_SLIDE": {
                             "function-name": "extractSingleParamVal",
                             "params": {
-                                "selectedSlide": "views['2'].slideInAction.selectedSlide.value"
+                                "selectedSlide": "views['1'].slideInAction.selectedSlide.value"
                             }
                         }
                     }
@@ -227,7 +227,7 @@
                         "hostparam": {
                             "function-name": "getSubCompHostParam",
                             "params": {
-                                "selectedSlide": "views['2'].slideInAction.selectedSlide.value"
+                                "selectedSlide": "views['1'].slideInAction.selectedSlide.value"
                             }
                         }
                     },
@@ -236,13 +236,13 @@
                             "COMP_IMAGE": {
                                 "function-name": "createResourcePath",
                                 "params": {
-                                    "path": "views['2'].treeContentXMLImages.value"
+                                    "path": "views['3'].croppedImage.path"
                                 }
                             },
                             "CROP_DATA": {
                                 "function-name": "extractSingleParamVal",
                                 "params": {
-                                    "embedableResources": "views['2'].treeContentXMLImages.value"
+                                    "embedableResources": "views['3'].croppedImageConfiguration.value"
                                 }
                             }
                         }
@@ -253,7 +253,7 @@
                         "hostparam": {
                             "function-name": "getSubCompHostParam",
                             "params": {
-                                "selectedSlide": "views['2'].slideInAction.selectedSlide.value"
+                                "selectedSlide": "views['1'].slideInAction.selectedSlide.value"
                             }
                         }
                     },
@@ -262,13 +262,13 @@
                             "COMP_IMAGE": {
                                 "function-name": "createResourcePath",
                                 "params": {
-                                    "path": "views['2'].treeContentXMLImages.value"
+                                    "path": "views['3'].croppedImage.path"
                                 }
                             },
                             "CROP_DATA": {
                                 "function-name": "extractSingleParamVal",
                                 "params": {
-                                    "embedableResources": "views['2'].treeContentXMLImages.value"
+                                    "embedableResources": "views['3'].croppedImageConfiguration.value"
                                 }
                             }
                         }
@@ -284,8 +284,8 @@
                             "PARTIAL_SLIDES_DATA": {
                                 "function-name": "getUpdatedSlideData",
                                 "params": {
-                                    "selectedSlide": "views['2'].slideInAction.selectedSlide.value",
-                                    "imgPath": "views['3'].updatedSlideData.path"
+                                    "selectedSlide": "views['1'].slideInAction.selectedSlide.value",
+                                    "imgPath": "views['3'].updatedSlideImage.path"
                                 }
                             }
                         }
