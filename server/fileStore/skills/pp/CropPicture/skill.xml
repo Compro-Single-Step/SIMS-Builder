@@ -218,7 +218,12 @@
 		</state>
 		<state id="4" desc="Final State Load" txt="2">
 			<comps>
-				<comp id="5" mode="remove" subcomp="true" hostid="2" hostparam=""/>
+				{{#ifCond MODE "without-caption"}}
+				<comp id="4" mode="remove"/>
+				{{/ifCond}}
+				{{#ifCond MODE "with-caption"}}
+				<comp id="5" mode="remove"/>
+				{{/ifCond}}
 				<comp id="1" mode="edit">
 					<initialattrs>
 						<attr name="HIGHLIGHT_CROP_OPTION" value="false"/>
