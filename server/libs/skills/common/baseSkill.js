@@ -142,4 +142,13 @@ module.exports = class BaseSkill {
             return Promise.reject(error);
         }
     }
+
+    createResourcePath(skillParams) {
+        let taskParams = skillParams.taskParams;
+        let paramValueObj = skillParams.paramsObj;
+
+        let attrValue = skillParams.taskParams.addResourceToMap({ path: paramValueObj["path"]}).absFilePath;
+        // { attrValue } is new syntax of ES6 which means => { 'attrValue': attrValue }
+        return Promise.resolve({ attrValue });
+    }
 }
