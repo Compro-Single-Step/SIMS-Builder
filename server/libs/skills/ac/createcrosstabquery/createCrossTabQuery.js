@@ -6,8 +6,24 @@ class createcrosstabquery extends AccessBaseSkill {
         this.crossTabInputJson = {};
         this.crossTabRowAxisArray = [];
         this.calcFunctionJson = {};
+        this.finalQueryName = ""
 
     }
+
+     init(data) {
+         try{
+            this.finalQueryName  = data.stepUIState.views[2].finalCrossTabQueryName.value;
+            if(this.finalQueryName == ""){
+                let defaultQueryName  = data.stepUIState.views[2].defaultCrossTabQueryName.value;
+                this.finalQueryName = defaultQueryName;
+         }
+         return Promise.resolve(true);
+         }catch(error){
+            return Promise.reject(true);
+         }
+         
+    }
+
     getCrossTabJsonInput(skillParams) {
         let paramValueObj = skillParams.paramsObj;
         let taskParams = skillParams.taskParams;
@@ -58,6 +74,16 @@ getCalcFnsMapJson(skillParams) {
         return Promise.resolve(resolveParams);
     }
 }
+    
+    getFinalQueryName(skillParams){
+        try{
+            let resolveParam = {"attrValue": this.finalQueryName};
+            return Promise.resolve(resolveParam);
+        }catch(error){
+            return Promise.reject(error);
+        }
+    }
+
     getSumRowsValue(skillParams){
         try{
             let paramValueObj = skillParams.paramsObj;
@@ -72,7 +98,7 @@ getDatasheetProjectJSon(skillParams) {
 
     // read the datasheet view project json
     let paramValueObj = skillParams.paramsObj;
-    let queryName = paramValueObj.finalQueryName;
+    let queryName = this.finalQueryName;
     let taskParams = skillParams.taskParams;
 
     return taskParams.dbFilestoreMgr.readFileFromFileStore(paramValueObj.datasheetProjJsnPath).then(function (resolveParam) {

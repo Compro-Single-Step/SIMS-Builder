@@ -78,8 +78,8 @@
               "id": "1.2.2",
               "label": "Selected Access Object",
               "desc": {
-                "basic": "Select the database object to be selecetd(if required) initiallly.",
-                "detailed": "Describe the type and name of the database object to be shown selected initially(if required) when the task is renedered"
+                "basic": "Choose the database object that is to be shown selecetd (if required) initiallly.",
+                "detailed": "Describe the type and name of the database object to be shown selected initially (if required) when the task is renedered"
               },
               "itemRenderer": "Dropdown",
                "subscribeEvents": [
@@ -171,10 +171,10 @@
           "items": [
             {
               "id": "2.1.1",
-              "label": "Crsoss Tab Query Wizard Configuration",
+              "label": "Wizard Configuration",
               "desc": {
-                "basic": "Provide cross tab query wizard configuration Json",
-                "detailed": "Provide Json to configure cross tab query wizard"
+                "basic": "Upload the json file which will be used to configure the Cross Tab Query Wizard",
+                "detailed": "Upload the json file which will be used to configure the Cross Tab Query Wizard"
               },
               "itemRenderer": "Dropzone",
               "itemType": "leaf",
@@ -190,7 +190,7 @@
             },
             {
               "id": "2.1.2",
-              "label": "Name of the Query/Table to create Cross Tab query from",
+              "label": "Name of the Query/Table to create Cross Tab query",
               "desc": {
                 "basic": "Select Table or Query that conatains the fields required for the Cross Tab Query.",
                 "detailed": "Select Table or Query that conatains the fields required for the Cross Tab Query."
@@ -216,10 +216,10 @@
             },
             {
               "id": "2.1.4",
-              "label": "fieled for Row heading",
+              "label": "Field for Row heading",
               "desc": {
-                "basic": "Field required to be the Row heading for the query.",
-                "detailed": ""
+                "basic": "Select the field for the Row heading of the query.",
+                "detailed": "Select the field for the Row heading of the query."
               },
               "itemRenderer": "Dropdown",
               "emitEvents": [
@@ -242,10 +242,10 @@
             },
             {
               "id": "2.1.5",
-              "label": "field for column heading",
+              "label": "Field for column heading",
               "desc": {
-                "basic": "Field required for the column heading for the query.",
-                "detailed": ""
+                "basic": "Select the field for the Column heading of the query.",
+                "detailed": "Select the field for the Column heading of the query."
               },
               "itemRenderer": "Dropdown",
               "emitEvents": [
@@ -268,10 +268,10 @@
             },
             {
               "id": "2.1.11",
-              "label": "Customized list of calculation function with respect to query/table",
+              "label": "Calculation functions for the fields",
               "desc": {
-                "basic": "Provide all list of calculation function related to each table/query",
-                "detailed": "Provide all list of function related to each table/query (if different from basic)"
+                "basic": "Upload a json file (if required) that conatins the list of calculation functions for the fields to be displayed.",
+                "detailed": "Upload a json file (if required) that conatins the list of calculation functions for the fields to be displayed."
               },
               "itemRenderer": "Dropzone",
               "itemType": "leaf",
@@ -287,10 +287,10 @@
             },
             {
               "id": "2.1.7",
-              "label": "Field to be calculated for the rows and column intersection",
+              "label": "Field for rows and columns intersection",
               "desc": {
-                "basic": "Select the field to be selected to be performed operation on.",
-                "detailed": "This is the field which will be calculated for the row and column intersection"
+                "basic": "Choose the field to be calculated across rows and columns intersection.",
+                "detailed": "Choose the field to be calculated across rows and columns intersection."
               },
               "itemRenderer": "Dropdown",
               "subscribeEvents": [
@@ -313,10 +313,10 @@
             },
             {
               "id": "2.1.6",
-              "label": "Calculation function available for the field",
+              "label": "Calculation function for the selected field",
               "desc": {
-                "basic": "Select the calculation to be performed on the selected field.",
-                "detailed": "this means that calculation of the type '<calFuntion>(<slectedField>)' "
+                "basic": "Select the calculation function to be performed on the selected field.",
+                "detailed": "Select the calculation function to be performed on the selected field.This means that calculation of the type '<calFuntion>(<selectedField>)' "
               },
               "itemRenderer": "Dropdown",
               "subscribeEvents": [
@@ -341,7 +341,7 @@
             },
             {
               "id": "2.1.8",
-              "label": "whether to Include Sum of rows",
+              "label": "Include Sum of rows",
               "desc": {
                 "basic": "Select if the field row to be summarized or not",
                 "detailed": "Select if the field row to be summarized or not"
@@ -359,8 +359,8 @@
               "id": "2.1.9",
               "label": "Cross Tab Query Default Name",
               "desc": {
-                "basic": "Provide default name for the final screen of wizard",
-                "detailed": ""
+                "basic": "Default name provided by the wizard for the query",
+                "detailed": "Default name provided by the wizard for the query"
               },
               "itemRenderer": "TextBox",
               "itemType": "leaf",
@@ -374,8 +374,8 @@
               "id": "2.1.10",
               "label": "Cross Tab Query final name",
               "desc": {
-                "basic": "Provide final name of the cross tab query",
-                "detailed": "Provide the final name of the query. Provide the same name as the default name if the name of the query is not to be changed"
+                "basic": "Provide the name of the Cross Tab Query (if different from the default name) by which it will be saved ",
+                "detailed": "Provide the name of the Cross Tab Query (if different from the default name) by which it will be saved"
               },
               "itemRenderer": "TextBox",
               "itemType": "leaf",

@@ -138,9 +138,8 @@
             },
             "stage5": {
               "STAGE5_NAME": {
-                "function-name": "extractSingleParamVal",
+                "function-name": "getFinalQueryName",
                 "params": {
-                  "finalQueryName" : "views[2].finalCrossTabQueryName.value"
                 }
               }
             }
@@ -166,17 +165,15 @@
           "initial": {
             "default-attrs": {
               "TABLE_NAME": {
-                "function-name": "getDatasheetTableName",
+                "function-name": "getFinalQueryName",
                 "params": {
-                  "finalQueryName" : "views[2].finalCrossTabQueryName.value"
                 }
               },
               "PROJECT_JSON": {
                 "function-name": "getDatasheetProjectJSon",
                 "params": {
                   "datasheetProjJsnPath":"views[3].datasheet.path",
-                  "datasheetdataJsnPath": "views[3].datasheetIntegratedResource.path",
-                  "finalQueryName" : "views[2].finalCrossTabQueryName.value"
+                  "datasheetdataJsnPath": "views[3].datasheetIntegratedResource.path"
                   }
               }
             }
