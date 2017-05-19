@@ -134,6 +134,33 @@
                     "items": [
                         {
                             "id": "1.3.1",
+                            "label": "Mode of Import",
+                            "desc": {
+                                "basic": "Mode in which the Database is to imported.",
+                                "detailed": "Template Supports two modes: 1. Import Tables, Queries etc from unlinked Table, 2.Import a Linked Table"
+                            },
+                            "itemRenderer": "Radio",
+                            "rendererProperties": {
+                                "itemList": [
+                                {
+                                    "value":"1",
+                                    "label":"Import database objects into current database"
+                                },
+                                {
+                                    "value":"2",
+                                    "label":"Linked to the data source by creating a linked table"
+                                }                  
+                                ]
+                            },
+                            "itemType": "leaf",
+                            "emitEvents": [
+                                "IMAGE_PH_COMP_UPDATE"
+                            ],
+                            "mandatory": true,
+                            "val": "{{views.2.importMode}}"
+                        },
+                        {
+                            "id": "1.3.2",
                             "label": "Image to be cropped",
                             "desc": {
                                 "basic": "Upload image which will be cropped.",
@@ -149,7 +176,7 @@
                             "val": "{{views.1.cropImage}}"
                         },
                         {
-                            "id": "1.3.2",
+                            "id": "1.3.3",
                             "label": "Image Configuration",
                             "desc": {
                                 "basic": "Upload an XML having configuration for Image",
@@ -165,7 +192,7 @@
                             "val": "{{views.1.imageConfig}}"
                         },
                         {
-                            "id": "1.3.3",
+                            "id": "1.3.4",
                             "label": "Image Border Configuration",
                             "desc": {
                                 "basic": "",
@@ -175,12 +202,13 @@
                             "itemType": "leaf",
                             "mandatory": false,
                             "rendererProperties": {
-                                "dataType": "string"
+                                "dataType": "string",
+                                "disabled": true
                             },
                             "val": "{{views.1.imgBorderConfig}}"
                         },
                         {
-                            "id": "1.3.3",
+                            "id": "1.3.5",
                             "label": "Caption Border Configuration",
                             "desc": {
                                 "basic": "",
@@ -190,7 +218,8 @@
                             "itemType": "leaf",
                             "mandatory": false,
                             "rendererProperties": {
-                                "dataType": "string"
+                                "dataType": "string",
+                                "disabled": true
                             },
                             "val": "{{views.1.imgCaptionBorderConfig}}"
                         }
