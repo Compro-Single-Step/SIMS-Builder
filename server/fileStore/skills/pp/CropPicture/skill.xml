@@ -189,9 +189,6 @@
 						<attr name="CROP_DATA" userDefined="true"/>
 						<attr name="CAPTION_TEXT_JSON" value="{&quot;type&quot;:&quot;TextEditorControl&quot;}"/>
 					</initialattrs>
-					<finalattrs>
-						<attr name="CROP_DATA" userDefined="true"/>
-					</finalattrs>
 					<events>
 						<event id="17" desc="Escape Clicked">
 							<validate followup="4">
