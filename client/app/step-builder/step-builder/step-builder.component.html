@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-md-10">
           <div class="row stepText stepTextOverflowHidden">
-            <h4 class="stepTextHeading"><strong>STEP {{stepIndex}}</strong>&nbsp;<span #stepTextContainer [innerHTML]="stepText"></span></h4>
+            <h4 class="stepTextHeading"><strong>STEP {{stepIndex}}:</strong>&nbsp;<span #stepTextContainer [innerHTML]="stepText"></span></h4>
             <span class="show-more"><a href="#">Show more</a></span>
           </div>
           <div class="row">
@@ -14,6 +14,7 @@
         <div class="col-md-2">
           <div class="nav navbar-nav navbar-right">
             <button class="btn header-icon pull-right" (click)="onClose()"><i class="fa fa-times" aria-hidden="true"></i></button>
+            <div class="seperator pull-right"></div>
             <button class="btn header-icon pull-right" style="border-right-style: ridge"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
           </div>
         </div>

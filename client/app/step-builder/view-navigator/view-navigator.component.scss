@@ -1,5 +1,4 @@
 @import "../../scss/variables";
-$progressbar-connector: #C1C1C1;
 
 .progressbar {
     counter-reset: step;
@@ -31,7 +30,7 @@ $progressbar-connector: #C1C1C1;
         }
         span.separator {
             width: 100%;
-            height: 4px;
+            height: 5px;
             position: absolute;
             background-color: $progressbar-connector;
             top: 19px;

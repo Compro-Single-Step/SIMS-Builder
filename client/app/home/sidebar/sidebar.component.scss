@@ -1,13 +1,14 @@
 @import '../../scss/variables.scss';
 .logo{
   background-color: $theme-blue;
-  margin-top: 0px;
+  margin: 0px;
   font-size: 25px;
   font-family: Cabin;
   color:$pure-white;
 }
 ul.sidebar-nav {
   font-weight: 600;
+  padding: 0px;
   .sidebar-listitem {
     display: block;
     a {

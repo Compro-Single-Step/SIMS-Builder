@@ -21,14 +21,23 @@
     font-size: 1.2rem;
     font-weight: 600;
   }
-  .header-icon{
-    background-color: transparent;
-    border: none;
-    color:$pure-white;
-    font-size: 25px;
-    border: 1px solid transparent;
-    &:hover{
-      border: 1px solid $pure-white;
+  .navbar-right{
+    .header-icon{
+      background-color: transparent;
+      border: none;
+      color:$pure-white;
+      font-size: 25px;
+      border: 1px solid transparent;
+      &:hover{
+        border: 1px solid $pure-white;
+      }
+    }
+    .seperator{
+      height: 50px;
+      width: 2px;
+      background-color: $pure-white;
+      opacity: 0.4;
+      margin: 0px 10px;
     }
   }
 }
