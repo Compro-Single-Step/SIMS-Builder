@@ -6,9 +6,26 @@
   font-family: Cabin;
   color:$pure-white;
 }
-ul.sidebar-nav{
+ul.sidebar-nav {
   font-weight: 600;
+  .sidebar-listitem {
+    display: block;
+    a {
+      padding-left: 0px;
+      display: flex;
+      line-height: 20px;
+      .sidebar-icon i {
+        font-size: 20px;
+        padding: 16px;
+      }
+      .sidebar-text {
+        font-size: 14px;
+        margin: auto 5px;
+      }
+    }
+  }
 }
+
 .sidebar-nav > li:last-child > a {
   border-color: #AAAAAA;
 }
@@ -16,5 +33,5 @@ ul.sidebar-nav{
   border-top-color: #AAAAAA;
 }
 .sidebar-nav > li > a:hover{
-  background-color: #484E5B;
+  background-color: $sidebar-hover;
 }

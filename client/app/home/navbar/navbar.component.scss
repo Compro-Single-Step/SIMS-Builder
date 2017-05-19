@@ -3,6 +3,25 @@
 .brand_logo, .baloo_icon{
   height:20px;
 }
-.simsBuilder{
-  color: $theme-blue;
+.navbar-header{
+  .navbar-nav{
+    .sidebarCollapse{
+      padding-top: 0.9rem;
+      font-size: 1.30em;
+    }
+    .simsBuilderLogo{
+      padding-top: 0.9rem;
+      padding-bottom: 0.9rem;
+      img {
+        size: 24px;
+      }
+    }
+    .simsBuilderText{
+      color: $theme-blue;
+      padding-top: 0.85rem;
+      h4{
+        font-size: 24px;
+      }
+    }
+  }
 }

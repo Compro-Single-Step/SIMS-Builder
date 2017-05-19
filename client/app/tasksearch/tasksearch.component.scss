@@ -63,9 +63,12 @@
     background-color: $deepdark-blue;
   }
 }
-.welcomeMessage h3{
-  font-weight:600; 
-}
-.welcomeMessage p{
-  font-weight:400; 
+.welcomeMessage{
+  color: $text-gray;
+  h3{
+    font-weight:600;
+  }
+  p{
+    font-weight:400;
+  }
 }
