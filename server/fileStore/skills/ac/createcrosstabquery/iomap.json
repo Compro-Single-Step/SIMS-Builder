@@ -130,7 +130,7 @@
                 }
               },
               "STAGE4_CHECK": {
-                "function-name": "getSumRow",
+                "function-name": "getSumRowsValue",
                 "params": {
                   "includeSum" : "views[2].includeSumOfRows.value"
                 }

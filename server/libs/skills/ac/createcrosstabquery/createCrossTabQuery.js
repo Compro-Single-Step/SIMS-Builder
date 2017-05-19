@@ -58,6 +58,15 @@ getCalcFnsMapJson(skillParams) {
         return Promise.resolve(resolveParams);
     }
 }
+    getSumRowsValue(skillParams){
+        try{
+            let paramValueObj = skillParams.paramsObj;
+            let resolveParam = {"attrValue": (paramValueObj.includeSum).toString()};
+            return Promise.resolve(resolveParam);
+        }catch(error){
+            return Promise.reject(error);
+        }
+    }
 
 getDatasheetProjectJSon(skillParams) {
 
