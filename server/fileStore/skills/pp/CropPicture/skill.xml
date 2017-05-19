@@ -1,19 +1,22 @@
 <?xml version="1.0"?>
-<task name="Insert audio from a file">
+<task name="Cropping a Picture and Inserting a Textbox" id="GO16.PPT.05.5B.03.T1">
 	<preload>
 		<comps>
 			<comp id="1" name="SIMS.Components.PPT.Ribbon" cssclass="SIMS_Ribbon_PPT" type="default"/>
 			<comp id="2" name="SIMS.Components.PPT.SlideView" cssclass="SlideViewComponent" type="default"/>
 			<comp id="3" name="SIMS.Components.Common.TaskBar" cssclass="SIMS_TaskBar" type="default"/>
-			<comp id="4" name="SIMS.Components.PPT.VideoPlaceholderV2" cssclass="VideoPlaceholder" type="default"/>
-			<comp id="5" name="SIMS.Components.Common.InsertFileDialog" cssclass="SaveAsDialog" type="modaldialog" title="Insert Audio"/>
+			<comp id="4" name="SIMS.Components.PPT.ImagePlaceHolder" cssclass="PPTImagePlaceHolder" type="default"/>
+			<comp id="9" name="SIMS.Components2016.PPT.ImageWithCaptionPlaceholder" cssclass="ImageWithCaptionPlaceholder" type="default"/>
 		</comps>
 	</preload>
-
+	<texts_formatted>
+		<txt StateStart="1" id="1">
+			<![CDATA[On Slide 7, crop the picture until the right edge of the picture aligns with 2 inches to the right of zero on the horizontal ruler.]]>
+		</txt>
+	</texts_formatted>
 	<states>
-		<state id="1" desc="MS PowerPoint File" txt="1">
+		<state id="1" desc="Initial State Load" txt="1">
 			<comps>
-				<comp id="5" mode="remove"/>
 				<comp id="1" mode="new">
 					<sizeandpos>
 						<attr name="left" value="0"/>
@@ -22,12 +25,21 @@
 						<attr name="height" value="150"/>
 					</sizeandpos>
 					<initialattrs>
-						<attr name="RIBBON_PATH" value="app/comps2016/Common/Ribbon/ppt-ribbon.xml"/>
+						<attr name="RIBBON_PATH" value="app/comps/Common/Ribbon/ppt-ribbon.xml"/>
 						<attr name="DOCUMENT_NAME" userDefined="true"/>
+
+						{{#ifCond MODE "with-caption"}}
+						<attr name="ACTIVATE_TAB" value="Drawing Tools Format"/>
+						{{/ifCond}}
+
+						<attr name="ACTIVATE_TAB" value="Picture Tools Format"/>
+						<attr name="PICTURE_HEIGHT" params="picture-height" value="4"/> ??????	
+            			<attr name="PICTURE_WIDTH" params="picture-width" value="6.02"/> ???????
 					</initialattrs>
 					<events>
-						<event id="5140" desc="insert audio clicked from ribbon">
-							<validate followup="2">
+						<event id="5122" desc="Picturetoolsformat_size_crop_crop" followup="2">
+							<validate>
+								<comp id="9"/>
 								<comp id="2"/>
 							</validate>
 						</event>
@@ -41,13 +53,9 @@
 					</sizeandpos>
 					<initialattrs>
 						<attr name="XML_PATH" userDefined="true"/>
-						<attr name="SELECTED_SLIDE" userDefined="true"/>  
+						<attr name="SELECTED_SLIDE" userDefined="true"/>
+						<attr name="SHOW_RULER" value="true"/>
 					</initialattrs>
-					<initialattributesets>
-						<attributeset name="cancel" inherits-default="false">
-							<attr name="STATUS_BAR_LEFT_LABEL_MODE" value="0"/>
-						</attributeset>
-					</initialattributesets>
 					<finalattrs>
 						<attr name="SELECTED_SLIDE" userDefined="true"/>
 					</finalattrs>
@@ -65,73 +73,173 @@
 						<attr name="APP_TOOLTIP_IMAGE" userDefined="true"/>
 					</initialattrs>
 				</comp>
-			</comps>
-		</state>
-		<state id="2" desc="insert audio dialog opened" txt="1">
-			<comps>
-				<comp id="5" mode="new">
-					<sizeandpos>
-						<attr name="width" value="720"/>
-						<attr name="height" value="393"/>
-						<attr name="left" value="center"/>
-						<attr name="top" value="center"/>
-					</sizeandpos>
+				{{#ifCond MODE "with-caption"}}
+				<comp id="9" mode="new" subcomp="true" hostid="2" hostparam="">
 					<initialattrs>
-						<attr name="APPLICATION_MODE" value="4"/>
-						<attr name="TREE_XML_PATH" userDefined="true"/> 
-						<attr name="TREE_SELECTED_ITEM_ID" value="documents"/>
-						<attr name="INSERT_DIALOG_MODE" value="4"/>
-						<attr name="DIALOG_MODE" value="2"/>
-						<attr name="AUTO_COMPLETE_LIST" userDefined="true"/>
+						<attr name="COMP_IMAGE" userDefined="true"/>
+						<attr name="XML_PATH" userDefined="true"/>
+						<attr name="IMAGE_DATA_JSON" userDefined="true"/>
+						<attr name="CAPTION_DATA_JSON" userDefined="true"/>
+						<attr name="CAPTION_TEXT_JSON" value="{&quot;type&quot;:&quot;TextEditorControl&quot;}"/>
 					</initialattrs>
-					<finalattributesets>
-						<attributeset name="set_1" inherits-default="false">
-							<attr name="FILE_NAME" userDefined="true"/> 
-						</attributeset>
-						<attributeset name="set_2" inherits-default="false">
-							<attr name="FILE_NAME" userDefined="true"/>  
-						</attributeset>
-					</finalattributesets>
+					<finalattrs>
+						<attr name="IMAGE_SELECTED" value="true"/>
+					</finalattrs>
 					<events>
-						<event id="9997" desc="OK_BUTTON_CLICKED">
-							<validate followup="3" operator="any">
-								<comp id="5" validation-set="set_1"/>
-								<comp id="5" validation-set="set_2"/>
-							</validate>
-						</event>
-						<event id="9998" followup="1" desc="CANCEL_BUTTON_CLICKED" target-attribute-set="cancel"/>
+						<event id="23" desc="Picture_RightClick_crop">
+			              <validate followup="2">
+			                <comp id="9" />
+			                <comp id="2" />
+			              </validate>
+			            </event>
 					</events>
 				</comp>
+				{{/ifCond}}
+				{{#ifCond MODE "without-caption"}}
+				<comp id="4" mode="new" subcomp="true" hostid="2" hostparam="">
+		          <initialattrs>
+		            <attr name="IMG_PH_MODE" value="WORK"/>
+		            <attr name="COMP_IMAGE" userDefined="true"/>
+		            <attr name="XML_PATH" userDefined="true"/>
+		          </initialattrs>
+		          <finalattrs>
+		            <attr name="IS_PH_SELECTED" value="true"/>
+		          </finalattrs>
+		          <events>
+		            <event id="23" desc="Picture_RightClick_crop">
+		              <validate followup="2">
+		                <comp id="4" />
+		                <comp id="2" />
+		              </validate>
+		            </event>
+		          </events>
+		        </comp>
+		        {{/ifCond}}
 			</comps>
 		</state>
-		<state id="3" desc="audio place holder inserted" islast="true">
+		<state id="2" desc="Loading state when Crop is clicked" txt="1">
 			<comps>
-				<comp id="5" mode="remove"/>
 				<comp id="1" mode="edit">
 					<initialattrs>
-						<attr name="ACTIVATE_TAB" value="Audio Tools Format"/>  
-						<attr name="ACTIVATE_TAB" value="Audio Tools Playback"/> 
-						<attr name="SEL_TAB" value="Audio Tools Playback"/>  
-						<attr name="HIGHLIGHT_AUDIO_NO_STYLE" value="true"/> 
+						<attr name="HIGHLIGHT_CROP_OPTION" value="true"/>
+					</initialattrs>
+				</comp>
+				{{#ifCond MODE "with-caption"}}
+				<comp id="9" mode="edit" subcomp="true" hostid="2" hostparam="">
+					<initialattrs>
+						<attr name="IMAGE_DATA_JSON" userDefined="true"/>
+						<attr name="ENABLE_CROP" value="true"/>
+						<attr name="CROP_DATA" userDefined="true"/>
+						<attr name="CAPTION_TEXT_JSON" value="{&quot;type&quot;:&quot;TextEditorControl&quot;}"/>
+					</initialattrs>
+					<finalattrs>
+						<attr name="CROP_DATA" userDefined="true"/>
+					</finalattrs>
+					<events>
+						<event id="15" desc="IMAGE_CROPPED">
+							<validate followup="3">
+								<comp id="9"/>
+							</validate>
+						</event>
+					</events>
+				</comp>
+				{{/ifCond}}
+				{{#ifCond MODE "without-caption"}}
+				<comp id="4" mode="edit" subcomp="true" hostid="2" hostparam="">
+		          <initialattrs>
+		            <attr name="ENABLE_CROP" value="true"/>
+		            <attr name="CROP_DATA" userDefined="true"/>
+		          </initialattrs>
+		          <finalattrs>
+		            <attr name="CROP_DATA" userDefined="true"/>
+		          </finalattrs>
+		          <events>
+		            <event id="15" desc="IMAGE_CROPPED">
+		              <validate followup="3">
+		                <comp id="4"/>
+		              </validate>
+		            </event>
+		          </events>
+		        </comp>
+		        {{/ifCond}}
+			</comps>
+		</state>
+		<state id="3" desc="Loading state when Crop is clicked" txt="1">
+			<comps>
+				<comp id="1" mode="edit">
+					<events>
+						<event id="5122" desc="Picturetoolsformat_size_crop_crop" followup="4">
+							<validate>
+								<comp id="2"/>
+							</validate>
+						</event>
+					</events>
+				</comp>
+				<comp id="2" mode="edit">
+					<initialattrs>
+						<attr name="PARTIAL_SLIDES_DATA" userDefined="true"/>
+						<attr name="SELECTED_SLIDE" userDefined="true"/>
+						<attr name="FIRE_EVENT_ON_SLIDEAREA_CLICK" value="true"/>
+					</initialattrs>
+					<finalattrs>
+						<attr name="SELECTED_SLIDE" userDefined="true"/>
+					</finalattrs>
+					<events>
+						<event id="41" followup="4" desc="Escape Clicked">
+							<validate>
+								<comp id="2"/>
+							</validate>
+						</event>
+					</events>
+				</comp>
+				{{#ifCond MODE "with-caption"}}
+				<comp id="9" mode="edit" subcomp="true" hostid="2" hostparam="">
+					<initialattrs>
+						<attr name="COMP_IMAGE" userDefined="true"/>
+						<attr name="CROP_DATA" userDefined="true"/>
+						<attr name="CAPTION_TEXT_JSON" value="{&quot;type&quot;:&quot;TextEditorControl&quot;}"/>
+					</initialattrs>
+					<finalattrs>
+						<attr name="CROP_DATA" userDefined="true"/>
+					</finalattrs>
+					<events>
+						<event id="17" followup="4" desc="Escape Clicked">
+							<validate>
+								<comp id="2"/>
+							</validate>
+						</event>
+					</events>
+				</comp>
+				{{/ifCond}}
+				{{#ifCond MODE "without-caption"}}
+				<comp id="4" mode="edit" subcomp="true" hostid="2" hostparam="">
+		          <initialattrs>
+		          	<attr name="COMP_IMAGE" userDefined="true"/>
+		            <attr name="ENABLE_CROP" value="true"/>
+		            <attr name="CROP_DATA" userDefined="true"/>
+		          </initialattrs>
+		          <events>
+		            <event id="17" followup="4" desc="Escape Clicked">
+		              <validate>
+		                <comp id="2" />
+		              </validate>
+		            </event>
+		          </events>
+		        </comp>
+		        {{/ifCond}}
+			</comps>
+		</state>
+		<state id="4" desc="Final State Load" txt="2">
+			<comps>
+				<comp id="9" mode="remove" subcomp="true" hostid="2" hostparam="" />
+				<comp id="1" mode="edit">
+					<initialattrs>
+						<attr name="HIGHLIGHT_CROP_OPTION" value="false"/>
 					</initialattrs>
 				</comp>
 				<comp id="2" mode="edit">
 					<initialattrs>
 						<attr name="PARTIAL_SLIDES_DATA" userDefined="true"/>
-					</initialattrs>
-				</comp>
-				<comp id="4" mode="new" subcomp="true" hostid="2" 
-					hostparam=''>
-					<sizeandpos>
-						<attr name="left" userDefined="true"/>
-						<attr name="top" userDefined="true"/>
-						<attr name="width" value="0.67"/>
-						<attr name="height" value="0.67"/>
-					</sizeandpos>
-					<initialattrs>
-						<attr name="MODE" value="AUDIO"/> 
-						<attr name="IS_SELECTED" value="true"/>  
-						<attr name="RESIZE_HANDLES_NEW" value="[[&quot;0px&quot;,&quot;0px&quot;],[&quot;50%&quot;,&quot;0px&quot;],[&quot;100%&quot;,&quot;0px&quot;],[&quot;0px&quot;,&quot;50%&quot;],[&quot;100%&quot;,&quot;50%&quot;],[&quot;0px&quot;,&quot;100%&quot;],[&quot;50%&quot;,&quot;100%&quot;],[&quot;100%&quot;,&quot;100%&quot;]]"/> 
 					</initialattrs>
 				</comp>
 			</comps>
