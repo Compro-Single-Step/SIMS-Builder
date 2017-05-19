@@ -27,6 +27,10 @@
         {
             "name":"Apply Shape Effect to a Text Box",
             "id":"applyshapeeffect"
+        },
+        {
+            "name":"Crop a picture",
+            "id":"croppicture"
         }
     ]
 }
