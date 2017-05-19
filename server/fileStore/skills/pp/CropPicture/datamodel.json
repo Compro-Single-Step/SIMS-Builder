@@ -19,6 +19,20 @@
                     "value": ""
                 }
             },
+            "cropImage": {
+                "displayName": "",
+                "path": ""
+            },
+            "imageConfig": {
+                "displayName": "",
+                "path": ""
+            },
+            "imgBorderConfig": {
+                "value": ""
+            },
+            "imgCaptionBorderConfig": {
+                "value": ""
+            },
             "taskbarPreviewImage": {
                 "displayName": "",
                 "path": ""
