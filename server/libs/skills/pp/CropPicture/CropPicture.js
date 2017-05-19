@@ -11,8 +11,12 @@ module.exports = class CropPicture extends PPTBaseSkill {
 
     getUpdatedSlideData(skillParams) {
         var selectedSlide = skillParams.paramsObj.selectedSlide.data,
-            slidePath = skillParams.taskParams.addResourceToMap({"path": skillParams.paramsObj["imgPath"]}).absFilePath,
+            slidePath = skillParams.taskParams.addResourceToMap({ "path": skillParams.paramsObj["imgPath"] }).absFilePath,
             attrValue = `[{"Number":"${selectedSlide}","ThumbHtml":"<img src='${slidePath}'/>"}]`;
         return Promise.resolve({ attrValue });
+    }
+
+    feSwitchComponent(radioValue, dependantModel) {
+        dependantModel.disabled = radioValue === "1" ? true : false;
     }
 }

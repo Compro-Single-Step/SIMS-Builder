@@ -134,21 +134,21 @@
                     "items": [
                         {
                             "id": "1.3.1",
-                            "label": "Mode of Import",
+                            "label": "Mode of Use",
                             "desc": {
-                                "basic": "Mode in which the Database is to imported.",
-                                "detailed": "Template Supports two modes: 1. Import Tables, Queries etc from unlinked Table, 2.Import a Linked Table"
+                                "basic": "Mode in which component will be used.",
+                                "detailed": ""
                             },
                             "itemRenderer": "Radio",
                             "rendererProperties": {
                                 "itemList": [
                                 {
                                     "value":"1",
-                                    "label":"Import database objects into current database"
+                                    "label":"Use Image Place Holder component."
                                 },
                                 {
                                     "value":"2",
-                                    "label":"Linked to the data source by creating a linked table"
+                                    "label":"Use Image with Caption Place Holder component."
                                 }                  
                                 ]
                             },
@@ -157,7 +157,7 @@
                                 "IMAGE_PH_COMP_UPDATE"
                             ],
                             "mandatory": true,
-                            "val": "{{views.2.importMode}}"
+                            "val": "{{views.1.compName}}"
                         },
                         {
                             "id": "1.3.2",
@@ -202,9 +202,15 @@
                             "itemType": "leaf",
                             "mandatory": false,
                             "rendererProperties": {
-                                "dataType": "string",
-                                "disabled": true
+                                "dataType": "string"
                             },
+                            "subscribeEvents": [
+                                {
+                                    "eventId": "IMAGE_PH_COMP_UPDATE",
+                                    "modelReference": "{{views.1.imgBorderConfig}}",
+                                    "rule": "feSwitchComponent"
+                                }
+                            ],
                             "val": "{{views.1.imgBorderConfig}}"
                         },
                         {
@@ -218,9 +224,15 @@
                             "itemType": "leaf",
                             "mandatory": false,
                             "rendererProperties": {
-                                "dataType": "string",
-                                "disabled": true
+                                "dataType": "string"
                             },
+                            "subscribeEvents": [
+                                {
+                                    "eventId": "IMAGE_PH_COMP_UPDATE",
+                                    "modelReference": "{{views.1.imgCaptionBorderConfig}}",
+                                    "rule": "feSwitchComponent"
+                                }
+                            ],
                             "val": "{{views.1.imgCaptionBorderConfig}}"
                         }
                     ]
@@ -324,9 +336,15 @@
                             "itemType": "leaf",
                             "mandatory": false,
                             "rendererProperties": {
-                                "dataType": "string",
-                                "disabled": true
+                                "dataType": "string"
                             },
+                            "subscribeEvents": [
+                                {
+                                    "eventId": "IMAGE_PH_COMP_UPDATE",
+                                    "modelReference": "{{views.1.cropViewImageBorderConfiguration}}",
+                                    "rule": "feSwitchComponent"
+                                }
+                            ],
                             "val": "{{views.2.cropViewImageBorderConfiguration}}"
                         }
                     ]

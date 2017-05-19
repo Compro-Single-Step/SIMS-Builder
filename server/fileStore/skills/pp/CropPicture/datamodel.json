@@ -19,6 +19,9 @@
                     "value": ""
                 }
             },
+            "compName": {
+                "value": ""
+            },
             "cropImage": {
                 "displayName": "",
                 "path": ""
@@ -28,10 +31,12 @@
                 "path": ""
             },
             "imgBorderConfig": {
-                "value": ""
+                "value": "",
+                "disabled": true
             },
             "imgCaptionBorderConfig": {
-                "value": ""
+                "value": "",
+                "disabled": true
             },
             "taskbarPreviewImage": {
                 "displayName": "",
@@ -46,7 +51,8 @@
                 "value": ""
             },
             "cropViewImageBorderConfiguration": {
-                "value": ""
+                "value": "",
+                "disabled": true
             }
         },
         "3": {
