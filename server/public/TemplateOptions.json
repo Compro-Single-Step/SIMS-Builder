@@ -21,12 +21,19 @@
             "id":"importaccessobject"
         },
         {
+
             "name":"Insert Audio From a File",
             "id":"insertaudio"
         },
         {
             "name":"Apply Shape Effect to a Text Box",
             "id":"applyshapeeffect"
+
+        },
+          {
+            "name":"create cross Tab Query",
+            "id":"createcrosstabquery"
+
         }
     ]
 }
