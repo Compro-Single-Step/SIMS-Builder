@@ -20,8 +20,8 @@
               "XML_PATH": {
                 "function-name": "handleEmbededResources",
                 "params": {
-                    "resourcePath": "views['1'].slideViewData.path",
-                    "embedableResources": "views['1'].slideImages.value"
+                  "resourcePath": "views['1'].slideViewData.path",
+                  "embedableResources": "views['1'].slideImages.value"
                 }
               },
               "SELECTED_SLIDE": {
@@ -60,41 +60,133 @@
               }
             }
           }
+        },
+        "5": {
+          "initial": {
+            "default-attrs": {
+              "COMP_IMAGE": {
+                "function-name": "createCompImagePath",
+                "params": {
+                  "tbPrvImage": "views['1'].taskbarPreviewImage.path"
+                }
+              },
+              "XML_PATH": {
+                "function-name": "createXmlPath",
+                "params": {
+                  "DocTitle": "views['1'].documentTitle.value"
+                }
+              },
+              "IMAGE_DATA_JSON": {
+                "function-name": "extractSingleParamVal",
+                "params": {
+                  "DocTitle": "views['1'].documentTitle.value"
+                }
+              },
+              "CAPTION_DATA_JSON": {
+                "function-name": "extractSingleParamVal",
+                "params": {
+                  "DocTitle": "views['1'].documentTitle.value"
+                }
+              }
+            }
+          },
+          "props": {
+            "hostparam": {
+              "function-name": "getSubCompHostParam",
+              "params": {
+                "selectedSlide": "views['1'].slideInAction.selectedSlide.value"
+              }
+            }
+          }
+        },
+        "4": {
+          "initial": {
+            "default-attrs": {
+              "COMP_IMAGE": {
+                "function-name": "createCompImagePath",
+                "params": {
+                  "tbPrvImage": "views['1'].taskbarPreviewImage.path"
+                }
+              },
+              "XML_PATH": {
+                "function-name": "createXmlPath",
+                "params": {
+                  "DocTitle": "views['1'].documentTitle.value"
+                }
+              }
+            }
+          },
+          "props": {
+            "hostparam": {
+              "function-name": "getSubCompHostParam",
+              "params": {
+                "selectedSlide": "views['1'].slideInAction.selectedSlide.value"
+              }
+            }
+          }
         }
       }
     },
     "2": {
       "components": {
         "5": {
+          "props": {
+            "hostparam": {
+              "function-name": "getSubCompHostParam",
+              "params": {
+                "selectedSlide": "views['2'].slideInAction.selectedSlide.value"
+              }
+            }
+          },
           "initial": {
             "default-attrs": {
-              "TREE_XML_PATH": {
-                "function-name": "handleEmbededResources",
+              "IMAGE_DATA_JSON": {
+                "function-name": "extractSingleParamVal",
                 "params": {
-                    "resourcePath": "views['2'].audioToBeAdded.path",
-                    "embedableResources": "views['2'].treeContentXMLImages.value"
+                  "embedableResources": "views['2'].treeContentXMLImages.value"
                 }
               },
-              "AUTO_COMPLETE_LIST": {
-                "function-name": "generateAutoCompleteList"
+              "CROP_DATA": {
+                "function-name": "extractSingleParamVal",
+                "params": {
+                  "embedableResources": "views['2'].treeContentXMLImages.value"
+                }
               }
             }
           },
           "final": {
-            "set_1": {
-              "FILE_NAME": {
+            "CROP_DATA": {
+              "function-name": "extractSingleParamVal",
+              "params": {
+                "embedableResources": "views['2'].treeContentXMLImages.value"
+              }
+            }
+          }
+        },
+        "4": {
+          "props": {
+            "hostparam": {
+              "function-name": "getSubCompHostParam",
+              "params": {
+                "selectedSlide": "views['2'].slideInAction.selectedSlide.value"
+              }
+            }
+          },
+          "initial": {
+            "default-attrs": {
+              "CROP_DATA": {
                 "function-name": "extractSingleParamVal",
                 "params": {
-                  "resAdded": "views['2'].audioTobeInserted.value"
+                  "embedableResources": "views['2'].treeContentXMLImages.value"
                 }
               }
-            },
-            "set_2": {
-              "FILE_NAME": {
-                "function-name": "getAudioTobeInsertedWithoutExt",
-                "params": {
-                  "resAdded": "views['2'].audioTobeInserted.value"
-                }
+            }
+          },
+          "final": {
+            "CROP_DATA": {
+              "function-name": "extractSingleParamVal",
+              "params": {
+                "embedableResources": "views['2'].treeContentXMLImages.value"
               }
             }
           }
@@ -112,24 +204,89 @@
                   "selectedSlide": "views['2'].slideInAction.selectedSlide.value",
                   "imgPath": "views['3'].updatedSlideData.path"
                 }
+              },
+              "SELECTED_SLIDE": {
+                "function-name": "extractSingleParamVal",
+                "params": {
+                  "selectedSlide": "views['2'].slideInAction.selectedSlide.value"
+                }
+              }
+            }
+          },
+          "final": {
+            "SELECTED_SLIDE": {
+              "function-name": "extractSingleParamVal",
+              "params": {
+                "selectedSlide": "views['2'].slideInAction.selectedSlide.value"
               }
             }
           }
         },
-        "4": {
-          "sizeandpos": {
-            "left": {
-              "function-name": "getSubCompLeftPosition"
-            },
-            "top": {
-              "function-name": "getSubCompTopPosition"
-            }
-          },
+        "5": {
           "props": {
             "hostparam": {
               "function-name": "getSubCompHostParam",
               "params": {
                 "selectedSlide": "views['2'].slideInAction.selectedSlide.value"
+              }
+            }
+          },
+          "initial": {
+            "default-attrs": {
+              "COMP_IMAGE": {
+                "function-name": "createCompImagePath",
+                "params": {
+                  "embedableResources": "views['2'].treeContentXMLImages.value"
+                }
+              },
+              "CROP_DATA": {
+                "function-name": "extractSingleParamVal",
+                "params": {
+                  "embedableResources": "views['2'].treeContentXMLImages.value"
+                }
+              }
+            }
+          }
+        },
+        "4": {
+          "props": {
+            "hostparam": {
+              "function-name": "getSubCompHostParam",
+              "params": {
+                "selectedSlide": "views['2'].slideInAction.selectedSlide.value"
+              }
+            }
+          },
+          "initial": {
+            "default-attrs": {
+              "COMP_IMAGE": {
+                "function-name": "createCompImagePath",
+                "params": {
+                  "embedableResources": "views['2'].treeContentXMLImages.value"
+                }
+              },
+              "CROP_DATA": {
+                "function-name": "extractSingleParamVal",
+                "params": {
+                  "embedableResources": "views['2'].treeContentXMLImages.value"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "4": {
+      "components": {
+        "2": {
+          "initial": {
+            "default-attrs": {
+              "PARTIAL_SLIDES_DATA": {
+                "function-name": "getUpdatedSlideData",
+                "params": {
+                  "selectedSlide": "views['2'].slideInAction.selectedSlide.value",
+                  "imgPath": "views['3'].updatedSlideData.path"
+                }
               }
             }
           }
