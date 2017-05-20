@@ -178,8 +178,8 @@
                             "id": "2.1.1",
                             "label": "Slide in Action",
                             "desc": {
-                                "basic": "Index of the slide in which the audio is to be inserted.",
-                                "detailed": "Index of the slide on which the audio has to be inserted is to be mentioned here."
+                                "basic": "Index of the slide in which image will be cropped.",
+                                "detailed": "Index of the slide in which the image will be cropped is to be mentioned here."
                             },
                             "subscribeEvents": [
                                 {
@@ -220,7 +220,7 @@
                             "label": "Mode of Use",
                             "desc": {
                                 "basic": "Mode in which component will be used.",
-                                "detailed": ""
+                                "detailed": "Here we select radio for appropriate component on the basis of caption in the image which will be cropped."
                             },
                             "itemRenderer": "Radio",
                             "rendererProperties": {
@@ -247,7 +247,7 @@
                             "label": "Image to be cropped",
                             "desc": {
                                 "basic": "Upload image which will be cropped.",
-                                "detailed": ""
+                                "detailed": "Upload image which will be cropped."
                             },
                             "itemRenderer": "Dropzone",
                             "itemType": "leaf",
@@ -263,7 +263,7 @@
                             "label": "Image Configuration",
                             "desc": {
                                 "basic": "Upload an XML having configuration for Image",
-                                "detailed": ""
+                                "detailed": "Upload an XML having position and dimension of the image in the slide which need to be cropped."
                             },
                             "itemRenderer": "Dropzone",
                             "itemType": "leaf",
@@ -278,8 +278,8 @@
                             "id": "2.2.4",
                             "label": "Image Border Configuration",
                             "desc": {
-                                "basic": "",
-                                "detailed": ""
+                                "basic": "Input a JSON to show the border on image selection.",
+                                "detailed": "Input a JSON having position and dimension of the border which need to show on image selection."
                             },
                             "itemRenderer": "TextBox",
                             "itemType": "leaf",
@@ -300,8 +300,8 @@
                             "id": "2.2.5",
                             "label": "Caption Border Configuration",
                             "desc": {
-                                "basic": "",
-                                "detailed": ""
+                                "basic": "Input a JSON to show crop place holders on image.",
+                                "detailed": "Input a JSON having position and dimension of the crop place holders on image which to be cropped."
                             },
                             "itemRenderer": "TextBox",
                             "itemType": "leaf",
