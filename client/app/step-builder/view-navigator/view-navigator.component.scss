@@ -17,8 +17,8 @@
             height: 40px;
             content: counter(step);
             counter-increment: step;
-            line-height: 30px;
-            border: 5px solid $progressbar-connector;
+            line-height: 32px;
+            border: 4px solid $progressbar-connector;
             display: block;
             text-align: center;
             margin: 0 auto 10px auto;

@@ -3,16 +3,20 @@
 p {
   margin-bottom: 0.5rem;
   &.ViewHeading {
-    font-size: 2.2rem;
+    font-size: 2rem;
+    font-weight: 400;
   }
   &.PanelHeading {
-    font-size: 2rem;
+    font-size: 1.75rem;
+    font-weight: 400;
   }
   &.ElementHeading {
     font-size: 1.25rem;
+    font-weight: 400;
   }
   &.Description {
     font-size: 1rem;
     margin-bottom: 1.5rem;
+    font-weight: 400;
   }
 }

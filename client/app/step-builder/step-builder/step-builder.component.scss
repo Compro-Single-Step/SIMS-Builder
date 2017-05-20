@@ -27,9 +27,8 @@
       border: none;
       color:$pure-white;
       font-size: 25px;
-      border: 1px solid transparent;
       &:hover{
-        border: 1px solid $pure-white;
+        color: $gray-semi-lighter;
       }
     }
     .seperator{
