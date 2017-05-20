@@ -82,7 +82,7 @@
                         "hostparam": {
                             "function-name": "getSubCompHostParam",
                             "params": {
-                                "selectedSlide": "views['2'].slideInAction.selectedSlide.value"
+                                "selectedSlide": "views['2'].slideInAction.selectedSlide.value.data"
                             }
                         }
                     }
@@ -120,7 +120,7 @@
                         "hostparam": {
                             "function-name": "getSubCompHostParam",
                             "params": {
-                                "selectedSlide": "views['2'].slideInAction.selectedSlide.value"
+                                "selectedSlide": "views['2'].slideInAction.selectedSlide.value.data"
                             }
                         }
                     }
@@ -134,7 +134,7 @@
                         "hostparam": {
                             "function-name": "getSubCompHostParam",
                             "params": {
-                                "selectedSlide": "views['2'].slideInAction.selectedSlide.value"
+                                "selectedSlide": "views['2'].slideInAction.selectedSlide.value.data"
                             }
                         }
                     },
@@ -162,7 +162,7 @@
                         "hostparam": {
                             "function-name": "getSubCompHostParam",
                             "params": {
-                                "selectedSlide": "views['2'].slideInAction.selectedSlide.value"
+                                "selectedSlide": "views['2'].slideInAction.selectedSlide.value.data"
                             }
                         }
                     },
@@ -201,14 +201,14 @@
                             "PARTIAL_SLIDES_DATA": {
                                 "function-name": "getUpdatedSlideData",
                                 "params": {
-                                    "selectedSlide": "views['2'].slideInAction.selectedSlide.value",
+                                    "selectedSlide": "views['2'].slideInAction.selectedSlide.value.data",
                                     "imgPath": "views['3'].updatedSlideImage.path"
                                 }
                             },
                             "SELECTED_SLIDE": {
                                 "function-name": "extractSingleParamVal",
                                 "params": {
-                                    "selectedSlide": "views['2'].slideInAction.selectedSlide.value"
+                                    "selectedSlide": "views['2'].slideInAction.selectedSlide.value.data"
                                 }
                             }
                         }
@@ -217,7 +217,7 @@
                         "SELECTED_SLIDE": {
                             "function-name": "extractSingleParamVal",
                             "params": {
-                                "selectedSlide": "views['2'].slideInAction.selectedSlide.value"
+                                "selectedSlide": "views['2'].slideInAction.selectedSlide.value.data"
                             }
                         }
                     }
@@ -227,7 +227,7 @@
                         "hostparam": {
                             "function-name": "getSubCompHostParam",
                             "params": {
-                                "selectedSlide": "views['2'].slideInAction.selectedSlide.value"
+                                "selectedSlide": "views['2'].slideInAction.selectedSlide.value.data"
                             }
                         }
                     },
@@ -253,7 +253,7 @@
                         "hostparam": {
                             "function-name": "getSubCompHostParam",
                             "params": {
-                                "selectedSlide": "views['2'].slideInAction.selectedSlide.value"
+                                "selectedSlide": "views['2'].slideInAction.selectedSlide.value.data"
                             }
                         }
                     },
@@ -284,7 +284,7 @@
                             "PARTIAL_SLIDES_DATA": {
                                 "function-name": "getUpdatedSlideData",
                                 "params": {
-                                    "selectedSlide": "views['2'].slideInAction.selectedSlide.value",
+                                    "selectedSlide": "views['2'].slideInAction.selectedSlide.value.data",
                                     "imgPath": "views['3'].updatedSlideImage.path"
                                 }
                             }
