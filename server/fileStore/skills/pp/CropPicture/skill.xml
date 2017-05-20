@@ -29,7 +29,12 @@
 					<events>
 						<event id="5122" desc="Picturetoolsformat_size_crop_crop">
 							<validate followup="2">
+								{{#ifCond MODE "with-caption"}}
 								<comp id="5"/>
+								{{/ifCond}}
+								{{#ifCond MODE "without-caption"}}
+								<comp id="4"/>
+								{{/ifCond}}
 								<comp id="2"/>
 							</validate>
 						</event>
