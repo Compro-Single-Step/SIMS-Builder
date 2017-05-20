@@ -69,7 +69,7 @@
 					</initialattrs>
 				</comp>
 				{{#ifCond MODE "with-caption"}}
-				<comp id="5" mode="new" subcomp="true" hostid="2" hostparam="">
+				<comp id="5" mode="new" subcomp="true" hostid="2" hostparam="" userDefined="hostparam">
 					<initialattrs>
 						<attr name="COMP_IMAGE" userDefined="true"/>
 						<attr name="XML_PATH" userDefined="true"/>
@@ -91,7 +91,7 @@
 				</comp>
 				{{/ifCond}}
 				{{#ifCond MODE "without-caption"}}
-				<comp id="4" mode="new" subcomp="true" hostid="2" hostparam="">
+				<comp id="4" mode="new" subcomp="true" hostid="2" hostparam="" userDefined="hostparam">
 					<initialattrs>
 						<attr name="IMG_PH_MODE" value="WORK"/>
 						<attr name="COMP_IMAGE" userDefined="true"/>
@@ -120,7 +120,7 @@
 					</initialattrs>
 				</comp>
 				{{#ifCond MODE "without-caption"}}
-				<comp id="4" mode="edit" subcomp="true" hostid="2" hostparam="">
+				<comp id="4" mode="edit" subcomp="true" hostid="2" hostparam="" userDefined="hostparam">
 					<initialattrs>
 						<attr name="ENABLE_CROP" value="true"/>
 						<attr name="CROP_DATA" userDefined="true"/>
@@ -138,7 +138,7 @@
 				</comp>
 		        {{/ifCond}}
 				{{#ifCond MODE "with-caption"}}
-				<comp id="5" mode="edit" subcomp="true" hostid="2" hostparam="">
+				<comp id="5" mode="edit" subcomp="true" hostid="2" hostparam="" userDefined="hostparam">
 					<initialattrs>
 						<attr name="IMAGE_DATA_JSON" userDefined="true"/>
 						<attr name="ENABLE_CROP" value="true"/>
@@ -188,7 +188,7 @@
 					</events>
 				</comp>
 				{{#ifCond MODE "without-caption"}}
-				<comp id="4" mode="edit" subcomp="true" hostid="2" hostparam="">
+				<comp id="4" mode="edit" subcomp="true" hostid="2" hostparam="" userDefined="hostparam">
 					<initialattrs>
 						<attr name="COMP_IMAGE" userDefined="true"/>
 						<attr name="ENABLE_CROP" value="true"/>
@@ -204,7 +204,7 @@
 				</comp>
 		        {{/ifCond}}
 				{{#ifCond MODE "with-caption"}}
-				<comp id="5" mode="edit" subcomp="true" hostid="2" hostparam="">
+				<comp id="5" mode="edit" subcomp="true" hostid="2" hostparam="" userDefined="hostparam">
 					<initialattrs>
 						<attr name="COMP_IMAGE" userDefined="true"/>
 						<attr name="CROP_DATA" userDefined="true"/>

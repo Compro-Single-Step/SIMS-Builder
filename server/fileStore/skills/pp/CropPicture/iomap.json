@@ -203,7 +203,7 @@
                     "initial": {
                         "default-attrs": {
                             "PARTIAL_SLIDES_DATA": {
-                                "function-name": "getUpdatedSlideData",
+                                "function-name": "getUpdatedThumbnailData",
                                 "params": {
                                     "selectedSlide": "views['2'].slideInAction.selectedSlide.value",
                                     "imgPath": "views['3'].updatedSlideImage.path"
