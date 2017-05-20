@@ -226,11 +226,11 @@
                             "rendererProperties": {
                                 "itemList": [
                                 {
-                                    "value":"1",
+                                    "value":"without-caption",
                                     "label":"Use Image Place Holder component."
                                 },
                                 {
-                                    "value":"2",
+                                    "value":"with-caption",
                                     "label":"Use Image with Caption Place Holder component."
                                 }                  
                                 ]

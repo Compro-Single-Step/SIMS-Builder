@@ -149,10 +149,12 @@
                         }
                     },
                     "final": {
-                        "CROP_DATA": {
-                            "function-name": "extractSingleParamVal",
-                            "params": {
-                                "val": "views['2'].croppedViewImageConfiguration.value"
+                        "default-attrs": {
+                            "CROP_DATA": {
+                                "function-name": "extractSingleParamVal",
+                                "params": {
+                                    "val": "views['2'].croppedViewImageConfiguration.value"
+                                }
                             }
                         }
                     }
@@ -183,10 +185,12 @@
                         }
                     },
                     "final": {
-                        "CROP_DATA": {
-                            "function-name": "extractSingleParamVal",
-                            "params": {
-                                "val": "views['2'].croppedViewImageConfiguration.value"
+                        "default-attrs": {
+                            "CROP_DATA": {
+                                "function-name": "extractSingleParamVal",
+                                "params": {
+                                    "val": "views['2'].croppedViewImageConfiguration.value"
+                                }
                             }
                         }
                     }
@@ -201,7 +205,7 @@
                             "PARTIAL_SLIDES_DATA": {
                                 "function-name": "getUpdatedSlideData",
                                 "params": {
-                                    "selectedSlide": "views['2'].slideInAction.selectedSlide.value.data",
+                                    "selectedSlide": "views['2'].slideInAction.selectedSlide.value",
                                     "imgPath": "views['3'].updatedSlideImage.path"
                                 }
                             },
@@ -214,10 +218,12 @@
                         }
                     },
                     "final": {
-                        "SELECTED_SLIDE": {
-                            "function-name": "extractSingleParamVal",
-                            "params": {
-                                "selectedSlide": "views['2'].slideInAction.selectedSlide.value.data"
+                        "default-attrs": {
+                            "SELECTED_SLIDE": {
+                                "function-name": "extractSingleParamVal",
+                                "params": {
+                                    "selectedSlide": "views['2'].slideInAction.selectedSlide.value.data"
+                                }
                             }
                         }
                     }
@@ -291,6 +297,14 @@
                         }
                     }
                 }
+            }
+        }
+    },
+    "templateRulesData": {
+        "MODE": {
+            "function-name": "extractSingleParamVal",
+            "params": {
+                "skillmode": "views['2'].compName.value"
             }
         }
     }

@@ -21,6 +21,6 @@ module.exports = class CropPicture extends PPTBaseSkill {
     }
 
     feSwitchComponent(radioValue, dependantModel) {
-        dependantModel.disabled = radioValue === "1" ? true : false;
+        dependantModel.disabled = radioValue === "without-caption" ? true : false;
     }
 }
