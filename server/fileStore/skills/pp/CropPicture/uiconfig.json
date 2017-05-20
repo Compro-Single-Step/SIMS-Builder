@@ -382,7 +382,7 @@
                             "subscribeEvents": [
                                 {
                                     "eventId": "IMAGE_PH_COMP_UPDATE",
-                                    "modelReference": "{{views.1.cropViewImageBorderConfiguration}}",
+                                    "modelReference": "{{views.2.cropViewImageBorderConfiguration}}",
                                     "rule": "feSwitchComponent"
                                 }
                             ],
