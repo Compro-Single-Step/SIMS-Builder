@@ -118,127 +118,6 @@
                 },
                 {
                     "id": "1.3",
-                    "label": "Image Place Holder",
-                    "itemRenderer": "Panel",
-                    "itemType": "child",
-                    "tags": [
-                        {
-                            "compName": "SIMS.Components.PPT.ImagePlaceHolder",
-                            "type": "default"
-                        }
-                    ],
-                    "rendererProperties": {
-                        "collapsable": true,
-                        "optionalItems": true
-                    },
-                    "items": [
-                        {
-                            "id": "1.3.1",
-                            "label": "Mode of Use",
-                            "desc": {
-                                "basic": "Mode in which component will be used.",
-                                "detailed": ""
-                            },
-                            "itemRenderer": "Radio",
-                            "rendererProperties": {
-                                "itemList": [
-                                {
-                                    "value":"1",
-                                    "label":"Use Image Place Holder component."
-                                },
-                                {
-                                    "value":"2",
-                                    "label":"Use Image with Caption Place Holder component."
-                                }                  
-                                ]
-                            },
-                            "itemType": "leaf",
-                            "emitEvents": [
-                                "IMAGE_PH_COMP_UPDATE"
-                            ],
-                            "mandatory": true,
-                            "val": "{{views.1.compName}}"
-                        },
-                        {
-                            "id": "1.3.2",
-                            "label": "Image to be cropped",
-                            "desc": {
-                                "basic": "Upload image which will be cropped.",
-                                "detailed": ""
-                            },
-                            "itemRenderer": "Dropzone",
-                            "itemType": "leaf",
-                            "rendererProperties": {
-                                "dataType": "img",
-                                "placeHolder": "Drop image here to upload"
-                            },
-                            "mandatory": true,
-                            "val": "{{views.1.cropImage}}"
-                        },
-                        {
-                            "id": "1.3.3",
-                            "label": "Image Configuration",
-                            "desc": {
-                                "basic": "Upload an XML having configuration for Image",
-                                "detailed": ""
-                            },
-                            "itemRenderer": "Dropzone",
-                            "itemType": "leaf",
-                            "rendererProperties": {
-                                "dataType": "xml",
-                                "placeHolder": "Drop xml here to upload"
-                            },
-                            "mandatory": true,
-                            "val": "{{views.1.imageConfig}}"
-                        },
-                        {
-                            "id": "1.3.4",
-                            "label": "Image Border Configuration",
-                            "desc": {
-                                "basic": "",
-                                "detailed": ""
-                            },
-                            "itemRenderer": "TextBox",
-                            "itemType": "leaf",
-                            "mandatory": false,
-                            "rendererProperties": {
-                                "dataType": "string"
-                            },
-                            "subscribeEvents": [
-                                {
-                                    "eventId": "IMAGE_PH_COMP_UPDATE",
-                                    "modelReference": "{{views.1.imgBorderConfig}}",
-                                    "rule": "feSwitchComponent"
-                                }
-                            ],
-                            "val": "{{views.1.imgBorderConfig}}"
-                        },
-                        {
-                            "id": "1.3.5",
-                            "label": "Caption Border Configuration",
-                            "desc": {
-                                "basic": "",
-                                "detailed": ""
-                            },
-                            "itemRenderer": "TextBox",
-                            "itemType": "leaf",
-                            "mandatory": false,
-                            "rendererProperties": {
-                                "dataType": "string"
-                            },
-                            "subscribeEvents": [
-                                {
-                                    "eventId": "IMAGE_PH_COMP_UPDATE",
-                                    "modelReference": "{{views.1.imgCaptionBorderConfig}}",
-                                    "rule": "feSwitchComponent"
-                                }
-                            ],
-                            "val": "{{views.1.imgCaptionBorderConfig}}"
-                        }
-                    ]
-                },
-                {
-                    "id": "1.4",
                     "label": "Taskbar",
                     "itemRenderer": "Panel",
                     "itemType": "child",
@@ -254,7 +133,7 @@
                     },
                     "items": [
                         {
-                            "id": "1.4.1",
+                            "id": "1.3.1",
                             "label": "Taskbar Preview Image",
                             "desc": {
                                 "basic": "Upload taskbar preview image.",
@@ -281,6 +160,168 @@
             "items": [
                 {
                     "id": "2.1",
+                    "label": "Slide View",
+                    "itemRenderer": "Panel",
+                    "itemType": "child",
+                    "tags": [
+                        {
+                            "compName": "SIMS.Components.PPT.SlideView",
+                            "type": "default"
+                        }
+                    ],
+                    "rendererProperties": {
+                        "collapsable": true,
+                        "optionalItems": true
+                    },
+                    "items": [
+                        {
+                            "id": "2.1.1",
+                            "label": "Slide in Action",
+                            "desc": {
+                                "basic": "Index of the slide in which the audio is to be inserted.",
+                                "detailed": "Index of the slide on which the audio has to be inserted is to be mentioned here."
+                            },
+                            "subscribeEvents": [
+                                {
+                                    "eventId": "SLIDE_VIEW_DATA_UPDATED",
+                                    "modelReference": "{{views.2.slideInAction}}",
+                                    "rule": "configureSlidesDropdown"
+                                }
+                            ],
+                            "itemRenderer": "Dropdown",
+                            "rendererProperties": {
+                                "dynamicMode": true,
+                                "itemList": "{{views.2.slideInAction.options}}"
+                            },
+                            "itemType": "leaf",
+                            "mandatory": true,
+                            "val": "{{views.2.slideInAction.selectedSlide}}"
+                        }
+                    ]
+                },
+                {
+                    "id": "2.2",
+                    "label": "Image Place Holder",
+                    "itemRenderer": "Panel",
+                    "itemType": "child",
+                    "tags": [
+                        {
+                            "compName": "SIMS.Components.PPT.ImagePlaceHolder",
+                            "type": "default"
+                        }
+                    ],
+                    "rendererProperties": {
+                        "collapsable": true,
+                        "optionalItems": true
+                    },
+                    "items": [
+                        {
+                            "id": "2.2.1",
+                            "label": "Mode of Use",
+                            "desc": {
+                                "basic": "Mode in which component will be used.",
+                                "detailed": ""
+                            },
+                            "itemRenderer": "Radio",
+                            "rendererProperties": {
+                                "itemList": [
+                                {
+                                    "value":"1",
+                                    "label":"Use Image Place Holder component."
+                                },
+                                {
+                                    "value":"2",
+                                    "label":"Use Image with Caption Place Holder component."
+                                }                  
+                                ]
+                            },
+                            "itemType": "leaf",
+                            "emitEvents": [
+                                "IMAGE_PH_COMP_UPDATE"
+                            ],
+                            "mandatory": true,
+                            "val": "{{views.2.compName}}"
+                        },
+                        {
+                            "id": "2.2.2",
+                            "label": "Image to be cropped",
+                            "desc": {
+                                "basic": "Upload image which will be cropped.",
+                                "detailed": ""
+                            },
+                            "itemRenderer": "Dropzone",
+                            "itemType": "leaf",
+                            "rendererProperties": {
+                                "dataType": "img",
+                                "placeHolder": "Drop image here to upload"
+                            },
+                            "mandatory": true,
+                            "val": "{{views.2.cropImage}}"
+                        },
+                        {
+                            "id": "2.2.3",
+                            "label": "Image Configuration",
+                            "desc": {
+                                "basic": "Upload an XML having configuration for Image",
+                                "detailed": ""
+                            },
+                            "itemRenderer": "Dropzone",
+                            "itemType": "leaf",
+                            "rendererProperties": {
+                                "dataType": "xml",
+                                "placeHolder": "Drop xml here to upload"
+                            },
+                            "mandatory": true,
+                            "val": "{{views.2.imageConfig}}"
+                        },
+                        {
+                            "id": "2.2.4",
+                            "label": "Image Border Configuration",
+                            "desc": {
+                                "basic": "",
+                                "detailed": ""
+                            },
+                            "itemRenderer": "TextBox",
+                            "itemType": "leaf",
+                            "mandatory": false,
+                            "rendererProperties": {
+                                "dataType": "string"
+                            },
+                            "subscribeEvents": [
+                                {
+                                    "eventId": "IMAGE_PH_COMP_UPDATE",
+                                    "modelReference": "{{views.2.imgBorderConfig}}",
+                                    "rule": "feSwitchComponent"
+                                }
+                            ],
+                            "val": "{{views.2.imgBorderConfig}}"
+                        },
+                        {
+                            "id": "2.2.5",
+                            "label": "Caption Border Configuration",
+                            "desc": {
+                                "basic": "",
+                                "detailed": ""
+                            },
+                            "itemRenderer": "TextBox",
+                            "itemType": "leaf",
+                            "mandatory": false,
+                            "rendererProperties": {
+                                "dataType": "string"
+                            },
+                            "subscribeEvents": [
+                                {
+                                    "eventId": "IMAGE_PH_COMP_UPDATE",
+                                    "modelReference": "{{views.2.imgCaptionBorderConfig}}",
+                                    "rule": "feSwitchComponent"
+                                }
+                            ],
+                            "val": "{{views.2.imgCaptionBorderConfig}}"
+                        }
+                    ]
+                },
+                {
+                    "id": "2.2",
                     "label": "Crop View Settings",
                     "itemRenderer": "Panel",
                     "itemType": "child",
@@ -296,7 +337,7 @@
                     },
                     "items": [
                         {
-                            "id": "2.1.1",
+                            "id": "2.2.1",
                             "label": "Crop View Image Configuration",
                             "desc": {
                                 "basic": "A JSON having the configuration for the border that appears on the image while cropping.",
@@ -311,7 +352,7 @@
                             "val": "{{views.2.cropViewImageConfiguration}}"
                         },
                         {
-                            "id": "2.1.2",
+                            "id": "2.2.2",
                             "label": "Cropped View Image Configuration",
                             "desc": {
                                 "basic": "A JSON having the configuration for the cropped image position and dimensions.",
@@ -326,7 +367,7 @@
                             "val": "{{views.2.croppedViewImageConfiguration}}"
                         },
                         {
-                            "id": "2.1.3",
+                            "id": "2.2.3",
                             "label": "Crop View Image Border Configuration",
                             "desc": {
                                 "basic": "A JSON having the configuration for the image position and dimensions.",

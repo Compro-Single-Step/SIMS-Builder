@@ -114,6 +114,24 @@
 						<attr name="HIGHLIGHT_CROP_OPTION" value="true"/>
 					</initialattrs>
 				</comp>
+				{{#ifCond MODE "without-caption"}}
+				<comp id="4" mode="edit" subcomp="true" hostid="2" hostparam="">
+					<initialattrs>
+						<attr name="ENABLE_CROP" value="true"/>
+						<attr name="CROP_DATA" userDefined="true"/>
+					</initialattrs>
+					<finalattrs>
+						<attr name="CROP_DATA" userDefined="true"/>
+					</finalattrs>
+					<events>
+						<event id="15" desc="IMAGE_CROPPED">
+							<validate followup="3">
+								<comp id="4"/>
+							</validate>
+						</event>
+					</events>
+				</comp>
+		        {{/ifCond}}
 				{{#ifCond MODE "with-caption"}}
 				<comp id="5" mode="edit" subcomp="true" hostid="2" hostparam="">
 					<initialattrs>
@@ -134,24 +152,6 @@
 					</events>
 				</comp>
 				{{/ifCond}}
-				{{#ifCond MODE "without-caption"}}
-				<comp id="4" mode="edit" subcomp="true" hostid="2" hostparam="">
-					<initialattrs>
-						<attr name="ENABLE_CROP" value="true"/>
-						<attr name="CROP_DATA" userDefined="true"/>
-					</initialattrs>
-					<finalattrs>
-						<attr name="CROP_DATA" userDefined="true"/>
-					</finalattrs>
-					<events>
-						<event id="15" desc="IMAGE_CROPPED">
-							<validate followup="3">
-								<comp id="4"/>
-							</validate>
-						</event>
-					</events>
-				</comp>
-		        {{/ifCond}}
 			</comps>
 		</state>
 		<state id="3" desc="Loading state when Crop is clicked" txt="1">
@@ -182,22 +182,6 @@
 						</event>
 					</events>
 				</comp>
-				{{#ifCond MODE "with-caption"}}
-				<comp id="5" mode="edit" subcomp="true" hostid="2" hostparam="">
-					<initialattrs>
-						<attr name="COMP_IMAGE" userDefined="true"/>
-						<attr name="CROP_DATA" userDefined="true"/>
-						<attr name="CAPTION_TEXT_JSON" value="{&quot;type&quot;:&quot;TextEditorControl&quot;}"/>
-					</initialattrs>
-					<events>
-						<event id="17" desc="Escape Clicked">
-							<validate followup="4">
-								<comp id="2"/>
-							</validate>
-						</event>
-					</events>
-				</comp>
-				{{/ifCond}}
 				{{#ifCond MODE "without-caption"}}
 				<comp id="4" mode="edit" subcomp="true" hostid="2" hostparam="">
 					<initialattrs>
@@ -214,6 +198,22 @@
 					</events>
 				</comp>
 		        {{/ifCond}}
+				{{#ifCond MODE "with-caption"}}
+				<comp id="5" mode="edit" subcomp="true" hostid="2" hostparam="">
+					<initialattrs>
+						<attr name="COMP_IMAGE" userDefined="true"/>
+						<attr name="CROP_DATA" userDefined="true"/>
+						<attr name="CAPTION_TEXT_JSON" value="{&quot;type&quot;:&quot;TextEditorControl&quot;}"/>
+					</initialattrs>
+					<events>
+						<event id="17" desc="Escape Clicked">
+							<validate followup="4">
+								<comp id="2"/>
+							</validate>
+						</event>
+					</events>
+				</comp>
+				{{/ifCond}}
 			</comps>
 		</state>
 		<state id="4" desc="Final State Load" txt="2">

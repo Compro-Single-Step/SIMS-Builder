@@ -67,13 +67,13 @@
                             "COMP_IMAGE": {
                                 "function-name": "createResourcePath",
                                 "params": {
-                                    "path": "key name is ok"
+                                    "path": "views['2'].cropImage.path"
                                 }
                             },
                             "XML_PATH": {
                                 "function-name": "createResourcePath",
                                 "params": {
-                                    "path": "key name is ok"
+                                    "path": "views['2'].imageConfig.path"
                                 }
                             }
                         }
@@ -82,7 +82,7 @@
                         "hostparam": {
                             "function-name": "getSubCompHostParam",
                             "params": {
-                                "selectedSlide": "views['1'].slideInAction.selectedSlide.value"
+                                "selectedSlide": "views['2'].slideInAction.selectedSlide.value"
                             }
                         }
                     }
@@ -93,25 +93,25 @@
                             "COMP_IMAGE": {
                                 "function-name": "createResourcePath",
                                 "params": {
-                                    "path": "views['1'].taskbarPreviewImage.path"
+                                    "path": "views['2'].cropImage.path"
                                 }
                             },
                             "XML_PATH": {
                                 "function-name": "createResourcePath",
                                 "params": {
-                                    "path": "views['1'].documentTitle.value"
+                                    "path": "views['2'].imageConfig.path"
                                 }
                             },
                             "IMAGE_DATA_JSON": {
                                 "function-name": "extractSingleParamVal",
                                 "params": {
-                                    "DocTitle": "views['1'].documentTitle.value"
+                                    "DocTitle": "views['2'].imgBorderConfig.value"
                                 }
                             },
                             "CAPTION_DATA_JSON": {
                                 "function-name": "extractSingleParamVal",
                                 "params": {
-                                    "DocTitle": "views['1'].documentTitle.value"
+                                    "DocTitle": "views['2'].imgCaptionBorderConfig.value"
                                 }
                             }
                         }
@@ -120,7 +120,7 @@
                         "hostparam": {
                             "function-name": "getSubCompHostParam",
                             "params": {
-                                "selectedSlide": "views['1'].slideInAction.selectedSlide.value"
+                                "selectedSlide": "views['2'].slideInAction.selectedSlide.value"
                             }
                         }
                     }
@@ -143,7 +143,7 @@
                             "CROP_DATA": {
                                 "function-name": "extractSingleParamVal",
                                 "params": {
-                                    "embedableResources": "views['2'].treeContentXMLImages.value"
+                                    "val": "views['2'].cropViewImageConfiguration.value"
                                 }
                             }
                         }
@@ -152,7 +152,7 @@
                         "CROP_DATA": {
                             "function-name": "extractSingleParamVal",
                             "params": {
-                                "embedableResources": "views['2'].treeContentXMLImages.value"
+                                "val": "views['2'].croppedViewImageConfiguration.value"
                             }
                         }
                     }
@@ -171,13 +171,13 @@
                             "IMAGE_DATA_JSON": {
                                 "function-name": "extractSingleParamVal",
                                 "params": {
-                                    "embedableResources": "views['2'].treeContentXMLImages.value"
+                                    "val": "views['2'].cropViewImageBorderConfiguration.value"
                                 }
                             },
                             "CROP_DATA": {
                                 "function-name": "extractSingleParamVal",
                                 "params": {
-                                    "embedableResources": "views['2'].treeContentXMLImages.value"
+                                    "val": "views['2'].cropViewImageConfiguration.value"
                                 }
                             }
                         }
@@ -186,7 +186,7 @@
                         "CROP_DATA": {
                             "function-name": "extractSingleParamVal",
                             "params": {
-                                "embedableResources": "views['2'].treeContentXMLImages.value"
+                                "val": "views['2'].croppedViewImageConfiguration.value"
                             }
                         }
                     }
@@ -201,14 +201,14 @@
                             "PARTIAL_SLIDES_DATA": {
                                 "function-name": "getUpdatedSlideData",
                                 "params": {
-                                    "selectedSlide": "views['1'].slideInAction.selectedSlide.value",
+                                    "selectedSlide": "views['2'].slideInAction.selectedSlide.value",
                                     "imgPath": "views['3'].updatedSlideImage.path"
                                 }
                             },
                             "SELECTED_SLIDE": {
                                 "function-name": "extractSingleParamVal",
                                 "params": {
-                                    "selectedSlide": "views['1'].slideInAction.selectedSlide.value"
+                                    "selectedSlide": "views['2'].slideInAction.selectedSlide.value"
                                 }
                             }
                         }
@@ -217,7 +217,7 @@
                         "SELECTED_SLIDE": {
                             "function-name": "extractSingleParamVal",
                             "params": {
-                                "selectedSlide": "views['1'].slideInAction.selectedSlide.value"
+                                "selectedSlide": "views['2'].slideInAction.selectedSlide.value"
                             }
                         }
                     }
@@ -227,7 +227,7 @@
                         "hostparam": {
                             "function-name": "getSubCompHostParam",
                             "params": {
-                                "selectedSlide": "views['1'].slideInAction.selectedSlide.value"
+                                "selectedSlide": "views['2'].slideInAction.selectedSlide.value"
                             }
                         }
                     },
@@ -253,7 +253,7 @@
                         "hostparam": {
                             "function-name": "getSubCompHostParam",
                             "params": {
-                                "selectedSlide": "views['1'].slideInAction.selectedSlide.value"
+                                "selectedSlide": "views['2'].slideInAction.selectedSlide.value"
                             }
                         }
                     },
@@ -284,7 +284,7 @@
                             "PARTIAL_SLIDES_DATA": {
                                 "function-name": "getUpdatedSlideData",
                                 "params": {
-                                    "selectedSlide": "views['1'].slideInAction.selectedSlide.value",
+                                    "selectedSlide": "views['2'].slideInAction.selectedSlide.value",
                                     "imgPath": "views['3'].updatedSlideImage.path"
                                 }
                             }

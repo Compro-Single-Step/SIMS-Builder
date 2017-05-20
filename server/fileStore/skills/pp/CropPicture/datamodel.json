@@ -19,6 +19,20 @@
                     "value": ""
                 }
             },
+            "taskbarPreviewImage": {
+                "displayName": "",
+                "path": ""
+            }
+        },
+        "2": {
+            "slideInAction": {
+                "options": {
+                    "value": []
+                },
+                "selectedSlide": {
+                    "value": ""
+                }
+            },
             "compName": {
                 "value": ""
             },
@@ -38,12 +52,6 @@
                 "value": "",
                 "disabled": true
             },
-            "taskbarPreviewImage": {
-                "displayName": "",
-                "path": ""
-            }
-        },
-        "2": {
             "cropViewImageConfiguration": {
                 "value": ""
             },
