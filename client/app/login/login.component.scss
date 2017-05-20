@@ -54,7 +54,7 @@
 }
 .loginText{
   text-align: center;
-  font-weight: bold;
+  font-weight: 600;
   font-size: 25px;
 }
 .sectionlogin{
@@ -67,7 +67,8 @@
   color: black;
 }
 .loginBackground{
-  background: radial-gradient(ellipse at center, rgba(56, 62, 75, 0.8) 0%, rgba(56, 62, 75, 0.88) 44%, rgba(56, 62, 75, 0.97) 100%);
+  //background: radial-gradient(ellipse at center, rgba(56, 62, 75, 0.8) 0%, rgba(56, 62, 75, 0.88) 44%, rgba(56, 62, 75, 0.97) 100%);
+  background-color: $deepdark-blue;
   width: 100%;
   height: 100%;
 }
@@ -83,6 +84,7 @@
   padding: 0;
 }
 .leftSection{
+  border-right-style: ridge;
   .simsBuilderIconAndText{
    .InfoHead{
     color: $theme-blue;
@@ -109,6 +111,9 @@
   }
 }
 .rightSection{
+  .loginHeader{
+    color: $gray-dark;
+  }
   .login-form {
     margin-top: 4.5rem;
     .formRow{
@@ -116,6 +121,7 @@
       .icon{
         font-size: 20px;
         padding: 5px 10px 0px 10px;
+        color: $gray-semi-light;
       }
       .form-control {
         font-size: 14px;
