@@ -3,6 +3,10 @@ const PPTBaseSkill = require("../common/ppSkill"),
 
 module.exports = class CropPicture extends PPTBaseSkill {
 
+    init(attrObj) {
+        return super.init(attrObj.stepUIState.views[1].slideViewData.path, attrObj.dbFilestoreMgr)
+    }
+
     getSubCompHostParam(skillParams) {
         var selectedSlide = skillParams.paramsObj.selectedSlide.data,
             attrValue = '{"Mode":"ImagePlaceHolder", "HostParams":{"slide":' + selectedSlide + '}}';
