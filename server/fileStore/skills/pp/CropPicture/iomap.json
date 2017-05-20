@@ -82,7 +82,7 @@
                         "hostparam": {
                             "function-name": "getSubCompHostParam",
                             "params": {
-                                "selectedSlide": "views['2'].slideInAction.selectedSlide.value.data"
+                                "selectedSlide": "views['2'].slideInAction.selectedSlide.value"
                             }
                         }
                     }
@@ -120,7 +120,7 @@
                         "hostparam": {
                             "function-name": "getSubCompHostParam",
                             "params": {
-                                "selectedSlide": "views['2'].slideInAction.selectedSlide.value.data"
+                                "selectedSlide": "views['2'].slideInAction.selectedSlide.value"
                             }
                         }
                     }
@@ -134,7 +134,7 @@
                         "hostparam": {
                             "function-name": "getSubCompHostParam",
                             "params": {
-                                "selectedSlide": "views['2'].slideInAction.selectedSlide.value.data"
+                                "selectedSlide": "views['2'].slideInAction.selectedSlide.value"
                             }
                         }
                     },
@@ -162,7 +162,7 @@
                         "hostparam": {
                             "function-name": "getSubCompHostParam",
                             "params": {
-                                "selectedSlide": "views['2'].slideInAction.selectedSlide.value.data"
+                                "selectedSlide": "views['2'].slideInAction.selectedSlide.value"
                             }
                         }
                     },
@@ -227,7 +227,7 @@
                         "hostparam": {
                             "function-name": "getSubCompHostParam",
                             "params": {
-                                "selectedSlide": "views['2'].slideInAction.selectedSlide.value.data"
+                                "selectedSlide": "views['2'].slideInAction.selectedSlide.value"
                             }
                         }
                     },
@@ -253,7 +253,7 @@
                         "hostparam": {
                             "function-name": "getSubCompHostParam",
                             "params": {
-                                "selectedSlide": "views['2'].slideInAction.selectedSlide.value.data"
+                                "selectedSlide": "views['2'].slideInAction.selectedSlide.value"
                             }
                         }
                     },
