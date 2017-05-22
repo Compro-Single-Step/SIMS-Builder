@@ -140,7 +140,6 @@
 				{{#ifCond MODE "with-caption"}}
 				<comp id="5" mode="edit" subcomp="true" hostid="2" hostparam="" userDefined="hostparam">
 					<initialattrs>
-						<attr name="IMAGE_DATA_JSON" userDefined="true"/>
 						<attr name="ENABLE_CROP" value="true"/>
 						<attr name="CROP_DATA" userDefined="true"/>
 						<attr name="CAPTION_TEXT_JSON" value="{&quot;type&quot;:&quot;TextEditorControl&quot;}"/>

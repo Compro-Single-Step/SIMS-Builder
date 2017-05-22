@@ -170,12 +170,6 @@
                     },
                     "initial": {
                         "default-attrs": {
-                            "IMAGE_DATA_JSON": {
-                                "function-name": "extractSingleParamVal",
-                                "params": {
-                                    "val": "views['2'].cropViewImageBorderConfiguration.value"
-                                }
-                            },
                             "CROP_DATA": {
                                 "function-name": "extractSingleParamVal",
                                 "params": {

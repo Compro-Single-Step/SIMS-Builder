@@ -57,10 +57,6 @@
             },
             "croppedViewImageConfiguration": {
                 "value": ""
-            },
-            "cropViewImageBorderConfiguration": {
-                "value": "",
-                "disabled": true
             }
         },
         "3": {

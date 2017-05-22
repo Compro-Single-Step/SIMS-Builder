@@ -201,7 +201,7 @@
                 },
                 {
                     "id": "2.2",
-                    "label": "Image Place Holder",
+                    "label": "Config of Image to be Cropped",
                     "itemRenderer": "Panel",
                     "itemType": "child",
                     "tags": [
@@ -220,7 +220,7 @@
                             "label": "Does the picture to be cropped has caption?",
                             "desc": {
                                 "basic": "Mode in which component will be used.",
-                                "detailed": "Here we select radio for appropriate component on the basis of caption in the image which will be cropped."
+                                "detailed": "Mode in which component will be used."
                             },
                             "itemRenderer": "Switch",
                             "itemType": "leaf",
@@ -238,8 +238,8 @@
                             "id": "2.2.2",
                             "label": "Image to be cropped",
                             "desc": {
-                                "basic": "Upload image which will be cropped.",
-                                "detailed": "Upload image which will be cropped."
+                                "basic": "Upload the image file which has to be cropped.",
+                                "detailed": "Upload the image file which has to be cropped."
                             },
                             "itemRenderer": "Dropzone",
                             "itemType": "leaf",
@@ -252,10 +252,10 @@
                         },
                         {
                             "id": "2.2.3",
-                            "label": "Image Configuration",
+                            "label": "Image Position & Dimension",
                             "desc": {
-                                "basic": "Upload an XML having configuration for Image",
-                                "detailed": "Upload an XML having position and dimension of the image in the slide which need to be cropped."
+                                "basic": "Upload an XML having position and dimension of the image which need to be cropped.",
+                                "detailed": "Upload an XML having position and dimension of the image which need to be cropped."
                             },
                             "itemRenderer": "Dropzone",
                             "itemType": "leaf",
@@ -268,10 +268,10 @@
                         },
                         {
                             "id": "2.2.4",
-                            "label": "Image Border Configuration",
+                            "label": "Image Border Position & Dimension",
                             "desc": {
-                                "basic": "Input a JSON to show the border on image selection.",
-                                "detailed": "Input a JSON having position and dimension of the border which need to show on image selection."
+                                "basic": "Input a JSON having position and dimension of the border which appears on image selection.",
+                                "detailed": "Input a JSON having position and dimension of the border which appears on image selection."
                             },
                             "itemRenderer": "TextBox",
                             "itemType": "leaf",
@@ -290,9 +290,9 @@
                         },
                         {
                             "id": "2.2.5",
-                            "label": "Caption Border Configuration",
+                            "label": "Caption Border Position & Dimension",
                             "desc": {
-                                "basic": "Input a JSON to show crop place holders on image.",
+                                "basic": "Input a JSON having position and dimension of the crop place holders on image which to be cropped.",
                                 "detailed": "Input a JSON having position and dimension of the crop place holders on image which to be cropped."
                             },
                             "itemRenderer": "TextBox",
@@ -314,7 +314,7 @@
                 },
                 {
                     "id": "2.2",
-                    "label": "Crop View Settings",
+                    "label": "Crop View Configuration",
                     "itemRenderer": "Panel",
                     "itemType": "child",
                     "tags": [
@@ -330,10 +330,10 @@
                     "items": [
                         {
                             "id": "2.2.1",
-                            "label": "Crop View Image Configuration",
+                            "label": "Crop View Image Position & Dimension",
                             "desc": {
-                                "basic": "A JSON having the configuration for the border that appears on the image while cropping.",
-                                "detailed": "A JSON having the configuration for the border that appears on the image while cropping."
+                                "basic": "A JSON having the configuration for the border that appears on the image before cropping.",
+                                "detailed": "A JSON having the configuration for the border that appears on the image before cropping."
                             },
                             "itemRenderer": "TextBox",
                             "itemType": "leaf",
@@ -345,10 +345,10 @@
                         },
                         {
                             "id": "2.2.2",
-                            "label": "Cropped View Image Configuration",
+                            "label": "Cropped View Image Validation",
                             "desc": {
-                                "basic": "A JSON having the configuration for the cropped image position and dimensions.",
-                                "detailed": "A JSON having the configuration for the cropped image position and dimensions."
+                                "basic": "A JSON having the configuration for the starting and ending position of the border which needs to be dragged to crop the image.",
+                                "detailed": "A JSON having the configuration for the starting and ending position of the border which needs to be dragged to crop the image."
                             },
                             "itemRenderer": "TextBox",
                             "itemType": "leaf",
@@ -357,28 +357,6 @@
                                 "dataType": "string"
                             },
                             "val": "{{views.2.croppedViewImageConfiguration}}"
-                        },
-                        {
-                            "id": "2.2.3",
-                            "label": "Crop View Image Border Configuration",
-                            "desc": {
-                                "basic": "A JSON having the configuration for the image position and dimensions.",
-                                "detailed": "A JSON having the configuration for the image position and dimensions."
-                            },
-                            "itemRenderer": "TextBox",
-                            "itemType": "leaf",
-                            "mandatory": false,
-                            "rendererProperties": {
-                                "dataType": "string"
-                            },
-                            "subscribeEvents": [
-                                {
-                                    "eventId": "IMAGE_PH_COMP_UPDATE",
-                                    "modelReference": "{{views.2.cropViewImageBorderConfiguration}}",
-                                    "rule": "feSwitchComponent"
-                                }
-                            ],
-                            "val": "{{views.2.cropViewImageBorderConfiguration}}"
                         }
                     ]
                 }
@@ -410,8 +388,8 @@
                             "id": "3.1.1",
                             "label": "Updated Slide Image",
                             "desc": {
-                                "basic": "Upload the updated image of the slide.",
-                                "detailed": "Upload the updated image of the slide."
+                                "basic": "Upload the updated image of the slide in which image has been cropped.",
+                                "detailed": "Upload the updated image of the slide in which image has been cropped."
                             },
                             "itemRenderer": "Dropzone",
                             "itemType": "leaf",
@@ -458,10 +436,10 @@
                         },
                         {
                             "id": "3.2.2",
-                            "label": "Cropped Image Configuration",
+                            "label": "Cropped Image Position & Dimension",
                             "desc": {
-                                "basic": "A JSON having the configuration for the cropped image position and dimensions.",
-                                "detailed": "A JSON having the configuration for the cropped image position and dimensions."
+                                "basic": "A JSON having the configuration for the cropped image position and dimensions. Ex: {'top': '0.14','left': '0.13','width': '6.28','height': '5.66'}",
+                                "detailed": "A JSON having the configuration for the cropped image position and dimensions. Ex: {'top': '0.14','left': '0.13','width': '6.28','height': '5.66'}"
                             },
                             "itemRenderer": "TextBox",
                             "itemType": "leaf",
