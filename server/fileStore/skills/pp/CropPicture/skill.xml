@@ -221,7 +221,7 @@
 				{{/ifCond}}
 			</comps>
 		</state>
-		<state id="4" desc="Final State Load" txt="2">
+		<state id="4" desc="Final State Load" islast="true">
 			<comps>
 				{{#ifCond MODE "without-caption"}}
 				<comp id="4" mode="remove"/>
