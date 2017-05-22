@@ -217,29 +217,21 @@
                     "items": [
                         {
                             "id": "2.2.1",
-                            "label": "Mode of Use",
+                            "label": "Does the picture to be cropped has caption?",
                             "desc": {
                                 "basic": "Mode in which component will be used.",
                                 "detailed": "Here we select radio for appropriate component on the basis of caption in the image which will be cropped."
                             },
-                            "itemRenderer": "Radio",
-                            "rendererProperties": {
-                                "itemList": [
-                                {
-                                    "value":"without-caption",
-                                    "label":"Use Image Place Holder component."
-                                },
-                                {
-                                    "value":"with-caption",
-                                    "label":"Use Image with Caption Place Holder component."
-                                }                  
-                                ]
-                            },
+                            "itemRenderer": "Switch",
                             "itemType": "leaf",
+                            "mandatory": true,
+                            "rendererProperties": {
+                                "layout_mode": "right",
+                                "value_type": "question"
+                            },
                             "emitEvents": [
                                 "IMAGE_PH_COMP_UPDATE"
                             ],
-                            "mandatory": true,
                             "val": "{{views.2.compName}}"
                         },
                         {

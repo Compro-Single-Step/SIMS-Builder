@@ -34,7 +34,7 @@
                 }
             },
             "compName": {
-                "value": "without-caption"
+                "value": false
             },
             "cropImage": {
                 "displayName": "",

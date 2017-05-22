@@ -302,7 +302,7 @@
     },
     "templateRulesData": {
         "MODE": {
-            "function-name": "extractSingleParamVal",
+            "function-name": "switchMode",
             "params": {
                 "skillmode": "views['2'].compName.value"
             }

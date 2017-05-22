@@ -28,6 +28,16 @@ module.exports = class CropPicture extends PPTBaseSkill {
     }
 
     feSwitchComponent(radioValue, dependantModel) {
-        dependantModel.disabled = radioValue === "without-caption" ? true : false;
+        dependantModel.disabled = !radioValue;
     }
+
+    switchMode(skillParams) {
+        var paramValueObj = skillParams.paramsObj;
+        if (paramValueObj[Object.keys(paramValueObj)[0]])
+            var attrValue = "with-caption";
+        else
+            var attrValue = "without-caption";
+        return Promise.resolve({ attrValue });
+    }
+
 }
