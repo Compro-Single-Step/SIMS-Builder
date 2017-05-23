@@ -1,0 +1,457 @@
+{
+    "views": [
+        {
+            "id": "1",
+            "label": "Initial Document Settings",
+            "itemType": "root",
+            "desc": {},
+            "items": [
+                {
+                    "id": "1.1",
+                    "label": "Ribbon",
+                    "itemRenderer": "Panel",
+                    "itemType": "child",
+                    "tags": [
+                        {
+                            "compName": "SIMS.Components.PPT.Ribbon",
+                            "type": "default"
+                        }
+                    ],
+                    "rendererProperties": {
+                        "collapsable": true,
+                        "optionalItems": true
+                    },
+                    "items": [
+                        {
+                            "id": "1.1.1",
+                            "label": "Document Title",
+                            "desc": {
+                                "basic": "Name of the document to be displayed in Ribbon.",
+                                "detailed": "Document Name which is shown in the central top area in the Ribbon is to be mentioned here."
+                            },
+                            "itemRenderer": "TextBox",
+                            "itemType": "leaf",
+                            "mandatory": false,
+                            "rendererProperties": {
+                                "dataType": "string"
+                            },
+                            "val": "{{views.1.documentTitle}}"
+                        }
+                    ]
+                },
+                {
+                    "id": "1.2",
+                    "label": "Slide View",
+                    "itemRenderer": "Panel",
+                    "itemType": "child",
+                    "tags": [
+                        {
+                            "compName": "SIMS.Components.PPT.SlideView",
+                            "type": "default"
+                        }
+                    ],
+                    "rendererProperties": {
+                        "collapsable": true,
+                        "optionalItems": true
+                    },
+                    "items": [
+                        {
+                            "id": "1.2.1",
+                            "label": "Slide View Data",
+                            "desc": {
+                                "basic": "Upload a XML file which is used to configure the Slide View Area in SIMS.",
+                                "detailed": "A XML file, which will be used to configure the Slide View Area in SIMS, is required to be uploaded here."
+                            },
+                            "itemRenderer": "Dropzone",
+                            "itemType": "leaf",
+                            "emitEvents": [
+                                "SLIDE_VIEW_DATA_UPDATED"
+                            ],
+                            "rendererProperties": {
+                                "dataType": "XML",
+                                "placeHolder": "Drop XML file here to upload"
+                            },
+                            "mandatory": true,
+                            "val": "{{views.1.slideViewData}}"
+                        },
+                        {
+                            "id": "1.2.2",
+                            "label": "Slide Images",
+                            "desc": {
+                                "basic": "Upload the images which are used to render slides in SIMS.",
+                                "detailed": "This section requires the images of the slides which we can get by saving presentation in .jpg format."
+                            },
+                            "itemRenderer": "Dropzone",
+                            "itemType": "leaf",
+                            "rendererProperties": {
+                                "placeholder": "Drop slide Image",
+                                "dataType": "img",
+                                "multipleFiles": true
+                            },
+                            "mandatory": true,
+                            "val": "{{views.1.slideImages}}"
+                        },
+                        {
+                            "id": "1.2.3",
+                            "label": "Inital Selected Slide",
+                            "desc": {
+                                "basic": "Index of the slide which is selected initially.",
+                                "detailed": "Index of the slide which is selected initially."
+                            },
+                            "subscribeEvents": [
+                                {
+                                    "eventId": "SLIDE_VIEW_DATA_UPDATED",
+                                    "modelReference": "{{views.1.initialSelectedSlide}}",
+                                    "rule": "configureSlidesDropdown"
+                                }
+                            ],
+                            "itemRenderer": "Dropdown",
+                            "rendererProperties": {
+                                "dynamicMode": true,
+                                "itemList": "{{views.1.initialSelectedSlide.options}}"
+                            },
+                            "itemType": "leaf",
+                            "mandatory": true,
+                            "val": "{{views.1.initialSelectedSlide.selectedSlide}}"
+                        }
+                    ]
+                },
+                {
+                    "id": "1.3",
+                    "label": "Taskbar",
+                    "itemRenderer": "Panel",
+                    "itemType": "child",
+                    "tags": [
+                        {
+                            "compName": "SIMS.Components.Common.TaskBar",
+                            "type": "default"
+                        }
+                    ],
+                    "rendererProperties": {
+                        "collapsable": true,
+                        "optionalItems": true
+                    },
+                    "items": [
+                        {
+                            "id": "1.3.1",
+                            "label": "Taskbar Preview Image",
+                            "desc": {
+                                "basic": "Upload taskbar preview image.",
+                                "detailed": "When a user hovers mouse over the application iconm show in the task bar an image gets opened in the tool tip. That image has to be uploaded here."
+                            },
+                            "itemRenderer": "Dropzone",
+                            "itemType": "leaf",
+                            "rendererProperties": {
+                                "dataType": "img",
+                                "placeHolder": "Drop image here to upload"
+                            },
+                            "mandatory": false,
+                            "val": "{{views.1.taskbarPreviewImage}}"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "2",
+            "label": "Skill Specific Inputs",
+            "itemType": "root",
+            "desc": {},
+            "items": [
+                {
+                    "id": "2.1",
+                    "label": "Slide View",
+                    "itemRenderer": "Panel",
+                    "itemType": "child",
+                    "tags": [
+                        {
+                            "compName": "SIMS.Components.PPT.SlideView",
+                            "type": "default"
+                        }
+                    ],
+                    "rendererProperties": {
+                        "collapsable": true,
+                        "optionalItems": true
+                    },
+                    "items": [
+                        {
+                            "id": "2.1.1",
+                            "label": "Slide in Action",
+                            "desc": {
+                                "basic": "Slide number in which the image has to be cropped.",
+                                "detailed": "Slide number in which the image has to be cropped."
+                            },
+                            "subscribeEvents": [
+                                {
+                                    "eventId": "SLIDE_VIEW_DATA_UPDATED",
+                                    "modelReference": "{{views.2.slideInAction}}",
+                                    "rule": "configureSlidesDropdown"
+                                }
+                            ],
+                            "itemRenderer": "Dropdown",
+                            "rendererProperties": {
+                                "dynamicMode": true,
+                                "itemList": "{{views.2.slideInAction.options}}"
+                            },
+                            "itemType": "leaf",
+                            "mandatory": true,
+                            "val": "{{views.2.slideInAction.selectedSlide}}"
+                        }
+                    ]
+                },
+                {
+                    "id": "2.2",
+                    "label": "Crop Picture Configuration",
+                    "itemRenderer": "Panel",
+                    "itemType": "child",
+                    "tags": [
+                        {
+                            "compName": "SIMS.Components.PPT.ImagePlaceHolder",
+                            "type": "default"
+                        }
+                    ],
+                    "rendererProperties": {
+                        "collapsable": true,
+                        "optionalItems": true
+                    },
+                    "items": [
+                        {
+                            "id": "2.2.1",
+                            "label": "Does the picture to be cropped has caption?",
+                            "desc": {
+                                "basic": "Mode in which component will be used.",
+                                "detailed": "Mode in which component will be used."
+                            },
+                            "itemRenderer": "Switch",
+                            "itemType": "leaf",
+                            "mandatory": true,
+                            "rendererProperties": {
+                                "layout_mode": "right",
+                                "value_type": "question"
+                            },
+                            "emitEvents": [
+                                "IMAGE_PH_COMP_UPDATE"
+                            ],
+                            "val": "{{views.2.pictureWithCaption}}"
+                        },
+                        {
+                            "id": "2.2.2",
+                            "label": "Picture to be Cropped",
+                            "desc": {
+                                "basic": "Upload the image file which has to be cropped.",
+                                "detailed": "Upload the image file which has to be cropped."
+                            },
+                            "itemRenderer": "Dropzone",
+                            "itemType": "leaf",
+                            "rendererProperties": {
+                                "dataType": "img",
+                                "placeHolder": "Drop image here to upload"
+                            },
+                            "mandatory": true,
+                            "val": "{{views.2.cropImage}}"
+                        },
+                        {
+                            "id": "2.2.3",
+                            "label": "Picture Size & Position",
+                            "desc": {
+                                "basic": "Upload an XML having size and position of the image which need to be cropped.",
+                                "detailed": "Upload an XML having size and position of the image which need to be cropped."
+                            },
+                            "itemRenderer": "Dropzone",
+                            "itemType": "leaf",
+                            "rendererProperties": {
+                                "dataType": "xml",
+                                "placeHolder": "Drop xml here to upload"
+                            },
+                            "mandatory": true,
+                            "val": "{{views.2.imageConfig}}"
+                        },
+                        {
+                            "id": "2.2.4",
+                            "label": "Picture Selection Size & Position",
+                            "desc": {
+                                "basic": "Input a JSON having size and position of the border which appears on image selection. Ex: {'top': 1,'left': 1,'height': 5, 'width': 8}",
+                                "detailed": "Input a JSON having size and position of the border which appears on image selection. Ex: {'top': 1,'left': 1,'height': 5, 'width': 8}"
+                            },
+                            "itemRenderer": "TextBox",
+                            "itemType": "leaf",
+                            "mandatory": false,
+                            "rendererProperties": {
+                                "dataType": "string"
+                            },
+                            "subscribeEvents": [
+                                {
+                                    "eventId": "IMAGE_PH_COMP_UPDATE",
+                                    "modelReference": "{{views.2.imgBorderConfig}}",
+                                    "rule": "feSwitchComponent"
+                                }
+                            ],
+                            "val": "{{views.2.imgBorderConfig}}"
+                        },
+                        {
+                            "id": "2.2.5",
+                            "label": "Caption Selection Size & Position",
+                            "desc": {
+                                "basic": "Input a JSON having size and position of the crop place holders on image which to be cropped. Ex: {'bottom': .1,'left': .1,'height': .3, 'width': 8}",
+                                "detailed": "Input a JSON having size and position of the crop place holders on image which to be cropped. Ex: {'bottom': .1,'left': .1,'height': .3, 'width': 8}"
+                            },
+                            "itemRenderer": "TextBox",
+                            "itemType": "leaf",
+                            "mandatory": false,
+                            "rendererProperties": {
+                                "dataType": "string"
+                            },
+                            "subscribeEvents": [
+                                {
+                                    "eventId": "IMAGE_PH_COMP_UPDATE",
+                                    "modelReference": "{{views.2.imgCaptionBorderConfig}}",
+                                    "rule": "feSwitchComponent"
+                                }
+                            ],
+                            "val": "{{views.2.imgCaptionBorderConfig}}"
+                        }
+                    ]
+                },
+                {
+                    "id": "2.2",
+                    "label": "Cropping Configuration",
+                    "itemRenderer": "Panel",
+                    "itemType": "child",
+                    "tags": [
+                        {
+                            "compName": "SIMS.Components.PPT.ImagePlaceHolder",
+                            "type": "default"
+                        }
+                    ],
+                    "rendererProperties": {
+                        "collapsable": true,
+                        "optionalItems": false
+                    },
+                    "items": [
+                        {
+                            "id": "2.2.1",
+                            "label": "Crop Handle Size & Position",
+                            "desc": {
+                                "basic": "A JSON having the configuration for the border that appears on the image before cropping. Ex: {'top': .1,'left': .1,'width': 8,'height': 5}",
+                                "detailed": "A JSON having the configuration for the border that appears on the image before cropping. Ex: {'top': .1,'left': .1,'width': 8,'height': 5}"
+                            },
+                            "itemRenderer": "TextBox",
+                            "itemType": "leaf",
+                            "mandatory": false,
+                            "rendererProperties": {
+                                "dataType": "string"
+                            },
+                            "val": "{{views.2.cropViewImageConfiguration}}"
+                        },
+                        {
+                            "id": "2.2.2",
+                            "label": "Crop Handle Drag Position",
+                            "desc": {
+                                "basic": "A JSON having the configuration for the starting and ending position of the border which needs to be dragged to crop the image.",
+                                "detailed": "A JSON having the configuration for the starting and ending position of the border which needs to be dragged to crop the image. Ex: {'top':{'start':.1,'end':.2},'left':{'start':.1,'end':.2},'width':{'start':5,'end':6},'height':{'start':5,'end':5}}"
+                            },
+                            "itemRenderer": "TextBox",
+                            "itemType": "leaf",
+                            "mandatory": false,
+                            "rendererProperties": {
+                                "dataType": "string"
+                            },
+                            "val": "{{views.2.croppedViewImageConfiguration}}"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "3",
+            "label": "Final Document Settings",
+            "itemType": "root",
+            "desc": {},
+            "items": [
+                {
+                    "id": "3.1",
+                    "label": "Slide View",
+                    "itemRenderer": "Panel",
+                    "itemType": "child",
+                    "tags": [
+                        {
+                            "compName": "SIMS.Components.PPT.SlideView",
+                            "type": "default"
+                        }
+                    ],
+                    "rendererProperties": {
+                        "collapsable": true,
+                        "optionalItems": false
+                    },
+                    "items": [
+                        {
+                            "id": "3.1.1",
+                            "label": "Updated Slide Picture",
+                            "desc": {
+                                "basic": "Upload the updated image of the slide in which image has been cropped.",
+                                "detailed": "Upload the updated image of the slide in which image has been cropped."
+                            },
+                            "itemRenderer": "Dropzone",
+                            "itemType": "leaf",
+                            "rendererProperties": {
+                                "placeHolder": "Drop Updated Slide Image",
+                                "dataType": "img"
+                            },
+                            "mandatory": true,
+                            "val": "{{views.3.updatedSlideImage}}"
+                        }
+                    ]
+                },
+                {
+                    "id": "3.2",
+                    "label": "Cropped Picture Configuration",
+                    "itemRenderer": "Panel",
+                    "itemType": "child",
+                    "tags": [
+                        {
+                            "compName": "SIMS.Components.PPT.ImagePlaceHolder",
+                            "type": "default"
+                        }
+                    ],
+                    "rendererProperties": {
+                        "collapsable": true,
+                        "optionalItems": false
+                    },
+                    "items": [
+                        {
+                            "id": "3.2.1",
+                            "label": "Cropped Picture",
+                            "desc": {
+                                "basic": "Upload the cropped image file.",
+                                "detailed": "Upload the cropped image file."
+                            },
+                            "itemRenderer": "Dropzone",
+                            "itemType": "leaf",
+                            "rendererProperties": {
+                                "placeHolder": "Drop Cropped Image",
+                                "dataType": "img"
+                            },
+                            "mandatory": true,
+                            "val": "{{views.3.croppedImage}}"
+                        },
+                        {
+                            "id": "3.2.2",
+                            "label": "Cropped Picture Size & Position",
+                            "desc": {
+                                "basic": "A JSON having the configuration for the cropped image size and position. Ex: {'top': .1,'left': .1,'width': 6,'height': 5}",
+                                "detailed": "A JSON having the configuration for the cropped image size and position. Ex: {'top': .1,'left': .1,'width': 6,'height': 5}"
+                            },
+                            "itemRenderer": "TextBox",
+                            "itemType": "leaf",
+                            "mandatory": false,
+                            "rendererProperties": {
+                                "dataType": "string"
+                            },
+                            "val": "{{views.3.croppedImageConfiguration}}"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

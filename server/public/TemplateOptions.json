@@ -1,39 +1,40 @@
 {
-    "templateOptions":[
+    "templateOptions": [
         {
-            "name":"Move Cell Content",
-            "id":"movecellcontent"
+            "name": "Move Cell Content",
+            "id": "movecellcontent"
         },
         {
-            "name":"Max Function",
-            "id":"maxfunction"
+            "name": "Max Function",
+            "id": "maxfunction"
         },
         {
-            "name":"Sorting Table Columns",
-            "id":"sortingtablecolumns"
+            "name": "Sorting Table Columns",
+            "id": "sortingtablecolumns"
         },
         {
-            "name":"Insert Picture",
-            "id":"insertpicture"
+            "name": "Insert Picture",
+            "id": "insertpicture"
         },
         {
-            "name":"Import Access Object",
-            "id":"importaccessobject"
+            "name": "Import Access Object",
+            "id": "importaccessobject"
         },
         {
-
-            "name":"Insert Audio From a File",
-            "id":"insertaudio"
+            "name": "Insert Audio From a File",
+            "id": "insertaudio"
         },
         {
-            "name":"Apply Shape Effect to a Text Box",
-            "id":"applyshapeeffect"
-
+            "name": "Apply Shape Effect to a Text Box",
+            "id": "applyshapeeffect"
         },
-          {
-            "name":"create cross Tab Query",
-            "id":"createcrosstabquery"
-
+        {
+            "name": "Crop a Picture",
+            "id": "croppicture"
+        },
+        {
+            "name": "Create Cross Tab Query",
+            "id": "createcrosstabquery"
         }
     ]
 }
