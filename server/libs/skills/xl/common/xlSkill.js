@@ -74,10 +74,12 @@ module.exports = class ExcelBaseSkill extends BaseSkill {
             console.log("folder operation success");
             finalObject["sheetImages"] = [];
             var preloadResArr = [];
-            for (var index = 0; (index < resolveParam.length) && (resolveParam[index] != null); ++index) {
-                finalObject["sheetImages"].push(resolveParam[index].sheetObject);
-                for (var iterator = 0; iterator < resolveParam[index].preloadResArr.length; ++iterator) {
-                    preloadResArr.push(resolveParam[index].preloadResArr[iterator]);
+            for (var index = 0; (index < resolveParam.length); ++index) {
+                if(resolveParam[index] != null){
+                    finalObject["sheetImages"].push(resolveParam[index].sheetObject);
+                    for (var iterator = 0; iterator < resolveParam[index].preloadResArr.length; ++iterator) {
+                        preloadResArr.push(resolveParam[index].preloadResArr[iterator]);
+                    }
                 }
             }
             if (finalObject["sheetImages"].length == 0) {
@@ -225,3 +227,4 @@ module.exports = class ExcelBaseSkill extends BaseSkill {
         return Promise.resolve({ attrValue });
     }
 }
+    
