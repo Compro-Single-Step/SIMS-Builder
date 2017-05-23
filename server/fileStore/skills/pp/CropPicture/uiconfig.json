@@ -347,7 +347,7 @@
                             "id": "2.2.2",
                             "label": "Crop Handle Drag Position",
                             "desc": {
-                                "basic": "A JSON having the configuration for the starting and ending position of the border which needs to be dragged to crop the image. Ex: {'top':{'start':.1,'end':.2},'left':{'start':.1,'end':.2},'width':{'start':5,'end':6},'height':{'start':5,'end':5}}",
+                                "basic": "A JSON having the configuration for the starting and ending position of the border which needs to be dragged to crop the image.",
                                 "detailed": "A JSON having the configuration for the starting and ending position of the border which needs to be dragged to crop the image. Ex: {'top':{'start':.1,'end':.2},'left':{'start':.1,'end':.2},'width':{'start':5,'end':6},'height':{'start':5,'end':5}}"
                             },
                             "itemRenderer": "TextBox",
