@@ -23,7 +23,7 @@ class s3Filestore extends baseFilestore{
 
     constructor(config){
         this.super();
-        this.s3Client = s3.createClient({
+        this.s3 = s3.createClient({
             s3Options: {
                 accessKeyId: config.key,
                 secretAccessKey: config.secret
@@ -84,14 +84,18 @@ class s3Filestore extends baseFilestore{
         destPath += fileName;
 
         return new Promise(function (resolve, reject) {
-
-            fse.copy(srcPath, destPath, { overwrite: false }, function (error) {
-                if (!error) {
+            let params = {
+                Bucket: 'sims-builder-store', /* required */
+                CopySource: 'sims-builder-store/' + srcPath, /* required */
+                Key: destPath /* required */
+            };
+            this.s3.copyObject(params, function(err, data) {
+                if (err){
+                    reject(err);
+                } 
+                else{
                     var resolveParam = { "filePath": relativeXmlPath + fileName, "fileType": resFileType };
                     resolve(resolveParam);
-                }
-                else {
-                    reject(error);
                 }
             });
 
@@ -122,12 +126,17 @@ class s3Filestore extends baseFilestore{
         let destPath = path.join(this.getStepAssetsFolderPath(taskId, stepIndex), resourceMap.AssetFolderHierarchy, resourceMap.fileName);
 
         return new Promise((resolve, reject) => {
-            fse.copy(srcPath, destPath, { overwrite: false }, error => {
-                if (!error) {
+            let params = {
+                Bucket: 'sims-builder-store', /* required */
+                CopySource: 'sims-builder-store/' + srcPath, /* required */
+                Key: destPath /* required */
+            };
+            this.s3.copyObject(params, function(err, data) {
+                if (err){
+                    reject(err);
+                } 
+                else{
                     resolve("success");
-                }
-                else {
-                    reject(error);
                 }
             });
         });
@@ -141,13 +150,17 @@ class s3Filestore extends baseFilestore{
         }
         else {
             return new Promise(function (resolve, reject) {
-                fs.readFile(absolutePath, 'utf8', function (error, fileData) {
-                    if (!error) {
+                var params = {
+                    Bucket: 'sims-builder-store', /* required */
+                    Key: absolutePath, /* required */
+                };
+                this.s3.getObject(getParams, function(err, data) {
+                    if (!err) {
                         var resolveParam = { "fileData": fileData, "filePath": absolutePath };
                         resolve(resolveParam);
                     }
                     else {
-                        reject(error);
+                        reject(err);
                     }
                 });
             });
@@ -158,7 +171,11 @@ class s3Filestore extends baseFilestore{
     removeResourceFile(filePath) {
         return new Promise((resolve, reject) => {
             filePath = config.fileStore.resourceFolder + filePath;
-            fs.unlink(filePath, (error) => {
+            var params = {
+                Bucket: 'sims-builder-store', /* required */
+                Key: filePath, /* required */
+            };
+            this.s3.deleteObject(params, function(error, data) {
                 if (error) {
                     reject(error);
                 } else {
@@ -176,14 +193,23 @@ class s3Filestore extends baseFilestore{
                 absolutePath = folder + filePath;
             }
 
-            fs.readFile(absolutePath, 'utf8', function (error, data) {
-                if (error) {
+            var params = {
+                Bucket: 'sims-builder-store', /* required */
+                Key: absolutePath, /* required */
+            };
+            this.s3.getObject(getParams, function(err, data) {
+                // Handle any error and exit
+                if (err){
                     error.filePath = filePath;
                     reject(error);
                 }
-                else {
-                    resolve(data);
+                // No error happened
+                // Convert Body from a Buffer to a String
+                else{
+                    let objectData = data.Body.toString('utf-8'); // Use the encoding necessary.
+                    resolve(objectData);
                 }
+                
             });
         })
     }
@@ -217,33 +243,22 @@ class s3Filestore extends baseFilestore{
         return upload.fields([{ name: 'dzfile', maxCount: 1 }]);
     }
 
-    createFolder(folderPath) {
-        return new Promise((resolve, reject) => {
-            mkdirp(folderPath, (error) => {
-                if (error) {
-                    reject(error);
-                }
-                else {
-                    resolve(true);
-                }
-            });
-        });
-    }
-
     saveFileToFileStore(filepath, fileName, file) {
-        return this.createFolder(filepath)
-            .then((success) => {
-                fs.writeFile(filepath + fileName, file, (err) => {
-                    if (err) {
+        return new Promise((resolve, reject) => {
+            this.s3.putObject(
+                {
+                    Bucket: 'sims-builder-store',
+                    Key: filepath + fileName,
+                    Body: file
+                }, function(err,data){
+                    if(err){
                         return Promise.reject(err);
                     }
-                    else {
+                    else{
                         return Promise.resolve("saved in directory");
                     }
-                });
-            }, (err) => {
-                return Promise.reject(err);
             });
+        })
     }
 
 }

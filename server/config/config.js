@@ -26,9 +26,20 @@ const config = {
             }
         },
         root: serverRootPath,
-      taskDataServer: {
+        taskDataServer: {
             Url: 'http://billi.comprotechnologies.com/SIMsInternal/internal/ScenarioPathways.ashx?scenario=',
             name: "billi"
+        },
+        contentStore: "s3",
+        contentStoreParam: {
+            s3: {
+                "bucketName": "xyz",
+                "access": "ksjdbfsdjf",
+                "secret": "sklehdfnsekfrh"
+            },
+            local: {
+                
+            }
         },
         fileStore: {
             skillFolder: skillFolder,
