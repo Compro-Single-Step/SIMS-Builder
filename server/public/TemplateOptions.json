@@ -29,11 +29,11 @@
             "id": "applyshapeeffect"
         },
         {
-            "name": "Crop a picture",
+            "name": "Crop a Picture",
             "id": "croppicture"
         },
         {
-            "name": "create cross Tab Query",
+            "name": "Create Cross Tab Query",
             "id": "createcrosstabquery"
         }
     ]

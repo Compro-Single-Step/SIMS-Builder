@@ -298,7 +298,7 @@
         "MODE": {
             "function-name": "switchMode",
             "params": {
-                "skillmode": "views['2'].compName.value"
+                "skillmode": "views['2'].pictureWithCaption.value"
             }
         }
     }

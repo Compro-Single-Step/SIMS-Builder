@@ -4,8 +4,12 @@
 			<comp id="1" name="SIMS.Components.PPT.Ribbon" cssclass="SIMS_Ribbon_PPT" type="default"/>
 			<comp id="2" name="SIMS.Components.PPT.SlideView" cssclass="SlideViewComponent" type="default"/>
 			<comp id="3" name="SIMS.Components.Common.TaskBar" cssclass="SIMS_TaskBar" type="default"/>
+			{{#ifCond MODE "without-caption"}}
 			<comp id="4" name="SIMS.Components.PPT.ImagePlaceHolder" cssclass="PPTImagePlaceHolder" type="default"/>
+			{{/ifCond}}
+			{{#ifCond MODE "with-caption"}}
 			<comp id="5" name="SIMS.Components2016.PPT.ImageWithCaptionPlaceholder" cssclass="ImageWithCaptionPlaceholder" type="default"/>
+			{{/ifCond}}
 		</comps>
 	</preload>
 	<states>

@@ -232,7 +232,7 @@
                             "emitEvents": [
                                 "IMAGE_PH_COMP_UPDATE"
                             ],
-                            "val": "{{views.2.compName}}"
+                            "val": "{{views.2.pictureWithCaption}}"
                         },
                         {
                             "id": "2.2.2",
