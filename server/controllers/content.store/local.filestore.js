@@ -1,11 +1,11 @@
 const path = require('path');
-const config = require('../config/config');
+const config = require('../../config/config');
 const fs = require('fs');
 const multer = require('multer');
 const mkdirp = require('mkdirp');
 const fse = require('fs-extra');
-const ResourceUtil = require('../utils/resourceUtil');
-const XMLUtil = require('../utils/xmlUtil');
+const ResourceUtil = require('../../utils/resourceUtil');
+const XMLUtil = require('../../utils/xmlUtil');
 const baseFilestore = require('./base.filestore');
 
 const resTypeMap = {

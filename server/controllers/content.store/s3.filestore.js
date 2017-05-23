@@ -1,8 +1,8 @@
 const path = require('path');
-const config = require('../config/config');
+const config = require('../../config/config');
 const multer = require('multer');
-const ResourceUtil = require('../utils/resourceUtil');
-const XMLUtil = require('../utils/xmlUtil');
+const ResourceUtil = require('../../utils/resourceUtil');
+const XMLUtil = require('../../utils/xmlUtil');
 const baseFilestore = require('./base.filestore');
 const s3 = require('s3');
 
