@@ -44,7 +44,7 @@ module.exports = {
             }
         ]
     },
-  
+
     "importaccessobject": {
         primaryFile: "ac/importAccessObject/importAccessObject",
         dependencyFiles: [
@@ -54,7 +54,7 @@ module.exports = {
                     {
                         primaryFile: "common/baseSkill",
                         dependencyFiles: []
-                    }                    
+                    }
                 ]
             }
         ],
@@ -73,6 +73,7 @@ module.exports = {
                 ]
             }
         ]
+
     },
     "insertaudio": {
         primaryFile: "pp/InsertAudio/insertAudio",
@@ -82,12 +83,17 @@ module.exports = {
                 dependencyFiles: [
                     {
                         primaryFile: "common/baseSkill"
+
+
+
+
                     }
                 ]
             }
         ]
+
     },
-     "applyshapeeffect": {
+    "applyshapeeffect": {
         primaryFile: "wd/ApplyShapeEffect/ApplyShapeEffect",
         dependencyFiles: [
             {
@@ -102,8 +108,8 @@ module.exports = {
                 ]
             }
         ]
-     },
-     "croppicture": {
+    },
+    "croppicture": {
         primaryFile: "pp/CropPicture/CropPicture",
         dependencyFiles: [
             {
@@ -115,7 +121,22 @@ module.exports = {
                 ]
             }
         ]
-     }
+    },
+    "createcrosstabquery": {
+        primaryFile: "ac/createcrosstabquery/createCrossTabQuery",
+        dependencyFiles: [
+            {
+                primaryFile: "ac/common/acSkill",
+                dependencyFiles: [
+                    {
+                        primaryFile: "common/baseSkill",
+                        dependencyFiles: []
+                    }
+                ]
+            }
+        ]
+    }
+
 }
 
 
