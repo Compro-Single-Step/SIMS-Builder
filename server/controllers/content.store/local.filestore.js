@@ -193,13 +193,7 @@ class localFilestore extends baseFilestore{
                 let resFolderPath = ResourceUtil.getUploadResourceFolderRelativePath(taskId, stepIndex);
                 req.body.folder = resFolderPath;
                 let destinationFolder = self.getUploadedResourceFolderPath(resFolderPath);
-
-                self.createFolder(destinationFolder)
-                    .then((success) => {
-                        callback(null, destinationFolder);
-                    }, (error) => {
-                        console.log("Folder not created.");
-                    });
+                callback(null, destinationFolder);
             },
             filename: function (req, file, callback) {
                 let timestamp = new Date().getTime().toString();
@@ -211,19 +205,6 @@ class localFilestore extends baseFilestore{
         });
         let upload = multer({ storage: storage });
         return upload.fields([{ name: 'dzfile', maxCount: 1 }]);
-    }
-
-    createFolder(folderPath) {
-        return new Promise((resolve, reject) => {
-            mkdirp(folderPath, (error) => {
-                if (error) {
-                    reject(error);
-                }
-                else {
-                    resolve(true);
-                }
-            });
-        });
     }
 
     saveFileToFileStore(filepath, fileName, file) {

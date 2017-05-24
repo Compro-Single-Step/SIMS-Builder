@@ -52,7 +52,6 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
         jQuery(window).on('sn:resize', this.initScroll.bind(this));
         this.initScroll();
         this.bindShowMoreButtonClick();
-        this.modelChecker = IntervalObservable.create(5000).subscribe(() => this.checkForModelChange());
         this.route.params.subscribe((params: Params) => {
             this.taskID = params["taskId"];
             this.stepIndex = params["stepIndex"];
@@ -130,6 +129,7 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
             });
             this.uiConfig = data["uiconfig"];
             skillManager.getSkillTranslator(data["skillfilesbundle"], this.templateID);
+            //this.modelChecker = IntervalObservable.create(5000).subscribe(() => this.checkForModelChange());
         });
     }
 

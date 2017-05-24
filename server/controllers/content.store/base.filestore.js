@@ -1,4 +1,5 @@
 const config = require('../../config/config');
+const fs = require('fs');
 
 
 class BaseFileStore {
@@ -46,6 +47,26 @@ class BaseFileStore {
     
     getTaskFolderPath(taskId) {
         return '{#approot#}/';
+    }
+
+    getSkillFile(filePath, folder) {
+        return new Promise((resolve, reject) => {
+            let absolutePath = filePath;
+
+            if (folder) {
+                absolutePath = folder + filePath;
+            }
+
+            fs.readFile(absolutePath, 'utf8', function (error, data) {
+                if (error) {
+                    error.filePath = filePath;
+                    reject(error);
+                }
+                else {
+                    resolve(data);
+                }
+            });
+        })
     }
 
     saveStepXML(taskId, stepIndex, OutputXML) {
@@ -113,8 +134,8 @@ class BaseFileStore {
     
     }
 
-    getResourcePath(filePath, folder) {
-        return folder + filePath;
+    getResource(filePath, folder) {
+        return this.getFileFromFileStore(filePath, folder);
     }
 }
 

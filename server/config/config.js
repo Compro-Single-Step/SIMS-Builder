@@ -1,10 +1,23 @@
 const path = require('path');
 const serverRootPath = path.normalize(__dirname + '/../');
-const fileStore = serverRootPath + 'fileStore/';
+const env = process.env.NODE_ENV || 'development';
+
+const envFileStoreMap = {
+    local: "s3",
+    production: "s3",
+    development: "s3"
+}
+
+const filestorePathMap = {
+    "s3": "",
+    "local": serverRootPath,
+}
+
+const fileStore = filestorePathMap[envFileStoreMap[env]] + 'fileStore/';
 const xmlFolder = fileStore + 'XMLs/';
 const skillFolder = fileStore + 'skills/';
 const resourceFolder = fileStore + 'Resources/';
-const env = process.env.NODE_ENV || 'development';
+
 
 const config = {
     local: {
@@ -30,15 +43,11 @@ const config = {
             Url: 'http://billi.comprotechnologies.com/SIMsInternal/internal/ScenarioPathways.ashx?scenario=',
             name: "billi"
         },
-        contentStore: "s3",
-        contentStoreParam: {
+        contentStore: {
+            type: envFileStoreMap[env],
             s3: {
-                "bucketName": "xyz",
-                "access": "ksjdbfsdjf",
-                "secret": "sklehdfnsekfrh"
-            },
-            local: {
-                
+                "key": "AKIAJNSVZZ2VCQUUKRQA",
+                "secret": "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"
             }
         },
         fileStore: {
@@ -70,6 +79,13 @@ const config = {
             Url: 'http://billi.comprotechnologies.com/SIMsInternal/internal/ScenarioPathways.ashx?scenario=',
             name: "billi"
         }, 
+        contentStore: {
+            type: envFileStoreMap[env],
+            s3: {
+                "key": "AKIAJNSVZZ2VCQUUKRQA",
+                "secret": "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"
+            }
+        },
         fileStore: {
             skillFolder: skillFolder,
             xmlFolder: xmlFolder,
@@ -99,7 +115,14 @@ const config = {
         taskDataServer: {
               Url: 'http://billi.comprotechnologies.com/SIMsInternal/internal/ScenarioPathways.ashx?scenario=',
               name: "billi"
-          }, 
+        }, 
+        contentStore: {
+            type: envFileStoreMap[env],
+            s3: {
+                "key": "AKIAJNSVZZ2VCQUUKRQA",
+                "secret": "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"
+            }
+        },
         fileStore: {
             skillFolder: skillFolder,
             xmlFolder: xmlFolder,

@@ -4,7 +4,9 @@ const multer = require('multer');
 const ResourceUtil = require('../../utils/resourceUtil');
 const XMLUtil = require('../../utils/xmlUtil');
 const baseFilestore = require('./base.filestore');
-const s3 = require('s3');
+const AWS = require('aws-sdk');
+const multerS3 = require('multer-s3');
+const mkdirp = require('mkdirp');
 
 const resTypeMap = {
     "png": "img",
@@ -15,6 +17,7 @@ const resTypeMap = {
     "html": "html",
     "xml": "xml"
 };
+
 const fileTypeFunctionMap = {
     "csv": "readCsvFile"
 }
@@ -22,12 +25,11 @@ const fileTypeFunctionMap = {
 class s3Filestore extends baseFilestore{
 
     constructor(config){
-        this.super();
-        this.s3 = s3.createClient({
-            s3Options: {
-                accessKeyId: config.key,
-                secretAccessKey: config.secret
-            }
+        super();
+        this.s3 = new AWS.S3({
+            accessKeyId: config.key,
+            secretAccessKey: config.secret,
+            signatureVersion: "v4" 
         });
     }
 
@@ -168,6 +170,19 @@ class s3Filestore extends baseFilestore{
 
     }
 
+    createFolder(folderPath) {
+        return new Promise((resolve, reject) => {
+            mkdirp(folderPath, (error) => {
+                if (error) {
+                    reject(error);
+                }
+                else {
+                    resolve(true);
+                }
+            });
+        });
+    }
+
     removeResourceFile(filePath) {
         return new Promise((resolve, reject) => {
             filePath = config.fileStore.resourceFolder + filePath;
@@ -197,11 +212,11 @@ class s3Filestore extends baseFilestore{
                 Bucket: 'sims-builder-store', /* required */
                 Key: absolutePath, /* required */
             };
-            this.s3.getObject(getParams, function(err, data) {
+            this.s3.getObject(params, function(err, data) {
                 // Handle any error and exit
                 if (err){
-                    error.filePath = filePath;
-                    reject(error);
+                    err.filePath = filePath;
+                    reject(err);
                 }
                 // No error happened
                 // Convert Body from a Buffer to a String
@@ -216,30 +231,19 @@ class s3Filestore extends baseFilestore{
 
     uploadFileHandler() {
         let self = this;
-        let storage = multer.diskStorage({
-            destination: function (req, file, callback) {
-                let taskId = req.body.taskId;
-                let stepIndex = req.body.stepIndex;
-                let resFolderPath = ResourceUtil.getUploadResourceFolderRelativePath(taskId, stepIndex);
-                req.body.folder = resFolderPath;
-                let destinationFolder = self.getUploadedResourceFolderPath(resFolderPath);
+        var upload = multer({
+            storage: multerS3({
+                s3: self.s3,
+                bucket: 'sims-builder-store',
+                key: function (req, file, callback) {
+                    let timestamp = new Date().getTime().toString();
+                    let fileName = timestamp + "." + file.originalname;
 
-                self.createFolder(destinationFolder)
-                    .then((success) => {
-                        callback(null, destinationFolder);
-                    }, (error) => {
-                        console.log("Folder not created.");
-                    });
-            },
-            filename: function (req, file, callback) {
-                let timestamp = new Date().getTime().toString();
-                let fileName = timestamp + "." + file.originalname;
-
-                req.body.filePath = req.body.folder + fileName;
-                callback(null, fileName);
-            }
+                    req.body.filePath = req.body.folder + fileName;
+                    callback(null, fileName);
+                }
+            })
         });
-        let upload = multer({ storage: storage });
         return upload.fields([{ name: 'dzfile', maxCount: 1 }]);
     }
 

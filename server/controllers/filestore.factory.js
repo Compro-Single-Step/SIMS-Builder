@@ -4,7 +4,7 @@ const config = require('../config/config');
 class FilestoreFactory {
     constructor(config) {
         this.storeType = config.contentStore.type;
-        this.storeConfig =  config.contentStore[storeType];
+        this.storeConfig =  config.contentStore[this.storeType];
     }
 
     getFilestoreInstance(){

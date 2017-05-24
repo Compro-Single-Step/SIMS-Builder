@@ -1,4 +1,5 @@
 const fileStoreInstance = require('./filestore.factory').getFilestoreInstance();
+const config = require('../config/config');
 
 const fileTypeFolderMap = {
     "SKILL": config.fileStore.skillFolder,
