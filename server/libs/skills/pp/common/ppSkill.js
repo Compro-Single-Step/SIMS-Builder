@@ -1,13 +1,13 @@
 const BaseSkill = require("../../common/baseSkill"),
     xmlUtil = require("../../../../utils/xmlUtil"),
-    DOMParser = require("xmldom").DOMParser;
+    DOMParse = require("xmldom").DOMParser;
 
 module.exports = class PPTBaseSkill extends BaseSkill {
     init(slideViewDataPath, dbFilestoreMgr) {
 
         return dbFilestoreMgr.readFileFromFileStore(slideViewDataPath)
             .then(response => {
-                let slideViewData = new DOMParser().parseFromString(response.fileData, 'text/xml');
+                let slideViewData = new DOMParse().parseFromString(response.fileData, 'text/xml');
                 let slideNodes = slideViewData.getElementsByTagName("Slide");
                 this.slideNumberArray = [];
 
@@ -24,5 +24,21 @@ module.exports = class PPTBaseSkill extends BaseSkill {
             .catch(error => {
                 return Promise.reject(error)
             });
+    }
+
+    configureSlidesDropdown(inputFile, dependantDropzoneModel) {
+        dependantDropzoneModel.options.value = [];
+        if (inputFile == null) {
+            dependantDropzoneModel.disabled = true;
+        }
+        else {
+            var parser = new DOMParser();
+            var slideXML = parser.parseFromString(inputFile, "application/xml");
+            var SlidesNodes = slideXML.getElementsByTagName("Slide");
+            for(let slideNode of SlidesNodes){
+                var slideNumber = slideNode.getAttribute("number");
+                dependantDropzoneModel.options.value.push({"label": slideNumber, "data": slideNumber});
+            }
+        }
     }
 }

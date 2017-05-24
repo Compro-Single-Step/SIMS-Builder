@@ -1,5 +1,4 @@
-const PPTBaseSkill = require("../common/ppSkill"),
-    DOMParse = require("xmldom").DOMParser;
+const PPTBaseSkill = require("../common/ppSkill");
 
 module.exports = class InsertAudio extends PPTBaseSkill {
 
@@ -91,21 +90,5 @@ module.exports = class InsertAudio extends PPTBaseSkill {
             return acc + '~' + nxtValue;
         });
         return Promise.resolve({ attrValue })
-    }
-
-    configureSlidesDropdown(inputFile, dependantDropzoneModel) {
-        dependantDropzoneModel.options.value = [];
-        if (inputFile == null) {
-            dependantDropzoneModel.disabled = true;
-        }
-        else {
-            var parser = new DOMParser();
-            var slideXML = parser.parseFromString(inputFile, "application/xml");
-            var SlidesNodes = slideXML.getElementsByTagName("Slide");
-            for(let slideNode of SlidesNodes){
-                var slideNumber = slideNode.getAttribute("number");
-                dependantDropzoneModel.options.value.push({"label": slideNumber, "data": slideNumber});
-            }
-        }
     }
 }
