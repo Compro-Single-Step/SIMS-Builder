@@ -1,8 +1,9 @@
-const router = require('express').Router();
-const automationController = require('./../../controllers/automation.controller');
+const router = require('express').Router(),
+      automationController = require('./../../controllers/automation.controller');
 
 /**
  * Get list of templates
+ * Sample Query: app=excel
  * Return Type: Array
  */
 

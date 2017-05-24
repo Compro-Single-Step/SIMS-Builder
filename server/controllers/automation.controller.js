@@ -1,10 +1,5 @@
-/**
- * Methods used for test script generation and
- * automation of sims
- */
-
-const storeManager = require('./../modules/automation/storage.service');
-var config = require('./../config/automation.config');
+const templateService = require('./../modules/automation/template.service'),
+      config          = require('./../config/automation.config');
 
 class AutomationController {
 
@@ -16,7 +11,7 @@ class AutomationController {
       }
       let query = {'app': config.appList.includes(appType) ? appType : null};
 
-      storeManager.getTemplates(query)
+      templateService.getTemplates(query)
         .then((templates) => {
           let templateMetaList = templates.map(function (obj) {
             return {
