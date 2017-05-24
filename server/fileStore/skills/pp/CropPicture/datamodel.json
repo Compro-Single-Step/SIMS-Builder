@@ -1,0 +1,76 @@
+{
+    "views": {
+        "1": {
+            "documentTitle": {
+                "value": ""
+            },
+            "slideViewData": {
+                "displayName": "",
+                "path": ""
+            },
+            "slideImages": {
+                "value": []
+            },
+            "initialSelectedSlide": {
+                "options": {
+                    "value": []
+                },
+                "selectedSlide": {
+                    "value": ""
+                }
+            },
+            "taskbarPreviewImage": {
+                "displayName": "",
+                "path": ""
+            }
+        },
+        "2": {
+            "slideInAction": {
+                "options": {
+                    "value": []
+                },
+                "selectedSlide": {
+                    "value": ""
+                }
+            },
+            "pictureWithCaption": {
+                "value": false
+            },
+            "cropImage": {
+                "displayName": "",
+                "path": ""
+            },
+            "imageConfig": {
+                "displayName": "",
+                "path": ""
+            },
+            "imgBorderConfig": {
+                "value": "",
+                "disabled": true
+            },
+            "imgCaptionBorderConfig": {
+                "value": "",
+                "disabled": true
+            },
+            "cropViewImageConfiguration": {
+                "value": ""
+            },
+            "croppedViewImageConfiguration": {
+                "value": ""
+            }
+        },
+        "3": {
+            "updatedSlideImage": {
+                "displayName": "",
+                "path": ""
+            },
+            "croppedImage": {
+                "displayName": "",
+                "path": ""
+            },
+            "croppedImageConfiguration": {
+                "value": ""
+            }
+        }
+    }
+}

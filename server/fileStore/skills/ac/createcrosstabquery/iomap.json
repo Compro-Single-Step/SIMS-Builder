@@ -1,0 +1,185 @@
+{
+  "states": {
+    "1": {
+      "components": {
+        "1": {
+          "initial": {
+            "default-attrs": {
+              "DOCUMENT_NAME": {
+                "function-name": "extractSingleParamVal",
+                "params": {
+                  "docTitle": "views['1'].documentTitle.value"
+                }
+              }
+            }
+          }
+        },
+        "2": {
+          "initial": {
+            "default-attrs": {
+              "APP_TOOLTIP_IMAGE": {
+                "function-name": "extractAttrPath",
+                "params": {
+                  "tbPrvImage": "views['1'].taskbarPreviewImage.path"
+                }
+              },
+              "OPENWORDFILE": {
+                "function-name": "getTaskbarTooltipText",
+                "params": {
+                  "DocTitle": "views['1'].documentTitle.value"
+                }
+              }
+            }
+          }
+        },
+        "3": {
+          "initial": {
+            "default-attrs": {
+              "PROJECT_JSON": {
+                "function-name": "extractAttrPath",
+                "params": {
+                  "projJsonPath":"views['1'].navigationPane.path"
+                }
+              },
+              "SELECTED_DB_OBJECT_TYPE": {
+                "function-name": "getSelectedDBObjectType",
+                "params": {
+                  "selectedObj": "views['1'].navigationPaneItems.selectedOption.value"
+                }
+            },
+              "SELECTED_DB_OBJECT": {
+                "function-name": "getSelectedDBObjectName",
+                "params": {
+                  "selectedObj": "views['1'].navigationPaneItems.selectedOption.value"
+                }
+            }
+            }             
+          }
+        }
+      }
+    },
+    "3": {
+      "components": {
+        "6": {
+          "initial": {
+            "default-attrs": {
+              "JSON_INPUT": {
+                "function-name": "getCrossTabJsonInput",
+                "params": {
+                  "inputJsonPath":"views[2].crossTabInputJson.path"
+                }
+              },
+              "STAGE5_NAME": {
+                "function-name": "extractSingleParamVal",
+                "params": {
+                  "defaultQueryName": "views[2].defaultCrossTabQueryName.value"
+                }
+              },
+              "STAGE4_FIELD_FUNC_JSON": {
+                "function-name": "getCalcFnsMapJson",
+                "params": {
+                  "calcMapJson": "views[2].screen4Function.path"
+                }
+              }
+            }
+          },
+          "final": {
+            "stage1": {
+              "STAGE1_SEL_ITEM": {
+                "function-name": "extractSingleParamVal",
+                "params": {
+                   "selSrc" :"views[2].stage1SelectItems.selectedOption.value.label"
+                }
+              }
+            },
+            "stage1_2": {
+              "STAGE1_SEL_ITEM": {
+                "function-name": "extractSingleParamVal",
+                "params": {
+                  "selSrc" :"views[2].stage1SelectItems.selectedOption.value.label"
+                }
+              }
+            },
+            "stage2": {
+              "STAGE2_LIST": {
+                "function-name": "extractSingleParamVal",
+                "params": {
+                  "rowHeading": "views[2].stage2List.selectedOption.value.label"
+                }
+              }
+            },
+            "stage3": {
+              "STAGE3_HEADER": {
+                "function-name": "extractSingleParamVal",
+                "params": {
+                  "colSel":"views[2].stage3ColumnHeader.selectedOption.value.label"
+                }
+              }
+            },
+            "stage4": {
+              "STAGE4_SEL1": {
+                "function-name": "extractSingleParamVal",
+                "params": {
+                  "calcField": "views[2].fieldToBecalculated.selectedOption.value.label"
+                }
+              },
+              "STAGE4_SEL2": {
+                "function-name": "extractSingleParamVal",
+                "params": {
+                  "calcFun": "views[2].calculationFunction.selectedOption.value.label"
+                }
+              },
+              "STAGE4_CHECK": {
+                "function-name": "getSumRowsValue",
+                "params": {
+                  "includeSum" : "views[2].includeSumOfRows.value"
+                }
+              }
+            },
+            "stage5": {
+              "STAGE5_NAME": {
+                "function-name": "getFinalQueryName",
+                "params": {
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "4": {
+      "components": {
+        "3": {
+          "initial": {
+            "default-attrs": {
+              "PROJECT_JSON": {
+                "function-name": "extractAttrPath",
+                "params": {
+                  "projJsonPath":"views['3'].navigationPane.path"
+                }
+              }
+            }
+          }
+        },
+        "7": {
+          "initial": {
+            "default-attrs": {
+              "TABLE_NAME": {
+                "function-name": "getFinalQueryName",
+                "params": {
+                }
+              },
+              "PROJECT_JSON": {
+                "function-name": "getDatasheetProjectJSon",
+                "params": {
+                  "datasheetProjJsnPath":"views[3].datasheet.path",
+                  "datasheetdataJsnPath": "views[3].datasheetIntegratedResource.path"
+                  }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

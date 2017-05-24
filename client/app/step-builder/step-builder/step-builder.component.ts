@@ -149,12 +149,15 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
         });
     }
 
-    checkForModelChange() {
+    checkForModelChange(callBack?, CallBackOwner?, callBackArgs?) {
         let self = this;
         let itemDataModel = this.builderModelSrvc.getState();
         localForage.getItem('model').then(function (value) {
             if (JSON.stringify(value) === JSON.stringify(itemDataModel)) {
                 self.exceptionHandlerSrvc.globalConsole("same Model: Do Nothing");
+                if(callBack){
+                    callBack.apply(CallBackOwner || this, callBackArgs);
+                }
             } else {
                 self.exceptionHandlerSrvc.globalConsole("Different Model: Update LocalStorage and Send to Sever");
                 localForage.setItem('model', itemDataModel).then(function () {
@@ -162,6 +165,9 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
                         if (data["status"] === "success") {
                             //TODO: Notify user of the draft save
                             self.exceptionHandlerSrvc.globalConsole("Model Data Sent to Server");
+                            if(callBack){
+                                callBack.apply(CallBackOwner || this, callBackArgs);
+                            }
                         } else if (data["status"] === "error") {
                             //TODO: Try saving on server again
                             self.exceptionHandlerSrvc.globalConsole("Couldn't Save Model Data on Server.");
@@ -188,7 +194,8 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
     }
 
     lauchPreviewTask() {
-        this.previewService.launchStepPreviewWindow(this.taskID, this.stepIndex, this.templateID, this.stepTextContainer.nativeElement.textContent);
+        let callBackArgs = [this.taskID, this.stepIndex, this.templateID, this.stepTextContainer.nativeElement.textContent];
+        this.checkForModelChange(this.previewService.launchStepPreviewWindow, this.previewService, callBackArgs);
     }
     onFinish() {
         this.closeStepbuilder();

@@ -96,7 +96,7 @@
               "SELECTED_CELLS": {
                 "function-name": "getSelectedCell",
                 "params": {
-                  "srcRange":"views['2'].sourceRange.value"
+                  "srcRange":"views['2'].destinationRange.value"
                 }
               }
             }
