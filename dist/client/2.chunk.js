@@ -26105,6 +26105,7 @@ var TaskBuilderComponent = (function () {
         this.templateOptions = [];
         this.SelectedTemplate = "";
         this.selectedTemplateOption = "";
+        this.disableOkBtn = true;
     }
     TaskBuilderComponent.prototype.ngOnInit = function () {
         this.initialiseTaskData();
@@ -26114,6 +26115,7 @@ var TaskBuilderComponent = (function () {
         // 	});
     };
     TaskBuilderComponent.prototype.selectTemplate = function ($event, selectedTemplate) {
+        this.disableOkBtn = false;
         jQuery($event.currentTarget).addClass("selected").siblings().removeClass("selected");
         this.selectedTemplateOption = selectedTemplate;
     };
@@ -26148,9 +26150,15 @@ var TaskBuilderComponent = (function () {
     };
     TaskBuilderComponent.prototype.stepNavigationListner = function (steptemplate, stepIndex) {
         this.SelectedStep = this.TaskData["stepData"][stepIndex];
-        if (steptemplate != "NotSelected")
+        if (steptemplate != "NotSelected" && steptemplate != null) {
             this.router.navigate(["task", this.TaskData["id"], "step", this.SelectedStep.Index, "template", steptemplate]);
+        }
         else {
+            this.selectedTemplateOption = "";
+            // syntax needs to be improved
+            // children should be found from parent elem ref "this.SelectTemplateDialog"
+            jQuery("#selectTemplateDialog .list-group-item").removeClass("selected");
+            this.disableOkBtn = true;
             this.SelectTemplateDialog.show();
         }
     };
@@ -26170,7 +26178,12 @@ var TaskBuilderComponent = (function () {
         });
     };
     TaskBuilderComponent.prototype.callSetTemplate = function () {
-        this.setTempalateMap(this.selectedTemplateOption);
+        if (this.selectedTemplateOption != "") {
+            this.setTempalateMap(this.selectedTemplateOption);
+        }
+        else {
+            this.displayMessage("Please select a template");
+        }
     };
     TaskBuilderComponent.prototype.displayMessage = function (messageText) {
         Messenger.options = { extraClasses: 'messenger-fixed messenger-on-top',
@@ -26352,7 +26365,7 @@ module.exports = module.exports.toString();
 /* 1120 */
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"TaskMetadata\">\r\n   <div class=\"row\">\r\n      <div class=\"col-md-6\">\r\n         <h3 class=\"page-title\">\r\n            <span><strong>TASK ID:</strong> &nbsp;</span>\r\n            <span>\r\n            <img [src]=\"AppImage\"/>\r\n            </span>\r\n            <span class=\"fw-semi-bold\">\r\n            {{TaskData.id}}\r\n            </span>\r\n         </h3>\r\n      </div>\r\n      <!--<div class=\"col-md-6\">\r\n        <h3 class=\"taskbadges pull-right\">\r\n          <span class=\"badge badge-pill badge-success align-middle\">Task Commit Status : {{TaskData.testStatus}}</span>\r\n          <span class=\"badge badge-pill badge-info align-middle\">Task Tested : {{TaskData.commitStatus}}</span>\r\n        </h3>\r\n      </div>-->\r\n   </div>\r\n</div>\r\n<div class=\"row\">\r\n   <div class=\"col-md-12\">\r\n      <taskbuilder-taskstep *ngFor=\"let step of StepData; let stepIndex = index \" [stepData]=\"step\" (stepNavigationEvent)=\"stepNavigationListner($event,stepIndex)\"></taskbuilder-taskstep>\r\n   </div>\r\n</div>\r\n<div class=\"row\" >\r\n   <div class=\"col-md-12\">\r\n\t\t\t<button class=\"btn btn-inverse mr-1\">\r\n          Test Task\r\n        </button>\r\n      <div class=\"pull-right\">\r\n\t\t\t\t<button (click) = \"lauchPreviewTask()\"class=\"btn btn-inverse mr-1\">\r\n\t\t\t\t\tPreview Task\r\n\t\t\t\t</button>\r\n\t\t\t\t<button class=\"btn btn-inverse width-100\">\r\n\t\t\t\t\tGenerate\r\n\t\t\t\t</button>\r\n\t\t\t</div>\r\n   </div>\r\n</div>\r\n<div bsModal #selectTemplateDialog=\"bs-modal\" class=\"modal fade\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"mySmallModalLabel\" aria-hidden=\"true\">\r\n  <div class=\"modal-dialog\">\r\n    <div class=\"modal-content\">\r\n      <div class=\"modal-header\">\r\n        <button (click)=\"selectTemplateDialog.hide()\" aria-label=\"Close\" class=\"close\" type=\"button\">\r\n          <span aria-hidden=\"true\">×</span>\r\n        </button>\r\n        <h4 class=\"modal-title text-xs-center fw-bold mt\" id=\"myModalLabel18\">Select the Template</h4>\r\n      </div>\r\n      <div class=\"modal-body\">\r\n        <ul class=\"list-group templateList\">\r\n          <li class=\"list-group-item\" *ngFor=\"let template of templateOptions\" (dblclick)=\"setTempalateMap(template)\" (click)=\"selectTemplate($event,template)\">{{template.name}}</li>\r\n        </ul>\r\n      </div>\r\n      <div class=\"modal-footer\">\r\n         <div class=\"pull-right\">\r\n          <button (click) = \"callSetTemplate()\"class=\"btn btn-inverse mr-1\">\r\n            OK\r\n          </button>\r\n\t\t\t  </div>\r\n      </div>\r\n    </div>\r\n  </div>  \r\n</div>\r\n"
+module.exports = "<div id=\"TaskMetadata\">\r\n   <div class=\"row\">\r\n      <div class=\"col-md-6\">\r\n         <h3 class=\"page-title\">\r\n            <span><strong>TASK ID:</strong> &nbsp;</span>\r\n            <span>\r\n            <img [src]=\"AppImage\"/>\r\n            </span>\r\n            <span class=\"fw-semi-bold\">\r\n            {{TaskData.id}}\r\n            </span>\r\n         </h3>\r\n      </div>\r\n      <!--<div class=\"col-md-6\">\r\n        <h3 class=\"taskbadges pull-right\">\r\n          <span class=\"badge badge-pill badge-success align-middle\">Task Commit Status : {{TaskData.testStatus}}</span>\r\n          <span class=\"badge badge-pill badge-info align-middle\">Task Tested : {{TaskData.commitStatus}}</span>\r\n        </h3>\r\n      </div>-->\r\n   </div>\r\n</div>\r\n<div class=\"row\">\r\n   <div class=\"col-md-12\">\r\n      <taskbuilder-taskstep *ngFor=\"let step of StepData; let stepIndex = index \" [stepData]=\"step\" (stepNavigationEvent)=\"stepNavigationListner($event,stepIndex)\"></taskbuilder-taskstep>\r\n   </div>\r\n</div>\r\n<div class=\"row\" >\r\n   <div class=\"col-md-12\">\r\n\t\t\t<button class=\"btn btn-inverse mr-1\">\r\n          Test Task\r\n        </button>\r\n      <div class=\"pull-right\">\r\n\t\t\t\t<button (click) = \"lauchPreviewTask()\"class=\"btn btn-inverse mr-1\">\r\n\t\t\t\t\tPreview Task\r\n\t\t\t\t</button>\r\n\t\t\t\t<button class=\"btn btn-inverse width-100\">\r\n\t\t\t\t\tGenerate\r\n\t\t\t\t</button>\r\n\t\t\t</div>\r\n   </div>\r\n</div>\r\n<div bsModal #selectTemplateDialog=\"bs-modal\" id=\"selectTemplateDialog\" class=\"modal fade\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"mySmallModalLabel\" aria-hidden=\"true\">\r\n  <div class=\"modal-dialog\">\r\n    <div class=\"modal-content\">\r\n      <div class=\"modal-header\">\r\n        <button (click)=\"selectTemplateDialog.hide()\" aria-label=\"Close\" class=\"close\" type=\"button\">\r\n          <span aria-hidden=\"true\">×</span>\r\n        </button>\r\n        <h4 class=\"modal-title text-xs-center fw-bold mt\" id=\"myModalLabel18\">Select the Template</h4>\r\n      </div>\r\n      <div class=\"modal-body\">\r\n        <ul class=\"list-group templateList\">\r\n          <li class=\"list-group-item\" *ngFor=\"let template of templateOptions\" (dblclick)=\"setTempalateMap(template)\" (click)=\"selectTemplate($event,template)\">{{template.name}}</li>\r\n        </ul>\r\n      </div>\r\n      <div class=\"modal-footer\">\r\n         <div class=\"pull-right\">\r\n          <button (click) = \"callSetTemplate()\"class=\"btn btn-inverse mr-1\" [disabled] = \"disableOkBtn\">\r\n            OK\r\n          </button>\r\n\t\t\t  </div>\r\n      </div>\r\n    </div>\r\n  </div>  \r\n</div>\r\n"
 
 /***/ }),
 /* 1121 */

@@ -17,7 +17,9 @@ module.exports = class Comp {
         this.XMLProps = {
             "id": comp.props.id,
             "mode": comp.props.mode,
-            "ref-state": comp.props["ref-state"]
+            "ref-state": comp.props["ref-state"],
+            "subcomp": comp.props.subcomp,
+            "hostid": comp.props.hostid
         };
 
         // this var holds the reference of state object of which this comp object is child

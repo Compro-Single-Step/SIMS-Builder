@@ -152,6 +152,16 @@ module.exports = function () {
                 return Promise.reject(error);
             }
         }
+    }, {
+        key: "createResourcePath",
+        value: function createResourcePath(skillParams) {
+            var taskParams = skillParams.taskParams;
+            var paramValueObj = skillParams.paramsObj;
+
+            var attrValue = skillParams.taskParams.addResourceToMap({ path: paramValueObj["path"] }).absFilePath;
+            // { attrValue } is new syntax of ES6 which means => { 'attrValue': attrValue }
+            return Promise.resolve({ attrValue: attrValue });
+        }
     }]);
 
     return BaseSkill;

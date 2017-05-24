@@ -8,8 +8,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var PPTBaseSkill = require("../common/ppSkill"),
-    DOMParse = require("xmldom").DOMParser;
+var PPTBaseSkill = require("../common/ppSkill");
 
 module.exports = function (_PPTBaseSkill) {
     _inherits(InsertAudio, _PPTBaseSkill);
@@ -75,7 +74,12 @@ module.exports = function (_PPTBaseSkill) {
             var resName = skillParams.paramsObj.resAdded;
             var regExpToRemoveFileExt = /(.+?)\.[^.]*$|$/g;
             var match = regExpToRemoveFileExt.exec(resName);
-            var resolveParam = { "attrValue": match[1] };
+            var resolveParam = null;
+            if (match && match[1]) {
+                resolveParam = { "attrValue": match[1] };
+            } else {
+                resolveParam = { "attrValue": resName };
+            }
             return Promise.resolve(resolveParam);
         }
     }, {
@@ -107,43 +111,6 @@ module.exports = function (_PPTBaseSkill) {
                 return acc + '~' + nxtValue;
             });
             return Promise.resolve({ attrValue: attrValue });
-        }
-    }, {
-        key: "configureSlidesDropdown",
-        value: function configureSlidesDropdown(inputFile, dependantDropzoneModel) {
-            dependantDropzoneModel.options.value = [];
-            if (inputFile == null) {
-                dependantDropzoneModel.disabled = true;
-            } else {
-                var parser = new DOMParser();
-                var slideXML = parser.parseFromString(inputFile, "application/xml");
-                var SlidesNodes = slideXML.getElementsByTagName("Slide");
-                var _iteratorNormalCompletion = true;
-                var _didIteratorError = false;
-                var _iteratorError = undefined;
-
-                try {
-                    for (var _iterator = SlidesNodes[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                        var slideNode = _step.value;
-
-                        var slideNumber = slideNode.getAttribute("number");
-                        dependantDropzoneModel.options.value.push({ "label": slideNumber, "data": slideNumber });
-                    }
-                } catch (err) {
-                    _didIteratorError = true;
-                    _iteratorError = err;
-                } finally {
-                    try {
-                        if (!_iteratorNormalCompletion && _iterator.return) {
-                            _iterator.return();
-                        }
-                    } finally {
-                        if (_didIteratorError) {
-                            throw _iteratorError;
-                        }
-                    }
-                }
-            }
         }
     }]);
 

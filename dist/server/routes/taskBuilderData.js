@@ -43,7 +43,7 @@ function validateTaskData(taskData) {
 		for (let stepIndex = 0; stepIndex < stepData.length; stepIndex++) {
 			//function getSkillName to bre renamed to getTemplateName if Baloo gives skill name and set only template name in it..
 			promiseArr.push(getTemplateName(taskData.getId(), stepData[stepIndex].getIndex()).then(templateId => {
-				if (templateId != "NotSelected") {
+				if (templateId != "NotSelected" && templateId != null) {
 					let index;
 					for (index = 0; index < TemplateOptions.length && TemplateOptions[index].id != templateId; index++);
 					templateName = TemplateOptions[index].name;

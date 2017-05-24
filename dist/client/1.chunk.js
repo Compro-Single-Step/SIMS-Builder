@@ -25799,6 +25799,7 @@ var DropzoneComponent = (function (_super) {
                     var file = new File([res._body], el.displayName);
                     dropzone.emit("addedfile", file);
                     dropzone.emit("complete", file);
+                    dropzone.files.push(file);
                 }
                 else {
                 }
@@ -25967,7 +25968,8 @@ var RadioComponent = (function (_super) {
         this.modelRef = this.builderModelSrvc.getStateRef(this.compConfig.val);
     };
     RadioComponent.prototype.selectedItemChange = function (selectedOption) {
-        this.modelRef["value"] = selectedOption;
+        this.modelRef['value'] = selectedOption;
+        this.emitEvents(this.modelRef['value']);
     };
     RadioComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
@@ -26042,6 +26044,12 @@ var SelectComponent = (function (_super) {
                     break;
                 }
             }
+        }
+    };
+    SelectComponent.prototype.updateDependencies = function (eventId, componentInput) {
+        _super.prototype.updateDependencies.call(this, eventId, componentInput);
+        if (this.itemList["value"].length == 0) {
+            this.modelRef["value"] = {};
         }
     };
     SelectComponent.prototype.selectedItemChange = function () {
@@ -26715,12 +26723,15 @@ var StepBuilderComponent = (function () {
             alwaysVisible: false
         });
     };
-    StepBuilderComponent.prototype.checkForModelChange = function () {
+    StepBuilderComponent.prototype.checkForModelChange = function (callBack, CallBackOwner, callBackArgs) {
         var self = this;
         var itemDataModel = this.builderModelSrvc.getState();
         localForage.getItem('model').then(function (value) {
             if (JSON.stringify(value) === JSON.stringify(itemDataModel)) {
                 self.exceptionHandlerSrvc.globalConsole("same Model: Do Nothing");
+                if (callBack) {
+                    callBack.apply(CallBackOwner || this, callBackArgs);
+                }
             }
             else {
                 self.exceptionHandlerSrvc.globalConsole("Different Model: Update LocalStorage and Send to Sever");
@@ -26729,6 +26740,9 @@ var StepBuilderComponent = (function () {
                         if (data["status"] === "success") {
                             //TODO: Notify user of the draft save
                             self.exceptionHandlerSrvc.globalConsole("Model Data Sent to Server");
+                            if (callBack) {
+                                callBack.apply(CallBackOwner || this, callBackArgs);
+                            }
                         }
                         else if (data["status"] === "error") {
                             //TODO: Try saving on server again
@@ -26755,7 +26769,8 @@ var StepBuilderComponent = (function () {
         this.closeStepbuilder();
     };
     StepBuilderComponent.prototype.lauchPreviewTask = function () {
-        this.previewService.launchStepPreviewWindow(this.taskID, this.stepIndex, this.templateID, this.stepTextContainer.nativeElement.textContent);
+        var callBackArgs = [this.taskID, this.stepIndex, this.templateID, this.stepTextContainer.nativeElement.textContent];
+        this.checkForModelChange(this.previewService.launchStepPreviewWindow, this.previewService, callBackArgs);
     };
     StepBuilderComponent.prototype.onFinish = function () {
         this.closeStepbuilder();
@@ -27024,7 +27039,7 @@ exports = module.exports = __webpack_require__(47)();
 
 
 // module
-exports.push([module.i, ".heading {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex; }\n\n.input-max-width {\n  max-width: 1000px; }\n\n.info-icon {\n  height: 25px;\n  color: #999999;\n  left: 2px;\n  border: none;\n  background-color: white;\n  cursor: pointer; }\n  .info-icon:focus {\n    outline: none; }\n  .info-icon:hover {\n    color: #5bc0de; }\n\n.dropzone {\n  border: 2px dashed #ccc;\n  position: relative;\n  margin-top: 1rem;\n  margin-right: 1rem;\n  margin-bottom: 1rem;\n  color: #aaa;\n  height: 200px;\n  width: 100%; }\n\n.dz-message {\n  margin-top: 4.5rem; }\n\n.disabled {\n  cursor: not-allowed; }\n  .disabled .dropzone {\n    pointer-events: none;\n    cursor: not-allowed; }\n", ""]);
+exports.push([module.i, ".heading {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex; }\n\n.input-max-width {\n  max-width: 1000px; }\n\n.info-icon {\n  height: 25px;\n  color: #999999;\n  left: 2px;\n  border: none;\n  background-color: white;\n  cursor: pointer; }\n  .info-icon:focus {\n    outline: none; }\n  .info-icon:hover {\n    color: #5bc0de; }\n\n.dropzone {\n  border: 2px dashed #ccc;\n  position: relative;\n  margin-top: 1rem;\n  margin-right: 1rem;\n  margin-bottom: 1rem;\n  color: #aaa;\n  height: auto;\n  width: 100%; }\n\n.dz-message {\n  margin: 0rem; }\n\n.disabled {\n  cursor: not-allowed; }\n  .disabled .dropzone {\n    pointer-events: none;\n    cursor: not-allowed; }\n", ""]);
 
 // exports
 
@@ -29738,7 +29753,7 @@ module.exports = "<ul class=\"nav-justified mb-sm nav nav-pills progressbar\">\r
     https://localforage.github.io/localForage
     (c) 2013-2017 Mozilla, Apache License 2.0
 */
-(function(f){if(true){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.localforage = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return require(o,!0);if(i)return require(o,!0);var f=new Error("Cannot find module '"+o+"'");throw (f.code="MODULE_NOT_FOUND", f)}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
+(function(f){if(true){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.localforage = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return require(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw (f.code="MODULE_NOT_FOUND", f)}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
 (function (global){
 'use strict';
 var Mutation = global.MutationObserver || global.WebKitMutationObserver;

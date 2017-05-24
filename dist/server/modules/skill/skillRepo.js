@@ -53,6 +53,7 @@ module.exports = {
                 dependencyFiles: []
             }]
         }]
+
     },
     "insertaudio": {
         primaryFile: "pp/InsertAudio/insertAudio",
@@ -60,8 +61,10 @@ module.exports = {
             primaryFile: "pp/common/ppSkill",
             dependencyFiles: [{
                 primaryFile: "common/baseSkill"
+
             }]
         }]
+
     },
     "applyshapeeffect": {
         primaryFile: "wd/ApplyShapeEffect/ApplyShapeEffect",
@@ -73,5 +76,25 @@ module.exports = {
                 primaryFile: "common/baseSkill"
             }]
         }]
+    },
+    "croppicture": {
+        primaryFile: "pp/CropPicture/CropPicture",
+        dependencyFiles: [{
+            primaryFile: "pp/common/ppSkill",
+            dependencyFiles: [{
+                primaryFile: "common/baseSkill"
+            }]
+        }]
+    },
+    "createcrosstabquery": {
+        primaryFile: "ac/createcrosstabquery/createCrossTabQuery",
+        dependencyFiles: [{
+            primaryFile: "ac/common/acSkill",
+            dependencyFiles: [{
+                primaryFile: "common/baseSkill",
+                dependencyFiles: []
+            }]
+        }]
     }
+
 };

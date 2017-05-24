@@ -8,7 +8,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var BaseSkill = require("../../common/baseSkill"),
     xmlUtil = require("../../../../utils/xmlUtil"),
-    DOMParser = require("xmldom").DOMParser;
+    DOMParse = require("xmldom").DOMParser;
 
 module.exports = function (_BaseSkill) {
     _inherits(PPTBaseSkill, _BaseSkill);
@@ -25,7 +25,7 @@ module.exports = function (_BaseSkill) {
             var _this2 = this;
 
             return dbFilestoreMgr.readFileFromFileStore(slideViewDataPath).then(function (response) {
-                var slideViewData = new DOMParser().parseFromString(response.fileData, 'text/xml');
+                var slideViewData = new DOMParse().parseFromString(response.fileData, 'text/xml');
                 var slideNodes = slideViewData.getElementsByTagName("Slide");
                 _this2.slideNumberArray = [];
 
@@ -40,6 +40,43 @@ module.exports = function (_BaseSkill) {
             }).catch(function (error) {
                 return Promise.reject(error);
             });
+        }
+    }, {
+        key: "configureSlidesDropdown",
+        value: function configureSlidesDropdown(inputFile, dependantDropzoneModel) {
+            dependantDropzoneModel.options.value = [];
+            if (inputFile == null) {
+                dependantDropzoneModel.disabled = true;
+            } else {
+                var parser = new DOMParser();
+                var slideXML = parser.parseFromString(inputFile, "application/xml");
+                var SlidesNodes = slideXML.getElementsByTagName("Slide");
+                var _iteratorNormalCompletion = true;
+                var _didIteratorError = false;
+                var _iteratorError = undefined;
+
+                try {
+                    for (var _iterator = SlidesNodes[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                        var slideNode = _step.value;
+
+                        var slideNumber = slideNode.getAttribute("number");
+                        dependantDropzoneModel.options.value.push({ "label": slideNumber, "data": slideNumber });
+                    }
+                } catch (err) {
+                    _didIteratorError = true;
+                    _iteratorError = err;
+                } finally {
+                    try {
+                        if (!_iteratorNormalCompletion && _iterator.return) {
+                            _iterator.return();
+                        }
+                    } finally {
+                        if (_didIteratorError) {
+                            throw _iteratorError;
+                        }
+                    }
+                }
+            }
         }
     }]);
 
