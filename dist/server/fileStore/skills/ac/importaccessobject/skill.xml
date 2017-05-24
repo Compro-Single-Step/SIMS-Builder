@@ -1,0 +1,266 @@
+<task>
+	<preload>
+		<comps>
+			<comp id="1" name="SIMS.Components.Access.Ribbon" cssclass="SIMS_Ribbon_Excel" type="default"/>
+			<comp id="2" name="SIMS.Components.Access.GetExternalDataDialog" cssclass="GetExternalDataDialog" type="modaldialog" title="Get External Data - Access Database"/>
+			<comp id="3" name="SIMS.Components.Access.AccessNavigationPane" cssclass="AccessNavigationPane" type="default"/>
+			<comp id="4" name="SIMS.Components.Common.TaskBar" cssclass="SIMS_TaskBar" type="default"/>
+			<comp id="5" name="SIMS.Components.Access.AccessStatusBar" cssclass="AccessStatusBar" type="default"/>
+			<comp id="6" name="SIMS.Components.Access.AccessImportObjectsDialog" cssclass="AccessImportObjectsDialog" type="modaldialog" userDefined = "title"/>
+			<comp id="7" name="SIMS.Components.Common.OpenFileDialog" cssclass="OpenFileDialog" type="modaldialog" title="File Open"/>
+			<comp id="8" name="SIMS.Components.Access.GetExternalDataCloseDialog" cssclass="GetExternalDataCloseDialog" type="modaldialog" title="Get External Data - Access Database"/>
+		</comps>
+	</preload>
+	<states>
+		<state id="1" desc="Access document opened" txt="1">
+			<comps>
+				<comp id="1" mode="new">
+					<sizeandpos>
+						<attr name="width" value="*"/>
+						<attr name="height" value="150"/>
+					</sizeandpos>
+					<initialattrs>
+						<attr name="APP" value="access"/>
+						<attr name="RIBBON_PATH" value="app/comps/Common/Ribbon/access-ribbon.xml"/>
+						<attr name="DOCUMENT_NAME" userDefined="true"/>
+						<attr name="SHOW_SECTION" value="external_tab_web_linked_list"/>
+					</initialattrs>
+					<events>
+						<event id="2143" followup="2" desc="Access Clicked"/>
+					</events>
+				</comp>
+				<comp id="3" mode="new">
+					<initialattrs>
+						<attr name="PROJECT_JSON" userDefined="true"/>
+						<attr name="SELECTED_DB_OBJECT_TYPE" userDefined="true"/>
+						<attr name="SELECTED_DB_OBJECT" userDefined="true"/>
+					</initialattrs>
+					<initialattributesets>
+						<attributeset name="cancel">
+							<attr name="SEARCH_TEXT" value=""/>
+						</attributeset>
+					</initialattributesets>
+					<events>
+						<event id="4014" followup="2" desc="Access Clicked"/>
+					</events>
+				</comp>
+				<comp id="5" mode="new">
+					<initialattrs>
+						<attr name="STATUSBAR_TEXT" value="Ready"/>
+						<attr name="DISPLAY_LOCK_KEYS" value="{ &quot;CAPSLOCK&quot; : false, &quot;NUMLOCK&quot; : true,  &quot;SCROLLOCK&quot; : false}"/>
+					</initialattrs>
+				</comp>
+				<comp id="4" mode="new">
+					<sizeandpos>
+						<attr name="left" value="0"/>
+						<attr name="bottom" value="0"/>
+						<attr name="width" value="*"/>
+						<attr name="height" value="31"/>
+					</sizeandpos>
+					<initialattrs>
+						<attr name="OPENWORDFILE" userDefined="true"/>
+						<attr name="APPLICATION" value="access"/>
+						<attr name="APP_TOOLTIP_IMAGE" userDefined="true"/>
+					</initialattrs>
+				</comp>
+				<comp id="2" mode="remove"/>
+				<comp id="6" mode="remove"/>
+			</comps>
+		</state>
+		<state id="2" desc="Get External Data - Access Database to opened" txt="1">
+			<comps>
+				<comp id="2" mode="new">
+					<sizeandpos>
+						<attr name="left" value="100"/>
+						<attr name="top" value="200"/>
+						<attr name="height" value="300"/>
+						<attr name="width" value="734"/>
+					</sizeandpos>
+					<initialattrs>
+						<attr name="OBJECT_TYPE" value="1"/>
+						<attr name="FILE_NAME" value="C:\Users\MyITLab\Documents\"/>
+						<attr name="ACCESS_SELECTED_RADIO_OPTION" value="1"/>
+						<attr name="OK_BUTTON_ENABLED" value="false"/>
+					</initialattrs>
+					<initialattributesets>
+						<attributeset name="cancelEvent" inherits-default="false">
+							<attr name="FILE_NAME" value="C:\Users\MyITLab\Documents\"/>
+						</attributeset>
+					</initialattributesets>
+					<finalattributesets>
+						<attributeset name="okEvent" inherits-default="true">
+							<attr name="FILE_NAME" userDefined="true"/>
+							<attr name="ACCESS_SELECTED_RADIO_OPTION" userDefined="true"/>
+						</attributeset>
+					</finalattributesets>
+					<events>
+						<event id="1" desc="Browse clicked" followup="3"/>
+						<event id="9998" followup="1" desc="Close button clicked" target-attribute-set="cancel"/>
+						<event id="9997" desc="OK button clicked">
+							<validate followup="5">
+								<comp id="2" validation-set="okEvent"/>
+							</validate>
+						</event>
+					</events>
+				</comp>
+				<comp id="7" mode="remove"/>
+			</comps>
+		</state>
+		<state id="3" txt="1" desc="Open file dialog">
+			<comps>
+				<comp id="7" mode="new">
+					<sizeandpos>
+						<attr name="width" value="720"/>
+						<attr name="height" value="408"/>
+						<attr name="left" value="center"/>
+						<attr name="top" value="center"/>
+					</sizeandpos>
+					<initialattrs>
+						<attr name="DIALOG_MODE" value="3"/>
+						<attr name="APPLICATION_MODE" value="3"/>
+						<attr name="OPEN_DIALOG_MODE" value="4"/>
+						<attr name="TREE_XML_PATH" userDefined="true"/>
+						<attr name="AUTO_COMPLETE_LIST" userDefined="true"/>
+						<attr name="TREE_SELECTED_ITEM_ID" value="documents"/>
+						<attr name="SELECTED_SAVEAS_TYPE_INDEX" value="1"/>
+						<attr name="FILE_TYPES" value="{&quot;All Files (*.*)&quot;:&quot;all&quot;,&quot;Microsoft Access (*.accdb;*.mdb;.*adp;*.mda;*.accda;*.mde;*.accde;*.ade)&quot;:&quot;accdb&quot;,&quot;Microsoft Access Databases(*.mdb;*.accdb)&quot;:&quot;docx&quot;,&quot;Microsoft Access Web App References (*.accdw)&quot;:&quot;accdw&quot;,&quot;Microsoft Access Database Templates (*.accdt)&quot;:&quot;accdt&quot;,&quot;Microsoft Access Signed Packages (*.accdc)&quot;:&quot;accdc&quot;,&quot;MDE Files (*.mde)&quot;:&quot;mde&quot;,&quot;ACCDE Files (*.accde)&quot;:&quot;accde&quot;,&quot;Excel Binary Workbook (*.xlsb)&quot;:&quot;xlsb&quot;,&quot;Excel Macro-enabled Workbook (*.xlsm)&quot;:&quot;xlsm&quot;,&quot;Excel Workbook (*.xlsx)&quot;:&quot;xlsx&quot;,&quot;Microsoft Excel (*.rtf)&quot;:&quot;rtf&quot;,&quot;Plain Text (*.xls)&quot;:&quot;xls&quot;,&quot;Exchange()&quot;:&quot;&quot;,&quot;Outlook()&quot;:&quot;&quot;,&quot;Text Files (*.txt;*.csv;*.tab;*.asc)&quot;:&quot;&quot;,&quot;ODBC Databases()&quot;:&quot;&quot;}"/>
+					</initialattrs>
+					<finalattributesets>
+						<attributeset name="validateFileName" inherits-default="false">
+							<attr name="FILE_NAME" userDefined="true"/>
+						</attributeset>
+						<attributeset name="validateFileNameWithExtension" inherits-default="false">
+							<attr name="FILE_NAME" userDefined="true"/>
+						</attributeset>
+					</finalattributesets>
+					<events>
+						<event id="9998" followup="2" target-attribute-set="cancelEvent" desc="Cancel button clicked"/>
+						<event id="9997" desc="select from right clicked/Double Clicked File Icon">
+							<validate followup="4" operator="any">
+								<comp id="7" validation-set="validateFileNameWithExtension"/>
+								<comp id="7" validation-set="validateFileName"/>
+							</validate>
+						</event>
+						<event id="5" desc="OK Button clicked">
+							<validate followup="4" operator="any">
+								<comp id="7" validation-set="validateFileNameWithExtension"/>
+								<comp id="7" validation-set="validateFileName"/>
+							</validate>
+						</event>
+					</events>
+				</comp>
+			</comps>
+		</state>
+		<state id="4" desc="Access file imported" txt="1">
+			<comps>
+				<comp id="7" mode="remove"/>
+				<comp id="2" mode="edit">
+					<initialattrs>
+						<attr name="OK_BUTTON_ENABLED" value="true"/>
+						<attr name="FILE_NAME" userDefined="true"/>
+					</initialattrs>
+					<finalattrs>
+						<attr name="ACCESS_SELECTED_RADIO_OPTION" userDefined="true"/>
+						<attr name="FILE_NAME" userDefined="true"/>
+					</finalattrs>
+					<events>
+						<event id="9998" desc="Close button clicked" followup="1" target-attribute-set="cancel"/>
+						<event id="9997" desc="OK button clicked" followup="5"/>
+					</events>
+				</comp>
+			</comps>
+		</state>
+		<state id="5" desc="Open database file" txt="1" optimized="1">
+			<comps>
+				<comp id="2" mode="remove"/>
+				<comp id="6" mode="new">
+					<sizeandpos>
+						<attr name="left" value="0"/>
+						<attr name="top" value="27"/>
+						<attr name="height" value="*"/>
+						<attr name="width" value="*"/>
+					</sizeandpos>
+					<initialattrs>
+						<attr name="MODE" userDefined="true"/>
+						<attr name="DIALOG_DATA" userDefined="true"/>
+					</initialattrs>
+					<finalattrs>
+								<attr name="TABLE_DATA" userDefined="true"/>
+						{{#ifCond MODE "1"}}
+									<attr name="REPORT_DATA" userDefined="true"/>
+									<attr name="QUERY_DATA" userDefined="true"/>
+									<attr name="FORM_DATA" userDefined="true"/>
+									<attr name="MACRO_DATA" userDefined="true"/>
+									<attr name="MODULE_DATA" userDefined="true"/>				
+						{{/ifCond}}
+					</finalattrs>
+					<events>
+						{{#ifCond MODE "1"}}
+						<event id="9997" desc="ok button clicked" followup="6"/>
+						{{/ifCond}}
+						{{#ifCond MODE "2"}}
+						<event id="9997" desc="ok button clicked" followup="7"/>
+						{{/ifCond}}
+						<event id="9998" desc="cancel button clicked" target-attribute-set="cancel" followup="1"/>
+					</events>
+				</comp>
+			</comps>
+		</state>
+		{{#ifCond MODE "1"}}
+		<state id="6" desc="External data Save as dialog open" txt="1" optimized="1">
+			<comps>
+				<comp id="6" mode="remove"/>
+				<comp id="5" mode="edit" desc="AccessStatusBar">
+					<initialattrs>
+						<attr name="STATUSBAR_TEXT" value=" "/>
+					</initialattrs>
+				</comp>
+				<comp id="8" mode="new" desc="GetExternalDataCloseDialog">
+					<sizeandpos>
+						<attr name="left" value="0"/>
+						<attr name="top" value="177"/>
+						<attr name="height" value="*"/>
+						<attr name="width" value="*"/>
+					</sizeandpos>
+					<initialattrs>
+						<attr name="OBJECT_TYPE" value="1"/>
+						<attr name="CHECKBOX_SAVE_IMPORT_STEPS_CHECKED" value="False"/>
+						<attr name="TEXTBOX_SAVE_AS_TEXT" userDefined="true"/>
+					</initialattrs>
+					<finalattrs>
+						<attr name="CHECKBOX_SAVE_IMPORT_STEPS_CHECKED" value="false"/>
+					</finalattrs>
+					<events>
+						<event id="9998" followup="7" desc="close button clicked"/>
+						<event id="9997" desc="Enter Key Pressed to Confirm Dialog">
+							<validate followup="7">
+								<comp id="8"/>
+							</validate>
+						</event>
+					</events>
+				</comp>
+			</comps>
+		</state>
+		{{/ifCond}}
+		<state id="7" desc="Final State" islast="true">
+			<comps>
+				<comp id="3" mode="new">
+					<initialattrs>
+						<attr name="PROJECT_JSON" userDefined="true"/>
+						<attr name="IS_COLLAPSED" value="false"/>
+						<attr name="SELECTED_DB_OBJECT_TYPE" userDefined="true"/>
+						<attr name="SELECTED_DB_OBJECT" userDefined="true"/>
+					</initialattrs>
+				</comp>
+				<comp id="5" mode="edit">
+					<initialattrs>
+						<attr name="STATUSBAR_TEXT" value="Ready"/>
+						<attr name="DISPLAY_LOCK_KEYS" value="{ &quot;CAPSLOCK&quot; : false, &quot;NUMLOCK&quot; : true,  &quot;SCROLLOCK&quot; : false}"/>
+					</initialattrs>
+				</comp>
+				<comp id="6" mode="remove"/>
+				<comp id="8"mode="remove"/>
+			</comps>
+		</state>
+	</states>
+</task>

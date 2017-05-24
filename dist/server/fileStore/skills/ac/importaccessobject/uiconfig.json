@@ -1,0 +1,338 @@
+{
+  "views": [
+    {
+      "id": "1",
+      "label": "Initial Document Settings",
+      "itemType": "root",
+      "desc": {},
+      "items": [
+        {
+          "id": "1.1",
+          "label": "Ribbon",
+          "itemRenderer": "Panel",
+          "itemType": "child",
+          "tags": [
+            {
+              "compName": "SIMS.Components.Access.Ribbon",
+              "type": "default"
+            }
+          ],
+          "rendererProperties": {
+            "collapsable": true,
+            "optionalItems": true
+          },
+          "items": [
+            {
+              "id": "1.1.1",
+              "label": "Document Title",
+              "desc": {
+                "basic": "Name of the document to be displayed in Ribbon.",
+                "detailed": "Document Name which is shown in the central top area in the Ribbon is to be mentioned here."
+              },
+              "itemRenderer": "TextBox",
+              "itemType": "leaf",
+              "mandatory": false,
+              "rendererProperties": {
+                "dataType": "string"
+              },
+              "val": "{{views.1.documentTitle}}"
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "label": "Navigation Pane",
+          "itemRenderer": "Panel",
+          "itemType": "child",
+          "tags": [
+            {
+              "compName": "SIMS.Components.Access.AccessNavigationPane",
+              "type": "default"
+            }
+          ],
+          "rendererProperties": {
+            "collapsable": true,
+            "optionalItems": true
+          },
+          "items": [
+            {
+              "id": "1.2.1",
+              "label": "Initial Configuration",
+              "desc": {
+                "basic": "Upload a JSON file which is used to configure the Navigation Pane for Access in SIMS.",
+                "detailed": "A JSON file, which will be used to configure the Navigation Pane for Access in SIMS, is required to be uploaded here. This file can be generated from here(Hyperlink pointing to the JSON creation tool spec)."
+              },
+              "itemRenderer": "Dropzone",
+              "itemType": "leaf",
+              "rendererProperties": {
+                "dataType": "JSON",
+                "placeHolder": "Drop JSON file here to upload"
+              },
+              "mandatory": true,
+               "emitEvents": [
+                "NAVPANE_DATA_UPDATED"
+              ],             
+                "val": "{{views.1.navigationPane}}"
+            },
+
+            {
+              "id": "1.2.2",
+              "label": "Selected Access Object",
+              "desc": {
+                "basic": "Select the database object to be selecetd initiallly.",
+                "detailed": "Describe the type and name of the database object to be shown selected initially when the task is renedered"
+              },
+              "itemRenderer": "Dropdown",
+               "subscribeEvents": [
+                {
+                  "eventId": "NAVPANE_DATA_UPDATED",
+                  "modelReference": "{{views.1.navigationPaneItems.options}}",
+                  "rule": "addDatabaseObjectToDropdown"
+                }
+              ],
+              "rendererProperties": {
+                "itemList": "{{views.1.navigationPaneItems.options}}",
+                "dynamicMode":true
+              
+              },
+              "itemType": "leaf",
+              "mandatory": false,
+              "val": "{{views.1.navigationPaneItems.selectedOption}}"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "label": "Taskbar",
+          "itemRenderer": "Panel",
+          "itemType": "child",
+          "tags": [
+            {
+              "compName": "SIMS.Components.Common.TaskBar",
+              "type": "default"
+            }
+          ],
+          "rendererProperties": {
+            "collapsable": true,
+            "optionalItems": true
+          },
+          "items": [
+            {
+              "id": "1.3.1",
+              "label": "Taskbar Preview Image",
+              "desc": {
+                "basic": "Upload taskbar preview image.",
+                "detailed": "When a user hovers mouse over the application icon show in the task bar an image gets opened in the tool tip. That image has to be uploaded here."
+              },
+              "itemRenderer": "Dropzone",
+              "itemType": "leaf",
+              "rendererProperties": {
+                "dataType": "img",
+                "placeHolder": "Drop image here to upload"
+              },
+              "mandatory": false,
+              "val": "{{views.1.taskbarPreviewImage}}"
+            }
+          ]
+        },
+        {
+          "id": "1.4",
+          "label": "Add Component(s)",
+          "itemRenderer": "Button",
+          "itemType": "leaf",
+          "rendererProperties": {
+            "click": {},
+            "disabled": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "label": "Skill Specific Inputs",
+      "itemType": "root",
+      "desc": {},
+      "items": [
+        {
+          "id": "2.1",
+          "label": "Get External Data - Access Database",
+          "itemRenderer": "Panel",
+          "itemType": "child",
+          "tags": [
+            {
+              "compName": "SIMS.Components.Access.GetExternalDataDialog",
+              "type": "default"
+            }
+          ],
+          "rendererProperties": {
+            "collapsable": true,
+            "optionalItems": false
+          },
+          "items": [
+            {
+              "id": "2.1.1",
+              "label": "Source of Access Database",
+              "desc": {
+                "basic": "Path of the Database to be Imported.",
+                "detailed": "Root path of the Database, objects (Tables/Reports/Queries etc) from which are to be imported."
+              },
+              "itemRenderer": "TextBox",
+              "itemType": "leaf",
+              "mandatory": true,
+              "rendererProperties": {
+                "dataType": "string"
+              },
+              "val": "{{views.2.dbPath}}"
+            },
+            {
+              "id": "2.1.2",
+              "label": "Mode of Import",
+              "desc": {
+                "basic": "Mode in which the Database is to imported.",
+                "detailed": "Template Supports two modes: 1. Import Tables, Queries etc from unlinked Table, 2.Import a Linked Table"
+              },
+              "itemRenderer": "Radio",
+              "rendererProperties": {
+                "itemList": [
+                  {
+                    "value":"1",
+                    "label":"Import database objects into current database"
+                  },
+                  {
+                    "value":"2",
+                    "label":"Linked to the data source by creating a linked table"
+                  }                  
+                  ]
+              },
+              "itemType": "leaf",
+              "mandatory": true,
+              "val": "{{views.2.importMode}}"
+            }
+          ]
+        },
+        {
+          "id": "2.2",
+          "label": "Open File Dialog Box",
+          "itemRenderer": "Panel",
+          "itemType": "child",
+          "tags": [
+            {
+              "compName": "SIMS.Components.Common.OpenFileDialog",
+              "type": "default"
+            }
+          ],
+          "rendererProperties": {
+            "collapsable": true,
+            "optionalItems": false
+          },
+          "items": [
+            {
+              "id": "2.2.1",
+              "label": "Dialog Configuration",
+              "desc": {
+                "basic": "XML to configure navigation pane in Open File Dialog.",
+                "detailed": "XML to configure the initial settings for navigation pane in open file dialog"
+              },
+              "itemRenderer": "Dropzone",
+              "itemType": "leaf",
+              "rendererProperties": {
+                "dataType": "XML",
+                "placeHolder": "Drop XML here to upload"
+              },
+              "mandatory": true,
+              "val": "{{views.2.openFileDialogXML}}"
+            },
+            {
+              "id": "2.2.2",
+              "label": "Auto Complete List Options",
+              "desc": {
+                "basic": "Options to be shown for Auto Complete List.",
+                "detailed": "Comma separated values to render options for Auto Complete List example:- Option1,Option2,etc"
+              },
+              "itemRenderer": "TextBox",
+              "itemType": "leaf",
+              "mandatory": true,
+              "val": "{{views.2.AutoCompleteOptions}}"
+            }
+          ]
+        },
+        {
+          "id": "2.3",
+          "label": "Import Access Objects",
+          "itemRenderer": "Panel",
+          "itemType": "child",
+          "tags": [
+            {
+              "compName": "SIMS.Components.Access.AccessImportObjectsDialog",
+              "type": "default"
+            }
+          ],
+          "rendererProperties": {
+            "collapsable": true,
+            "optionalItems": false
+          },
+          "items": [
+            {
+              "id": "2.3.1",
+              "label": "Database Configuration",
+              "desc": {
+                "basic": "Description of the database to be imported.",
+                "detailed": "JSON Describing  all the objects of the Database (Object Type/ Whether it has to be Vsalidated)"
+              },
+              "itemRenderer": "Dropzone",
+              "itemType": "leaf",
+              "rendererProperties": {
+                "dataType": "JSON",
+                "placeHolder": "Drop JSON here to upload"
+              },
+              "mandatory": true,
+              "val": "{{views.2.importDBConfig}}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "label": "Final Document Settings",
+      "itemType": "root",
+      "desc": {},
+      "items": [
+        {
+          "id": "3.1",
+          "label": "Navigation Pane",
+          "itemRenderer": "Panel",
+          "itemType": "child",
+          "tags": [
+            {
+              "compName": "SIMS.Components.Access.AccessNavigationPane",
+              "type": "default"
+            }
+          ],
+          "rendererProperties": {
+            "collapsable": true,
+            "optionalItems": true
+          },
+          "items": [
+            {
+              "id": "3.1.1",
+              "label": "Final Configuration",
+              "desc": {
+                "basic": "Upload a JSON file which is used to configure the Navigation Pane for Access in SIMS.",
+                "detailed": "A JSON file, which will be used to configure the Navigation Pane for Access in SIMS, is required to be uploaded here. This file can be generated from here(Hyperlink pointing to the JSON creation tool spec)."
+              },
+              "itemRenderer": "Dropzone",
+              "itemType": "leaf",
+              "rendererProperties": {
+                "dataType": "JSON",
+                "placeHolder": "Drop JSON file here to upload"
+              },
+              "mandatory": true,
+              "val": "{{views.3.navigationPane}}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
