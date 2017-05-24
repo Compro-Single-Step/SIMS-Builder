@@ -72,7 +72,7 @@ const config = {
         },
         port: process.env.port || 3000,
         db: {
-            url: 'ds123361.mlab.com:23361/sims-builder',
+            url: 'ds113650.mlab.com:13650/sims-task-bullder',
             dbOptions: {
                 db: {
                     native_parser: true
@@ -80,8 +80,8 @@ const config = {
                 server: {
                     poolsize: 20
                 },
-                user: 'sims-builder',
-                pass: 'sims-builder'
+                user: 'task_builder',
+                pass: 'task_builder'
             }
         },
         root: serverRootPath,
