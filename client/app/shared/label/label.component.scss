@@ -3,13 +3,13 @@
 p {
   margin-bottom: 0.5rem;
   &.ViewHeading {
-    font-size: 2rem;
+    font-size: 1.75rem;
     font-weight: 400;
     color: $theme-blue;
   }
   &.PanelHeading {
-    font-size: 1.75rem;
-    font-weight: 400;
+    font-size: 1.50rem;
+    font-weight: 600;
     color: $theme-blue;
   }
   &.ElementHeading {
@@ -20,7 +20,5 @@ p {
   &.Description {
     font-size: 1rem;
     margin-bottom: 1.5rem;
-    font-weight: 400;
-    color: $theme-blue;
   }
 }
