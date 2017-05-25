@@ -1,0 +1,27 @@
+@import './../../scss/variables.scss';
+
+.brand_logo, .baloo_icon{
+  height:1.60rem;
+}
+.navbar-header{
+  .navbar-nav{
+    .sidebarCollapse{
+      padding-top: 0.7rem;
+      font-size: 1.75em;
+    }
+    .simsBuilderLogo{
+      padding-top: 1.0rem;
+      padding-bottom: 0.9rem;
+      img {
+        size: 24px;
+      }
+    }
+    .simsBuilderText{
+      color: $theme-blue;
+      padding-top: 0.85rem;
+      h4{
+        font-size: 24px;
+      }
+    }
+  }
+}

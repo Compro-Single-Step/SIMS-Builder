@@ -14,7 +14,7 @@ declare var jQuery: any;
     '[class.app]' : 'true',
     id: 'app'
   },
-  styles:['.fixed_navbar{position:fixed;} .searchForm{margin-top:2px;}']
+  styles:['.fixed_navbar{position:fixed;} .searchForm{margin-top:2px;} .sidebar{background-color: #383E4B}']
 })  
 export class Layout implements OnInit{
   config: any;

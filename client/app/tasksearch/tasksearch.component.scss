@@ -2,6 +2,7 @@
 @import "../scss/variables";
 
 .widget-invoice{
+  border-left: 5px solid $card-border-blue;
   padding: 40px;
 }
 ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
@@ -15,16 +16,23 @@
 }
 .taskHeadingFont{
   border: 0;
-  color: $black;
+  color: $gray-dark;
   font-size: 20px;
   font-weight: bold;
+}
+span.unit.taskHeadingFont{
+  pointer-events: none;
+  position: absolute;
+  top: 15px;
+  -webkit-transition: 0.2s ease-in-out;
+  transition: 0.2s ease-in-out;
 }
 .tashHeadWrapper{
   padding-bottom: 28px;
 }
 .pageHead{
   font-weight: bold;
-  color: $black;
+  color: $theme-blue;
   font-size: 23px;
 }
 .tempPadding{
@@ -48,7 +56,31 @@
 #task_id{
   background-color: $white;
   border-bottom: 2px solid rgba(221, 221, 221, 1);
+  font-weight: 600;
+}
+#task_id:focus + span.unit.taskHeadingFont,
+#task_id:not(:focus):valid + span.unit.taskHeadingFont{
+  top: -25px;
 }
 .searchForm{
   display: none;
+}
+.login-form{
+  margin-top: 75px;
+}
+.btn-dark{
+  background-color: $theme-blue;
+  color: $pure-white;
+  &:hover{
+    background-color: $deepdark-blue;
+  }
+}
+.welcomeMessage{
+  color: $text-gray;
+  h3{
+    font-weight:600;
+  }
+  p{
+    font-weight:400;
+  }
 }

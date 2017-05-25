@@ -1,3 +1,5 @@
+@import "./../scss/variables.scss";
+
 .login-page{
   background-color: lightgray;
 }
@@ -43,28 +45,6 @@
   }
 }
 
-.widget-login-info{
-  font-size: 10px;
-  color: #888;
-  margin-top: 1px;
-  margin-bottom: 0;
-  text-align: center;
-
-  &.abc-checkbox {
-    margin-left: -25px;
-  }
-}
-
-.login-form{
-  .form-control{
-    font-size: 10px;
-    border: none;
-    background-color: lightgrey;
-    &:focus{
-      background-color: lightgray;
-    }
-  }
-}
 .lab{
   text-align: right;
   padding-right: 30px;
@@ -72,63 +52,126 @@
   margin-top: 5px;
   color: black;
 }
-.form-group .inp{
-  padding: 2px;
-  background-color: white;
-}
-.form-group .inp:focus{
-  background-color: white;
-}
 .loginText{
   text-align: center;
-  font-weight: bold;
+  font-weight: 600;
   font-size: 25px;
 }
 .sectionlogin{
-  border-bottom-right-radius: 4%;
-  border-top-right-radius: 4%;
+  border-bottom-right-radius: 2%;
+  border-top-right-radius: 2%;
   border-bottom-left-radius: 0;
   border-top-left-radius: 0;
-  background: #ffffff;
+  background: $pure-white;
   border-color:rgba(204,204,204,1);
   color: black;
 }
-.forgetPassRow{
-  padding-top: 15px;
-}
 .loginBackground{
-  background: radial-gradient(ellipse at center, rgba(4, 13, 17, 0.8) 0%, rgba(4, 13, 17, 0.88) 44%, rgba(4, 13, 17, 0.97) 100%);
+  //background: radial-gradient(ellipse at center, rgba(56, 62, 75, 0.8) 0%, rgba(56, 62, 75, 0.88) 44%, rgba(56, 62, 75, 0.97) 100%);
+  background-color: $deepdark-blue;
   width: 100%;
   height: 100%;
 }
-.lineSep{
-  color: black;
-  background-color: black;
-  height: 1px;
-}
-.fgtPass{
-    color: #1d3167;
-    font-weight: 400;
-}
 .infoSection{
-  border-bottom-left-radius: 4%;
-  border-top-left-radius: 4%;
+  border-bottom-left-radius: 2%;
+  border-top-left-radius: 2%;
   border-bottom-right-radius: 0;
   border-top-right-radius: 0;
-  
-  background: rgba(221,221,221,1);
+  background: $offwhite;
   border-color:rgba(204,204,204,1);
 }
 .Section{
   padding: 0;
 }
-.InfoHead{
-  color: #008b7f;
-  text-align: center;
-  font-weight: bold;
-  font-size: 25px;
+.leftSection{
+  border-right-style: ridge;
+  .simsBuilderIconAndText{
+   .InfoHead{
+    color: $theme-blue;
+    text-align: center;
+    font-weight: 500;
+    font-size: 25px;
+  }
+  .simsBuilderIcon {
+    display: flex;
+    padding-top: 50px;
+    img {
+      margin: 0px auto;
+      width: 60px;
+      height: 60px;
+    }
+  }
+  }
+  .widget-body{
+    .InfoBody{
+      text-align: center;
+      font-weight: 500;
+      font-size: 13px;
+    }
+  }
 }
-.InfoBody{
-  text-align: center;
-  font-weight: bold;
+.rightSection{
+  .loginHeader{
+    color: $gray-dark;
+  }
+  .login-form {
+    margin-top: 4.5rem;
+    .formRow{
+      padding: 10px 40px;
+      .icon{
+        font-size: 20px;
+        padding: 5px 10px 0px 10px;
+        color: $gray-semi-light;
+      }
+      .form-control {
+        font-size: 14px;
+        border: none;
+        border-radius: 0px;
+        border-bottom: 1px solid $gray-semi-light;
+      }
+    }
+    .forgetPassRow{
+      padding-top: 0px;
+      font-size: 11px;
+      .passwordSignInRow{
+        padding: 0px;
+        .fgtPassDiv{
+          padding-left: 0px;
+          padding-right: 2px;
+          text-align: left;
+          .fgtPass{
+            color: $theme-blue;
+            font-weight: 600;
+          }
+        }
+        .signin-checkbox{
+          color: #888;
+          padding-right: 0px;
+          padding-left: 2px;
+          text-align: right;
+          font-weight: 600;
+          input{
+            height: 16px;
+            width: 16px;
+          }
+          span{
+            position: relative;
+            top: -4px;
+          }
+        }
+      }
+    }
+  }
+  .loginButtonDiv{
+    display: flex;
+    margin: 40px 0px 10px 0px;
+    button.btn-dark{
+      margin: auto;
+      background-color: $theme-blue;
+      color: $pure-white;
+      &:hover{
+        background-color: $deepdark-blue;
+      }
+    }
+  }
 }

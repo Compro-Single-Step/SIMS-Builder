@@ -1,5 +1,6 @@
 @import "../../../../node_modules/bootstrap/scss/variables";
-$lightgray: #d3d3d3;
+@import "../../scss/variables";
+
 .row {
   margin: {
     left: $spacer;
@@ -11,10 +12,32 @@ $lightgray: #d3d3d3;
   width: 100%;
   height: 6.3rem;
   padding-top: $spacer;
-  background-color: $body-bg;
-  border-bottom: 3px solid $lightgray;
   z-index: 2;
   padding-bottom: 0.3rem;
+  background-color: $theme-blue;
+  color:$pure-white;
+  .stepTextContainer {
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+  .navbar-right{
+    .header-icon{
+      background-color: transparent;
+      border: none;
+      color:$pure-white;
+      font-size: 25px;
+      &:hover{
+        color: $gray-semi-lighter;
+      }
+    }
+    .seperator{
+      height: 50px;
+      width: 2px;
+      background-color: $pure-white;
+      opacity: 0.4;
+      margin: 0px 10px;
+    }
+  }
 }
 .body-container {
   height: calc(100% - 4rem);
@@ -33,9 +56,22 @@ $lightgray: #d3d3d3;
   padding-top: 1rem;
   border-top: 3px solid $lightgray;
   background-color: $body-bg;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
+  .seperator{
+    background-color:#C4C4C4;
+    color: #C4C4C4;
+    display: inline-block;
+    width: 2px;
+    height: 100%;
+    margin: 0px 5px;
+  }
+}
+
+.btn-dark{
+  background-color: $theme-blue;
+  color: $pure-white;
+  &:hover{
+    background-color: $deepdark-blue;
+  }
 }
 
 .stepText.stepTextOverflowHidden {
@@ -59,7 +95,7 @@ $lightgray: #d3d3d3;
   right: 0;
   width: 30%;
   height: 64%;
-  background-image: linear-gradient(left, rgba(255,255,255,0) 0%, white 80%, white 100%);
+  background-image: linear-gradient(left, rgba(255,255,255,0) 0%, $theme-blue 80%, $theme-blue 100%);
   pointer-events: none;
 }
 
@@ -71,4 +107,10 @@ $lightgray: #d3d3d3;
   position: absolute;
   bottom: 25px;
   right: 0px;
+  a{
+    color: $pure-white;
+    &:hover{
+      color: $pure-white;
+    }
+  }
 }

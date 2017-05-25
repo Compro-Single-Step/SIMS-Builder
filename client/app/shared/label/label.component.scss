@@ -1,13 +1,21 @@
+@import './../../scss/variables.scss';
+
 p {
   margin-bottom: 0.5rem;
   &.ViewHeading {
-    font-size: 2.2rem;
+    font-size: 1.75rem;
+    font-weight: 400;
+    color: $theme-blue;
   }
   &.PanelHeading {
-    font-size: 2rem;
+    font-size: 1.50rem;
+    font-weight: 600;
+    color: $theme-blue;
   }
   &.ElementHeading {
     font-size: 1.25rem;
+    font-weight: 400;
+    color: $theme-blue;
   }
   &.Description {
     font-size: 1rem;

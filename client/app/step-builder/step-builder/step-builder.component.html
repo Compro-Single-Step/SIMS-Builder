@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-md-10">
           <div class="row stepText stepTextOverflowHidden">
-            <h4 class="stepTextHeading"><strong>STEP {{stepIndex}}</strong>&nbsp;<span #stepTextContainer [innerHTML]="stepText"></span></h4>
+            <h4 class="stepTextHeading"><strong>STEP {{stepIndex}}:</strong>&nbsp;<span #stepTextContainer [innerHTML]="stepText"></span></h4>
             <span class="show-more"><a href="#">Show more</a></span>
           </div>
           <div class="row">
@@ -12,31 +12,33 @@
           </div>
         </div>
         <div class="col-md-2">
-          <ul class="nav navbar-nav navbar-right">
-            <li><button class="btn btn-inverse pull-right" (click)="onClose()">Close</button></li>
-          </ul>
+          <div class="nav navbar-nav navbar-right">
+            <button class="btn header-icon pull-right" (click)="onClose()"><i class="fa fa-times" aria-hidden="true"></i></button>
+            <div class="seperator pull-right"></div>
+            <button class="btn header-icon pull-right"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
+          </div>
         </div>
       </div>
-    </div>
+  </div>
   </div>
 </nav>
 <div class="body-container">
   <div id="body">
     <div class="row">
       <div class="col-lg-12 col-md-12">
-        <app-step-input-area [stepConfig]="uiConfig" (viewChanged)="setSelectedView($event.viewNumber)" [selectedView]="selectedView"></app-step-input-area>
+        <app-step-input-area class="taskstep-number-{{stepIndex}}" [stepConfig]="uiConfig" (viewChanged)="setSelectedView($event.viewNumber)" [selectedView]="selectedView"></app-step-input-area>
       </div>
     </div>
   </div>
 </div>
 <div id="footer">
   <div class="col-md-12">
-    <button class="btn btn-inverse" (click)='lauchPreviewTask()'>Preview Step</button>
-    <button class="btn btn-inverse">Save</button>
     <div class="pull-right">
-      <button class="btn btn-inverse width-100" (click)="setSelectedView(selectedView-1)" [disabled]="selectedView == 1">Previous</button>
-      <button class="btn btn-inverse width-100" *ngIf="selectedView < uiConfig.views.length" (click)="setSelectedView(selectedView+1)">Next</button>
-      <button class="btn btn-inverse width-100" *ngIf="selectedView == uiConfig.views.length" (click)="onFinish()">Finish</button>
+      <button class="btn btn-dark" (click)='lauchPreviewTask()'>Preview Step</button>
+      <div class="seperator">.</div>
+      <button class="btn btn-dark width-100" (click)="setSelectedView(selectedView-1)" [disabled]="selectedView == 1">Previous</button>
+      <button class="btn btn-dark width-100" *ngIf="selectedView < uiConfig.views.length" (click)="setSelectedView(selectedView+1)">Next</button>
+      <button class="btn btn-dark width-100" *ngIf="selectedView == uiConfig.views.length" (click)="onFinish()">Finish</button>
     </div>
   </div>
 </div>
