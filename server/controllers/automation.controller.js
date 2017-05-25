@@ -7,7 +7,7 @@ class AutomationController {
 
     return new Promise((resolve, reject) => {
 
-      let query = (config.apps.isValid(appType) ? ({'app': appType}) : {});
+      let query = (config.apps.isValid(appType) ? ({'meta.app': appType}) : {});
 
       templateService.getTemplates(query)
         .then((templates) => {
@@ -32,7 +32,7 @@ class AutomationController {
 
     return new Promise((resolve, reject) => {
 
-      let filter  = (config.apps.isValid(appType) ? ({'app': appType}) : {}),
+      let filter  = (config.apps.isValid(appType) ? ({'meta.app': appType}) : {}),
           query   = {$and: [
             {'uuid': templateId},filter
           ]};
