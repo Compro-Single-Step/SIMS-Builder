@@ -14,7 +14,7 @@ const templateSchema = new Schema({
 
 
 templateSchema.statics = {
-  getTemplates: getTemplates
+  get: get
 };
 
 module.exports = mongoose.model('Template', templateSchema);

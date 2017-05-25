@@ -1,5 +1,5 @@
 const router = require('express').Router(),
-  templateRoutes = require('./templateRoutes');
+  templateRoutes = require('./template.routes');
 
 router.use('/templates', templateRoutes);
 
