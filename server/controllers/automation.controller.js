@@ -1,5 +1,5 @@
 const templateService = require('./../modules/automation/template.service'),
-      config          = require('./../config/automation.config');
+  config = require('./../config/automation.config');
 
 class AutomationController {
 
@@ -25,6 +25,30 @@ class AutomationController {
 
     });
   }
+
+;
+
+  getTemplateById(templateId, appType) {
+
+    return new Promise((resolve, reject) => {
+
+      let filter  = (config.apps.isValid(appType) ? ({'app': appType}) : {}),
+          query   = {$and: [
+            {'uuid': templateId},filter
+          ]};
+
+      templateService.getTemplates(query)
+        .then((templates) => {
+          resolve(templates);
+        }, (error) => {
+          reject(error);
+        });
+
+    });
+  }
+
+;
+
 }
 
 module.exports = new AutomationController();
