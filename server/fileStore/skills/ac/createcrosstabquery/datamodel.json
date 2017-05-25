@@ -77,7 +77,7 @@
             }
         },
          "includeSumOfRows": {
-          "value":""
+          "value":false
         },
         "defaultCrossTabQueryName": {
           "value": ""
