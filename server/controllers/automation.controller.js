@@ -6,10 +6,8 @@ class AutomationController {
   getTemplateList(appType) {
 
     return new Promise((resolve, reject) => {
-      if (appType) {
-        appType = appType.trim().toLowerCase();
-      }
-      let query = {'app': config.appList.includes(appType) ? appType : null};
+
+      let query = (config.app.isValid(appType) ? ({'app': appType}) : {});
 
       templateService.getTemplates(query)
         .then((templates) => {

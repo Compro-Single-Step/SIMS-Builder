@@ -1,36 +1,6 @@
 const router = require('express').Router(),
-      automationController = require('./../../controllers/automation.controller');
+  templateRoutes = require('./templateRoutes');
 
-/**
- * Get list of templates
- * Sample Query: app=excel
- * Return Type: Array
- */
-
-router.get('/templates', (req, res) => {
-  let appType = req.query.app;
-
-  automationController.getTemplateList(appType)
-    .then((templates) => {
-      res.send(templates);
-    }, (error) => {
-      res.send(error);
-    });
-
-  /**
-   * Sample:
-   * [{
-      "uuid": "sample-uuid-123",
-      "name": "Move Cell Content",
-      "meta": {
-        "version": 1,
-        "description": "Test template for skill related to move cell content",
-        "skill": "move cell content",
-        "app": "excel"
-        }
-    }]
-   */
-
-});
+router.use('/templates', templateRoutes);
 
 module.exports = router;

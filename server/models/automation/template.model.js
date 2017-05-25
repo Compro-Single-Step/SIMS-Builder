@@ -23,7 +23,7 @@ module.exports = mongoose.model('Template', templateSchema);
  * Template model functions
  */
 
-function getTemplates(query) {
+function get(query) {
   return new Promise((resolve, reject) => {
 
     let condition = query;

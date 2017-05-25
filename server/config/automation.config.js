@@ -1,7 +1,9 @@
-
 const config = {
   default: {
-    appList: ['word','excel','ppt','access']
+    apps: {
+      list: ['word', 'excel', 'ppt', 'access'],
+      isValid: isValidApp
+    }
   },
   local: {},
   development: {},
@@ -10,3 +12,14 @@ const config = {
 
 const env = process.env.NODE_ENV || 'development';
 module.exports = Object.assign(config['default'], config[env]);
+
+/**
+ * Config Helpers
+ */
+
+function isValidApp(appType) {
+  if (appType) {
+    appType = appType.trim().toLowerCase();
+  }
+  return this.list.includes(appType);
+}
