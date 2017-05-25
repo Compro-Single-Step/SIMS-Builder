@@ -10,7 +10,7 @@ const templateSchema = new Schema({
   "meta": {},
   "publish": {},
   "items": []
-}, {collection: 'templates'});
+}, {collection: 'automation_templates'});
 
 
 templateSchema.statics = {
