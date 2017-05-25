@@ -49,21 +49,6 @@ router.get('/:templateId', (req, res) => {
     }, (error) => {
       res.send(error);
     });
-
-  /**
-   * Sample:
-   * [{
-      "uuid": "sample-uuid-123",
-      "name": "Move Cell Content",
-      "meta": {
-        "version": 1,
-        "description": "Test template for skill related to move cell content",
-        "skill": "move cell content",
-        "app": "excel"
-        }
-    }]
-   */
-
 });
 
 module.exports = router;
