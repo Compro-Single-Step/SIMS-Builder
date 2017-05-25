@@ -223,6 +223,13 @@ class localFilestore extends baseFilestore{
             });
     }
 
+    getTaskFolderOnLocal(taskId){
+        var self = this;
+        return new Promise((resolve,reject) => {
+            resolve(config.fileStore.xmlFolder + taskId);
+        })
+    }
+
 }
 
 module.exports = localFilestore;

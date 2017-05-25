@@ -5,6 +5,7 @@ const ResourceUtil = require('../../utils/resourceUtil');
 const XMLUtil = require('../../utils/xmlUtil');
 const baseFilestore = require('./base.filestore');
 const AWS = require('aws-sdk');
+const s3Module = require('s3');
 const multerS3 = require('multer-s3');
 const mkdirp = require('mkdirp');
 
@@ -61,7 +62,7 @@ class s3Filestore extends baseFilestore{
 
 
     copyAssetToTaskFolder(srcPath, taskParams) {
-
+        var self = this;
         var filepathArr = srcPath.split("/")
         var fileName = filepathArr[filepathArr.length - 1].trim();
         var fileTypeArr = fileName.split(".")
@@ -91,7 +92,7 @@ class s3Filestore extends baseFilestore{
                 CopySource: 'sims-builder-store/' + srcPath, /* required */
                 Key: destPath /* required */
             };
-            this.s3.copyObject(params, function(err, data) {
+            self.s3.copyObject(params, function(err, data) {
                 if (err){
                     reject(err);
                 } 
@@ -118,7 +119,7 @@ class s3Filestore extends baseFilestore{
      * destination and returns the promise for same
      */
     copyAssetToTaskFolderEnhanced(sourceFileLocation, resourceMap, taskId, stepIndex) {
-
+        let self = this;
         let srcPath;
         if (resourceMap.resourceType === "step")
             srcPath = config.fileStore.resourceFolder + sourceFileLocation;
@@ -130,10 +131,10 @@ class s3Filestore extends baseFilestore{
         return new Promise((resolve, reject) => {
             let params = {
                 Bucket: 'sims-builder-store', /* required */
-                CopySource: 'sims-builder-store/' + srcPath, /* required */
-                Key: destPath /* required */
+                CopySource: 'sims-builder-store/' + srcPath.replace(/\\/g, "/"), /* required */
+                Key: destPath.replace(/\\/g, "/") /* required */
             };
-            this.s3.copyObject(params, function(err, data) {
+            self.s3.copyObject(params, function(err, data) {
                 if (err){
                     reject(err);
                 } 
@@ -145,6 +146,7 @@ class s3Filestore extends baseFilestore{
     }
 
     readTaskRes(filepath, readFileType) {
+        var self = this;
         var absolutePath = config.fileStore.resourceFolder + filepath;
         if (readFileType && fileTypeFunctionMap[readFileType]) {
 
@@ -156,9 +158,10 @@ class s3Filestore extends baseFilestore{
                     Bucket: 'sims-builder-store', /* required */
                     Key: absolutePath, /* required */
                 };
-                this.s3.getObject(getParams, function(err, data) {
+                self.s3.getObject(params, function(err, data) {
                     if (!err) {
-                        var resolveParam = { "fileData": fileData, "filePath": absolutePath };
+                        let objectData = data.Body.toString('utf-8');
+                        let resolveParam = { "fileData": objectData, "filePath": absolutePath };
                         resolve(resolveParam);
                     }
                     else {
@@ -236,11 +239,13 @@ class s3Filestore extends baseFilestore{
                 s3: self.s3,
                 bucket: 'sims-builder-store',
                 key: function (req, file, callback) {
+                    let taskId = req.body.taskId;
+                    let stepIndex = req.body.stepIndex;
+                    let resFolderPath = ResourceUtil.getUploadResourceFolderRelativePath(taskId, stepIndex);
                     let timestamp = new Date().getTime().toString();
                     let fileName = timestamp + "." + file.originalname;
-
-                    req.body.filePath = req.body.folder + fileName;
-                    callback(null, fileName);
+                    req.body.filePath = resFolderPath + fileName;
+                    callback(null, config.fileStore.resourceFolder + req.body.filePath);
                 }
             })
         });
@@ -248,19 +253,47 @@ class s3Filestore extends baseFilestore{
     }
 
     saveFileToFileStore(filepath, fileName, file) {
+        var self = this;
         return new Promise((resolve, reject) => {
-            this.s3.putObject(
+            self.s3.putObject(
                 {
                     Bucket: 'sims-builder-store',
                     Key: filepath + fileName,
                     Body: file
                 }, function(err,data){
                     if(err){
-                        return Promise.reject(err);
+                        reject(err);
                     }
                     else{
-                        return Promise.resolve("saved in directory");
+                        resolve("saved in s3");
                     }
+            });
+        })
+    }
+
+    getTaskFolderOnLocal(taskId){
+        var self = this;
+        return new Promise((resolve,reject) => {
+            var options = {
+                s3Client: self.s3
+            };
+            var client = s3Module.createClient(options);
+            var params = {
+                localDir: path.join(config.root, 'tmp'),
+                deleteRemoved: true, // default false, whether to remove s3 objects 
+                // that have no corresponding local file. 
+                s3Params: {
+                    Bucket: "sims-builder-store",
+                    Prefix: config.fileStore.xmlFolder + taskId
+                }
+            };
+
+            var uploader = client.downloadDir(params);
+            uploader.on('error', function (err) {
+                reject(err);
+            });
+            uploader.on('end', function () {
+                resolve(params.localDir);
             });
         })
     }

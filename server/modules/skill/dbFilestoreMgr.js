@@ -124,6 +124,10 @@ class DatabaseFileStoreManager {
     getFileFromFileStore(filePath) {
         return fsc.getFileFromFileStore(filePath);
     }
+
+    getTaskFolderOnLocal(taskId){
+        return fsc.getTaskFolderOnLocal(taskId);
+    }
 }
 
 module.exports = new DatabaseFileStoreManager();

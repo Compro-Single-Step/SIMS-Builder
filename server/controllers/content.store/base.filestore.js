@@ -137,6 +137,10 @@ class BaseFileStore {
     getResource(filePath, folder) {
         return this.getFileFromFileStore(filePath, folder);
     }
+
+    getTaskFolderOnLocal(taskId){
+
+    }
 }
 
 module.exports = BaseFileStore;
