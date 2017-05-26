@@ -1,4 +1,4 @@
-const templateModel = require('../../models/automation/template.model');
+const templateModel = require('./../../models/skilltest/template.model');
 
 class TemplateService {
 

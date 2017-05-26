@@ -1,5 +1,5 @@
 const router = require('express').Router(),
-  automationController = require('./../../controllers/automation.controller');
+  skillTestController = require('./../../controllers/skilltest.controller.js');
 
 /**
  * Get list of templates
@@ -10,7 +10,7 @@ const router = require('express').Router(),
 router.get('/', (req, res) => {
   let appType = req.query.app;
 
-  automationController.getTemplateList(appType)
+  skillTestController.getTemplateList(appType)
     .then((templates) => {
       res.send(templates);
     }, (error) => {
@@ -43,7 +43,7 @@ router.get('/:templateId', (req, res) => {
   let appType   = req.query.app,
     templateId  = req.params.templateId;
 
-  automationController.getTemplateById(templateId, appType)
+  skillTestController.getTemplateById(templateId, appType)
     .then((templates) => {
       res.send(templates);
     }, (error) => {

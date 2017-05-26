@@ -1,5 +1,5 @@
-const templateService = require('./../modules/automation/template.service'),
-  config = require('./../config/automation.config');
+const templateService = require('./../modules/skilltest/template.service'),
+  config = require('./../config/skilltest.config');
 
 class AutomationController {
 
@@ -7,7 +7,8 @@ class AutomationController {
 
     return new Promise((resolve, reject) => {
 
-      let query = (config.apps.isValid(appType) ? ({'meta.app': appType}) : {});
+      let query = {};
+      if (config.apps.isValid(appType)) { query.appType = appType.toLowerCase() };
 
       templateService.getTemplates(query)
         .then((templates) => {
@@ -25,17 +26,14 @@ class AutomationController {
 
     });
   }
-
 ;
 
   getTemplateById(templateId, appType) {
 
     return new Promise((resolve, reject) => {
-
-      let filter  = (config.apps.isValid(appType) ? ({'meta.app': appType}) : {}),
-          query   = {$and: [
-            {'uuid': templateId},filter
-          ]};
+      let query = {};
+      if (config.apps.isValid(appType)) { query.app = appType.toLowerCase() };
+      query.uuid = templateId;
 
       templateService.getTemplates(query)
         .then((templates) => {
