@@ -4,38 +4,35 @@ const mongoose = require("mongoose"),
   Schema = mongoose.Schema;
 
 
-var template_schema_search_map = {
+var mapper_schema_search_map = {
   uuid: 'uuid',
-  app: 'app_type'
+  template_id: 'template_id'
 };
 
 /**
- * Template Schema
+ * Mapper Schema
  */
 
-const templateSchema = new Schema({
-  "uuid": String,
-  "name": String,
-  "meta": {},
-  "publish": {},
-  "items": []
-}, {collection: 'test_templates'});
+const mapperSchema = new Schema({
+  "template_id": String,
+  "parameters": []
+}, {collection: 'test_template_mapper'});
 
 
-templateSchema.statics = {
+mapperSchema.statics = {
   get: get
 };
 
-module.exports = mongoose.model('Template', templateSchema);
+module.exports = mongoose.model('Mapper', mapperSchema);
 
 /**
- * Template model functions
+ * Mapper model functions
  */
 
 function get(query) {
   return new Promise((resolve, reject) => {
 
-    let condition = helper.getMongoSearchObject(query, template_schema_search_map);
+    let condition = helper.getMongoSearchObject(query, mapper_schema_search_map);
     let projection = {"_id": false};
 
         this.find(condition, projection, (error, data) => {
