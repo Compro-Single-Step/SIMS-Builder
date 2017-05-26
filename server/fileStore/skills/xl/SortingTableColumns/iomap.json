@@ -32,8 +32,7 @@
               "PIVOT_FILTER_BTNS": {
                 "function-name": "getFilterData",
                 "params": {
-                  "sheetData": "views['1'].sheetsForTable.value",
-                  "sheetAction": "views['2'].sheetInAction.selectedOption.value.label"
+                  
                 }
               },
               "TABLE_RANGE": {
