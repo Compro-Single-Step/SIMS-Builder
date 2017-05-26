@@ -32,13 +32,13 @@
               "PIVOT_FILTER_BTNS": {
                 "function-name": "getFilterData",
                 "params": {
-                  "filterMenuJson": "views['1'].sheetsForTable.value[0].tableFilterMenuData.path"
+                  "sheetData": "views['1'].sheetsForTable.value",
+                  "sheetAction": "views['2'].sheetInAction.selectedOption.value.label"
                 }
               },
               "TABLE_RANGE": {
                 "function-name": "getTableRange",
                 "params": {
-                  "tableRange": "views['1'].sheetsForTable.value[0].tableRange.value",
                   "sheetAction": "views['2'].sheetInAction.selectedOption.value.label"
                 }
               },
@@ -69,9 +69,8 @@
             },
             "SelectedCells_TableRange": {
               "SELECTED_CELLS_COMPLETE_IN_RANGE": {
-                "function-name": "extractSingleParamVal",
+                "function-name": "getSelCellInRange",
                 "params": {
-                  "tableRange": "views['1'].sheetsForTable.value[0].tableRange.value"
                 }
               }
             },
@@ -79,7 +78,6 @@
               "CELL_BEHIND_FILTER_MENU": {
                 "function-name": "getFilterMenuCell",
                 "params": {
-                  "tableRange": "views['1'].sheetsForTable.value[0].tableRange.value"
                 }
               }
             },
