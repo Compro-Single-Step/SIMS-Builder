@@ -9,7 +9,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__(115);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ng2_bootstrap__ = __webpack_require__(949);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_router__ = __webpack_require__(117);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_messenger_build_js_messenger_js__ = __webpack_require__(995);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_messenger_build_js_messenger_js__ = __webpack_require__(997);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_messenger_build_js_messenger_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_messenger_build_js_messenger_js__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__task_builder_component__ = __webpack_require__(1063);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__taskstep_taskstep_component__ = __webpack_require__(1064);
@@ -24695,7 +24695,9 @@ exports.Action = Action;
 /* 992 */,
 /* 993 */,
 /* 994 */,
-/* 995 */
+/* 995 */,
+/* 996 */,
+/* 997 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(jQuery) {/*! messenger 1.4.2 */
@@ -25970,8 +25972,6 @@ window.Messenger.Events = (function() {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(169)))
 
 /***/ }),
-/* 996 */,
-/* 997 */,
 /* 998 */,
 /* 999 */,
 /* 1000 */,

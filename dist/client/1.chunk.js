@@ -23,7 +23,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__scenario_docs_scenario_docs_component__ = __webpack_require__(1055);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__task_file_store_task_file_store_component__ = __webpack_require__(1059);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__shared_shared_module__ = __webpack_require__(1047);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__shared_builder_data_service__ = __webpack_require__(994);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__shared_builder_data_service__ = __webpack_require__(995);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -23253,7 +23253,7 @@ exports.AsyncScheduler = AsyncScheduler;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BaseComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__UIConfig_model__ = __webpack_require__(777);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__step_builder_shared_builder_model_service__ = __webpack_require__(1009);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__step_builder_shared_builder_model_service__ = __webpack_require__(996);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__step_builder_shared_skill_manager_service__ = __webpack_require__(1011);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__step_builder_shared_event_service__ = __webpack_require__(1010);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__enums__ = __webpack_require__(776);
@@ -24952,7 +24952,7 @@ exports.isNumeric = isNumeric;
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return InputFactoryService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__component_repository_service__ = __webpack_require__(1005);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__component_repository_service__ = __webpack_require__(1007);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -25015,6 +25015,48 @@ var InputFactoryService = (function () {
 /* 992 */,
 /* 993 */,
 /* 994 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ExceptionHandlerService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var ExceptionHandlerService = (function () {
+    function ExceptionHandlerService() {
+    }
+    ExceptionHandlerService.prototype.globalConsole = function (msg) {
+        if (__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["isDevMode"])()) {
+            console.log(msg);
+        }
+    };
+    ExceptionHandlerService.prototype.globalAlert = function (msg) {
+        if (__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["isDevMode"])()) {
+            alert(msg);
+        }
+    };
+    ExceptionHandlerService.prototype.globalLog = function (msg) {
+        this.globalAlert(msg);
+        this.globalConsole(msg);
+    };
+    ExceptionHandlerService = __decorate([
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(), 
+        __metadata('design:paramtypes', [])
+    ], ExceptionHandlerService);
+    return ExceptionHandlerService;
+}());
+//# sourceMappingURL=E:/Sim-Builder-Packaging/checkout/develop/client/exception-handler.service.js.map
+
+/***/ }),
+/* 995 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -25102,8 +25144,45 @@ var BuilderDataService = (function () {
 //# sourceMappingURL=E:/Sim-Builder-Packaging/checkout/develop/client/builder-data.service.js.map
 
 /***/ }),
-/* 995 */,
 /* 996 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BuilderModelObj; });
+var BuilderModel = (function () {
+    function BuilderModel() {
+    }
+    BuilderModel.prototype.setState = function (state) {
+        this.builderState = state;
+    };
+    BuilderModel.prototype.setDefaultState = function (model) {
+        this.builderModel = JSON.parse(JSON.stringify(model));
+    };
+    BuilderModel.prototype.getState = function () {
+        return this.builderState;
+    };
+    BuilderModel.prototype.getStateRef = function (modelRefStr) {
+        return this.getRef(modelRefStr, this.builderState);
+    };
+    BuilderModel.prototype.getDefaultState = function (modelRefStr) {
+        return this.getRef(modelRefStr, this.builderModel);
+    };
+    BuilderModel.prototype.getRef = function (modelRefStr, model) {
+        var propertyAccessorPathArray = modelRefStr.replace(/['{{','}}']/g, "").split('.');
+        for (var nestingLevel = 0; nestingLevel < propertyAccessorPathArray.length; nestingLevel++) {
+            model = model[propertyAccessorPathArray[nestingLevel]];
+        }
+        return model;
+    };
+    return BuilderModel;
+}());
+;
+var BuilderModelObj = new BuilderModel();
+//# sourceMappingURL=E:/Sim-Builder-Packaging/checkout/develop/client/builder-model.service.js.map
+
+/***/ }),
+/* 997 */,
+/* 998 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25197,15 +25276,15 @@ exports.IntervalObservable = IntervalObservable;
 
 
 /***/ }),
-/* 997 */,
-/* 998 */,
 /* 999 */,
 /* 1000 */,
 /* 1001 */,
 /* 1002 */,
 /* 1003 */,
 /* 1004 */,
-/* 1005 */
+/* 1005 */,
+/* 1006 */,
+/* 1007 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -25253,7 +25332,7 @@ var Comps = (function () {
 //# sourceMappingURL=E:/Sim-Builder-Packaging/checkout/develop/client/component-repository.service.js.map
 
 /***/ }),
-/* 1006 */
+/* 1008 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -25281,49 +25360,7 @@ var ContainerComponent = (function (_super) {
 //# sourceMappingURL=E:/Sim-Builder-Packaging/checkout/develop/client/container.component.js.map
 
 /***/ }),
-/* 1007 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ExceptionHandlerService; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-var ExceptionHandlerService = (function () {
-    function ExceptionHandlerService() {
-    }
-    ExceptionHandlerService.prototype.globalConsole = function (msg) {
-        if (__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["isDevMode"])()) {
-            console.log(msg);
-        }
-    };
-    ExceptionHandlerService.prototype.globalAlert = function (msg) {
-        if (__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["isDevMode"])()) {
-            alert(msg);
-        }
-    };
-    ExceptionHandlerService.prototype.globalLog = function (msg) {
-        this.globalAlert(msg);
-        this.globalConsole(msg);
-    };
-    ExceptionHandlerService = __decorate([
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(), 
-        __metadata('design:paramtypes', [])
-    ], ExceptionHandlerService);
-    return ExceptionHandlerService;
-}());
-//# sourceMappingURL=E:/Sim-Builder-Packaging/checkout/develop/client/exception-handler.service.js.map
-
-/***/ }),
-/* 1008 */
+/* 1009 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -25370,43 +25407,6 @@ var LabelComponent = (function (_super) {
     return LabelComponent;
 }(__WEBPACK_IMPORTED_MODULE_1__base_component__["a" /* BaseComponent */]));
 //# sourceMappingURL=E:/Sim-Builder-Packaging/checkout/develop/client/label.component.js.map
-
-/***/ }),
-/* 1009 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BuilderModelObj; });
-var BuilderModel = (function () {
-    function BuilderModel() {
-    }
-    BuilderModel.prototype.setState = function (state) {
-        this.builderState = state;
-    };
-    BuilderModel.prototype.setDefaultState = function (model) {
-        this.builderModel = JSON.parse(JSON.stringify(model));
-    };
-    BuilderModel.prototype.getState = function () {
-        return this.builderState;
-    };
-    BuilderModel.prototype.getStateRef = function (modelRefStr) {
-        return this.getRef(modelRefStr, this.builderState);
-    };
-    BuilderModel.prototype.getDefaultState = function (modelRefStr) {
-        return this.getRef(modelRefStr, this.builderModel);
-    };
-    BuilderModel.prototype.getRef = function (modelRefStr, model) {
-        var propertyAccessorPathArray = modelRefStr.replace(/['{{','}}']/g, "").split('.');
-        for (var nestingLevel = 0; nestingLevel < propertyAccessorPathArray.length; nestingLevel++) {
-            model = model[propertyAccessorPathArray[nestingLevel]];
-        }
-        return model;
-    };
-    return BuilderModel;
-}());
-;
-var BuilderModelObj = new BuilderModel();
-//# sourceMappingURL=E:/Sim-Builder-Packaging/checkout/develop/client/builder-model.service.js.map
 
 /***/ }),
 /* 1010 */
@@ -25567,7 +25567,7 @@ var ButtonComponent = (function (_super) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__dropzone_dropzone_component__ = __webpack_require__(1043);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__tab_page_tab_page_component__ = __webpack_require__(1049);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__tag_tag_component__ = __webpack_require__(1051);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__label_label_component__ = __webpack_require__(1008);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__label_label_component__ = __webpack_require__(1009);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__switch_switch_component__ = __webpack_require__(1048);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__radio_radio_component__ = __webpack_require__(1045);
 
@@ -25608,7 +25608,9 @@ var CompRepo = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__enums__ = __webpack_require__(776);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__UIConfig_model__ = __webpack_require__(777);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_auth_service__ = __webpack_require__(256);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__step_builder_shared_builder_data_service__ = __webpack_require__(994);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__step_builder_shared_builder_data_service__ = __webpack_require__(995);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__step_builder_shared_builder_model_service__ = __webpack_require__(996);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__shared_exception_handler_service__ = __webpack_require__(994);
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -25630,20 +25632,27 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
+
 Dropzone.autoDiscover = false;
 var DropzoneComponent = (function (_super) {
     __extends(DropzoneComponent, _super);
-    function DropzoneComponent(elementRef, route, router, authSrvc, bds) {
+    function DropzoneComponent(elementRef, route, router, authSrvc, bds, exceptionHandlerSrvc) {
         _super.call(this);
         this.elementRef = elementRef;
         this.route = route;
         this.router = router;
         this.authSrvc = authSrvc;
         this.bds = bds;
+        this.exceptionHandlerSrvc = exceptionHandlerSrvc;
         this.labelConfig = new __WEBPACK_IMPORTED_MODULE_4__UIConfig_model__["b" /* itemSchema */]();
         this.makeDeleteCall = true;
         this.fileTypesToRead = [MIMETYPE.JSON, MIMETYPE.CSV, MIMETYPE.HTML, MIMETYPE.XML];
         this.isMultipleFiles = false;
+        this.builderModelSrvc = __WEBPACK_IMPORTED_MODULE_7__step_builder_shared_builder_model_service__["a" /* BuilderModelObj */];
+        var routeParams = this.route.snapshot.params;
+        this.taskId = routeParams["taskId"];
+        this.stepIndex = routeParams["stepIndex"];
     }
     DropzoneComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -25671,7 +25680,6 @@ var DropzoneComponent = (function (_super) {
             this.height = "" + this.compConfig.dim['height'];
             this.width = "" + this.compConfig.dim['width'];
         }
-        var routeParams = this.route.snapshot.params;
         var dropzone = new Dropzone(this.dropzoneContainer.nativeElement, {
             url: "/api/skill/resource",
             paramName: "dzfile",
@@ -25683,8 +25691,8 @@ var DropzoneComponent = (function (_super) {
             },
             sending: function (file, xhr, formData) {
                 xhr.setRequestHeader('Authorization', self.authSrvc.getCurrentUserToken());
-                formData.append("taskId", routeParams["taskId"]);
-                formData.append("stepIndex", routeParams["stepIndex"]);
+                formData.append("taskId", self.taskId);
+                formData.append("stepIndex", self.stepIndex);
                 // Need to discuss the passing of model ref along with the file as the model can be generated dynamicallly in some cases.
                 // formData.append("modelref", self.compConfig.val);
             }
@@ -25715,31 +25723,50 @@ var DropzoneComponent = (function (_super) {
             if (self.isMultipleFiles) {
                 for (var i = 0; i < currModelRef["value"].length; i++) {
                     if (currModelRef["value"][i].displayName === file.name) {
-                        self.removeFileFromServer(currModelRef, i);
+                        self.removeFile(currModelRef, i);
                         break;
                     }
                 }
             }
             else {
-                self.removeFileFromServer(currModelRef);
+                self.removeFile(currModelRef);
             }
         });
         this.restoreFileUI(dropzone);
     };
-    DropzoneComponent.prototype.removeFileFromServer = function (model, index) {
-        var _this = this;
-        var el = this.isMultipleFiles ? model["value"][index] : model;
-        if (el["path"] != "") {
-            this.bds.removeFile(el["path"]).subscribe(function (data) {
+    DropzoneComponent.prototype.removeFile = function (model, index) {
+        this.emitEvents(null);
+        var path = this.isMultipleFiles ? model["value"][index]["path"] : model["path"];
+        if (this.isMultipleFiles) {
+            model["value"].splice(index, 1);
+        }
+        else {
+            model["displayName"] = "";
+            model["path"] = "";
+        }
+        var self = this;
+        var itemDataModel = this.builderModelSrvc.getState();
+        this.bds.saveSkillData({ stepUIState: itemDataModel }, this.taskId, this.stepIndex).subscribe(function (data) {
+            if (data["status"] === "success") {
+                //TODO: Notify user of the draft save
+                self.exceptionHandlerSrvc.globalConsole("Model Data Sent to Server");
+                self.removeFileFromServer(path);
+            }
+            else if (data["status"] === "error") {
+                //TODO: Try saving on server again
+                self.exceptionHandlerSrvc.globalConsole("Couldn't Save Model Data on Server.");
+                if (data["errcode"] === "DATA_NOT_PRESENT") {
+                    self.exceptionHandlerSrvc.globalLog("UI State is null. Please check");
+                }
+            }
+        });
+    };
+    DropzoneComponent.prototype.removeFileFromServer = function (path) {
+        var self = this;
+        if (path != "") {
+            this.bds.removeFile(path).subscribe(function (data) {
                 if (data.status === "success") {
-                    _this.emitEvents(null);
-                    if (_this.isMultipleFiles) {
-                        model["value"].splice(index, 1);
-                    }
-                    else {
-                        model["displayName"] = "";
-                        model["path"] = "";
-                    }
+                    self.exceptionHandlerSrvc.globalConsole("File removed from server.");
                 }
                 else if (data.status == "error") {
                 }
@@ -25839,10 +25866,10 @@ var DropzoneComponent = (function (_super) {
             template: __webpack_require__(1101),
             styles: [__webpack_require__(1071)]
         }), 
-        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["c" /* ActivatedRoute */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__angular_router__["c" /* ActivatedRoute */]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["d" /* Router */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__angular_router__["d" /* Router */]) === 'function' && _c) || Object, (typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_5__services_auth_service__["a" /* AuthService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_5__services_auth_service__["a" /* AuthService */]) === 'function' && _d) || Object, (typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_6__step_builder_shared_builder_data_service__["a" /* BuilderDataService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_6__step_builder_shared_builder_data_service__["a" /* BuilderDataService */]) === 'function' && _e) || Object])
+        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["c" /* ActivatedRoute */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__angular_router__["c" /* ActivatedRoute */]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["d" /* Router */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__angular_router__["d" /* Router */]) === 'function' && _c) || Object, (typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_5__services_auth_service__["a" /* AuthService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_5__services_auth_service__["a" /* AuthService */]) === 'function' && _d) || Object, (typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_6__step_builder_shared_builder_data_service__["a" /* BuilderDataService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_6__step_builder_shared_builder_data_service__["a" /* BuilderDataService */]) === 'function' && _e) || Object, (typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_8__shared_exception_handler_service__["a" /* ExceptionHandlerService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_8__shared_exception_handler_service__["a" /* ExceptionHandlerService */]) === 'function' && _f) || Object])
     ], DropzoneComponent);
     return DropzoneComponent;
-    var _a, _b, _c, _d, _e;
+    var _a, _b, _c, _d, _e, _f;
 }(__WEBPACK_IMPORTED_MODULE_1__base_component__["a" /* BaseComponent */]));
 var MIMETYPE;
 (function (MIMETYPE) {
@@ -25862,7 +25889,7 @@ var MIMETYPE;
 "use strict";
 /* WEBPACK VAR INJECTION */(function(jQuery) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PanelComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__container_component__ = __webpack_require__(1006);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__container_component__ = __webpack_require__(1008);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__input_factory_service__ = __webpack_require__(985);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__UIConfig_model__ = __webpack_require__(777);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__enums__ = __webpack_require__(776);
@@ -26080,10 +26107,10 @@ var SelectComponent = (function (_super) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__(115);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(404);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng2_bootstrap__ = __webpack_require__(949);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__label_label_component__ = __webpack_require__(1008);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__label_label_component__ = __webpack_require__(1009);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__input_factory_service__ = __webpack_require__(985);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__component_repository_service__ = __webpack_require__(1005);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__exception_handler_service__ = __webpack_require__(1007);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__component_repository_service__ = __webpack_require__(1007);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__exception_handler_service__ = __webpack_require__(994);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -26209,7 +26236,7 @@ var ValueOptionType;
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TabPageComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__container_component__ = __webpack_require__(1006);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__container_component__ = __webpack_require__(1008);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__input_factory_service__ = __webpack_require__(985);
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -26581,16 +26608,16 @@ var ScenarioFilesViewerComponent = (function () {
 /* WEBPACK VAR INJECTION */(function(jQuery, localForage) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return StepBuilderComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(117);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__shared_builder_data_service__ = __webpack_require__(994);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__shared_builder_data_service__ = __webpack_require__(995);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__shared_event_service__ = __webpack_require__(1010);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__shared_UIConfig_model__ = __webpack_require__(777);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__shared_skill_manager_service__ = __webpack_require__(1011);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__shared_builder_model_service__ = __webpack_require__(1009);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__shared_builder_model_service__ = __webpack_require__(996);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_preview_service__ = __webpack_require__(414);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rxjs_observable_IntervalObservable__ = __webpack_require__(996);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rxjs_observable_IntervalObservable__ = __webpack_require__(998);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rxjs_observable_IntervalObservable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_rxjs_observable_IntervalObservable__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__services_taskData_service__ = __webpack_require__(407);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__shared_exception_handler_service__ = __webpack_require__(1007);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__shared_exception_handler_service__ = __webpack_require__(994);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -26637,7 +26664,6 @@ var StepBuilderComponent = (function () {
         jQuery(window).on('sn:resize', this.initScroll.bind(this));
         this.initScroll();
         this.bindShowMoreButtonClick();
-        this.modelChecker = __WEBPACK_IMPORTED_MODULE_8_rxjs_observable_IntervalObservable__["IntervalObservable"].create(5000).subscribe(function () { return _this.checkForModelChange(); });
         this.route.params.subscribe(function (params) {
             _this.taskID = params["taskId"];
             _this.stepIndex = params["stepIndex"];
@@ -26652,6 +26678,13 @@ var StepBuilderComponent = (function () {
             });
             _this.fetchSkillData();
         });
+    };
+    StepBuilderComponent.prototype.bindModelChecker = function ($event) {
+        var _this = this;
+        //bind only when ui has been rendered for all the views. An event is emitted from view input area component.
+        if ($event.uiRendered == true) {
+            this.modelChecker = __WEBPACK_IMPORTED_MODULE_8_rxjs_observable_IntervalObservable__["IntervalObservable"].create(5000).subscribe(function () { return _this.checkForModelChange(); });
+        }
     };
     StepBuilderComponent.prototype.checkForStepTextOverflow = function () {
         jQuery(".show-more a").each(function () {
@@ -26818,11 +26851,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var StepInputAreaComponent = (function () {
     function StepInputAreaComponent() {
         this.viewChanged = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]();
+        this.uiRendered = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]();
     }
     StepInputAreaComponent.prototype.ngOnInit = function () { };
     StepInputAreaComponent.prototype.setSelectedView = function ($event) {
         this.selectedView = $event.viewNumber;
         this.viewChanged.emit({ viewNumber: this.selectedView });
+    };
+    StepInputAreaComponent.prototype.emitEventToParent = function ($event) {
+        this.uiRendered.emit({ uiRendered: $event.uiRendered });
     };
     __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(), 
@@ -26836,6 +26873,10 @@ var StepInputAreaComponent = (function () {
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Output"])(), 
         __metadata('design:type', (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]) === 'function' && _b) || Object)
     ], StepInputAreaComponent.prototype, "viewChanged", void 0);
+    __decorate([
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Output"])(), 
+        __metadata('design:type', (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]) === 'function' && _c) || Object)
+    ], StepInputAreaComponent.prototype, "uiRendered", void 0);
     StepInputAreaComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'app-step-input-area',
@@ -26845,7 +26886,7 @@ var StepInputAreaComponent = (function () {
         __metadata('design:paramtypes', [])
     ], StepInputAreaComponent);
     return StepInputAreaComponent;
-    var _a, _b;
+    var _a, _b, _c;
 }());
 //# sourceMappingURL=E:/Sim-Builder-Packaging/checkout/develop/client/step-input-area.component.js.map
 
@@ -26910,6 +26951,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var ViewInputAreaComponent = (function () {
     function ViewInputAreaComponent(factoryRef, vcref) {
         this.factoryRef = factoryRef;
+        this.uiRendered = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]();
         this.viewHeadingConfig = new __WEBPACK_IMPORTED_MODULE_2__shared_UIConfig_model__["b" /* itemSchema */]();
     }
     ViewInputAreaComponent.prototype.ngOnInit = function () {
@@ -26921,6 +26963,10 @@ var ViewInputAreaComponent = (function () {
             for (var _i = 0, _a = this.viewConfig["items"]; _i < _a.length; _i++) {
                 var item = _a[_i];
                 this.factoryRef.createComp(this.compContainer, item);
+            }
+            //when all the views are rendered in UI, emit an event to parent component so that it can bind modelchecker function to check for model changes every 5 secs.
+            if (this.currentView == this.viewsCount) {
+                this.uiRendered.emit({ uiRendered: true });
             }
         }
         catch (err) {
@@ -26935,16 +26981,28 @@ var ViewInputAreaComponent = (function () {
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(), 
         __metadata('design:type', (typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__shared_UIConfig_model__["a" /* UIConfig */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__shared_UIConfig_model__["a" /* UIConfig */]) === 'function' && _a) || Object)
     ], ViewInputAreaComponent.prototype, "viewConfig", void 0);
+    __decorate([
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Output"])(), 
+        __metadata('design:type', (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]) === 'function' && _b) || Object)
+    ], ViewInputAreaComponent.prototype, "uiRendered", void 0);
+    __decorate([
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(), 
+        __metadata('design:type', Object)
+    ], ViewInputAreaComponent.prototype, "viewsCount", void 0);
+    __decorate([
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(), 
+        __metadata('design:type', Object)
+    ], ViewInputAreaComponent.prototype, "currentView", void 0);
     ViewInputAreaComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'app-view-input-area',
             template: __webpack_require__(1118),
             styles: [__webpack_require__(1088)]
         }), 
-        __metadata('design:paramtypes', [(typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__shared_input_factory_service__["a" /* InputFactoryService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__shared_input_factory_service__["a" /* InputFactoryService */]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewContainerRef"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewContainerRef"]) === 'function' && _c) || Object])
+        __metadata('design:paramtypes', [(typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__shared_input_factory_service__["a" /* InputFactoryService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__shared_input_factory_service__["a" /* InputFactoryService */]) === 'function' && _c) || Object, (typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewContainerRef"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewContainerRef"]) === 'function' && _d) || Object])
     ], ViewInputAreaComponent);
     return ViewInputAreaComponent;
-    var _a, _b, _c;
+    var _a, _b, _c, _d;
 }());
 //# sourceMappingURL=E:/Sim-Builder-Packaging/checkout/develop/client/view-input-area.component.js.map
 
@@ -27457,13 +27515,13 @@ module.exports = "<p>\r\n  scenario-files-viewer works!\r\n</p>\r\n"
 /* 1115 */
 /***/ (function(module, exports) {
 
-module.exports = "<nav class=\"navbar navbar-default\" id=\"header\">\r\n  <div class=\"container-fluid\">\r\n    <div class=\"navbar-header\">\r\n      <div class=\"row\">\r\n        <div class=\"col-md-10\">\r\n          <div class=\"row stepText stepTextOverflowHidden\">\r\n            <h4 class=\"stepTextHeading\"><strong>STEP {{stepIndex}}</strong>&nbsp;<span #stepTextContainer [innerHTML]=\"stepText\"></span></h4>\r\n            <span class=\"show-more\"><a href=\"#\">Show more</a></span>\r\n          </div>\r\n          <div class=\"row\">\r\n            <span class=\"tag tag-primary\"><span>Task ID:&nbsp;</span> {{taskID}}  </span>&nbsp;<span class=\"tag tagFontNormal tag-primary\"><span >Skill:&nbsp;</span> {{skillName}}</span> &nbsp; <span class=\"tag tag-primary\"><span>Template:&nbsp;</span> {{templateName}} </span>\r\n          </div>\r\n        </div>\r\n        <div class=\"col-md-2\">\r\n          <ul class=\"nav navbar-nav navbar-right\">\r\n            <li><button class=\"btn btn-inverse pull-right\" (click)=\"onClose()\">Close</button></li>\r\n          </ul>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</nav>\r\n<div class=\"body-container\">\r\n  <div id=\"body\">\r\n    <div class=\"row\">\r\n      <div class=\"col-lg-12 col-md-12\">\r\n        <app-step-input-area [stepConfig]=\"uiConfig\" (viewChanged)=\"setSelectedView($event.viewNumber)\" [selectedView]=\"selectedView\"></app-step-input-area>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n<div id=\"footer\">\r\n  <div class=\"col-md-12\">\r\n    <button class=\"btn btn-inverse\" (click)='lauchPreviewTask()'>Preview Step</button>\r\n    <button class=\"btn btn-inverse\">Save</button>\r\n    <div class=\"pull-right\">\r\n      <button class=\"btn btn-inverse width-100\" (click)=\"setSelectedView(selectedView-1)\" [disabled]=\"selectedView == 1\">Previous</button>\r\n      <button class=\"btn btn-inverse width-100\" *ngIf=\"selectedView < uiConfig.views.length\" (click)=\"setSelectedView(selectedView+1)\">Next</button>\r\n      <button class=\"btn btn-inverse width-100\" *ngIf=\"selectedView == uiConfig.views.length\" (click)=\"onFinish()\">Finish</button>\r\n    </div>\r\n  </div>\r\n</div>\r\n"
+module.exports = "<nav class=\"navbar navbar-default\" id=\"header\">\r\n  <div class=\"container-fluid\">\r\n    <div class=\"navbar-header\">\r\n      <div class=\"row\">\r\n        <div class=\"col-md-10\">\r\n          <div class=\"row stepText stepTextOverflowHidden\">\r\n            <h4 class=\"stepTextHeading\"><strong>STEP {{stepIndex}}</strong>&nbsp;<span #stepTextContainer [innerHTML]=\"stepText\"></span></h4>\r\n            <span class=\"show-more\"><a href=\"#\">Show more</a></span>\r\n          </div>\r\n          <div class=\"row\">\r\n            <span class=\"tag tag-primary\"><span>Task ID:&nbsp;</span> {{taskID}}  </span>&nbsp;<span class=\"tag tagFontNormal tag-primary\"><span >Skill:&nbsp;</span> {{skillName}}</span> &nbsp; <span class=\"tag tag-primary\"><span>Template:&nbsp;</span> {{templateName}} </span>\r\n          </div>\r\n        </div>\r\n        <div class=\"col-md-2\">\r\n          <ul class=\"nav navbar-nav navbar-right\">\r\n            <li><button class=\"btn btn-inverse pull-right\" (click)=\"onClose()\">Close</button></li>\r\n          </ul>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</nav>\r\n<div class=\"body-container\">\r\n  <div id=\"body\">\r\n    <div class=\"row\">\r\n      <div class=\"col-lg-12 col-md-12\">\r\n        <app-step-input-area [stepConfig]=\"uiConfig\" (viewChanged)=\"setSelectedView($event.viewNumber)\" [selectedView]=\"selectedView\" (uiRendered)=\"bindModelChecker($event)\"></app-step-input-area>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n<div id=\"footer\">\r\n  <div class=\"col-md-12\">\r\n    <button class=\"btn btn-inverse\" (click)='lauchPreviewTask()'>Preview Step</button>\r\n    <button class=\"btn btn-inverse\">Save</button>\r\n    <div class=\"pull-right\">\r\n      <button class=\"btn btn-inverse width-100\" (click)=\"setSelectedView(selectedView-1)\" [disabled]=\"selectedView == 1\">Previous</button>\r\n      <button class=\"btn btn-inverse width-100\" *ngIf=\"selectedView < uiConfig.views.length\" (click)=\"setSelectedView(selectedView+1)\">Next</button>\r\n      <button class=\"btn btn-inverse width-100\" *ngIf=\"selectedView == uiConfig.views.length\" (click)=\"onFinish()\">Finish</button>\r\n    </div>\r\n  </div>\r\n</div>\r\n"
 
 /***/ }),
 /* 1116 */
 /***/ (function(module, exports) {
 
-module.exports = "<app-view-navigator (viewClicked)=\"setSelectedView($event)\" [viewCount]=\"stepConfig.views.length\" [selectedViewNumber]=\"selectedView\"></app-view-navigator>\r\n<app-view-input-area *ngFor=\"let view of stepConfig.views; let viewIndex=index;\" [viewConfig]=\"view\" [hidden]=\"selectedView!=(viewIndex+1)\"></app-view-input-area>\r\n"
+module.exports = "<app-view-navigator (viewClicked)=\"setSelectedView($event)\" [viewCount]=\"stepConfig.views.length\" [selectedViewNumber]=\"selectedView\"></app-view-navigator>\r\n<app-view-input-area *ngFor=\"let view of stepConfig.views; let viewIndex=index;\" [viewConfig]=\"view\" [hidden]=\"selectedView!=(viewIndex+1)\" [viewsCount]=\"stepConfig.views.length\" [currentView]=\"viewIndex+1\" (uiRendered)=\"emitEventToParent($event)\"></app-view-input-area>\r\n"
 
 /***/ }),
 /* 1117 */

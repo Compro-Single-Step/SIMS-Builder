@@ -16,6 +16,7 @@ var columnTypeContextMenuMap = {
   "TEXT": "TABLE"
 };
 var tableRange = "";
+var currSheetObj = {};
 
 var sortingTableColumns = function (_ExcelBaseSkill) {
   _inherits(sortingTableColumns, _ExcelBaseSkill);
@@ -154,9 +155,13 @@ var sortingTableColumns = function (_ExcelBaseSkill) {
       var self = this;
       var initPromise = _get(sortingTableColumns.prototype.__proto__ || Object.getPrototypeOf(sortingTableColumns.prototype), "init", this).call(this, skilldata);
       var dbMgr = data.dbFilestoreMgr;
+
+      var sheetAction = data.stepUIState.views['2'].sheetInAction.selectedOption.value.label;
+      var sheetDataArr = data.stepUIState.views['1'].sheetsForTable.value;
+      currSheetObj = this.getCurrentSheetObject(sheetAction, sheetDataArr);
       //reading the csv file 
       var readFileType = "csv";
-      var colHdrFilePath = data.stepUIState.views['1'].sheetsForTable.value[0].columnHeaders["path"]; // abc is the model reference for the  csv file path
+      var colHdrFilePath = currSheetObj.columnHeaders["path"];
       var readFilePromise = dbMgr.readFileFromFileStore(colHdrFilePath, readFileType);
       return Promise.all([initPromise, readFilePromise]).then(function (resolveParamArr) {
 
@@ -166,7 +171,10 @@ var sortingTableColumns = function (_ExcelBaseSkill) {
         var resolveParam = resolveParamArr[1];
 
         // making it toUpperCase as the data will be used later as well
-        tableRange = eval("data.stepUIState." + "views['1'].sheetsForTable.value[0].tableRange.value").toUpperCase();
+
+        // created for multiple usage
+        tableRange = currSheetObj["tableRange"].value.toUpperCase();
+        // first one
         tableRange.trim();
 
         var tableRAngeArr = self.getTableRangeArray(tableRange);
@@ -214,8 +222,8 @@ var sortingTableColumns = function (_ExcelBaseSkill) {
 
       var taskParams = skillParams.taskParams;
       var paramValueObj = skillParams.paramsObj;
-
-      return taskParams.dbFilestoreMgr.readFileFromFileStore(paramValueObj.filterMenuJson).then(function (resolveParam) {
+      var filterMenuJsonPath = currSheetObj["tableFilterMenuData"].path;
+      return taskParams.dbFilestoreMgr.readFileFromFileStore(filterMenuJsonPath).then(function (resolveParam) {
 
         var finalValue = JSON.parse(resolveParam.fileData);
         var resolveParams = { "attrValue": JSON.stringify(finalValue) };
@@ -246,7 +254,7 @@ var sortingTableColumns = function (_ExcelBaseSkill) {
         var tableArr = [];
         var tableObj = {};
         tableObj["name"] = "Table1"; //table Name not present
-        tableObj["range"] = paramValueObj["tableRange"];
+        tableObj["range"] = tableRange;
         tableArr.push(tableObj);
         sheetObj["tables"] = tableArr;
         var resolveParams = { "attrValue": JSON.stringify(sheetObj) };
@@ -254,6 +262,26 @@ var sortingTableColumns = function (_ExcelBaseSkill) {
       } catch (error) {
         return Promise.reject(error);
       }
+    }
+  }, {
+    key: "getSelCellInRange",
+    value: function getSelCellInRange(skillParams) {
+
+      var resolveParams = { "attrValue": tableRange };
+      return Promise.resolve(resolveParams);
+    }
+  }, {
+    key: "getCurrentSheetObject",
+    value: function getCurrentSheetObject(sheetAction, sheetDataArr) {
+
+      var sheetObj = {};
+      for (var idx = 0; idx < sheetDataArr.length; ++idx) {
+        if (sheetAction == sheetDataArr[idx].name) {
+          sheetObj = sheetDataArr[idx];
+          break;
+        }
+      }
+      return sheetObj;
     }
   }, {
     key: "getColumnHdrCell",
@@ -467,9 +495,8 @@ var sortingTableColumns = function (_ExcelBaseSkill) {
       try {
         var taskParams = skillParams.taskParams;
         var paramValueObj = skillParams.paramsObj;
-        var _tableRange = paramValueObj.tableRange;
-        var finalArr = this.getColumnHeaderArray(_tableRange);
-
+        // tableRange is a common variable available for all
+        var finalArr = this.getColumnHeaderArray(tableRange);
         return Promise.resolve({ "attrValue": finalArr });
       } catch (error) {
         return Promise.reject(error);

@@ -10,7 +10,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(404);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__home_routes__ = __webpack_require__(1038);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ng2_bootstrap__ = __webpack_require__(949);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__layout_component__ = __webpack_require__(1004);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__layout_component__ = __webpack_require__(1006);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__sidebar_sidebar_component__ = __webpack_require__(1040);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__navbar_navbar_component__ = __webpack_require__(1039);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -24726,7 +24726,9 @@ var User = (function () {
 /* 1001 */,
 /* 1002 */,
 /* 1003 */,
-/* 1004 */
+/* 1004 */,
+/* 1005 */,
+/* 1006 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -24939,8 +24941,6 @@ var Layout = (function () {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(169)))
 
 /***/ }),
-/* 1005 */,
-/* 1006 */,
 /* 1007 */,
 /* 1008 */,
 /* 1009 */,
@@ -24978,7 +24978,7 @@ var Layout = (function () {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ROUTES; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_router__ = __webpack_require__(117);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__layout_component__ = __webpack_require__(1004);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__layout_component__ = __webpack_require__(1006);
 
 
 // noinspection TypeScriptValidateTypes
