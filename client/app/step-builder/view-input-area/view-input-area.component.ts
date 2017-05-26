@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewContainerRef, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewContainerRef, ViewChild } from '@angular/core';
 import { InputFactoryService } from '../../shared/input-factory.service';
 import { UIConfig } from '../../shared/UIConfig.model';
 import { itemSchema } from '../../shared/UIConfig.model';
@@ -11,8 +11,11 @@ import { LabelTypes } from '../../shared/enums';
 export class ViewInputAreaComponent implements OnInit {
   @ViewChild('inputCompContainer', { read: ViewContainerRef }) compContainer;
   @Input() viewConfig: UIConfig;
+  @Output() uiRendered: EventEmitter<Object> = new EventEmitter();
   viewHeadingConfig: itemSchema = new itemSchema();
   constructor(private factoryRef: InputFactoryService, vcref: ViewContainerRef) { }
+  @Input() viewsCount;
+  @Input() currentView;
   ngOnInit() {
     this.viewHeadingConfig.rendererProperties.text = this.viewConfig["label"];
     this.viewHeadingConfig.rendererProperties.type = LabelTypes.VIEW_HEADING;
@@ -21,6 +24,10 @@ export class ViewInputAreaComponent implements OnInit {
     try {
       for (let item of this.viewConfig["items"]) {
         this.factoryRef.createComp(this.compContainer, item);
+      }
+      if(this.currentView == this.viewsCount)
+      {
+        this.uiRendered.emit({uiRendered: true});
       }
     }
     catch(err){
