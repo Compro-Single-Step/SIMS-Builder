@@ -111,19 +111,19 @@ export class DropzoneComponent extends BaseComponent implements OnDestroy {
       if (self.isMultipleFiles) {
         for (let i = 0; i < currModelRef["value"].length; i++) {
            if (currModelRef["value"][i].displayName === file.name) {
-            self.updateModelAndSaveToServer(currModelRef, i);
+            self.removeFile(currModelRef, i);
             break;
           }
         }
       } else {
-        self.updateModelAndSaveToServer(currModelRef)
+        self.removeFile(currModelRef)
       }
     })
 
     this.restoreFileUI(dropzone);
   }
 
-  updateModelAndSaveToServer(model, index?) {
+  removeFile(model, index?) {
     this.emitEvents(null);
     let path = this.isMultipleFiles ? model["value"][index]["path"] : model["path"];
     if (this.isMultipleFiles) {
