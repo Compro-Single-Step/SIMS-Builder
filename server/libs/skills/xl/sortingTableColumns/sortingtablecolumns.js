@@ -6,6 +6,7 @@ const columnTypeContextMenuMap = {
   "TEXT": "TABLE"
 }
 let tableRange = "";
+let currSheetObj = {};
 
 class sortingTableColumns extends ExcelBaseSkill {
   getSheetDetails(initDocJSON, dependantSheetArrayInModel, clonedDependantSheetArrayInModel) {
@@ -131,7 +132,7 @@ class sortingTableColumns extends ExcelBaseSkill {
     
     let sheetAction = data.stepUIState.views['2'].sheetInAction.selectedOption.value.label;
     let sheetDataArr = data.stepUIState.views['1'].sheetsForTable.value;
-    let currSheetObj = this.getCurrentSheetObject(sheetAction,sheetDataArr);
+    currSheetObj = this.getCurrentSheetObject(sheetAction,sheetDataArr);
     //reading the csv file 
     let readFileType = "csv";
     let colHdrFilePath = currSheetObj.columnHeaders["path"];
@@ -143,7 +144,6 @@ class sortingTableColumns extends ExcelBaseSkill {
       // super.init(skilldata).then(function (resolveParams) {
       let resolveParam = resolveParamArr[1];
 
-      //kapil
       // making it toUpperCase as the data will be used later as well
       
       // created for multiple usage
@@ -198,10 +198,7 @@ class sortingTableColumns extends ExcelBaseSkill {
 
     var taskParams = skillParams.taskParams;
     var paramValueObj = skillParams.paramsObj;
-    let sheetAction = paramValueObj.sheetAction
-    let sheetDataArr = paramValueObj.sheetData
-    let currSheetObj = this.getCurrentSheetObject(sheetAction,sheetDataArr);
-    let filterMenuJsonPath = currSheetObj["tableFilterMenuData"].path
+    let filterMenuJsonPath = currSheetObj["tableFilterMenuData"].path;
     return taskParams.dbFilestoreMgr.readFileFromFileStore(filterMenuJsonPath).then(function (resolveParam) {
 
       var finalValue = JSON.parse(resolveParam.fileData);
@@ -254,7 +251,8 @@ class sortingTableColumns extends ExcelBaseSkill {
       let sheetObj = {};
       for(let idx = 0 ;idx < sheetDataArr.length; ++idx){
         if(sheetAction == sheetDataArr[idx].name){
-          sheetObj = sheetDataArr[idx]
+          sheetObj = sheetDataArr[idx];
+          break;
         }
       }
       return sheetObj;
