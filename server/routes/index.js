@@ -6,7 +6,7 @@ var skillRoutes = require('./skill.routes');
 var verifyToken = require('./login/verifyToken');
 var userData = require('./userData');
 var taskPreviewRouter = require('./taskpreview/taskPreview'),
-    automationRoutes  = require('./skilltest/skilltest.routes');
+    skilltestRoutes  = require('./skilltest/skilltest.routes');
 
 
 module.exports = function () {
@@ -18,7 +18,7 @@ module.exports = function () {
 	router.use('/skill', skillRoutes);
   router.use('/fetchTaskData', taskBuilderData);
 	router.use('/user', userData);
-  router.use('/skilltest', automationRoutes);
+  router.use('/skilltest', skilltestRoutes);
 
   return router;
 };
