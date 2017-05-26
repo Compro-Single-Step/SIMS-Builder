@@ -51,8 +51,7 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
         });
         jQuery(window).on('sn:resize', this.initScroll.bind(this));
         this.initScroll();
-        this.bindShowMoreButtonClick();
-        this.modelChecker = IntervalObservable.create(5000).subscribe(() => this.checkForModelChange());
+        this.bindShowMoreButtonClick();        
         this.route.params.subscribe((params: Params) => {
             this.taskID = params["taskId"];
             this.stepIndex = params["stepIndex"];
@@ -67,6 +66,14 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
             });
             this.fetchSkillData();
         })        
+    }
+
+    bindModelChecker($event) {
+        //bind only when ui has been rendered for all the views. An event is emitted from view input area component.
+        if($event.uiRendered == true)
+        {
+            this.modelChecker = IntervalObservable.create(5000).subscribe(() => this.checkForModelChange());
+        }
     }
 
     checkForStepTextOverflow() {

@@ -10,6 +10,7 @@ export class StepInputAreaComponent implements OnInit {
   @Input() selectedView: number;
   @Input() stepConfig: UIConfig;
   @Output() viewChanged: EventEmitter<Object> = new EventEmitter();
+  @Output() uiRendered: EventEmitter<Object> = new EventEmitter();
   constructor() {}
 
   ngOnInit() {}
@@ -17,5 +18,9 @@ export class StepInputAreaComponent implements OnInit {
   setSelectedView($event) {
     this.selectedView = $event.viewNumber;
     this.viewChanged.emit({viewNumber: this.selectedView});
+  }
+
+  emitEventToParent($event) {
+    this.uiRendered.emit({uiRendered: $event.uiRendered});
   }
 }
