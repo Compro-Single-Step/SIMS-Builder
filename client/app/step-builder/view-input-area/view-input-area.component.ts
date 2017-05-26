@@ -25,6 +25,7 @@ export class ViewInputAreaComponent implements OnInit {
       for (let item of this.viewConfig["items"]) {
         this.factoryRef.createComp(this.compContainer, item);
       }
+      //when all the views are rendered in UI, emit an event to parent component so that it can bind modelchecker function to check for model changes every 5 secs.
       if(this.currentView == this.viewsCount)
       {
         this.uiRendered.emit({uiRendered: true});

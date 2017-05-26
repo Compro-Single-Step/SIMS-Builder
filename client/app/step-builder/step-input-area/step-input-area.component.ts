@@ -20,7 +20,7 @@ export class StepInputAreaComponent implements OnInit {
     this.viewChanged.emit({viewNumber: this.selectedView});
   }
 
-  emitEventToParentComponent($event) {
+  emitEventToParent($event) {
     this.uiRendered.emit({uiRendered: $event.uiRendered});
   }
 }

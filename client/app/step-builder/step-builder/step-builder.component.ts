@@ -69,6 +69,7 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
     }
 
     bindModelChecker($event) {
+        //bind only when ui has been rendered for all the views. An event is emitted from view input area component.
         if($event.uiRendered == true)
         {
             this.modelChecker = IntervalObservable.create(5000).subscribe(() => this.checkForModelChange());
