@@ -50,6 +50,9 @@ class FileStoreController {
                         resolve(resolveParam);
                     }
                 })
+                .on('error', (error) => {
+                    reject(error);
+                });
         });
     }
     // Below function was a duplicate. Use 'getStepXMLFolderPath' instead.
@@ -62,28 +65,32 @@ class FileStoreController {
 
     copyAssetToTaskFolder(srcPath, taskParams) {
 
-        var filepathArr = srcPath.split("/")
-        var fileName = filepathArr[filepathArr.length - 1].trim();
-        var fileTypeArr = fileName.split(".")
-        var fileType = fileTypeArr[fileTypeArr.length - 1];
-        var resFileType = fileType;
-        if (resTypeMap[fileType]) {
-            resFileType = resTypeMap[fileType]
+        try {
+            var filepathArr = srcPath.split("/")
+            var fileName = filepathArr[filepathArr.length - 1].trim();
+            var fileTypeArr = fileName.split(".")
+            var fileType = fileTypeArr[fileTypeArr.length - 1];
+            var resFileType = fileType;
+            if (resTypeMap[fileType]) {
+                resFileType = resTypeMap[fileType]
+            }
+            //path to save the file
+            var absFilePath = this.getStepXMLFolderPath(taskParams.taskId, taskParams.stepIndex);
+
+            //path to return for the file
+            var srcPath = config.fileStore.resourceFolder + srcPath;
+            var destPath = this.getStepXMLFolderPath(taskParams.taskId, taskParams.stepIndex);
+            var relativeXmlPath = this.getSimsXmlStepFolderPath(taskParams.taskId, taskParams.stepIndex);
+
+            if (taskParams.parentFolder) {
+                destPath += taskParams.parentFolder + "/"
+                relativeXmlPath += taskParams.parentFolder + "/";
+            }
+
+            destPath += fileName;
+        } catch (error) {
+            return Promise.reject(error);
         }
-        //path to save the file
-        var absFilePath = this.getStepXMLFolderPath(taskParams.taskId, taskParams.stepIndex);
-
-        //path to return for the file
-        var srcPath = config.fileStore.resourceFolder + srcPath;
-        var destPath = this.getStepXMLFolderPath(taskParams.taskId, taskParams.stepIndex);
-        var relativeXmlPath = this.getSimsXmlStepFolderPath(taskParams.taskId, taskParams.stepIndex);
-
-        if (taskParams.parentFolder) {
-            destPath += taskParams.parentFolder + "/"
-            relativeXmlPath += taskParams.parentFolder + "/";
-        }
-
-        destPath += fileName;
 
         return new Promise(function (resolve, reject) {
 
@@ -114,14 +121,19 @@ class FileStoreController {
      * destination and returns the promise for same
      */
     copyAssetToTaskFolderEnhanced(sourceFileLocation, resourceMap, taskId, stepIndex) {
-
         let srcPath;
-        if (resourceMap.resourceType === "step")
-            srcPath = config.fileStore.resourceFolder + sourceFileLocation;
-        else
-            srcPath = path.join(config.fileStore.skillFolder, sourceFileLocation);
+        let destPath;
+        try {
+            if (resourceMap.resourceType === "step")
+                srcPath = config.fileStore.resourceFolder + sourceFileLocation;
+            else
+                srcPath = path.join(config.fileStore.skillFolder, sourceFileLocation);
 
-        let destPath = path.join(this.getStepAssetsFolderPath(taskId, stepIndex), resourceMap.AssetFolderHierarchy, resourceMap.fileName);
+            destPath = path.join(this.getStepAssetsFolderPath(taskId, stepIndex), resourceMap.AssetFolderHierarchy, resourceMap.fileName);
+
+        } catch (error) {
+            return Promise.reject(error);
+        }
 
         return new Promise((resolve, reject) => {
             fse.copy(srcPath, destPath, { overwrite: false }, error => {
@@ -156,7 +168,7 @@ class FileStoreController {
         }
 
     }
-    
+
     getTaskFolderPath(taskId) {
         return '{#approot#}/';
     }
@@ -179,8 +191,8 @@ class FileStoreController {
         let destPath = this.getStepXMLFolderPath(taskParams.taskId, taskParams.stepIndex);
         let relativeXmlPath = this.getSimsXmlStepFolderPath(taskParams.taskId, taskParams.stepIndex);
         let fileName = FileName; //this will come from out side.
-        return this.saveFileToFileStore(destPath, fileName, File).then(()=>{
-            var relativeResourcePath = relativeXmlPath+fileName;
+        return this.saveFileToFileStore(destPath, fileName, File).then(() => {
+            var relativeResourcePath = relativeXmlPath + fileName;
             return Promise.resolve(relativeResourcePath);
         });
     }
@@ -267,7 +279,7 @@ class FileStoreController {
     getStepXMLFolderPath(taskId, stepIndex) {
         return config.fileStore.xmlFolder + taskId + "/" + stepIndex + "/";
     }
-    
+
     /**
      * @param {*} taskId : Task ID
      * @param {*} stepIndex : Step Number
