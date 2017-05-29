@@ -42,7 +42,12 @@ class FileStoreController {
                 })
                 .on('done', (error) => {
                     if (resultArr.length == 0) {
-                        var error = new Error("Error occured while reading the csv type file at path " + absolutePath);
+                        let customError = {
+                            method: "readCsvFile()",
+                            msg: "Error occured while reading the csv type file",
+                            filePath: absolutePath
+                        };
+                        error.customError = customError;
                         reject(error);
                     }
                     else {
@@ -51,6 +56,12 @@ class FileStoreController {
                     }
                 })
                 .on('error', (error) => {
+                    let customError = {
+                        method: "readCsvFile()",
+                        msg: "Error occured while reading the csv type file",
+                        filePath: absolutePath
+                    };
+                    error.customError = customError;
                     reject(error);
                 });
         });
@@ -89,6 +100,11 @@ class FileStoreController {
 
             destPath += fileName;
         } catch (error) {
+            let customError = {
+                method: "copyAssetToTaskFolder()",
+                msg: "Error occured while creating source and destination path to copy file",
+            };
+            error.customError = customError;
             return Promise.reject(error);
         }
 
@@ -132,6 +148,11 @@ class FileStoreController {
             destPath = path.join(this.getStepAssetsFolderPath(taskId, stepIndex), resourceMap.AssetFolderHierarchy, resourceMap.fileName);
 
         } catch (error) {
+            let customError = {
+                method: "copyAssetToTaskFolderEnhanced()",
+                msg: "Error occured while creating source and destination path to copy file",
+            };
+            error.customError = customError;
             return Promise.reject(error);
         }
 
