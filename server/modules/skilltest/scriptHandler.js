@@ -1,166 +1,185 @@
-/*
-const skillTestController = require('./../../controllers/skilltest.controller');
+const scriptService = require('./script.service');
+  config = require('./../../config/skilltest.config');
+
+const mapperHandler = require('./mapperHandler'),
+  templateHandler = require('./templateHandler');
 
 class ScriptHandler {
 
-  generateStepScript( templateId ) {
+  generateScript(script_meta) {
+    var _data = {}, scriptData = {};
 
-    // request data
-    var script_meta = {
-      template_id: req.body.template_id,
-      step_number: req.body.step_number,
-      task_id: req.body.task_id,
-      scenario: req.body.scenario,
-      params: req.body.params,
-      pathways: req.body.methods,
-      appName: ""
-    };
+    return new Promise((resolve, reject) => {
 
-      // get files for script creation
+      templateHandler.getTemplateById(script_meta.template_id)
+        .then((data) => {
+          _data.template = data[0];
+          return mapperHandler.getMapperByTemplateId(script_meta.template_id)
+        })
+        .then((data) => {
+          _data.mapper = data[0];
+          return this.getScriptBySleId((script_meta.task_id + '.' + script_meta.scenario))
+        })
+        .then((script) => {
 
-      return new Promise((resolve, reject) => {
-
-        // create step script
-
-      });
-
-
-    */
-/**
-     *
-     *//*
-
-
-    return Promise.all([
-      skillTestController.getTemplateById(templateId),
-      skillTestController.getMapperByTemplateId(templateId)
-    ])
-      .then(([template, mapper]) => {
-
-        return Promise.resolve(data);
-
-      })
-      .catch(error => {
-        return Promise.reject(error);
-      });
-  };
-
-};
-
-function getScriptBySleId(req, res) {
-  let _q = {"sle_id": req.params['taskId']};
-
-  Script.get(_q)
-    .then((script) => {
-      if(req.query.format === 'xml') {
-        var xmlContent = Service.jsonToDistXml(script);
-        res.set('Content-Type', 'text/xml');
-        return res.send(xmlContent);
-      } else if(req.query.format === 'java') {
-        var javaContent = Service.jsonToDistJava(script);
-
-        res.set('Content-type', 'text/plain');
-        res.charset = 'UTF-8';
-
-        return res.send(javaContent);
-      } else {
-        return res.json(script);
-      }
-    })
-    .catch(e => next(e));
-}
-
-
-function generateAndSaveScript(req, res, next ) {
-  // todo: change to promises and es6 syntax
-
-  // request data
-  var script_meta = {
-    template_id: req.body.template_id,
-    step_number: req.body.step_number,
-    task_id: req.body.task_id,
-    scenario: req.body.scenario,
-    params: req.body.params,
-    pathways: req.body.methods,
-    appName: ""
-  };
-
-  console.log(script_meta);
-
-  prepareScriptItem( script_meta, ( script_item ) => {
-      _getScriptByTaskId((script_meta.task_id + '.' + script_meta.scenario), (script) => {
-          var scriptData;
-          if(script){
-            console.log('************** script exist');
-            // update existing script
-            scriptData = script;
+          if (script && script[0]) {
+            scriptData = script[0];
           } else {
-            console.log('************** script do not exist');
             scriptData = {
               sle_id: (script_meta.task_id + '.' + script_meta.scenario),
               task_json: [
                 {
                   "items": [],
-                  "appName" : script_meta.appName,
-                  "id" : script_meta.task_id,
-                  "scenario" : script_meta.scenario
+                  "appName": script_meta.appName,
+                  "id": script_meta.task_id,
+                  "scenario": script_meta.scenario
                 },
                 [
-                  ["\"1\", \"1\""],"\"Primary\""
+                  ["\"1\", \"1\""], "\"Primary\""
                 ]
               ]
             };
           }
+          ;
 
-          //update script item
-          scriptData.task_json[0].items[parseInt(script_meta.step_number) -1] = script_item;
+          return prepareScriptItem(script_meta, _data.template, _data.mapper)
+        })
+        .then((script_item) => {
+
+          //update script data
+          scriptData.task_json[0].items[parseInt(script_meta.step_number) - 1] = script_item;
 
           // update script pathways
           scriptData.task_json[1] = generatePathways(script_meta.pathways);
 
-          function generatePathways(input){
+          function generatePathways(input) {
             var pathways = [];
-            for (var i=0; i<input.length; i++) {
-              pathways.push([('"1","'+input[i]+'"').toString()]);
+            for (var i = 0; i < input.length; i++) {
+              pathways.push([('"1","' + input[i] + '"').toString()]);
               pathways.push('"Primary"');
             }
             return pathways;
           }
 
-          // save updated script
-          const _script = new Script(scriptData);
+          resolve(scriptData);
 
-          _script.save()
-            .then(savedScript => res.json(savedScript))
-            .catch(e => next(e));
-
-        },
-        (error) => {
-          console.log(error);
         })
-    },
-    ( error ) => {
-      console.log(error);
-    }
-  );
-}
+        .catch(error => {
+          reject(error);
+        });
 
-function mergeTemplateParams( template, mapper, params ) {
+    })
 
-  // todo: use - var delimeter = '$$';
+  }
 
-  var _ret = JSON.stringify(template).replace(/\$\$.*?\$\$/gi, function myFunction(x){return getKeyValue(x);});
+  /**
+   * Script Controllers
+   */
+
+  getScriptList(appType) {
+
+    return new Promise((resolve, reject) => {
+
+      let query = {};
+      if (config.apps.isValid(appType)) {
+        query.appType = appType.toLowerCase()
+      }
+      ;
+
+      scriptService.getScripts(query)
+        .then((scripts) => {
+          let scriptMetaList = scripts.map(function (obj) {
+            return obj; // todo: return only meta object
+          });
+          resolve(scriptMetaList);
+        }, (error) => {
+          reject(error);
+        });
+
+    });
+  }
+
+  getScriptBySleId(sleId, appType, format) {
+
+    // todo: apply format, defaults to json
+    return new Promise((resolve, reject) => {
+      let query = {};
+      if (config.apps.isValid(appType)) {
+        query.app = appType.toLowerCase()
+      }
+      ;
+      query.sle_id = sleId;
+
+      scriptService.getScripts(query)
+        .then((scripts) => {
+          resolve(scripts);
+        }, (error) => {
+          reject(error);
+        });
+
+    });
+  }
+
+
+;
+} // class end
+;
+
+/**
+ * Generate Item Script
+ * @param script_meta
+ * @param template
+ * @param mapper
+ * @returns {any|Promise<T>|*|Promise|Promise<U>|Promise<R>}
+ */
+
+function prepareScriptItem(script_meta, template, mapper) {
+
+  return new Promise((resolve, reject) => {
+    script_meta.appName = template.meta.app;
+    var template_item = template.items[0];
+
+    template_item.template = {
+      "id": script_meta.template_id,
+      "revision": template.meta.version
+    };
+
+    var script_item = mergeTemplateParams(template_item, mapper.parameters, script_meta.params);
+
+    resolve(script_item);
+
+  })
+    .catch(e => console.log(e));
+};
+
+/**
+ * Merge template with scenario params using mapper
+ * @param template
+ * @param mapper
+ * @param params
+ * @returns {*}
+ */
+function mergeTemplateParams(template, mapper, params) {
+
+  var delimeter = '$$';
+
+  var _ret = JSON.stringify(template).replace(/\$\$.*?\$\$/gi,
+    function myFunction(x) {
+      return getKeyValue(x);
+    });
 
   try {
     _ret = JSON.parse(_ret);
-  } catch (e){ console.log(e)}
+  } catch (e) {
+    console.log(e)
+  }
 
   // private helper
-  function getKeyValue(key){
+  function getKeyValue(key) {
     var ret = null;
-    for (var i=0; i<mapper.length; i++){
+    for (var i = 0; i < mapper.length; i++) {
       let el = mapper[i];
-      if((delimeter + el['key'] + delimeter) === key) {
+      if ((delimeter + el['key'] + delimeter) === key) {
         ret = el['refer']['ext_key'];
         break;
       }
@@ -174,37 +193,37 @@ function mergeTemplateParams( template, mapper, params ) {
   return _ret;
 };
 
-function prepareScriptItem( script_meta, done, error ){
+/**
+ * Get saved script from database
+ */
+/*function getScriptBySleId(sleId, format) {
 
-  getMapper(script_meta.template_id,function( mapper ){
+ return new Promise((resolve, reject) => {
 
-      getTemplateById(script_meta.template_id, function( template ) {
-          console.log(template);
-          script_meta.appName = template.meta.app;
-          var template_item = template.items[0];
+ let query = {"sle_id": sleId};
+ scriptModel.get(query)
+ .then((script) => {
+ if(format === 'xml') {
+ var xmlContent = converterService.jsonToDistXml(script);
+ //res.set('Content-Type', 'text/xml');
+ resolve(xmlContent);
+ } else if(format === 'java') {
+ var javaContent = converterService.jsonToDistJava(script);
 
-          template_item.template = {
-            "id": script_meta.template_id,
-            "revision": template.meta.version
-          };
+ //res.set('Content-type', 'text/plain');
+ //res.charset = 'UTF-8';
 
-          var script_item = mergeTemplateParams(template_item, mapper.parameters, script_meta.params);
+ resolve(javaContent);
+ } else {
+ resolve(script);
+ }
+ })
+ .catch(e => next(e));
 
-          done( script_item );
-        },
-        ( e ) => {
-          error (e);
-        }
-      )
+ });
+ }*/
 
-    },
-    ( e ) => {
-      error (e);
-    }
-  )
-}
 
 module.exports = new ScriptHandler();
 
 
-*/

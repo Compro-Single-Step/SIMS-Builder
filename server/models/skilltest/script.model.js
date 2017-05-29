@@ -24,7 +24,8 @@ const scriptSchema = new Schema({
 
 
 scriptSchema.statics = {
-  get: get
+  get: get,
+  save: save
 };
 
 module.exports = mongoose.model('Script', scriptSchema);
@@ -37,7 +38,7 @@ function get(query) {
   return new Promise((resolve, reject) => {
 
     let condition = helper.getMongoSearchObject(query, script_schema_search_map);
-    let projection = {"_id": false};
+    let projection = {};
 
         this.find(condition, projection, (error, data) => {
           if (error) {
@@ -46,6 +47,23 @@ function get(query) {
             resolve(data);
           }
         });
+  });
+};
+
+
+function save(scriptData) {
+  return new Promise((resolve, reject) => {
+
+    const script = new this(scriptData);
+
+    script.save(( error ) => {
+      if (error) {
+        console.log(error);
+        reject(error);
+      }
+      console.log('Script Created In Database');
+      resolve('Script Created In Database');
+    })
   });
 };
 

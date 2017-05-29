@@ -54,8 +54,8 @@ router.get('/:sleId', (req, res) => {
 router.post('/', (req, res) => {
 
   skillTestController.generateAndSaveScript(req, res)
-    .then((scripts) => {
-      res.send(scripts);
+    .then((status) => {
+      res.send(status);
     }, (error) => {
       res.send(error);
     });

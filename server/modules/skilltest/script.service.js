@@ -6,6 +6,10 @@ class ScriptService {
     return scriptModel.get( query );
   };
 
+  saveScript( scriptData ) {
+    return scriptModel.save( scriptData );
+  };
+
 };
 
 module.exports = new ScriptService();
