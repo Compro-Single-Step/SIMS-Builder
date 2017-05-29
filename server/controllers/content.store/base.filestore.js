@@ -1,5 +1,20 @@
+const path = require('path');
 const config = require('../../config/config');
 const fs = require('fs');
+
+const resTypeMap = {
+    "png": "img",
+    "jpeg": "img",
+    "jpg": "img",
+    "json": "json",
+    "txt": "text",
+    "html": "html",
+    "xml": "xml"
+};
+
+const fileTypeFunctionMap = {
+    "csv": "readCsvFile"
+}
 
 
 class BaseFileStore {
@@ -22,6 +37,36 @@ class BaseFileStore {
 
     copyAssetToTaskFolder(srcPath, taskParams) {
 
+        var filepathArr = srcPath.split("/")
+        var fileName = filepathArr[filepathArr.length - 1].trim();
+        var fileTypeArr = fileName.split(".")
+        var fileType = fileTypeArr[fileTypeArr.length - 1];
+        var resFileType = fileType;
+        if (resTypeMap[fileType]) {
+            resFileType = resTypeMap[fileType]
+        }
+        //path to save the file
+        var absFilePath = this.getStepXMLFolderPath(taskParams.taskId, taskParams.stepIndex);
+
+        //path to return for the file
+        var srcPath = config.fileStore.resourceFolder + srcPath;
+        var destPath = this.getStepXMLFolderPath(taskParams.taskId, taskParams.stepIndex);
+        var relativeXmlPath = this.getSimsXmlStepFolderPath(taskParams.taskId, taskParams.stepIndex);
+
+        if (taskParams.parentFolder) {
+            destPath += taskParams.parentFolder + "/"
+            relativeXmlPath += taskParams.parentFolder + "/";
+        }
+
+        destPath += fileName;
+
+        return this.copyFile(srcPath, destPath).then((data) => {
+                var resolveParam = { "filePath": relativeXmlPath + fileName, "fileType": resFileType };
+                    return resolveParam;
+            }, (err) => {
+                Promise.reject(err);
+        })
+
     }
     /**
      * @param {*} sourceFileLocation : Location from which file to be copied 
@@ -39,9 +84,32 @@ class BaseFileStore {
      */
     copyAssetToTaskFolderEnhanced(sourceFileLocation, resourceMap, taskId, stepIndex) {
 
+        let srcPath;
+        if (resourceMap.resourceType === "step")
+            srcPath = config.fileStore.resourceFolder + sourceFileLocation;
+        else
+            srcPath = path.join(config.fileStore.skillFolder, sourceFileLocation);
+
+        let destPath = path.join(this.getStepAssetsFolderPath(taskId, stepIndex), resourceMap.AssetFolderHierarchy, resourceMap.fileName);
+
+        return this.copyFile(srcPath,destPath);
+
     }
 
     readTaskRes(filepath, readFileType) {
+
+        var absolutePath = config.fileStore.resourceFolder + filepath;
+        if (readFileType && fileTypeFunctionMap[readFileType]) {
+            return this[fileTypeFunctionMap[readFileType]](absolutePath);
+        }
+        else {
+            return this.readFile(absolutePath).then((fileData) => {
+                let resolveParam = { "fileData": fileData, "filePath": absolutePath };
+                return resolveParam;
+            }, (err) => {
+                Promise.reject(err);
+            })
+        }
 
     }
     
@@ -98,10 +166,18 @@ class BaseFileStore {
     }
 
     removeResourceFile(filePath) {
-    
+        filePath = config.fileStore.resourceFolder + filePath;
+        return this.removeFile(filePath);
     }
 
     getFileFromFileStore(filePath, folder) {
+        let absolutePath = filePath;
+
+        if (folder) {
+            absolutePath = folder + filePath;
+        }
+
+        return this.readFile(absolutePath, filePath);
     
     }
 
@@ -131,11 +207,27 @@ class BaseFileStore {
     }
 
     saveFileToFileStore(filepath, fileName, file) {
-    
+        return this.saveFile(filepath, fileName, file);
     }
 
     getResource(filePath, folder) {
         return this.getFileFromFileStore(filePath, folder);
+    }
+
+    copyFile(srcPath, destPath) {
+    
+    }
+
+    removeFile(filePath) {
+    
+    }
+
+    readFile(absFilePath, relFilePath) {
+    
+    }
+
+    saveFile(filepath, fileName, file) {
+    
     }
 
     getTaskFolderOnLocal(taskId){
