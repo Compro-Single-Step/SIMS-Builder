@@ -40,8 +40,14 @@ export class SelectComponent extends BaseComponent {
         if (this.modelRef["value"].label == this.itemList["value"][itemIndex].label) {
           this.modelRef["value"] = this.itemList["value"][itemIndex];
           break;
-        }        
+        }
       }
+    }
+  }
+  updateDependencies(eventId, componentInput) {
+    super.updateDependencies(eventId, componentInput);
+    if(this.itemList["value"].length == 0){
+      this.modelRef["value"] = {};
     }
   }
 

@@ -24,6 +24,7 @@ export class RadioComponent extends BaseComponent implements OnInit {
     this.modelRef = this.builderModelSrvc.getStateRef(this.compConfig.val); 
   }
   selectedItemChange(selectedOption){
-    this.modelRef["value"] = selectedOption;
+    this.modelRef['value'] = selectedOption;
+    this.emitEvents(this.modelRef['value']);
   }
 }

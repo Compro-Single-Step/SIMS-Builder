@@ -44,9 +44,9 @@ module.exports = {
             }
         ]
     },
-  
+
     "importaccessobject": {
-        primaryFile: "ac/importaccessobject/importAccessObject",
+        primaryFile: "ac/importAccessObject/importAccessObject",
         dependencyFiles: [
             {
                 primaryFile: "ac/common/acSkill",
@@ -54,14 +54,14 @@ module.exports = {
                     {
                         primaryFile: "common/baseSkill",
                         dependencyFiles: []
-                    }                    
+                    }
                 ]
             }
         ],
         dependencySkills: []
     },
     "sortingtablecolumns": {
-        primaryFile: "xl/sortingtablecolumns/sortingtablecolumns",
+        primaryFile: "xl/sortingTableColumns/sortingtablecolumns",
         dependencyFiles: [
             {
                 primaryFile: "xl/common/xlSkill",
@@ -73,21 +73,27 @@ module.exports = {
                 ]
             }
         ]
+
     },
     "insertaudio": {
-        primaryFile: "pp/insertAudio/insertAudio",
+        primaryFile: "pp/InsertAudio/insertAudio",
         dependencyFiles: [
             {
                 primaryFile: "pp/common/ppSkill",
                 dependencyFiles: [
                     {
                         primaryFile: "common/baseSkill"
+
+
+
+
                     }
                 ]
             }
         ]
+
     },
-     "applyshapeeffect": {
+    "applyshapeeffect": {
         primaryFile: "wd/ApplyShapeEffect/ApplyShapeEffect",
         dependencyFiles: [
             {
@@ -102,7 +108,35 @@ module.exports = {
                 ]
             }
         ]
-     }
+    },
+    "croppicture": {
+        primaryFile: "pp/CropPicture/CropPicture",
+        dependencyFiles: [
+            {
+                primaryFile: "pp/common/ppSkill",
+                dependencyFiles: [
+                    {
+                        primaryFile: "common/baseSkill"
+                    }
+                ]
+            }
+        ]
+    },
+    "createcrosstabquery": {
+        primaryFile: "ac/createcrosstabquery/createCrossTabQuery",
+        dependencyFiles: [
+            {
+                primaryFile: "ac/common/acSkill",
+                dependencyFiles: [
+                    {
+                        primaryFile: "common/baseSkill",
+                        dependencyFiles: []
+                    }
+                ]
+            }
+        ]
+    }
+
 }
 
 
