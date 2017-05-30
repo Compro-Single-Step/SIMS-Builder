@@ -38,7 +38,7 @@ class createcrosstabquery extends AccessBaseSkill {
 
     getSelectedDBObjectType(skillParams) {
         var paramValueObj = skillParams.paramsObj;
-        if (paramValueObj.selectedObj != "" && Object.keys(paramValueObj.selectedObj) != 0) {
+        if (Object.keys(paramValueObj.selectedObj) != 0) {
             return super.getSelectedDBObjectType(skillParams);
         }
         else {
@@ -49,7 +49,7 @@ class createcrosstabquery extends AccessBaseSkill {
 
      getSelectedDBObjectName(skillParams) {
         var paramValueObj = skillParams.paramsObj;
-        if (paramValueObj.selectedObj != "" && Object.keys(paramValueObj.selectedObj) != 0) {
+        if (Object.keys(paramValueObj.selectedObj) != 0) {
             return super.getSelectedDBObjectName(skillParams);
         }
         else {
