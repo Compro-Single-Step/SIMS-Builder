@@ -61,8 +61,7 @@ function save(scriptData) {
         console.log(error);
         reject(error);
       }
-      console.log('Script Created In Database');
-      resolve('Script Created In Database');
+      resolve(config.messages.saveSuccessful);
     })
   });
 };

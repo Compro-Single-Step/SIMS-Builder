@@ -6,7 +6,7 @@ var skillRoutes = require('./skill.routes');
 var verifyToken = require('./login/verifyToken');
 var userData = require('./userData');
 var taskPreviewRouter = require('./taskpreview/taskPreview'),
-    skilltestRoutes  = require('./skilltest/skilltest.routes');
+    skilltestRoutes  = require('./skilltest/skilltest.routes.index');
 
 
 module.exports = function () {

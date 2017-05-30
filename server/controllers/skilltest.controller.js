@@ -1,6 +1,5 @@
-const templateHandler = require('./../modules/skilltest/templateHandler'),
-  mapperHandler = require('./../modules/skilltest/mapperHandler'),
-  scriptHandler = require('./../modules/skilltest/scriptHandler'),
+const mapperService = require('./../modules/skilltest/mapper.service'),
+  templateService = require('./../modules/skilltest/template.service'),
   scriptService = require('./../modules/skilltest/script.service'),
   config = require('./../config/skilltest.config');
 
@@ -10,12 +9,12 @@ class SkillTest {
    * Controllers for template
    */
   getTemplateList(appType) {
-    return templateHandler.getTemplateList(appType);
+    return templateService.getTemplateList(appType);
   }
 
   getTemplateById(templateId, appType) {
 
-    return templateHandler.getTemplateById(templateId, appType);
+    return templateService.getTemplateById(templateId, appType);
   }
 
   /**
@@ -24,21 +23,21 @@ class SkillTest {
 
   getMapperByTemplateId(templateId, appType) {
 
-    return mapperHandler.getMapperByTemplateId(templateId, appType);
+    return mapperService.getMapperByTemplateId(templateId, appType);
   }
 
   /**
-   * Script Controllers
+   * Controllers for script
    */
 
   getScriptList(appType) {
 
-    scriptHandler.getScriptList(appType);
+    return scriptService.getScriptList(appType);
   }
 
   getScriptBySleId(sleId, appType, format) {
 
-    scriptHandler.getScriptBySleId(sleId, appType, format);
+    return scriptService.getScriptBySleId(sleId, appType, format);
   }
 
   generateAndSaveScript( req, res ){
@@ -55,7 +54,7 @@ class SkillTest {
       };
 
       // generate script
-      scriptHandler.generateScript( script_meta )
+      scriptService.generateScript( script_meta )
         .then((script) => {
           return scriptService.saveScript(script)
         })

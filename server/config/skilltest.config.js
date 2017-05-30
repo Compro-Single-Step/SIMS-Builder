@@ -3,6 +3,25 @@ const config = {
     apps: {
       list: ['word', 'excel', 'ppt', 'access'],
       isValid: isValidApp
+    },
+    messages: {
+      notFound: {
+        error: 'NOT_FOUND',
+        status: '404'
+      },
+      invalidRequest: {
+
+      },
+      saveSuccessful: {
+        error: 'false',
+        status: '200',
+        message: 'SAVE_SUCCESSFUL'
+      }
+    },
+    dao: {
+      script: 'script',
+      template: 'template',
+      mapper: 'mapper'
     }
   },
   local: {},

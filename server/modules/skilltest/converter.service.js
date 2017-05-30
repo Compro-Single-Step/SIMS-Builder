@@ -1,3 +1,5 @@
+// note - legacy code, todo: refactor and use a templating engine
+
 exports.jsonToDistXml = function(scriptData) {
 
   if(scriptData.task_json[0] !== undefined){

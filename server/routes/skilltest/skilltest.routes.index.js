@@ -4,7 +4,7 @@ const router = require('express').Router(),
   scriptRoutes = require('./script.routes');
 
 router.use('/templates', templateRoutes);
-router.use('/mapper', mapperRoutes);
+router.use('/mappers', mapperRoutes);
 router.use('/scripts', scriptRoutes);
 
 module.exports = router;

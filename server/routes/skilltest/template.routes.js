@@ -1,5 +1,6 @@
 const router = require('express').Router(),
-  skillTestController = require('./../../controllers/skilltest.controller.js');
+  skillTestController = require('./../../controllers/skilltest.controller.js'),
+  config = require('./../../config/skilltest.config');
 
 /**
  * Get list of templates
@@ -16,27 +17,12 @@ router.get('/', (req, res) => {
     }, (error) => {
       res.send(error);
     });
-
-  /**
-   * Sample:
-   * [{
-      "uuid": "sample-uuid-123",
-      "name": "Move Cell Content",
-      "meta": {
-        "version": 1,
-        "description": "Test template for skill related to move cell content",
-        "skill": "move cell content",
-        "app": "excel"
-        }
-    }]
-   */
-
 });
 
 /**
  * Get template by id
  * Query params: app
- * Return Type: Array
+ * Return Type: Object
  */
 
 router.get('/:templateId', (req, res) => {
@@ -45,7 +31,12 @@ router.get('/:templateId', (req, res) => {
 
   skillTestController.getTemplateById(templateId, appType)
     .then((templates) => {
-      res.send(templates);
+
+      if(!templates.length) {
+        res.status(404).send(config.messages.notFound);
+      } else{
+        res.send(templates[0]);
+      }
     }, (error) => {
       res.send(error);
     });

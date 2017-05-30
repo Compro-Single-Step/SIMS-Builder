@@ -1,5 +1,6 @@
 const router = require('express').Router(),
-  skillTestController = require('./../../controllers/skilltest.controller.js');
+  skillTestController = require('./../../controllers/skilltest.controller.js'),
+  config = require('./../../config/skilltest.config');
 
 /**
  * Get mapper by template id
@@ -11,8 +12,12 @@ router.get('/:templateId', (req, res) => {
     templateId  = req.params.templateId;
 
   skillTestController.getMapperByTemplateId(templateId, appType)
-    .then((templates) => {
-      res.send(templates);
+    .then((mappers) => {
+      if(!mappers.length) {
+        res.status(404).send(config.messages.notFound);
+      } else{
+        res.send(mappers[0]);
+      }
     }, (error) => {
       res.send(error);
     });
