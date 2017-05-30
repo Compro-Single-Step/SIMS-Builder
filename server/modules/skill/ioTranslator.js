@@ -124,7 +124,7 @@ class IOTranslator {
     let functionName = attrParams.attrObject["function-name"];
 
     if (!attrParams.skillobject[functionName]) {
-      functionName = "extractSingleParamVal"
+      functionName = "extractSingleParamVal";
     }
 
     let params = { paramsObj, skillParamsObj, taskParams };
@@ -141,6 +141,7 @@ class IOTranslator {
       return this.evaluateFromFunc(attrParams, evaluatedParams, attrParams.attrObject.skillParams, taskParam);
     } catch (error) {
       // this catch is required in order to handle the sync code exception handling
+      error.message += " (attribute : " + attrParams.attrName + ")";
       return Promise.reject(error);
     }
   }
@@ -175,7 +176,9 @@ class IOTranslator {
             attrObj.IOMap.preload.resource = [];
           attrObj.IOMap.preload.resource.push(...resolveParams.preloadResArr);
         }
-      }, error => {
+      })
+      .catch((error) => {
+        error.message += " (attribute : " + data.keyName + ")";
         return Promise.reject(error);
       }));
   }
