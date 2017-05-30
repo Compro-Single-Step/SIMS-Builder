@@ -46,8 +46,8 @@ const config = {
         contentStore: {
             type: envFileStoreMap[env],
             s3: {
-                "key": "AKIAJNSVZZ2VCQUUKRQA",
-                "secret": "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"
+                "key": "",
+                "secret": ""
             }
         },
         fileStore: {
@@ -82,8 +82,8 @@ const config = {
         contentStore: {
             type: envFileStoreMap[env],
             s3: {
-                "key": "AKIAJNSVZZ2VCQUUKRQA",
-                "secret": "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"
+                "key": "",
+                "secret": ""
             }
         },
         fileStore: {
@@ -119,8 +119,8 @@ const config = {
         contentStore: {
             type: envFileStoreMap[env],
             s3: {
-                "key": "AKIAJNSVZZ2VCQUUKRQA",
-                "secret": "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"
+                "key": "",
+                "secret": ""
             }
         },
         fileStore: {
