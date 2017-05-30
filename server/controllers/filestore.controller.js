@@ -99,7 +99,7 @@ class FileStoreController {
                     resolve(resolveParam);
                 }
                 else {
-                    error.message = error.message + "\n<Error occured in method copyAssetToTaskFolder() while coppying files>";
+                    error.message = error.message + "\n<Error occured in function: copyAssetToTaskFolder(), while coppying files>";
                     reject(error);
                 }
             });
@@ -142,7 +142,7 @@ class FileStoreController {
                     resolve("success");
                 }
                 else {
-                    error.message = error.message + "\n<Error occured in method copyAssetToTaskFolderEnhanced() while coppying files>";
+                    error.message = error.message + "\n<Error occured in function: copyAssetToTaskFolderEnhanced(), while coppying files>";
                     reject(error);
                 }
             });
@@ -307,7 +307,7 @@ class FileStoreController {
                     }
                 });
             }, (err) => {
-                err.message = err.message + "\n<Error occured in method saveFileToFileStore() while writing file>"
+                err.message = err.message + "\n<Error occured in function: saveFileToFileStore(), while writing file>"
                 return Promise.reject(err);
             });
     }
