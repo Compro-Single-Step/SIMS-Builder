@@ -28,12 +28,14 @@ class ScriptHandler {
           if (script && script[0]) {
             _data.script = script[0];
           } else {
+            // todo: prepare this from external config, pass sle id from here, sle id non editable
             _data.script = {
               sle_id: (script_meta.task_id + '.' + script_meta.scenario),
+              version: '1.0',
               task_json: [
                 {
                   "items": [],
-                  "appName": script_meta.appName,
+                  "appName": "",
                   "id": script_meta.task_id,
                   "scenario": script_meta.scenario
                 },
@@ -47,6 +49,9 @@ class ScriptHandler {
           return this.prepareScriptItem(script_meta, _data.template, _data.mapper)
         })
         .then((script_item) => {
+
+          // todo: init script meta here
+          _data.script.task_json.appName = script_meta.appName;
 
           _data.script.task_json[0].items[parseInt(script_meta.step_number) - 1] = script_item;
           _data.script.task_json[1] = generatePathways(script_meta.pathways);

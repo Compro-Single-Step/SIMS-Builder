@@ -44,7 +44,7 @@ class SkillTest {
 
     return new Promise((resolve, reject) => {
       let script_meta = {
-        template_id: req.body.template_id,
+        template_id: req.body.test_template_id,
         step_number: req.body.step_number,
         task_id: req.body.task_id,
         scenario: req.body.scenario,
