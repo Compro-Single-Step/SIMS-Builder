@@ -137,6 +137,7 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
             });
             this.uiConfig = data["uiconfig"];
             skillManager.getSkillTranslator(data["skillfilesbundle"], this.templateID);
+            //this.modelChecker = IntervalObservable.create(5000).subscribe(() => this.checkForModelChange());
         });
     }
 

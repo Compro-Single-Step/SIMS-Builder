@@ -27,7 +27,7 @@ var req = request.post({
 		}
 	);
 	var form = req.form();
-	form.append('file', file_system.createReadStream(serverRootPath+'/tmp/myZip.zip'));
+	form.append('file', file_system.createReadStream(serverRootPath+'/myZip.zip'));
 };
 
 
