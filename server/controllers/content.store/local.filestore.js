@@ -54,6 +54,19 @@ class localFilestore extends baseFilestore{
         })
     }
 
+    createFolder(folderPath) {
+        return new Promise((resolve, reject) => {
+            mkdirp(folderPath, (error) => {
+                if (error) {
+                    reject(error);
+                }
+                else {
+                    resolve(true);
+                }
+            });
+        });
+    }
+
     uploadFileHandler() {
         let self = this;
         let storage = multer.diskStorage({
@@ -63,7 +76,13 @@ class localFilestore extends baseFilestore{
                 let resFolderPath = ResourceUtil.getUploadResourceFolderRelativePath(taskId, stepIndex);
                 req.body.folder = resFolderPath;
                 let destinationFolder = self.getUploadedResourceFolderPath(resFolderPath);
-                callback(null, destinationFolder);
+
+                self.createFolder(destinationFolder)
+                    .then((success) => {
+                        callback(null, destinationFolder);
+                    }, (error) => {
+                        console.log("Folder not created.");
+                    });
             },
             filename: function (req, file, callback) {
                 let timestamp = new Date().getTime().toString();
