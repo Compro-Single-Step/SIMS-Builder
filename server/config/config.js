@@ -3,9 +3,9 @@ const serverRootPath = path.normalize(__dirname + '/../');
 const env = process.env.NODE_ENV || 'development';
 
 const envFileStoreMap = {
-    local: "s3",
+    local: "local",
     production: "s3",
-    development: "s3"
+    development: "local"
 }
 
 const filestorePathMap = {
