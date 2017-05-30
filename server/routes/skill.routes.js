@@ -109,11 +109,12 @@ router.get("/resource/*", (req, res) => {
         }
     };
 
-    res.sendFile(skillController.getResourcePath(filePath), options, error => {
-        if (error) {
+    skillController.getResource(filePath)
+        .then((resourceData) => {
+            res.send(resourceData);
+        }, (error) => {
             res.status(error.status).set("status", "error").end();
-        }
-    });
+        });
 });
 
 router.delete("/resource/*", (req, res) => {

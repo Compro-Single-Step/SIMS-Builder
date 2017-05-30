@@ -95,7 +95,7 @@ class DatabaseFileStoreManager {
     }
     
     getSkillHelperFile(filePath, folder) {
-        return fsc.getFileFromFileStore(filePath, folder);
+        return fsc.getSkillFile(filePath, folder);
     }
 
     saveStepUIState(taskId, stepIndex, stepUIData) {
@@ -117,12 +117,16 @@ class DatabaseFileStoreManager {
         return fsc.removeResourceFile(filePath);
     }
 
-    getResourcePath(filePath){
-        return fsc.getResourcePath(filePath, folderMap.RESOURCE);
+    getResource(filePath){
+        return fsc.getResource(filePath, folderMap.RESOURCE);
     }
 
     getFileFromFileStore(filePath) {
         return fsc.getFileFromFileStore(filePath);
+    }
+
+    getTaskFolderOnLocal(taskId){
+        return fsc.getTaskFolderOnLocal(taskId);
     }
 }
 
