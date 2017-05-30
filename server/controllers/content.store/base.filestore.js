@@ -27,26 +27,32 @@ class BaseFileStore {
         let resultArr = [];
         const csv = require('csvtojson');
 
-        return this.readFile(absolutePath).then((data) => {
-            return new Promise((resolve,reject) => {
-                csv().fromString(data)
-                .on('json', (jsonObj) => {
-                    resultArr.push(jsonObj);
-                })
-                .on('done', (error) => {
-                    if (resultArr.length == 0) {
-                        var error = new Error("Error occured while reading the csv type file at path " + absolutePath);
-                        reject(error);
-                    }
-                    else {
-                        var resolveParam = { "fileData": resultArr, "filePath": absolutePath };
-                        resolve(resolveParam);
-                    }
-                })
+        return this.readFile(absolutePath)
+            .then((data) => {
+                return new Promise((resolve, reject) => {
+                    csv().fromString(data)
+                        .on('json', (jsonObj) => {
+                            resultArr.push(jsonObj);
+                        })
+                        .on('done', (error) => {
+                            if (resultArr.length == 0) {
+                                error.message = error.message + "\n<Error occured while reading the csv type file>";
+                                reject(error);
+                            }
+                            else {
+                                var resolveParam = { "fileData": resultArr, "filePath": absolutePath };
+                                resolve(resolveParam);
+                            }
+                        })
+                        .on('error', (error) => {
+                            error.message = error.message + "\n<Error occured while reading the csv type file>";
+                            reject(error);
+                        });
+                });
+            })
+            .catch((err) => {
+                return Promise.reject(err);
             });
-        }, (err) => {
-            return Promise.reject(err);
-        })
     }
     // Below function was a duplicate. Use 'getStepXMLFolderPath' instead.
     // getFileStoreStepFolderPath(taskId, stepIdx) {
@@ -58,37 +64,43 @@ class BaseFileStore {
 
 
     copyAssetToTaskFolder(srcPath, taskParams) {
+        try {
+            var filepathArr = srcPath.split("/")
+            var fileName = filepathArr[filepathArr.length - 1].trim();
+            var fileTypeArr = fileName.split(".")
+            var fileType = fileTypeArr[fileTypeArr.length - 1];
+            var resFileType = fileType;
+            if (resTypeMap[fileType]) {
+                resFileType = resTypeMap[fileType]
+            }
+            //path to save the file
+            var absFilePath = this.getStepXMLFolderPath(taskParams.taskId, taskParams.stepIndex);
 
-        var filepathArr = srcPath.split("/")
-        var fileName = filepathArr[filepathArr.length - 1].trim();
-        var fileTypeArr = fileName.split(".")
-        var fileType = fileTypeArr[fileTypeArr.length - 1];
-        var resFileType = fileType;
-        if (resTypeMap[fileType]) {
-            resFileType = resTypeMap[fileType]
+            //path to return for the file
+            var srcPath = config.fileStore.resourceFolder + srcPath;
+            var destPath = this.getStepXMLFolderPath(taskParams.taskId, taskParams.stepIndex);
+            var relativeXmlPath = this.getSimsXmlStepFolderPath(taskParams.taskId, taskParams.stepIndex);
+
+            if (taskParams.parentFolder) {
+                destPath += taskParams.parentFolder + "/"
+                relativeXmlPath += taskParams.parentFolder + "/";
+            }
+
+            destPath += fileName;
+        } catch (error) {
+            error.message = error.message + "\n<Error occured while creating source and destination path to copy file>";
+            return Promise.reject(error);
         }
-        //path to save the file
-        var absFilePath = this.getStepXMLFolderPath(taskParams.taskId, taskParams.stepIndex);
 
-        //path to return for the file
-        var srcPath = config.fileStore.resourceFolder + srcPath;
-        var destPath = this.getStepXMLFolderPath(taskParams.taskId, taskParams.stepIndex);
-        var relativeXmlPath = this.getSimsXmlStepFolderPath(taskParams.taskId, taskParams.stepIndex);
-
-        if (taskParams.parentFolder) {
-            destPath += taskParams.parentFolder + "/"
-            relativeXmlPath += taskParams.parentFolder + "/";
-        }
-
-        destPath += fileName;
-
-        return this.copyFile(srcPath, destPath).then((data) => {
-            var resolveParam = { "filePath": relativeXmlPath + fileName, "fileType": resFileType };
-            return resolveParam;
-        }, (err) => {
-            Promise.reject(err);
-        })
-
+        return this.copyFile(srcPath, destPath)
+            .then((data) => {
+                var resolveParam = { "filePath": relativeXmlPath + fileName, "fileType": resFileType };
+                return resolveParam;
+            })
+            .catch((error) => {
+                error.message = error.message + "\n<Error occured in function: copyAssetToTaskFolder(), while coppying files>";
+                return Promise.reject(error);
+            });
     }
     /**
      * @param {*} sourceFileLocation : Location from which file to be copied 
@@ -105,17 +117,26 @@ class BaseFileStore {
      * destination and returns the promise for same
      */
     copyAssetToTaskFolderEnhanced(sourceFileLocation, resourceMap, taskId, stepIndex) {
-
         let srcPath;
-        if (resourceMap.resourceType === "step")
-            srcPath = config.fileStore.resourceFolder + sourceFileLocation;
-        else
-            srcPath = path.join(config.fileStore.skillFolder, sourceFileLocation);
+        let destPath;
+        try {
+            if (resourceMap.resourceType === "step")
+                srcPath = config.fileStore.resourceFolder + sourceFileLocation;
+            else
+                srcPath = path.join(config.fileStore.skillFolder, sourceFileLocation);
 
-        let destPath = path.join(this.getStepAssetsFolderPath(taskId, stepIndex), resourceMap.AssetFolderHierarchy, resourceMap.fileName);
+            destPath = path.join(this.getStepAssetsFolderPath(taskId, stepIndex), resourceMap.AssetFolderHierarchy, resourceMap.fileName);
 
-        return this.copyFile(srcPath, destPath);
+        } catch (error) {
+            error.message = error.message + "\n<Error occured while creating source and destination path to copy file>";
+            return Promise.reject(error);
+        }
 
+        return this.copyFile(srcPath, destPath)
+            .catch((error) => {
+                error.message = error.message + "\n<Error occured in function: copyAssetToTaskFolderEnhanced(), while coppying files>";
+                return Promise.reject(error);
+            });
     }
 
     readTaskRes(filepath, readFileType) {
@@ -229,7 +250,11 @@ class BaseFileStore {
     }
 
     saveFileToFileStore(filepath, fileName, file) {
-        return this.saveFile(filepath, fileName, file);
+        return this.saveFile(filepath, fileName, file)
+            .catch((error) => {
+                error.message = error.message + "\n<Error occured in function: saveFileToFileStore(), while writing file>"
+                return Promise.reject(error);
+            });
     }
 
     getResource(filePath, folder) {

@@ -100,8 +100,7 @@ class IOTranslator {
       self.evaluateAttribute(attrParams, taskParam)
         .then(function (resolveParams) {
           resolve(resolveParams);
-        }, function (error) {
-          console.log("promise rejection at genPromise");
+        }).catch( function (error) {          
           reject(error);
         });
     })
@@ -125,7 +124,7 @@ class IOTranslator {
     let functionName = attrParams.attrObject["function-name"];
 
     if (!attrParams.skillobject[functionName]) {
-      functionName = "extractSingleParamVal"
+      functionName = "extractSingleParamVal";
     }
 
     let params = { paramsObj, skillParamsObj, taskParams };
@@ -134,11 +133,17 @@ class IOTranslator {
 
   evaluateAttribute(attrParams, taskParam) {
 
-    let evaluatedParams = {};
-    //the attr params currently contains the string values , the LOC below converts it into values from the Step UI Json 
-    if (attrParams.attrObject.params)
-      evaluatedParams = this.getEvaluatedParams(attrParams.attrObject.params, attrParams.stepUIState);
-    return this.evaluateFromFunc(attrParams, evaluatedParams, attrParams.attrObject.skillParams, taskParam);
+    try {
+      let evaluatedParams = {};
+      //the attr params currently contains the string values , the LOC below converts it into values from the Step UI Json 
+      if (attrParams.attrObject.params)
+        evaluatedParams = this.getEvaluatedParams(attrParams.attrObject.params, attrParams.stepUIState);
+      return this.evaluateFromFunc(attrParams, evaluatedParams, attrParams.attrObject.skillParams, taskParam);
+    } catch (error) {
+      // this catch is required in order to handle the sync code exception handling
+      error.message += " (attribute : " + attrParams.attrName + ")";
+      return Promise.reject(error);
+    }
   }
 
   /**
@@ -171,7 +176,9 @@ class IOTranslator {
             attrObj.IOMap.preload.resource = [];
           attrObj.IOMap.preload.resource.push(...resolveParams.preloadResArr);
         }
-      }, error => {
+      })
+      .catch((error) => {
+        error.message += " (attribute : " + data.keyName + ")";
         return Promise.reject(error);
       }));
   }
@@ -225,7 +232,10 @@ class IOTranslator {
         return Promise.all(PromiseRequestsArr)
           .then(() => {
             let copyResPromiseArray = this._copyResourceFilesAndFillPreload(resourceMap, attrObj);
-            iomap.preload.resource = self._removeDuplicatePreloadResources(iomap.preload.resource);
+            // Scenario when the skill requires no resources to be moved and copied.
+            if(iomap.preload.resource){
+              iomap.preload.resource = self._removeDuplicatePreloadResources(iomap.preload.resource);
+            }
             return Promise.resolve([iomap, copyResPromiseArray]);
           })
           .catch(err => {
