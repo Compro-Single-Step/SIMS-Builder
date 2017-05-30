@@ -11,7 +11,7 @@ const baseFilestore = require('./base.filestore');
 class localFilestore extends baseFilestore{
 
     constructor(config){
-        this.super();
+        super();
     }
 
     copyFile(srcPath, destPath) {
