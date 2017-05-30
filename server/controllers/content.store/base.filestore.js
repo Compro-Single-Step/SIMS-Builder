@@ -19,12 +19,34 @@ const fileTypeFunctionMap = {
 
 class BaseFileStore {
 
-    constructor(){
-        
+    constructor() {
+
     }
-    
+
     readCsvFile(absolutePath) {
-        
+        let resultArr = [];
+        const csv = require('csvtojson');
+
+        return this.readFile(absolutePath).then((data) => {
+            return new Promise((resolve,reject) => {
+                csv().fromString(data)
+                .on('json', (jsonObj) => {
+                    resultArr.push(jsonObj);
+                })
+                .on('done', (error) => {
+                    if (resultArr.length == 0) {
+                        var error = new Error("Error occured while reading the csv type file at path " + absolutePath);
+                        reject(error);
+                    }
+                    else {
+                        var resolveParam = { "fileData": resultArr, "filePath": absolutePath };
+                        resolve(resolveParam);
+                    }
+                })
+            });
+        }, (err) => {
+            return Promise.reject(err);
+        })
     }
     // Below function was a duplicate. Use 'getStepXMLFolderPath' instead.
     // getFileStoreStepFolderPath(taskId, stepIdx) {
@@ -61,10 +83,10 @@ class BaseFileStore {
         destPath += fileName;
 
         return this.copyFile(srcPath, destPath).then((data) => {
-                var resolveParam = { "filePath": relativeXmlPath + fileName, "fileType": resFileType };
-                    return resolveParam;
-            }, (err) => {
-                Promise.reject(err);
+            var resolveParam = { "filePath": relativeXmlPath + fileName, "fileType": resFileType };
+            return resolveParam;
+        }, (err) => {
+            Promise.reject(err);
         })
 
     }
@@ -92,7 +114,7 @@ class BaseFileStore {
 
         let destPath = path.join(this.getStepAssetsFolderPath(taskId, stepIndex), resourceMap.AssetFolderHierarchy, resourceMap.fileName);
 
-        return this.copyFile(srcPath,destPath);
+        return this.copyFile(srcPath, destPath);
 
     }
 
@@ -112,7 +134,7 @@ class BaseFileStore {
         }
 
     }
-    
+
     getTaskFolderPath(taskId) {
         return '{#approot#}/';
     }
@@ -155,8 +177,8 @@ class BaseFileStore {
         let destPath = this.getStepXMLFolderPath(taskParams.taskId, taskParams.stepIndex);
         let relativeXmlPath = this.getSimsXmlStepFolderPath(taskParams.taskId, taskParams.stepIndex);
         let fileName = FileName; //this will come from out side.
-        return this.saveFileToFileStore(destPath, fileName, File).then(()=>{
-            var relativeResourcePath = relativeXmlPath+fileName;
+        return this.saveFileToFileStore(destPath, fileName, File).then(() => {
+            var relativeResourcePath = relativeXmlPath + fileName;
             return Promise.resolve(relativeResourcePath);
         });
     }
@@ -178,21 +200,21 @@ class BaseFileStore {
         }
 
         return this.readFile(absolutePath, filePath);
-    
+
     }
 
     uploadFileHandler() {
-        
+
     }
 
     createFolder(folderPath) {
-        
+
     }
 
     getStepXMLFolderPath(taskId, stepIndex) {
         return config.fileStore.xmlFolder + taskId + "/" + stepIndex + "/";
     }
-    
+
     /**
      * @param {*} taskId : Task ID
      * @param {*} stepIndex : Step Number
@@ -215,22 +237,22 @@ class BaseFileStore {
     }
 
     copyFile(srcPath, destPath) {
-    
+
     }
 
     removeFile(filePath) {
-    
+
     }
 
     readFile(absFilePath, relFilePath) {
-    
+
     }
 
     saveFile(filepath, fileName, file) {
-    
+
     }
 
-    getTaskFolderOnLocal(taskId){
+    getTaskFolderOnLocal(taskId) {
 
     }
 }

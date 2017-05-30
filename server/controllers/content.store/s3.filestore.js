@@ -19,32 +19,6 @@ class s3Filestore extends baseFilestore{
         });
     }
 
-    readCsvFile(absolutePath) {
-        return new Promise(function (resolve, reject) {
-            let resultArr = [];
-            const csv = require('csvtojson');
-            csv()
-                .fromFile(absolutePath)
-                .on('json', (jsonObj) => {
-                    console.log(jsonObj);
-                    resultArr.push(jsonObj);
-
-                    // combine csv header row and csv line to a json object 
-                    // jsonObj.a ==> 1 or 4 
-                })
-                .on('done', (error) => {
-                    if (resultArr.length == 0) {
-                        var error = new Error("Error occured while reading the csv type file at path " + absolutePath);
-                        reject(error);
-                    }
-                    else {
-                        var resolveParam = { "fileData": resultArr, "filePath": absolutePath };
-                        resolve(resolveParam);
-                    }
-                })
-        });
-    }
-
     copyFile(srcPath, destPath) {
         let self = this;
         return new Promise((resolve, reject) => {
