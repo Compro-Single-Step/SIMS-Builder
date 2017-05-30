@@ -36,18 +36,10 @@ class FileStoreController {
                 .on('json', (jsonObj) => {
                     console.log(jsonObj);
                     resultArr.push(jsonObj);
-
-                    // combine csv header row and csv line to a json object 
-                    // jsonObj.a ==> 1 or 4 
                 })
                 .on('done', (error) => {
                     if (resultArr.length == 0) {
-                        let customError = {
-                            method: "readCsvFile()",
-                            msg: "Error occured while reading the csv type file",
-                            filePath: absolutePath
-                        };
-                        error.customError = customError;
+                        error.message = error.message + "\n<Error occured while reading the csv type file>";
                         reject(error);
                     }
                     else {
@@ -56,12 +48,7 @@ class FileStoreController {
                     }
                 })
                 .on('error', (error) => {
-                    let customError = {
-                        method: "readCsvFile()",
-                        msg: "Error occured while reading the csv type file",
-                        filePath: absolutePath
-                    };
-                    error.customError = customError;
+                    error.message = error.message + "\n<Error occured while reading the csv type file>";
                     reject(error);
                 });
         });
@@ -100,11 +87,7 @@ class FileStoreController {
 
             destPath += fileName;
         } catch (error) {
-            let customError = {
-                method: "copyAssetToTaskFolder()",
-                msg: "Error occured while creating source and destination path to copy file",
-            };
-            error.customError = customError;
+            error.message = error.message + "\n<Error occured while creating source and destination path to copy file>";
             return Promise.reject(error);
         }
 
@@ -148,11 +131,7 @@ class FileStoreController {
             destPath = path.join(this.getStepAssetsFolderPath(taskId, stepIndex), resourceMap.AssetFolderHierarchy, resourceMap.fileName);
 
         } catch (error) {
-            let customError = {
-                method: "copyAssetToTaskFolderEnhanced()",
-                msg: "Error occured while creating source and destination path to copy file",
-            };
-            error.customError = customError;
+            error.message = error.message + "\n<Error occured while creating source and destination path to copy file>";
             return Promise.reject(error);
         }
 
