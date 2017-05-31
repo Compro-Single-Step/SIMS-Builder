@@ -23,7 +23,6 @@ module.exports = class ExcelBaseSkill extends BaseSkill {
     }
 
     getSheetDetails(initDocJSON, dependantSheetArrayInModel, clonedDependantSheetArrayInModel) {
-        debugger;
         while (dependantSheetArrayInModel.length > 0) {
             dependantSheetArrayInModel.pop(); //https://jsperf.com/array-clear-methods/3
         }
