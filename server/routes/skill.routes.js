@@ -103,15 +103,11 @@ router.post("/resource", (req, res) => {
 router.get("/resource/*", (req, res) => {
 
     let filePath = req.params[0];
-    let options = {
-        headers: {
-            "status": "success"
-        }
-    };
 
     skillController.getResource(filePath)
         .then((resourceData) => {
-            res.send(resourceData);
+            res.setHeader('status','success');
+            res.end(resourceData);
         }, (error) => {
             res.status(error.status).set("status", "error").end();
         });
