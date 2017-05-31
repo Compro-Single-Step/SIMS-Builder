@@ -9,6 +9,48 @@ let tableRange = "";
 let currSheetObj = {};
 
 class sortingTableColumns extends ExcelBaseSkill {
+  getSheetDetails(initDocJSON, dependantSheetArrayInModel, clonedDependantSheetArrayInModel) {
+    while (dependantSheetArrayInModel.length > 0) {
+      dependantSheetArrayInModel.pop(); //https://jsperf.com/array-clear-methods/3
+    }
+
+    if (initDocJSON === null || initDocJSON === undefined) { //initDocJSON Removed
+      dependantSheetArrayInModel.push(clonedDependantSheetArrayInModel[0]);
+    }
+    else {  //initDocJSON Added
+
+      //Add Sheet Names From Init Doc JSON
+      for (let sheetNum = 0; sheetNum < initDocJSON.sheetCount; sheetNum++) {
+        dependantSheetArrayInModel.push(JSON.parse(JSON.stringify(clonedDependantSheetArrayInModel[0])));
+        dependantSheetArrayInModel[sheetNum].name = initDocJSON.sheets[sheetNum].name;
+      }
+    }
+  }
+
+  addSheetNamesToDropdown(initDocJSON, dependantSheetArrayInModel) {
+
+    //Empty the existing array
+    while (dependantSheetArrayInModel.length > 0) {
+      dependantSheetArrayInModel.pop(); //https://jsperf.com/array-clear-methods/3
+    }
+    if (initDocJSON !== null && initDocJSON !==undefined) {
+      //Add Sheet Names to Array From Init Doc JSON
+      for (let sheetNum = 0; sheetNum < initDocJSON.sheetCount; sheetNum++) {
+        var sheetName = initDocJSON.sheets[sheetNum].name;
+        dependantSheetArrayInModel.push({ "label": sheetName, "data": sheetName });
+      }
+    }
+  }
+
+  updateSheetName(selectedSheetName, dependentSheetArrayInModel, clonedDependentSheetArrayInModel) {
+    while (dependentSheetArrayInModel.length > 0) {
+      dependentSheetArrayInModel.pop();
+    }
+    dependentSheetArrayInModel.push(JSON.parse(JSON.stringify(clonedDependentSheetArrayInModel[0])));
+    if (selectedSheetName) {
+      dependentSheetArrayInModel[0].name = selectedSheetName.label;
+    }
+  }
 
   updateColumnNamesInDropdown(columnHeadersData, dependantSheetArrayInModel) {
     //Empty the existing array
