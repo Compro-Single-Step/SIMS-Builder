@@ -88,10 +88,13 @@
   }
 }
 
+.stepText {
+  margin-left: 0px;
+}
+
 .stepText.stepTextOverflowHidden {
   overflow: hidden;
   height: 3rem;
-  margin-left: 0px;
 }
 
 #header.removeFixedHeight {
@@ -106,7 +109,7 @@
 .stepTextHeading:after{
   content: '';
   position: absolute;
-  bottom: 3px;
+  bottom: 5px;
   right: 0;
   width: 30%;
   height: 64%;
@@ -121,7 +124,7 @@
 
 .show-more{
   position: absolute;
-  bottom: 25px;
+  bottom: 28px;
   right: 0px;
   a{
     color: $pure-white;
