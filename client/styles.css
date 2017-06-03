@@ -3,5 +3,5 @@
 @import "../node_modules/dropzone/dist/dropzone.css";
 
 .dropzone .dz-success-mark svg path{
-    fill: green;
+    fill: rgb(0,181,81);
 }
