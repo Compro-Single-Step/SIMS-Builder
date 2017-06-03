@@ -261,6 +261,10 @@ class BaseFileStore {
         return this.getFileFromFileStore(filePath, folder);
     }
 
+    getResourcePath(filePath, folder) {
+        return folder + filePath;
+    }
+
     copyFile(srcPath, destPath) {
 
     }
