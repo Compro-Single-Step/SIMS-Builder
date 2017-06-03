@@ -121,6 +121,10 @@ class DatabaseFileStoreManager {
         return fsc.getResource(filePath, folderMap.RESOURCE);
     }
 
+    getResourcePath(filePath){
+        return fsc.getResourcePath(filePath, folderMap.RESOURCE);
+    }
+
     getFileFromFileStore(filePath) {
         return fsc.getFileFromFileStore(filePath);
     }
