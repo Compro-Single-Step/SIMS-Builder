@@ -1,5 +1,14 @@
 @import "./../scss/variables.scss";
 
+@media (min-width: 1600px){
+  .col-xxl-4{
+    max-width: 40%;
+  }
+  .offset-xxl-3{
+    margin-left: 30%
+  }
+}
+
 .login-page{
   background-color: lightgray;
 }

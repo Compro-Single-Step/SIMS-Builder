@@ -7,15 +7,15 @@
             <h4 class="stepTextHeading"><strong>STEP {{stepIndex}}:</strong>&nbsp;<span #stepTextContainer [innerHTML]="stepText"></span></h4>
             <span class="show-more"><a href="#">Show more</a></span>
           </div>
-          <div class="row">
+          <div class="row taskInfo">
             <span class="tag tag-primary"><span>Task ID:&nbsp;</span> {{taskID}}  </span>&nbsp;<span class="tag tagFontNormal tag-primary"><span >Skill:&nbsp;</span> {{skillName}}</span> &nbsp; <span class="tag tag-primary"><span>Template:&nbsp;</span> {{templateName}} </span>
           </div>
         </div>
         <div class="col-md-2">
-          <div class="nav navbar-nav navbar-right">
-            <button class="btn header-icon pull-right" (click)="onClose()"><i class="fa fa-times" aria-hidden="true"></i></button>
+          <div class="nav navbar-nav navbar-right saveAndCloseBtn">
+            <button class="btn header-icon pull-right" title="Save" (click)="onClose()"><i class="fa fa-times" aria-hidden="true"></i></button>
             <div class="seperator pull-right"></div>
-            <button class="btn header-icon pull-right"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
+            <button class="btn header-icon pull-right" title="Close"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
           </div>
         </div>
       </div>
