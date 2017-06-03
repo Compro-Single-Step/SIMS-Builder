@@ -136,9 +136,9 @@
       .passwordSignInRow{
         padding: 0px;
         .fgtPassDiv{
-          padding-left: 0px;
-          padding-right: 2px;
-          text-align: left;
+          padding-left: 0px;         
+          text-align: right;
+           padding-right: 2px;
           .fgtPass{
             color: $theme-blue;
             font-weight: 600;
@@ -148,7 +148,7 @@
           color: #888;
           padding-right: 0px;
           padding-left: 2px;
-          text-align: right;
+          text-align: left;
           font-weight: 600;
           input{
             height: 16px;

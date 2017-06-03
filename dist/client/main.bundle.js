@@ -1,4 +1,4 @@
-webpackJsonp([7,10],{
+webpackJsonp([7],{
 
 /***/ 178:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -34,7 +34,7 @@ var LoaderService = (function () {
     ], LoaderService);
     return LoaderService;
 }());
-//# sourceMappingURL=E:/Single Step Builder/client/loader.service.js.map
+//# sourceMappingURL=D:/SIMBuilder/client/loader.service.js.map
 
 /***/ }),
 
@@ -104,7 +104,7 @@ var AuthService = (function () {
     return AuthService;
     var _a;
 }());
-//# sourceMappingURL=E:/Single Step Builder/client/auth.service.js.map
+//# sourceMappingURL=D:/SIMBuilder/client/auth.service.js.map
 
 /***/ }),
 
@@ -134,7 +134,8 @@ var map = {
 	]
 };
 function webpackAsyncContext(req) {
-	var ids = map[req];	if(!ids)
+	var ids = map[req];
+	if(!ids)
 		return Promise.reject(new Error("Cannot find module '" + req + "'."));
 	return __webpack_require__.e(ids[1]).then(function() {
 		return __webpack_require__(ids[0]);
@@ -145,7 +146,6 @@ webpackAsyncContext.keys = function webpackAsyncContextKeys() {
 };
 module.exports = webpackAsyncContext;
 webpackAsyncContext.id = 265;
-
 
 /***/ }),
 
@@ -187,7 +187,7 @@ var AuthGuard = (function () {
     return AuthGuard;
     var _a;
 }());
-//# sourceMappingURL=E:/Single Step Builder/client/auth.guard.js.map
+//# sourceMappingURL=D:/SIMBuilder/client/auth.guard.js.map
 
 /***/ }),
 
@@ -247,7 +247,7 @@ var LoginComponent = (function () {
     return LoginComponent;
     var _a, _b, _c;
 }());
-//# sourceMappingURL=E:/Single Step Builder/client/login.component.js.map
+//# sourceMappingURL=D:/SIMBuilder/client/login.component.js.map
 
 /***/ }),
 
@@ -268,7 +268,7 @@ if (__WEBPACK_IMPORTED_MODULE_2__environments_environment__["a" /* environment *
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["enableProdMode"])();
 }
 __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_3__app_app_module__["a" /* AppModule */]);
-//# sourceMappingURL=E:/Single Step Builder/client/main.js.map
+//# sourceMappingURL=D:/SIMBuilder/client/main.js.map
 
 /***/ }),
 
@@ -388,7 +388,7 @@ var TaskDataService = (function () {
     return TaskDataService;
     var _a;
 }());
-//# sourceMappingURL=E:/Single Step Builder/client/taskData.service.js.map
+//# sourceMappingURL=D:/SIMBuilder/client/taskData.service.js.map
 
 /***/ }),
 
@@ -495,7 +495,7 @@ var UserService = (function () {
     return UserService;
     var _a;
 }());
-//# sourceMappingURL=E:/Single Step Builder/client/user.service.js.map
+//# sourceMappingURL=D:/SIMBuilder/client/user.service.js.map
 
 /***/ }),
 
@@ -715,7 +715,7 @@ var AppConfig = (function () {
     ], AppConfig);
     return AppConfig;
 }());
-//# sourceMappingURL=E:/Single Step Builder/client/app.config.js.map
+//# sourceMappingURL=D:/SIMBuilder/client/app.config.js.map
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(169)))
 
 /***/ }),
@@ -777,7 +777,7 @@ var PreviewService = (function () {
     return PreviewService;
     var _a;
 }());
-//# sourceMappingURL=E:/Single Step Builder/client/preview.service.js.map
+//# sourceMappingURL=D:/SIMBuilder/client/preview.service.js.map
 
 /***/ }),
 
@@ -799,7 +799,7 @@ var appRoutes = [
     { path: '**', redirectTo: '' }
 ];
 var routing = __WEBPACK_IMPORTED_MODULE_0__angular_router__["a" /* RouterModule */].forRoot(appRoutes);
-//# sourceMappingURL=E:/Single Step Builder/client/app-routing.module.js.map
+//# sourceMappingURL=D:/SIMBuilder/client/app-routing.module.js.map
 
 /***/ }),
 
@@ -832,7 +832,7 @@ var AppComponent = (function () {
     ], AppComponent);
     return AppComponent;
 }());
-//# sourceMappingURL=E:/Single Step Builder/client/app.component.js.map
+//# sourceMappingURL=D:/SIMBuilder/client/app.component.js.map
 
 /***/ }),
 
@@ -914,7 +914,7 @@ var AppModule = (function () {
     ], AppModule);
     return AppModule;
 }());
-//# sourceMappingURL=E:/Single Step Builder/client/app.module.js.map
+//# sourceMappingURL=D:/SIMBuilder/client/app.module.js.map
 
 /***/ }),
 
@@ -964,7 +964,7 @@ var AuthModule = (function () {
     ], AuthModule);
     return AuthModule;
 }());
-//# sourceMappingURL=E:/Single Step Builder/client/auth.module.js.map
+//# sourceMappingURL=D:/SIMBuilder/client/auth.module.js.map
 
 /***/ }),
 
@@ -1002,7 +1002,7 @@ var LoaderComponent = (function () {
     return LoaderComponent;
     var _a;
 }());
-//# sourceMappingURL=E:/Single Step Builder/client/loader.component.js.map
+//# sourceMappingURL=D:/SIMBuilder/client/loader.component.js.map
 
 /***/ }),
 
@@ -1018,7 +1018,7 @@ var LoaderComponent = (function () {
 var environment = {
     production: false
 };
-//# sourceMappingURL=E:/Single Step Builder/client/environment.js.map
+//# sourceMappingURL=D:/SIMBuilder/client/environment.js.map
 
 /***/ }),
 
@@ -1066,7 +1066,7 @@ exports = module.exports = __webpack_require__(47)();
 
 
 // module
-exports.push([module.i, ".login-page {\n  background-color: lightgray; }\n\n.page-footer {\n  margin-bottom: 25px;\n  font-size: 10px;\n  color: lightgray;\n  text-align: center; }\n  @media (min-height: 600px) {\n    .page-footer {\n      position: absolute;\n      bottom: 0;\n      left: 0;\n      right: 0; } }\n\n.widget-login-container {\n  padding-top: 10%;\n  padding-bottom: 20px;\n  min-height: 700px; }\n\n.widget-login-logo {\n  margin-top: 15px;\n  margin-bottom: 15px;\n  text-align: center;\n  font-weight: normal; }\n  .widget-login-logo .fa-circle {\n    font-size: 13px;\n    margin: 0 20px; }\n\n.widget-login {\n  padding: 30px; }\n  .widget-login > header h1, .widget-login > header h2, .widget-login > header h3, .widget-login > header h4, .widget-login > header h5, .widget-login > header h6 {\n    font-weight: normal;\n    text-align: center; }\n\n.lab {\n  text-align: right;\n  padding-right: 30px;\n  margin-bottom: 0px;\n  margin-top: 5px;\n  color: black; }\n\n.loginText {\n  text-align: center;\n  font-weight: 600;\n  font-size: 25px; }\n\n.sectionlogin {\n  border-bottom-right-radius: 2%;\n  border-top-right-radius: 2%;\n  border-bottom-left-radius: 0;\n  border-top-left-radius: 0;\n  background: #FFFFFF;\n  border-color: #cccccc;\n  color: black; }\n\n.loginBackground {\n  background-color: #383E4B;\n  width: 100%;\n  height: 100%; }\n\n.infoSection {\n  border-bottom-left-radius: 2%;\n  border-top-left-radius: 2%;\n  border-bottom-right-radius: 0;\n  border-top-right-radius: 0;\n  background: #EFEFEF;\n  border-color: #cccccc; }\n\n.Section {\n  padding: 0; }\n\n.leftSection {\n  border-right-style: ridge; }\n  .leftSection .simsBuilderIconAndText .InfoHead {\n    color: #00505c;\n    text-align: center;\n    font-weight: 500;\n    font-size: 25px; }\n  .leftSection .simsBuilderIconAndText .simsBuilderIcon {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    padding-top: 50px; }\n    .leftSection .simsBuilderIconAndText .simsBuilderIcon img {\n      margin: 0px auto;\n      width: 60px;\n      height: 60px; }\n  .leftSection .widget-body .InfoBody {\n    text-align: center;\n    font-weight: 500;\n    font-size: 13px; }\n\n.rightSection .loginHeader {\n  color: #343434; }\n\n.rightSection .login-form {\n  margin-top: 4.5rem; }\n  .rightSection .login-form .formRow {\n    padding: 10px 40px; }\n    .rightSection .login-form .formRow .icon {\n      font-size: 20px;\n      padding: 5px 10px 0px 10px;\n      color: #777; }\n    .rightSection .login-form .formRow .form-control {\n      font-size: 14px;\n      border: none;\n      border-radius: 0px;\n      border-bottom: 1px solid #777; }\n  .rightSection .login-form .forgetPassRow {\n    padding-top: 0px;\n    font-size: 11px; }\n    .rightSection .login-form .forgetPassRow .passwordSignInRow {\n      padding: 0px; }\n      .rightSection .login-form .forgetPassRow .passwordSignInRow .fgtPassDiv {\n        padding-left: 0px;\n        padding-right: 2px;\n        text-align: left; }\n        .rightSection .login-form .forgetPassRow .passwordSignInRow .fgtPassDiv .fgtPass {\n          color: #00505c;\n          font-weight: 600; }\n      .rightSection .login-form .forgetPassRow .passwordSignInRow .signin-checkbox {\n        color: #888;\n        padding-right: 0px;\n        padding-left: 2px;\n        text-align: right;\n        font-weight: 600; }\n        .rightSection .login-form .forgetPassRow .passwordSignInRow .signin-checkbox input {\n          height: 16px;\n          width: 16px; }\n        .rightSection .login-form .forgetPassRow .passwordSignInRow .signin-checkbox span {\n          position: relative;\n          top: -4px; }\n\n.rightSection .loginButtonDiv {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  margin: 40px 0px 10px 0px; }\n  .rightSection .loginButtonDiv button.btn-dark {\n    margin: auto;\n    background-color: #00505c;\n    color: #FFFFFF; }\n    .rightSection .loginButtonDiv button.btn-dark:hover {\n      background-color: #383E4B; }\n", ""]);
+exports.push([module.i, ".login-page {\n  background-color: lightgray; }\n\n.page-footer {\n  margin-bottom: 25px;\n  font-size: 10px;\n  color: lightgray;\n  text-align: center; }\n  @media (min-height: 600px) {\n    .page-footer {\n      position: absolute;\n      bottom: 0;\n      left: 0;\n      right: 0; } }\n\n.widget-login-container {\n  padding-top: 10%;\n  padding-bottom: 20px;\n  min-height: 700px; }\n\n.widget-login-logo {\n  margin-top: 15px;\n  margin-bottom: 15px;\n  text-align: center;\n  font-weight: normal; }\n  .widget-login-logo .fa-circle {\n    font-size: 13px;\n    margin: 0 20px; }\n\n.widget-login {\n  padding: 30px; }\n  .widget-login > header h1, .widget-login > header h2, .widget-login > header h3, .widget-login > header h4, .widget-login > header h5, .widget-login > header h6 {\n    font-weight: normal;\n    text-align: center; }\n\n.lab {\n  text-align: right;\n  padding-right: 30px;\n  margin-bottom: 0px;\n  margin-top: 5px;\n  color: black; }\n\n.loginText {\n  text-align: center;\n  font-weight: 600;\n  font-size: 25px; }\n\n.sectionlogin {\n  border-bottom-right-radius: 2%;\n  border-top-right-radius: 2%;\n  border-bottom-left-radius: 0;\n  border-top-left-radius: 0;\n  background: #FFFFFF;\n  border-color: #cccccc;\n  color: black; }\n\n.loginBackground {\n  background-color: #383E4B;\n  width: 100%;\n  height: 100%; }\n\n.infoSection {\n  border-bottom-left-radius: 2%;\n  border-top-left-radius: 2%;\n  border-bottom-right-radius: 0;\n  border-top-right-radius: 0;\n  background: #EFEFEF;\n  border-color: #cccccc; }\n\n.Section {\n  padding: 0; }\n\n.leftSection {\n  border-right-style: ridge; }\n  .leftSection .simsBuilderIconAndText .InfoHead {\n    color: #00505c;\n    text-align: center;\n    font-weight: 500;\n    font-size: 25px; }\n  .leftSection .simsBuilderIconAndText .simsBuilderIcon {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    padding-top: 50px; }\n    .leftSection .simsBuilderIconAndText .simsBuilderIcon img {\n      margin: 0px auto;\n      width: 60px;\n      height: 60px; }\n  .leftSection .widget-body .InfoBody {\n    text-align: center;\n    font-weight: 500;\n    font-size: 13px; }\n\n.rightSection .loginHeader {\n  color: #343434; }\n\n.rightSection .login-form {\n  margin-top: 4.5rem; }\n  .rightSection .login-form .formRow {\n    padding: 10px 40px; }\n    .rightSection .login-form .formRow .icon {\n      font-size: 20px;\n      padding: 5px 10px 0px 10px;\n      color: #777; }\n    .rightSection .login-form .formRow .form-control {\n      font-size: 14px;\n      border: none;\n      border-radius: 0px;\n      border-bottom: 1px solid #777; }\n  .rightSection .login-form .forgetPassRow {\n    padding-top: 0px;\n    font-size: 11px; }\n    .rightSection .login-form .forgetPassRow .passwordSignInRow {\n      padding: 0px; }\n      .rightSection .login-form .forgetPassRow .passwordSignInRow .fgtPassDiv {\n        padding-left: 0px;\n        text-align: right;\n        padding-right: 2px; }\n        .rightSection .login-form .forgetPassRow .passwordSignInRow .fgtPassDiv .fgtPass {\n          color: #00505c;\n          font-weight: 600; }\n      .rightSection .login-form .forgetPassRow .passwordSignInRow .signin-checkbox {\n        color: #888;\n        padding-right: 0px;\n        padding-left: 2px;\n        text-align: left;\n        font-weight: 600; }\n        .rightSection .login-form .forgetPassRow .passwordSignInRow .signin-checkbox input {\n          height: 16px;\n          width: 16px; }\n        .rightSection .login-form .forgetPassRow .passwordSignInRow .signin-checkbox span {\n          position: relative;\n          top: -4px; }\n\n.rightSection .loginButtonDiv {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  margin: 40px 0px 10px 0px; }\n  .rightSection .loginButtonDiv button.btn-dark {\n    margin: auto;\n    background-color: #00505c;\n    color: #FFFFFF; }\n    .rightSection .loginButtonDiv button.btn-dark:hover {\n      background-color: #383E4B; }\n", ""]);
 
 // exports
 
@@ -1093,7 +1093,7 @@ module.exports = "<div [hidden]=\"!loader.Visible\">\r\n    <div class=\"loader-
 /***/ 443:
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container loginBackground\">\r\n  <main id=\"content\" class=\"widget-login-container\" role=\"main\">\r\n    <div class=\"row\">\r\n      <div class=\"col-xl-6 col-md-8 col-sm-10 col-xs-12 offset-xl-3 offset-md-2 offset-sm-1 offset-xs-0\">\r\n        <div class=\"row\">\r\n        <div class=\"col-xl-6 col-md-6 col-sm-6 col-xs-6 Section widget-login infoSection leftSection\">\r\n          <div class=\"widget-login  infoSection\">\r\n            <div class=\"simsBuilderIconAndText\">\r\n              <div class=\"simsBuilderIcon\">\r\n                <img src=\"assets/images/builder_logo_blue.png\">\r\n              </div>\r\n              <header class=\"simsBuilderText\">\r\n                <p class=\"InfoHead\"><strong>SIMS</strong> Builder</p>\r\n              </header>\r\n            </div>\r\n            <div class=\"widget-body\">\r\n              <p class=\"InfoBody\">\r\n                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\r\n                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do\r\n              </p>\r\n            </div>\r\n          </div>\r\n        </div>\r\n        <div class=\"col-xl-6 col-md-6 col-sm-6 col-xs-6 Section rightSection\">\r\n          <div class=\" widget-login sectionlogin\">\r\n            <header class=\"loginHeader\">\r\n              <p class=\"loginText\">LOGIN</p>\r\n            </header>\r\n            <div class=\"widget-body\">\r\n              <form class=\"login-form mt-lg\" name=\"form\" (ngSubmit)=\"f.form.valid && login()\" #f=\"ngForm\"  enctype=\"application/x-www-form-urlencoded\">\r\n                <div class=\"row m-t-1 formRow\" [ngClass]=\"{ 'has-error': f.submitted && !username.valid }\">\r\n                    <div class=\"icon col-md-2\"><i class=\"fa fa-user\" aria-hidden=\"true\"></i></div>\r\n                    <input type=\"text\" class=\"form-control col-md-10\" id=\"pswd\" placeholder=\"Username\" name=\"username\" [(ngModel)]=\"model.username\" #username=\"ngModel\" required />\r\n                    <div *ngIf=\"f.submitted && !username.valid\" class=\"help-block\">Username is required</div>\r\n                </div>\r\n                <div class=\"row m-t-1 formRow\" [ngClass]=\"{ 'has-error': f.submitted && !password.valid }\">\r\n                    <div class=\"icon col-md-2\"><i class=\"fa fa-lock\" aria-hidden=\"true\"></i></div>\r\n                    <input type=\"password\" class=\"form-control col-md-10\" id=\"pswd\" name=\"password\" placeholder=\"Password\" [(ngModel)]=\"model.password\" #password=\"ngModel\" required />\r\n                    <div *ngIf=\"f.submitted && !password.valid\" class=\"help-block\">Password is required</div>\r\n                </div>\r\n                <div *ngIf=\"error\" class=\"alert alert-danger\">{{error}}</div>\r\n                <div class=\"row m-t-1 formRow forgetPassRow\">\r\n                    <div class=\"col-md-2\"></div>\r\n                    <div class=\"col-md-10 passwordSignInRow\">\r\n                      <div class=\"fgtPassDiv col-xl-6 col-md-6 col-sm-6 col-xs-6\"><a class=\"mr-n-lg fgtPass\" href=\"#\">Forgot Password?</a></div>\r\n                      <div class=\"signin-checkbox col-xl-6 col-md-6 col-sm-6 col-xs-6\">\r\n                        <input type=\"checkbox\" value=\"1\">\r\n                        <span>Stay Sign In </span>\r\n                      </div>\r\n                    </div>\r\n                </div>  \r\n                <div class=\"clearfix loginButtonDiv\">\r\n                  <button class=\"btn btn-primary btn-dark\">LOGIN NOW!</button>\r\n                </div>\r\n              </form>\r\n            </div>\r\n          </div>\r\n        </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </main>\r\n  <footer class=\"page-footer\">\r\n    <div class=\"site-info row\">\r\n      <div class=\"col-xl-6 col-md-8 col-sm-10 col-xs-12 offset-xl-3 offset-md-2 offset-sm-1 offset-xs-0\">\r\n      Copyright © 2016 comprotechnologies.com. <a href=\"http://www.comprotechnologies.com\" title=\"Terms of Use\">Terms of Use</a> and <a href=\"http://www.comprotechnologies.com\" title=\"Terms of Use\">Privacy Policy</a>\r\n      </div>\r\n    </div>\r\n  </footer>\r\n</div>\r\n"
+module.exports = "<div class=\"container loginBackground\">\r\n  <main id=\"content\" class=\"widget-login-container\" role=\"main\">\r\n    <div class=\"row\">\r\n      <div class=\"col-xl-6 col-md-8 col-sm-10 col-xs-12 offset-xl-3 offset-md-2 offset-sm-1 offset-xs-0\">\r\n        <div class=\"row\">\r\n        <div class=\"col-xl-6 col-md-6 col-sm-6 col-xs-6 Section widget-login infoSection leftSection\">\r\n          <div class=\"widget-login  infoSection\">\r\n            <div class=\"simsBuilderIconAndText\">\r\n              <div class=\"simsBuilderIcon\">\r\n                <img src=\"assets/images/builder_logo_blue.png\">\r\n              </div>\r\n              <header class=\"simsBuilderText\">\r\n                <p class=\"InfoHead\"><strong>SIMS</strong> Builder</p>\r\n              </header>\r\n            </div>\r\n            <div class=\"widget-body\">\r\n              <p class=\"InfoBody\">\r\n                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\r\n                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do\r\n              </p>\r\n            </div>\r\n          </div>\r\n        </div>\r\n        <div class=\"col-xl-6 col-md-6 col-sm-6 col-xs-6 Section rightSection\">\r\n          <div class=\" widget-login sectionlogin\">\r\n            <header class=\"loginHeader\">\r\n              <p class=\"loginText\">LOGIN</p>\r\n            </header>\r\n            <div class=\"widget-body\">\r\n              <form class=\"login-form mt-lg\" name=\"form\" (ngSubmit)=\"f.form.valid && login()\" #f=\"ngForm\"  enctype=\"application/x-www-form-urlencoded\">\r\n                <div class=\"row m-t-1 formRow\" [ngClass]=\"{ 'has-error': f.submitted && !username.valid }\">\r\n                    <div class=\"icon col-md-2\"><i class=\"fa fa-user\" aria-hidden=\"true\"></i></div>\r\n                    <input type=\"text\" class=\"form-control col-md-10\" id=\"pswd\" placeholder=\"Username\" name=\"username\" [(ngModel)]=\"model.username\" #username=\"ngModel\" required />\r\n                    <div *ngIf=\"f.submitted && !username.valid\" class=\"help-block\">Username is required</div>\r\n                </div>\r\n                <div class=\"row m-t-1 formRow\" [ngClass]=\"{ 'has-error': f.submitted && !password.valid }\">\r\n                    <div class=\"icon col-md-2\"><i class=\"fa fa-lock\" aria-hidden=\"true\"></i></div>\r\n                    <input type=\"password\" class=\"form-control col-md-10\" id=\"pswd\" name=\"password\" placeholder=\"Password\" [(ngModel)]=\"model.password\" #password=\"ngModel\" required />\r\n                    <div *ngIf=\"f.submitted && !password.valid\" class=\"help-block\">Password is required</div>\r\n                </div>\r\n                <div *ngIf=\"error\" class=\"alert alert-danger\">{{error}}</div>\r\n                <div class=\"row m-t-1 formRow forgetPassRow\">\r\n                    <div class=\"col-md-2\"></div>\r\n                    <div class=\"col-md-10 passwordSignInRow\">\r\n                      \r\n                      <div class=\"signin-checkbox col-xl-6 col-md-6 col-sm-6 col-xs-6\">\r\n                        <input type=\"checkbox\" value=\"1\">\r\n                        <span>Stay Sign In </span>\r\n                      </div>\r\n                      <div class=\"fgtPassDiv col-xl-6 col-md-6 col-sm-6 col-xs-6\"><a class=\"fgtPass\" href=\"#\">Forgot Password?</a></div>\r\n                    </div>\r\n                </div>  \r\n                <div class=\"clearfix loginButtonDiv\">\r\n                  <button class=\"btn btn-primary btn-dark\">LOGIN</button>\r\n                </div>\r\n              </form>\r\n            </div>\r\n          </div>\r\n        </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </main>\r\n  <footer class=\"page-footer\">\r\n    <div class=\"site-info row\">\r\n      <div class=\"col-xl-6 col-md-8 col-sm-10 col-xs-12 offset-xl-3 offset-md-2 offset-sm-1 offset-xs-0\">\r\n      Copyright © 2016 comprotechnologies.com. <a href=\"http://www.comprotechnologies.com\" title=\"Terms of Use\">Terms of Use</a> and <a href=\"http://www.comprotechnologies.com\" title=\"Terms of Use\">Privacy Policy</a>\r\n      </div>\r\n    </div>\r\n  </footer>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -1196,7 +1196,7 @@ var HttpClient = (function () {
     return HttpClient;
     var _a, _b, _c;
 }());
-//# sourceMappingURL=E:/Single Step Builder/client/http.client.js.map
+//# sourceMappingURL=D:/SIMBuilder/client/http.client.js.map
 
 /***/ })
 

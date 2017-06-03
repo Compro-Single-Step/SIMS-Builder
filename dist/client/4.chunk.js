@@ -1,4 +1,4 @@
-webpackJsonp([4,10],{
+webpackJsonp([4],{
 
 /***/ 1064:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -50,7 +50,7 @@ var TaskSearch = (function () {
     return TaskSearch;
     var _a, _b;
 }());
-//# sourceMappingURL=E:/Single Step Builder/client/tasksearch.component.js.map
+//# sourceMappingURL=D:/SIMBuilder/client/tasksearch.component.js.map
 
 /***/ }),
 
@@ -62,7 +62,7 @@ exports = module.exports = __webpack_require__(47)();
 
 
 // module
-exports.push([module.i, ".widget-invoice {\n  border-left: 5px solid #5876B9;\n  padding: 40px; }\n\n::-webkit-input-placeholder {\n  /* Chrome/Opera/Safari */\n  font-weight: bold; }\n\n::-moz-placeholder {\n  /* Firefox 19+ */\n  font-weight: bold; }\n\n:-ms-input-placeholder {\n  /* IE 10+ */\n  font-weight: bold; }\n\n.taskHeadingFont {\n  border: 0;\n  color: #373a3c;\n  font-size: 20px;\n  font-weight: bold; }\n\nspan.unit.taskHeadingFont {\n  pointer-events: none;\n  position: absolute;\n  top: 15px;\n  -webkit-transition: 0.2s ease-in-out;\n  transition: 0.2s ease-in-out; }\n\n.tashHeadWrapper {\n  padding-bottom: 28px; }\n\n.pageHead {\n  font-weight: bold;\n  color: #00505c;\n  font-size: 23px; }\n\n.tempPadding {\n  padding-bottom: 35px; }\n\n.radioOption {\n  font-weight: bold; }\n\n.srchBtn {\n  margin-top: -12px; }\n\n.unit {\n  position: absolute;\n  display: block;\n  top: -23px;\n  z-index: 9; }\n\n.radioButton {\n  margin-right: 13px; }\n\n#task_id {\n  background-color: #fff;\n  border-bottom: 2px solid #dddddd;\n  font-weight: 600; }\n\n#task_id:focus + span.unit.taskHeadingFont,\n#task_id:not(:focus):valid + span.unit.taskHeadingFont {\n  top: -25px; }\n\n.searchForm {\n  display: none; }\n\n.login-form {\n  margin-top: 75px; }\n\n.btn-dark {\n  background-color: #00505c;\n  color: #FFFFFF; }\n  .btn-dark:hover {\n    background-color: #383E4B; }\n\n.welcomeMessage {\n  color: #555555; }\n  .welcomeMessage h3 {\n    font-weight: 600; }\n  .welcomeMessage p {\n    font-weight: 400; }\n", ""]);
+exports.push([module.i, ".widget-invoice {\n  border-left: 5px solid #5876B9;\n  padding: 40px; }\n\n::-webkit-input-placeholder {\n  /* Chrome/Opera/Safari */\n  font-weight: bold; }\n\n::-moz-placeholder {\n  /* Firefox 19+ */\n  font-weight: bold; }\n\n:-ms-input-placeholder {\n  /* IE 10+ */\n  font-weight: bold; }\n\n.taskHeadingFont {\n  border: 0;\n  color: #373a3c;\n  font-size: 20px;\n  font-weight: bold; }\n\nspan.unit.taskHeadingFont {\n  pointer-events: none;\n  position: absolute;\n  top: 15px;\n  transition: 0.2s ease-in-out; }\n\n.tashHeadWrapper {\n  padding-bottom: 28px; }\n\n.pageHead {\n  font-weight: bold;\n  color: #00505c;\n  font-size: 23px; }\n\n.tempPadding {\n  padding-bottom: 35px; }\n\n.radioOption {\n  font-weight: bold; }\n\n.srchBtn {\n  margin-top: -12px; }\n\n.unit {\n  position: absolute;\n  display: block;\n  top: -23px;\n  z-index: 9; }\n\n.radioButton {\n  margin-right: 13px; }\n\n#task_id {\n  background-color: #fff;\n  border-bottom: 2px solid #dddddd;\n  font-weight: 600; }\n\n#task_id:focus + span.unit.taskHeadingFont,\n#task_id:not(:focus):valid + span.unit.taskHeadingFont {\n  top: -25px; }\n\n.searchForm {\n  display: none; }\n\n.login-form {\n  margin-top: 75px; }\n\n.btn-dark {\n  background-color: #00505c;\n  color: #FFFFFF; }\n  .btn-dark:hover {\n    background-color: #383E4B; }\n\n.welcomeMessage {\n  color: #555555; }\n  .welcomeMessage h3 {\n    font-weight: 600; }\n  .welcomeMessage p {\n    font-weight: 400; }\n", ""]);
 
 // exports
 
@@ -119,7 +119,7 @@ var TaskSearchModule = (function () {
     ], TaskSearchModule);
     return TaskSearchModule;
 }());
-//# sourceMappingURL=E:/Single Step Builder/client/taskSearch.module.js.map
+//# sourceMappingURL=D:/SIMBuilder/client/taskSearch.module.js.map
 
 /***/ })
 
