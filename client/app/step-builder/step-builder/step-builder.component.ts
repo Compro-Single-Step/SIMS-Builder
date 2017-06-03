@@ -61,7 +61,12 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
                 let stepData = taskData.stepData[parseInt(this.stepIndex) - 1];
                 this.skillName = stepData.SkillName;
                 this.templateName = stepData.TemplateName;
-                this.stepText = stepData.Text;
+                
+                //Replacing font colour to #fff
+                let regex = /(<\s*font\s+.*?color\s*=\s*['"])(.*?)(['"].*?>)/gim;
+                let customColor = "#fff";
+                this.stepText = stepData.Text.replace(regex, "$1"+customColor+"$3");
+
                 this.cdRef.detectChanges();
                 this.checkForStepTextOverflow();
             });
