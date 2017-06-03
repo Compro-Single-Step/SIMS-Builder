@@ -1,4 +1,5 @@
 const PPTBaseSkill = require("../common/ppSkill");
+const DOMParse = require("xmldom").DOMParser;
 
 module.exports = class InsertAudio extends PPTBaseSkill {
 
