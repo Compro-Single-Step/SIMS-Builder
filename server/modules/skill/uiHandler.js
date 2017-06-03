@@ -33,12 +33,8 @@ class UIHandler {
                             });
                     })
                     .catch(errorsArray => {
-                        return Promise.reject({
-                            errorMessage: "File(s) not found",
-                            status: "error",
-                            statusCode: 404,
-                            filesPathArray: errorsArray.map((error) => error.filePath)
-                        });
+                        let error = new Error("File(s) not found.\n" + errorsArray.map((error) => {error.filePath}));
+                        return Promise.reject(error);
                     });
             })
             .catch(error => {
@@ -67,7 +63,7 @@ class UIHandler {
 
                 //Throw error if not able to fetch any file
                 if (errorsArray.length !== 0) {
-                    throw errorsArray;
+                    throw new Error(errorsArray);
                 }
 
                 //If files array is empty (No skill map found in skillRepo)

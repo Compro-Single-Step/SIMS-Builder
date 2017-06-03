@@ -32,7 +32,8 @@ skillConfigRepoSchema.statics = {
                         let filePath = data[0][configType];
                         resolve(filePath);
                     } catch(error) {
-                        reject("No document exist for template id " + templateId);
+                        error.message += "\n No document exist for template id " + templateId;
+                        reject(error);
                     }
                 }
             });

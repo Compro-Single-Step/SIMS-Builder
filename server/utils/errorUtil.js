@@ -1,10 +1,11 @@
 class ErrorUtil {
 
     attachErroInfo(error) {
-        return {
-            status: "Error",
-            error: error.message
+        let errorObject = {
+            'status': "error",
+            'error': error.message || error.error
         };
+        return errorObject;
     }
 }
 

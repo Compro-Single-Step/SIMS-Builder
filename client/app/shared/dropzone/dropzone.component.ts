@@ -142,9 +142,11 @@ export class DropzoneComponent extends BaseComponent implements OnDestroy {
         } else if (data["status"] === "error") {
             //TODO: Try saving on server again
             self.exceptionHandlerSrvc.globalConsole("Couldn't Save Model Data on Server.");
-            if(data["errcode"] === "DATA_NOT_PRESENT"){
-                self.exceptionHandlerSrvc.globalLog("UI State is null. Please check");
-            }
+            
+            //Commenting this code because of Generic Error handling on server.
+            // if(data["errcode"] === "DATA_NOT_PRESENT"){
+            //     self.exceptionHandlerSrvc.globalLog("UI State is null. Please check");
+            // }
         }
     });
   }

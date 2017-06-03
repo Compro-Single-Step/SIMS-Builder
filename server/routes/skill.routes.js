@@ -11,7 +11,7 @@ router.get('/stepuiconfig/uiconfig/:templateId', (req, res) => {
             res.send(uiConfig);
         })
         .catch((error) => {
-            res.send(ErrorUtil.attachErroInfo(error));
+            res.status(500).send(ErrorUtil.attachErroInfo(error));
         });
 });
 
@@ -23,7 +23,7 @@ router.get('/stepuiconfig/model/:templateId', (req, res) => {
             res.send(model);
         })
         .catch((error) => {
-            res.send(ErrorUtil.attachErroInfo(error));
+            res.status(500).send(ErrorUtil.attachErroInfo(error));
         });
 });
 
@@ -37,7 +37,7 @@ router.get('/stepuiconfig/stepuistate/:taskId/:stepIndex', (req, res) => {
             res.send(stepUIState);
         })
         .catch((error) => {
-            res.send(ErrorUtil.attachErroInfo(error));
+            res.status(500).send(ErrorUtil.attachErroInfo(error));
         });
 });
 
@@ -65,7 +65,7 @@ router.post('/stepuistate/:taskId/:stepIndex', (req, res) => {
             });
         })
         .catch((error) => {
-            res.send(ErrorUtil.attachErroInfo(error));
+            res.status(500).send(ErrorUtil.attachErroInfo(error));
         });
 });
 
@@ -82,7 +82,7 @@ router.post('/xmlgeneration', (req, res) => {
             });
         })
         .catch((error) => {
-            res.send(ErrorUtil.attachErroInfo(error));
+            res.status(500).send(ErrorUtil.attachErroInfo(error));
         });
 });
 
@@ -91,7 +91,7 @@ router.post("/resource", (req, res) => {
     let upload = skillController.saveResourceFile();
     upload(req, res, (error) => {
         if (error) {
-            res.send("Error uploading file.");
+            res.status(500).send(ErrorUtil.attachErroInfo(error));
         }
         else {
             let filePath = req.body.filePath;
@@ -113,7 +113,7 @@ router.get("/resource/*", (req, res) => {
             res.end(resourceData);
         })
         .catch((error) => {
-            res.status(error.status).set("status", "error").end(ErrorUtil.attachErroInfo(error));
+            res.status(error.status || 404).set("status", "error").end(ErrorUtil.attachErroInfo(error));
         });
 });
 
@@ -127,7 +127,7 @@ router.delete("/resource/*", (req, res) => {
             });
         })
         .catch((error) => {
-            res.send(ErrorUtil.attachErroInfo(error));
+            res.status(501).send(ErrorUtil.attachErroInfo(error));
         });
 });
 

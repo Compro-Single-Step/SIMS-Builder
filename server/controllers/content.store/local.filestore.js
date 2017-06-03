@@ -44,7 +44,7 @@ class localFilestore extends baseFilestore{
         return new Promise((resolve, reject) => {
             fs.readFile(absFilePath, 'utf8', function (error, data) {
                 if (error) {
-                    error.filePath = relFilePath;
+                    error.message += `\nFile Path: ${relFilePath}`;
                     reject(error);
                 }
                 else {
