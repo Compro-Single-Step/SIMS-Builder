@@ -65,6 +65,9 @@ class BaseFileStore {
 
     copyAssetToTaskFolder(srcPath, taskParams) {
         try {
+            if(!srcPath) {
+                return Promise.resolve(true);
+            }
             var filepathArr = srcPath.split("/")
             var fileName = filepathArr[filepathArr.length - 1].trim();
             var fileTypeArr = fileName.split(".")
@@ -117,6 +120,10 @@ class BaseFileStore {
      * destination and returns the promise for same
      */
     copyAssetToTaskFolderEnhanced(sourceFileLocation, resourceMap, taskId, stepIndex) {
+        
+        if(!sourceFileLocation) {
+            return Promise.resolve(true);
+        }
         let srcPath;
         let destPath;
         try {
