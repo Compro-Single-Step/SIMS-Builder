@@ -153,11 +153,12 @@ class BaseFileStore {
             return this[fileTypeFunctionMap[readFileType]](absolutePath);
         }
         else {
-            return this.readFile(absolutePath).then((fileData) => {
+            return this.readFile(absolutePath)
+            .then((fileData) => {
                 let resolveParam = { "fileData": fileData, "filePath": absolutePath };
                 return resolveParam;
             }, (err) => {
-                Promise.reject(err);
+                return Promise.reject(err);
             })
         }
 
