@@ -64,7 +64,7 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
                 
                 //Replacing font colour to #fff
                 let regex = /(<\s*font\s+.*?color\s*=\s*['"])(.*?)(['"].*?>)/gim;
-                let customColor = "#fff";
+                let customColor = "#feff92";
                 this.stepText = stepData.Text.replace(regex, "$1"+customColor+"$3");
 
                 this.cdRef.detectChanges();
