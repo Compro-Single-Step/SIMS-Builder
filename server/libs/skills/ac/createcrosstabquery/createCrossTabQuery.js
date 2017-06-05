@@ -18,8 +18,10 @@ class createcrosstabquery extends AccessBaseSkill {
                 this.finalQueryName = defaultQueryName;
          }
          return Promise.resolve(true);
-         }catch(error){
-            return Promise.reject(true);
+        }catch(error){
+            console.log("Error Occured in the init function: Still resolving");
+            // resolvong as part of Xml Generation for minimum attributes.
+            return Promise.resolve(error);
          }
          
     }

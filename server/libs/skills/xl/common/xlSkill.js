@@ -4,6 +4,14 @@ const BaseSkill = require("../../common/baseSkill");
 const xmlUtil = require("../../../../utils/xmlUtil");
 
 module.exports = class ExcelBaseSkill extends BaseSkill {
+    
+    constructor(){
+        super();
+        /* Creating a list of he mandatory initial attributes which are application specific, these are mandatorily needed 
+        to succeed in the AttrValueMap generation */
+        this.mandatoryAttributeList = ["INIT_DOC_JSON","IMAGE_JSON"];
+    }
+
     //dynamic sheet changes
     init(data) {
         var self = this;
