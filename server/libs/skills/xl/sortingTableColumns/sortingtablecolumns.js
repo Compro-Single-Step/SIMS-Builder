@@ -20,9 +20,14 @@ class sortingTableColumns extends ExcelBaseSkill {
     else {  //initDocJSON Added
 
       //Add Sheet Names From Init Doc JSON
-      for (let sheetNum = 0; sheetNum < initDocJSON.sheetCount; sheetNum++) {
-        dependantSheetArrayInModel.push(JSON.parse(JSON.stringify(clonedDependantSheetArrayInModel[0])));
-        dependantSheetArrayInModel[sheetNum].name = initDocJSON.sheets[sheetNum].name;
+      if(initDocJSON.sheets){
+        for (let sheetNum = 0; sheetNum < initDocJSON.sheetCount; sheetNum++) {
+          dependantSheetArrayInModel.push(JSON.parse(JSON.stringify(clonedDependantSheetArrayInModel[0])));
+          dependantSheetArrayInModel[sheetNum].name = initDocJSON.sheets[sheetNum].name;
+        }
+      }
+      else{
+        dependantSheetArrayInModel.push(clonedDependantSheetArrayInModel[0]);
       }
     }
   }

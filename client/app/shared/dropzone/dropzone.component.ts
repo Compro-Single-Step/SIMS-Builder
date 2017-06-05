@@ -93,10 +93,11 @@ export class DropzoneComponent extends BaseComponent implements OnDestroy {
       if (file.status === "success") {
         let currModelRef = self.getData();
         if (self.isMultipleFiles) {
-          currModelRef["value"].push({ displayName: file.name, path: response.filePath });
+          currModelRef["value"].push({ displayName: file.name, path: response.filePath, size: file.size });
         } else {
           currModelRef["displayName"] = file.name;
           currModelRef["path"] = response.filePath;
+          currModelRef["size"] = file.size;
         }
         self.readFile(file, MIMETYPE[self.compConfig.rendererProperties.dataType]);
       }
@@ -216,20 +217,20 @@ export class DropzoneComponent extends BaseComponent implements OnDestroy {
   }
 
   addFileToDropzone(dropzone, el) {
-    if (el.path && el.path != "") {
-      this.bds.getResource(el.path).subscribe((res) => {
-        if (res.headers.get("status") == "success") {
-          let file = new File([res._body], el.displayName);
-          dropzone.emit("addedfile", file);
-          dropzone.emit("complete", file);
-          dropzone.files.push(file);
-        }
-        else {
-          //TODO: Handling of code when error is receiving file occurrs. 
-        }
-      });
+    if (el.displayName && el.displayName != "")
+    {
+      var file = {
+        name: el.displayName,
+        size: el.size ? el.size : 2000,
+        status: Dropzone.ADDED,
+        accepted: true
+      };
+      dropzone.emit("addedfile", file);
+      dropzone.emit("complete", file);
+      dropzone.files.push(file);
     }
   }
+  
   restoreFileUI(dropzone) {
     let fileInfo = this.getData();
     if (this.isMultipleFiles) {
