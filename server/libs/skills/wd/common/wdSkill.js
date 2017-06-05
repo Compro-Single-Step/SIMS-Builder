@@ -6,6 +6,14 @@ const xmlUtil = require("../../../../utils/xmlUtil");
 const dbfileStoreManager = require('../../../../modules/skill/dbFilestoreMgr');
 
 module.exports = class WordSkill extends BaseSkill {
+    
+    constructor() {
+       super();
+       /* Creating a list of he mandatory initial attributes which are application specific, these are mandatorily needed 
+        to succeed in the AttrValueMap generation */
+       this.mandatoryAttributeList = ["DOCUMENT_DATA"];
+  }
+
     createCursorPosition(skillParams) {
         try {
             let paramValueObj = skillParams.paramsObj;

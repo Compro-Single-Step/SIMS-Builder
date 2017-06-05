@@ -48,7 +48,7 @@ function attrTaskParam(taskId, stepIndex, stateId, dbFilestoreMgr, resourceMap) 
  *    absFilePath: Absolute folder path which needs to be added (in attribute value and preload map) in the task XML. Ex:
  */
 attrTaskParam.prototype.addResourceToMap = function (fileInfo) {
-
+  
   let returnArray = [];
 
   if (!(fileInfo instanceof Array)) {
@@ -94,6 +94,12 @@ attrTaskParam.prototype._addToResMap = function (filePathObj, config) {
 
 class IOTranslator {
 
+  constructor(){
+    /* As per Discussion with DPS, this variable is assigned a static value.
+     This static value will have to be fetched from outside so that this variable gets populated*/
+    this.xmlInitialState = 1;
+  }
+  
   genPromise(attrParams, taskParam) {
     var self = this;
     return new Promise(function (resolve, reject) {
@@ -131,18 +137,44 @@ class IOTranslator {
     return attrParams.skillobject[functionName](params);
   }
 
+  /* As per Discussion with DPS, the below function handles the error and also 
+   controlls whch attribute to be resolved or not. This desision is made on the basis of that Attribute's 
+   prescence in the "mandatoryAttributeList" list and their position in the 
+   xmlInitialState (currently 1) in the skill xml and IOMap*/
   evaluateAttribute(attrParams, taskParam) {
-
+    let self = this;
+    let evaluatedParams = {};
     try {
-      let evaluatedParams = {};
       //the attr params currently contains the string values , the LOC below converts it into values from the Step UI Json 
-      if (attrParams.attrObject.params)
+      if (attrParams.attrObject.params){
         evaluatedParams = this.getEvaluatedParams(attrParams.attrObject.params, attrParams.stepUIState);
-      return this.evaluateFromFunc(attrParams, evaluatedParams, attrParams.attrObject.skillParams, taskParam);
+      }
+      return this.evaluateFromFunc(attrParams, evaluatedParams, attrParams.attrObject.skillParams, taskParam)
+      .catch(function(err){
+        // this is the catch if rejection/crash is faced in the Asynchronous code 
+        if(((taskParam.stateId == self.xmlInitialState) && (attrParams.skillobject.mandatoryAttributeList.indexOf(attrParams.attrName) != -1) )){
+          // this means that if the skill has rejected the attribute , then translator will also reject it 
+          return Promise.reject(err);
+        }
+        else{
+          // this means that if the skill has rejected the attribute , then translator will still create the xml
+          console.log(attrParams.attrName + " : creation failed for this attribute");
+          let resolveParam = {"attrValue":null};
+          return Promise.resolve(resolveParam);
+        }
+      })
     } catch (error) {
-      // this catch is required in order to handle the sync code exception handling
-      error.message += " (attribute : " + attrParams.attrName + ")";
-      return Promise.reject(error);
+        // this is the catch if crash is faced in the Synchronous code/Iomap reference 
+        if(((taskParam.stateId == self.xmlInitialState) && (attrParams.skillobject.mandatoryAttributeList.indexOf(attrParams.attrName) != -1) )){
+          // this means that if the skill has rejected the attribute , then translator will also reject it 
+          return Promise.reject(err);
+        }
+        else{
+          // this means that if the skill has rejected the attribute , then translator will still create the xml
+          console.log(attrParams.attrName + " : creation failed for this attribute");
+          let resolveParam = {"attrValue":null};
+          return Promise.resolve(resolveParam);
+        }
     }
   }
 
