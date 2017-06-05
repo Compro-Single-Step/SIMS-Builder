@@ -170,10 +170,14 @@ class IOTranslator {
         // in the new implementation skill class need not send this preload resource array here
         // this code will become obsolete once all the present templates start using new approach
         if (resolveParams.preloadResArr) {
+          resolveParams.preloadResArr.filter((value) => {
+              return value.path;
+          });
+
           if (!attrObj.IOMap.preload)
-            attrObj.IOMap.preload = { resource: [] };
+              attrObj.IOMap.preload = { resource: [] };
           else if (!attrObj.IOMap.preload.resource)
-            attrObj.IOMap.preload.resource = [];
+              attrObj.IOMap.preload.resource = [];
           attrObj.IOMap.preload.resource.push(...resolveParams.preloadResArr);
         }
       })
