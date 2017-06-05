@@ -11,7 +11,7 @@ module.exports = class WordSkill extends BaseSkill {
        super();
        /* Creating a list of he mandatory initial attributes which are application specific, these are mandatorily needed 
         to succeed in the AttrValueMap generation */
-       this.mandatoryAttributeList = ["DOCUMENT_DATA"];
+       this.mandatoryAttributeList = ["HTML_PATH"];
   }
 
     createCursorPosition(skillParams) {

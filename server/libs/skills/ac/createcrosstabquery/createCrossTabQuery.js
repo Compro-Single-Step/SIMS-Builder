@@ -19,7 +19,7 @@ class createcrosstabquery extends AccessBaseSkill {
          }
          return Promise.resolve(true);
         }catch(error){
-            console.log("Error Occured in the init function: Still resolving");s
+            console.log("Error Occured in the init function: Still resolving");
             // resolvong as part of Xml Generation for minimum attributes.
             return Promise.resolve(error);
          }
