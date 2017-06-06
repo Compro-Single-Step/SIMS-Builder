@@ -35,13 +35,13 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
                     this.router.navigate([this.returnUrl]);
                 } else {
+                    this.LoaderService.setLoaderVisibility(false);
                     this.error = 'Username or password is incorrect';
                    
                 }
             });
     }
-    ngAfterViewInit(){
-        console.log('After View Init');
+    ngAfterViewInit(){        
          this.LoaderService.setLoaderVisibility(false);
 
     }
