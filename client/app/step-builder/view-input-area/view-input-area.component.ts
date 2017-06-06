@@ -1,19 +1,20 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewContainerRef, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewContainerRef, ViewChild, AfterViewInit } from '@angular/core';
 import { InputFactoryService } from '../../shared/input-factory.service';
 import { UIConfig } from '../../shared/UIConfig.model';
 import { itemSchema } from '../../shared/UIConfig.model';
 import { LabelTypes } from '../../shared/enums';
+import { LoaderService } from '../../_services/loader.service';
 @Component({
   selector: 'app-view-input-area',
   templateUrl: './view-input-area.component.html',
   styleUrls: ['./view-input-area.component.scss']
 })
-export class ViewInputAreaComponent implements OnInit {
+export class ViewInputAreaComponent implements OnInit, AfterViewInit  {
   @ViewChild('inputCompContainer', { read: ViewContainerRef }) compContainer;
   @Input() viewConfig: UIConfig;
   @Output() uiRendered: EventEmitter<Object> = new EventEmitter();
   viewHeadingConfig: itemSchema = new itemSchema();
-  constructor(private factoryRef: InputFactoryService, vcref: ViewContainerRef) { }
+  constructor(private factoryRef: InputFactoryService, vcref: ViewContainerRef, private LoaderService:LoaderService) { }
   @Input() viewsCount;
   @Input() currentView;
   ngOnInit() {
@@ -33,6 +34,11 @@ export class ViewInputAreaComponent implements OnInit {
     }
     catch(err){
       console.log("Error in painting the components - " + err);
+    }
+  }
+  ngAfterViewInit() {
+    if (this.currentView == this.viewsCount) {
+      this.LoaderService.setLoaderVisibility(false);
     }
   }
 }

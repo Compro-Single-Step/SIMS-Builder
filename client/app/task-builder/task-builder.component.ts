@@ -1,10 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit,AfterViewInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PreviewService } from '../_services/preview.service';
 import { TaskDataService } from '../_services/taskData.service';
 import { ModalDirective } from 'ng2-bootstrap/modal';
 
 import { MessageMap } from '../shared/enums';
+import { LoaderService } from '../_services/loader.service';
 
 declare var Messenger: any;
 declare var jQuery: any; // for template selection bnx, can be renmoved later
@@ -13,7 +14,7 @@ declare var jQuery: any; // for template selection bnx, can be renmoved later
   templateUrl: './task-builder.component.html',
   styleUrls: ['./task-builder.component.scss']
 })
-export class TaskBuilderComponent implements OnInit {
+export class TaskBuilderComponent implements OnInit, AfterViewInit {
  StepData;
  TaskData = {};
  AppImage;
@@ -25,7 +26,7 @@ export class TaskBuilderComponent implements OnInit {
  disableOkBtn = true;
  @ViewChild('selectTemplateDialog') public SelectTemplateDialog:ModalDirective;
  constructor(private route: ActivatedRoute,private previewService:PreviewService ,private taskDataService:TaskDataService, 
-    private router: Router) { 
+    private router: Router, private LoaderService: LoaderService) { 
 	}
 
  ngOnInit(): void {
@@ -118,5 +119,9 @@ initialiseTaskData() {
 					showCloseButton: true,
 					hideAfter: 3
 					});
+		}
+		ngAfterViewInit(){
+			console.log("Task builder after view it");
+			this.LoaderService.setLoaderVisibility(false);
 		}	          
 }
