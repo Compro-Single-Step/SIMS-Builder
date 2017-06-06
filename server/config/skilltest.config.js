@@ -27,7 +27,7 @@ const config = {
       getBlankScript: getBlankScript
     },
     runner: {
-      url: 'http://loadrunner1:9001',
+      url: 'http://34.209.150.28',
       runtask : '/sims/runtask'
     }
   },
