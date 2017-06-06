@@ -1,0 +1,248 @@
+<task name="Crop a Picture">
+	<preload>
+		<comps>
+			<comp id="1" name="SIMS.Components.PPT.Ribbon" cssclass="SIMS_Ribbon_PPT" type="default"/>
+			<comp id="2" name="SIMS.Components.PPT.SlideView" cssclass="SlideViewComponent" type="default"/>
+			<comp id="3" name="SIMS.Components.Common.TaskBar" cssclass="SIMS_TaskBar" type="default"/>
+			{{#ifCond MODE "without-caption"}}
+			<comp id="4" name="SIMS.Components.PPT.ImagePlaceHolder" cssclass="PPTImagePlaceHolder" type="default"/>
+			{{/ifCond}}
+			{{#ifCond MODE "with-caption"}}
+			<comp id="5" name="SIMS.Components2016.PPT.ImageWithCaptionPlaceholder" cssclass="ImageWithCaptionPlaceholder" type="default"/>
+			{{/ifCond}}
+		</comps>
+	</preload>
+	<states>
+		<state id="1" desc="Initial State Load" txt="1">
+			<comps>
+				<comp id="1" mode="new">
+					<sizeandpos>
+						<attr name="left" value="0"/>
+						<attr name="top" value="0"/>
+						<attr name="width" value="*"/>
+						<attr name="height" value="150"/>
+					</sizeandpos>
+					<initialattrs>
+						<attr name="RIBBON_PATH" value="app/comps/Common/Ribbon/ppt-ribbon.xml"/>
+						<attr name="DOCUMENT_NAME" userDefined="true"/>
+						{{#ifCond MODE "with-caption"}}
+						<attr name="ACTIVATE_TAB" value="Drawing Tools Format"/>
+						{{/ifCond}}
+						<attr name="ACTIVATE_TAB" value="Picture Tools Format"/>
+					</initialattrs>
+					<events>
+						<event id="5122" desc="Picturetoolsformat_size_crop_crop">
+							<validate followup="2">
+								{{#ifCond MODE "with-caption"}}
+								<comp id="5"/>
+								{{/ifCond}}
+								{{#ifCond MODE "without-caption"}}
+								<comp id="4"/>
+								{{/ifCond}}
+								<comp id="2"/>
+							</validate>
+						</event>
+					</events>
+				</comp>
+				<comp id="2" mode="new">
+					<sizeandpos>
+						<attr name="left" value="0"/>
+						<attr name="top" value="145"/>
+						<attr name="width" value="*"/>
+					</sizeandpos>
+					<initialattrs>
+						<attr name="XML_PATH" userDefined="true"/>
+						<attr name="SELECTED_SLIDE" userDefined="true"/>
+						<attr name="SHOW_RULER" value="true"/>
+					</initialattrs>
+					<finalattrs>
+						<attr name="SELECTED_SLIDE" userDefined="true"/>
+					</finalattrs>
+				</comp>
+				<comp id="3" mode="new">
+					<sizeandpos>
+						<attr name="left" value="0"/>
+						<attr name="bottom" value="0"/>
+						<attr name="width" value="*"/>
+						<attr name="height" value="31"/>
+					</sizeandpos>
+					<initialattrs>
+						<attr name="OPENWORDFILE" userDefined="true"/>
+						<attr name="APPLICATION" value="ppt"/>
+						<attr name="APP_TOOLTIP_IMAGE" userDefined="true"/>
+					</initialattrs>
+				</comp>
+				{{#ifCond MODE "with-caption"}}
+				<comp id="5" mode="new" subcomp="true" hostid="2" hostparam="" userDefined="hostparam">
+					<initialattrs>
+						<attr name="COMP_IMAGE" userDefined="true"/>
+						<attr name="XML_PATH" userDefined="true"/>
+						<attr name="IMAGE_DATA_JSON" userDefined="true"/>
+						<attr name="CAPTION_DATA_JSON" userDefined="true"/>
+						<attr name="CAPTION_TEXT_JSON" value="{&quot;type&quot;:&quot;TextEditorControl&quot;}"/>
+					</initialattrs>
+					<finalattrs>
+						<attr name="IMAGE_SELECTED" value="true"/>
+					</finalattrs>
+					<events>
+						<event id="23" desc="Picture_RightClick_crop">
+							<validate followup="2">
+								<comp id="5" />
+								<comp id="2" />
+							</validate>
+						</event>
+					</events>
+				</comp>
+				{{/ifCond}}
+				{{#ifCond MODE "without-caption"}}
+				<comp id="4" mode="new" subcomp="true" hostid="2" hostparam="" userDefined="hostparam">
+					<initialattrs>
+						<attr name="IMG_PH_MODE" value="WORK"/>
+						<attr name="COMP_IMAGE" userDefined="true"/>
+						<attr name="XML_PATH" userDefined="true"/>
+					</initialattrs>
+					<finalattrs>
+						<attr name="IS_PH_SELECTED" value="true"/>
+					</finalattrs>
+					<events>
+						<event id="23" desc="Picture_RightClick_crop">
+							<validate followup="2">
+								<comp id="4" />
+								<comp id="2" />
+							</validate>
+						</event>
+					</events>
+				</comp>
+		        {{/ifCond}}
+			</comps>
+		</state>
+		<state id="2" desc="Loading state when Crop is clicked" txt="1">
+			<comps>
+				<comp id="1" mode="edit">
+					<initialattrs>
+						<attr name="HIGHLIGHT_CROP_OPTION" value="true"/>
+					</initialattrs>
+				</comp>
+				{{#ifCond MODE "without-caption"}}
+				<comp id="4" mode="edit" subcomp="true" hostid="2" hostparam="" userDefined="hostparam">
+					<initialattrs>
+						<attr name="ENABLE_CROP" value="true"/>
+						<attr name="CROP_DATA" userDefined="true"/>
+					</initialattrs>
+					<finalattrs>
+						<attr name="CROP_DATA" userDefined="true"/>
+					</finalattrs>
+					<events>
+						<event id="15" desc="IMAGE_CROPPED">
+							<validate followup="3">
+								<comp id="4"/>
+							</validate>
+						</event>
+					</events>
+				</comp>
+		        {{/ifCond}}
+				{{#ifCond MODE "with-caption"}}
+				<comp id="5" mode="edit" subcomp="true" hostid="2" hostparam="" userDefined="hostparam">
+					<initialattrs>
+						<attr name="ENABLE_CROP" value="true"/>
+						<attr name="CROP_DATA" userDefined="true"/>
+						<attr name="CAPTION_TEXT_JSON" value="{&quot;type&quot;:&quot;TextEditorControl&quot;}"/>
+					</initialattrs>
+					<finalattrs>
+						<attr name="CROP_DATA" userDefined="true"/>
+					</finalattrs>
+					<events>
+						<event id="15" desc="IMAGE_CROPPED">
+							<validate followup="3">
+								<comp id="5"/>
+							</validate>
+						</event>
+					</events>
+				</comp>
+				{{/ifCond}}
+			</comps>
+		</state>
+		<state id="3" desc="Loading state when Crop is clicked" txt="1">
+			<comps>
+				<comp id="1" mode="edit">
+					<events>
+						<event id="5122" desc="Picturetoolsformat_size_crop_crop">
+							<validate followup="4">
+								<comp id="2"/>
+							</validate>
+						</event>
+					</events>
+				</comp>
+				<comp id="2" mode="edit">
+					<initialattrs>
+						<attr name="PARTIAL_SLIDES_DATA" userDefined="true"/>
+						<attr name="SELECTED_SLIDE" userDefined="true"/>
+						<attr name="FIRE_EVENT_ON_SLIDEAREA_CLICK" value="true"/>
+					</initialattrs>
+					<finalattrs>
+						<attr name="SELECTED_SLIDE" userDefined="true"/>
+					</finalattrs>
+					<events>
+						<event id="41" desc="Escape Clicked">
+							<validate followup="4">
+								<comp id="2"/>
+							</validate>
+						</event>
+					</events>
+				</comp>
+				{{#ifCond MODE "without-caption"}}
+				<comp id="4" mode="edit" subcomp="true" hostid="2" hostparam="" userDefined="hostparam">
+					<initialattrs>
+						<attr name="COMP_IMAGE" userDefined="true"/>
+						<attr name="ENABLE_CROP" value="true"/>
+						<attr name="CROP_DATA" userDefined="true"/>
+					</initialattrs>
+					<events>
+						<event id="17" desc="Escape Clicked">
+							<validate followup="4">
+								<comp id="2" />
+							</validate>
+						</event>
+					</events>
+				</comp>
+		        {{/ifCond}}
+				{{#ifCond MODE "with-caption"}}
+				<comp id="5" mode="edit" subcomp="true" hostid="2" hostparam="" userDefined="hostparam">
+					<initialattrs>
+						<attr name="COMP_IMAGE" userDefined="true"/>
+						<attr name="CROP_DATA" userDefined="true"/>
+						<attr name="CAPTION_TEXT_JSON" value="{&quot;type&quot;:&quot;TextEditorControl&quot;}"/>
+					</initialattrs>
+					<events>
+						<event id="17" desc="Escape Clicked">
+							<validate followup="4">
+								<comp id="2"/>
+							</validate>
+						</event>
+					</events>
+				</comp>
+				{{/ifCond}}
+			</comps>
+		</state>
+		<state id="4" desc="Final State Load" islast="true">
+			<comps>
+				{{#ifCond MODE "without-caption"}}
+				<comp id="4" mode="remove"/>
+				{{/ifCond}}
+				{{#ifCond MODE "with-caption"}}
+				<comp id="5" mode="remove"/>
+				{{/ifCond}}
+				<comp id="1" mode="edit">
+					<initialattrs>
+						<attr name="HIGHLIGHT_CROP_OPTION" value="false"/>
+					</initialattrs>
+				</comp>
+				<comp id="2" mode="edit">
+					<initialattrs>
+						<attr name="PARTIAL_SLIDES_DATA" userDefined="true"/>
+					</initialattrs>
+				</comp>
+			</comps>
+		</state>
+	</states>
+</task>
