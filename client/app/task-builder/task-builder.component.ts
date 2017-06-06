@@ -121,7 +121,6 @@ initialiseTaskData() {
 					});
 		}
 		ngAfterViewInit(){
-			console.log("Task builder after view it");
 			this.LoaderService.setLoaderVisibility(false);
 		}	          
 }
