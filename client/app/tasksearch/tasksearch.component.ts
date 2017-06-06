@@ -34,9 +34,7 @@ export class TaskSearch implements OnInit, AfterViewInit{
   }
 
    ngAfterViewInit(){
-        console.log('After View Init');
          this.LoaderService.setLoaderVisibility(false);
-
     }
 
 
