@@ -14,7 +14,7 @@ declare var jQuery: any;
     '[class.app]' : 'true',
     id: 'app'
   },
-  styles:['.fixed_navbar{position:fixed;} .searchForm{margin-top:2px;}']
+  styles:['.fixed_navbar{position:fixed;} .searchForm{margin-top:2px;} .sidebar{background-color: #383E4B}']
 })  
 export class Layout implements OnInit{
   config: any;
@@ -63,9 +63,13 @@ export class Layout implements OnInit{
     if (!this.config.state['nav-static']) {
       this.collapseNavigation();
     }
+    else{
+        this.expandNavigation();
+    }
   }
 
   expandNavigation(): void {
+    this.$sidebar.find('.logo').find('img').attr('src','assets/images/compro.png'); 
     // this method only makes sense for non-static navigation state
     // if (this.isNavigationStatic()
     //   && (this.configFn.isScreen('lg') || this.configFn.isScreen('xl'))) { return; }
@@ -81,6 +85,7 @@ export class Layout implements OnInit{
       && (this.configFn.isScreen('lg') || this.configFn.isScreen('xl'))) { return; }
 
     jQuery('layout').addClass('nav-collapsed');
+    this.$sidebar.find('.logo').find('img').attr('src','assets/images/Compro-Logo.png');  
     // this.$sidebar.find('.collapse.in').collapse('hide')
     //   .siblings('[data-toggle=collapse]').addClass('collapsed');
   }
@@ -180,11 +185,11 @@ export class Layout implements OnInit{
     
     this.collapseNavigation();
 
-    this.$sidebar.on('click', () => {
-      if (jQuery('layout').is('.nav-collapsed')) {
-        this.expandNavigation();
-      }
-    });
+    // this.$sidebar.on('click', () => {
+    //   if (jQuery('layout').is('.nav-collapsed')) {
+    //     this.expandNavigation();
+    //   }
+    // });
 
     // this.router.events.subscribe(() => {
     //   this.collapseNavIfSmallScreen();

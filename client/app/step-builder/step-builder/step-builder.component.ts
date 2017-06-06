@@ -60,7 +60,12 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
                 let stepData = taskData.stepData[parseInt(this.stepIndex) - 1];
                 this.skillName = stepData.SkillName;
                 this.templateName = stepData.TemplateName;
-                this.stepText = stepData.Text;
+                
+                //Replacing font colour to #fff
+                let regex = /(<\s*font\s+.*?color\s*=\s*['"])(.*?)(['"].*?>)/gim;
+                let customColor = "#feff92";
+                this.stepText = stepData.Text.replace(regex, "$1"+customColor+"$3");
+
                 this.cdRef.detectChanges();
                 this.checkForStepTextOverflow();
             });
@@ -80,14 +85,16 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
         jQuery(".show-more a").each(function() {
             var $link = jQuery(this);
             var $content = $link.parents().find(".stepText");
+            var $stepText = $link.parents().find(".stepTextHeading");
 
             var visibleHeight = $content[0].clientHeight;
-            var actualHeight = $content[0].scrollHeight - 5;
+            var actualHeight = $content[0].scrollHeight - 7;
 
             if (actualHeight > visibleHeight) {
                 $link.show();
             } else {
                 $link.hide();
+                $stepText.addClass("hideEllipsis");
             }
         });
     }    

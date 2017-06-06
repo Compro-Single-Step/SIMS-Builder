@@ -1,74 +1,71 @@
 <div class="container loginBackground">
   <main id="content" class="widget-login-container" role="main">
     <div class="row">
-      <div class="col-xl-6 col-md-6 col-xs-10 offset-xl-3 offset-md-3 offset-xs-1">
+      <div class="col-xxl-4 col-xl-6 col-md-8 col-sm-10 col-xs-12 offset-xxl-3 offset-xl-3 offset-md-2 offset-sm-1 offset-xs-0">
         <div class="row">
-        <div class="col-xl-6 Section widget-login  infoSection">
-            <section class="widget-login  infoSection">
-              <header>
-                <p class="InfoHead">SIMS Builder</p>
-              </header>
-              <div class="widget-body">
-                <p class="InfoBody">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                  et dolore magna aliqua.
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do 
-                
-                </p>                    
+        <div class="col-xl-6 col-md-6 col-sm-6 col-xs-6 Section widget-login infoSection leftSection">
+          <div class="widget-login  infoSection">
+            <div class="simsBuilderIconAndText">
+              <div class="simsBuilderIcon">
+                <img src="assets/images/builder_logo_blue.png">
               </div>
-          </section>
+              <header class="simsBuilderText">
+                <p class="InfoHead"><strong>SIMS</strong> Builder</p>
+              </header>
+            </div>
+            <div class="widget-body">
+              <p class="InfoBody">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              </p>
+            </div>
+          </div>
         </div>
-        <div class="col-xl-6 Section">
-          <section class=" widget-login sectionlogin">
-            <header>
-              <p class="loginText">Login</p>
-              <hr class="lineSep">
+        <div class="col-xl-6 col-md-6 col-sm-6 col-xs-6 Section rightSection">
+          <div class=" widget-login sectionlogin">
+            <header class="loginHeader">
+              <p class="loginText">LOGIN</p>
             </header>
             <div class="widget-body">
               <form class="login-form mt-lg" name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm"  enctype="application/x-www-form-urlencoded">
-                <div class="form-group row m-t-1" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
-                    <label class="col-md-5 lab" for="username">Username</label>
-                    <input type="text" class="form-control col-md-6" id="pswd" placeholder="Username" name="username" [(ngModel)]="model.username" #username="ngModel" required />
+                <div class="row m-t-1 formRow" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
+                    <div class="icon col-md-2"><i class="fa fa-user" aria-hidden="true"></i></div>
+                    <input type="text" class="form-control col-md-10" id="pswd" placeholder="Username" name="username" [(ngModel)]="model.username" #username="ngModel" required />
                     <div *ngIf="f.submitted && !username.valid" class="help-block">Username is required</div>
                 </div>
-                <div class="form-group row m-t-1" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
-                    <label class="col-md-5 lab" for="password">Password</label>
-                    <input type="password" class="form-control col-md-6" id="pswd" name="password" placeholder="Password" [(ngModel)]="model.password" #password="ngModel" required />
+                <div class="row m-t-1 formRow" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
+                    <div class="icon col-md-2"><i class="fa fa-lock" aria-hidden="true"></i></div>
+                    <input type="password" class="form-control col-md-10" id="pswd" name="password" placeholder="Password" [(ngModel)]="model.password" #password="ngModel" required />
                     <div *ngIf="f.submitted && !password.valid" class="help-block">Password is required</div>
                 </div>
                 <div *ngIf="error" class="alert alert-danger">{{error}}</div>
-                <div class="row m-t-1 forgetPassRow">
-                    <div class="col-md-12">
-                        <a class="mr-n-lg float-xs-left fgtPass" href="#">Forgot Password?</a>
-                      <div class="abc-checkbox widget-login-info float-xs-right">
-                        <input type="checkbox" id="checkbox1" value="1">
-                        <label for="checkbox1">Stay Sign In </label>
-                      </div>
-                  </div>
-                </div>  
-                <div class="clearfix">
-                  <div class="btn-toolbar float-xs-right m-t-1">
-                    <button class="btn btn-primary btn-sm">Login Now!</button>
-                  </div>
-                </div>
-                <div class="row m-t-1">
-                  <div class="col-md-6 push-md-6">
-                    <div class="clearfix">
+                <div class="row m-t-1 formRow forgetPassRow">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-10 passwordSignInRow">
                       
+                      <div class="signin-checkbox col-xl-6 col-md-6 col-sm-6 col-xs-6">
+                        <input type="checkbox" value="1">
+                        <span>Stay Sign In </span>
+                      </div>
+                      <div class="fgtPassDiv col-xl-6 col-md-6 col-sm-6 col-xs-6"><a class="fgtPass" href="#">Forgot Password?</a></div>
                     </div>
-                  </div>
+                </div>  
+                <div class="clearfix loginButtonDiv">
+                  <button class="btn btn-primary btn-dark">LOGIN</button>
                 </div>
               </form>
             </div>
-          </section>
+          </div>
         </div>
         </div>
       </div>
     </div>
   </main>
   <footer class="page-footer">
-    <div class="site-info">
+    <div class="site-info row">
+      <div class="col-xl-6 col-md-8 col-sm-10 col-xs-12 offset-xl-3 offset-md-2 offset-sm-1 offset-xs-0">
       Copyright © 2016 comprotechnologies.com. <a href="http://www.comprotechnologies.com" title="Terms of Use">Terms of Use</a> and <a href="http://www.comprotechnologies.com" title="Terms of Use">Privacy Policy</a>
+      </div>
     </div>
   </footer>
 </div>

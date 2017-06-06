@@ -24,6 +24,17 @@ $enable-grid-classes:       true !default;
 
 $white: #fff !default;
 $black: #000 !default;
+$theme-blue: #00505c;
+$pure-white: #FFFFFF;
+$success-green: #00B551;
+$deepdark-blue: #383E4B;
+$card-border-blue:#5876B9;
+$lightgray: #d3d3d3;
+$text-gray: #555555;
+$sidebar-hover: #484E5B;
+$progressbar-connector: #C1C1C1;
+$offwhite: #EFEFEF;
+$footer-background: #e1e1e1;
 
 //copy from BS
 $gray-darker:            lighten(#000, 13.5%) !default; // #222
@@ -34,7 +45,7 @@ $gray-lighter:           lighten(#000, 93.5%) !default; // #eee
 $gray-semi-light:        #777;
 $gray-semi-lighter:      #ddd;
 
-$brand-primary:         #5d8fc2 !default; //#618fb0 !default;
+$brand-primary:         #66969d !default; //#618fb0 !default;
 $brand-success:         #64bd63 !default;
 $brand-info:            #5dc4bf !default; //#61c4b8 !default; //#5DADE2 !default;
 $brand-warning:         #f0b518 !default;

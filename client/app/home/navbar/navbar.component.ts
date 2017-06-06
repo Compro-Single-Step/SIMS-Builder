@@ -10,7 +10,7 @@ declare var jQuery: any;
 @Component({
   selector: '[navbar]',
   templateUrl: './navbar.component.html',
-  styles:['.brand_logo, .baloo_icon{height:20px;}']
+  styleUrls:  ['./navbar.component.scss']
 })
 export class Navbar implements OnInit {
  @Output() toggleSidebarEvent: EventEmitter<any> = new EventEmitter();

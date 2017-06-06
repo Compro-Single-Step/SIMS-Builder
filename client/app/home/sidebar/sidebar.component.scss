@@ -1,0 +1,41 @@
+@import '../../scss/variables.scss';
+.logo{
+  background-color: $theme-blue;
+  margin: 0px;
+  font-size: 25px;
+  font-family: Cabin;
+  color:$pure-white;
+  img{
+    height: 25px;
+  }
+}
+ul.sidebar-nav {
+  font-weight: 600;
+  padding: 0px;
+  .sidebar-listitem {
+    display: block;
+    a {
+      padding-left: 0px;
+      display: flex;
+      line-height: 20px;
+      .sidebar-icon i {
+        font-size: 20px;
+        padding: 16px;
+      }
+      .sidebar-text {
+        font-size: 14px;
+        margin: auto 5px;
+      }
+    }
+  }
+}
+
+.sidebar-nav > li:last-child > a {
+  border-color: #AAAAAA;
+}
+.sidebar-nav > li > a{
+  border-top-color: $deepdark-blue;
+}
+.sidebar-nav > li > a:hover{
+  background-color: $sidebar-hover;
+}

@@ -1,5 +1,6 @@
 @import "../../../../node_modules/bootstrap/scss/variables";
-$lightgray: #d3d3d3;
+@import "../../scss/variables";
+
 .row {
   margin: {
     left: $spacer;
@@ -10,11 +11,47 @@ $lightgray: #d3d3d3;
   position: fixed;
   width: 100%;
   height: 6.3rem;
-  padding-top: $spacer;
-  background-color: $body-bg;
-  border-bottom: 3px solid $lightgray;
-  z-index: 2;
-  padding-bottom: 0.3rem;
+  padding: 9px 0px;
+  z-index: 21;
+  background-color: $theme-blue;
+  color:$pure-white;
+  .stepTextContainer {
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+  .taskInfo{
+    margin-left: 0px;
+    padding-top: 0.3rem;
+    & span{
+      margin-right: 10px;
+    }
+    & span:last-of-type{
+      margin-right: 0px;
+    }
+  }
+  .saveAndCloseBtn{
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-55%);
+
+    .header-icon{
+      background-color: transparent;
+      border: none;
+      color:$pure-white;
+      font-size: 25px;
+      &:hover{
+        color: $gray-semi-lighter;
+      }
+    }
+    .seperator{
+      height: 25px;
+      width: 2px;
+      background-color: $pure-white;
+      opacity: 0.4;
+      margin: 11px 10px;
+    }
+  }
 }
 .body-container {
   height: calc(100% - 4rem);
@@ -32,10 +69,27 @@ $lightgray: #d3d3d3;
   height: 4rem;
   padding-top: 1rem;
   border-top: 3px solid $lightgray;
-  background-color: $body-bg;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
+  background-color: $footer-background;
+  .seperator{
+    background-color:#C4C4C4;
+    color: #C4C4C4;
+    display: inline-block;
+    width: 2px;
+    height: 100%;
+    margin: 0px 5px;
+  }
+}
+
+.btn-dark{
+  background-color: $theme-blue;
+  color: $pure-white;
+  &:hover{
+    background-color: $deepdark-blue;
+  }
+}
+
+.stepText {
+  margin-left: 0px;
 }
 
 .stepText.stepTextOverflowHidden {
@@ -55,11 +109,12 @@ $lightgray: #d3d3d3;
 .stepTextHeading:after{
   content: '';
   position: absolute;
-  bottom: 0;
+  bottom: 5px;
   right: 0;
   width: 30%;
   height: 64%;
-  background-image: linear-gradient(left, rgba(255,255,255,0) 0%, white 80%, white 100%);
+  background-image: -webkit-linear-gradient(left, rgba(255, 255, 255, 0) 0%, #00505c 80%, #00505c 100%);
+  background-image: linear-gradient(left, rgba(255, 255, 255, 0) 0%, #00505c 80%, #00505c 100%);
   pointer-events: none;
 }
 
@@ -69,6 +124,12 @@ $lightgray: #d3d3d3;
 
 .show-more{
   position: absolute;
-  bottom: 25px;
+  bottom: 28px;
   right: 0px;
+  a{
+    color: $pure-white;
+    &:hover{
+      color: $pure-white;
+    }
+  }
 }

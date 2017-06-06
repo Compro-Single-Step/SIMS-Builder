@@ -41,4 +41,26 @@
 .searchForm{
   display: block;
 }
+.page-title{
+  color: $theme-blue;
+}
+.btn-dark{
+  background-color: $theme-blue;
+  color: $pure-white;
+  &:hover{
+    background-color: $deepdark-blue;
+  }
+}
+.seperator{
+  background-color:#C4C4C4;
+  color: #C4C4C4;
+  display: inline-block;
+  width: 2px;
+  height: 100%;
+  margin-left: 0px;
+  margin-right: 10px;
+}
 
+.task-builder-button-band{
+  margin-top:5px;
+}

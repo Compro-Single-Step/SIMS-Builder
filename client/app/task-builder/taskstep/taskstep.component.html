@@ -1,24 +1,19 @@
 <div id="stepList" class="widget-body" (click)="navigateToStepBuilder()">
     <div class="row">
-      <div class="col-md-10" >
-          <div class="text-color row">
-            <div class="col col-md-auto">
-                <span class="fw-bold step_number">Step {{step.Index}}</span>
+      <div class="col-md-10 removeRightPadding" >
+            <div class="text-color row col-md-12 removeRightPadding">
+                <span class="step_number">Step {{step.Index}}: <span class="stepText" [innerHTML]="step.Text"></span></span>
             </div>
-            <div class="col-md-10 step_text">
-                <span [innerHTML]="step.Text"></span>
-                <div class="row col-md-12">
-                  <span class="skill_metadata">Skill :&nbsp;{{step.TemplateName}}</span>
-                  <span>|</span>
-                  <span class="method-count skill_metadata">Method Count: <span>{{step.MethodCount}}</span></span>
-                  <span>|</span>
-                  <span class="template_label">Template: {{step.TemplateName}}</span>
-                </div>
+            <div class="row col-md-12 removeRightPadding">
+              <span class="skill_metadata">Skill :&nbsp;{{step.TemplateName}}</span>
+              <span class="verticalRule">|</span>
+              <span class="method-count skill_metadata">Method Count: <span>{{step.MethodCount}}</span></span>
+              <span class="verticalRule">|</span>
+              <span class="template_label">Template: {{step.TemplateName}}</span>
             </div>
-          </div>       
       </div>
       <div class="col-md-2">
-          <div class="row">
+          <div class="row rightArrowDiv">
             <!--<div class="col-md-5">
                 <div class="row col-md-12 text-center">
                   <span class="icon_label">Attributes Filled</span>
