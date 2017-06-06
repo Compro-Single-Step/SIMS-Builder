@@ -1,0 +1,42 @@
+{
+  "Tables": [
+    {
+      "table_name": "5A Category",
+      "table_fields": []
+    },
+    {
+      "table_name": "5A Inventory",
+      "table_fields": []
+    },
+    {
+      "table_name": "5A Supplier",
+      "table_fields": []
+    }
+  ],
+  "Queries": [
+    {
+      "table_name": "5A Cost Per Company and Category",
+      "table_fields": [
+        "Company",
+        "CatName",
+        "Cost"
+      ]
+    },
+    {
+      "table_name": "5A Inventory by Supplier",
+      "table_fields": []
+    },
+    {
+      "table_name": "5A Per Item Profit",
+      "table_fields": []
+    },
+    {
+      "table_name": "5A Surfboarding Sale",
+      "table_fields": []
+    },
+    {
+      "table_name": "5A Total Inventory Cost",
+      "table_fields": []
+    }
+  ]
+}
