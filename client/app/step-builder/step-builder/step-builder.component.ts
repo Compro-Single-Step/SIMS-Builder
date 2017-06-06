@@ -12,6 +12,7 @@ import { ExceptionHandlerService } from '../../shared/exception-handler.service'
 
 declare var jQuery;
 declare var localForage;
+declare var Messenger: any;
 
 @Component({
     selector: 'app-step-builder',
@@ -32,6 +33,7 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
     modelChecker;
     templateID: string;
     eventSrvc: Object;
+    previewWindow: any;
     @ViewChild('stepTextContainer') stepTextContainer;
 
     constructor(el: ElementRef, private route: ActivatedRoute, private router: Router, private bds: BuilderDataService, private previewService: PreviewService, private tds: TaskDataService, private exceptionHandlerSrvc: ExceptionHandlerService, private cdRef:ChangeDetectorRef) {
@@ -168,8 +170,16 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
         localForage.getItem('model').then(function (value) {
             if (JSON.stringify(value) === JSON.stringify(itemDataModel)) {
                 self.exceptionHandlerSrvc.globalConsole("same Model: Do Nothing");
-                if(callBack){
-                    callBack.apply(CallBackOwner || this, callBackArgs);
+                if (callBack) {
+                    callBack.apply(CallBackOwner || this, callBackArgs)
+                        .subscribe((res) => {
+                            self.launchPreview(res, self);
+                        },
+                        (error) => {                            
+                            error = error.json();
+                            self.displayMessage("preview error "+ error["error"]);
+                        }
+                        );
                 }
             } else {
                 self.exceptionHandlerSrvc.globalConsole("Different Model: Update LocalStorage and Send to Sever");
@@ -179,7 +189,15 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
                             //TODO: Notify user of the draft save
                             self.exceptionHandlerSrvc.globalConsole("Model Data Sent to Server");
                             if(callBack){
-                                callBack.apply(CallBackOwner || this, callBackArgs);
+                                callBack.apply(CallBackOwner || this, callBackArgs)
+                                .subscribe((res) => {
+                                    self.launchPreview(res, self);
+                        },
+                        (error) => {
+                            error = error.json();
+                            self.displayMessage(+ error["error"]);
+                        }
+                        );
                             }
                         } else if (data["status"] === "error") {
                             //TODO: Try saving on server again
@@ -195,6 +213,14 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
             }
         });
     }
+
+    launchPreview(res, currRef){
+        let data = res.json();
+        if (data["Url"]) {
+        currRef.previewWindow = window.open(data["Url"], '_blank', 'location=yes,scrollbars=yes,status=yes');
+        }
+    }
+
     setSelectedView(viewNumber) {
         this.selectedView = viewNumber;
     }
@@ -219,4 +245,19 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
         this.eventSrvc["dispose"]();
     }
+
+    displayMessage(messageText) {
+		Messenger.options = {
+			extraClasses: 'messenger-fixed messenger-on-top',
+			theme: 'block'
+		}
+		Messenger().post({
+			message: messageText,
+			type: 'error',
+			showCloseButton: true,
+			hideAfter: 5
+		});
+	}
+
+
 }

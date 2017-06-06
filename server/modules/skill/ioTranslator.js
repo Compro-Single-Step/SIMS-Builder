@@ -150,19 +150,20 @@ class IOTranslator {
         evaluatedParams = this.getEvaluatedParams(attrParams.attrObject.params, attrParams.stepUIState);
       }
       return this.evaluateFromFunc(attrParams, evaluatedParams, attrParams.attrObject.skillParams, taskParam)
-      .catch(function(err){
-        return self.getAttributeResolution(taskParam.stateId, attrParams.skillobject.mandatoryAttributeList, attrParams.attrName, self);
+      .catch(function(error){
+        return self.getAttributeResolution(taskParam.stateId, attrParams.skillobject.mandatoryAttributeList, attrParams.attrName, error, self);
       })
     } catch (error) {
-        return self.getAttributeResolution(taskParam.stateId, attrParams.skillobject.mandatoryAttributeList, attrParams.attrName, self);
+        return self.getAttributeResolution(taskParam.stateId, attrParams.skillobject.mandatoryAttributeList, attrParams.attrName, error, self);
     }
   }
 
-  getAttributeResolution(currentState, mandatoryList, CurrAttrName, currRef){
+  getAttributeResolution(currentState, mandatoryList, CurrAttrName, errorObj, currRef){
       // this is the catch if rejection/crash is faced in the Asynchronous code 
         if(((currentState == currRef.xmlInitialState) && (mandatoryList.indexOf(CurrAttrName) != -1) )){
           // this means that if the skill has rejected the attribute , then translator will also reject it 
-          return Promise.reject(err);
+          errorObj.message += " (attribute : " + CurrAttrName + ")";
+          return Promise.reject(errorObj);
         }
         else{
           // this means that if the skill has rejected the attribute , then translator will still create the xml
@@ -276,6 +277,7 @@ class IOTranslator {
       })
       .catch(error => {
         console.log("Error in readIOMap function of IOTranslator: " + error.message);
+        error.message += " (Initialization of the skill failed) "
         return Promise.reject(error);
       });
   }
