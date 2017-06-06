@@ -126,10 +126,11 @@
   position: absolute;
   bottom: 28px;
   right: 0px;
+  font-size: 12px;
   a{
-    color: $pure-white;
+    color: $showMoreLessStepText;
     &:hover{
-      color: $pure-white;
+      color: $showMoreLessStepText;
     }
   }
 }
