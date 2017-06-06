@@ -3,6 +3,14 @@ const BaseSkill = require("../../common/baseSkill"),
     DOMParse = require("xmldom").DOMParser;
 
 module.exports = class PPTBaseSkill extends BaseSkill {
+
+    constructor() {
+        super();
+        /* Creating a list of he mandatory initial attributes which are application specific, these are mandatorily needed 
+        to succeed in the AttrValueMap generation */
+        this.mandatoryAttributeList = ["XML_PATH"];
+    }
+
     init(slideViewDataPath, dbFilestoreMgr) {
 
         return dbFilestoreMgr.readFileFromFileStore(slideViewDataPath)

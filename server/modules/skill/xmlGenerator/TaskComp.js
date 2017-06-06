@@ -217,7 +217,7 @@ module.exports = class Comp {
         
         for(let attr in attrsValsMap){
             attrArr.push(attr);
-            attrValsArr.push(attrsValsMap[attr]);
+            attrValsArr.push(attrsValsMap[attr]||[""]);
         }
 
         var attrValsCartProd = this.cartesianProduct(attrValsArr);

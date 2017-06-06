@@ -6,6 +6,7 @@ const columnTypeContextMenuMap = {
   "TEXT": "TABLE"
 }
 let tableRange = "";
+let currSheetObj = {};
 
 class sortingTableColumns extends ExcelBaseSkill {
   getSheetDetails(initDocJSON, dependantSheetArrayInModel, clonedDependantSheetArrayInModel) {
@@ -13,15 +14,20 @@ class sortingTableColumns extends ExcelBaseSkill {
       dependantSheetArrayInModel.pop(); //https://jsperf.com/array-clear-methods/3
     }
 
-    if (initDocJSON === null) { //initDocJSON Removed
+    if (initDocJSON === null || initDocJSON === undefined) { //initDocJSON Removed
       dependantSheetArrayInModel.push(clonedDependantSheetArrayInModel[0]);
     }
     else {  //initDocJSON Added
 
       //Add Sheet Names From Init Doc JSON
-      for (let sheetNum = 0; sheetNum < initDocJSON.sheetCount; sheetNum++) {
-        dependantSheetArrayInModel.push(JSON.parse(JSON.stringify(clonedDependantSheetArrayInModel[0])));
-        dependantSheetArrayInModel[sheetNum].name = initDocJSON.sheets[sheetNum].name;
+      if(initDocJSON.sheets){
+        for (let sheetNum = 0; sheetNum < initDocJSON.sheetCount; sheetNum++) {
+          dependantSheetArrayInModel.push(JSON.parse(JSON.stringify(clonedDependantSheetArrayInModel[0])));
+          dependantSheetArrayInModel[sheetNum].name = initDocJSON.sheets[sheetNum].name;
+        }
+      }
+      else{
+        dependantSheetArrayInModel.push(clonedDependantSheetArrayInModel[0]);
       }
     }
   }
@@ -32,7 +38,7 @@ class sortingTableColumns extends ExcelBaseSkill {
     while (dependantSheetArrayInModel.length > 0) {
       dependantSheetArrayInModel.pop(); //https://jsperf.com/array-clear-methods/3
     }
-    if (initDocJSON !== null) {
+    if (initDocJSON !== null && initDocJSON !==undefined) {
       //Add Sheet Names to Array From Init Doc JSON
       for (let sheetNum = 0; sheetNum < initDocJSON.sheetCount; sheetNum++) {
         var sheetName = initDocJSON.sheets[sheetNum].name;
@@ -120,79 +126,84 @@ class sortingTableColumns extends ExcelBaseSkill {
     return finalArray;
 
   }
-
+  /*  this function had a promise.all implementation beforehand because reading the csv file and 
+  init doc json did not matter.This does nmatter now as part of the minimum attribute xml generation
+  implementation.
+  */
   init(data) {
-
     var initDocJSonPath = data.stepUIState.views["1"].documentData.path;
     var skilldata = { "initDocJSonPath": initDocJSonPath, "dbMgr": data.dbFilestoreMgr };
     let self = this;
-    let initPromise = super.init(skilldata);
     let dbMgr = data.dbFilestoreMgr;
+    let sheetAction = data.stepUIState.views['2'].sheetInAction.selectedOption.value.label;
+    let sheetDataArr = data.stepUIState.views['1'].sheetsForTable.value;
+    currSheetObj = this.getCurrentSheetObject(sheetAction, sheetDataArr);
     //reading the csv file 
     let readFileType = "csv";
-    let colHdrFilePath = data.stepUIState.views['1'].sheetsForTable.value[0].columnHeaders["path"];// abc is the model reference for the  csv file path
-    let readFilePromise = dbMgr.readFileFromFileStore(colHdrFilePath, readFileType);
-    return Promise.all([initPromise, readFilePromise]).then(function (resolveParamArr) {
-
-      // });
-
-      // super.init(skilldata).then(function (resolveParams) {
-      let resolveParam = resolveParamArr[1];
-
-      // making it toUpperCase as the data will be used later as well
-      tableRange = (eval("data.stepUIState." + "views['1'].sheetsForTable.value[0].tableRange.value")).toUpperCase();
-      tableRange.trim();
-
-      let tableRAngeArr = self.getTableRangeArray(tableRange);
-      // let dbMgr = data.dbFilestoreMgr;
+    let colHdrFilePath = "";
+    if (currSheetObj.columnHeaders)
+      colHdrFilePath = currSheetObj.columnHeaders["path"];
+    return super.init(skilldata).then(function (value) {
       // reading the csv file 
       // make the readFile call here and update the 2 variables that can be used in this skill
-      // return dbMgr.readFileFromFileStore(colHdrFilePath, readFileType).then(function (resolveParam) {
-      if (tableRAngeArr.length == resolveParam.fileData.length) {
-        for (let index = 0; index < resolveParam.fileData.length; ++index) {
-          let columnName = resolveParam.fileData[index].columnName
-          let columnType = resolveParam.fileData[index].columnType.toUpperCase();
+      return dbMgr.readFileFromFileStore(colHdrFilePath, readFileType).then(function (resolveParam) {
+        // making it toUpperCase as the data will be used later as well
+        // created for multiple usage
+        tableRange = (currSheetObj["tableRange"].value).toUpperCase();
+        
+        tableRange.trim();
 
-          columnHeaderObj[columnName] = {};
-          // if no type for the column is given
-          if (columnType == "") {
-            columnType = "TEXT"
+        let tableRAngeArr = self.getTableRangeArray(tableRange);
+        if (tableRAngeArr.length == resolveParam.fileData.length) {
+          for (let index = 0; index < resolveParam.fileData.length; ++index) {
+            let columnName = resolveParam.fileData[index].columnName
+            let columnType = resolveParam.fileData[index].columnType.toUpperCase();
+
+            columnHeaderObj[columnName] = {};
+            // if no type for the column is given
+            if (columnType == "") {
+              columnType = "TEXT"
+            }
+            columnHeaderObj[columnName]["type"] = columnType;
+            columnHeaderObj[columnName]["range"] = tableRAngeArr[index]; 
           }
-          columnHeaderObj[columnName]["type"] = columnType;
-          // if (index < tableRAngeArr.length) {
-          columnHeaderObj[columnName]["range"] = tableRAngeArr[index];
-          // }
-          // else {
-          // }
         }
+        else {
+          let error = new Error("number of columns in the csv and the Table range are inconsistent");
+          /* resolving this as a part of Error Handling 
+           implementation suggesting minimum resources required to create a file.
+           This Resolution is in place to remove the hindrance for the launching of the task*/
+          return Promise.resolve(error);
+        }
+        console.log("columnHeaderObj ", JSON.stringify(columnHeaderObj));
+        return Promise.resolve(true);
+        // read the resolveparam data here and update the new variables and create an object
 
-      }
-      else {
-        let error = new Error("number of columns in the csv and the Table range are inconsistent");
-        return Promise.reject(error);
-      }
-      console.log("columnHeaderObj ", JSON.stringify(columnHeaderObj));
-      return Promise.resolve(true);
-      // read the resolveparam data here and update the new variables and create an object
-
-    }, function (error) {
+      }, function (error) {
+        let err = new Error("Something failed in the Csv file reading.");
+        /* resolving this as a part of Error Handling 
+           implementation suggesting minimum resources required to create a file.
+           This Resolution is in place to remove the hindrance for the launching of the task*/
+        return Promise.resolve(err);
+      });
+    }).catch(function (error) {
+      console.log("Init doc json failed");
       return Promise.reject(error);
-      // });
-    }
-    );
+    });
   }
-
 
   // returns an array obtained from a file directly
   // using the function readFileFromFileStore (used in xlskill)
   // PIVOT_FILTER_BTNS
+
+
   getFilterData(skillParams) {
 
     var taskParams = skillParams.taskParams;
     var paramValueObj = skillParams.paramsObj;
-
-    return taskParams.dbFilestoreMgr.readFileFromFileStore(paramValueObj.filterMenuJson).then(function (resolveParam) {
-
+    let filterMenuJsonPath = currSheetObj["tableFilterMenuData"].path;
+    return taskParams.dbFilestoreMgr.readFileFromFileStore(filterMenuJsonPath).then(function (resolveParam) {
+      
       var finalValue = JSON.parse(resolveParam.fileData);
       var resolveParams = { "attrValue": JSON.stringify(finalValue) };
       return Promise.resolve(resolveParams);
@@ -220,7 +231,7 @@ class sortingTableColumns extends ExcelBaseSkill {
       let tableArr = [];
       let tableObj = {};
       tableObj["name"] = "Table1"; //table Name not present
-      tableObj["range"] = paramValueObj["tableRange"];
+      tableObj["range"] = tableRange;
       tableArr.push(tableObj);
       sheetObj["tables"] = tableArr;
       let resolveParams = { "attrValue": JSON.stringify(sheetObj) }
@@ -229,6 +240,25 @@ class sortingTableColumns extends ExcelBaseSkill {
       return Promise.reject(error);
 
     }
+  }
+
+
+  getSelCellInRange(skillParams){
+
+    let resolveParams = {"attrValue":tableRange};
+    return Promise.resolve(resolveParams);
+  }
+
+  getCurrentSheetObject(sheetAction,sheetDataArr){
+          
+      let sheetObj = {};
+      for(let idx = 0 ;idx < sheetDataArr.length; ++idx){
+        if(sheetAction == sheetDataArr[idx].name){
+          sheetObj = sheetDataArr[idx];
+          break;
+        }
+      }
+      return sheetObj;
   }
 
 
@@ -242,29 +272,6 @@ class sortingTableColumns extends ExcelBaseSkill {
       return Promise.reject(error);
     }
   }
-
-  // CUSTOM_CONTEXT_MENU
-  // this is a deducable value from 3 differenct areas
-  // Table Range (known)
-  // Column Header Names (not known)
-  // Column Types (not known)
-  // expects an array of objects
-
-  // currently getting the different file , and putting the data according to that
-  // getContextMenuData(skillParams) {
-  //   var taskParams = skillParams.taskParams;
-  //   var paramValueObj = skillParams.paramsObj;
-
-
-  //   return taskParams.dbFilestoreMgr.readFileFromFileStore(paramValueObj.contextMenuPath).then(function (resolveParam) {
-  //     let attrValue = JSON.stringify(resolveParam.fileData);
-  //     return Promise.resolve({ "attrValue": attrValue });
-  //   }, function () {
-  //     return Promise.reject(error);
-  //   })
-
-  // }
-
 
   //deducing the context menu data 
   getContextMenuData(skillParams) {
@@ -415,22 +422,6 @@ class sortingTableColumns extends ExcelBaseSkill {
     }
   }
 
-
-
-  // getSelectedColRange(skillParams) {
-  //   try {
-  //     var taskParams = skillParams.taskParams;
-  //     var paramValueObj = skillParams.paramsObj;
-  //     let columnName = paramValueObj.sortColName;
-  //     let resolveParam = { "attrValue ": columnHeaderObj[columnName]["range"] }
-  //     // let resolveParam = { "attrValue ":"abc" }
-  //     return Promise.resolve(resolveParam);
-  //   }
-  //   catch (error) {
-  //     return Promise.reject(error);
-  //   }
-  // }
-
   // CELL_BEHIND_FILTER_MENU
   // an array of strings to be created which contains the values from A3 to K3 
   // get the range of the table SelectedCells_TableRange
@@ -440,9 +431,8 @@ class sortingTableColumns extends ExcelBaseSkill {
     try {
       var taskParams = skillParams.taskParams;
       var paramValueObj = skillParams.paramsObj;
-      let tableRange = paramValueObj.tableRange;
+      // tableRange is a common variable available for all
       let finalArr = this.getColumnHeaderArray(tableRange);
-
       return Promise.resolve({ "attrValue": finalArr });
     } catch (error) {
       return Promise.reject(error);
@@ -534,7 +524,6 @@ class sortingTableColumns extends ExcelBaseSkill {
     let finalObj = { "attrValue": paramValueObj.sortType + "~" };
     return Promise.resolve(finalObj);
   }
-
 
 }
 module.exports = sortingTableColumns;

@@ -51,8 +51,7 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
         });
         jQuery(window).on('sn:resize', this.initScroll.bind(this));
         this.initScroll();
-        this.bindShowMoreButtonClick();
-        this.modelChecker = IntervalObservable.create(5000).subscribe(() => this.checkForModelChange());
+        this.bindShowMoreButtonClick();        
         this.route.params.subscribe((params: Params) => {
             this.taskID = params["taskId"];
             this.stepIndex = params["stepIndex"];
@@ -72,6 +71,14 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
             });
             this.fetchSkillData();
         })        
+    }
+
+    bindModelChecker($event) {
+        //bind only when ui has been rendered for all the views. An event is emitted from view input area component.
+        if($event.uiRendered == true)
+        {
+            this.modelChecker = IntervalObservable.create(5000).subscribe(() => this.checkForModelChange());
+        }
     }
 
     checkForStepTextOverflow() {
@@ -137,6 +144,7 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
             });
             this.uiConfig = data["uiconfig"];
             skillManager.getSkillTranslator(data["skillfilesbundle"], this.templateID);
+            //this.modelChecker = IntervalObservable.create(5000).subscribe(() => this.checkForModelChange());
         });
     }
 
@@ -176,9 +184,11 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
                         } else if (data["status"] === "error") {
                             //TODO: Try saving on server again
                             self.exceptionHandlerSrvc.globalConsole("Couldn't Save Model Data on Server.");
-                            if(data["errcode"] === "DATA_NOT_PRESENT"){
-                                self.exceptionHandlerSrvc.globalLog("UI State is null. Please check");
-                            }
+
+                            //Commenting this code because of Generic Error handling on server.
+                            // if(data["errcode"] === "DATA_NOT_PRESENT"){
+                            //     self.exceptionHandlerSrvc.globalLog("UI State is null. Please check");
+                            // }
                         }
                     });
                 });

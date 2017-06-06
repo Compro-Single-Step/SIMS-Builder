@@ -5,6 +5,8 @@ import { LabelTypes } from '../enums';
 import { itemSchema } from '../UIConfig.model';
 import { AuthService } from '../../_services/auth.service';
 import { BuilderDataService } from '../../step-builder/shared/builder-data.service';
+import { BuilderModelObj } from '../../step-builder/shared/builder-model.service';
+import { ExceptionHandlerService } from '../../shared/exception-handler.service';
 
 
 declare var Dropzone: any;
@@ -23,11 +25,18 @@ export class DropzoneComponent extends BaseComponent implements OnDestroy {
   makeDeleteCall: boolean;
   fileTypesToRead: Array<MIMETYPE>;
   isMultipleFiles: boolean;
-  constructor(private elementRef: ElementRef, private route: ActivatedRoute, private router: Router, private authSrvc: AuthService, private bds: BuilderDataService) {
+  builderModelSrvc;
+  taskId: string;
+  stepIndex: string;
+  constructor(private elementRef: ElementRef, private route: ActivatedRoute, private router: Router, private authSrvc: AuthService, private bds: BuilderDataService, private exceptionHandlerSrvc: ExceptionHandlerService) {
     super();
     this.makeDeleteCall = true;
     this.fileTypesToRead = [MIMETYPE.JSON, MIMETYPE.CSV, MIMETYPE.HTML, MIMETYPE.XML];
     this.isMultipleFiles = false;
+    this.builderModelSrvc = BuilderModelObj;
+    let routeParams = this.route.snapshot.params;
+    this.taskId = routeParams["taskId"];
+    this.stepIndex = routeParams["stepIndex"];
   }
 
   ngOnInit() {
@@ -58,7 +67,6 @@ export class DropzoneComponent extends BaseComponent implements OnDestroy {
       this.height = `${this.compConfig.dim['height']}`;
       this.width = `${this.compConfig.dim['width']}`;
     }
-    var routeParams = this.route.snapshot.params;
     let dropzone = new Dropzone(this.dropzoneContainer.nativeElement, {
       url: "/api/skill/resource",
       paramName: "dzfile",
@@ -71,8 +79,8 @@ export class DropzoneComponent extends BaseComponent implements OnDestroy {
       },
       sending: function (file, xhr, formData) {
         xhr.setRequestHeader('Authorization', self.authSrvc.getCurrentUserToken());
-        formData.append("taskId", routeParams["taskId"]);
-        formData.append("stepIndex", routeParams["stepIndex"]);
+        formData.append("taskId", self.taskId);
+        formData.append("stepIndex", self.stepIndex);
         // Need to discuss the passing of model ref along with the file as the model can be generated dynamicallly in some cases.
         // formData.append("modelref", self.compConfig.val);
       }
@@ -85,10 +93,11 @@ export class DropzoneComponent extends BaseComponent implements OnDestroy {
       if (file.status === "success") {
         let currModelRef = self.getData();
         if (self.isMultipleFiles) {
-          currModelRef["value"].push({ displayName: file.name, path: response.filePath });
+          currModelRef["value"].push({ displayName: file.name, path: response.filePath, size: file.size });
         } else {
           currModelRef["displayName"] = file.name;
           currModelRef["path"] = response.filePath;
+          currModelRef["size"] = file.size;
         }
         self.readFile(file, MIMETYPE[self.compConfig.rendererProperties.dataType]);
       }
@@ -103,29 +112,52 @@ export class DropzoneComponent extends BaseComponent implements OnDestroy {
       if (self.isMultipleFiles) {
         for (let i = 0; i < currModelRef["value"].length; i++) {
            if (currModelRef["value"][i].displayName === file.name) {
-            self.removeFileFromServer(currModelRef, i);
+            self.removeFile(currModelRef, i);
             break;
           }
         }
       } else {
-        self.removeFileFromServer(currModelRef)
+        self.removeFile(currModelRef)
       }
     })
 
     this.restoreFileUI(dropzone);
   }
-  removeFileFromServer(model, index?) {
-    let el = this.isMultipleFiles ? model["value"][index] : model;
-    if (el["path"] != "") {
-      this.bds.removeFile(el["path"]).subscribe((data) => {
+
+  removeFile(model, index?) {
+    this.emitEvents(null);
+    let path = this.isMultipleFiles ? model["value"][index]["path"] : model["path"];
+    if (this.isMultipleFiles) {
+      model["value"].splice(index, 1);
+    } else {
+      model["displayName"] = "";
+      model["path"] = "";
+    }
+    let self = this;
+    let itemDataModel = this.builderModelSrvc.getState();
+    this.bds.saveSkillData({ stepUIState: itemDataModel }, this.taskId, this.stepIndex).subscribe(function (data) {
+        if (data["status"] === "success") {
+            //TODO: Notify user of the draft save
+            self.exceptionHandlerSrvc.globalConsole("Model Data Sent to Server");
+            self.removeFileFromServer(path);           
+        } else if (data["status"] === "error") {
+            //TODO: Try saving on server again
+            self.exceptionHandlerSrvc.globalConsole("Couldn't Save Model Data on Server.");
+            
+            //Commenting this code because of Generic Error handling on server.
+            // if(data["errcode"] === "DATA_NOT_PRESENT"){
+            //     self.exceptionHandlerSrvc.globalLog("UI State is null. Please check");
+            // }
+        }
+    });
+  }
+  
+  removeFileFromServer(path) {
+    let self = this;    
+    if (path != "") {
+      this.bds.removeFile(path).subscribe((data) => {
         if (data.status === "success") {
-          this.emitEvents(null);
-          if (this.isMultipleFiles) {
-            model["value"].splice(index, 1);
-          } else {
-            model["displayName"] = "";
-            model["path"] = "";
-          }
+          self.exceptionHandlerSrvc.globalConsole("File removed from server.");
         } else if (data.status == "error") {
           // TODO: Code for handling - File Doesn't Exist Error
         }
@@ -185,20 +217,20 @@ export class DropzoneComponent extends BaseComponent implements OnDestroy {
   }
 
   addFileToDropzone(dropzone, el) {
-    if (el.path && el.path != "") {
-      this.bds.getResource(el.path).subscribe((res) => {
-        if (res.headers.get("status") == "success") {
-          let file = new File([res._body], el.displayName);
-          dropzone.emit("addedfile", file);
-          dropzone.emit("complete", file);
-          dropzone.files.push(file);
-        }
-        else {
-          //TODO: Handling of code when error is receiving file occurrs. 
-        }
-      });
+    if (el.displayName && el.displayName != "")
+    {
+      var file = {
+        name: el.displayName,
+        size: el.size ? el.size : 2000,
+        status: Dropzone.ADDED,
+        accepted: true
+      };
+      dropzone.emit("addedfile", file);
+      dropzone.emit("complete", file);
+      dropzone.files.push(file);
     }
   }
+  
   restoreFileUI(dropzone) {
     let fileInfo = this.getData();
     if (this.isMultipleFiles) {

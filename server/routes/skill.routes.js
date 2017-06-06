@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const skillController = require('../controllers/skill.controller');
+const ErrorUtil = require('../utils/errorUtil');
 
 router.get('/stepuiconfig/uiconfig/:templateId', (req, res) => {
     let templateId = req.params.templateId;
@@ -8,8 +9,9 @@ router.get('/stepuiconfig/uiconfig/:templateId', (req, res) => {
     skillController.getUIConfig(templateId)
         .then((uiConfig) => {
             res.send(uiConfig);
-        }, (error) => {
-            res.send(error);
+        })
+        .catch((error) => {
+            res.status(500).send(ErrorUtil.attachErroInfo(error));
         });
 });
 
@@ -19,8 +21,9 @@ router.get('/stepuiconfig/model/:templateId', (req, res) => {
     skillController.getSkillModel(templateId)
         .then((model) => {
             res.send(model);
-        }, (error) => {
-            res.send(error);
+        })
+        .catch((error) => {
+            res.status(500).send(ErrorUtil.attachErroInfo(error));
         });
 });
 
@@ -32,8 +35,9 @@ router.get('/stepuiconfig/stepuistate/:taskId/:stepIndex', (req, res) => {
     skillController.getStepUIState(taskId, stepIndex)
         .then((stepUIState) => {
             res.send(stepUIState);
-        }, (error) => {
-            res.send(error);
+        })
+        .catch((error) => {
+            res.status(500).send(ErrorUtil.attachErroInfo(error));
         });
 });
 
@@ -45,8 +49,9 @@ router.get('/stepuiconfig/:templateId/:taskId/:stepIndex', (req, res) => {
     skillController.getStepUIConfig(templateId, taskId, stepIndex)
         .then((stepUIConfig) => {
             res.send(stepUIConfig);
-        }, (error) => {
-            res.status(error.statusCode || 404).send(error);
+        })
+        .catch((error) => {
+            res.status(error.statusCode || 404).send(ErrorUtil.attachErroInfo(error));
         });
 });
 
@@ -58,8 +63,9 @@ router.post('/stepuistate/:taskId/:stepIndex', (req, res) => {
             res.send({
                 status: "success"
             });
-        }, (error) => {
-            res.send(error);
+        })
+        .catch((error) => {
+            res.status(500).send(ErrorUtil.attachErroInfo(error));
         });
 });
 
@@ -75,11 +81,8 @@ router.post('/xmlgeneration', (req, res) => {
                 status: "success"
             });
         })
-        .catch(error => {
-            res.send({
-                status: "Error",
-                error: error
-            });
+        .catch((error) => {
+            res.status(500).send(ErrorUtil.attachErroInfo(error));
         });
 });
 
@@ -88,7 +91,7 @@ router.post("/resource", (req, res) => {
     let upload = skillController.saveResourceFile();
     upload(req, res, (error) => {
         if (error) {
-            res.send("Error uploading file.");
+            res.status(500).send(ErrorUtil.attachErroInfo(error));
         }
         else {
             let filePath = req.body.filePath;
@@ -103,17 +106,15 @@ router.post("/resource", (req, res) => {
 router.get("/resource/*", (req, res) => {
 
     let filePath = req.params[0];
-    let options = {
-        headers: {
-            "status": "success"
-        }
-    };
 
-    res.sendFile(skillController.getResourcePath(filePath), options, error => {
-        if (error) {
-            res.status(error.status).set("status", "error").end();
-        }
-    });
+    skillController.getResource(filePath)
+        .then((resourceData) => {
+            res.setHeader('status', 'success');
+            res.end(resourceData);
+        })
+        .catch((error) => {
+            res.status(error.status || 404).set("status", "error").end(ErrorUtil.attachErroInfo(error));
+        });
 });
 
 router.delete("/resource/*", (req, res) => {
@@ -124,11 +125,9 @@ router.delete("/resource/*", (req, res) => {
             res.send({
                 "status": "success"
             });
-        }, (error) => {
-            res.send({
-                "status": "error",
-                "error": error
-            });
+        })
+        .catch((error) => {
+            res.status(501).send(ErrorUtil.attachErroInfo(error));
         });
 });
 

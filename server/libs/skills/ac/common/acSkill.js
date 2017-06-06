@@ -4,6 +4,13 @@ const BaseSkill = require("../../common/baseSkill");
 const xmlUtil = require("../../../../utils/xmlUtil");
 
 module.exports = class AccessBaseSkill extends BaseSkill {
+
+  constructor() {
+    super();
+    /* Creating a list of he mandatory initial attributes which are application specific, these are mandatorily needed 
+        to succeed in the AttrValueMap generation */
+    this.mandatoryAttributeList = ["PROJECT_JSON","SELECTED_DB_OBJECT_TYPE", "SELECTED_DB_OBJECT"];
+  }
 /**
  * 
  * @param {*} skillParams : Contains taskParams (it contains data such as taskid, stepNo etc and refrence to dbFileStoreManager ) and paramsObj (it contains the parameters passed to function when called in iomap).

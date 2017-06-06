@@ -1,4 +1,5 @@
 const PPTBaseSkill = require("../common/ppSkill");
+const DOMParse = require("xmldom").DOMParser;
 
 module.exports = class InsertAudio extends PPTBaseSkill {
 
@@ -35,7 +36,10 @@ module.exports = class InsertAudio extends PPTBaseSkill {
                 return Promise.resolve(true)
             })
             .catch(error => {
-                return Promise.reject(error)
+                /* resolving this as a part of Error Handling 
+                implementation suggesting minimum resources required to create a file.
+                This Resolution is in place to remove the hindrance for the launching of the task*/
+                return Promise.resolve(error)
             });
     }
 

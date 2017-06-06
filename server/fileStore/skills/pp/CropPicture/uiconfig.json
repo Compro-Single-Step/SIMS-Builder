@@ -217,6 +217,38 @@
                     "items": [
                         {
                             "id": "2.2.1",
+                            "label": "Picture to be Cropped",
+                            "desc": {
+                                "basic": "Upload the image file which has to be cropped.",
+                                "detailed": "Upload the image file which has to be cropped."
+                            },
+                            "itemRenderer": "Dropzone",
+                            "itemType": "leaf",
+                            "rendererProperties": {
+                                "dataType": "img",
+                                "placeHolder": "Drop image here to upload"
+                            },
+                            "mandatory": true,
+                            "val": "{{views.2.cropImage}}"
+                        },
+                        {
+                            "id": "2.2.2",
+                            "label": "Picture Size & Position",
+                            "desc": {
+                                "basic": "Upload an XML having size and position of the image which need to be cropped.",
+                                "detailed": "Upload an XML having size and position of the image which need to be cropped."
+                            },
+                            "itemRenderer": "Dropzone",
+                            "itemType": "leaf",
+                            "rendererProperties": {
+                                "dataType": "xml",
+                                "placeHolder": "Drop xml here to upload"
+                            },
+                            "mandatory": true,
+                            "val": "{{views.2.imageConfig}}"
+                        },
+                        {
+                            "id": "2.2.3",
                             "label": "Does the picture to be cropped has caption?",
                             "desc": {
                                 "basic": "Mode in which component will be used.",
@@ -233,38 +265,6 @@
                                 "IMAGE_PH_COMP_UPDATE"
                             ],
                             "val": "{{views.2.pictureWithCaption}}"
-                        },
-                        {
-                            "id": "2.2.2",
-                            "label": "Picture to be Cropped",
-                            "desc": {
-                                "basic": "Upload the image file which has to be cropped.",
-                                "detailed": "Upload the image file which has to be cropped."
-                            },
-                            "itemRenderer": "Dropzone",
-                            "itemType": "leaf",
-                            "rendererProperties": {
-                                "dataType": "img",
-                                "placeHolder": "Drop image here to upload"
-                            },
-                            "mandatory": true,
-                            "val": "{{views.2.cropImage}}"
-                        },
-                        {
-                            "id": "2.2.3",
-                            "label": "Picture Size & Position",
-                            "desc": {
-                                "basic": "Upload an XML having size and position of the image which need to be cropped.",
-                                "detailed": "Upload an XML having size and position of the image which need to be cropped."
-                            },
-                            "itemRenderer": "Dropzone",
-                            "itemType": "leaf",
-                            "rendererProperties": {
-                                "dataType": "xml",
-                                "placeHolder": "Drop xml here to upload"
-                            },
-                            "mandatory": true,
-                            "val": "{{views.2.imageConfig}}"
                         },
                         {
                             "id": "2.2.4",

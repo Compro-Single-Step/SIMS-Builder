@@ -18,8 +18,10 @@ class createcrosstabquery extends AccessBaseSkill {
                 this.finalQueryName = defaultQueryName;
          }
          return Promise.resolve(true);
-         }catch(error){
-            return Promise.reject(true);
+        }catch(error){
+            console.log("Error Occured in the init function: Still resolving");
+            // resolvong as part of Xml Generation for minimum attributes.
+            return Promise.resolve(error);
          }
          
     }
@@ -38,7 +40,7 @@ class createcrosstabquery extends AccessBaseSkill {
 
     getSelectedDBObjectType(skillParams) {
         var paramValueObj = skillParams.paramsObj;
-        if (paramValueObj.selectedObj != "") {
+        if (Object.keys(paramValueObj.selectedObj) != 0) {
             return super.getSelectedDBObjectType(skillParams);
         }
         else {
@@ -47,9 +49,9 @@ class createcrosstabquery extends AccessBaseSkill {
         }
     }
 
-    getSelectedDBObjectName(skillParams) {
+     getSelectedDBObjectName(skillParams) {
         var paramValueObj = skillParams.paramsObj;
-        if (paramValueObj.selectedObj != "") {
+        if (Object.keys(paramValueObj.selectedObj) != 0) {
             return super.getSelectedDBObjectName(skillParams);
         }
         else {

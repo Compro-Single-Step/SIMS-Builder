@@ -26,7 +26,8 @@ uiTaskStepSchema.statics = {
                         stepUIState = data[0].task_data[stepId];
                         resolve(stepUIState);
                     } catch (error) {
-                        reject({error: "Document to corresponding task " + taskId + " doesn't exist in collection"});
+                        error.message = "Document to corresponding task " + taskId + " doesn't exist in collection"; 
+                        reject(error);
                     }
                 }
             });
@@ -35,11 +36,7 @@ uiTaskStepSchema.statics = {
     updateStepUIData: function(taskId, stepIndex, stepUIData, callback) {
         return new Promise((resolve, reject)=> {
             if (stepUIData == undefined || stepUIData == null || stepUIData == "") {
-                reject({
-                    status: "error",
-                    error: "null value not allowed for Step UI State",
-                    errcode: "DATA_NOT_PRESENT"
-                });
+                reject(new Error("null value not allowed for Step UI State"));
             } else {
                 let condition = {"task_id": taskId};
                 let jsonKey = "task_data.step_" + stepIndex;

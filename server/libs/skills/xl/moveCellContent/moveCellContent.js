@@ -92,15 +92,20 @@ class MoveCellContent extends ExcelBaseSkill {
       dependantSheetArrayInModel.pop(); //https://jsperf.com/array-clear-methods/3
     }
 
-    if (initDocJSON === null) { //initDocJSON Removed
+    if (initDocJSON === null || initDocJSON === undefined) { //initDocJSON Removed
       dependantSheetArrayInModel.push(clonedDependantSheetArrayInModel[0]);
     }
     else {  //initDocJSON Added
 
       //Add Sheet Names From Init Doc JSON
-      for (let sheetNum = 0; sheetNum < initDocJSON.sheetCount; sheetNum++) {
-        dependantSheetArrayInModel.push(JSON.parse(JSON.stringify(clonedDependantSheetArrayInModel[0])));
-        dependantSheetArrayInModel[sheetNum].name = initDocJSON.sheets[sheetNum].name;
+      if(initDocJSON.sheets){
+        for (let sheetNum = 0; sheetNum < initDocJSON.sheetCount; sheetNum++) {
+          dependantSheetArrayInModel.push(JSON.parse(JSON.stringify(clonedDependantSheetArrayInModel[0])));
+          dependantSheetArrayInModel[sheetNum].name = initDocJSON.sheets[sheetNum].name;
+        }
+      }
+      else{
+        dependantSheetArrayInModel.push(clonedDependantSheetArrayInModel[0]);
       }
     }
   }
@@ -111,7 +116,7 @@ class MoveCellContent extends ExcelBaseSkill {
     while (dependantSheetArrayInModel.length > 0) {
       dependantSheetArrayInModel.pop(); //https://jsperf.com/array-clear-methods/3
     }
-    if (initDocJSON !== null) {
+    if (initDocJSON !== null && initDocJSON !==undefined) {
       //Add Sheet Names to Array From Init Doc JSON
       for (let sheetNum = 0; sheetNum < initDocJSON.sheetCount; sheetNum++) {
         var sheetName = initDocJSON.sheets[sheetNum].name;
