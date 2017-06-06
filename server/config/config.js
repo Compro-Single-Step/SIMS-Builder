@@ -4,7 +4,7 @@ const env = process.env.NODE_ENV || 'development';
 
 const envFileStoreMap = {
     local: "local",
-    production: "s3",
+    production: "local",
     development: "local"
 }
 
