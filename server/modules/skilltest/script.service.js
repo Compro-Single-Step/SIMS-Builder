@@ -3,74 +3,11 @@ const dao = require('./dao'),
     mapperService   = require('./mapper.service'),
     templateService = require('./template.service');
 
-class ScriptHandler {
+class ScriptService {
 
   saveScript( scriptData ) {
     return dao.save(config.dao.script ,scriptData );
   };
-
-  generateScript(script_meta) {
-    var _data = {};
-
-    return new Promise((resolve, reject) => {
-
-      templateService.getTemplateById(script_meta.template_id)
-        .then((data) => {
-          _data.template = data[0];
-          return mapperService.getMapperByTemplateId(script_meta.template_id)
-        })
-        .then((data) => {
-          _data.mapper = data[0];
-          return this.getScriptBySleId((script_meta.task_id + '.' + script_meta.scenario))
-        })
-        .then((script) => {
-
-          if (script && script[0]) {
-            _data.script = script[0];
-          } else {
-            // todo: prepare this from external config, pass sle id from here, sle id non editable
-            _data.script = {
-              sle_id: (script_meta.task_id + '.' + script_meta.scenario),
-              version: '1.0',
-              task_json: [
-                {
-                  "items": [],
-                  "appName": "",
-                  "id": script_meta.task_id,
-                  "scenario": script_meta.scenario
-                },
-                [
-                  ["\"1\", \"1\""], "\"Primary\""
-                ]
-              ]
-            };
-          };
-
-          return this.prepareScriptItem(script_meta, _data.template, _data.mapper)
-        })
-        .then((script_item) => {
-
-          // todo: init script meta here
-          _data.script.task_json.appName = script_meta.appName;
-
-          _data.script.task_json[0].items[parseInt(script_meta.step_number) - 1] = script_item;
-          _data.script.task_json[1] = generatePathways(script_meta.pathways);
-
-          function generatePathways(input) {
-            var pathways = [];
-            for (var i = 0; i < input.length; i++) {
-              pathways.push([('"1","' + input[i] + '"').toString()]);
-              pathways.push('"Primary"');
-            }
-            return pathways;
-          }
-          resolve(_data.script);
-        })
-        .catch(error => {
-          reject(error);
-        });
-    })
-  }
 
   getScriptList(appType) {
 
@@ -114,6 +51,56 @@ class ScriptHandler {
     });
   }
 
+  generateScript(script_meta) {
+    var _data = {};
+
+    return new Promise((resolve, reject) => {
+
+      Promise.all([
+
+            templateService.getTemplateById(script_meta.template_id),
+            mapperService.getMapperByTemplateId(script_meta.template_id),
+            this.getScriptBySleId((script_meta.task_id + '.' + script_meta.scenario))
+
+        ]).then(( [template, mapper, script] ) => {
+
+          _data = {
+            template: template[0],
+            mapper: mapper[0]
+          }
+          if (script && script[0]) {
+            _data.script = script[0];
+          } else {
+            _data.script = config.script.getBlankScript(script_meta);
+          };
+
+          return this.prepareScriptItem(script_meta, _data.template, _data.mapper)
+        })
+        .then((script_item) => {
+
+          // update script content
+          _data.script.task_json[0].appName = script_meta.appName;
+          _data.script.task_json[0].items[parseInt(script_meta.step_number) - 1] = script_item;
+          if(script_meta.pathways) {
+            _data.script.task_json[1] = generatePathways(script_meta.pathways);
+          }
+
+          function generatePathways(input) {  // todo: update/remove fixed for single item
+            var pathways = [];
+            for (var i = 0; i < input.length; i++) {
+              pathways.push([('"1","' + input[i] + '"').toString()]);
+              pathways.push('"Primary"');
+            }
+            return pathways;
+          }
+          resolve(_data.script);
+        })
+        .catch(error => {
+          reject(error);
+        });
+    })
+  }
+
   prepareScriptItem(script_meta, template, mapper) {
 
     return new Promise((resolve, reject) => {
@@ -121,8 +108,8 @@ class ScriptHandler {
       var template_item = template.items[0];
 
       template_item.template = {
-        "id": script_meta.template_id,
-        "revision": template.meta.version
+        "uuid": template.uuid,
+        "revision": template.meta.revision
       };
 
       var script_item = this.mergeTemplateParams(template_item, mapper.parameters, script_meta.params);
@@ -168,6 +155,6 @@ class ScriptHandler {
 
 };
 
-module.exports = new ScriptHandler();
+module.exports = new ScriptService();
 
 

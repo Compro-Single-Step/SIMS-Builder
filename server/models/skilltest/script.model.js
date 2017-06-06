@@ -14,11 +14,9 @@ var script_schema_search_map = {
  */
 
 const scriptSchema = new Schema({
-  "uuid": String,
-  "name": String,
   "sle_id": String,
+  "version": String,
   "meta": {},
-  "publish": {},
   "task_json": []
 }, {collection: 'test_scripts'});
 

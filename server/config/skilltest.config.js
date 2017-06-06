@@ -22,6 +22,13 @@ const config = {
       script: 'script',
       template: 'template',
       mapper: 'mapper'
+    },
+    script: {
+      getBlankScript: getBlankScript
+    },
+    runner: {
+      url: 'http://loadrunner1:9001',
+      runtask : '/sims/runtask'
     }
   },
   local: {},
@@ -41,4 +48,25 @@ function isValidApp(appType) {
     appType = appType.trim().toLowerCase();
   }
   return this.list.includes(appType);
+}
+
+function getBlankScript(meta) {
+
+  let script = {
+    sle_id: (meta.task_id + '.' + meta.scenario),
+    version: '1.0',
+    task_json: [
+      {
+        "items": [],
+        "appName": "",
+        "id": meta.task_id,
+        "scenario": meta.scenario
+      },
+      [
+        ["\"1\", \"1\""], "\"Primary\""
+      ]
+    ]
+  };
+
+  return script;
 }
