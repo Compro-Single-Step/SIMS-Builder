@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Router, ActivatedRoute} from '@angular/router';
 
 import { AuthService } from '../_services/auth.service';
+import { LoaderService } from '../_services/loader.service';
 
 @Component({
     selector: 'login',
@@ -9,7 +10,7 @@ import { AuthService } from '../_services/auth.service';
     styleUrls: ['login.component.scss']
 })
 
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, AfterViewInit {
     model: any = {};
     returnUrl: string;
     error = '';
@@ -17,7 +18,8 @@ export class LoginComponent implements OnInit {
     constructor(
         private router: Router,
          private route: ActivatedRoute,
-        private authenticationService: AuthService) { }
+        private authenticationService: AuthService,
+         private LoaderService: LoaderService) { }
 
     ngOnInit() {
         // reset login status
@@ -38,4 +40,10 @@ export class LoginComponent implements OnInit {
                 }
             });
     }
+    ngAfterViewInit(){
+        console.log('After View Init');
+         this.LoaderService.setLoaderVisibility(false);
+
+    }
+   
 }

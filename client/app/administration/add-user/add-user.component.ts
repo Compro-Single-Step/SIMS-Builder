@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,AfterViewInit } from '@angular/core';
 import { UserService} from '../../_services/user.service';
 import { MessageMap } from '../../shared/enums';
+import { LoaderService } from '../../_services/loader.service';
 declare var Messenger: any;
 @Component({
   selector: 'app-add-user',
   templateUrl: './add-user.component.html',
   styleUrls: ['./add-user.component.scss']
 })
-export class AddUserComponent implements OnInit {
-  constructor() { }
+export class AddUserComponent implements OnInit,AfterViewInit {
+  constructor(private LoaderService: LoaderService) { }
   ngOnInit() {
      Messenger.options = { extraClasses: 'messenger-fixed messenger-on-top',
 							theme: 'block'}
@@ -22,5 +23,8 @@ export class AddUserComponent implements OnInit {
 							hideAfter: 4
 							});
     }
+  }
+   ngAfterViewInit() {  
+      this.LoaderService.setLoaderVisibility(false);  
   }
 }

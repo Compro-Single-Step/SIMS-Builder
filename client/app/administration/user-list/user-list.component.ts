@@ -1,9 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalDirective } from 'ng2-bootstrap/modal';
 import { UserService} from '../../_services/user.service';
 import { User } from '../../_services/userModel';
 import { MessageMap } from '../../shared/enums';
+import { LoaderService } from '../../_services/loader.service';
 declare var jQuery: any;
 declare var Messenger: any;
 
@@ -14,7 +15,7 @@ declare var Messenger: any;
   styleUrls: ['./user-list.component.scss']
 })
 
-export class UserListComponent implements OnInit {
+export class UserListComponent implements OnInit, AfterViewInit {
 userData;
 selectedUser = 1;
 errorMessage;
@@ -22,7 +23,7 @@ userdetails: User;
 message="";
 @ViewChild('modalWindow') public modalWindow:ModalDirective;
 @ViewChild('deleteModalWindow') public deleteModalWindow:ModalDirective;
-  constructor(private route: ActivatedRoute, private router: Router, private userservice: UserService) {
+  constructor(private route: ActivatedRoute, private router: Router, private userservice: UserService, private LoaderService:LoaderService) {
     this.userdetails = new User();
   }
 
@@ -82,6 +83,9 @@ message="";
       
     }
     this.modalWindow.hide();
+  }
+   ngAfterViewInit() {  
+      this.LoaderService.setLoaderVisibility(false);  
   }
   
 }
