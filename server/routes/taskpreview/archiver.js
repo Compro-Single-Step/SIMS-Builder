@@ -26,6 +26,7 @@ module.exports = function (req, res, next) {
             archive.finalize();
         })
         .catch((err) => {
-            throw err;
+            err.error = "Archiving of the folder failed";
+            next(err);
         })
 };
