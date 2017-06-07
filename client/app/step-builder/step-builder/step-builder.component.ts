@@ -177,7 +177,7 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
                         },
                         (error) => {                            
                             error = error.json();
-                            self.displayMessage("Preview step error: "+ error["error"]);
+                            self.displayErrorMessage("Step Preview unsuccessful: Please check your inputs");
                         }
                         );
                 }
@@ -195,7 +195,7 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
                         },
                         (error) => {
                             error = error.json();
-                            self.displayMessage("Preview step error: "+ error["error"]);
+                            self.displayErrorMessage("Step Preview unsuccessful: Please check your inputs");
                         }
                         );
                             }
@@ -246,13 +246,13 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
         this.eventSrvc["dispose"]();
     }
 
-    displayMessage(messageText) {
+    displayErrorMessage(errorText) {
 		Messenger.options = {
 			extraClasses: 'messenger-fixed messenger-on-top',
 			theme: 'block'
 		}
 		Messenger().post({
-			message: messageText,
+			message: errorText,
 			type: 'error',
 			showCloseButton: true,
 			hideAfter: 5

@@ -20,7 +20,7 @@ try{
 			}, function (err, resp, body) {
 				if (err) {
 					console.log('Error!');
-					err.error = "Tranfer Process failed"
+					err.error = "Transfer Process failed"
 					next(err);
 				} 
 				else {
@@ -32,7 +32,7 @@ try{
 		var form = req.form();
 		form.append('file', file_system.createReadStream(serverRootPath+'/myZip.zip'));
 }catch(err){
-	err.error = "Tranfer Process failed"
+	err.error = "Transfer Process failed"
 	next(err);
 	}
 };

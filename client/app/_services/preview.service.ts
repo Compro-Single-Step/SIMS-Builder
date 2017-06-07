@@ -8,8 +8,6 @@ import 'rxjs/add/operator/switchMap';
 
 @Injectable()
 export class PreviewService {
-  data;
-  previewWindow;
   res;
   constructor(private http: HttpClient) { }
 
