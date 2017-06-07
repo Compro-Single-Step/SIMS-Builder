@@ -21,7 +21,8 @@ const config = {
     dao: {
       script: 'script',
       template: 'template',
-      mapper: 'mapper'
+      mapper: 'mapper',
+      locator: 'locator'
     },
     script: {
       getBlankScript: getBlankScript

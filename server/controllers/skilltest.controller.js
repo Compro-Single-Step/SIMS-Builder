@@ -1,11 +1,19 @@
 const mapperService = require('./../modules/skilltest/mapper.service'),
   templateService = require('./../modules/skilltest/template.service'),
+  locatorService = require('./../modules/skilltest/locator.service'),
   converterService = require('./../modules/skilltest/converter.service'),
   scriptService = require('./../modules/skilltest/script.service'),
   runHandler = require('./../modules/skilltest/run.handler'),
   config = require('./../config/skilltest.config');
 
 class SkillTest {
+
+  /**
+   * Controllers for locators
+   */
+  getApplicationLocator(appType) {
+    return locatorService.getApplicationLocators(appType);
+  }
 
   /**
    * Controllers for template
@@ -149,6 +157,7 @@ class SkillTest {
             "xml": "",
             "java": "",
             "json": "",
+            "locators":"",
             "commit": "false"
           },
           "svn": {
@@ -169,6 +178,11 @@ class SkillTest {
           run_request_body.task.java = converterService.jsonToDistJava(script);
           run_request_body.task.json = script;
 
+          return locatorService.getApplicationLocators(run_request_body.task.appType);
+        })
+        .then((locators) => {
+
+          run_request_body.task.locators = locators;
           // todo: move script conversion code to runner server send json in request, save script in runner
           return runHandler.triggerTestRun( run_request_body )
         })
