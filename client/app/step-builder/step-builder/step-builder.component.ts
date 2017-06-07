@@ -177,7 +177,7 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
                         },
                         (error) => {                            
                             error = error.json();
-                            self.displayMessage("preview error "+ error["error"]);
+                            self.displayMessage("Preview step error: "+ error["error"]);
                         }
                         );
                 }
@@ -195,7 +195,7 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
                         },
                         (error) => {
                             error = error.json();
-                            self.displayMessage(+ error["error"]);
+                            self.displayMessage("Preview step error: "+ error["error"]);
                         }
                         );
                             }

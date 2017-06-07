@@ -15,7 +15,8 @@ module.exports = function (req, res, next) {
             var dirToCompress = directoryPath;
             var output = file_system.createWriteStream(path.join(serverRootPath, 'myZip.zip')); //path to create .zip file
             archive.on('error', function (err) {
-                Promise.reject(err);
+                err.error = "Archiving of the folder failed";
+                next(err);
             });
             output.on('close', function () {
                 next();
