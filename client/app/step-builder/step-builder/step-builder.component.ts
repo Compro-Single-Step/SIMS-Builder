@@ -177,7 +177,7 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
                         },
                         (error) => {                            
                             error = error.json();
-                            self.displayErrorMessage("Step Preview unsuccessful: Please check your inputs");
+                            self.displayErrorMessage("Error occurred in Step preview : Please check your inputs");
                         }
                         );
                 }
@@ -195,7 +195,7 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
                         },
                         (error) => {
                             error = error.json();
-                            self.displayErrorMessage("Step Preview unsuccessful: Please check your inputs");
+                            self.displayErrorMessage("Error occurred in Step preview : Please check your inputs");
                         }
                         );
                             }
