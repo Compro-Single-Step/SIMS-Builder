@@ -121,6 +121,10 @@
 							<attr name="STAGE1_SEL_RADIO" value="query"/>
 							<attr name="STAGE1_SEL_ITEM" userDefined="true"/>
 						</attributeset>
+						<attributeset name="stage1_3" inherits-default="false">
+							<attr name="STAGE1_SEL_RADIO" value="table"/>
+							<attr name="STAGE1_SEL_ITEM" userDefined="true"/>
+						</attributeset>
 						<attributeset name="stage2" inherits-default="false">
 							<attr name="STAGE2_LIST" userDefined="true"/>
 						</attributeset>
