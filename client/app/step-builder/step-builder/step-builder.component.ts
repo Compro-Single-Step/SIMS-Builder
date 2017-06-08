@@ -9,6 +9,7 @@ import { PreviewService } from '../../_services/preview.service';
 import { IntervalObservable } from 'rxjs/observable/IntervalObservable';
 import { TaskDataService } from '../../_services/taskData.service';
 import { ExceptionHandlerService } from '../../shared/exception-handler.service';
+import { LoaderService } from '../../_services/loader.service';
 
 declare var jQuery;
 declare var localForage;
@@ -36,7 +37,7 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
     previewWindow: any;
     @ViewChild('stepTextContainer') stepTextContainer;
 
-    constructor(el: ElementRef, private route: ActivatedRoute, private router: Router, private bds: BuilderDataService, private previewService: PreviewService, private tds: TaskDataService, private exceptionHandlerSrvc: ExceptionHandlerService, private cdRef:ChangeDetectorRef) {
+    constructor(el: ElementRef, private route: ActivatedRoute, private router: Router, private bds: BuilderDataService, private previewService: PreviewService, private tds: TaskDataService, private exceptionHandlerSrvc: ExceptionHandlerService, private cdRef:ChangeDetectorRef,private LoaderService:LoaderService) {
         this.$el = jQuery(el.nativeElement);
         this.uiConfig = new UIConfig();
         this.selectedView = 1;
@@ -176,6 +177,7 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
                             self.launchPreview(res, self);
                         },
                         (error) => {                            
+                            self.LoaderService.setLoaderVisibility(false);
                             error = error.json();
                             self.displayErrorMessage("Error occurred in Step preview : Please check your inputs");
                         }
@@ -194,6 +196,7 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
                                     self.launchPreview(res, self);
                         },
                         (error) => {
+                            self.LoaderService.setLoaderVisibility(false);
                             error = error.json();
                             self.displayErrorMessage("Error occurred in Step preview : Please check your inputs");
                         }
@@ -217,7 +220,8 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
     launchPreview(res, currRef){
         let data = res.json();
         if (data["Url"]) {
-        currRef.previewWindow = window.open(data["Url"], '_blank', 'location=yes,scrollbars=yes,status=yes');
+            currRef.LoaderService.setLoaderVisibility(false);
+            currRef.previewWindow = window.open(data["Url"], '_blank', 'location=yes,scrollbars=yes,status=yes');
         }
     }
 
