@@ -31,7 +31,7 @@ export class BuilderDataService {
   removeFile(filePath: string): Observable<any> {
     const headers = new Headers({ 'Content-Type': 'application/json' });
     const options = new RequestOptions({ headers: headers });
-    return this.httpClient.delete(`api/skill/resource/${filePath}`, options)
+    return this.httpClient.delete(`api/skill/resource/${filePath}`, options, true)
       .map(this.extractData)
       .catch(this.handleError);
   }

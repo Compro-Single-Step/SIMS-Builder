@@ -39,7 +39,7 @@ export class HttpClient {
             });
   }
   private onEnd(): void {   
-      this.loaderService.setLoaderVisibility(false);
+      //this.loaderService.setLoaderVisibility(false);
     
   }
 

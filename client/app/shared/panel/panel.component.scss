@@ -23,32 +23,32 @@ app-label {
 }
 
 :host-context(.taskstep-number-1) .widget{
-  border-left: 5px solid #0A819C;
+  border-left: 5px solid #0A81bd;
 }
 :host-context(.taskstep-number-2) .widget{
-  border-left: 5px solid #CCA32F;
+  border-left: 5px solid #945f38;
 }
 :host-context(.taskstep-number-3) .widget{
-  border-left-color:#D1293A;
-}
-:host-context(.taskstep-number-4) .widget{
-  border-left-color:#9351AD;
-}
-:host-context(.taskstep-number-5) .widget{
-  border-left-color:#488C6C;
-}
-:host-context(.taskstep-number-6) .widget{
-  border-left-color:#945f38;
-}
-:host-context(.taskstep-number-7) .widget{
-  border-left-color:#ff6c00;
-}
-:host-context(.taskstep-number-8) .widget{
   border-left-color:#c33bbb;
 }
+:host-context(.taskstep-number-4) .widget{
+  border-left-color:#488c6c;
+}
+:host-context(.taskstep-number-5) .widget{
+  border-left-color:#ff6f06;
+}
+:host-context(.taskstep-number-6) .widget{
+  border-left-color:#06c7aa;
+}
+:host-context(.taskstep-number-7) .widget{
+  border-left-color:#9859b1;
+}
+:host-context(.taskstep-number-8) .widget{
+  border-left-color:#d4a32f;
+}
 :host-context(.taskstep-number-9) .widget{
-  border-left-color:#00c6a8;
+  border-left-color:#808000;
 }
 :host-context(.taskstep-number-10) .widget{
-  border-left-color:#808000;
+  border-left-color:#ac3100;
 }

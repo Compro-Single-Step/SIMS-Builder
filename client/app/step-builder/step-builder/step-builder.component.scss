@@ -113,8 +113,7 @@
   right: 0;
   width: 30%;
   height: 64%;
-  background-image: -webkit-linear-gradient(left, rgba(255, 255, 255, 0) 0%, #00505c 80%, #00505c 100%);
-  background-image: linear-gradient(left, rgba(255, 255, 255, 0) 0%, #00505c 80%, #00505c 100%);
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, #00505c 80%, #00505c 100%);
   pointer-events: none;
 }
 
@@ -126,10 +125,11 @@
   position: absolute;
   bottom: 28px;
   right: 0px;
+  font-size: 12px;
   a{
-    color: $pure-white;
+    color: $showMoreLessStepText;
     &:hover{
-      color: $pure-white;
+      color: $showMoreLessStepText;
     }
   }
 }
