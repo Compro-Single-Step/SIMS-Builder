@@ -54,6 +54,14 @@ class BilliTaskData extends TaskdataInterface {
     }
     getStepMethodCount(index){
       return this.taskData.ScenarioItemList[index].ScenarioPathwayList.length;
-    }    
+    }
+    getTaskScenario() {
+        try {
+            let app = this.taskData.TaskFriendlyID.split('.');
+            return app[app.length - 1].toUpperCase();
+        } catch (error) {
+            return error.message;
+        }
+    }
 }
 module.exports = BilliTaskData;

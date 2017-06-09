@@ -6,6 +6,7 @@ class Task {
       this.testStatus = taskDataObj.getTaskTestStatus();
       this.commitStatus = taskDataObj.getTaskCommitStatus();
       this.stepData = this.getScenario(taskDataObj.getStepData(),taskDataObj);
+      this.taskScenario = taskDataObj.getTaskScenario();
     }
   getId(){
     return this.id;
