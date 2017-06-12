@@ -42,4 +42,21 @@ router.get('/:templateId', (req, res) => {
     });
 });
 
+router.get('/:templateId/methods', (req, res) => {
+  let appType   = req.query.app,
+    templateId  = req.params.templateId;
+
+  skillTestController.getMethodsByTemplateId(templateId, appType)
+    .then((methods) => {
+
+      if(!methods) {
+        res.status(404).send(config.messages.notFound);
+      } else{
+        res.send(methods);
+      }
+    }, (error) => {
+      res.send(error);
+    });
+});
+
 module.exports = router;

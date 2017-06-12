@@ -27,6 +27,41 @@ class SkillTest {
     return templateService.getTemplateById(templateId, appType);
   }
 
+  getMethodsByTemplateId(templateId, appType) {
+
+    return new Promise((resolve, reject) => {
+      templateService.getTemplateById(templateId, appType)
+        .then((templates) => {
+
+          if(!templates.length) {
+            reject(config.messages.notFound);
+          } else{
+            var _methods = {
+              "test_template_id" : templates[0].uuid,
+              "methods": []
+            };
+
+            // getting methods list
+            if (templates[0].items[0].methods.length){
+              for(var i in templates[0].items[0].methods) {
+
+                let _m = {
+                    "index" : i,
+                    "type": templates[0].items[0].methods[i].type
+                }
+                _methods.methods.push(_m);
+              }
+            }
+
+            resolve(_methods);
+          }
+        }, (error) => {
+          reject(error);
+        });
+
+    })
+  }
+
   /**
    * Controllers for mapper
    */
@@ -157,7 +192,7 @@ class SkillTest {
             "xml": "",
             "java": "",
             "json": "",
-            "locators":"",
+            "xpaths":[],
             "commit": "false"
           },
           "svn": {
@@ -182,7 +217,17 @@ class SkillTest {
         })
         .then((locators) => {
 
-          run_request_body.task.locators = locators;
+          // create locators array
+
+          var _xpaths = [];
+          if (locators.data.length){
+            for(var i in locators.data) {
+              var _temp = (locators.data[i].xpath.key.trim()) + ' = ' + (locators.data[i].xpath.value.trim());
+              _xpaths.push(_temp)
+            }
+          }
+
+          run_request_body.task.xpaths = _xpaths;
           // todo: move script conversion code to runner server send json in request, save script in runner
           return runHandler.triggerTestRun( run_request_body )
         })
