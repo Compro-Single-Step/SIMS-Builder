@@ -19,6 +19,22 @@ router.get('/', (req, res) => {
     });
 });
 
+router.get('/linkages', (req, res) => {
+  let templateId   = req.query.id ? req.query.id : undefined
+
+  skillTestController.getTemplateLinkage(templateId)
+    .then((linkages) => {
+
+      if(linkages.length === 0 ) {
+        res.status(404).send(config.messages.notFound);
+      } else{
+        res.send(linkages);
+      }
+    }, (error) => {
+      res.send(error);
+    });
+});
+
 /**
  * Get template by id
  * Query params: app
@@ -49,7 +65,7 @@ router.get('/:templateId/methods', (req, res) => {
   skillTestController.getMethodsByTemplateId(templateId, appType)
     .then((methods) => {
 
-      if(!methods) {
+      if(methods.length === 0) {
         res.status(404).send(config.messages.notFound);
       } else{
         res.send(methods);

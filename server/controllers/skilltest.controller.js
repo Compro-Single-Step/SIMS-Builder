@@ -27,6 +27,11 @@ class SkillTest {
     return templateService.getTemplateById(templateId, appType);
   }
 
+  getTemplateLinkage(templateId) {
+
+    return templateService.getTemplateLinkage(templateId);
+  }
+
   getMethodsByTemplateId(templateId, appType) {
 
     return new Promise((resolve, reject) => {

@@ -13,9 +13,9 @@ class ScriptService {
 
     return new Promise((resolve, reject) => {
 
-      let query = {};
+      let query = [];
       if (config.apps.isValid(appType)) {
-        query.appType = appType.toLowerCase()
+        query.push({appType : appType.toLowerCase()})
       };
 
       dao.get(config.dao.script, query)
@@ -34,12 +34,12 @@ class ScriptService {
   getScriptBySleId(sleId, appType) {
 
     return new Promise((resolve, reject) => {
-      let query = {};
+      let query = [];
       if (config.apps.isValid(appType)) {
-        query.app = appType.toLowerCase()
+        query.push({appType : appType.toLowerCase()})
       }
       ;
-      query.sle_id = sleId;
+      query.push({sle_id : sleId})
 
       dao.get(config.dao.script, query)
         .then((scripts) => {

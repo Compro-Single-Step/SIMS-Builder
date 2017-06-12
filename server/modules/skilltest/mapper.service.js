@@ -8,9 +8,9 @@ class MapperService {
     return new Promise((resolve, reject) => {
       let query = {};
       if (config.apps.isValid(appType)) {
-        query.app = appType.toLowerCase()
+        query.push({app : appType.toLowerCase()})
       };
-      query.template_id = templateId;
+      query.push({template_id : templateId})
 
       dao.get( config.dao.mapper, query )
         .then((mappers) => {

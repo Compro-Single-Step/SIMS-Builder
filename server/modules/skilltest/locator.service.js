@@ -6,9 +6,9 @@ class LocatorService {
   getApplicationLocators (appType) {
 
     return new Promise((resolve, reject) => {
-      let query = {};
+      let query = [];
       if (config.apps.isValid(appType)) {
-        query.app = appType.toLowerCase()
+        query.push({app : appType.toLowerCase()})
       };
 
       dao.get(config.dao.locator, query)
