@@ -8,7 +8,7 @@
                 </button>
                 <h4 class="modal-title text-xs-center fw-bold" id="myModalLabel18">Preview Step</h4>
             </div>
-            <div class="modal-body ml">
+            <div class="modal-body pl-30 pr-30">
                 <form class="form-horizontal form-label-left" role="form">
                     <fieldset>
                         <legend>Select an Action:</legend>
@@ -23,97 +23,99 @@
                             </div>
                         </div>
                     </fieldset>
-                    <fieldset>
-                        <legend>Test Configuration</legend>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label" for="default-select">Test Env</label>
-                            <div class="col-sm-6">
-                                <select data-width="auto" data-minimum-results-for-search="10" tabindex="-1" class="select2 form-control" id="default-select">
-                                    <option value=""></option>
-                                    <option value="Magellanic">Saucelabs</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label" for="default-select">OS</label>
-                            <div class="col-sm-6">
-                                <select data-width="auto" data-minimum-results-for-search="10" tabindex="-1" class="select2 form-control" id="default-select">
-                                    <option value=""></option>
-                                    <option value="Magellanic">Windows 8.1</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label" for="default-select">Browser</label>
-                            <div class="col-sm-6">
-                                <select data-width="auto" data-minimum-results-for-search="10" tabindex="-1" class="select2 form-control" id="default-select">
-                                    <option value=""></option>
-                                    <option value="Magellanic">Chrome</option>
-                                </select>
-                            </div>
-                            <div class="col-sm-2 pl-0">
-                                <input type="number" min="1" id="normal-field" class="form-control" placeholder="Version">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label" for="default-select">Resolution</label>
-                            <div class="col-sm-6">
-                                <select data-width="auto" data-minimum-results-for-search="10" tabindex="-1" class="select2 form-control" id="default-select">
-                                    <option value=""></option>
-                                    <option value="Magellanic">1200X900</option>
-                                    <option value="Magellanic">1080X768</option>
-                                </select>
-                            </div>
-                        </div>
-                    </fieldset>
-                    <br/>
-                    <fieldset>
-                        <legend>Choose Steps and Methods to validate</legend>
-                        <div id="step-fields">
+                    <div *ngIf="launchScenario === 'test'">
+                        <fieldset>
+                            <legend>Test Configuration</legend>
                             <div class="form-group">
-                                <div class="checkbox">
-                                    <input id="checkbox1" type="checkbox">
-                                    <label for="checkbox1">Step 1</label>
-                                </div>
-                            </div>
-                            <div class="form-group ml">
-                                <div class="checkbox">
-                                    <input id="checkbox21" type="checkbox">
-                                    <label for="checkbox21">M1 (Ribbon)</label>
-                                </div>
-                            </div>
-                            <div class="form-group ml">
-                                <div class="checkbox">
-                                    <input id="checkbox22" type="checkbox">
-                                    <label for="checkbox22">M1 (Keyboard)</label>
+                                <div>
+                                    <label class="col-sm-4 control-label" for="test-environment">Test Env</label>
+                                    <div class="col-sm-6">
+                                        <select class="form-control" tabindex="-1" id="test-environment">
+                                        <option value="Magellanic">Saucelabs</option>
+                                    </select>
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <div class="checkbox">
-                                    <input id="checkbox2" type="checkbox">
-                                    <label for="checkbox2">Step 2</label>
-                                </div>
-                            </div>
-                            <div class="form-group ml">
-                                <div class="checkbox">
-                                    <input id="checkbox31" type="checkbox">
-                                    <label for="checkbox31">M1 (Ribbon)</label>
-                                </div>
-                            </div>
-                            <div class="form-group ml">
-                                <div class="checkbox">
-                                    <input id="checkbox32" type="checkbox">
-                                    <label for="checkbox32">M1 (Keyboard)</label>
+                                <div>
+                                    <label class="col-sm-4 control-label" for="operating-system">OS</label>
+                                    <div class="col-sm-6">
+                                        <select class="form-control" tabindex="-1" id="operating-system">
+                                        <option value="Magellanic">Windows 8.1</option>
+                                    </select>
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <div class="checkbox">
-                                    <input id="checkbox3" type="checkbox">
-                                    <label for="checkbox3">Step 3</label>
+                                <label class="col-sm-4 control-label" for="browser">Browser</label>
+                                <div class="col-sm-6">
+                                    <select class="form-control" tabindex="-1" id="browser">
+                                        <option value="Magellanic">Chrome</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-2 pl-0">
+                                    <input type="number" min="1" id="normal-field" class="form-control" placeholder="Version">
                                 </div>
                             </div>
-                        </div>
-                    </fieldset>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label" for="resolution">Resolution</label>
+                                <div class="col-sm-6">
+                                    <select class="form-control" tabindex="-1" id="resolution">
+                                        <option value="Magellanic">1200X900</option>
+                                        <option value="Magellanic">1080X768</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <br/>
+                        <fieldset>
+                            <legend>Choose Steps and Methods to validate</legend>
+                            <div id="step-fields">
+                                <div class="form-group">
+                                    <div class="checkbox">
+                                        <input id="checkbox1" type="checkbox">
+                                        <label for="checkbox1">Step 1</label>
+                                    </div>
+                                </div>
+                                <div class="form-group ml">
+                                    <div class="checkbox">
+                                        <input id="checkbox21" type="checkbox">
+                                        <label for="checkbox21">M1 (Ribbon)</label>
+                                    </div>
+                                </div>
+                                <div class="form-group ml">
+                                    <div class="checkbox">
+                                        <input id="checkbox22" type="checkbox">
+                                        <label for="checkbox22">M1 (Keyboard)</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="checkbox">
+                                        <input id="checkbox2" type="checkbox">
+                                        <label for="checkbox2">Step 2</label>
+                                    </div>
+                                </div>
+                                <div class="form-group ml">
+                                    <div class="checkbox">
+                                        <input id="checkbox31" type="checkbox">
+                                        <label for="checkbox31">M1 (Ribbon)</label>
+                                    </div>
+                                </div>
+                                <div class="form-group ml">
+                                    <div class="checkbox">
+                                        <input id="checkbox32" type="checkbox">
+                                        <label for="checkbox32">M1 (Keyboard)</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="checkbox">
+                                        <input id="checkbox3" type="checkbox">
+                                        <label for="checkbox3">Step 3</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
                 </form>
             </div>
             <div class="modal-footer">
