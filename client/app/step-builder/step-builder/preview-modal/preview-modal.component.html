@@ -1,35 +1,126 @@
-<div bsModal #previewModalDialog="bs-modal" id="previewModalDialog" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button (click)="PreviewModalDialog.hide()" aria-label="Close" class="close" type="button">
-          <span aria-hidden="true">×</span>
-        </button>
-        <h4 class="modal-title text-xs-center fw-bold mt" id="myModalLabel18">Select the Template</h4>
-      </div>
-      <div class="modal-body">
-        <div class="form-group">
-          <div class="sim-radio">
-            <input type="radio" name="radioElement" checked="true" value="preview" [(ngModel)]="launchScenario">
-            <label for="radioElement">
-              Preview
-            </label>
-          </div>
-          <div class="sim-radio">
-            <input type="radio" name="radioElement" value="test" [(ngModel)]="launchScenario">
-            <label for="radioElement">
-              Test
-            </label>
-          </div>	
+<div bsModal #previewModalDialog="bs-modal" id="previewModalDialog" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button (click)="PreviewModalDialog.hide()" aria-label="Close" class="close" type="button">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title text-xs-center fw-bold" id="myModalLabel18">Preview Step</h4>
+            </div>
+            <div class="modal-body ml">
+                <form class="form-horizontal form-label-left" role="form">
+                    <fieldset>
+                        <legend>Select an Action:</legend>
+                        <div class="form-group">
+                            <div class="radio">
+                                <input type="radio" name="radioElement" checked="true" id="radio1" value="preview" [(ngModel)]="launchScenario">
+                                <label for="radio1">Preview</label>
+                            </div>
+                            <div class="radio">
+                                <input type="radio" name="radioElement" id="radio2" value="test" [(ngModel)]="launchScenario">
+                                <label for="radio2">Test</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Test Configuration</legend>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label" for="default-select">Test Env</label>
+                            <div class="col-sm-6">
+                                <select data-width="auto" data-minimum-results-for-search="10" tabindex="-1" class="select2 form-control" id="default-select">
+                                    <option value=""></option>
+                                    <option value="Magellanic">Saucelabs</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label" for="default-select">OS</label>
+                            <div class="col-sm-6">
+                                <select data-width="auto" data-minimum-results-for-search="10" tabindex="-1" class="select2 form-control" id="default-select">
+                                    <option value=""></option>
+                                    <option value="Magellanic">Windows 8.1</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label" for="default-select">Browser</label>
+                            <div class="col-sm-6">
+                                <select data-width="auto" data-minimum-results-for-search="10" tabindex="-1" class="select2 form-control" id="default-select">
+                                    <option value=""></option>
+                                    <option value="Magellanic">Chrome</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-2 pl-0">
+                                <input type="number" min="1" id="normal-field" class="form-control" placeholder="Version">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label" for="default-select">Resolution</label>
+                            <div class="col-sm-6">
+                                <select data-width="auto" data-minimum-results-for-search="10" tabindex="-1" class="select2 form-control" id="default-select">
+                                    <option value=""></option>
+                                    <option value="Magellanic">1200X900</option>
+                                    <option value="Magellanic">1080X768</option>
+                                </select>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <br/>
+                    <fieldset>
+                        <legend>Choose Steps and Methods to validate</legend>
+                        <div id="step-fields">
+                            <div class="form-group">
+                                <div class="checkbox">
+                                    <input id="checkbox1" type="checkbox">
+                                    <label for="checkbox1">Step 1</label>
+                                </div>
+                            </div>
+                            <div class="form-group ml">
+                                <div class="checkbox">
+                                    <input id="checkbox21" type="checkbox">
+                                    <label for="checkbox21">M1 (Ribbon)</label>
+                                </div>
+                            </div>
+                            <div class="form-group ml">
+                                <div class="checkbox">
+                                    <input id="checkbox22" type="checkbox">
+                                    <label for="checkbox22">M1 (Keyboard)</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="checkbox">
+                                    <input id="checkbox2" type="checkbox">
+                                    <label for="checkbox2">Step 2</label>
+                                </div>
+                            </div>
+                            <div class="form-group ml">
+                                <div class="checkbox">
+                                    <input id="checkbox31" type="checkbox">
+                                    <label for="checkbox31">M1 (Ribbon)</label>
+                                </div>
+                            </div>
+                            <div class="form-group ml">
+                                <div class="checkbox">
+                                    <input id="checkbox32" type="checkbox">
+                                    <label for="checkbox32">M1 (Keyboard)</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="checkbox">
+                                    <input id="checkbox3" type="checkbox">
+                                    <label for="checkbox3">Step 3</label>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="pull-right">
+                    <button (click)="runPreview()" class="btn btn-dark mr-1">Go</button>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="modal-footer">
-         <div class="pull-right">
-          <button (click)="runPreview()" class="btn btn-dark mr-1">
-            Run
-          </button>
-			  </div>
-      </div>
     </div>
-  </div>  
 </div>
