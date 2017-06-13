@@ -35,9 +35,41 @@ export class PreviewModalComponent implements OnInit {
 
   }
 
+  getTaskData(taskID, stepIndex, templateID, stepText) {
+    this.taskInfo["taskID"] = taskID;
+    this.taskInfo["stepIndex"] = stepIndex;
+    this.taskInfo["devTemplateID"] = templateID;
+    this.taskInfo["stepText"] = stepText;
+
+    //If check to stop server calls on every click of preview button
+    this.taskInfo["testTemplateID"] = "Dummy" //To be removed
+    if (!this.taskInfo["testTemplateID"]) {
+
+      //Fetch test template ID
+      this.previewService.getTestTemplateID(this.taskInfo["devTemplateID"])
+        .subscribe(testTemplateID => {
+          this.taskInfo["testTemplateID"] = testTemplateID;
+
+          //Fetch All Test Methods
+          this.previewService.getTestMethods(this.taskInfo["testTemplateID"])
+            .subscribe(methodsObj => {
+              for (let obj of methodsObj.methods) {
+                this.testMethods.push(`M${obj.index + 1} - ${obj.type}`)
+              }
+            });
+
+          //Show Modal Dialog
+          this.PreviewModalDialog.show();
+        });
+    }
+    else {
+      this.PreviewModalDialog.show();
+    }
+  }
+
   runPreview() {
     if (this.launchScenario === "preview") {
-      this.previewTask(data => {
+      this._previewTask(data => {
         if (data["Url"]) {
           this.previewWindow = this.previewService.launchStepPreviewWindow(data["Url"]);
           this.LoaderService.setLoaderVisibility(false);
@@ -71,7 +103,7 @@ export class PreviewModalComponent implements OnInit {
       //Run Config
 
       //Launch Automation Test
-      this.previewTask(data => {
+      this._previewTask(data => {
         this.previewService.startAutomationTest(this.testConfig);
         this.LoaderService.setLoaderVisibility(false);
       })
@@ -80,36 +112,8 @@ export class PreviewModalComponent implements OnInit {
     this.PreviewModalDialog.hide();
   }
 
-  getTaskData(taskID, stepIndex, templateID, stepText) {
-    this.taskInfo["taskID"] = taskID;
-    this.taskInfo["stepIndex"] = stepIndex;
-    this.taskInfo["devTemplateID"] = templateID;
-    this.taskInfo["stepText"] = stepText;
-
-    //Fetch test template ID
-    // this.previewService.getTestTemplateID(this.taskInfo["devTemplateID"])
-    //   .subscribe(testTemplateID => {
-    //     this.taskInfo["testTemplateID"] = testTemplateID;
-    //     //Fetch All Test Methods
-    //     this.previewService.getTestMethods(this.taskInfo["testTemplateID"])
-    //       .subscribe(methodsObj => {
-    //         for (let obj of methodsObj.methods) {
-    //           this.testMethods.push(`M${obj.index + 1} - ${obj.type}`)
-    //         }
-    //       });
-
-    //     //Show Modal Dialog
-    //     this.PreviewModalDialog.show();
-    //   });
-
-      //TO BE REMOVED
-      this.PreviewModalDialog.show();
-
-
-  }
-
-  previewTask(callback) {
-    this.previewService.previewTask(this.taskInfo["taskID"], this.taskInfo["stepIndex"], this.taskInfo["templateID"], this.taskInfo["stepText"])
+  private _previewTask(callback) {
+    this.previewService.previewTask(this.taskInfo["taskID"], this.taskInfo["stepIndex"], this.taskInfo["devTemplateID"], this.taskInfo["stepText"])
       .subscribe(response => {
         let data = response.json();
         callback(data);

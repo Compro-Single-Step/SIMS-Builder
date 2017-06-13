@@ -4,6 +4,7 @@ import { URLSearchParams } from '@angular/http';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/throw';
+import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/map';
 
 @Injectable()
