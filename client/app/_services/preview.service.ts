@@ -11,7 +11,7 @@ export class PreviewService {
   res;
   constructor(private http: HttpClient) { }
 
-  launchStepPreviewWindow(taskId: string, stepId: string, templateId: string, stepText: string) {
+  previewTask(taskId: string, stepId: string, templateId: string, stepText: string) {
     let previewparams = new URLSearchParams();
     previewparams.set('taskId', taskId);
     previewparams.set('stepNo', stepId);
@@ -25,6 +25,28 @@ export class PreviewService {
           return Observable.throw(this.res["error"]);
         }
       })
+  }
+
+  getTestMethods(templateId: string){
+    return this.http.get(`/api/skilltest/templates/${templateId}/methods`)
+      .switchMap(methods => 
+        methods.json()
+      )
+  }
+
+  // getTestTemplateID(devTemplateID: string){
+  //   return this.http.get(`/api/skilltest/templates/linkages?id=${devTemplateID}`)
+  //     .switchMap(templateID => 
+  //       templateID.json()
+  //     )
+  // }
+
+  launchStepPreviewWindow(url: string){
+    window.open(url, '_blank', 'location=yes,scrollbars=yes,status=yes')
+  }
+
+  startAutomationTest(config: Object){
+
   }
 }
 

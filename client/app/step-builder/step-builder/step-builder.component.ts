@@ -5,7 +5,6 @@ import { EventService } from '../shared/event.service';
 import { UIConfig } from '../../shared/UIConfig.model';
 import { skillManager } from '../shared/skill-manager.service';
 import { BuilderModelObj } from '../shared/builder-model.service';
-import { PreviewService } from '../../_services/preview.service';
 import { IntervalObservable } from 'rxjs/observable/IntervalObservable';
 import { TaskDataService } from '../../_services/taskData.service';
 import { ExceptionHandlerService } from '../../shared/exception-handler.service';
@@ -36,8 +35,9 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
     eventSrvc: Object;
     previewWindow: any;
     @ViewChild('stepTextContainer') stepTextContainer;
+    @ViewChild('modalDialog') modalDialog;
 
-    constructor(el: ElementRef, private route: ActivatedRoute, private router: Router, private bds: BuilderDataService, private previewService: PreviewService, private tds: TaskDataService, private exceptionHandlerSrvc: ExceptionHandlerService, private cdRef:ChangeDetectorRef,private LoaderService:LoaderService) {
+    constructor(el: ElementRef, private route: ActivatedRoute, private router: Router, private bds: BuilderDataService, private tds: TaskDataService, private exceptionHandlerSrvc: ExceptionHandlerService, private cdRef:ChangeDetectorRef,private LoaderService:LoaderService) {
         this.$el = jQuery(el.nativeElement);
         this.uiConfig = new UIConfig();
         this.selectedView = 1;
@@ -172,16 +172,16 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
             if (JSON.stringify(value) === JSON.stringify(itemDataModel)) {
                 self.exceptionHandlerSrvc.globalConsole("same Model: Do Nothing");
                 if (callBack) {
-                    callBack.apply(CallBackOwner || this, callBackArgs)
-                        .subscribe((res) => {
-                            self.launchPreview(res, self);
-                        },
-                        (error) => {                            
-                            self.LoaderService.setLoaderVisibility(false);
-                            error = error.json();
-                            self.displayErrorMessage("Error occurred in Step preview : Please check your inputs");
-                        }
-                        );
+                    // callBack.apply(CallBackOwner || this, callBackArgs)
+                    //     .subscribe((res) => {
+                    //         self.launchPreview(res, self);
+                    //     },
+                    //     (error) => {                            
+                    //         self.LoaderService.setLoaderVisibility(false);
+                    //         error = error.json();
+                    //         self.displayErrorMessage("Error occurred in Step preview : Please check your inputs");
+                    //     }
+                    //     );
                 }
             } else {
                 self.exceptionHandlerSrvc.globalConsole("Different Model: Update LocalStorage and Send to Sever");
@@ -191,16 +191,16 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
                             //TODO: Notify user of the draft save
                             self.exceptionHandlerSrvc.globalConsole("Model Data Sent to Server");
                             if(callBack){
-                                callBack.apply(CallBackOwner || this, callBackArgs)
-                                .subscribe((res) => {
-                                    self.launchPreview(res, self);
-                        },
-                        (error) => {
-                            self.LoaderService.setLoaderVisibility(false);
-                            error = error.json();
-                            self.displayErrorMessage("Error occurred in Step preview : Please check your inputs");
-                        }
-                        );
+                        //         callBack.apply(CallBackOwner || this, callBackArgs)
+                        //         .subscribe((res) => {
+                        //             self.launchPreview(res, self);
+                        // },
+                        // (error) => {
+                        //     self.LoaderService.setLoaderVisibility(false);
+                        //     error = error.json();
+                        //     self.displayErrorMessage("Error occurred in Step preview : Please check your inputs");
+                        // }
+                        // );
                             }
                         } else if (data["status"] === "error") {
                             //TODO: Try saving on server again
@@ -217,13 +217,13 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
         });
     }
 
-    launchPreview(res, currRef){
-        let data = res.json();
-        if (data["Url"]) {
-            currRef.LoaderService.setLoaderVisibility(false);
-            currRef.previewWindow = window.open(data["Url"], '_blank', 'location=yes,scrollbars=yes,status=yes');
-        }
-    }
+    // launchPreview(res, currRef){
+    //     let data = res.json();
+    //     if (data["Url"]) {
+    //         currRef.LoaderService.setLoaderVisibility(false);
+    //         currRef.previewWindow = window.open(data["Url"], '_blank', 'location=yes,scrollbars=yes,status=yes');
+    //     }
+    // }
 
     setSelectedView(viewNumber) {
         this.selectedView = viewNumber;
@@ -238,10 +238,14 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
         this.closeStepbuilder();
     }
 
-    lauchPreviewTask() {
-        let callBackArgs = [this.taskID, this.stepIndex, this.templateID, this.stepTextContainer.nativeElement.textContent];
-        this.checkForModelChange(this.previewService.launchStepPreviewWindow, this.previewService, callBackArgs);
+    previewTask() {
+        let callBackArgs = {"taskID": this.taskID, "stepIndex": this.stepIndex, "templateID": this.templateID, "stepText": this.stepTextContainer.nativeElement.textContent};
+        this.modalDialog.getTaskData(callBackArgs);
+        this.checkForModelChange();
+        
+        // this.checkForModelChange(this.previewService.previewTask, this.previewService, callBackArgs);
     }
+
     onFinish() {
         this.closeStepbuilder();
     }
@@ -262,6 +266,4 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
 			hideAfter: 5
 		});
 	}
-
-
 }

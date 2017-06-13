@@ -1,0 +1,35 @@
+<div bsModal #previewModalDialog="bs-modal" id="previewModalDialog" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button (click)="PreviewModalDialog.hide()" aria-label="Close" class="close" type="button">
+          <span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title text-xs-center fw-bold mt" id="myModalLabel18">Select the Template</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <div class="sim-radio">
+            <input type="radio" name="radioElement" checked="true" value="preview" [(ngModel)]="launchScenario">
+            <label for="radioElement">
+              Preview
+            </label>
+          </div>
+          <div class="sim-radio">
+            <input type="radio" name="radioElement" value="test" [(ngModel)]="launchScenario">
+            <label for="radioElement">
+              Test
+            </label>
+          </div>	
+        </div>
+      </div>
+      <div class="modal-footer">
+         <div class="pull-right">
+          <button (click)="runPreview()" class="btn btn-dark mr-1">
+            Run
+          </button>
+			  </div>
+      </div>
+    </div>
+  </div>  
+</div>
