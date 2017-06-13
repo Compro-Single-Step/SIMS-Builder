@@ -4,7 +4,7 @@ import { URLSearchParams } from '@angular/http';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/throw';
-import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/map';
 
 @Injectable()
 export class PreviewService {
@@ -19,7 +19,7 @@ export class PreviewService {
       .switchMap((res) => {
         this.res = res.json();
         if (this.res.status == "success") {
-          return this.http.get("/api/taskPreview", { search: previewparams });
+          return this.http.get("/api/taskPreview", { search: previewparams }, true);
         }
         else {
           return Observable.throw(this.res["error"]);
@@ -27,19 +27,20 @@ export class PreviewService {
       })
   }
 
-  getTestMethods(templateId: string){
-    return this.http.get(`/api/skilltest/templates/${templateId}/methods`)
-      .switchMap(methods => 
+  getTestMethods(testTemplateId: string){
+    return this.http.get(`/api/skilltest/templates/${testTemplateId}/methods`, null, true)
+      .map(methods => 
         methods.json()
       )
   }
 
-  // getTestTemplateID(devTemplateID: string){
-  //   return this.http.get(`/api/skilltest/templates/linkages?id=${devTemplateID}`)
-  //     .switchMap(templateID => 
-  //       templateID.json()
-  //     )
-  // }
+  getTestTemplateID(devTemplateID: string){
+    return this.http.get(`/api/skilltest/templates/linkages?id=${devTemplateID}`, null, true)
+      .map(templateID => {
+        //templateID.json()
+        return templateID._body;
+      })
+  }
 
   launchStepPreviewWindow(url: string){
     window.open(url, '_blank', 'location=yes,scrollbars=yes,status=yes')

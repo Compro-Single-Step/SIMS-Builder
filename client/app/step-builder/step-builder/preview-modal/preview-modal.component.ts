@@ -25,6 +25,7 @@ export class PreviewModalComponent implements OnInit {
 
   constructor(private previewService: PreviewService, private LoaderService: LoaderService) {
     this.taskInfo = {};
+    this.testMethods = [];
     this.testConfig = { "script": {}, "run": {} };
     this.launchScenario = "preview";
     this.builderModelSrvc = BuilderModelObj;
@@ -32,26 +33,21 @@ export class PreviewModalComponent implements OnInit {
 
   ngOnInit() {
 
-    //Fetch All Test Methods
-    // this.previewService.getTestMethods(this.taskInfo["templateID"])
-    //   .subscribe(methods => {
-    //     this.testMethods = methods;
-    //   });
   }
 
   runPreview() {
     if (this.launchScenario === "preview") {
-      this.previewTask(data =>{
+      this.previewTask(data => {
         if (data["Url"]) {
-            this.LoaderService.setLoaderVisibility(false);
-            this.previewWindow = this.previewService.launchStepPreviewWindow(data["Url"]);
-          }
+          this.previewWindow = this.previewService.launchStepPreviewWindow(data["Url"]);
+          this.LoaderService.setLoaderVisibility(false);
+        }
       })
     }
     else {
       //Calculate Task Scenerio
       this.testConfig["script"] = {
-        dev_template_id: this.taskInfo["templateID"],
+        test_template_id: this.taskInfo["testTemplateID"],
         step_number: this.taskInfo["stepIndex"],
         task_id: this.taskInfo["taskID"]
       }
@@ -59,9 +55,9 @@ export class PreviewModalComponent implements OnInit {
       //Calculate params
       let testParams = this.builderModelSrvc.getState()["testParams"];
       this.testConfig["script"]["params"] = {};
-      
-      for(let key in testParams){
-        if(typeof testParams[key] === "object" && testParams[key] !== null){
+
+      for (let key in testParams) {
+        if (typeof testParams[key] === "object" && testParams[key] !== null) {
           let func = testParams[key]["function-name"];
           let params = testParams[key]["params"];
           this.testConfig["script"]["params"][key] = skillManager.skillTranslator[func](params);
@@ -75,35 +71,54 @@ export class PreviewModalComponent implements OnInit {
       //Run Config
 
       //Launch Automation Test
-      this.previewTask(data =>{
-        this.LoaderService.setLoaderVisibility(false);
+      this.previewTask(data => {
         this.previewService.startAutomationTest(this.testConfig);
+        this.LoaderService.setLoaderVisibility(false);
       })
     }
 
     this.PreviewModalDialog.hide();
   }
 
-  getTaskData(taskData) {
-    this.taskInfo["taskID"] = taskData.taskID;
-    this.taskInfo["stepIndex"] = taskData.stepIndex;
-    this.taskInfo["templateID"] = taskData.templateID;
-    this.taskInfo["stepText"] = taskData.stepText;
+  getTaskData(taskID, stepIndex, templateID, stepText) {
+    this.taskInfo["taskID"] = taskID;
+    this.taskInfo["stepIndex"] = stepIndex;
+    this.taskInfo["devTemplateID"] = templateID;
+    this.taskInfo["stepText"] = stepText;
 
-    this.PreviewModalDialog.show();
+    //Fetch test template ID
+    // this.previewService.getTestTemplateID(this.taskInfo["devTemplateID"])
+    //   .subscribe(testTemplateID => {
+    //     this.taskInfo["testTemplateID"] = testTemplateID;
+    //     //Fetch All Test Methods
+    //     this.previewService.getTestMethods(this.taskInfo["testTemplateID"])
+    //       .subscribe(methodsObj => {
+    //         for (let obj of methodsObj.methods) {
+    //           this.testMethods.push(`M${obj.index + 1} - ${obj.type}`)
+    //         }
+    //       });
+
+    //     //Show Modal Dialog
+    //     this.PreviewModalDialog.show();
+    //   });
+
+      //TO BE REMOVED
+      this.PreviewModalDialog.show();
+
+
   }
 
-  previewTask(callback){
+  previewTask(callback) {
     this.previewService.previewTask(this.taskInfo["taskID"], this.taskInfo["stepIndex"], this.taskInfo["templateID"], this.taskInfo["stepText"])
-        .subscribe(response => {
-          let data = response.json();
-          callback(data);
-        },
-          error => {
-          this.LoaderService.setLoaderVisibility(false);
-          error = error.json();
-          console.error("Error occurred in Step preview, please check your inputs. Error: ", error);
-        });
+      .subscribe(response => {
+        let data = response.json();
+        callback(data);
+      },
+      error => {
+        this.LoaderService.setLoaderVisibility(false);
+        error = error.json();
+        console.error("Error occurred in Step preview, please check your inputs. Error: ", error);
+      });
   }
 
 }
