@@ -223,7 +223,7 @@ stage1SelectedItems(inputJson, crosstabInputArray) {
             // if (key == 'Tables') {
 
             for (let i = 0; i < inputJson[key].length; i++) {
-                crosstabInputArray.push({ "label": inputJson[key][i].table_name, "data": { 'category': key, 'table_fields': inputJson[key][i].table_fields, 'table_name': inputJson[key][i].table_name } });
+                crosstabInputArray.push({"label": (key + ': ' + inputJson[key][i].table_name), "data": { 'category': key, 'table_fields': inputJson[key][i].table_fields, 'table_name': inputJson[key][i].table_name } });
             }
             console.log(crosstabInputArray);
             //}
