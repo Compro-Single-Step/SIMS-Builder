@@ -79,6 +79,9 @@ export class PreviewModalComponent implements OnInit {
                 "brversion": 1,
             }
 
+            this.updateOSList();
+            this.updateBrowserList();
+
             this.PreviewModalDialog.show() //TO BE REMOVED
         }
         else {
@@ -132,7 +135,7 @@ export class PreviewModalComponent implements OnInit {
     }
 
     updateOSList(){
-        this.renderingConfig["os"] = initialTestConfig["options"]["os"][this.bindedValues["env"]];
+        this.renderingConfig["os"] = initialTestConfig["options"]["os"][this.bindedValues["environment"]];
     }
 
     updateBrowserList(){
