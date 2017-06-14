@@ -57,13 +57,13 @@
                                     <input type="number" min="1" name="brversion" [(ngModel)]="bindedValues.brversion" class="form-control" placeholder="Ver.">
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" *ngIf="bindedValues.environment === 'saucelabs'">
                                 <label class="col-sm-4 control-label" for="resolution">Resolution</label>
                                 <div class="col-sm-6">
                                     <input class="form-control" type="text" [(ngModel)]="bindedValues.screenresolution" name="screenresolution" />
                                 </div>
                             </div>
-                            <div class="form-group" *ngIf="bindedValues.env === 'hub'">
+                            <div class="form-group" *ngIf="bindedValues.environment === 'hub'">
                                 <label class="col-sm-4 control-label" for="resolution">Client</label>
                                 <div class="col-sm-6">
                                     <input class="form-control" type="text" [(ngModel)]="bindedValues.client" name="client" />
