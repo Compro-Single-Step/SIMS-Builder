@@ -31,7 +31,7 @@
                                     <label class="col-sm-4 control-label" for="test-environment">Test Env</label>
                                     <div class="col-sm-6">
                                         <select class="form-control" [(ngModel)]="bindedValues.env" name="environment" (change)="updateOSList()">
-                                            <option *ngFor="let testEnv of renderingConfig.environment" [value]="testEnv.key">{{testEnv.label}}</option>
+                                            <option *ngFor="let testEnv of renderingConfig.environment; let idx=index;" [selected]="idx===0" [value]="testEnv.key">{{testEnv.label}}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -41,7 +41,7 @@
                                     <label class="col-sm-4 control-label" for="operating-system">OS</label>
                                     <div class="col-sm-6">
                                         <select class="form-control" [(ngModel)]="bindedValues.os" name="operatingSystem" (change)="updateBrowserList()">
-                                            <option *ngFor="let operatingSystem of renderingConfig.os" [value]="operatingSystem.key">{{operatingSystem.label}}</option>
+                                            <option *ngFor="let operatingSystem of renderingConfig.os; let idx=index;" [selected]="idx===0" [value]="operatingSystem.key">{{operatingSystem.label}}</option>
                                     </select>
                                     </div>
                                 </div>
@@ -50,7 +50,7 @@
                                 <label class="col-sm-4 control-label" for="browser">Browser</label>
                                 <div class="col-sm-6">
                                     <select class="form-control" [(ngModel)]="bindedValues.browser" name="browser">
-                                        <option *ngFor="let browser of renderingConfig.browser" [value]="browser.key">{{browser.label}}</option>
+                                        <option *ngFor="let browser of renderingConfig.browser; let idx=index;" [selected]="idx===0" [value]="browser.key">{{browser.label}}</option>
                                     </select>
                                 </div>
                                 <div class="col-sm-2 pl-0">
@@ -60,9 +60,13 @@
                             <div class="form-group">
                                 <label class="col-sm-4 control-label" for="resolution">Resolution</label>
                                 <div class="col-sm-6">
-                                    <select class="form-control" name="screenresolution" [(ngModel)]="bindedValues.screenresolution">
-                                        <option *ngFor="let screenresolution of renderingConfig.screenresolution" [value]="screenresolution.key">{{screenresolution.label}}</option>
-                                    </select>
+                                    <input class="form-control" type="text" [(ngModel)]="bindedValues.screenresolution" name="screenresolution" />
+                                </div>
+                            </div>
+                            <div class="form-group" *ngIf="bindedValues.env === 'hub'">
+                                <label class="col-sm-4 control-label" for="resolution">Client</label>
+                                <div class="col-sm-6">
+                                    <input class="form-control" type="text" [(ngModel)]="bindedValues.client" name="client" />
                                 </div>
                             </div>
                         </fieldset>

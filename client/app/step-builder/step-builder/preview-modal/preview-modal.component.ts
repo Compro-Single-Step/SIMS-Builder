@@ -71,10 +71,11 @@ export class PreviewModalComponent implements OnInit {
 
             //Fill Default values
             this.bindedValues = {
+                "launchScenario": "preview",
                 "environment": initialTestConfig["defaults"]["environment"],
                 "browser": initialTestConfig["defaults"]["browser"],
                 "os": initialTestConfig["defaults"]["os"],
-                "screenresolution": initialTestConfig["defaults"]["screenresolution"],
+                "screenresolution": "1200X900",
                 "brversion": 1,
             }
 
