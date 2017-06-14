@@ -14,25 +14,25 @@
                         <legend>Select an Action:</legend>
                         <div class="form-group">
                             <div class="radio">
-                                <input type="radio" name="radioElement" checked="true" id="radio1" value="preview" [(ngModel)]="launchScenario">
+                                <input type="radio" name="radioElement" checked="true" id="radio1" value="preview" [(ngModel)]="bindedValues.launchScenario">
                                 <label for="radio1">Preview</label>
                             </div>
                             <div class="radio">
-                                <input type="radio" name="radioElement" id="radio2" value="test" [(ngModel)]="launchScenario">
+                                <input type="radio" name="radioElement" id="radio2" value="test" [(ngModel)]="bindedValues.launchScenario">
                                 <label for="radio2">Test</label>
                             </div>
                         </div>
                     </fieldset>
-                    <div *ngIf="launchScenario === 'test'">
+                    <div *ngIf="bindedValues.launchScenario === 'test'">
                         <fieldset>
                             <legend>Test Configuration</legend>
                             <div class="form-group">
                                 <div>
                                     <label class="col-sm-4 control-label" for="test-environment">Test Env</label>
                                     <div class="col-sm-6">
-                                        <select class="form-control" tabindex="-1" id="test-environment">
-                                        <option value="Magellanic">Saucelabs</option>
-                                    </select>
+                                        <select class="form-control" [(ngModel)]="bindedValues.env" name="environment" (change)="updateOSList()">
+                                            <option *ngFor="let testEnv of renderingConfig.environment" [value]="testEnv.key">{{testEnv.label}}</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -40,8 +40,8 @@
                                 <div>
                                     <label class="col-sm-4 control-label" for="operating-system">OS</label>
                                     <div class="col-sm-6">
-                                        <select class="form-control" tabindex="-1" id="operating-system">
-                                        <option value="Magellanic">Windows 8.1</option>
+                                        <select class="form-control" [(ngModel)]="bindedValues.os" name="operatingSystem" (change)="updateBrowserList()">
+                                            <option *ngFor="let operatingSystem of renderingConfig.os" [value]="operatingSystem.key">{{operatingSystem.label}}</option>
                                     </select>
                                     </div>
                                 </div>
@@ -49,20 +49,19 @@
                             <div class="form-group">
                                 <label class="col-sm-4 control-label" for="browser">Browser</label>
                                 <div class="col-sm-6">
-                                    <select class="form-control" tabindex="-1" id="browser">
-                                        <option value="Magellanic">Chrome</option>
+                                    <select class="form-control" [(ngModel)]="bindedValues.browser" name="browser">
+                                        <option *ngFor="let browser of renderingConfig.browser" [value]="browser.key">{{browser.label}}</option>
                                     </select>
                                 </div>
                                 <div class="col-sm-2 pl-0">
-                                    <input type="number" min="1" id="normal-field" class="form-control" placeholder="Ver.">
+                                    <input type="number" min="1" name="brversion" [(ngModel)]="bindedValues.brversion" class="form-control" placeholder="Ver.">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-4 control-label" for="resolution">Resolution</label>
                                 <div class="col-sm-6">
-                                    <select class="form-control" tabindex="-1" id="resolution">
-                                        <option value="Magellanic">1200X900</option>
-                                        <option value="Magellanic">1080X768</option>
+                                    <select class="form-control" name="screenresolution" [(ngModel)]="bindedValues.screenresolution">
+                                        <option *ngFor="let screenresolution of renderingConfig.screenresolution" [value]="screenresolution.key">{{screenresolution.label}}</option>
                                     </select>
                                 </div>
                             </div>

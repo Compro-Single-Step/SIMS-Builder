@@ -5,6 +5,7 @@ import { PreviewService } from '../../../_services/preview.service';
 import { LoaderService } from '../../../_services/loader.service';
 import { BuilderModelObj } from '../../shared/builder-model.service';
 import { skillManager } from '../../shared/skill-manager.service';
+import { initialTestConfig } from './test-config';
 
 
 @Component({
@@ -18,7 +19,9 @@ export class PreviewModalComponent implements OnInit {
 
     taskInfo: Object;
     testMethods: Array<string>;
-    testConfig: Object;
+    finalTestConfig: Object;
+    renderingConfig: Object;
+    bindedValues: Object;
     launchScenario: string;
     previewWindow;
     builderModelSrvc;
@@ -26,13 +29,15 @@ export class PreviewModalComponent implements OnInit {
     constructor(private previewService: PreviewService, private LoaderService: LoaderService) {
         this.taskInfo = {};
         this.testMethods = [];
-        this.testConfig = { "script": {}, "run": {} };
-        this.launchScenario = "preview";
+        this.renderingConfig = {
+            "environment": []
+        };
+        this.bindedValues = {};
+        this.finalTestConfig = { "script": {}, "run": {} };
         this.builderModelSrvc = BuilderModelObj;
     }
 
     ngOnInit() {
-
     }
 
     getTaskData(taskID, stepIndex, templateID, stepText) {
@@ -42,25 +47,38 @@ export class PreviewModalComponent implements OnInit {
         this.taskInfo["stepText"] = stepText;
 
         //If check to stop server calls on every click of preview button
-        this.taskInfo["testTemplateID"] = "Dummy" //To be removed
         if (!this.taskInfo["testTemplateID"]) {
-
             //Fetch test template ID
-            this.previewService.getTestTemplateID(this.taskInfo["devTemplateID"])
-                .subscribe(testTemplateID => {
-                    this.taskInfo["testTemplateID"] = testTemplateID;
+            // this.previewService.getTestTemplateID(this.taskInfo["devTemplateID"])
+            //     .subscribe(testTemplateID => {
+            //         this.taskInfo["testTemplateID"] = testTemplateID;
 
-                    //Fetch All Test Methods
-                    this.previewService.getTestMethods(this.taskInfo["testTemplateID"])
-                        .subscribe(methodsObj => {
-                            for (let obj of methodsObj.methods) {
-                                this.testMethods.push(`M${obj.index + 1} - ${obj.type}`)
-                            }
-                        });
+            //         //Fetch All Test Methods
+            //         this.previewService.getTestMethods(this.taskInfo["testTemplateID"])
+            //             .subscribe(methodsObj => {
+            //                 for (let obj of methodsObj.methods) {
+            //                     this.testMethods.push(`M${obj.index + 1} - ${obj.type}`)
+            //                 }
+            //             });
 
-                    //Show Modal Dialog
-                    this.PreviewModalDialog.show();
-                });
+            //         //Show Modal Dialog
+            //         this.PreviewModalDialog.show();
+            //     });
+
+            //Fetch Test Template Configuration
+            //...TO DO...
+            this.renderingConfig["environment"] = initialTestConfig["options"]["environment"];
+
+            //Fill Default values
+            this.bindedValues = {
+                "environment": initialTestConfig["defaults"]["environment"],
+                "browser": initialTestConfig["defaults"]["browser"],
+                "os": initialTestConfig["defaults"]["os"],
+                "screenresolution": initialTestConfig["defaults"]["screenresolution"],
+                "brversion": 1,
+            }
+
+            this.PreviewModalDialog.show() //TO BE REMOVED
         }
         else {
             this.PreviewModalDialog.show();
@@ -78,7 +96,7 @@ export class PreviewModalComponent implements OnInit {
         }
         else {
             //Calculate Task Scenerio
-            this.testConfig["script"] = {
+            this.finalTestConfig["script"] = {
                 test_template_id: this.taskInfo["testTemplateID"],
                 step_number: this.taskInfo["stepIndex"],
                 task_id: this.taskInfo["taskID"]
@@ -86,16 +104,16 @@ export class PreviewModalComponent implements OnInit {
 
             //Calculate params
             let testParams = this.builderModelSrvc.getState()["testParams"];
-            this.testConfig["script"]["params"] = {};
+            this.finalTestConfig["script"]["params"] = {};
 
             for (let key in testParams) {
                 if (typeof testParams[key] === "object" && testParams[key] !== null) {
                     let func = testParams[key]["function-name"];
                     let params = testParams[key]["params"];
-                    this.testConfig["script"]["params"][key] = skillManager.skillTranslator[func](params);
+                    this.finalTestConfig["script"]["params"][key] = skillManager.skillTranslator[func](params);
                 }
                 else
-                    this.testConfig["script"]["params"][key] = testParams[key];
+                    this.finalTestConfig["script"]["params"][key] = testParams[key];
             }
 
             //Test Methods
@@ -104,12 +122,20 @@ export class PreviewModalComponent implements OnInit {
 
             //Launch Automation Test
             this._previewTask(data => {
-                this.previewService.startAutomationTest(this.testConfig);
+                this.previewService.startAutomationTest(this.finalTestConfig);
                 this.LoaderService.setLoaderVisibility(false);
             })
         }
 
         this.PreviewModalDialog.hide();
+    }
+
+    updateOSList(){
+        this.renderingConfig["os"] = initialTestConfig["options"]["os"][this.bindedValues["env"]];
+    }
+
+    updateBrowserList(){
+        this.renderingConfig["browser"] = initialTestConfig["options"]["browser"][this.bindedValues["os"]];
     }
 
     private _previewTask(callback) {
