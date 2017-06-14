@@ -218,16 +218,16 @@ class SkillTest {
           run_request_body.task.java = converterService.jsonToDistJava(script);
           run_request_body.task.json = script;
 
-          return locatorService.getApplicationLocators(run_request_body.task.appType);
+          return locatorService.getApplicationLocators(run_request_body.task.appName);
         })
         .then((locators) => {
 
           // create locators array
 
           var _xpaths = [];
-          if (locators.data.length){
-            for(var i in locators.data) {
-              var _temp = (locators.data[i].xpath.key.trim()) + ' = ' + (locators.data[i].xpath.value.trim());
+          if (locators.length){
+            for(var i in locators) {
+              var _temp = (locators[i].xpath.key.trim()) + ' = ' + (locators[i].xpath.value.trim());
               _xpaths.push(_temp)
             }
           }
