@@ -6,7 +6,7 @@ class MapperService {
   getMapperByTemplateId(templateId, appType) {
 
     return new Promise((resolve, reject) => {
-      let query = {};
+      let query = [];
       if (config.apps.isValid(appType)) {
         query.push({app : appType.toLowerCase()})
       };
