@@ -36,7 +36,7 @@
           "initial": {
             "default-attrs": {
               "PROJECT_JSON": {
-                "function-name": "extractAttrPath",
+                "function-name": "extractAttrPathForProjectJson",
                 "params": {
                   "projJsonPath":"views['1'].navigationPane.path"
                 }

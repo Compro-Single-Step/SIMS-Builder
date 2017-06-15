@@ -26,6 +26,27 @@ class createcrosstabquery extends AccessBaseSkill {
          
     }
 
+//separated this function from base skill as this is a mandatory attribute for launching a task. If path is not present, then it should reject the promise instead of resolving it in the else condition
+    extractAttrPathForProjectJson(skillParams) {
+        var taskParams = skillParams.taskParams;
+        var paramValueObj = skillParams.paramsObj;
+        if (paramValueObj[Object.keys(paramValueObj)[0]] != "") {
+            return taskParams.dbFilestoreMgr.copyTaskAssetFile(paramValueObj[Object.keys(paramValueObj)[0]], taskParams)
+                .then(function (resolveParam) {
+                    var preloadResArr = [];
+                    preloadResArr.push({ "path": "" + resolveParam.filePath, "type": resolveParam.fileType });
+                    var resolveParams = { "attrValue": resolveParam.filePath, "preloadResArr": preloadResArr };
+                    return Promise.resolve(resolveParams);
+                }, function (error) {
+                    return Promise.reject(error);
+                });
+        }
+        else {
+            var resolveParams = { "attrValue": "" };
+            return Promise.reject(resolveParams);
+        }
+    }
+
     getCrossTabJsonInput(skillParams) {
         let paramValueObj = skillParams.paramsObj;
         let taskParams = skillParams.taskParams;
