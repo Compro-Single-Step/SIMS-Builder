@@ -88,7 +88,7 @@
               "STAGE1_SEL_ITEM": {
                 "function-name": "extractSingleParamVal",
                 "params": {
-                   "selSrc" :"views[2].stage1SelectItems.selectedOption.value.label"
+                   "selSrc" :"views[2].stage1SelectItems.selectedOption.value.data.table_name"
                 }
               }
             },
@@ -96,7 +96,7 @@
               "STAGE1_SEL_ITEM": {
                 "function-name": "extractSingleParamVal",
                 "params": {
-                  "selSrc" :"views[2].stage1SelectItems.selectedOption.value.label"
+                  "selSrc" :"views[2].stage1SelectItems.selectedOption.value.data.table_name"
                 }
               }
             },            
@@ -104,7 +104,7 @@
               "STAGE1_SEL_ITEM": {
                 "function-name": "extractSingleParamVal",
                 "params": {
-                  "selSrc" :"views[2].stage1SelectItems.selectedOption.value.label"
+                  "selSrc" :"views[2].stage1SelectItems.selectedOption.value.data.table_name"
                 }
               }
             },
