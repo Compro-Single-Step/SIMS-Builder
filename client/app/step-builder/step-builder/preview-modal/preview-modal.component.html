@@ -26,8 +26,8 @@
                     <div *ngIf="bindedValues.launchScenario === 'test'">
                         <fieldset>
                             <legend>Test Configuration</legend>
-                            <div class="form-group">
-                                <div>
+                            <div class="form-group mb-5">
+                                <div class="display-flex">
                                     <label class="col-sm-4 control-label" for="test-environment">Test Env</label>
                                     <div class="col-sm-6">
                                         <select class="form-control" [(ngModel)]="bindedValues.environment" name="environment" (change)="updateOSList()">
@@ -36,8 +36,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <div>
+                            <div class="form-group mb-5">
+                                <div class="display-flex">
                                     <label class="col-sm-4 control-label" for="operating-system">OS</label>
                                     <div class="col-sm-6">
                                         <select class="form-control" [(ngModel)]="bindedValues.os" name="operatingSystem" (change)="updateBrowserList()">
@@ -46,27 +46,33 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label" for="browser">Browser</label>
-                                <div class="col-sm-6">
-                                    <select class="form-control" [(ngModel)]="bindedValues.browser" name="browser">
+                            <div class="form-group mb-5">
+                                <div class="display-flex">
+                                    <label class="col-sm-4 control-label" for="browser">Browser</label>
+                                    <div class="col-sm-6">
+                                        <select class="form-control" [(ngModel)]="bindedValues.browser" name="browser">
                                         <option *ngFor="let browser of renderingConfig.browser" [value]="browser.key">{{browser.label}}</option>
                                     </select>
-                                </div>
-                                <div class="col-sm-2 pl-0">
-                                    <input type="number" min="1" name="brversion" [(ngModel)]="bindedValues.brversion" class="form-control" placeholder="Ver.">
-                                </div>
-                            </div>
-                            <div class="form-group" *ngIf="bindedValues.environment === 'saucelabs'">
-                                <label class="col-sm-4 control-label" for="resolution">Resolution</label>
-                                <div class="col-sm-6">
-                                    <input class="form-control" type="text" [(ngModel)]="bindedValues.screenresolution" name="screenresolution" />
+                                    </div>
+                                    <div class="col-sm-2 pl-0">
+                                        <input type="number" min="1" name="brversion" [(ngModel)]="bindedValues.brversion" class="form-control" placeholder="Ver.">
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-group" *ngIf="bindedValues.environment === 'hub'">
-                                <label class="col-sm-4 control-label" for="resolution">Client</label>
-                                <div class="col-sm-6">
-                                    <input class="form-control" type="text" [(ngModel)]="bindedValues.client" name="client" />
+                            <div class="form-group mb-5" *ngIf="bindedValues.environment === 'saucelabs'">
+                                <div class="display-flex">
+                                    <label class="col-sm-4 control-label" for="resolution">Resolution</label>
+                                    <div class="col-sm-6">
+                                        <input class="form-control" type="text" [(ngModel)]="bindedValues.screenresolution" name="screenresolution" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group mb-5" *ngIf="bindedValues.environment === 'hub'">
+                                <div class="display-flex">
+                                    <label class="col-sm-4 control-label" for="resolution">Client</label>
+                                    <div class="col-sm-6">
+                                        <input class="form-control" type="text" [(ngModel)]="bindedValues.client" name="client" />
+                                    </div>
                                 </div>
                             </div>
                         </fieldset>
@@ -76,44 +82,14 @@
                             <div id="step-fields">
                                 <div class="form-group mb-0">
                                     <div class="checkbox">
-                                        <input id="checkbox1" type="checkbox">
-                                        <label for="checkbox1">Step 1</label>
+                                        <input id="step-checkbox{{taskInfo.stepIndex}}" type="checkbox">
+                                        <label for="step-checkbox{{taskInfo.stepIndex}}">Step {{taskInfo.stepIndex}}</label>
                                     </div>
                                 </div>
-                                <div class="form-group mb-0 pl-30">
+                                <div class="form-group mb-0 pl-30" *ngFor="let method of renderingConfig.methods">
                                     <div class="checkbox">
-                                        <input id="checkbox21" type="checkbox">
-                                        <label for="checkbox21">M1 (Ribbon)</label>
-                                    </div>
-                                </div>
-                                <div class="form-group mb-0 pl-30">
-                                    <div class="checkbox">
-                                        <input id="checkbox22" type="checkbox">
-                                        <label for="checkbox22">M1 (Keyboard)</label>
-                                    </div>
-                                </div>
-                                <div class="form-group mb-0">
-                                    <div class="checkbox">
-                                        <input id="checkbox2" type="checkbox">
-                                        <label for="checkbox2">Step 2</label>
-                                    </div>
-                                </div>
-                                <div class="form-group mb-0 pl-30">
-                                    <div class="checkbox">
-                                        <input id="checkbox31" type="checkbox">
-                                        <label for="checkbox31">M1 (Ribbon)</label>
-                                    </div>
-                                </div>
-                                <div class="form-group mb-0 pl-30">
-                                    <div class="checkbox">
-                                        <input id="checkbox32" type="checkbox">
-                                        <label for="checkbox32">M1 (Keyboard)</label>
-                                    </div>
-                                </div>
-                                <div class="form-group mb-0">
-                                    <div class="checkbox">
-                                        <input id="checkbox3" type="checkbox">
-                                        <label for="checkbox3">Step 3</label>
+                                        <input id="method-checkbox{{method.index}}" type="checkbox">
+                                        <label for="method-checkbox{{method.index}}">M{{method.index}} ({{method.type}})</label>
                                     </div>
                                 </div>
                             </div>

@@ -28,3 +28,31 @@ div#step-fields {
         background-color: $deepdark-blue;
     }
 }
+
+.modal-header {
+    background-color: $theme-blue;
+    color: $white;;
+}
+
+.modal-footer {
+    background-color: $lightgray;
+}
+
+.close {
+    font-size: 2.5rem;
+    opacity: 1;
+    color: $white;
+}
+
+legend {
+    border-bottom: 1px solid $theme-blue;
+    color: $theme-blue;
+}
+
+.display-flex{
+    display: flex;
+}
+
+.mb-5 {
+    margin-bottom: 5px;
+}

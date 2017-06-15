@@ -6,6 +6,7 @@ import { LoaderService } from '../../../_services/loader.service';
 import { BuilderModelObj } from '../../shared/builder-model.service';
 import { skillManager } from '../../shared/skill-manager.service';
 import { initialTestConfig } from './test-config';
+import { methodList } from './method';
 
 
 @Component({
@@ -38,6 +39,9 @@ export class PreviewModalComponent implements OnInit {
     }
 
     ngOnInit() {
+        // setInterval(()=> {
+        //     console.log(this.bindedValues["launchScenario"]);
+        // }, 1000);
     }
 
     getTaskData(taskID, stepIndex, templateID, stepText) {
@@ -50,24 +54,30 @@ export class PreviewModalComponent implements OnInit {
         if (!this.taskInfo["testTemplateID"]) {
             //Fetch test template ID
             // this.previewService.getTestTemplateID(this.taskInfo["devTemplateID"])
-            //     .subscribe(testTemplateID => {
+            //     .subscribe((testTemplateID) => {
             //         this.taskInfo["testTemplateID"] = testTemplateID;
 
             //         //Fetch All Test Methods
             //         this.previewService.getTestMethods(this.taskInfo["testTemplateID"])
             //             .subscribe(methodsObj => {
+
             //                 for (let obj of methodsObj.methods) {
-            //                     this.testMethods.push(`M${obj.index + 1} - ${obj.type}`)
+            //                     this.testMethods.push(`M${obj.index + 1} - ${obj.type}`);
             //                 }
             //             });
 
             //         //Show Modal Dialog
-            //         this.PreviewModalDialog.show();
+            //         //this.PreviewModalDialog.show();
             //     });
 
             //Fetch Test Template Configuration
             //...TO DO...
             this.renderingConfig["environment"] = initialTestConfig["options"]["environment"];
+            this.renderingConfig["methods"] = methodList["methods"];
+            this.renderingConfig["methods"].forEach((element) => {
+                element.index = parseInt(element.index) + 1;
+            });
+            this.taskInfo["testTemplateID"] = methodList["test_template_id"];
 
             //Fill Default values
             this.bindedValues = {
@@ -83,22 +93,20 @@ export class PreviewModalComponent implements OnInit {
             this.updateBrowserList();
 
             this.PreviewModalDialog.show() //TO BE REMOVED
-        }
-        else {
+        } else {
             this.PreviewModalDialog.show();
         }
     }
 
     runPreview() {
-        if (this.launchScenario === "preview") {
-            this._previewTask(data => {
+        if (this.bindedValues["launchScenario"] === "preview") {
+            this._previewTask((data) => {
                 if (data["Url"]) {
                     this.previewWindow = this.previewService.launchStepPreviewWindow(data["Url"]);
                     this.LoaderService.setLoaderVisibility(false);
                 }
-            })
-        }
-        else {
+            });
+        } else {
             //Calculate Task Scenerio
             this.finalTestConfig["script"] = {
                 test_template_id: this.taskInfo["testTemplateID"],
@@ -115,9 +123,9 @@ export class PreviewModalComponent implements OnInit {
                     let func = testParams[key]["function-name"];
                     let params = testParams[key]["params"];
                     this.finalTestConfig["script"]["params"][key] = skillManager.skillTranslator[func](params);
-                }
-                else
+                } else {
                     this.finalTestConfig["script"]["params"][key] = testParams[key];
+                }
             }
 
             //Test Methods
@@ -128,17 +136,17 @@ export class PreviewModalComponent implements OnInit {
             this._previewTask(data => {
                 this.previewService.startAutomationTest(this.finalTestConfig);
                 this.LoaderService.setLoaderVisibility(false);
-            })
+            });
         }
 
         this.PreviewModalDialog.hide();
     }
 
-    updateOSList(){
+    updateOSList() {
         this.renderingConfig["os"] = initialTestConfig["options"]["os"][this.bindedValues["environment"]];
     }
 
-    updateBrowserList(){
+    updateBrowserList() {
         this.renderingConfig["browser"] = initialTestConfig["options"]["browser"][this.bindedValues["os"]];
     }
 
@@ -154,5 +162,4 @@ export class PreviewModalComponent implements OnInit {
                 console.error("Error occurred in Step preview, please check your inputs. Error: ", error);
             });
     }
-
 }
