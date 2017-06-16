@@ -6,7 +6,7 @@ import { LoaderService } from '../../../_services/loader.service';
 import { BuilderModelObj } from '../../shared/builder-model.service';
 import { skillManager } from '../../shared/skill-manager.service';
 import { initialTestConfig } from './test-config';
-import { methodList } from './method';
+import { stepsData } from './task-steps';
 
 
 @Component({
@@ -26,6 +26,7 @@ export class PreviewModalComponent implements OnInit {
     launchScenario: string;
     previewWindow;
     builderModelSrvc;
+    methodCheckboxes: Object;
 
     constructor(private previewService: PreviewService, private LoaderService: LoaderService) {
         this.taskInfo = {};
@@ -36,6 +37,7 @@ export class PreviewModalComponent implements OnInit {
         this.bindedValues = {};
         this.finalTestConfig = { "script": {}, "run": {} };
         this.builderModelSrvc = BuilderModelObj;
+        this.methodCheckboxes = {};
     }
 
     ngOnInit() {
@@ -73,11 +75,30 @@ export class PreviewModalComponent implements OnInit {
             //Fetch Test Template Configuration
             //...TO DO...
             this.renderingConfig["environment"] = initialTestConfig["options"]["environment"];
-            this.renderingConfig["methods"] = methodList["methods"];
-            this.renderingConfig["methods"].forEach((element) => {
-                element.index = parseInt(element.index) + 1;
-            });
-            this.taskInfo["testTemplateID"] = methodList["test_template_id"];
+            this.renderingConfig["steps"] = [];
+            let steps = stepsData;
+            for (const key in steps) {
+                if (steps.hasOwnProperty(key)) {
+                    this.renderingConfig["steps"].push(steps[key]);
+                    const step = this.renderingConfig["steps"][key];
+                    this.renderingConfig["steps"][parseInt(key) - 1]["methods"].forEach((element) => {
+                        element.index = parseInt(element.index) + 1;
+                    });
+                }
+            }
+            // for (const key in this.renderingConfig["steps"]) {
+            //     if (this.renderingConfig["steps"].hasOwnProperty(key)) {
+            //         const step = this.renderingConfig["steps"][key];
+            //         step["methods"].forEach((element) => {
+            //             element.index = parseInt(element.index) + 1;
+            //         });
+            //     }
+            // }
+
+            // this.renderingConfig["steps"][stepIndex]["methods"].forEach((element) => {
+            //     element.index = parseInt(element.index) + 1;
+            // });
+            this.taskInfo["testTemplateID"] = stepsData[stepIndex]["test_template_id"];
 
             //Fill Default values
             this.bindedValues = {
@@ -114,6 +135,22 @@ export class PreviewModalComponent implements OnInit {
                 task_id: this.taskInfo["taskID"]
             }
 
+            //calculate run params
+            this.finalTestConfig["run"]["config"] = {
+                "env": this.bindedValues["environment"],
+                "os": this.bindedValues["os"],
+                "resolution": this.bindedValues["screenresolution"],
+                "app": {
+                    "url": "http://dev2.comprotechnologies.com/SimBuilderPreview/SIM5Frame.aspx",
+                    "public": "false",
+                    "build": ""
+                },
+                "browser": {
+                    "node": "aws",
+                    "name": this.bindedValues["browser"],
+                    "version": this.bindedValues["brversion"],
+                }
+            }
             //Calculate params
             let testParams = this.builderModelSrvc.getState()["testParams"];
             this.finalTestConfig["script"]["params"] = {};
@@ -128,14 +165,12 @@ export class PreviewModalComponent implements OnInit {
                 }
             }
 
-            //Test Methods
-
-            //Run Config
-
             //Launch Automation Test
-            this._previewTask(data => {
-                this.previewService.startAutomationTest(this.finalTestConfig);
-                this.LoaderService.setLoaderVisibility(false);
+            this._previewTask((data) => {
+                if (data["Url"]) {
+                    this.previewService.startAutomationTest(this.finalTestConfig);
+                    this.LoaderService.setLoaderVisibility(false);
+                }
             });
         }
 
@@ -156,7 +191,7 @@ export class PreviewModalComponent implements OnInit {
                 let data = response.json();
                 callback(data);
             },
-            error => {
+            (error) => {
                 this.LoaderService.setLoaderVisibility(false);
                 error = error.json();
                 console.error("Error occurred in Step preview, please check your inputs. Error: ", error);

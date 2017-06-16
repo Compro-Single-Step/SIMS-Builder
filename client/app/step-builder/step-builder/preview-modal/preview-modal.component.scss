@@ -13,7 +13,7 @@
 }
 
 div#step-fields {
-    height: 200px;
+    height: 150px;
     overflow-y: auto;
 }
 
@@ -45,7 +45,6 @@ div#step-fields {
 }
 
 legend {
-    border-bottom: 1px solid $theme-blue;
     color: $theme-blue;
 }
 
