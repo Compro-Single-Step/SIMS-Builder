@@ -21,7 +21,7 @@
     "interface-over-type-literal": true,
     "label-position": true,
     "max-line-length": [
-      false,
+      true,
       140
     ],
     "member-access": false,
@@ -65,7 +65,8 @@
     ],
     "prefer-const": true,
     "quotemark": [
-      false
+      true,
+      "single"
     ],
     "radix": true,
     "semicolon": [
