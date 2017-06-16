@@ -41,9 +41,6 @@ export class PreviewModalComponent implements OnInit {
     }
 
     ngOnInit() {
-        // setInterval(()=> {
-        //     console.log(this.bindedValues["launchScenario"]);
-        // }, 1000);
     }
 
     getTaskData(taskID, stepIndex, templateID, stepText) {
@@ -72,8 +69,7 @@ export class PreviewModalComponent implements OnInit {
             //         //this.PreviewModalDialog.show();
             //     });
 
-            //Fetch Test Template Configuration
-            //...TO DO...
+            //Rendering step and methods
             this.renderingConfig["environment"] = initialTestConfig["options"]["environment"];
             this.renderingConfig["steps"] = [];
             let steps = stepsData;
@@ -81,23 +77,14 @@ export class PreviewModalComponent implements OnInit {
                 if (steps.hasOwnProperty(key)) {
                     this.renderingConfig["steps"].push(steps[key]);
                     const step = this.renderingConfig["steps"][key];
+                    this.methodCheckboxes[key] = {};
                     this.renderingConfig["steps"][parseInt(key) - 1]["methods"].forEach((element) => {
                         element.index = parseInt(element.index) + 1;
+                        this.methodCheckboxes[key][element.index] = false;
                     });
                 }
             }
-            // for (const key in this.renderingConfig["steps"]) {
-            //     if (this.renderingConfig["steps"].hasOwnProperty(key)) {
-            //         const step = this.renderingConfig["steps"][key];
-            //         step["methods"].forEach((element) => {
-            //             element.index = parseInt(element.index) + 1;
-            //         });
-            //     }
-            // }
-
-            // this.renderingConfig["steps"][stepIndex]["methods"].forEach((element) => {
-            //     element.index = parseInt(element.index) + 1;
-            // });
+            //TO BE REMOVED
             this.taskInfo["testTemplateID"] = stepsData[stepIndex]["test_template_id"];
 
             //Fill Default values
@@ -112,11 +99,8 @@ export class PreviewModalComponent implements OnInit {
 
             this.updateOSList();
             this.updateBrowserList();
-
-            this.PreviewModalDialog.show() //TO BE REMOVED
-        } else {
-            this.PreviewModalDialog.show();
         }
+        this.PreviewModalDialog.show();
     }
 
     runPreview() {
@@ -124,7 +108,6 @@ export class PreviewModalComponent implements OnInit {
             this._previewTask((data) => {
                 if (data["Url"]) {
                     this.previewWindow = this.previewService.launchStepPreviewWindow(data["Url"]);
-                    this.LoaderService.setLoaderVisibility(false);
                 }
             });
         } else {
@@ -135,13 +118,46 @@ export class PreviewModalComponent implements OnInit {
                 task_id: this.taskInfo["taskID"]
             }
 
+            //Calculate params
+            let stepUIState = this.builderModelSrvc.getState();
+            let testParams = stepUIState["testParams"];
+            this.finalTestConfig["script"]["params"] = {};
+
+            for (let key in testParams) {
+
+                if (typeof testParams[key] === "object" && testParams[key] !== null) {
+
+                    let func = testParams[key]["function-name"];
+                    let params = testParams[key]["params"];
+                    let updatedParams = {};
+
+                    //Evaluating values of each param
+                    for (let i in params) {
+                        updatedParams[i] = this.builderModelSrvc.getRef(params[i], stepUIState);
+                    }
+                    this.finalTestConfig["script"]["params"][key] = skillManager.skillTranslator[func](updatedParams);
+                } else {
+                    this.finalTestConfig["script"]["params"][key] = this.builderModelSrvc.getRef(testParams[key], stepUIState);
+                }
+            }
+
+            //Calculate methods config
+            let methodsConfig = this.finalTestConfig["script"]["methods"] = {};
+            for (let stepNumber in this.methodCheckboxes) {
+                methodsConfig[stepNumber] = [];
+                for (let methodNumber in this.methodCheckboxes[stepNumber]) {
+                    if (this.methodCheckboxes[stepNumber][methodNumber])
+                        methodsConfig[stepNumber].push(methodNumber);
+                }
+            };
+
             //calculate run params
             this.finalTestConfig["run"]["config"] = {
                 "env": this.bindedValues["environment"],
                 "os": this.bindedValues["os"],
                 "resolution": this.bindedValues["screenresolution"],
                 "app": {
-                    "url": "http://dev2.comprotechnologies.com/SimBuilderPreview/SIM5Frame.aspx",
+                    "url": "",
                     "public": "false",
                     "build": ""
                 },
@@ -151,30 +167,18 @@ export class PreviewModalComponent implements OnInit {
                     "version": this.bindedValues["brversion"],
                 }
             }
-            //Calculate params
-            let testParams = this.builderModelSrvc.getState()["testParams"];
-            this.finalTestConfig["script"]["params"] = {};
-
-            for (let key in testParams) {
-                if (typeof testParams[key] === "object" && testParams[key] !== null) {
-                    let func = testParams[key]["function-name"];
-                    let params = testParams[key]["params"];
-                    this.finalTestConfig["script"]["params"][key] = skillManager.skillTranslator[func](params);
-                } else {
-                    this.finalTestConfig["script"]["params"][key] = testParams[key];
-                }
-            }
 
             //Launch Automation Test
             this._previewTask((data) => {
                 if (data["Url"]) {
+                    this.finalTestConfig["run"]["config"]["app"]["url"] = data["Url"];
                     this.previewService.startAutomationTest(this.finalTestConfig);
                     this.LoaderService.setLoaderVisibility(false);
                 }
             });
         }
-
         this.PreviewModalDialog.hide();
+        this.LoaderService.setLoaderVisibility(false);
     }
 
     updateOSList() {
@@ -183,6 +187,13 @@ export class PreviewModalComponent implements OnInit {
 
     updateBrowserList() {
         this.renderingConfig["browser"] = initialTestConfig["options"]["browser"][this.bindedValues["os"]];
+    }
+
+    updateMethodsCheckbox({ event, stepNumber }) {
+        let isChecked = event.target.checked;
+        for (let methodNumber in this.methodCheckboxes[stepNumber]) {
+            this.methodCheckboxes[stepNumber][methodNumber] = isChecked;
+        }
     }
 
     private _previewTask(callback) {
