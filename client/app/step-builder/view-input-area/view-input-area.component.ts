@@ -24,7 +24,7 @@ export class ViewInputAreaComponent implements OnInit, AfterViewInit  {
     // This Loop Iterates over the view data and creates GroupComponents
     try {
       for (let item of this.viewConfig["items"]) {
-        this.factoryRef.createComp(this.compContainer, item);
+        this.factoryRef.createComp(this.compContainer, item, null, this.currentView);
       }
       //when all the views are rendered in UI, emit an event to parent component so that it can bind modelchecker function to check for model changes every 5 secs.
       if(this.currentView == this.viewsCount)

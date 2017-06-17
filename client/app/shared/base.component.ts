@@ -13,6 +13,7 @@ export class BaseComponent implements OnInit, OnDestroy {
     descriptionConfig: itemSchema = new itemSchema();
     eventSrvc: Object;
     subscriptions: Array<Object>;
+    viewNumber;
     constructor() {
         this.compConfig = new itemSchema();
         this.builderModelSrvc = BuilderModelObj;
@@ -43,8 +44,9 @@ export class BaseComponent implements OnInit, OnDestroy {
         this.unsubscribeEvents();
     }
 
-    setData(inputConfig, modelRef?) {
+    setData(inputConfig, viewNumber, modelRef?) {
         this.compConfig = inputConfig;
+        this.viewNumber = viewNumber;
         if (modelRef) {
             this.modelRef = modelRef;
         }
