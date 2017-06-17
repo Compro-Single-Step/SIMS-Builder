@@ -8,6 +8,7 @@ import { skillManager } from '../../shared/skill-manager.service';
 import { initialTestConfig } from './test-config';
 import { stepsData } from './task-steps';
 
+declare var Messenger: any;
 
 @Component({
     selector: 'app-preview-modal',
@@ -122,7 +123,13 @@ export class PreviewModalComponent implements OnInit {
                 if (data["Url"]) {
                     this.LoaderService.setLoaderVisibility(false);
                     this.finalTestConfig["run"]["config"]["app"]["url"] = data["Url"];
-                    this.previewService.startAutomationTest(this.finalTestConfig);
+                    this.previewService.startAutomationTest(this.finalTestConfig)
+                    // .subscribe(response=>{
+
+                    // },
+                    // error=>{
+                    //     this.displayErrorMessage("Error occurred in Automation Test, please check your test config.");
+                    // });
                 }
             });
         }
@@ -146,6 +153,19 @@ export class PreviewModalComponent implements OnInit {
         }
     }
 
+    displayErrorMessage(errorText) {
+		Messenger.options = {
+			extraClasses: 'messenger-fixed messenger-on-top',
+			theme: 'block'
+		}
+		Messenger().post({
+			message: errorText,
+			type: 'error',
+			showCloseButton: true,
+			hideAfter: 5
+		});
+	}
+
     private _previewTask(callback) {
         this.previewService.previewTask(this.taskInfo["taskID"], this.taskInfo["stepIndex"], this.taskInfo["devTemplateID"], this.taskInfo["stepText"])
             .subscribe(response => {
@@ -155,7 +175,7 @@ export class PreviewModalComponent implements OnInit {
             (error) => {
                 this.LoaderService.setLoaderVisibility(false);
                 error = error.json();
-                console.error("Error occurred in Step preview, please check your inputs. Error: ", error);
+                this.displayErrorMessage("Error occurred in Step preview, please check your inputs.");
             });
     }
 

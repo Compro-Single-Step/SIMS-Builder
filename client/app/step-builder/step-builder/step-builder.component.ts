@@ -12,7 +12,6 @@ import { LoaderService } from '../../_services/loader.service';
 
 declare var jQuery;
 declare var localForage;
-declare var Messenger: any;
 
 @Component({
     selector: 'app-step-builder',
@@ -251,16 +250,4 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
         this.eventSrvc["dispose"]();
     }
 
-    displayErrorMessage(errorText) {
-		Messenger.options = {
-			extraClasses: 'messenger-fixed messenger-on-top',
-			theme: 'block'
-		}
-		Messenger().post({
-			message: errorText,
-			type: 'error',
-			showCloseButton: true,
-			hideAfter: 5
-		});
-	}
 }
