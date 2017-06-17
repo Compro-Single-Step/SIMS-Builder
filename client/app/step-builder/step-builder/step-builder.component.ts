@@ -35,7 +35,7 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
     eventSrvc: Object;
     previewWindow: any;
     @ViewChild('stepTextContainer') stepTextContainer;
-    @ViewChild('modalDialog') modalDialog;
+    @ViewChild('previewModalDialog') previewModalDialog;
 
     constructor(el: ElementRef, private route: ActivatedRoute, private router: Router, private bds: BuilderDataService, private tds: TaskDataService, private exceptionHandlerSrvc: ExceptionHandlerService, private cdRef:ChangeDetectorRef,private LoaderService:LoaderService) {
         this.$el = jQuery(el.nativeElement);
@@ -240,7 +240,7 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
 
     previewTask() {
         let callBackArgs = [this.taskID, this.stepIndex, this.templateID, this.stepTextContainer.nativeElement.textContent];
-        this.checkForModelChange(this.modalDialog.getTaskData, this.modalDialog, callBackArgs);
+        this.checkForModelChange(this.previewModalDialog.setTaskData, this.previewModalDialog, callBackArgs);
     }
 
     onFinish() {

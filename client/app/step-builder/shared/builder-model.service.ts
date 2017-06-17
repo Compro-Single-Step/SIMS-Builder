@@ -29,6 +29,27 @@ class BuilderModel {
         }
         return model;
     }
+
+    evaluateParams(model, referenceObject, functionsObject) {
+        let tempObj = {}
+        for (let key in referenceObject) {
+            if (typeof referenceObject[key] === "object" && referenceObject[key] !== null) {
+                let func = referenceObject[key]["function-name"];
+                let params = referenceObject[key]["params"];
+                let updatedParams = {};
+
+                //Evaluating values of each param
+                for (let i in params) {
+                    updatedParams[i] = this.getRef(params[i], model);
+                }
+                tempObj[key] = functionsObject[func](updatedParams);
+            } else {
+                tempObj[key] = this.getRef(referenceObject[key], model);
+            }
+        }
+
+        return tempObj;
+    }
 };
 
 export let BuilderModelObj = new BuilderModel();

@@ -43,7 +43,7 @@ export class PreviewModalComponent implements OnInit {
     ngOnInit() {
     }
 
-    getTaskData(taskID, stepIndex, templateID, stepText) {
+    setTaskData(taskID, stepIndex, templateID, stepText) {
         this.taskInfo["taskID"] = taskID;
         this.taskInfo["stepIndex"] = stepIndex;
         this.taskInfo["devTemplateID"] = templateID;
@@ -105,80 +105,30 @@ export class PreviewModalComponent implements OnInit {
 
     runPreview() {
         if (this.bindedValues["launchScenario"] === "preview") {
+            //Launch Preview Simulation
             this._previewTask((data) => {
                 if (data["Url"]) {
-                    this.previewWindow = this.previewService.launchStepPreviewWindow(data["Url"]);
-                }
-            });
-        } else {
-            //Calculate Task Scenerio
-            this.finalTestConfig["script"] = {
-                test_template_id: this.taskInfo["testTemplateID"],
-                step_number: this.taskInfo["stepIndex"],
-                task_id: this.taskInfo["taskID"]
-            }
-
-            //Calculate params
-            let stepUIState = this.builderModelSrvc.getState();
-            let testParams = stepUIState["testParams"];
-            this.finalTestConfig["script"]["params"] = {};
-
-            for (let key in testParams) {
-
-                if (typeof testParams[key] === "object" && testParams[key] !== null) {
-
-                    let func = testParams[key]["function-name"];
-                    let params = testParams[key]["params"];
-                    let updatedParams = {};
-
-                    //Evaluating values of each param
-                    for (let i in params) {
-                        updatedParams[i] = this.builderModelSrvc.getRef(params[i], stepUIState);
-                    }
-                    this.finalTestConfig["script"]["params"][key] = skillManager.skillTranslator[func](updatedParams);
-                } else {
-                    this.finalTestConfig["script"]["params"][key] = this.builderModelSrvc.getRef(testParams[key], stepUIState);
-                }
-            }
-
-            //Calculate methods config
-            let methodsConfig = this.finalTestConfig["script"]["methods"] = {};
-            for (let stepNumber in this.methodCheckboxes) {
-                methodsConfig[stepNumber] = [];
-                for (let methodNumber in this.methodCheckboxes[stepNumber]) {
-                    if (this.methodCheckboxes[stepNumber][methodNumber])
-                        methodsConfig[stepNumber].push(methodNumber);
-                }
-            };
-
-            //calculate run params
-            this.finalTestConfig["run"]["config"] = {
-                "env": this.bindedValues["environment"],
-                "os": this.bindedValues["os"],
-                "resolution": this.bindedValues["screenresolution"],
-                "app": {
-                    "url": "",
-                    "public": "false",
-                    "build": ""
-                },
-                "browser": {
-                    "node": "aws",
-                    "name": this.bindedValues["browser"],
-                    "version": this.bindedValues["brversion"],
-                }
-            }
-
-            //Launch Automation Test
-            this._previewTask((data) => {
-                if (data["Url"]) {
-                    this.finalTestConfig["run"]["config"]["app"]["url"] = data["Url"];
-                    this.previewService.startAutomationTest(this.finalTestConfig);
+                    this.previewWindow = this.previewService.previewSimulation(data["Url"]);
                     this.LoaderService.setLoaderVisibility(false);
                 }
             });
         }
+        else if (this.bindedValues["launchScenario"] === "test") {
+            //Configure the payload JSON to be send to the server for Automation Testing
+            this._configurePayload();
+
+            //Launch Automation Test
+            this._previewTask((data) => {
+                if (data["Url"]) {
+                    this.LoaderService.setLoaderVisibility(false);
+                    this.finalTestConfig["run"]["config"]["app"]["url"] = data["Url"];
+                    this.previewService.startAutomationTest(this.finalTestConfig);
+                }
+            });
+        }
+        else { }
+
         this.PreviewModalDialog.hide();
-        this.LoaderService.setLoaderVisibility(false);
     }
 
     updateOSList() {
@@ -207,5 +157,59 @@ export class PreviewModalComponent implements OnInit {
                 error = error.json();
                 console.error("Error occurred in Step preview, please check your inputs. Error: ", error);
             });
+    }
+
+    private _configurePayload() {
+        //Calculate Task Scenario
+        this.finalTestConfig["script"] = this._configureTaskScenario(this.taskInfo);
+
+        //Calculate params
+        let stepUIState = this.builderModelSrvc.getState();
+        let testParams = stepUIState["testParams"];
+        this.finalTestConfig["script"]["params"] = this.builderModelSrvc.evaluateParams(stepUIState, testParams, skillManager.skillTranslator);
+
+        //Calculate methods config
+        this.finalTestConfig["script"]["methods"] = this._configureMethodsConfig(this.methodCheckboxes)
+
+        //calculate run params
+        this.finalTestConfig["run"]["config"] = this._configureRunParams(this.bindedValues);
+    }
+
+    private _configureTaskScenario(taskInfo) {
+        return {
+            test_template_id: taskInfo["testTemplateID"],
+            step_number: taskInfo["stepIndex"],
+            task_id: taskInfo["taskID"]
+        }
+    }
+
+    private _configureMethodsConfig(methodCheckboxConfig) {
+        let tempObj = {}
+        for (let stepNumber in methodCheckboxConfig) {
+            tempObj[stepNumber] = [];
+            for (let methodNumber in methodCheckboxConfig[stepNumber]) {
+                if (methodCheckboxConfig[stepNumber][methodNumber])
+                    tempObj[stepNumber].push(methodNumber);
+            }
+        };
+        return tempObj;
+    }
+
+    private _configureRunParams(runParamConfig) {
+        return {
+            "env": runParamConfig["environment"],
+            "os": runParamConfig["os"],
+            "resolution": runParamConfig["screenresolution"],
+            "app": {
+                "url": "",
+                "public": "false",
+                "build": ""
+            },
+            "browser": {
+                "node": "aws",
+                "name": runParamConfig["browser"],
+                "version": runParamConfig["brversion"],
+            }
+        }
     }
 }
