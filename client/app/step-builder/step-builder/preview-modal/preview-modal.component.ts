@@ -28,17 +28,19 @@ export class PreviewModalComponent implements OnInit {
     previewWindow;
     builderModelSrvc;
     methodCheckboxes: Object;
+    stepsArray: Array<string>;
 
     constructor(private previewService: PreviewService, private LoaderService: LoaderService) {
         this.taskInfo = {};
         this.testMethods = [];
         this.renderingConfig = {
-            "environment": []
+            'environment': []
         };
         this.bindedValues = {};
         this.finalTestConfig = { "script": {}, "run": {} };
         this.builderModelSrvc = BuilderModelObj;
         this.methodCheckboxes = {};
+        this.stepsArray = [];
     }
 
     ngOnInit() {
@@ -71,22 +73,44 @@ export class PreviewModalComponent implements OnInit {
             //     });
 
             //Rendering step and methods
-            this.renderingConfig["environment"] = initialTestConfig["options"]["environment"];
-            this.renderingConfig["steps"] = [];
-            let steps = stepsData;
-            for (const key in steps) {
-                if (steps.hasOwnProperty(key)) {
-                    this.renderingConfig["steps"].push(steps[key]);
-                    const step = this.renderingConfig["steps"][key];
-                    this.methodCheckboxes[key] = {};
-                    this.renderingConfig["steps"][parseInt(key) - 1]["methods"].forEach((element) => {
-                        element.index = parseInt(element.index) + 1;
-                        this.methodCheckboxes[key][element.index] = false;
-                    });
+            this.renderingConfig['environment'] = initialTestConfig['options']['environment'];
+            this.renderingConfig['pathways'] = [];
+            const steps = stepsData['pathways'][0];
+            for (const stepIndex in steps) {
+                if (steps.hasOwnProperty(stepIndex)) {
+                    if (typeof steps[stepIndex] === 'object') {
+                        this.stepsArray.push('Step ' + stepIndex);
+                    }
                 }
             }
+
+            const pathways = stepsData['pathways'];
+            pathways.forEach((element) => {
+                const pathway = [];
+                for (const step in element) {
+                    if (element.hasOwnProperty(step)) {
+                        if (typeof steps[step] === 'object') {
+                            element[step].index = parseInt(element[step].index) + 1;
+                            pathway.push(element[step]);
+                        }
+                    }
+                }
+                this.renderingConfig['pathways'].push(pathway);
+            });
+
+            // for (const key in steps) {
+            //     if (steps.hasOwnProperty(key)) {
+            //         this.renderingConfig["steps"].push(steps[key]);
+            //         const step = this.renderingConfig["steps"][key];
+            //         this.methodCheckboxes[key] = {};
+            //         this.renderingConfig["steps"][parseInt(key) - 1]["methods"].forEach((element) => {
+            //             element.index = parseInt(element.index) + 1;
+            //             this.methodCheckboxes[key][element.index] = false;
+            //         });
+            //     }
+            // }
             //TO BE REMOVED
-            this.taskInfo["testTemplateID"] = stepsData[stepIndex]["test_template_id"];
+            //this.taskInfo["testTemplateID"] = stepsData[stepIndex]["test_template_id"];
 
             //Fill Default values
             this.bindedValues = {
@@ -154,17 +178,17 @@ export class PreviewModalComponent implements OnInit {
     }
 
     displayErrorMessage(errorText) {
-		Messenger.options = {
-			extraClasses: 'messenger-fixed messenger-on-top',
-			theme: 'block'
-		}
-		Messenger().post({
-			message: errorText,
-			type: 'error',
-			showCloseButton: true,
-			hideAfter: 5
-		});
-	}
+        Messenger.options = {
+            extraClasses: 'messenger-fixed messenger-on-top',
+            theme: 'block'
+        }
+        Messenger().post({
+            message: errorText,
+            type: 'error',
+            showCloseButton: true,
+            hideAfter: 5
+        });
+    }
 
     private _previewTask(callback) {
         this.previewService.previewTask(this.taskInfo["taskID"], this.taskInfo["stepIndex"], this.taskInfo["devTemplateID"], this.taskInfo["stepText"])

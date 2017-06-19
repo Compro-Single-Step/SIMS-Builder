@@ -6,31 +6,32 @@
                 <button (click)="PreviewModalDialog.hide()" aria-label="Close" class="close" type="button">
                     <span aria-hidden="true">×</span>
                 </button>
-                <h4 class="modal-title text-xs-center fw-bold" id="myModalLabel18">Preview</h4>
+                <h4 class="modal-title text-xs-center fw-bold" id="myModalLabel18">Preview / Test Simulation</h4>
             </div>
             <div class="modal-body pl-30 pr-30">
                 <form class="form-horizontal form-label-left" role="form">
                     <fieldset>
-                        <legend>Would you like to preview simulation manually or through automated test environment?</legend>
-                        <div class="form-group">
-                            <div class="radio">
+                        <legend>Select an Option</legend>
+                        <p class="fw-400">Would you like to preview simulation manually or through automated test environment?</p>
+                        <div class="row">
+                            <div class="radio col-sm-6">
                                 <input type="radio" name="radioElement" checked="true" id="radio1" value="preview" [(ngModel)]="bindedValues.launchScenario">
-                                <label for="radio1">Preview Simulation</label>
+                                <label class="radio-label" for="radio1">Preview Simulation</label>
                             </div>
-                            <div class="radio">
+                            <div class="radio col-sm-6">
                                 <input type="radio" name="radioElement" id="radio2" value="test" [(ngModel)]="bindedValues.launchScenario">
-                                <label for="radio2">Run Automated Test</label>
+                                <label class="radio-label" for="radio2">Run Automated Test</label>
                             </div>
                         </div>
                     </fieldset>
-                    <div *ngIf="bindedValues.launchScenario === 'test'">
+                    <div *ngIf="bindedValues.launchScenario === 'test'" class="pt-15">
                         <fieldset>
                             <legend>Test Configuration</legend>
                             <div class="form-group mb-5">
                                 <div class="display-flex">
                                     <label class="col-sm-4 control-label" for="test-environment">Test Env</label>
                                     <div class="col-sm-6">
-                                        <select class="form-control" [(ngModel)]="bindedValues.environment" name="environment" (change)="updateOSList()">
+                                        <select class="select2 form-control" [(ngModel)]="bindedValues.environment" name="environment" (change)="updateOSList()">
                                             <option *ngFor="let testEnv of renderingConfig.environment; let idx=index;" [value]="testEnv.key">{{testEnv.label}}</option>
                                         </select>
                                     </div>
@@ -40,7 +41,7 @@
                                 <div class="display-flex">
                                     <label class="col-sm-4 control-label" for="operating-system">OS</label>
                                     <div class="col-sm-6">
-                                        <select class="form-control" [(ngModel)]="bindedValues.os" name="operatingSystem" (change)="updateBrowserList()">
+                                        <select class="select2 form-control" [(ngModel)]="bindedValues.os" name="operatingSystem" (change)="updateBrowserList()">
                                             <option *ngFor="let operatingSystem of renderingConfig.os" [value]="operatingSystem.key">{{operatingSystem.label}}</option>
                                     </select>
                                     </div>
@@ -50,7 +51,7 @@
                                 <div class="display-flex">
                                     <label class="col-sm-4 control-label" for="browser">Browser</label>
                                     <div class="col-sm-6">
-                                        <select class="form-control" [(ngModel)]="bindedValues.browser" name="browser">
+                                        <select class="select2 form-control" [(ngModel)]="bindedValues.browser" name="browser">
                                         <option *ngFor="let browser of renderingConfig.browser" [value]="browser.key">{{browser.label}}</option>
                                     </select>
                                     </div>
@@ -80,7 +81,7 @@
                         <fieldset>
                             <legend>Choose Method(s) to validate</legend>
                             <div id="step-fields">
-                                <div *ngFor="let stepData of renderingConfig.steps; let idx = index">
+                                <!--<div *ngFor="let stepData of renderingConfig.steps; let idx = index">
                                     <div class="form-group mb-0">
                                         <div class="checkbox">
                                             <input id="step-checkbox{{taskInfo.stepIndex}}" type="checkbox" name="step-checkbox{{taskInfo.stepIndex}}" (change)="updateMethodsCheckbox({event: $event, stepNumber: idx+1})">
@@ -94,6 +95,36 @@
                                             <label for="method-checkbox{{method.index}}">M{{method.index}} ({{method.type}})</label>
                                         </div>
                                     </div>
+                                </div>-->
+                                <div class="col-md-12 p-0">
+                                    <section class="widget p-0 m-0">
+                                        <div class="widget-body">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <!--<th>
+                                                            <div class="checkbox">
+                                                                <input id="check-all" type="checkbox">
+                                                                <label for="check-all"></label>
+                                                            </div>
+                                                        </th>-->
+                                                        <th *ngFor="let step of stepsArray">{{step}}</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let pathway of renderingConfig.pathways">
+                                                        <!--<td *ngIf="index === 0">
+                                                            <div class="checkbox">
+                                                                <input id="checkbox2" type="checkbox">
+                                                                <label for="checkbox2"></label>
+                                                            </div>
+                                                        </td>-->
+                                                        <td *ngFor="let method of pathway">Method {{method.index}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </section>
                                 </div>
                             </div>
                         </fieldset>
@@ -102,7 +133,7 @@
             </div>
             <div class="modal-footer">
                 <div class="pull-right">
-                    <button (click)="runPreview()" class="btn btn-dark mr-1">Preview</button>
+                    <button (click)="runPreview()" class="btn btn-dark mr-1">Go</button>
                 </div>
             </div>
         </div>

@@ -1,31 +1,34 @@
 export let stepsData: Object = {
-    "1": {
-        "test_template_id": "df380df4-450d-11e7-a919-92ebcb67fe33",
-        "methods": [
-            {
+    "pathways": [
+        {
+            "1": {
                 "index": "0",
                 "type": "Ribbon"
             },
-            {
-                "index": "1",
+            "2": {
+                "index": "0",
                 "type": "Ribbon"
             },
-            {
-                "index": "2",
-                "type": "Right - Click"
+            "3": {
+                "index": "0",
+                "type": "Ribbon"
             },
-            {
-                "index": "3",
+            "name": "Primary"
+        },
+        {
+            "1": {
+                "index": "1",
                 "type": "Keyboard"
             },
-            {
-                "index": "4",
+            "2": {
+                "index": "1",
                 "type": "Other"
             },
-            {
-                "index": "5",
-                "type": "Ribbon"
-            }
-        ]
-    }
+            "3": {
+                "index": "1",
+                "type": "Keyboard"
+            },
+            "name": "Keyboard, Other"
+        }
+    ]
 };
