@@ -58,11 +58,11 @@ router.get('/:templateId', (req, res) => {
     });
 });
 
-router.get('/:templateId/methods', (req, res) => {
+router.get('/:templateId/pathways', (req, res) => {
   let appType   = req.query.app,
     templateId  = req.params.templateId;
 
-  skillTestController.getMethodsByTemplateId(templateId, appType)
+  skillTestController.getPathwaysByTemplateId(templateId, appType)
     .then((methods) => {
 
       if(methods.length === 0) {

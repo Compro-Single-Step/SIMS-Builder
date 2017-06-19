@@ -32,7 +32,7 @@ class SkillTest {
     return templateService.getTemplateLinkage(templateId);
   }
 
-  getMethodsByTemplateId(templateId, appType) {
+  getPathwaysByTemplateId(templateId, appType) {
 
     return new Promise((resolve, reject) => {
       templateService.getTemplateById(templateId, appType)
@@ -43,18 +43,21 @@ class SkillTest {
           } else{
             var _methods = {
               "test_template_id" : templates[0].uuid,
-              "methods": []
+              "pathways": []
             };
 
-            // getting methods list
+            // getting methods list - for a step / template, different implementation required for task methods
             if (templates[0].items[0].methods.length){
               for(var i in templates[0].items[0].methods) {
 
                 let _m = {
-                    "index" : i,
+                  name: templates[0].items[0].methods[i].type,
+                  "1": {
+                    "index": i,
                     "type": templates[0].items[0].methods[i].type
+                  }
                 }
-                _methods.methods.push(_m);
+                _methods.pathways.push(_m);
               }
             }
 

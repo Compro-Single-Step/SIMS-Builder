@@ -33,9 +33,24 @@ const config = {
       runtask : '/sims/runtask'
     }
   },
-  local: {},
-  development: {},
-  production: {}
+  local: {
+    runner: {
+      url: 'http://loadrunner1:9001',
+      runtask : '/sims/runtask'
+    }
+  },
+  development: {
+    runner: {
+      url: 'http://loadrunner1:9001',
+      runtask : '/sims/runtask'
+    }
+  },
+  production: {
+    runner: {
+      url: 'http://34.209.150.28',
+      runtask : '/sims/runtask'
+    }
+  }
 };
 
 const env = process.env.NODE_ENV || 'development';
