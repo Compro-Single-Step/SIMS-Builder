@@ -29,6 +29,7 @@ export class PreviewModalComponent implements OnInit {
     builderModelSrvc;
     methodCheckboxes: Object;
     stepsArray: Array<string>;
+    selectAll: Boolean;
 
     constructor(private previewService: PreviewService, private LoaderService: LoaderService) {
         this.taskInfo = {};
@@ -41,6 +42,7 @@ export class PreviewModalComponent implements OnInit {
         this.builderModelSrvc = BuilderModelObj;
         this.methodCheckboxes = {};
         this.stepsArray = [];
+        this.selectAll = false;
     }
 
     ngOnInit() {
@@ -76,6 +78,7 @@ export class PreviewModalComponent implements OnInit {
             this.renderingConfig['environment'] = initialTestConfig['options']['environment'];
             this.renderingConfig['pathways'] = [];
             const steps = stepsData['pathways'][0];
+            this.stepsArray = [];
             for (const stepIndex in steps) {
                 if (steps.hasOwnProperty(stepIndex)) {
                     if (typeof steps[stepIndex] === 'object') {
@@ -87,7 +90,7 @@ export class PreviewModalComponent implements OnInit {
             }
 
             const pathways = stepsData['pathways'];
-            pathways.forEach((element) => {
+            pathways.forEach((element, index) => {
                 const pathway = [];
                 for (const step in element) {
                     if (element.hasOwnProperty(step)) {
@@ -99,6 +102,7 @@ export class PreviewModalComponent implements OnInit {
                         }
                     }
                 }
+                this.methodCheckboxes[index + 1] = false;
                 this.renderingConfig['pathways'].push(pathway);
             });
 
@@ -114,7 +118,7 @@ export class PreviewModalComponent implements OnInit {
             //     }
             // }
             //TO BE REMOVED
-            //this.taskInfo["testTemplateID"] = stepsData[stepIndex]["test_template_id"];
+            this.taskInfo["testTemplateID"] = "dummy";
 
             //Fill Default values
             this.bindedValues = {
@@ -174,13 +178,19 @@ export class PreviewModalComponent implements OnInit {
         this.renderingConfig["browser"] = initialTestConfig["options"]["browser"][this.bindedValues["os"]];
     }
 
-    updateMethodsCheckbox({ event, stepNumber }) {
+    updateMethodsCheckbox({ event }) {
         let isChecked = event.target.checked;
 
         for (let pathway in this.methodCheckboxes) {
             if (this.methodCheckboxes.hasOwnProperty(pathway)) {
                 this.methodCheckboxes[pathway] = isChecked;
             }
+        }
+    }
+
+    updateSelectAllsCheckbox({ event }) {
+        if(!event.target.checked) {
+            this.selectAll = false;
         }
     }
 
@@ -239,15 +249,25 @@ export class PreviewModalComponent implements OnInit {
     }
 
     private _configureMethodsConfig(methodCheckboxConfig) {
+        let pathwayArray = [];
+
         let tempObj = {}
         for (let stepNumber in methodCheckboxConfig) {
-            tempObj[stepNumber] = [];
-            for (let methodNumber in methodCheckboxConfig[stepNumber]) {
-                if (methodCheckboxConfig[stepNumber][methodNumber])
-                    tempObj[stepNumber].push(methodNumber);
+            if (methodCheckboxConfig[stepNumber]) {
+                let pathway = this.renderingConfig['pathways'][parseInt(stepNumber) - 1];
+                let methods = "";
+                for (let i = 1; i < pathway.length; i++) {
+                    methods += pathway[i].index;
+                }
+                pathwayArray.push(methods);
             }
+            // tempObj[stepNumber] = [];
+            // for (let methodNumber in methodCheckboxConfig[stepNumber]) {
+            //     if (methodCheckboxConfig[stepNumber][methodNumber])
+            //         tempObj[stepNumber].push(methodNumber);
+            // }
         };
-        return tempObj;
+        return pathwayArray;
     }
 
     private _configureRunParams(runParamConfig) {

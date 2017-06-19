@@ -105,7 +105,7 @@
                                                         <th *ngFor="let step of stepsArray; let idx = index">
                                                             <span *ngIf="step === 'checkbox'">
                                                                 <div class="checkbox">
-                                                                    <input id="check-all" name="check-all" type="checkbox" (change)="updateMethodsCheckbox({event: $event})">
+                                                                    <input id="check-all" name="check-all" type="checkbox" [(ngModel)]="selectAll" (change)="updateMethodsCheckbox({event: $event})">
                                                                     <label for="check-all"></label>
                                                                 </div>
                                                             </span>
@@ -117,7 +117,7 @@
                                                     <tr *ngFor="let pathway of renderingConfig.pathways; let idx = index">
                                                         <td *ngFor="let method of pathway">
                                                             <div *ngIf="getTypeOf(method) === 'string'" class="checkbox">
-                                                                <input id='checkbox{{idx}}' name='checkbox{{idx}}' type="checkbox" [(ngModel)]="methodCheckboxes[idx+1]">
+                                                                <input id='checkbox{{idx}}' name='checkbox{{idx}}' type="checkbox" [(ngModel)]="methodCheckboxes[idx+1]" (change)="updateSelectAllsCheckbox({event: $event})">
                                                                 <label for='checkbox{{idx}}'></label>
                                                             </div>
                                                             <span *ngIf="getTypeOf(method) === 'object'">Method {{method.index}}</span>
