@@ -51,9 +51,7 @@
           <i class="fa fa-cog fa-lg"></i>
         </a>
         <ul class="dropdown-menu dropdown-menu-right">
-          <li><a class="dropdown-item" href="#"><i class="glyphicon glyphicon-user"></i> &nbsp; My Account</a></li>
-          <li class="dropdown-divider"></li>
-          <li *ngIf="adminUser" ><a class="dropdown-item" [routerLink]=" ['/admin']"><i class="glyphicon glyphicon-user"></i> &nbsp; Administration</a></li>
+          <li *ngIf="adminUser" ><a class="dropdown-item" [routerLink]=" ['/admin']"><i class="glyphicon glyphicon-user"></i> &nbsp; Admin Settings</a></li>
           <li *ngIf="adminUser" class="dropdown-divider"></li>
           <li><a class="dropdown-item" (click)="logout()"><i class="fa fa-sign-out"></i> &nbsp; Log Out</a></li>
         </ul>
