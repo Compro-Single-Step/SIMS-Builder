@@ -102,24 +102,26 @@
                                             <table class="table table-striped">
                                                 <thead>
                                                     <tr>
-                                                        <!--<th>
-                                                            <div class="checkbox">
-                                                                <input id="check-all" type="checkbox">
-                                                                <label for="check-all"></label>
-                                                            </div>
-                                                        </th>-->
-                                                        <th *ngFor="let step of stepsArray">{{step}}</th>
+                                                        <th *ngFor="let step of stepsArray; let idx = index">
+                                                            <span *ngIf="step === 'checkbox'">
+                                                                <div class="checkbox">
+                                                                    <input id="check-all" name="check-all" type="checkbox" (change)="updateMethodsCheckbox({event: $event})">
+                                                                    <label for="check-all"></label>
+                                                                </div>
+                                                            </span>
+                                                            <span *ngIf="step !== 'checkbox'">{{step}}</span>
+                                                        </th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr *ngFor="let pathway of renderingConfig.pathways">
-                                                        <!--<td *ngIf="index === 0">
-                                                            <div class="checkbox">
-                                                                <input id="checkbox2" type="checkbox">
-                                                                <label for="checkbox2"></label>
+                                                    <tr *ngFor="let pathway of renderingConfig.pathways; let idx = index">
+                                                        <td *ngFor="let method of pathway">
+                                                            <div *ngIf="getTypeOf(method) === 'string'" class="checkbox">
+                                                                <input id='checkbox{{idx}}' name='checkbox{{idx}}' type="checkbox" [(ngModel)]="methodCheckboxes[idx+1]">
+                                                                <label for='checkbox{{idx}}'></label>
                                                             </div>
-                                                        </td>-->
-                                                        <td *ngFor="let method of pathway">Method {{method.index}}</td>
+                                                            <span *ngIf="getTypeOf(method) === 'object'">Method {{method.index}}</span>
+                                                        </td>
                                                     </tr>
                                                 </tbody>
                                             </table>

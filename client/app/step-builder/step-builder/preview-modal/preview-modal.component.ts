@@ -80,6 +80,8 @@ export class PreviewModalComponent implements OnInit {
                 if (steps.hasOwnProperty(stepIndex)) {
                     if (typeof steps[stepIndex] === 'object') {
                         this.stepsArray.push('Step ' + stepIndex);
+                    } else {
+                        this.stepsArray.unshift('checkbox');
                     }
                 }
             }
@@ -92,6 +94,8 @@ export class PreviewModalComponent implements OnInit {
                         if (typeof steps[step] === 'object') {
                             element[step].index = parseInt(element[step].index) + 1;
                             pathway.push(element[step]);
+                        } else {
+                            pathway.unshift('checkbox');
                         }
                     }
                 }
@@ -172,8 +176,11 @@ export class PreviewModalComponent implements OnInit {
 
     updateMethodsCheckbox({ event, stepNumber }) {
         let isChecked = event.target.checked;
-        for (let methodNumber in this.methodCheckboxes[stepNumber]) {
-            this.methodCheckboxes[stepNumber][methodNumber] = isChecked;
+
+        for (let pathway in this.methodCheckboxes) {
+            if (this.methodCheckboxes.hasOwnProperty(pathway)) {
+                this.methodCheckboxes[pathway] = isChecked;
+            }
         }
     }
 
@@ -188,6 +195,10 @@ export class PreviewModalComponent implements OnInit {
             showCloseButton: true,
             hideAfter: 5
         });
+    }
+
+    getTypeOf(value) {
+        return typeof value;
     }
 
     private _previewTask(callback) {
