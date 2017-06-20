@@ -40,7 +40,7 @@ class SkillTest {
 
           if(!templates.length) {
             reject(config.messages.notFound);
-          } else{
+          } else {
             var _methods = {
               "test_template_id" : templates[0].uuid,
               "pathways": []
@@ -100,9 +100,8 @@ class SkillTest {
         template_id: req.body.test_template_id,
         step_number: req.body.step_number,
         task_id: req.body.task_id,
-        scenario: req.body.scenario,
         params: req.body.params,
-        pathways: req.body.methods,
+        pathways: req.body.pathways,
         appName: ""
       };
 
@@ -128,15 +127,14 @@ class SkillTest {
      "script": {
        "test_template_id": "df380df4-450d-11e7-a919-92ebcb67fe33",
        "step_number": "1",
-       "task_id": "SKL16.XL.04.01.03",
-       "scenario": "T1",
+       "task_id": "SKL16.XL.04.01.03.T1",
        "app_name": "excel",
        "params": {
          "source_range": "G5:H6",
          "destination_start_cell_number": "D5",
          "destination_range": "D5:E6"
        },
-       "methods": [
+       "pathways": [
          "1",
          "4"
        ]
@@ -183,13 +181,12 @@ class SkillTest {
           template_id: _script.test_template_id,
           step_number: _script.step_number,
           task_id: _script.task_id,
-          scenario: _script.scenario,
           params: _script.params,
-          pathways: _script.methods,
+          pathways: _script.pathways,
           appName: _script.app_name
         };
 
-        filename = ((_script.task_id).replace(/\./gi, "_")).trim() + '_' +_script.scenario.toUpperCase().trim();
+        filename = ((_script.task_id).replace(/\./gi, "_")).trim();
 
         run_request_body = {
           "user": _run.user,

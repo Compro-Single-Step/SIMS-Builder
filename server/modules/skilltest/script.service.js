@@ -60,7 +60,7 @@ class ScriptService {
 
             templateService.getTemplateById(script_meta.template_id),
             mapperService.getMapperByTemplateId(script_meta.template_id),
-            this.getScriptBySleId((script_meta.task_id + '.' + script_meta.scenario))
+            this.getScriptBySleId((script_meta.task_id))
 
         ]).then(( [template, mapper, script] ) => {
 
