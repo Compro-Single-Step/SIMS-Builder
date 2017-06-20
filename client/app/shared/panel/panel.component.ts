@@ -28,7 +28,7 @@ export class PanelComponent extends ContainerComponent {
   ngOnInit() {
     super.ngOnInit();
     this.UpdateView();
-    this.AddChildElements(this.factoryRef, this.inputElementsContainer, this.compConfig.items);
+    this.AddChildElements(this.factoryRef, this.inputElementsContainer, this.compConfig.items, this.viewNumber);
   }
 
   UpdateView() {

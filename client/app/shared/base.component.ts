@@ -4,6 +4,7 @@ import { BuilderModelObj } from '../step-builder/shared/builder-model.service';
 import { skillManager } from '../step-builder/shared/skill-manager.service';
 import { EventService } from '../step-builder/shared/event.service';
 import { LabelTypes } from './enums';
+import { ValidationService } from './validation.service';
 
 export class BaseComponent implements OnInit, OnDestroy {
     @Input() compConfig: itemSchema;
@@ -13,23 +14,32 @@ export class BaseComponent implements OnInit, OnDestroy {
     descriptionConfig: itemSchema = new itemSchema();
     eventSrvc: Object;
     subscriptions: Array<Object>;
-    viewNumber;
+    viewNumber: number;
+    validationErrors: Object;
+    parentViewValidationRef: Object;
+    validationParams: Object;
+    validationService;
+
     constructor() {
         this.compConfig = new itemSchema();
         this.builderModelSrvc = BuilderModelObj;
+        this.validationService = ValidationService;
         this.eventSrvc = EventService;
         this.subscriptions = [];
+
+        //Used to show errors on change of view
+        this.validationParams = ValidationService.getValidationParams();
     }
     ngOnInit() {
         this.registerEvents();
         this.subscribeEvents();
         this.updateModel();
+        this.addValidations();
     }
 
     //function to call a skill specific function to update model from an external file while it is being painted.
-    updateModel() {      
-        if(this.compConfig.rendererProperties && this.compConfig.rendererProperties.updateModel)
-        {
+    updateModel() {
+        if (this.compConfig.rendererProperties && this.compConfig.rendererProperties.updateModel) {
             let updateModels = this.compConfig.rendererProperties.updateModel || [];
             for (let i = 0; i < updateModels.length; i++) {
                 let dependantModelReference = updateModels[i]['modelReference'];
@@ -106,7 +116,7 @@ export class BaseComponent implements OnInit, OnDestroy {
         }
     }
 
-    eventCallback({eventId, payload: callbackData}) {
+    eventCallback({ eventId, payload: callbackData }) {
         this.updateDependencies(eventId, callbackData);
         this.emitEvents(this.getEventPayload());
     }
@@ -150,5 +160,28 @@ export class BaseComponent implements OnInit, OnDestroy {
             return true;
         }
         return this.modelRef["disabled"];
+    }
+
+    addValidations() {
+        //Comp dynamically created (unlike label component)
+        if (this.viewNumber) {
+            let tempErrorObj = this.validationService.setValidationErrorsUsingUIConfig(this.compConfig);
+            let stepBuilderValidationObj = ValidationService.getValidationErrorsObj("stepBuilder");
+            let view = "view" + this.viewNumber;
+
+            if (!stepBuilderValidationObj[view]) {
+                stepBuilderValidationObj[view] = { "isViewValid": true };
+            }
+
+            if (Object.keys(tempErrorObj).length !== 0) {
+                this.validationErrors = (stepBuilderValidationObj[view][Date.now() + "_" + this.compConfig.itemRenderer] = { "errors": tempErrorObj, "errorsCount": -1 });
+                this.parentViewValidationRef = stepBuilderValidationObj[view];
+            }
+        }
+    }
+
+    validateComp(value) {
+        if (this.validationErrors)
+            this.validationService.validateComponent(this.validationErrors, this.parentViewValidationRef, value);
     }
 }

@@ -100,6 +100,9 @@ export class DropzoneComponent extends BaseComponent implements OnDestroy {
           currModelRef["size"] = file.size;
         }
         self.readFile(file, MIMETYPE[self.compConfig.rendererProperties.dataType]);
+
+        //Validation
+        self.validateComp("success");
       }
     });
     dropzone.on("maxfilesexceeded", function (file) {
@@ -111,13 +114,19 @@ export class DropzoneComponent extends BaseComponent implements OnDestroy {
       let currModelRef = self.getData();
       if (self.isMultipleFiles) {
         for (let i = 0; i < currModelRef["value"].length; i++) {
-           if (currModelRef["value"][i].displayName === file.name) {
+          if (currModelRef["value"][i].displayName === file.name) {
             self.removeFile(currModelRef, i);
             break;
           }
         }
+
+        if (currModelRef["value"].length === 0) {
+          self.validateComp(null);
+        }
       } else {
-        self.removeFile(currModelRef)
+        self.validateComp(null);
+
+        self.removeFile(currModelRef);
       }
     })
 
@@ -136,24 +145,24 @@ export class DropzoneComponent extends BaseComponent implements OnDestroy {
     let self = this;
     let itemDataModel = this.builderModelSrvc.getState();
     this.bds.saveSkillData({ stepUIState: itemDataModel }, this.taskId, this.stepIndex).subscribe(function (data) {
-        if (data["status"] === "success") {
-            //TODO: Notify user of the draft save
-            self.exceptionHandlerSrvc.globalConsole("Model Data Sent to Server");
-            self.removeFileFromServer(path);           
-        } else if (data["status"] === "error") {
-            //TODO: Try saving on server again
-            self.exceptionHandlerSrvc.globalConsole("Couldn't Save Model Data on Server.");
-            
-            //Commenting this code because of Generic Error handling on server.
-            // if(data["errcode"] === "DATA_NOT_PRESENT"){
-            //     self.exceptionHandlerSrvc.globalLog("UI State is null. Please check");
-            // }
-        }
+      if (data["status"] === "success") {
+        //TODO: Notify user of the draft save
+        self.exceptionHandlerSrvc.globalConsole("Model Data Sent to Server");
+        self.removeFileFromServer(path);
+      } else if (data["status"] === "error") {
+        //TODO: Try saving on server again
+        self.exceptionHandlerSrvc.globalConsole("Couldn't Save Model Data on Server.");
+
+        //Commenting this code because of Generic Error handling on server.
+        // if(data["errcode"] === "DATA_NOT_PRESENT"){
+        //     self.exceptionHandlerSrvc.globalLog("UI State is null. Please check");
+        // }
+      }
     });
   }
-  
+
   removeFileFromServer(path) {
-    let self = this;    
+    let self = this;
     if (path != "") {
       this.bds.removeFile(path).subscribe((data) => {
         if (data.status === "success") {
@@ -212,13 +221,12 @@ export class DropzoneComponent extends BaseComponent implements OnDestroy {
     return output.data;
   }
 
-  parseAsText(data){
+  parseAsText(data) {
     return data;
   }
 
   addFileToDropzone(dropzone, el) {
-    if (el.displayName && el.displayName != "")
-    {
+    if (el.displayName && el.displayName != "") {
       var file = {
         name: el.displayName,
         size: el.size ? el.size : 2000,
@@ -228,9 +236,12 @@ export class DropzoneComponent extends BaseComponent implements OnDestroy {
       dropzone.emit("addedfile", file);
       dropzone.emit("complete", file);
       dropzone.files.push(file);
+
+      //Default validation status on page reload
+      this.validateComp("success");
     }
   }
-  
+
   restoreFileUI(dropzone) {
     let fileInfo = this.getData();
     if (this.isMultipleFiles) {

@@ -16,20 +16,20 @@ export class TabPageComponent extends ContainerComponent {
     this.factoryRef = injector.get(InputFactoryService);
   }
 
-  AddChildElements(factoryRef, containerRef, itemArray) {
+  AddChildElements(factoryRef, containerRef, itemArray, viewNumber) {
     if (this.modelRef) {
       for (let item of itemArray) {
         let childModelRef = this.modelRef[item.relVal];
-        factoryRef.createComp(containerRef, item, childModelRef);
+        factoryRef.createComp(containerRef, item, childModelRef, viewNumber);
       }
     }
     else {
-      super.AddChildElements(factoryRef, containerRef, itemArray);
+      super.AddChildElements(factoryRef, containerRef, itemArray, viewNumber);
     }
   }
 
   ngOnInit() {
     super.ngOnInit();
-    this.AddChildElements(this.factoryRef, this.wrapperContainer, this.compConfig.items);
+    this.AddChildElements(this.factoryRef, this.wrapperContainer, this.compConfig.items, this.viewNumber);
   }
 }

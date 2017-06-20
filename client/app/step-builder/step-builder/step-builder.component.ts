@@ -10,6 +10,7 @@ import { IntervalObservable } from 'rxjs/observable/IntervalObservable';
 import { TaskDataService } from '../../_services/taskData.service';
 import { ExceptionHandlerService } from '../../shared/exception-handler.service';
 import { LoaderService } from '../../_services/loader.service';
+import { ValidationService } from '../../shared/validation.service';
 
 declare var jQuery;
 declare var localForage;
@@ -226,7 +227,8 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
     }
 
     setSelectedView(viewNumber) {
-        this.selectedView = viewNumber;
+        if(!ValidationService.validateViewAndShowErrors(ValidationService.getValidationErrorsObj("stepBuilder")["view"+viewNumber]))
+            this.selectedView = viewNumber;
     }
     closeStepbuilder() {
         this.checkForModelChange()
@@ -248,6 +250,7 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.eventSrvc["dispose"]();
+        ValidationService.clearValidationErrorsObj("stepBuilder")
     }
 
     displayErrorMessage(errorText) {
