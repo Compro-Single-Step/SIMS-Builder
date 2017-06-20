@@ -60,7 +60,7 @@ class ScriptService {
 
             templateService.getTemplateById(script_meta.template_id),
             mapperService.getMapperByTemplateId(script_meta.template_id),
-            this.getScriptBySleId((script_meta.task_id))
+            this.getScriptBySleId((script_meta.sle_id))
 
         ]).then(( [template, mapper, script] ) => {
 
@@ -88,8 +88,11 @@ class ScriptService {
           function generatePathways(input) {  // todo: update/remove fixed for single item
             var pathways = [];
             for (var i = 0; i < input.length; i++) {
-              pathways.push([('"1","' + input[i] + '"').toString()]);
-              pathways.push('"Primary"');
+
+              let _m = (parseInt(input[i][script_meta.step_number]['index']) + 1).toString();
+
+              pathways.push([('"'+script_meta.step_number+'","' + _m + '"').toString()]);
+              pathways.push('"'+input[i].name+'"');
             }
             return pathways;
           }

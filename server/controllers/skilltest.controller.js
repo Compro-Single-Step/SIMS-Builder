@@ -46,14 +46,16 @@ class SkillTest {
               "pathways": []
             };
 
-            // getting methods list - for a step / template, different implementation required for task methods
+            // getting methods list - for a step
+            // todo: different implementation for task
+
             if (templates[0].items[0].methods.length){
               for(var i in templates[0].items[0].methods) {
 
                 let _m = {
                   name: templates[0].items[0].methods[i].type,
                   "1": {
-                    "index": i,
+                    "method": (parseInt(i) + 1),
                     "type": templates[0].items[0].methods[i].type
                   }
                 }
@@ -99,10 +101,12 @@ class SkillTest {
       let script_meta = {
         template_id: req.body.test_template_id,
         step_number: req.body.step_number,
-        task_id: req.body.task_id,
+        sle_id: req.body.task_id,
+        task_id: (this.splitSleId(req.body.task_id)).task_id,
+        scenario: (this.splitSleId(req.body.task_id)).scenario,
         params: req.body.params,
         pathways: req.body.pathways,
-        appName: ""
+        appName: req.body.app_name
       };
 
       // generate script
@@ -180,13 +184,15 @@ class SkillTest {
         script_meta = {
           template_id: _script.test_template_id,
           step_number: _script.step_number,
-          task_id: _script.task_id,
+          sle_id: _script.task_id,
+          task_id: (this.splitSleId(_script.task_id)).task_id,
+          scenario: (this.splitSleId(_script.task_id)).scenario,
           params: _script.params,
           pathways: _script.pathways,
           appName: _script.app_name
         };
 
-        filename = ((_script.task_id).replace(/\./gi, "_")).trim();
+        filename = ((script_meta.sle_id.replace(/\./gi, "_")).trim());
 
         run_request_body = {
           "user": _run.user,
@@ -244,6 +250,16 @@ class SkillTest {
     })
 
   };
+
+  splitSleId( sle_id ){
+    var lastIndex = sle_id.lastIndexOf(".")
+
+    return {
+      task_id : sle_id.substring(0, lastIndex),
+      scenario : sle_id.substring(lastIndex + 1)
+    };
+
+  }
 
 }
 
