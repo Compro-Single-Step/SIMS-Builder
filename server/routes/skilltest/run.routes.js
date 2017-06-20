@@ -18,4 +18,17 @@ router.post('/', (req, res) => {
     });
 });
 
+router.get('/configurations', (req, res) => {
+
+  skillTestController.getRunConfigurations(req, res)
+    .then((config) => {
+      res.send(config);
+    }, (error) => {
+      res.send(error);
+    });
+
+});
+
+
+
 module.exports = router;
