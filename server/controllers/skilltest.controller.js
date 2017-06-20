@@ -4,7 +4,8 @@ const mapperService = require('./../modules/skilltest/mapper.service'),
   converterService = require('./../modules/skilltest/converter.service'),
   scriptService = require('./../modules/skilltest/script.service'),
   runHandler = require('./../modules/skilltest/run.handler'),
-  config = require('./../config/skilltest.config');
+  config = require('./../config/skilltest.config'),
+  runConfig = require('./../config/skilltest.run.config');
 
 class SkillTest {
 
@@ -250,6 +251,13 @@ class SkillTest {
     })
 
   };
+
+  getRunConfigurations() {
+    // todo: move this conf to database
+    return new Promise((resolve, reject) => {
+      resolve(runConfig);
+    })
+  }
 
   splitSleId( sle_id ){
     var lastIndex = sle_id.lastIndexOf(".")
