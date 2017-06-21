@@ -88,8 +88,6 @@ export class PreviewModalComponent implements OnInit {
                                 if (steps.hasOwnProperty(stepIndex)) {
                                     if (typeof steps[stepIndex] === 'object') {
                                         this.stepsArray.push('Step ' + stepIndex);
-                                    } else {
-                                        this.stepsArray.unshift('checkbox');
                                     }
                                 }
                             }
@@ -100,10 +98,7 @@ export class PreviewModalComponent implements OnInit {
                                 for (const step in element) {
                                     if (element.hasOwnProperty(step)) {
                                         if (typeof steps[step] === 'object') {
-                                            //element[step].index = parseInt(element[step].index) + 1;
                                             pathway.push(element[step]);
-                                        } else {
-                                            pathway.unshift('checkbox');
                                         }
                                     }
                                 }
