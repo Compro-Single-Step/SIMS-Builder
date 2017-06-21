@@ -12,7 +12,8 @@ router.post('/', (req, res) => {
 
   skillTestController.generateScriptAndRun(req, res)
     .then((status) => {
-      res.send(status);}, (error) => {
+      res.send(status);
+    },(error) => {
       res.send(error);
     })
     .catch(er => {
