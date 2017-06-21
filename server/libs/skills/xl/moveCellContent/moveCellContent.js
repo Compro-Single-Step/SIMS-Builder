@@ -135,7 +135,7 @@ class MoveCellContent extends ExcelBaseSkill {
     }
   }
 
-  test_DestinationStartCell(params){
+  test_StartCellNumber(params) {
     return params.destinationRange.split(":")[0].toUpperCase();
   }
 }

@@ -129,8 +129,7 @@ export class PreviewModalComponent implements OnInit {
                     this.LoaderService.setLoaderVisibility(false);
                 }
             });
-        }
-        else {
+        } else {
             //Configure the payload JSON to be send to the server for Automation Testing
             this._configurePayload();
 
@@ -140,12 +139,10 @@ export class PreviewModalComponent implements OnInit {
                     this.LoaderService.setLoaderVisibility(false);
                     this.finalTestConfig['run']['config']['app']['url'] = data['Url'];
                     this.previewService.startAutomationTest(this.finalTestConfig)
-                    // .subscribe(response=>{
-
-                    // },
-                    // error=>{
-                    //     this.displayErrorMessage('Error occurred in Automation Test, please check your test config.');
-                    // });
+                        .subscribe((response) => { },
+                        (error) => {
+                            this.displayErrorMessage('Error occurred in Automation Test, please check your test config.');
+                        });
                 }
             });
         }
@@ -222,7 +219,6 @@ export class PreviewModalComponent implements OnInit {
 
         //calculate run params
         this.finalTestConfig['run']['config'] = this._configureRunParams(this.bindedValues);
-        console.log(this.finalTestConfig);
     }
 
     private _configureTaskScenario(taskInfo) {
@@ -230,7 +226,7 @@ export class PreviewModalComponent implements OnInit {
             test_template_id: taskInfo['testTemplateID'],
             step_number: taskInfo['stepIndex'],
             task_id: taskInfo['taskID']
-        }
+        };
     }
 
     private _configureMethodsConfig(methodCheckboxConfig) {
@@ -311,7 +307,7 @@ export class PreviewModalComponent implements OnInit {
         }
 
         //listen for candidate events
-        pc.onicecandidate = function (ice) {
+        pc.onicecandidate = function(ice) {
             //skip non-candidate events
             if (ice.candidate) {
                 handleCandidate(ice.candidate.candidate);
@@ -322,10 +318,10 @@ export class PreviewModalComponent implements OnInit {
         pc.createDataChannel('');
 
         //create an offer sdp
-        pc.createOffer(function (result) {
+        pc.createOffer(function(result) {
             //trigger the stun server request
-            pc.setLocalDescription(result, function () { }, function () { });
+            pc.setLocalDescription(result, function() { }, function() { });
 
-        }, function () { });
+        }, function() { });
     }
 }
