@@ -177,8 +177,7 @@ class SkillTest {
 
       var _script , _run , script_meta, filename, run_request_body;
 
-      // todo: add validation on request body
-      try {
+
         _script = req.body.script;
         _run = req.body.run;
 
@@ -186,7 +185,7 @@ class SkillTest {
           template_id: _script.test_template_id,
           step_number: _script.step_number,
           sle_id: _script.task_id,
-          task_id: (this.splitSleId(_script.task_id)).task_id,
+          task_id: (splitSleId(_script.task_id)).task_id,
           scenario: (this.splitSleId(_script.task_id)).scenario,
           params: _script.params,
           pathways: _script.pathways,
@@ -214,9 +213,7 @@ class SkillTest {
             "message": ""
           }
         };
-      } catch (er){
-        console.log('error in request body json' + er);
-      }
+
 
       // generate script
       scriptService.generateScript( script_meta )

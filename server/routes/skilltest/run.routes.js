@@ -12,9 +12,11 @@ router.post('/', (req, res) => {
 
   skillTestController.generateScriptAndRun(req, res)
     .then((status) => {
-      res.send(status);
-    }, (error) => {
+      res.send(status);}, (error) => {
       res.send(error);
+    })
+    .catch(er => {
+      res.send(er);
     });
 });
 
@@ -25,6 +27,9 @@ router.get('/configurations', (req, res) => {
       res.send(config);
     }, (error) => {
       res.send(error);
+    })
+    .catch(er => {
+      res.send(er);
     });
 
 });
@@ -32,3 +37,5 @@ router.get('/configurations', (req, res) => {
 
 
 module.exports = router;
+
+

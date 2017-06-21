@@ -20,6 +20,9 @@ router.get('/:templateId', (req, res) => {
       }
     }, (error) => {
       res.send(error);
+    })
+    .catch(er => {
+      res.send(er);
     });
 });
 

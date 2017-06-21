@@ -16,6 +16,9 @@ router.get('/', (req, res) => {
       res.send(templates);
     }, (error) => {
       res.send(error);
+    })
+    .catch(er => {
+      res.send(er);
     });
 });
 
@@ -32,6 +35,9 @@ router.get('/linkages', (req, res) => {
       }
     }, (error) => {
       res.send(error);
+    })
+    .catch(er => {
+      res.send(er);
     });
 });
 
@@ -55,6 +61,9 @@ router.get('/:templateId', (req, res) => {
       }
     }, (error) => {
       res.send(error);
+    })
+    .catch(er => {
+      res.send(er);
     });
 });
 
@@ -72,6 +81,9 @@ router.get('/:templateId/pathways', (req, res) => {
       }
     }, (error) => {
       res.send(error);
+    })
+    .catch(er => {
+      res.send(er);
     });
 });
 
