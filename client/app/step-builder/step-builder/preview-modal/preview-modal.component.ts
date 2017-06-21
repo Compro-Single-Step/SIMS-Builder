@@ -9,6 +9,8 @@ import { initialTestConfig } from './test-config';
 import { stepsData } from './task-steps';
 
 declare var Messenger: any;
+declare const $;
+declare const window;
 
 @Component({
     selector: 'app-preview-modal',
@@ -30,6 +32,7 @@ export class PreviewModalComponent implements OnInit {
     methodCheckboxes: Object;
     stepsArray: Array<string>;
     selectAll: Boolean;
+    userIP: string;
 
     constructor(private previewService: PreviewService, private LoaderService: LoaderService) {
         this.taskInfo = {};
@@ -45,6 +48,12 @@ export class PreviewModalComponent implements OnInit {
         this.selectAll = false;
     }
 
+    getIP() {
+        $.getJSON('https://jsonip.com?callback=?', function (data) {
+            alert('Your IP address is :- ' + data.ip);
+        });
+    }
+
     ngOnInit() {
     }
 
@@ -53,6 +62,10 @@ export class PreviewModalComponent implements OnInit {
         this.taskInfo["stepIndex"] = stepIndex;
         this.taskInfo["devTemplateID"] = templateID;
         this.taskInfo["stepText"] = stepText;
+        this.getUserIP((ip) => {
+            this.userIP = ip;
+            //this.finalTestConfig['run']['user']['ip']= ip;
+        });
 
         //If check to stop server calls on every click of preview button
         if (!this.taskInfo["testTemplateID"]) {
@@ -189,7 +202,7 @@ export class PreviewModalComponent implements OnInit {
     }
 
     updateSelectAllsCheckbox({ event }) {
-        if(!event.target.checked) {
+        if (!event.target.checked) {
             this.selectAll = false;
         }
     }
@@ -238,6 +251,7 @@ export class PreviewModalComponent implements OnInit {
 
         //calculate run params
         this.finalTestConfig["run"]["config"] = this._configureRunParams(this.bindedValues);
+        console.log(this.finalTestConfig);
     }
 
     private _configureTaskScenario(taskInfo) {
@@ -271,6 +285,7 @@ export class PreviewModalComponent implements OnInit {
     }
 
     private _configureRunParams(runParamConfig) {
+
         return {
             "env": runParamConfig["environment"],
             "os": runParamConfig["os"],
@@ -284,7 +299,61 @@ export class PreviewModalComponent implements OnInit {
                 "node": "aws",
                 "name": runParamConfig["browser"],
                 "version": runParamConfig["brversion"],
+            },
+            'user': {
+                'ip': this.userIP,
+                'userdata': {}
             }
         }
+    }
+
+    getUserIP(callback) {
+        var ip_dups = {};
+
+        //compatibility for firefox and chrome
+        var RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
+        var useWebKit = !!window.webkitRTCPeerConnection;
+
+
+        //minimal requirements for data connection
+        var mediaConstraints = {
+            optional: [{ RtpDataChannels: true }]
+        };
+
+        var servers = { iceServers: [{ urls: "stun:stun.services.mozilla.com" }] };
+
+        //construct a new RTCPeerConnection
+        var pc = new RTCPeerConnection(servers, mediaConstraints);
+
+        function handleCandidate(candidate) {
+            //match just the IP address
+            var ip_regex = /([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/
+            var ip_addr = ip_regex.exec(candidate)[1];
+
+            //remove duplicates
+            if (ip_dups[ip_addr] === undefined) {
+                callback(ip_addr);
+            }
+
+            ip_dups[ip_addr] = true;
+        }
+
+        //listen for candidate events
+        pc.onicecandidate = function (ice) {
+            //skip non-candidate events
+            if (ice.candidate) {
+                handleCandidate(ice.candidate.candidate);
+            }
+        };
+
+        //create a bogus data channel
+        pc.createDataChannel("");
+
+        //create an offer sdp
+        pc.createOffer(function (result) {
+            //trigger the stun server request
+            pc.setLocalDescription(result, function () { }, function () { });
+
+        }, function () { });
     }
 }

@@ -103,12 +103,10 @@
                                                 <thead>
                                                     <tr>
                                                         <th *ngFor="let step of stepsArray; let idx = index">
-                                                            <span *ngIf="step === 'checkbox'">
-                                                                <div class="checkbox">
-                                                                    <input id="check-all" name="check-all" type="checkbox" [(ngModel)]="selectAll" (change)="updateMethodsCheckbox({event: $event})">
-                                                                    <label for="check-all"></label>
-                                                                </div>
-                                                            </span>
+                                                            <div class="checkbox" *ngIf="step === 'checkbox'">
+                                                                <input id="check-all" name="check-all" type="checkbox" [(ngModel)]="selectAll" (change)="updateMethodsCheckbox({event: $event})">
+                                                                <label for="check-all"></label>
+                                                            </div>
                                                             <span *ngIf="step !== 'checkbox'">{{step}}</span>
                                                         </th>
                                                     </tr>
