@@ -29,16 +29,16 @@ export class PreviewService {
   }
 
   getTestMethods(testTemplateId: string) {
-    return this.http.get(`/api/skilltest/templates/${testTemplateId}/methods`, null, true)
+    return this.http.get(`/api/skilltest/templates/${testTemplateId}/pathways`, null, true)
       .map((methods) => {
-        methods.json();
+        return methods.json();
       });
   }
 
   getTestTemplateID(devTemplateID: string) {
     return this.http.get(`/api/skilltest/templates/linkages?id=${devTemplateID}`, null, true)
       .map((templateID) => {
-        templateID.json();
+        return templateID.json();
       });
   }
 

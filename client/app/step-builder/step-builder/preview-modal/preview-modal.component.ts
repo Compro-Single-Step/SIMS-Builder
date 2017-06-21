@@ -6,7 +6,7 @@ import { LoaderService } from '../../../_services/loader.service';
 import { BuilderModelObj } from '../../shared/builder-model.service';
 import { skillManager } from '../../shared/skill-manager.service';
 import { initialTestConfig } from './test-config';
-import { stepsData } from './task-steps';
+
 
 declare var Messenger: any;
 declare const $;
@@ -33,6 +33,8 @@ export class PreviewModalComponent implements OnInit {
     stepsArray: Array<string>;
     selectAll: Boolean;
     userIP: string;
+    methodObject: Object;
+
 
     constructor(private previewService: PreviewService, private LoaderService: LoaderService) {
         this.taskInfo = {};
@@ -41,7 +43,7 @@ export class PreviewModalComponent implements OnInit {
             'environment': []
         };
         this.bindedValues = {};
-        this.finalTestConfig = { "script": {}, "run": {} };
+        this.finalTestConfig = { 'script': {}, 'run': {} };
         this.builderModelSrvc = BuilderModelObj;
         this.methodCheckboxes = {};
         this.stepsArray = [];
@@ -58,122 +60,117 @@ export class PreviewModalComponent implements OnInit {
     }
 
     setTaskData(taskID, stepIndex, templateID, stepText) {
-        this.taskInfo["taskID"] = taskID;
-        this.taskInfo["stepIndex"] = stepIndex;
-        this.taskInfo["devTemplateID"] = templateID;
-        this.taskInfo["stepText"] = stepText;
+        this.taskInfo['taskID'] = taskID;
+        this.taskInfo['stepIndex'] = stepIndex;
+        this.taskInfo['devTemplateID'] = templateID;
+        this.taskInfo['stepText'] = stepText;
         this.getUserIP((ip) => {
             this.userIP = ip;
             //this.finalTestConfig['run']['user']['ip']= ip;
         });
 
         //If check to stop server calls on every click of preview button
-        if (!this.taskInfo["testTemplateID"]) {
+        if (!this.taskInfo['testTemplateID']) {
             //Fetch test template ID
-            // this.previewService.getTestTemplateID(this.taskInfo["devTemplateID"])
-            //     .subscribe((testTemplateID) => {
-            //         this.taskInfo["testTemplateID"] = testTemplateID;
+            this.previewService.getTestTemplateID(this.taskInfo['devTemplateID'])
+                .subscribe((testTemplateID) => {
+                    this.taskInfo['testTemplateID'] = testTemplateID[0].test_template_id;
 
-            //         //Fetch All Test Methods
-            //         this.previewService.getTestMethods(this.taskInfo["testTemplateID"])
-            //             .subscribe(methodsObj => {
+                    //Fetch All Test Methods
+                    this.previewService.getTestMethods(this.taskInfo['testTemplateID'])
+                        .subscribe(methodsObj => {
 
-            //                 for (let obj of methodsObj.methods) {
-            //                     this.testMethods.push(`M${obj.index + 1} - ${obj.type}`);
-            //                 }
-            //             });
+                            this.methodObject = methodsObj['pathways'];
+                            this.renderingConfig['pathways'] = [];
+                            const steps = methodsObj['pathways'][0];
+                            this.stepsArray = [];
+                            for (const stepIndex in steps) {
+                                if (steps.hasOwnProperty(stepIndex)) {
+                                    if (typeof steps[stepIndex] === 'object') {
+                                        this.stepsArray.push('Step ' + stepIndex);
+                                    } else {
+                                        this.stepsArray.unshift('checkbox');
+                                    }
+                                }
+                            }
 
-            //         //Show Modal Dialog
-            //         //this.PreviewModalDialog.show();
-            //     });
+                            const pathways = methodsObj['pathways'];
+                            pathways.forEach((element, index) => {
+                                const pathway = [];
+                                for (const step in element) {
+                                    if (element.hasOwnProperty(step)) {
+                                        if (typeof steps[step] === 'object') {
+                                            //element[step].index = parseInt(element[step].index) + 1;
+                                            pathway.push(element[step]);
+                                        } else {
+                                            pathway.unshift('checkbox');
+                                        }
+                                    }
+                                }
+                                this.methodCheckboxes[index + 1] = false;
+                                this.renderingConfig['pathways'].push(pathway);
+                            });
+
+                            this.updateOSList();
+                        });
+                });
 
             //Rendering step and methods
             this.renderingConfig['environment'] = initialTestConfig['options']['environment'];
-            this.renderingConfig['pathways'] = [];
-            const steps = stepsData['pathways'][0];
-            this.stepsArray = [];
-            for (const stepIndex in steps) {
-                if (steps.hasOwnProperty(stepIndex)) {
-                    if (typeof steps[stepIndex] === 'object') {
-                        this.stepsArray.push('Step ' + stepIndex);
-                    } else {
-                        this.stepsArray.unshift('checkbox');
-                    }
-                }
-            }
 
-            const pathways = stepsData['pathways'];
-            pathways.forEach((element, index) => {
-                const pathway = [];
-                for (const step in element) {
-                    if (element.hasOwnProperty(step)) {
-                        if (typeof steps[step] === 'object') {
-                            element[step].index = parseInt(element[step].index) + 1;
-                            pathway.push(element[step]);
-                        } else {
-                            pathway.unshift('checkbox');
-                        }
-                    }
-                }
-                this.methodCheckboxes[index + 1] = false;
-                this.renderingConfig['pathways'].push(pathway);
-            });
 
             // for (const key in steps) {
             //     if (steps.hasOwnProperty(key)) {
-            //         this.renderingConfig["steps"].push(steps[key]);
-            //         const step = this.renderingConfig["steps"][key];
+            //         this.renderingConfig['steps'].push(steps[key]);
+            //         const step = this.renderingConfig['steps'][key];
             //         this.methodCheckboxes[key] = {};
-            //         this.renderingConfig["steps"][parseInt(key) - 1]["methods"].forEach((element) => {
+            //         this.renderingConfig['steps'][parseInt(key) - 1]['methods'].forEach((element) => {
             //             element.index = parseInt(element.index) + 1;
             //             this.methodCheckboxes[key][element.index] = false;
             //         });
             //     }
             // }
             //TO BE REMOVED
-            this.taskInfo["testTemplateID"] = "dummy";
+            //this.taskInfo['testTemplateID'] = 'dummy';
 
             //Fill Default values
             this.bindedValues = {
-                "launchScenario": "preview",
-                "environment": initialTestConfig["defaults"]["environment"],
-                "browser": initialTestConfig["defaults"]["browser"],
-                "os": initialTestConfig["defaults"]["os"],
-                "screenresolution": "1200X900",
-                "brversion": 1,
-            }
-
-            this.updateOSList();
-            this.updateBrowserList();
+                'launchScenario': 'preview',
+                'environment': initialTestConfig['defaults']['environment'],
+                'browser': initialTestConfig['defaults']['browser'],
+                'os': initialTestConfig['defaults']['os'],
+                'screenresolution': '1200X900',
+                'brversion': 1,
+            };
         }
         this.PreviewModalDialog.show();
     }
 
     runPreview() {
-        if (this.bindedValues["launchScenario"] === "preview") {
+        if (this.bindedValues['launchScenario'] === 'preview') {
             //Launch Preview Simulation
             this._previewTask((data) => {
-                if (data["Url"]) {
-                    this.previewWindow = this.previewService.previewSimulation(data["Url"]);
+                if (data['Url']) {
+                    this.previewWindow = this.previewService.previewSimulation(data['Url']);
                     this.LoaderService.setLoaderVisibility(false);
                 }
             });
         }
-        else if (this.bindedValues["launchScenario"] === "test") {
+        else if (this.bindedValues['launchScenario'] === 'test') {
             //Configure the payload JSON to be send to the server for Automation Testing
             this._configurePayload();
 
             //Launch Automation Test
             this._previewTask((data) => {
-                if (data["Url"]) {
+                if (data['Url']) {
                     this.LoaderService.setLoaderVisibility(false);
-                    this.finalTestConfig["run"]["config"]["app"]["url"] = data["Url"];
+                    this.finalTestConfig['run']['config']['app']['url'] = data['Url'];
                     this.previewService.startAutomationTest(this.finalTestConfig)
                     // .subscribe(response=>{
 
                     // },
                     // error=>{
-                    //     this.displayErrorMessage("Error occurred in Automation Test, please check your test config.");
+                    //     this.displayErrorMessage('Error occurred in Automation Test, please check your test config.');
                     // });
                 }
             });
@@ -184,11 +181,12 @@ export class PreviewModalComponent implements OnInit {
     }
 
     updateOSList() {
-        this.renderingConfig["os"] = initialTestConfig["options"]["os"][this.bindedValues["environment"]];
+        this.renderingConfig['os'] = initialTestConfig['options']['os'][this.bindedValues['environment']];
+        this.updateBrowserList();
     }
 
     updateBrowserList() {
-        this.renderingConfig["browser"] = initialTestConfig["options"]["browser"][this.bindedValues["os"]];
+        this.renderingConfig['browser'] = initialTestConfig['options']['browser'][this.bindedValues['os']];
     }
 
     updateMethodsCheckbox({ event }) {
@@ -225,7 +223,7 @@ export class PreviewModalComponent implements OnInit {
     }
 
     private _previewTask(callback) {
-        this.previewService.previewTask(this.taskInfo["taskID"], this.taskInfo["stepIndex"], this.taskInfo["devTemplateID"], this.taskInfo["stepText"])
+        this.previewService.previewTask(this.taskInfo['taskID'], this.taskInfo['stepIndex'], this.taskInfo['devTemplateID'], this.taskInfo['stepText'])
             .subscribe(response => {
                 let data = response.json();
                 callback(data);
@@ -233,32 +231,32 @@ export class PreviewModalComponent implements OnInit {
             (error) => {
                 this.LoaderService.setLoaderVisibility(false);
                 error = error.json();
-                this.displayErrorMessage("Error occurred in Step preview, please check your inputs.");
+                this.displayErrorMessage('Error occurred in Step preview, please check your inputs.');
             });
     }
 
     private _configurePayload() {
         //Calculate Task Scenario
-        this.finalTestConfig["script"] = this._configureTaskScenario(this.taskInfo);
+        this.finalTestConfig['script'] = this._configureTaskScenario(this.taskInfo);
 
         //Calculate params
         let stepUIState = this.builderModelSrvc.getState();
-        let testParams = stepUIState["testParams"];
-        this.finalTestConfig["script"]["params"] = this.builderModelSrvc.evaluateParams(stepUIState, testParams, skillManager.skillTranslator);
+        let testParams = stepUIState['testParams'];
+        this.finalTestConfig['script']['params'] = this.builderModelSrvc.evaluateParams(stepUIState, testParams, skillManager.skillTranslator);
 
         //Calculate methods config
-        this.finalTestConfig["script"]["methods"] = this._configureMethodsConfig(this.methodCheckboxes)
+        this.finalTestConfig['script']['pathways'] = this._configureMethodsConfig(this.methodCheckboxes)
 
         //calculate run params
-        this.finalTestConfig["run"]["config"] = this._configureRunParams(this.bindedValues);
+        this.finalTestConfig['run']['config'] = this._configureRunParams(this.bindedValues);
         console.log(this.finalTestConfig);
     }
 
     private _configureTaskScenario(taskInfo) {
         return {
-            test_template_id: taskInfo["testTemplateID"],
-            step_number: taskInfo["stepIndex"],
-            task_id: taskInfo["taskID"]
+            test_template_id: taskInfo['testTemplateID'],
+            step_number: taskInfo['stepIndex'],
+            task_id: taskInfo['taskID']
         }
     }
 
@@ -268,12 +266,13 @@ export class PreviewModalComponent implements OnInit {
         let tempObj = {}
         for (let stepNumber in methodCheckboxConfig) {
             if (methodCheckboxConfig[stepNumber]) {
-                let pathway = this.renderingConfig['pathways'][parseInt(stepNumber) - 1];
-                let methods = "";
-                for (let i = 1; i < pathway.length; i++) {
-                    methods += pathway[i].index;
-                }
-                pathwayArray.push(methods);
+                pathwayArray.push(this.methodObject[parseInt(stepNumber) - 1]);
+                // let pathway = this.renderingConfig['pathways'][parseInt(stepNumber) - 1];
+                // let methods = '';
+                // for (let i = 1; i < pathway.length; i++) {
+                //     methods += pathway[i].index;
+                // }
+                // pathwayArray.push(methods);
             }
             // tempObj[stepNumber] = [];
             // for (let methodNumber in methodCheckboxConfig[stepNumber]) {
@@ -287,18 +286,18 @@ export class PreviewModalComponent implements OnInit {
     private _configureRunParams(runParamConfig) {
 
         return {
-            "env": runParamConfig["environment"],
-            "os": runParamConfig["os"],
-            "resolution": runParamConfig["screenresolution"],
-            "app": {
-                "url": "",
-                "public": "false",
-                "build": ""
+            'env': runParamConfig['environment'],
+            'os': runParamConfig['os'],
+            'resolution': runParamConfig['screenresolution'],
+            'app': {
+                'url': '',
+                'public': 'false',
+                'build': ''
             },
-            "browser": {
-                "node": "aws",
-                "name": runParamConfig["browser"],
-                "version": runParamConfig["brversion"],
+            'browser': {
+                'node': runParamConfig['client'],
+                'name': runParamConfig['browser'],
+                'version': runParamConfig['brversion'],
             },
             'user': {
                 'ip': this.userIP,
@@ -320,7 +319,7 @@ export class PreviewModalComponent implements OnInit {
             optional: [{ RtpDataChannels: true }]
         };
 
-        var servers = { iceServers: [{ urls: "stun:stun.services.mozilla.com" }] };
+        var servers = { iceServers: [{ urls: 'stun:stun.services.mozilla.com' }] };
 
         //construct a new RTCPeerConnection
         var pc = new RTCPeerConnection(servers, mediaConstraints);
@@ -347,7 +346,7 @@ export class PreviewModalComponent implements OnInit {
         };
 
         //create a bogus data channel
-        pc.createDataChannel("");
+        pc.createDataChannel('');
 
         //create an offer sdp
         pc.createOffer(function (result) {
