@@ -75,7 +75,7 @@ module.exports = class BaseSkill {
         }
         else {
             var resolveParams = { "attrValue": "" };
-            return Promise.resolve(resolveParams);
+            return Promise.reject(resolveParams);
         }
     }
 
