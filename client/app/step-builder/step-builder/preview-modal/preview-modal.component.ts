@@ -5,8 +5,6 @@ import { PreviewService } from '../../../_services/preview.service';
 import { LoaderService } from '../../../_services/loader.service';
 import { BuilderModelObj } from '../../shared/builder-model.service';
 import { skillManager } from '../../shared/skill-manager.service';
-import { initialTestConfig } from './test-config';
-
 
 declare var Messenger: any;
 declare const $;
@@ -34,7 +32,7 @@ export class PreviewModalComponent implements OnInit {
     selectAll: Boolean;
     userIP: string;
     methodObject: Object;
-
+    initialTestConfig: Object;
 
     constructor(private previewService: PreviewService, private LoaderService: LoaderService) {
         this.taskInfo = {};
@@ -48,12 +46,6 @@ export class PreviewModalComponent implements OnInit {
         this.methodCheckboxes = {};
         this.stepsArray = [];
         this.selectAll = false;
-    }
-
-    getIP() {
-        $.getJSON('https://jsonip.com?callback=?', function (data) {
-            alert('Your IP address is :- ' + data.ip);
-        });
     }
 
     ngOnInit() {
@@ -111,32 +103,19 @@ export class PreviewModalComponent implements OnInit {
                 });
 
             //Rendering step and methods
-            this.renderingConfig['environment'] = initialTestConfig['options']['environment'];
-
-
-            // for (const key in steps) {
-            //     if (steps.hasOwnProperty(key)) {
-            //         this.renderingConfig['steps'].push(steps[key]);
-            //         const step = this.renderingConfig['steps'][key];
-            //         this.methodCheckboxes[key] = {};
-            //         this.renderingConfig['steps'][parseInt(key) - 1]['methods'].forEach((element) => {
-            //             element.index = parseInt(element.index) + 1;
-            //             this.methodCheckboxes[key][element.index] = false;
-            //         });
-            //     }
-            // }
-            //TO BE REMOVED
-            //this.taskInfo['testTemplateID'] = 'dummy';
-
-            //Fill Default values
-            this.bindedValues = {
-                'launchScenario': 'preview',
-                'environment': initialTestConfig['defaults']['environment'],
-                'browser': initialTestConfig['defaults']['browser'],
-                'os': initialTestConfig['defaults']['os'],
-                'screenresolution': '1200X900',
-                'brversion': 1,
-            };
+            this.previewService.getInitialTestConfig()
+                .subscribe((initialTestConfig) => {
+                    this.initialTestConfig = initialTestConfig;
+                    this.renderingConfig['environment'] = initialTestConfig['options']['environment'];
+                    this.bindedValues = {
+                        'launchScenario': 'preview',
+                        'environment': initialTestConfig['defaults']['environment'],
+                        'browser': initialTestConfig['defaults']['browser'],
+                        'os': initialTestConfig['defaults']['os'],
+                        'screenresolution': '1200X900',
+                        'brversion': 1,
+                    };
+                });
         }
         this.PreviewModalDialog.show();
     }
@@ -151,7 +130,7 @@ export class PreviewModalComponent implements OnInit {
                 }
             });
         }
-        else if (this.bindedValues['launchScenario'] === 'test') {
+        else {
             //Configure the payload JSON to be send to the server for Automation Testing
             this._configurePayload();
 
@@ -170,18 +149,17 @@ export class PreviewModalComponent implements OnInit {
                 }
             });
         }
-        else { }
 
         this.PreviewModalDialog.hide();
     }
 
     updateOSList() {
-        this.renderingConfig['os'] = initialTestConfig['options']['os'][this.bindedValues['environment']];
+        this.renderingConfig['os'] = this.initialTestConfig['options']['os'][this.bindedValues['environment']];
         this.updateBrowserList();
     }
 
     updateBrowserList() {
-        this.renderingConfig['browser'] = initialTestConfig['options']['browser'][this.bindedValues['os']];
+        this.renderingConfig['browser'] = this.initialTestConfig['options']['browser'][this.bindedValues['os']];
     }
 
     updateMethodsCheckbox({ event }) {

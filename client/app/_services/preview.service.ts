@@ -42,6 +42,13 @@ export class PreviewService {
       });
   }
 
+  getInitialTestConfig() {
+    return this.http.get('/api/skilltest/run/configurations', null, true)
+      .map((testConfig) => {
+        return testConfig.json();
+      });
+  }
+
   previewSimulation(url: string) {
     window.open(url, '_blank', 'location=yes,scrollbars=yes,status=yes')
   }
