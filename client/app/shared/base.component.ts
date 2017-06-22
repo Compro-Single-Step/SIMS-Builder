@@ -163,7 +163,8 @@ export class BaseComponent implements OnInit, OnDestroy {
     }
 
     addValidations() {
-        //Comp dynamically created (unlike label component)
+        // viewNumber is set for the Components that are created dynamically,
+        // unlike label component. Validations are required only for such components.
         if (this.viewNumber) {
             let tempErrorObj = this.validationService.setValidationErrorsUsingUIConfig(this.compConfig);
             let stepBuilderValidationObj = ValidationService.getValidationErrorsObj("stepBuilder");
