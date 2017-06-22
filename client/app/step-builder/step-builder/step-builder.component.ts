@@ -227,7 +227,7 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
     }
 
     setSelectedView(viewNumber) {
-        if(!ValidationService.validateViewAndShowErrors(ValidationService.getValidationErrorsObj("stepBuilder")["view"+viewNumber]))
+        if(!ValidationService.validateViewAndShowErrors(ValidationService.getValidationErrorsObj("stepBuilder")["view"+this.selectedView]))
             this.selectedView = viewNumber;
     }
     closeStepbuilder() {
