@@ -21,8 +21,7 @@ export class PreviewService {
                 this.res = res.json();
                 if (this.res.status == "success") {
                     return this.http.get("/api/taskPreview", { search: previewparams }, true);
-                }
-                else {
+                } else {
                     return Observable.throw(this.res["error"]);
                 }
             })
