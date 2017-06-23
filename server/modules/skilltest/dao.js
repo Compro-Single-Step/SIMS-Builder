@@ -4,7 +4,8 @@ const config = require('./../../config/skilltest.config'),
     [config.dao.script]: require('./../../models/skilltest/script.model.js'),
     [config.dao.template]: require('./../../models/skilltest/template.model.js'),
     [config.dao.locator]: require('./../../models/skilltest/locator.model.js'),
-    [config.dao.linkage]: require('./../../models/skilltest/linkage.model.js')
+    [config.dao.linkage]: require('./../../models/skilltest/linkage.model.js'),
+    [config.dao.task_template_map]: require('./../../models/skilltest/taskTemplateMap.model.js')
   };
 
 class Dao {
