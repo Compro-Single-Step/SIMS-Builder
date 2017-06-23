@@ -69,9 +69,10 @@ router.get('/:templateId', (req, res) => {
 
 router.get('/:templateId/pathways', (req, res) => {
   let appType   = req.query.app,
+    step_no   = req.query.step,
     templateId  = req.params.templateId;
 
-  skillTestController.getPathwaysByTemplateId(templateId, appType)
+  skillTestController.getPathwaysByTemplateId(templateId, step_no, appType)
     .then((methods) => {
 
       if(methods.length === 0) {

@@ -3,6 +3,7 @@ const mapperService = require('./../modules/skilltest/mapper.service'),
   locatorService = require('./../modules/skilltest/locator.service'),
   converterService = require('./../modules/skilltest/converter.service'),
   scriptService = require('./../modules/skilltest/script.service'),
+  taskService = require('./../modules/skilltest/task.service'),
   runHandler = require('./../modules/skilltest/run.handler'),
   config = require('./../config/skilltest.config'),
   runConfig = require('./../config/skilltest.run.config');
@@ -31,46 +32,6 @@ class SkillTest {
   getTemplateLinkage(templateId) {
 
     return templateService.getTemplateLinkage(templateId);
-  }
-
-  getPathwaysByTemplateId(templateId, appType) {
-
-    return new Promise((resolve, reject) => {
-      templateService.getTemplateById(templateId, appType)
-        .then((templates) => {
-
-          if(!templates.length) {
-            reject(config.messages.notFound);
-          } else {
-            var _methods = {
-              "test_template_id" : templates[0].uuid,
-              "pathways": []
-            };
-
-            // getting methods list - for a step
-            // todo: different implementation for task
-
-            if (templates[0].items[0].methods.length){
-              for(var i in templates[0].items[0].methods) {
-
-                let _m = {
-                  name: templates[0].items[0].methods[i].type,
-                  "1": {
-                    "method": (parseInt(i) + 1),
-                    "type": templates[0].items[0].methods[i].type
-                  }
-                }
-                _methods.pathways.push(_m);
-              }
-            }
-
-            resolve(_methods);
-          }
-        }, (error) => {
-          reject(error);
-        });
-
-    })
   }
 
   /**
@@ -258,6 +219,13 @@ class SkillTest {
       resolve(runConfig);
     })
   }
+
+
+  getPathwaysByTaskId(task_id, step_no, appType) {
+
+    return taskService.getPathwaysForTask(task_id, step_no);
+  }
+
 
   splitSleId( sle_id ){
     var lastIndex = sle_id.lastIndexOf(".")

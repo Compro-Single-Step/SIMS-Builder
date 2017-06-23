@@ -6,7 +6,7 @@ const dao = require('./dao'),
 class ScriptService {
 
   saveScript( scriptData ) {
-    return dao.save(config.dao.script ,scriptData );
+    return dao.save( config.dao.script ,scriptData );
   };
 
   getScriptList(appType) {
@@ -62,7 +62,9 @@ class ScriptService {
             mapperService.getMapperByTemplateId(script_meta.template_id),
             this.getScriptBySleId((script_meta.sle_id))
 
-        ]).then(( [template, mapper, script] ) => {
+        ]).
+        then(( [template, mapper, script] ) =>
+      {
 
           _data = {
             template: template[0],

@@ -23,7 +23,8 @@ const config = {
       template: 'template',
       mapper: 'mapper',
       locator: 'locator',
-      linkage : 'linkage'
+      linkage : 'linkage',
+      task_template_map: 'task_template_map'
     },
     script: {
       getBlankScript: getBlankScript
