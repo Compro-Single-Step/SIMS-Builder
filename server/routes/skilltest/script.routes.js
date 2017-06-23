@@ -17,6 +17,9 @@ router.get('/', (req, res) => {
       res.send(scripts);
     }, (error) => {
       res.send(error);
+    })
+    .catch(er => {
+      res.send(er);
     });
 });
 
@@ -50,6 +53,9 @@ router.get('/:sleId', (req, res) => {
 
     }, (error) => {
       res.send(error);
+    })
+    .catch(er => {
+      res.send(er);
     });
 });
 
@@ -80,6 +86,9 @@ router.get('/:sleId/pathways', (req, res) => {
 
     }, (error) => {
       res.send(error);
+    })
+    .catch(er => {
+      res.send(er);
     });
 });
 
@@ -90,6 +99,9 @@ router.post('/', (req, res) => {
       res.send(status);
     }, (error) => {
       res.send(error);
+    })
+    .catch(er => {
+      res.send(er);
     });
 });
 

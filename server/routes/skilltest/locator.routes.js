@@ -16,6 +16,9 @@ router.get('/:app', (req, res) => {
       res.send(locators);
     }, (error) => {
       res.send(error);
+    })
+    .catch(er => {
+      res.send(er);
     });
 });
 

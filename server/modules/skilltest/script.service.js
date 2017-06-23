@@ -89,7 +89,7 @@ class ScriptService {
             var pathways = [];
             for (var i = 0; i < input.length; i++) {
 
-              let _m = (parseInt(input[i][script_meta.step_number]['index']) + 1).toString();
+              let _m = (input[i][script_meta.step_number]['method']).toString();
 
               pathways.push([('"'+script_meta.step_number+'","' + _m + '"').toString()]);
               pathways.push('"'+input[i].name+'"');
