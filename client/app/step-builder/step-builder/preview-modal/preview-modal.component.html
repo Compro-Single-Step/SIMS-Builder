@@ -55,7 +55,7 @@
                                         <option *ngFor="let browser of renderingConfig.browser" [value]="browser.key">{{browser.label}}</option>
                                     </select>
                                     </div>
-                                    <div class="col-sm-2 pl-0">
+                                    <div class="col-sm-2 pl-0" *ngIf="bindedValues.environment === 'saucelabs'">
                                         <input type="number" min="1" name="brversion" [(ngModel)]="bindedValues.brversion" class="form-control" placeholder="Ver.">
                                     </div>
                                 </div>

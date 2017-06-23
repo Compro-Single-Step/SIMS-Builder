@@ -58,17 +58,17 @@ export class PreviewModalComponent implements OnInit {
         this.taskInfo['stepText'] = stepText;
         this.getUserIP((ip) => {
             this.userIP = ip;
-            //this.finalTestConfig['run']['user']['ip']= ip;
+            // this.finalTestConfig['run']['user']['ip']= ip;
         });
 
-        //If check to stop server calls on every click of preview button
+        // If check to stop server calls on every click of preview button
         if (!this.taskInfo['testTemplateID']) {
-            //Fetch test template ID
+            // Fetch test template ID
             this.previewService.getTestTemplateID(this.taskInfo['devTemplateID'])
                 .subscribe((testTemplateID) => {
                     this.taskInfo['testTemplateID'] = testTemplateID[0].test_template_id;
 
-                    //Fetch All Test Methods
+                    // Fetch All Test Methods
                     this.previewService.getTestMethods(this.taskInfo['testTemplateID'])
                         .subscribe(methodsObj => {
 
@@ -102,7 +102,7 @@ export class PreviewModalComponent implements OnInit {
                         });
                 });
 
-            //Rendering step and methods
+            // Rendering step and methods
             this.previewService.getInitialTestConfig()
                 .subscribe((initialTestConfig) => {
                     this.initialTestConfig = initialTestConfig;
@@ -122,7 +122,7 @@ export class PreviewModalComponent implements OnInit {
 
     runPreview() {
         if (this.bindedValues['launchScenario'] === 'preview') {
-            //Launch Preview Simulation
+            // Launch Preview Simulation
             this._previewTask((data) => {
                 if (data['Url']) {
                     this.previewWindow = this.previewService.previewSimulation(data['Url']);
@@ -130,10 +130,10 @@ export class PreviewModalComponent implements OnInit {
                 }
             });
         } else {
-            //Configure the payload JSON to be send to the server for Automation Testing
+            // Configure the payload JSON to be send to the server for Automation Testing
             this._configurePayload();
 
-            //Launch Automation Test
+            // Launch Automation Test
             this._previewTask((data) => {
                 if (data['Url']) {
                     this.LoaderService.setLoaderVisibility(false);
@@ -206,18 +206,18 @@ export class PreviewModalComponent implements OnInit {
     }
 
     private _configurePayload() {
-        //Calculate Task Scenario
+        // Calculate Task Scenario
         this.finalTestConfig['script'] = this._configureTaskScenario(this.taskInfo);
 
-        //Calculate params
+        // Calculate params
         let stepUIState = this.builderModelSrvc.getState();
         let testParams = stepUIState['testParams'];
         this.finalTestConfig['script']['params'] = this.builderModelSrvc.evaluateParams(stepUIState, testParams, skillManager.skillTranslator);
 
-        //Calculate methods config
+        // Calculate methods config
         this.finalTestConfig['script']['pathways'] = this._configureMethodsConfig(this.methodCheckboxes)
 
-        //calculate run params
+        // calculate run params
         this.finalTestConfig['run']['config'] = this._configureRunParams(this.bindedValues);
     }
 
@@ -235,19 +235,8 @@ export class PreviewModalComponent implements OnInit {
         let tempObj = {}
         for (let stepNumber in methodCheckboxConfig) {
             if (methodCheckboxConfig[stepNumber]) {
-                pathwayArray.push(this.methodObject[parseInt(stepNumber) - 1]);
-                // let pathway = this.renderingConfig['pathways'][parseInt(stepNumber) - 1];
-                // let methods = '';
-                // for (let i = 1; i < pathway.length; i++) {
-                //     methods += pathway[i].index;
-                // }
-                // pathwayArray.push(methods);
+                pathwayArray.push(this.methodObject[parseInt(stepNumber, 10) - 1]);
             }
-            // tempObj[stepNumber] = [];
-            // for (let methodNumber in methodCheckboxConfig[stepNumber]) {
-            //     if (methodCheckboxConfig[stepNumber][methodNumber])
-            //         tempObj[stepNumber].push(methodNumber);
-            // }
         };
         return pathwayArray;
     }
@@ -276,29 +265,28 @@ export class PreviewModalComponent implements OnInit {
     }
 
     getUserIP(callback) {
-        var ip_dups = {};
+        const ip_dups = {};
 
-        //compatibility for firefox and chrome
-        var RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
-        var useWebKit = !!window.webkitRTCPeerConnection;
+        // compatibility for firefox and chrome
+        const RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
+        const useWebKit = !!window.webkitRTCPeerConnection;
 
-
-        //minimal requirements for data connection
-        var mediaConstraints = {
+        // minimal requirements for data connection
+        const mediaConstraints = {
             optional: [{ RtpDataChannels: true }]
         };
 
-        var servers = { iceServers: [{ urls: 'stun:stun.services.mozilla.com' }] };
+        const servers = { iceServers: [{ urls: 'stun:stun.services.mozilla.com' }] };
 
-        //construct a new RTCPeerConnection
-        var pc = new RTCPeerConnection(servers, mediaConstraints);
+        // construct a new RTCPeerConnection
+        const pc = new RTCPeerConnection(servers, mediaConstraints);
 
         function handleCandidate(candidate) {
-            //match just the IP address
-            var ip_regex = /([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/
-            var ip_addr = ip_regex.exec(candidate)[1];
+            // match just the IP address
+            const ip_regex = /([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/
+            const ip_addr = ip_regex.exec(candidate)[1];
 
-            //remove duplicates
+            // remove duplicates
             if (ip_dups[ip_addr] === undefined) {
                 callback(ip_addr);
             }
@@ -306,22 +294,22 @@ export class PreviewModalComponent implements OnInit {
             ip_dups[ip_addr] = true;
         }
 
-        //listen for candidate events
-        pc.onicecandidate = function(ice) {
-            //skip non-candidate events
+        // listen for candidate events
+        pc.onicecandidate = function (ice) {
+            // skip non-candidate events
             if (ice.candidate) {
                 handleCandidate(ice.candidate.candidate);
             }
         };
 
-        //create a bogus data channel
+        // create a bogus data channel
         pc.createDataChannel('');
 
-        //create an offer sdp
-        pc.createOffer(function(result) {
-            //trigger the stun server request
-            pc.setLocalDescription(result, function() { }, function() { });
+        // create an offer sdp
+        pc.createOffer(function (result) {
+            // trigger the stun server request
+            pc.setLocalDescription(result, function () { }, function () { });
 
-        }, function() { });
+        }, function () { });
     }
 }
