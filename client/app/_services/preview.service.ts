@@ -27,8 +27,8 @@ export class PreviewService {
             })
     }
 
-    getTestMethods(testTemplateId: string) {
-        return this.http.get(`/api/skilltest/templates/${testTemplateId}/pathways`, null, true)
+    getTestMethods(taskId: string, stepIndex: string) {
+        return this.http.get(`/api/skilltest/tasks/${taskId}/pathways?step=${stepIndex}`, null, true)
             .map((methods) => {
                 return methods.json();
             });

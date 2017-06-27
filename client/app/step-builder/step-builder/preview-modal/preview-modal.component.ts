@@ -65,41 +65,41 @@ export class PreviewModalComponent implements OnInit {
         if (!this.taskInfo['testTemplateID']) {
             // Fetch test template ID
             this.previewService.getTestTemplateID(this.taskInfo['devTemplateID'])
-                .subscribe((testTemplateID) => {
-                    this.taskInfo['testTemplateID'] = testTemplateID[0].test_template_id;
+                .subscribe((templageObject) => {
+                    this.taskInfo['testTemplateID'] = templageObject.test_template_id;
+                });
 
-                    // Fetch All Test Methods
-                    this.previewService.getTestMethods(this.taskInfo['testTemplateID'])
-                        .subscribe(methodsObj => {
+            // Fetch All Test Methods
+            this.previewService.getTestMethods(this.taskInfo['taskID'], this.taskInfo['stepIndex'])
+                .subscribe(methodsObj => {
 
-                            this.methodObject = methodsObj['pathways'];
-                            this.renderingConfig['pathways'] = [];
-                            const steps = methodsObj['pathways'][0];
-                            this.stepsArray = [];
-                            for (const stepIndex in steps) {
-                                if (steps.hasOwnProperty(stepIndex)) {
-                                    if (typeof steps[stepIndex] === 'object') {
-                                        this.stepsArray.push('Step ' + stepIndex);
-                                    }
+                    this.methodObject = methodsObj['pathways'];
+                    this.renderingConfig['pathways'] = [];
+                    const steps = methodsObj['pathways'][0];
+                    this.stepsArray = [];
+                    for (const stepIndex in steps) {
+                        if (steps.hasOwnProperty(stepIndex)) {
+                            if (typeof steps[stepIndex] === 'object') {
+                                this.stepsArray.push('Step ' + stepIndex);
+                            }
+                        }
+                    }
+
+                    const pathways = methodsObj['pathways'];
+                    pathways.forEach((element, index) => {
+                        const pathway = [];
+                        for (const step in element) {
+                            if (element.hasOwnProperty(step)) {
+                                if (typeof steps[step] === 'object') {
+                                    pathway.push(element[step]);
                                 }
                             }
+                        }
+                        this.methodCheckboxes[index + 1] = false;
+                        this.renderingConfig['pathways'].push(pathway);
+                    });
 
-                            const pathways = methodsObj['pathways'];
-                            pathways.forEach((element, index) => {
-                                const pathway = [];
-                                for (const step in element) {
-                                    if (element.hasOwnProperty(step)) {
-                                        if (typeof steps[step] === 'object') {
-                                            pathway.push(element[step]);
-                                        }
-                                    }
-                                }
-                                this.methodCheckboxes[index + 1] = false;
-                                this.renderingConfig['pathways'].push(pathway);
-                            });
-
-                            this.updateOSList();
-                        });
+                    this.updateOSList();
                 });
 
             // Rendering step and methods
