@@ -27,7 +27,7 @@ export class ViewNavigatorComponent implements OnInit, OnChanges {
   }
 
   setSelectedView(viewNumber: number) {
-    if(!ValidationService.validateViewAndShowErrors(this.validationErrors["view"+this.selectedViewNumber]) && viewNumber <= this.selectedViewNumber + 1)
+    if(viewNumber <= this.selectedViewNumber || !ValidationService.validateViewAndShowErrors(this.validationErrors["view"+this.selectedViewNumber]) && viewNumber <= this.selectedViewNumber + 1)
       this.viewClicked.emit({viewNumber: viewNumber});
   }
 }

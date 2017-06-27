@@ -227,7 +227,7 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
     }
 
     setSelectedView(viewNumber) {
-        if(!ValidationService.validateViewAndShowErrors(ValidationService.getValidationErrorsObj("stepBuilder")["view"+this.selectedView]))
+        if( viewNumber <= this.selectedView || !ValidationService.validateViewAndShowErrors(ValidationService.getValidationErrorsObj("stepBuilder")["view"+this.selectedView]))
             this.selectedView = viewNumber;
     }
     closeStepbuilder() {
@@ -245,7 +245,8 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
         this.checkForModelChange(this.previewService.launchStepPreviewWindow, this.previewService, callBackArgs);
     }
     onFinish() {
-        this.closeStepbuilder();
+        if(!ValidationService.validateViewAndShowErrors(ValidationService.getValidationErrorsObj("stepBuilder")["view"+this.selectedView]))        
+            this.closeStepbuilder();
     }
 
     ngOnDestroy() {
