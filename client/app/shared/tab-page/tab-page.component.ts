@@ -20,7 +20,7 @@ export class TabPageComponent extends ContainerComponent {
     if (this.modelRef) {
       for (let item of itemArray) {
         let childModelRef = this.modelRef[item.relVal];
-        factoryRef.createComp(containerRef, item, childModelRef, viewNumber);
+        factoryRef.createComp(containerRef, item, viewNumber, childModelRef);
       }
     }
     else {
