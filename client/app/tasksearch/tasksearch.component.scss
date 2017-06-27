@@ -66,13 +66,13 @@ span.unit.taskHeadingFont{
   display: none;
 }
 .login-form{
-  margin-top: 75px;
+  margin-top: 36px;
 }
 .btn-dark{
   background-color: $theme-blue;
   color: $pure-white;
   &:hover{
-    background-color: $deepdark-blue;
+    background-color: $primaryButton-hover;
   }
 }
 .welcomeMessage{

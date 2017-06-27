@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-lg-12 welcomeMessage">
-    <h3><strong>Welcome to...</strong> SIMS Builder</h3>
+    <h3><strong>Welcome to</strong> SIMS Builder</h3>
     <p>A tool that allows easy creation of simulations for Microsoft Office applications. Users can provide scenario inputs so as to configure scenario specific SIMS. It also provides enhanced error reporting allowing users to identify and fix errors in input.</p>
   </div>
 </div>
@@ -11,8 +11,9 @@
       <header>
         <div class="row">
           <div class="col-md-12">
-            <h4 class="text-xs-left pageHead"> Search My Task
+            <h4 class="text-xs-left pageHead"> Search Task
             </h4>
+            <p>Enter a Task ID for which you want to configure Simulation [e.g. SKL16.XL.04.01.03.T1]</p>
           </div>
         </div>
       </header>
@@ -20,7 +21,7 @@
           <div class="row">
             <div class="col-md-12 tashHeadWrapper">
               <h4 class="text-xs-left">
-              <input type="text" name="taskId" id="input" required class="form-control taskHeadingFont" id="task_id" [(ngModel)]="taskID">
+              <input type="text" name="taskId" id="input" required class="form-control taskHeadingFont" id="task_id" [(ngModel)]="taskID" title="Please enter Task ID">
               <span class="unit taskHeadingFont">Task ID</span>
               </h4>
             </div>
