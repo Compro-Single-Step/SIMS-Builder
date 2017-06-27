@@ -9,6 +9,7 @@ import { InputFactoryService } from '../input-factory.service';
 })
 
 export class TabPageComponent extends ContainerComponent {
+  @Input() viewNumber: number;
   @ViewChild('wrapper', { read: ViewContainerRef }) wrapperContainer;
   private factoryRef: InputFactoryService;
   constructor(vcref: ViewContainerRef, injector: Injector) {
