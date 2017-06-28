@@ -41,6 +41,7 @@ export class DropzoneComponent extends BaseComponent implements OnDestroy {
 
   ngOnInit() {
     super.ngOnInit();
+    this.validateComp(null);
     if (this.compConfig.rendererProperties) {
       this.isMultipleFiles = (this.compConfig.rendererProperties.multipleFiles) ? true : false;
     }
