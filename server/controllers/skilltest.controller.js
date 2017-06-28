@@ -6,7 +6,9 @@ const mapperService = require('./../modules/skilltest/mapper.service'),
   taskService = require('./../modules/skilltest/task.service'),
   runHandler = require('./../modules/skilltest/run.handler'),
   config = require('./../config/skilltest.config'),
-  runConfig = require('./../config/skilltest.run.config');
+  runConfig = require('./../config/skilltest.run.config'),
+  teskStatusModel = require('../models/skilltest/test.status.model').testStatusModel;
+
 
 class SkillTest {
 
@@ -236,6 +238,14 @@ class SkillTest {
     };
 
   }
+
+    updateTestStatus(taskId, step, pathwaysData) {
+        if(step === undefined || step === "") {
+            return teskStatusModel.updateTaskTestStatus(taskId, pathwaysData);
+        } else {
+            return teskStatusModel.updateStepTestStatus(taskId, step, pathwaysData);
+        }
+    }
 
 }
 
