@@ -120,7 +120,7 @@ exports.jsonToDistJava = function(scriptData) {
           var _pathwaySuffix = '';
 
           arrayItem.forEach(function (arrayItem2) {
-            _pathwaySuffix += parseInt((arrayItem2.split(',')[1]).replace(/"/g, ""));
+            _pathwaySuffix = _pathwaySuffix + 'M' + parseInt((arrayItem2.split(',')[1]).replace(/"/g, ""));
           });
 
           var preJin = '\n    ' +
