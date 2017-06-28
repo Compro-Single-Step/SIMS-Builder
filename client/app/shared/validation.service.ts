@@ -76,6 +76,14 @@ class ValidationSrvc {
       return (validationParams["showValidationErrors"] = true);
   }
 
+  //To delete validation Error Object of a component
+  deleteValidationErroObj(errorObject, parentViewRef){
+    for(var key in parentViewRef){
+      if(parentViewRef[key] === errorObject)
+        delete parentViewRef[key];
+    }
+  }
+
   _isEmpty(value){
     return value === "" || value === undefined || value === null;
   }
