@@ -65,7 +65,7 @@ testStatusSchema.statics = {
                 delete pathwaysData.taskid;
                 let testReportToBeSaved = pathwaysData;
 
-                if (dbData !== true) {
+                if (dbData) {
                     dbPathways = dbData;
                     Object.keys(dbPathways).forEach((key) => {
                         if (!testReportToBeSaved['pathways'][key]) {
@@ -151,14 +151,14 @@ testStatusSchema.statics = {
                     if (error) {
                         reject(error);
                     } else if (dbResponse.length === 0) {
-                        resolve(true);
+                        resolve(false);
                     } else {
                         try {
                             let taskData = (isStep ? dbResponse[0].steps[`s${stepIndex}`].pathways : dbResponse[0].pathways);
                             resolve(taskData);
                         } catch (error) {
                             error.message = "Document to corresponding task " + taskId + " doesn't exist in collection";
-                            reject(error);
+                            resolve(false);
                         }
                     }
                 });
