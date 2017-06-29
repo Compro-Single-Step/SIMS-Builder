@@ -38,7 +38,21 @@ router.post('/:taskId/test-status', (req, res) => {
     let taskId = req.params.taskId;
     let step = req.query.step;
     let pathwaysData = req.body;
+
     skillTestController.updateTestStatus(taskId, step, pathwaysData)
+        .then((success) => {
+            res.send(success);
+        })
+        .catch((error) => {
+            res.status(500).send(ErrorUtil.attachErroInfo(error));
+        })
+});
+
+router.get('/:taskId/test-status', (req, res) => {
+    let taskId = req.params.taskId;
+    let step = req.query.step;
+    
+    skillTestController.getTestStatus(taskId, step)
         .then((success) => {
             res.send(success);
         })

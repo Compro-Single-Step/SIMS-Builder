@@ -3,15 +3,16 @@ const Schema = mongoose.Schema;
 
 const testStatusSchema = new Schema({
     task_id: "string",
-    task_data: Schema.Types.Mixed
+    status: "string",
+    steps: Schema.Types.Mixed,
+    pathways: Schema.Types.Mixed
 }, { collection: 'test_status_report' });
 
 testStatusSchema.statics = {
-    getStepTestStatus: function(taskId, stepIndex) {
+    getStepTestStatus: function (taskId, step) {
         return new Promise((resolve, reject) => {
-
             let condition = { "task_id": taskId };
-            let jsonKey = `task_data.s${stepIndex}`;
+            let jsonKey = `steps.s${step}`;
             let projection = { "_id": false };
             projection[jsonKey] = true;
 
@@ -19,12 +20,12 @@ testStatusSchema.statics = {
                 if (error) {
                     reject(error);
                 } else {
-                    let stepId = `s${stepIndex}`;
-                    let stepLogs;
+                    let stepId = `s${step}`;
+                    let stepReport;
 
                     try {
-                        stepLogs = dbResponse[0].task_data[stepId];
-                        resolve(stepLogs);
+                        stepReport = dbResponse[0].steps[`s${step}`];
+                        resolve(stepReport);
                     } catch (error) {
                         error.message = "Document to corresponding task " + taskId + " doesn't exist in collection";
                         reject(error);
@@ -33,23 +34,21 @@ testStatusSchema.statics = {
             });
         });
     },
-    getTaskTeststatus: function(taskId) {
+    getTaskTestStatus: function (taskId) {
         return new Promise((resolve, reject) => {
-
-            let condition = { "task_id": taskId };
-            let jsonKey = 'task_data';
-            let projection = { "_id": false };
-            projection[jsonKey] = true;
+            let condition = { 'task_id': taskId };
+            let projection = { '_id': false, 'pathways': true, 'status': true };
 
             this.find(condition, projection, (error, dbResponse) => {
                 if (error) {
                     reject(error);
                 } else {
-                    let taskStepsLogs;
+                    let taskReport = {};
 
                     try {
-                        taskStepsLogs = dbResponse[0].task_data;
-                        resolve(taskStepsLogs);
+                        taskReport.pathways = dbResponse[0].pathways;
+                        taskReport.status = dbResponse[0].status;
+                        resolve(taskReport);
                     } catch (error) {
                         error.message = "Document to corresponding task " + taskId + " doesn't exist in collection";
                         reject(error);
@@ -58,28 +57,26 @@ testStatusSchema.statics = {
             });
         });
     },
-    updateStepTestStatus: function(taskId, stepIndex, pathwaysData, callback) {
-        return this.getPathwayData(taskId, stepIndex)
+    updateStepTestStatus: function (taskId, step, pathwaysData) {
+        return this.getPathwayData(taskId, step)
             .then((dbData) => {
                 // Update this taskData object with stepLogs object and then save it in db.
                 let dbPathways;
-                let testPathways = pathwaysData.pathways;
                 delete pathwaysData.taskid;
                 let testReportToBeSaved = pathwaysData;
 
                 if (dbData !== true) {
                     dbPathways = dbData;
-
                     Object.keys(dbPathways).forEach((key) => {
-                        if (!testReportToBeSaved.key) {
-                            testReportToBeSaved.key = dbPathways.key;
+                        if (!testReportToBeSaved['pathways'][key]) {
+                            testReportToBeSaved['pathways'][key] = dbPathways[key];
                         }
                     });
                 }
 
                 // After updating taskData object.
                 let condition = { "task_id": taskId };
-                let jsonKey = `steps.${stepIndex}`;
+                let jsonKey = `steps.s${step}`;
                 let updateData = { $set: {} };
                 updateData.$set[jsonKey] = testReportToBeSaved;
                 let options = { upsert: true };
@@ -98,28 +95,43 @@ testStatusSchema.statics = {
                 return Promise.reject(error);
             });
     },
-    updateTaskTestStatus: function(taskId, taskSteplLogs, callback) {
-        return new Promise((resolve, reject) => {
-            if (stepUIData == undefined || stepUIData == null || stepUIData == "") {
-                reject(new Error("null value not allowed for Step UI State"));
-            } else {
+    updateTaskTestStatus: function (taskId, pathwaysData) {
+        return this.getPathwayData(taskId)
+            .then((dbData) => {
+
+                let dbPathways;
+                delete pathwaysData.taskid;
+                let testReportToBeSaved = pathwaysData;
+
+                if (dbData !== undefined && dbData !== true) {
+                    dbPathways = dbData;
+
+                    Object.keys(dbPathways).forEach((key) => {
+                        if (!testReportToBeSaved['pathways'][key]) {
+                            testReportToBeSaved['pathways'][key] = dbPathways[key];
+                        }
+                    });
+                }
+
                 let condition = { "task_id": taskId };
-                let jsonKey = "task_data.step_" + stepIndex;
-                let updateData = { $set: {} };
-                updateData.$set[jsonKey] = stepUIData;
+                let updateData = { $set: { 'status': testReportToBeSaved['status'], 'pathways': testReportToBeSaved['pathways'] } };
                 let options = { upsert: true };
 
-                this.collection.update(condition, updateData, options, (error, success) => {
-                    if (error) {
-                        reject(error);
-                    } else {
-                        resolve(success);
-                    }
+                return new Promise((resolve, reject) => {
+                    this.collection.update(condition, updateData, options, (error, success) => {
+                        if (error) {
+                            reject(error);
+                        } else {
+                            resolve(success);
+                        }
+                    });
                 });
-            }
-        });
+            })
+            .catch((error) => {
+                return Promise.reject(error);
+            });
     },
-    getPathwayData: function(taskId, stepIndex) {
+    getPathwayData: function (taskId, stepIndex) {
         let self = this;
         return new Promise((resolve, reject) => {
             try {
@@ -131,7 +143,8 @@ testStatusSchema.statics = {
                     projection['pathways'] = true;
                 } else {
                     isStep = true;
-                    projection['steps'] = true;
+                    let jsonKey = `steps.s${stepIndex}`;
+                    projection[jsonKey] = true;
                 }
 
                 self.find(condition, projection, (error, dbResponse) => {
@@ -141,7 +154,7 @@ testStatusSchema.statics = {
                         resolve(true);
                     } else {
                         try {
-                            let taskData = (isStep ? dbResponse[0].steps[stepIndex].pathways : dbResponse[0].pathways);
+                            let taskData = (isStep ? dbResponse[0].steps[`s${stepIndex}`].pathways : dbResponse[0].pathways);
                             resolve(taskData);
                         } catch (error) {
                             error.message = "Document to corresponding task " + taskId + " doesn't exist in collection";
