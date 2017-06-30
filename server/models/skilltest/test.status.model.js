@@ -81,15 +81,7 @@ testStatusSchema.statics = {
                 updateData.$set[jsonKey] = testReportToBeSaved;
                 let options = { upsert: true };
 
-                return new Promise((resolve, reject) => {
-                    this.collection.update(condition, updateData, options, (error, success) => {
-                        if (error) {
-                            reject(error);
-                        } else {
-                            resolve(success);
-                        }
-                    });
-                });
+                return this.updateCollection(condition, updateData, options);
             })
             .catch((error) => {
                 return Promise.reject(error);
@@ -117,15 +109,7 @@ testStatusSchema.statics = {
                 let updateData = { $set: { 'status': testReportToBeSaved['status'], 'pathways': testReportToBeSaved['pathways'] } };
                 let options = { upsert: true };
 
-                return new Promise((resolve, reject) => {
-                    this.collection.update(condition, updateData, options, (error, success) => {
-                        if (error) {
-                            reject(error);
-                        } else {
-                            resolve(success);
-                        }
-                    });
-                });
+                return this.updateCollection(condition, updateData, options);
             })
             .catch((error) => {
                 return Promise.reject(error);
@@ -165,6 +149,18 @@ testStatusSchema.statics = {
             } catch (error) {
                 reject(error);
             }
+        });
+    },
+    updateCollection: function (condition, updateData, options) {
+        let self = this;
+        return new Promise((resolve, reject) => {
+            self.collection.update(condition, updateData, options, (error, success) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve(success);
+                }
+            });
         });
     }
 };
