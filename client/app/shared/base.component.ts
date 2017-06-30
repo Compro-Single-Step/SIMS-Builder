@@ -54,9 +54,9 @@ export class BaseComponent implements OnInit, OnDestroy {
         this.unsubscribeEvents();
     }
 
-    setData(inputConfig, viewNumber, modelRef?) {
+    setData(inputConfig, validationErrors, modelRef?) {
         this.compConfig = inputConfig;
-        this.viewNumber = viewNumber;
+        this.parentViewValidationRef = validationErrors;
         if (modelRef) {
             this.modelRef = modelRef;
         }
@@ -163,20 +163,12 @@ export class BaseComponent implements OnInit, OnDestroy {
     }
 
     addValidations() {
-        // viewNumber is set for the Components that are created dynamically,
+        // parentViewValidationRef is set for the Components that are created dynamically,
         // unlike label component. Validations are required only for such components.
-        if (this.viewNumber) {
+        if (this.parentViewValidationRef) {
             let tempErrorObj = this.validationService.setValidationErrorsUsingUIConfig(this.compConfig);
-            let stepBuilderValidationObj = ValidationService.getValidationErrorsObj("stepBuilder");
-            let view = "view" + this.viewNumber;
-
-            if (!stepBuilderValidationObj[view]) {
-                stepBuilderValidationObj[view] = { "isViewValid": true };
-            }
-
             if (Object.keys(tempErrorObj).length !== 0) {
-                this.validationErrors = (stepBuilderValidationObj[view][Date.now() + "_" + this.compConfig.itemRenderer] = { "errors": tempErrorObj, "errorsCount": -1 });
-                this.parentViewValidationRef = stepBuilderValidationObj[view];
+                this.validationErrors = (this.parentViewValidationRef[Date.now() + "_" + this.compConfig.itemRenderer] = { "errors": tempErrorObj, "errorsCount": -1 });
             }
         }
     }

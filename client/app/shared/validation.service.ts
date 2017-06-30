@@ -11,7 +11,10 @@ class ValidationSrvc {
       }
     };
     this.validationMap = {
-      "mandatory": this._isEmpty,
+      "mandatory": {
+        "func": this._isEmpty,
+        "default": true
+      }
     };
   }
 
@@ -56,7 +59,7 @@ class ValidationSrvc {
     errorObject.errorsCount = 0;
     let errors = errorObject['errors'];
     for(let key in errors){
-      errors[key] = this.validationMap[key](value);
+      errors[key] = this.validationMap[key]["func"](value);
       if(errors[key])
         errorObject.errorsCount++;
     }

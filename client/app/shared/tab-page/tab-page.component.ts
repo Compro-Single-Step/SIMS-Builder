@@ -9,7 +9,7 @@ import { InputFactoryService } from '../input-factory.service';
 })
 
 export class TabPageComponent extends ContainerComponent {
-  @Input() viewNumber: number;
+  @Input() viewValidationRef: Object;
   @ViewChild('wrapper', { read: ViewContainerRef }) wrapperContainer;
   private factoryRef: InputFactoryService;
   constructor(vcref: ViewContainerRef, injector: Injector) {
@@ -17,20 +17,20 @@ export class TabPageComponent extends ContainerComponent {
     this.factoryRef = injector.get(InputFactoryService);
   }
 
-  AddChildElements(factoryRef, containerRef, itemArray, viewNumber) {
+  AddChildElements(factoryRef, containerRef, itemArray, viewValidationRef) {
     if (this.modelRef) {
       for (let item of itemArray) {
         let childModelRef = this.modelRef[item.relVal];
-        factoryRef.createComp(containerRef, item, viewNumber, childModelRef);
+        factoryRef.createComp(containerRef, item, viewValidationRef, childModelRef);
       }
     }
     else {
-      super.AddChildElements(factoryRef, containerRef, itemArray, viewNumber);
+      super.AddChildElements(factoryRef, containerRef, itemArray, viewValidationRef);
     }
   }
 
   ngOnInit() {
     super.ngOnInit();
-    this.AddChildElements(this.factoryRef, this.wrapperContainer, this.compConfig.items, this.viewNumber);
+    this.AddChildElements(this.factoryRef, this.wrapperContainer, this.compConfig.items, this.viewValidationRef);
   }
 }

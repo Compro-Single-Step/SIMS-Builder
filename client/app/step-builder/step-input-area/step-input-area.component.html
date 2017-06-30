@@ -1,2 +1,2 @@
 <app-view-navigator (viewClicked)="setSelectedView($event)" [viewCount]="stepConfig.views.length" [selectedViewNumber]="selectedView"></app-view-navigator>
-<app-view-input-area *ngFor="let view of stepConfig.views; let viewIndex=index;" [viewConfig]="view" [hidden]="selectedView!=(viewIndex+1)" [viewsCount]="stepConfig.views.length" [currentView]="viewIndex+1" (uiRendered)="emitEventToParent($event)"></app-view-input-area>
+<app-view-input-area *ngFor="let view of stepConfig.views; let viewIndex=index;" [viewConfig]="view" [hidden]="selectedView!=(viewIndex+1)" [viewsCount]="stepConfig.views.length" [currentView]="viewIndex+1" (uiRendered)="emitEventToParent($event)" [ValidationErrorsObj]="ValidationErrorsObj"></app-view-input-area>

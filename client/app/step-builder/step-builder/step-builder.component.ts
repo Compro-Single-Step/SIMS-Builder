@@ -36,6 +36,7 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
     templateID: string;
     eventSrvc: Object;
     previewWindow: any;
+    ValidationErrorsObj: Object;
     @ViewChild('stepTextContainer') stepTextContainer;
 
     constructor(el: ElementRef, private route: ActivatedRoute, private router: Router, private bds: BuilderDataService, private previewService: PreviewService, private tds: TaskDataService, private exceptionHandlerSrvc: ExceptionHandlerService, private cdRef:ChangeDetectorRef,private LoaderService:LoaderService) {
@@ -44,6 +45,7 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
         this.selectedView = 1;
         this.builderModelSrvc = BuilderModelObj;
         this.eventSrvc = EventService;
+        this.ValidationErrorsObj = ValidationService.getValidationErrorsObj("stepBuilder");
     }
 
     ngOnInit() {

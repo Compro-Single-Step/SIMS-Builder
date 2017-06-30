@@ -8,6 +8,7 @@ import { UIConfig } from '../../shared/UIConfig.model';
 })
 export class StepInputAreaComponent implements OnInit {
   @Input() selectedView: number;
+  @Input() ValidationErrorsObj: Object;
   @Input() stepConfig: UIConfig;
   @Output() viewChanged: EventEmitter<Object> = new EventEmitter();
   @Output() uiRendered: EventEmitter<Object> = new EventEmitter();
