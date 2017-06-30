@@ -36,7 +36,7 @@ class ValidationSrvc {
   setValidationErrorsUsingUIConfig(uiconfig) {
     let tempObj = {};
     for (let key in this.validationMap) {
-      if ((!uiconfig[key] && this.validationMap[key]["default"]) || (uiconfig[key] && uiconfig[key].toString().toLowerCase() === "true"))
+      if ((uiconfig[key] === undefined && this.validationMap[key]["default"]) || (uiconfig[key] !== undefined && uiconfig[key].toString().toLowerCase() === "true"))
         tempObj[key] = false;
     }
     return tempObj;
