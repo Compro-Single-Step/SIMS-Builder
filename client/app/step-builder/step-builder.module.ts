@@ -5,9 +5,11 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from "@angular/router";
+import { ModalModule } from 'ng2-bootstrap';
 
 //Importing the core components for step builder module and Services.
 import { StepBuilderComponent } from './step-builder/step-builder.component';
+import { PreviewModalComponent } from './step-builder/preview-modal/preview-modal.component';
 import { StepInputAreaComponent } from './step-input-area/step-input-area.component';
 import { BalooReferenceComponent } from './baloo-reference/baloo-reference.component';
 import { ViewNavigatorComponent } from './view-navigator/view-navigator.component';
@@ -32,9 +34,10 @@ import { BuilderDataService } from './shared/builder-data.service';
         component: StepBuilderComponent
       }
     ]),
-    SharedModule
+    SharedModule,
+    ModalModule.forRoot()
   ],
-  declarations: [StepBuilderComponent, StepInputAreaComponent, BalooReferenceComponent, ViewNavigatorComponent, ViewInputAreaComponent, MethodViewerComponent, ScenarioFilesViewerComponent, ScenarioDocsComponent, TaskFileStoreComponent],
+  declarations: [StepBuilderComponent, StepInputAreaComponent, BalooReferenceComponent, ViewNavigatorComponent, ViewInputAreaComponent, MethodViewerComponent, ScenarioFilesViewerComponent, ScenarioDocsComponent, TaskFileStoreComponent, PreviewModalComponent],
   providers: [BuilderDataService]
 })
 export class StepBuilderModule { }
