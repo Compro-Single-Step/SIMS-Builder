@@ -56,7 +56,7 @@
                                     </select>
                                     </div>
                                     <div class="col-sm-2 pl-0" *ngIf="bindedValues.environment === 'saucelabs'">
-                                        <input type="number" min="1" name="brversion" [(ngModel)]="bindedValues.brversion" class="form-control" placeholder="Ver.">
+                                        <input type="number" min="1" name="brversion" [(ngModel)]="bindedValues.brversion" class="form-control text-field-line-height" placeholder="Ver.">
                                     </div>
                                 </div>
                             </div>
@@ -64,7 +64,7 @@
                                 <div class="display-flex">
                                     <label class="col-sm-4 control-label" for="resolution">Resolution</label>
                                     <div class="col-sm-6">
-                                        <input class="form-control" type="text" [(ngModel)]="bindedValues.screenresolution" name="screenresolution" />
+                                        <input class="form-control text-field-line-height" type="text" [(ngModel)]="bindedValues.screenresolution" name="screenresolution" />
                                     </div>
                                 </div>
                             </div>
@@ -72,7 +72,7 @@
                                 <div class="display-flex">
                                     <label class="col-sm-4 control-label" for="resolution">Client</label>
                                     <div class="col-sm-6">
-                                        <input class="form-control" type="text" [(ngModel)]="bindedValues.client" name="client" />
+                                        <input class="form-control text-field-line-height" type="text" [(ngModel)]="bindedValues.client" name="client" />
                                     </div>
                                 </div>
                             </div>
