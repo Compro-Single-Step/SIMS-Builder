@@ -2,10 +2,10 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const testStatusSchema = new Schema({
-    task_id: "string",
-    status: "string",
-    steps: Schema.Types.Mixed,
-    pathways: Schema.Types.Mixed
+    task_id: { type: "string", required: true },
+    status: { type: "string", required: true },
+    steps: { type: Schema.Types.Mixed, required: true },
+    pathways: { type: Schema.Types.Mixed, required: true }
 }, { collection: 'test_status_report' });
 
 testStatusSchema.statics = {
@@ -22,10 +22,14 @@ testStatusSchema.statics = {
                 } else {
                     let stepId = `s${step}`;
                     let stepReport;
-
                     try {
                         stepReport = dbResponse[0].steps[`s${step}`];
-                        resolve(stepReport);
+                        if (stepReport) {
+                            resolve(stepReport);
+                        } else {
+                            let error = new Error("Step to corresponding task " + taskId + " doesn't exist in collection");
+                            reject(error);
+                        }
                     } catch (error) {
                         error.message = "Document to corresponding task " + taskId + " doesn't exist in collection";
                         reject(error);
@@ -42,9 +46,8 @@ testStatusSchema.statics = {
             this.find(condition, projection, (error, dbResponse) => {
                 if (error) {
                     reject(error);
-                } else {
+                } else if (dbResponse.length) {
                     let taskReport = {};
-
                     try {
                         taskReport.pathways = dbResponse[0].pathways;
                         taskReport.status = dbResponse[0].status;
@@ -53,6 +56,9 @@ testStatusSchema.statics = {
                         error.message = "Document to corresponding task " + taskId + " doesn't exist in collection";
                         reject(error);
                     }
+                } else {
+                    let error = new Error("Document to corresponding task " + taskId + " doesn't exist in collection");
+                    reject(error);
                 }
             });
         });
@@ -90,14 +96,12 @@ testStatusSchema.statics = {
     updateTaskTestStatus: function (taskId, pathwaysData) {
         return this.getPathwayData(taskId)
             .then((dbData) => {
-
                 let dbPathways;
                 delete pathwaysData.taskid;
                 let testReportToBeSaved = pathwaysData;
 
                 if (dbData) {
                     dbPathways = dbData;
-
                     Object.keys(dbPathways).forEach((key) => {
                         if (!testReportToBeSaved['pathways'][key]) {
                             testReportToBeSaved['pathways'][key] = dbPathways[key];
