@@ -84,6 +84,23 @@ class ValidationSrvc {
     }
   }
 
+  //Disable Validation of a component when its disabled
+  disableValidation(errorObject, parentViewRef){
+    errorObject.errorsCount = 0;
+    parentViewRef["isViewValid"] = this.validateView(parentViewRef);
+  }
+
+  //Enable Validation of a component when it changes its state from disabled
+  enableValidation(errorObject, parentViewRef){
+    let errors = errorObject['errors'];
+    for (let key in errors) {
+      if (errors[key]){
+        errorObject.errorsCount++;
+        parentViewRef["isViewValid"] = false;
+      }
+    }
+  }
+
   _isEmpty(value) {
     return value === "" || value === undefined || value === null;
   }

@@ -156,9 +156,12 @@ export class BaseComponent implements OnInit, OnDestroy {
         this.eventSrvc["emitEvent"](eventId, data);
     }
     isDisabled() {
-        if (this.compConfig.rendererProperties && this.compConfig.rendererProperties.disabled === true) {
-            return true;
+        //TODO - Optimize it so that error checking is not done on every life cycle detection
+        if ((this.compConfig.rendererProperties && this.compConfig.rendererProperties.disabled === true) || (this.modelRef["disabled"] !== undefined && this.modelRef["disabled"].toString().toLowerCase() === "true")) {
+            this.validationErrors && this.validationService.disableValidation(this.validationErrors, this.parentViewValidationRef);
+                return true;
         }
+        this.validationErrors && this.validationService.enableValidation(this.validationErrors, this.parentViewValidationRef);
         return this.modelRef["disabled"];
     }
 
