@@ -32,6 +32,7 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
     modelChecker;
     templateID: string;
     eventSrvc: Object;
+    appName: string;
     previewWindow: any;
     @ViewChild('stepTextContainer') stepTextContainer;
     @ViewChild('previewModalDialog') previewModalDialog;
@@ -62,6 +63,7 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
                 let stepData = taskData.stepData[parseInt(this.stepIndex) - 1];
                 this.skillName = stepData.SkillName;
                 this.templateName = stepData.TemplateName;
+                this.appName = taskData.app;
                 
                 //Replacing font colour to #fff
                 let regex = /(<\s*font\s+.*?color\s*=\s*['"])(.*?)(['"].*?>)/gim;
@@ -238,7 +240,7 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
     }
 
     previewTask() {
-        let callBackArgs = [this.taskID, this.stepIndex, this.templateID, this.stepTextContainer.nativeElement.textContent];
+        let callBackArgs = [this.taskID, this.stepIndex, this.templateID, this.stepTextContainer.nativeElement.textContent, this.appName];
         this.checkForModelChange(this.previewModalDialog.setTaskData, this.previewModalDialog, callBackArgs);
     }
 
