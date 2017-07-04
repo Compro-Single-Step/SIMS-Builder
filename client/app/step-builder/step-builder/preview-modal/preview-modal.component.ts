@@ -139,10 +139,13 @@ export class PreviewModalComponent implements OnInit {
                 if (data['Url']) {
                     this.LoaderService.setLoaderVisibility(false);
                     this.finalTestConfig['run']['config']['app']['url'] = data['Url'];
-                    
+
                     this.previewService.startAutomationTest(this.finalTestConfig)
                         .subscribe((response) => {
-                            console.log(response);
+                            if (response.status === 'success') {
+                                window.open('http://loadrunner1:9001/', '_blank', 'location=yes,scrollbars=yes,status=yes')
+                            }
+                            // console.log(response);
                         },
                         (error) => {
                             this.displayErrorMessage('Error occurred in Automation Test, please check your test config.');
