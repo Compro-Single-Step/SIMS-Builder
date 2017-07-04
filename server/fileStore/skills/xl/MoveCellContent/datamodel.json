@@ -81,5 +81,22 @@
                 ]
             }
         }
+    },
+
+    "testParams":{
+        "source_range": "views.2.sourceRange.value",
+        "destination_start_cell_number": {
+            "function-name": "test_StartCellNumber",
+            "params": {
+                "destinationRange":"views.2.destinationRange.value"
+            }
+        },
+        "destination_range": "views.2.destinationRange.value",
+        "source_start_cell_number": {
+            "function-name": "test_StartCellNumber",
+        "params": {
+                "destinationRange":"views.2.sourceRange.value"
+            }
+        }
     }
 }

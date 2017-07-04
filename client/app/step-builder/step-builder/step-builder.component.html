@@ -34,7 +34,7 @@
 <div id="footer">
   <div class="col-md-12">
     <div class="pull-right">
-      <button class="btn btn-black width-100" (click)='lauchPreviewTask()'>Preview</button>
+      <button class="btn btn-dark" (click)='previewTask()'>Preview Step</button>
       <div class="seperator">.</div>
       <button class="btn btn-dark width-100" (click)="setSelectedView(selectedView-1)" [disabled]="selectedView == 1">Previous</button>
       <button class="btn btn-dark width-100" *ngIf="selectedView < uiConfig.views.length" (click)="setSelectedView(selectedView+1)">Next</button>
@@ -42,3 +42,4 @@
     </div>
   </div>
 </div>
+<app-preview-modal #previewModalDialog></app-preview-modal>
