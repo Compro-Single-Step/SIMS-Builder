@@ -107,6 +107,14 @@
                   "selSrc" :"views[2].stage1SelectItems.selectedOption.value.data.table_name"
                 }
               }
+            },            
+            "stage1_3": {
+              "STAGE1_SEL_ITEM": {
+                "function-name": "extractSingleParamVal",
+                "params": {
+                  "selSrc" :"views[2].stage1SelectItems.selectedOption.value.label"
+                }
+              }
             },
             "stage2": {
               "STAGE2_LIST": {
