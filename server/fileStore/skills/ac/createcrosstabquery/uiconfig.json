@@ -31,7 +31,6 @@
               },
               "itemRenderer": "TextBox",
               "itemType": "leaf",
-              "mandatory": false,
               "rendererProperties": {
                 "dataType": "string"
               },
@@ -71,7 +70,6 @@
                 "dataType": "JSON",
                 "placeholder": "Drop JSON file here to upload"
               },
-              "mandatory": true,
               "val": "{{views.1.navigationPane}}"
             },
             {
@@ -130,7 +128,6 @@
                 "dataType": "img",
                 "placeholder": "Drop image here to upload"
               },
-              "mandatory": false,
               "val": "{{views.1.taskbarPreviewImage}}"
             }
           ]
@@ -178,7 +175,6 @@
               },
               "itemRenderer": "Dropzone",
               "itemType": "leaf",
-              "mandatory": true,
               "emitEvents": [
                 "CROSS_TAB_DATA_UPDATED"
               ],
@@ -211,7 +207,6 @@
                 "dynamicMode": true
               },
               "itemType": "leaf",
-              "mandatory": false,
               "val": "{{views.2.stage1SelectItems.selectedOption}}"
             },
             {
@@ -237,7 +232,6 @@
                 "dynamicMode": true
               },
               "itemType": "leaf",
-              "mandatory": false,
               "val": "{{views.2.stage2List.selectedOption}}"
             },
             {
@@ -263,7 +257,6 @@
                 "dynamicMode": true
               },
               "itemType": "leaf",
-              "mandatory": false,
               "val": "{{views.2.stage3ColumnHeader.selectedOption}}"
             },
             {
@@ -308,7 +301,6 @@
                 "dynamicMode": true
               },
               "itemType": "leaf",
-              "mandatory": false,
               "val": "{{views.2.fieldToBecalculated.selectedOption}}"
             },
             {
@@ -336,7 +328,6 @@
                 "dynamicMode": true
               },
               "itemType": "leaf",
-              "mandatory": false,
               "val": "{{views.2.calculationFunction.selectedOption}}"
             },
             {
@@ -348,7 +339,6 @@
               },
               "itemRenderer": "Switch",
               "itemType": "leaf",
-              "mandatory": true,
               "rendererProperties": {
                 "layout_mode": "bottom",
                 "value_type": "question"
@@ -364,7 +354,6 @@
               },
               "itemRenderer": "TextBox",
               "itemType": "leaf",
-              "mandatory": true,
               "rendererProperties": {
                 "dataType": "string"
               },
@@ -379,10 +368,10 @@
               },
               "itemRenderer": "TextBox",
               "itemType": "leaf",
-              "mandatory": true,
               "rendererProperties": {
                 "dataType": "string"
               },
+              "mandatory": false,
               "val": "{{views.2.finalCrossTabQueryName}}"
             }
           ]
@@ -424,7 +413,6 @@
                 "dataType": "JSON",
                 "placeholder": "Drop JSON file here to upload"
               },
-              "mandatory": true,
               "val": "{{views.3.navigationPane}}"
             }
           ]
@@ -458,7 +446,6 @@
                 "dataType": "JSON",
                 "placeholder": "Drop JSON file here to upload"
               },
-              "mandatory": true,
               "val": "{{views.3.datasheet}}"
             },
             {
@@ -474,7 +461,6 @@
                 "dataType": "JSON",
                 "placeholder": "Drop JSON file here to upload"
               },
-              "mandatory": true,
               "val": "{{views.3.datasheetIntegratedResource}}"
             }
           ]

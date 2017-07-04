@@ -31,7 +31,6 @@
               },
               "itemRenderer": "TextBox",
               "itemType": "leaf",
-              "mandatory": false,
               "rendererProperties": {
                 "dataType": "string"
               },
@@ -293,7 +292,6 @@
                 "dataType": "img",
                 "placeholder": "Drop image here to upload"
               },
-              "mandatory": false,
               "val": "{{views.1.taskbarPreviewImage}}"
             }
           ]

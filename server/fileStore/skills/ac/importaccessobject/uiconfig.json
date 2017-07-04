@@ -31,7 +31,6 @@
               },
               "itemRenderer": "TextBox",
               "itemType": "leaf",
-              "mandatory": false,
               "rendererProperties": {
                 "dataType": "string"
               },
@@ -68,7 +67,6 @@
                 "dataType": "JSON",
                 "placeHolder": "Drop JSON file here to upload"
               },
-              "mandatory": true,
                "emitEvents": [
                 "NAVPANE_DATA_UPDATED"
               ],             
@@ -130,7 +128,6 @@
                 "dataType": "img",
                 "placeHolder": "Drop image here to upload"
               },
-              "mandatory": false,
               "val": "{{views.1.taskbarPreviewImage}}"
             }
           ]
@@ -178,7 +175,6 @@
               },
               "itemRenderer": "TextBox",
               "itemType": "leaf",
-              "mandatory": true,
               "rendererProperties": {
                 "dataType": "string"
               },
@@ -205,7 +201,6 @@
                   ]
               },
               "itemType": "leaf",
-              "mandatory": true,
               "val": "{{views.2.importMode}}"
             }
           ]
@@ -239,7 +234,6 @@
                 "dataType": "XML",
                 "placeHolder": "Drop XML here to upload"
               },
-              "mandatory": true,
               "val": "{{views.2.openFileDialogXML}}"
             },
             {
@@ -251,7 +245,7 @@
               },
               "itemRenderer": "TextBox",
               "itemType": "leaf",
-              "mandatory": true,
+              "mandatory": false,
               "val": "{{views.2.AutoCompleteOptions}}"
             }
           ]
@@ -285,7 +279,6 @@
                 "dataType": "JSON",
                 "placeHolder": "Drop JSON here to upload"
               },
-              "mandatory": true,
               "val": "{{views.2.importDBConfig}}"
             }
           ]
@@ -327,7 +320,6 @@
                 "dataType": "JSON",
                 "placeHolder": "Drop JSON file here to upload"
               },
-              "mandatory": true,
               "val": "{{views.3.navigationPane}}"
             }
           ]

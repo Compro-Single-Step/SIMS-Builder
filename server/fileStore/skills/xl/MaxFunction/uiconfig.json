@@ -31,7 +31,6 @@
               },
               "itemRenderer": "TextBox",
               "itemType": "leaf",
-              "mandatory": false,
               "rendererProperties": {
                 "dataType": "string"
               },
@@ -208,7 +207,6 @@
                 "dataType": "img",
                 "placeholder": "Drop image here to upload"
               },
-              "mandatory": false,
               "val": "{{views.1.taskbarPreviewImage}}"
             }
           ]
@@ -346,7 +344,6 @@
               },
               "itemRenderer": "TextBox",
               "itemType": "leaf",
-              "mandatory": false,
               "subscribeEvents": [
                 {
                   "eventId": "SWITCH_VALUE_TOGGLED",
@@ -368,7 +365,6 @@
               },
               "itemRenderer": "TextBox",
               "itemType": "leaf",
-              "mandatory": false,
               "subscribeEvents": [
                 {
                   "eventId": "SWITCH_VALUE_TOGGLED",
@@ -390,7 +386,6 @@
               },
               "itemRenderer": "TextBox",
               "itemType": "leaf",
-              "mandatory": false,
               "subscribeEvents": [
                 {
                   "eventId": "SWITCH_VALUE_TOGGLED",
