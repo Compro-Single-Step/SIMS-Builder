@@ -15,12 +15,14 @@ export class SelectComponent extends BaseComponent {
 
   ngOnInit() {
     super.ngOnInit();
+    this.modelRef = this.getData();
     this.UpdateView();
   }
   constructor() {
     super();
     this.itemList = {};
   }
+
   UpdateView() {
     this.labelConfig.rendererProperties.text = this.compConfig.label;
     this.labelConfig.rendererProperties.type = LabelTypes.ELEMENT_HEADING;
@@ -30,7 +32,6 @@ export class SelectComponent extends BaseComponent {
     } else {
       this.itemList["value"] = this.compConfig.rendererProperties.itemList;
     }
-    this.modelRef = this.builderModelSrvc.getStateRef(this.compConfig.val);
     this.setSelectedOption();
   }
 
@@ -57,5 +58,9 @@ export class SelectComponent extends BaseComponent {
 
   getEventPayload() {
     return this.modelRef["value"];
+  }
+
+  getData() {
+    return this.modelRef ? this.modelRef : this.builderModelSrvc.getStateRef(this.compConfig.val);
   }
 }
