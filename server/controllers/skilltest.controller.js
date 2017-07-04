@@ -6,8 +6,7 @@ const mapperService = require('./../modules/skilltest/mapper.service'),
     taskService = require('./../modules/skilltest/task.service'),
     runHandler = require('./../modules/skilltest/run.handler'),
     config = require('./../config/skilltest.config'),
-    runConfig = require('./../config/skilltest.run.config'),
-    teskStatusModel = require('../models/skilltest/test.status.model').testStatusModel;
+    runConfig = require('./../config/skilltest.run.config');
 
 
 class SkillTest {
@@ -184,9 +183,13 @@ class SkillTest {
             // generate script
             scriptService.generateScript(script_meta)
                 .then((script) => {
-                    run_request_body.task.xml = converterService.jsonToDistXml(script);
-                    run_request_body.task.java = converterService.jsonToDistJava(script);
-                    run_request_body.task.json = script;
+                    try {
+                        run_request_body.task.xml = converterService.jsonToDistXml(script);
+                        run_request_body.task.java = converterService.jsonToDistJava(script);
+                        run_request_body.task.json = script;
+                    } catch (error) {
+                        Promise.reject(error);
+                    }
 
                     return locatorService.getApplicationLocators(run_request_body.task.appName);
                 })
@@ -240,19 +243,11 @@ class SkillTest {
     }
 
     updateTestStatus(taskId, step, pathwaysData) {
-        if (step === undefined || step === "" || step === null) {
-            return teskStatusModel.updateTaskTestStatus(taskId, pathwaysData);
-        } else {
-            return teskStatusModel.updateStepTestStatus(taskId, step, pathwaysData);
-        }
+        taskService.updateTestStatus(taskId, step, pathwaysData);
     }
 
     getTestStatus(taskId, step) {
-        if (step === undefined || step === "" || step === null) {
-            return teskStatusModel.getTaskTestStatus(taskId);
-        } else {
-            return teskStatusModel.getStepTestStatus(taskId, step);
-        }
+        taskService.getTestStatus(taskId, step);
     }
 }
 

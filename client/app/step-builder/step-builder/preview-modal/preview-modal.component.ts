@@ -51,11 +51,12 @@ export class PreviewModalComponent implements OnInit {
     ngOnInit() {
     }
 
-    setTaskData(taskID, stepIndex, templateID, stepText) {
+    setTaskData(taskID, stepIndex, templateID, stepText, appName) {
         this.taskInfo['taskID'] = taskID;
         this.taskInfo['stepIndex'] = stepIndex;
         this.taskInfo['devTemplateID'] = templateID;
         this.taskInfo['stepText'] = stepText;
+        this.taskInfo['appName'] = appName;
         this.getUserIP((ip) => {
             this.userIP = ip;
             // this.finalTestConfig['run']['user']['ip']= ip;
@@ -138,8 +139,11 @@ export class PreviewModalComponent implements OnInit {
                 if (data['Url']) {
                     this.LoaderService.setLoaderVisibility(false);
                     this.finalTestConfig['run']['config']['app']['url'] = data['Url'];
+                    
                     this.previewService.startAutomationTest(this.finalTestConfig)
-                        .subscribe((response) => { },
+                        .subscribe((response) => {
+                            console.log(response);
+                        },
                         (error) => {
                             this.displayErrorMessage('Error occurred in Automation Test, please check your test config.');
                         });
@@ -219,13 +223,18 @@ export class PreviewModalComponent implements OnInit {
 
         // calculate run params
         this.finalTestConfig['run']['config'] = this._configureRunParams(this.bindedValues);
+        this.finalTestConfig['run']['user'] = {
+            'ip': this.userIP,
+            'userdata': {}
+        }
     }
 
     private _configureTaskScenario(taskInfo) {
         return {
             test_template_id: taskInfo['testTemplateID'],
             step_number: taskInfo['stepIndex'],
-            task_id: taskInfo['taskID']
+            task_id: taskInfo['taskID'],
+            app_name: taskInfo['appName']
         };
     }
 
@@ -256,10 +265,6 @@ export class PreviewModalComponent implements OnInit {
                 'node': runParamConfig['client'],
                 'name': runParamConfig['browser'],
                 'version': runParamConfig['brversion'],
-            },
-            'user': {
-                'ip': this.userIP,
-                'userdata': {}
             }
         }
     }
