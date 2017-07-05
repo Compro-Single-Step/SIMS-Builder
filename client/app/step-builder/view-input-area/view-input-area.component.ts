@@ -4,6 +4,8 @@ import { UIConfig } from '../../shared/UIConfig.model';
 import { itemSchema } from '../../shared/UIConfig.model';
 import { LabelTypes } from '../../shared/enums';
 import { LoaderService } from '../../_services/loader.service';
+import { ValidationService } from '../../shared/validation.service';
+
 @Component({
   selector: 'app-view-input-area',
   templateUrl: './view-input-area.component.html',
@@ -41,6 +43,7 @@ export class ViewInputAreaComponent implements OnInit, AfterViewInit  {
   }
   ngAfterViewInit() {
     if (this.currentView == this.viewsCount) {
+      ValidationService.setStatus();
       this.LoaderService.setLoaderVisibility(false);
     }
   }
