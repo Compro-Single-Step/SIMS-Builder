@@ -84,7 +84,20 @@
   background-color: $theme-blue;
   color: $pure-white;
   &:hover{
-    background-color: $deepdark-blue;
+    background-color: $primaryButton-hover;
+  }
+}
+
+.btn.btn-dark:disabled{
+  opacity: 1;
+  color: $primaryButton-disabled;
+}
+
+.btn-black{
+  background-color: $black;
+  color: $pure-white;
+  &:hover{
+    background-color: $secondaryButton-hover;
   }
 }
 

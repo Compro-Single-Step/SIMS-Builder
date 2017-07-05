@@ -134,5 +134,9 @@ class MoveCellContent extends ExcelBaseSkill {
       dependentSheetArrayInModel[0].name = selectedSheetName.label;
     }
   }
+
+  test_StartCellNumber(params) {
+    return params.destinationRange.split(":")[0].toUpperCase();
+  }
 }
 module.exports = MoveCellContent;
