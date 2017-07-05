@@ -260,7 +260,6 @@ export class DropzoneComponent extends BaseComponent implements OnDestroy {
 
   ngOnDestroy() {
     super.ngOnDestroy();
-    this.deleteValidationErroObj();
     if (this.makeDeleteCall && this.getData()["path"] != "") {
       this.bds.removeFile(this.getData()["path"]).subscribe((data) => {
         //TODO: error handling.

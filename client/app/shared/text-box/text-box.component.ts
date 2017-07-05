@@ -20,6 +20,10 @@ export class TextBoxComponent extends BaseComponent {
     this.validateComp(this.modelRef["value"]);
   }
 
+  ngOnDestroy() {
+    super.ngOnDestroy();
+  }
+
   UpdateView() {
     this.labelConfig.rendererProperties.text = this.compConfig.label;
     this.labelConfig.rendererProperties.type = LabelTypes.ELEMENT_HEADING;

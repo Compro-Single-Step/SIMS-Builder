@@ -52,6 +52,7 @@ export class BaseComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.unsubscribeEvents();
+        this.deleteValidationErroObj();
     }
 
     setData(inputConfig, validationErrors, modelRef?) {
@@ -159,7 +160,7 @@ export class BaseComponent implements OnInit, OnDestroy {
         //TODO - Optimize it so that error checking is not done on every life cycle detection
         if ((this.compConfig.rendererProperties && this.compConfig.rendererProperties.disabled === true) || (this.modelRef["disabled"] !== undefined && this.modelRef["disabled"].toString().toLowerCase() === "true")) {
             this.validationErrors && this.validationService.disableValidation(this.validationErrors, this.parentViewValidationRef);
-                return true;
+            return true;
         }
         this.validationErrors && this.validationService.enableValidation(this.validationErrors, this.parentViewValidationRef);
         return this.modelRef["disabled"];
@@ -171,7 +172,7 @@ export class BaseComponent implements OnInit, OnDestroy {
         if (this.parentViewValidationRef) {
             let tempErrorObj = this.validationService.setValidationErrorsUsingUIConfig(this.compConfig);
             if (Object.keys(tempErrorObj).length !== 0) {
-                this.validationErrors = (this.parentViewValidationRef[Date.now() + "_" + this.compConfig.itemRenderer] = { "errors": tempErrorObj, "errorsCount": -1 });
+                this.validationErrors = (this.parentViewValidationRef[this.uniqueId() + "_" + this.compConfig.itemRenderer] = { "errors": tempErrorObj, "errorsCount": -1 });
             }
         }
     }
@@ -181,8 +182,21 @@ export class BaseComponent implements OnInit, OnDestroy {
             this.validationService.validateComponent(this.validationErrors, this.parentViewValidationRef, value);
     }
 
-    deleteValidationErroObj(){
+    deleteValidationErroObj() {
         if (this.validationErrors)
             this.validationService.deleteValidationErroObj(this.validationErrors, this.parentViewValidationRef);
+    }
+
+    uniqueId() {
+        // desired length of Id
+        var idStrLen = 25;
+        // add a timestamp in milliseconds (base 36 again) as the base
+        var idStr = (new Date()).getTime().toString();
+        // similar to above, complete the Id using random, alphanumeric characters
+        do {
+            idStr += (Math.floor((Math.random() * 35))).toString(36);
+        } while (idStr.length < idStrLen);
+
+        return (idStr);
     }
 }

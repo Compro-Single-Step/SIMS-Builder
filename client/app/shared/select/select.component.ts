@@ -21,6 +21,11 @@ export class SelectComponent extends BaseComponent {
     super();
     this.itemList = {};
   }
+
+  ngOnDestroy() {
+    super.ngOnDestroy();
+  }
+  
   UpdateView() {
     this.labelConfig.rendererProperties.text = this.compConfig.label;
     this.labelConfig.rendererProperties.type = LabelTypes.ELEMENT_HEADING;

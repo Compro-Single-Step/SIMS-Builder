@@ -20,6 +20,10 @@ export class TabComponent extends BaseComponent{
     this.UpdateView();
   }
 
+  ngOnDestroy() {
+    super.ngOnDestroy();
+  }
+
   UpdateView() {
     if(this.compConfig.rendererProperties != undefined)
     {

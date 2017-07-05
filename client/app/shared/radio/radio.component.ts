@@ -17,6 +17,11 @@ export class RadioComponent extends BaseComponent implements OnInit {
     this.UpdateView();
     this.validateComp(this.modelRef["value"]);
   }
+
+  ngOnDestroy() {
+    super.ngOnDestroy();
+  }
+  
   UpdateView() {
     this.labelConfig.rendererProperties.text = this.compConfig.label;
     this.labelConfig.rendererProperties.type = LabelTypes.ELEMENT_HEADING;

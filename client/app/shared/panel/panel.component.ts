@@ -31,6 +31,10 @@ export class PanelComponent extends ContainerComponent {
     this.AddChildElements(this.factoryRef, this.inputElementsContainer, this.compConfig.items, this.parentViewValidationRef);
   }
 
+  ngOnDestroy() {
+    super.ngOnDestroy();
+  }
+
   UpdateView() {
     this.labelConfig.rendererProperties.text = this.compConfig.label;
     this.labelConfig.rendererProperties.type = LabelTypes.PANEL_HEADING;

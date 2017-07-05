@@ -33,4 +33,8 @@ export class TabPageComponent extends ContainerComponent {
     super.ngOnInit();
     this.AddChildElements(this.factoryRef, this.wrapperContainer, this.compConfig.items, this.viewValidationRef);
   }
+
+  ngOnDestroy() {
+    super.ngOnDestroy();
+  }
 }
