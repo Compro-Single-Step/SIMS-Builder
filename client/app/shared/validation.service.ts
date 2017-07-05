@@ -115,6 +115,7 @@ class ValidationSrvc {
 
   //Enable Validation of a component when it changes its state from disabled
   enableValidation(errorObject, parentViewRef) {
+    errorObject.errorsCount = 0;
     let errors = errorObject['errors'];
     for (let key in errors) {
       if (errors[key]) {
