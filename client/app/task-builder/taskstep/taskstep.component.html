@@ -1,46 +1,29 @@
 <div id="stepList" class="widget-body" (click)="navigateToStepBuilder()">
     <div class="row">
-      <div class="col-md-10 removeRightPadding" >
+        <div class="col-md-10 removeRightPadding">
             <div class="text-color row col-md-12 removeRightPadding">
                 <span class="step_number">Step {{step.Index}}: <span class="stepText" [innerHTML]="step.Text"></span></span>
             </div>
             <div class="row col-md-12 removeRightPadding">
-              <span class="skill_metadata">Skill :&nbsp;{{step.TemplateName}}</span>
-              <span class="verticalRule">|</span>
-              <span class="method-count skill_metadata">Method Count: <span>{{step.MethodCount}}</span></span>
-              <span class="verticalRule">|</span>
-              <span class="template_label">Template: {{step.TemplateName}}</span>
+                <span class="skill_metadata">Skill :&nbsp;{{step.TemplateName}}</span>
+                <span class="verticalRule">|</span>
+                <span class="method-count skill_metadata">Method Count: <span>{{step.MethodCount}}</span></span>
+                <span class="verticalRule">|</span>
+                <span class="template_label">Template: {{step.TemplateName}}</span>
             </div>
-      </div>
-      <div class="col-md-2">
-          <div class="row rightArrowDiv">
-            <!--<div class="col-md-5">
-                <div class="row col-md-12 text-center">
-                  <span class="icon_label">Attributes Filled</span>
+        </div>
+        <div class="col-md-2">
+            <div class="row rightArrowDiv">
+                <div class="col-md-8 test-status-items">
+                    <span (click)="getStepReport(step.Index, $event)" class=""><i class="fa fa-file-text-o" title="Click to view test status"></i><span class="test-status" title="Test status">{{status}}</span></span>
+                    <span (click)="updateStepStatus(step.Index, $event)" class="sync-button pull-right"><i class="fa fa-refresh" title="Sync test status"></i></span>
                 </div>
-                <div class="row col-md-12">
-                  <div class="progress">
-                    <div class="progress-bar bg-info" [ngStyle]="{'width':step.stepProgress}" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{step.stepProgress}}</div>
-                  </div>
+                <div class="col-md-1">
+                    <div class="row">
+                        <span class="glyphicon glyphicon-menu-right right_arrow" aria-hidden="true" tooltip="Build"></span>
+                    </div>
                 </div>
-            </div>-->
-            <div class="col-md-8">
-                <!--<div class="row">
-                  <span class="icon_label text-center">Test Status</span>
-                </div>
-                <div class="row testSymbol">
-                  <div class="col-md-8 offset-md-2">
-                      <span *ngIf="step.TestStatus" class="glyphicon glyphicon-ok greenText" aria-hidden="true"></span>
-                      <span *ngIf="!step.TestStatus" class="glyphicon glyphicon-remove redText" aria-hidden="true"></span>
-                  </div>
-                </div>-->
             </div>
-            <div class="col-md-1">
-              <div class="row">
-                <span class="glyphicon glyphicon-menu-right right_arrow" aria-hidden="true" tooltip="Build"></span>
-              </div>
-            </div>
-            </div>
-      </div>
+        </div>
     </div>
 </div>
