@@ -14,7 +14,6 @@ export class BaseComponent implements OnInit, OnDestroy {
     descriptionConfig: itemSchema = new itemSchema();
     eventSrvc: Object;
     subscriptions: Array<Object>;
-    viewNumber: number;
     validationErrors: Object;
     parentViewValidationRef: Object;
     validationParams: Object;
@@ -163,7 +162,7 @@ export class BaseComponent implements OnInit, OnDestroy {
             return true;
         }
         this.validationErrors && this.validationService.enableValidation(this.validationErrors, this.parentViewValidationRef);
-        return this.modelRef["disabled"];
+        return false;
     }
 
     addValidations() {

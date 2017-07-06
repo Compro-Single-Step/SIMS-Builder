@@ -1,7 +1,7 @@
 <ul class="nav-justified mb-sm nav nav-pills progressbar">
   <li *ngFor="let view of viewCountArr; let viewIndex = index; let lastIndex = last;" [ngClass]="{'active': selectedViewNumber == (viewIndex+1), 'visited': ((viewIndex+1) < selectedViewNumber) }"
     class="nav-item">
-    <span class="stepNumber" [ngClass]="{'disabled': (validationErrors && validationErrors['view'+(viewIndex+1)].status==='disable'), 'enabled': (validationErrors && validationErrors['view'+(viewIndex+1)].status === 'enable'), 'incomplete': (validationErrors && validationErrors['view'+(viewIndex+1)].status==='incomplete')}"
+    <span class="stepNumber" [ngClass]="{'disabled': (validationErrorsObj && validationErrorsObj['view'+(viewIndex+1)].status==='disable'), 'enabled': (validationErrorsObj && validationErrorsObj['view'+(viewIndex+1)].status === 'enable'), 'incomplete': (validationErrorsObj && validationErrorsObj['view'+(viewIndex+1)].status==='incomplete')}"
       (click)="setSelectedView(viewIndex+1)">{{viewIndex+1}}</span>
     <span class="separator" *ngIf="!lastIndex"></span>
   </li>

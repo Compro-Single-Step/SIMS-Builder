@@ -14,7 +14,7 @@ import { ValidationService } from '../../shared/validation.service';
 export class ViewInputAreaComponent implements OnInit, AfterViewInit  {
   @ViewChild('inputCompContainer', { read: ViewContainerRef }) compContainer;
   @Input() viewConfig: UIConfig;
-  @Input() ValidationErrorsObj: Object;
+  @Input() validationErrorsObj: Object;
   @Output() uiRendered: EventEmitter<Object> = new EventEmitter();
   viewHeadingConfig: itemSchema = new itemSchema();
   constructor(private factoryRef: InputFactoryService, vcref: ViewContainerRef, private LoaderService:LoaderService) { }
@@ -23,13 +23,13 @@ export class ViewInputAreaComponent implements OnInit, AfterViewInit  {
   ngOnInit() {
     this.viewHeadingConfig.rendererProperties.text = this.viewConfig["label"];
     this.viewHeadingConfig.rendererProperties.type = LabelTypes.VIEW_HEADING;
-    this.ValidationErrorsObj = (this.ValidationErrorsObj["view" + this.currentView] = { "isViewValid": true });
+    this.validationErrorsObj = (this.validationErrorsObj["view" + this.currentView] = { "isViewValid": true });
 
     // Initializing dynamic components based on the ui config json.
     // This Loop Iterates over the view data and creates GroupComponents
     try {
       for (let item of this.viewConfig["items"]) {
-        this.factoryRef.createComp(this.compContainer, item, this.ValidationErrorsObj, null);        
+        this.factoryRef.createComp(this.compContainer, item, this.validationErrorsObj, null);        
       }
       //when all the views are rendered in UI, emit an event to parent component so that it can bind modelchecker function to check for model changes every 5 secs.
       if(this.currentView == this.viewsCount)
