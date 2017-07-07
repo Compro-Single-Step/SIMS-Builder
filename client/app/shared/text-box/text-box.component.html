@@ -11,7 +11,7 @@
 	<app-label [compConfig]="descriptionConfig"></app-label>
 	<div *ngIf="validationParams.showValidationErrors && validationErrors && validationErrors.errorsCount !==0" class="alert alert-danger input-max-width">
 		<div [hidden]="!validationErrors.errors.mandatory">
-			The Field is required
+			Please enter some value.
 		</div>
 	</div>
 </fieldset>

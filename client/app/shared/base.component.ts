@@ -176,9 +176,11 @@ export class BaseComponent implements OnInit, OnDestroy {
         }
     }
 
-    validateComp(value) {
+    validateComp(ComponentValue) {
+        // validationErrors: The error object of corresponding Component
+        // parentViewValidationRef: The error object of corresponding group (view)
         if (this.validationErrors)
-            this.validationService.validateComponent(this.validationErrors, this.parentViewValidationRef, value);
+            this.validationService.validateComponent(this.validationErrors, this.parentViewValidationRef, ComponentValue);
     }
 
     deleteValidationErroObj() {
