@@ -2,7 +2,7 @@ import { Component, ViewChild, OnInit } from '@angular/core';
 import { ModalDirective } from 'ng2-bootstrap/modal';
 import { TaskDataService } from '../../_services/taskData.service';
 
-declare const $;
+declare const Messenger: any;
 
 @Component({
     selector: 'app-test-report',
@@ -42,11 +42,24 @@ export class TestReportModalComponent implements OnInit {
                     }
                     this.TestReportModalDialog.show();
                 } catch (error) {
-                    // Do error handling.
+                    this.displayErrorMessage(error.message);
                 }
             } else {
-                // Do error handling.
+                this.displayErrorMessage(`Records doesn't exist in database.`);
             }
+        });
+    }
+
+    displayErrorMessage(errorText) {
+        Messenger.options = {
+            extraClasses: 'messenger-fixed messenger-on-top',
+            theme: 'block'
+        }
+        Messenger().post({
+            message: errorText,
+            type: 'error',
+            showCloseButton: true,
+            hideAfter: 5
         });
     }
 }
