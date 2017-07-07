@@ -11,6 +11,7 @@ import { TaskDataService } from '../../_services/taskData.service';
 export class TaskstepComponent implements OnInit {
     @Input() stepData: Array<Object> = [];
     @Output() stepNavigationEvent: EventEmitter<any> = new EventEmitter();
+    @Output() testReportEvent: EventEmitter<any> = new EventEmitter();
     step;
     taskID;
     errorMessage;
@@ -31,7 +32,13 @@ export class TaskstepComponent implements OnInit {
         this.stepNavigationEvent.emit(this.step.TemplateId);
     }
     getStepReport(step, event) {
-        
+        this.taskDataService.getReport(this.taskID, step)
+            .subscribe((testReport) => {
+                this.taskDataService.testReportEmitEvent(testReport);
+            }, (error) => {
+
+            });
+
 
         if (event) {
             event.stopPropagation();

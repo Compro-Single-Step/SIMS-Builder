@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { Response, URLSearchParams, Headers, RequestOptions } from '@angular/http';
 import { HttpClient } from './http.client';
 import { Observable } from 'rxjs/Observable';
@@ -15,8 +15,10 @@ export class TaskDataService {
     public data: any;
     public taskId: any;
     public templateOptions: any;
+    public testReportData: any;
 
     constructor(private http: HttpClient) {
+        this.testReportData = new EventEmitter();
     }
 
     getTaskData(taskId: string): Observable<Task> {
@@ -95,5 +97,14 @@ export class TaskDataService {
             .map((response) => {
                 return response.json();
             });
+    }
+    getReport(taskId, step) {
+        return this.http.get(`/api/skilltest/tasks/${taskId}/test-status?step=${step}`, null, true)
+            .map((response) => {
+                return response.json();
+            });
+    }
+    testReportEmitEvent(data) {
+        this.testReportData.emit(data);
     }
 }

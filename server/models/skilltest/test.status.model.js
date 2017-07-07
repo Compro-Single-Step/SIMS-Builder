@@ -154,6 +154,7 @@ testStatusSchema.statics = {
                     let stepReport;
                     try {
                         stepReport = dbResponse[0].steps[`s${step}`];
+                        stepReport['step'] = step;
                         if (stepReport) {
                             resolve(stepReport);
                         } else {
