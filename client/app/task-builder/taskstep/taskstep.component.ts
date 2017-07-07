@@ -38,9 +38,8 @@ export class TaskstepComponent implements OnInit {
             .subscribe((testReport) => {
                 this.taskDataService.testReportEmitEvent(testReport);
             }, (error) => {
-
+                this.processing = false;
             });
-
 
         if (event) {
             event.stopPropagation();
@@ -53,7 +52,7 @@ export class TaskstepComponent implements OnInit {
                 this.processing = false;
                 this.status = statusObj.status;
             }, (error) => {
-
+                this.processing = false;
             });
 
         if (event) {

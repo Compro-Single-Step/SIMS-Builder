@@ -47,6 +47,8 @@ export class TestReportModalComponent implements OnInit {
             } else {
                 this.displayErrorMessage(`Records doesn't exist in database.`);
             }
+        }, (error) => {
+            this.displayErrorMessage(error.message);
         });
     }
 
