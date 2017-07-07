@@ -17,7 +17,9 @@ export class TaskstepComponent implements OnInit {
     errorMessage;
     message;
     status: string;
+    processing: boolean;
     constructor(private route: ActivatedRoute, private router: Router, private taskDataService: TaskDataService) {
+        this.processing = true;
     }
 
     ngOnInit(): void {
@@ -45,8 +47,10 @@ export class TaskstepComponent implements OnInit {
         }
     }
     updateStepStatus(step, event) {
+        this.processing = true;
         this.taskDataService.getTaskStatus(this.taskID, step)
             .subscribe((statusObj) => {
+                this.processing = false;
                 this.status = statusObj.status;
             }, (error) => {
 
