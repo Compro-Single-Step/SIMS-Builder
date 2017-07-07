@@ -1,4 +1,5 @@
 import { Component, OnInit, OnChanges, Input, EventEmitter, Output } from '@angular/core';
+import { ValidationService } from '../../shared/validation.service';
 
 @Component({
   selector: 'app-view-navigator',
@@ -9,10 +10,10 @@ export class ViewNavigatorComponent implements OnInit, OnChanges {
 
   @Input() viewCount: number;
   @Input() selectedViewNumber: number = 1;
+  @Input() validationErrorsObj: Object;
   @Output() viewClicked: EventEmitter<Object> = new EventEmitter();
   viewCountArr: Array<number>;
-
-  constructor() { }
+  validationErrors: Object;
 
   ngOnInit() {
   }
@@ -24,6 +25,7 @@ export class ViewNavigatorComponent implements OnInit, OnChanges {
   }
 
   setSelectedView(viewNumber: number) {
-    this.viewClicked.emit({viewNumber: viewNumber});
+    if(!ValidationService.validateViewAndShowErrors(this.validationErrorsObj["view"+this.selectedViewNumber], this.validationErrorsObj["view"+viewNumber]))
+      this.viewClicked.emit({viewNumber: viewNumber});
   }
 }

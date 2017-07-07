@@ -6,7 +6,7 @@ export class InputFactoryService {
 
   constructor(private componentFactoryResolver: ComponentFactoryResolver, private compRepoSrvc: ComponentRepositoryService) { }
 
-  public createComp(vcref: ViewContainerRef, itemConfig, modelRef?) {
+  public createComp(vcref: ViewContainerRef, itemConfig, ValidationErrorsObj, modelRef?) {
 
     /**
      * [resolveComponentFactory - Get the factory object to create the component]
@@ -26,10 +26,10 @@ export class InputFactoryService {
 
     // add Data to the instance of the Component.
     if (modelRef) {
-      comp.instance["setData"](itemConfig, modelRef);
+      comp.instance["setData"](itemConfig, ValidationErrorsObj, modelRef);
     }
     else {
-      comp.instance["setData"](itemConfig);
+      comp.instance["setData"](itemConfig, ValidationErrorsObj);
     }
 
     // add the newly created component to the DOM ..

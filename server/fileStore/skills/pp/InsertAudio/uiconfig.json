@@ -31,7 +31,6 @@
               },
               "itemRenderer": "TextBox",
               "itemType": "leaf",
-              "mandatory": false,
               "rendererProperties": {
                 "dataType": "string"
               },
@@ -71,7 +70,6 @@
                 "dataType": "XML",
                 "placeHolder": "Drop XML file here to upload"
               },
-              "mandatory": true,
               "val": "{{views.1.slideViewData}}"
             },
             {
@@ -88,12 +86,11 @@
                 "dataType": "img",
                 "multipleFiles": true
               },
-              "mandatory": true,
               "val": "{{views.1.slideImages}}"
             },
             {
               "id": "1.2.3",
-              "label": "Inital Selected Slide",
+              "label": "Initial Selected Slide",
               "desc": {
                 "basic": "Index of the slide which is selected initially.",
                 "detailed": "Index of the slide which is selected initially."
@@ -111,7 +108,7 @@
                 "itemList": "{{views.1.initialSelectedSlide.options}}"
               },
               "itemType": "leaf",
-              "mandatory": true,
+              "mandatory": false,
               "val": "{{views.1.initialSelectedSlide.selectedSlide}}"
             }
           ]
@@ -145,7 +142,6 @@
                 "dataType": "img",
                 "placeHolder": "Drop image here to upload"
               },
-              "mandatory": false,
               "val": "{{views.1.taskbarPreviewImage}}"
             }
           ]
@@ -204,7 +200,6 @@
                 "itemList": "{{views.2.slideInAction.options}}"
               },
               "itemType": "leaf",
-              "mandatory": true,
               "val": "{{views.2.slideInAction.selectedSlide}}"
             }
           ]
@@ -241,7 +236,6 @@
                 "dataType": "XML",
                 "placeHolder": "Drop XML file here to upload"
               },
-              "mandatory": true,
               "val": "{{views.2.audioToBeAdded}}"
             },
                         {
@@ -258,7 +252,6 @@
                 "dataType": "img",
                 "multipleFiles": true
               },
-              "mandatory": true,
               "val": "{{views.2.treeContentXMLImages}}"
             },
             {
@@ -270,7 +263,6 @@
               },
               "itemRenderer": "TextBox",
               "itemType": "leaf",
-              "mandatory": false,
               "rendererProperties": {
                 "dataType": "string"
               },
@@ -315,7 +307,6 @@
                 "placeHolder": "Drop Updated Slide Image",
                 "dataType": "img"
               },
-              "mandatory": true,
               "val": "{{views.3.updatedSlideData}}"
             }
           ]

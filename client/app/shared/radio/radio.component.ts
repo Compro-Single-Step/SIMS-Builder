@@ -15,7 +15,13 @@ export class RadioComponent extends BaseComponent implements OnInit {
  ngOnInit() {
     super.ngOnInit();
     this.UpdateView();
+    this.validateComp(this.modelRef["value"]);
   }
+
+  ngOnDestroy() {
+    super.ngOnDestroy();
+  }
+  
   UpdateView() {
     this.labelConfig.rendererProperties.text = this.compConfig.label;
     this.labelConfig.rendererProperties.type = LabelTypes.ELEMENT_HEADING;
@@ -24,6 +30,7 @@ export class RadioComponent extends BaseComponent implements OnInit {
     this.modelRef = this.builderModelSrvc.getStateRef(this.compConfig.val); 
   }
   selectedItemChange(selectedOption){
+    this.validateComp(selectedOption);
     this.modelRef['value'] = selectedOption;
     this.emitEvents(this.modelRef['value']);
   }

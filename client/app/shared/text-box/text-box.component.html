@@ -1,10 +1,17 @@
 <fieldset>
 	<div class="heading">
-	  <app-label class="elementHeadingContainer" [compConfig]="labelConfig"></app-label>
-		<button class="glyphicon glyphicon-info-sign info-icon" [popover]="compConfig.desc.detailed" [popoverTitle]="compConfig.label" placement="right" triggers="focus"></button>
+		<app-label class="elementHeadingContainer" [compConfig]="labelConfig"></app-label>
+		<button class="glyphicon glyphicon-info-sign info-icon" [popover]="compConfig.desc.detailed" [popoverTitle]="compConfig.label"
+		 placement="right" triggers="focus"></button>
 	</div>
 	<div class="form-group">
-	    <input class="form-control input-max-width" [(ngModel)] = "modelRef.value" [disabled]="isDisabled()" [placeholder]="placeholder"/>
+		<input class="form-control input-max-width" [(ngModel)]="modelRef.value" [disabled]="isDisabled()" [placeholder]="placeholder"
+		 (change)="validateComp($event.target.value)" />
 	</div>
 	<app-label [compConfig]="descriptionConfig"></app-label>
+	<div *ngIf="validationParams.showValidationErrors && validationErrors && validationErrors.errorsCount !==0" class="alert alert-danger input-max-width">
+		<div [hidden]="!validationErrors.errors.mandatory">
+			Please enter some value.
+		</div>
+	</div>
 </fieldset>

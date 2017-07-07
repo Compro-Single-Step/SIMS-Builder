@@ -31,7 +31,6 @@
               },
               "itemRenderer": "TextBox",
               "itemType": "leaf",
-              "mandatory": false,
               "rendererProperties": {
                 "dataType": "string"
               },
@@ -71,7 +70,6 @@
               "emitEvents": [
                 "INITIAL_HTML_FILE_UPLOADED"
               ],
-              "mandatory": true,
               "val": "{{views.1.initialDocumentFile}}"
             },
             {
@@ -95,7 +93,6 @@
                 "placeholder": "Drop Document Images",
                 "multipleFiles": true
               },
-              "mandatory": true,
               "val": "{{views.1.initialDocumentImages}}"
             }
           ]
@@ -125,7 +122,6 @@
               },
               "itemRenderer": "TextBox",
               "itemType": "leaf",
-              "mandatory": false,
               "rendererProperties": {
                 "dataType": "string"
               },
@@ -140,7 +136,6 @@
               },
               "itemRenderer": "TextBox",
               "itemType": "leaf",
-              "mandatory": false,
               "rendererProperties": {
                 "dataType": "string"
               },
@@ -177,7 +172,6 @@
                 "dataType": "img",
                 "placeholder": "Drop image here to upload"
               },
-              "mandatory": false,
               "val": "{{views.1.taskbarPreviewImage}}"
             }
           ]
@@ -215,7 +209,6 @@
               },
               "itemRenderer": "TextBox",
               "itemType": "leaf",
-              "mandatory": false,
               "rendererProperties": {
                 "dataType": "string"
               },
@@ -230,7 +223,6 @@
               },
               "itemRenderer": "TextBox",
               "itemType": "leaf",
-              "mandatory": false,
               "rendererProperties": {
                 "dataType": "string"
               },
@@ -267,7 +259,6 @@
                 "dataType": "XML",
                 "placeholder": "Drop XML file here to upload"
               },
-              "mandatory": true,
               "val": "{{views.2.treeXML}}"
             },
             {
@@ -284,7 +275,6 @@
                 "placeholder": "Drop Tree Images",
                 "multipleFiles": true
               },
-              "mandatory": true,
               "val": "{{views.2.treeXMLImages}}"
             },
             {
@@ -296,7 +286,6 @@
               },
               "itemRenderer": "TextBox",
               "itemType": "leaf",
-              "mandatory": false,
               "rendererProperties": {
                 "dataType": "string"
               },
@@ -315,7 +304,7 @@
                 "dataType": "img",
                 "placeholder": "Drop Image file here to upload"
               },
-              "mandatory": true,
+              "mandatory": false,
               "val": "{{views.2.addressBarImage}}"
             },
             {
@@ -327,7 +316,6 @@
               },
               "itemRenderer": "TextBox",
               "itemType": "leaf",
-              "mandatory": false,
               "rendererProperties": {
                 "dataType": "string"
               },
@@ -411,7 +399,6 @@
               },
               "itemRenderer": "TextBox",
               "itemType": "leaf",
-              "mandatory": false,
               "rendererProperties": {
                 "dataType": "string"
               },

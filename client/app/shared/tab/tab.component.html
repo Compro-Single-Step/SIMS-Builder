@@ -13,7 +13,7 @@
   </ul>
   <div class="tabPageContainer">
     <div *ngFor="let tabConfig of compConfig.items; let i = index">
-      <app-tab-page [hidden]="activeTabIndex != i" [compConfig]="tabConfig" [ngClass]="{'displayInOneLine': displayInOneLine}"></app-tab-page>
+      <app-tab-page [hidden]="activeTabIndex != i" [compConfig]="tabConfig" [viewValidationRef]="parentViewValidationRef" [ngClass]="{'displayInOneLine': displayInOneLine}"></app-tab-page>
     </div>
   </div>
 </div>
@@ -27,7 +27,7 @@
   </ul>
   <div class="tabPageContainer">
     <div *ngFor="let tab of tabs.value; let i = index">
-      <app-tab-page [hidden]="activeTabIndex != i" [compConfig]="compConfig.items[0]" [modelRef]="tab" [ngClass]="{'displayInOneLine': displayInOneLine}"></app-tab-page>
+      <app-tab-page [hidden]="activeTabIndex != i" [compConfig]="compConfig.items[0]" [viewValidationRef]="parentViewValidationRef" [modelRef]="tab" [ngClass]="{'displayInOneLine': displayInOneLine}"></app-tab-page>
     </div>
   </div>
 </div>

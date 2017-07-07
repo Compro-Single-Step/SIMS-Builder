@@ -9,6 +9,7 @@ import { IntervalObservable } from 'rxjs/observable/IntervalObservable';
 import { TaskDataService } from '../../_services/taskData.service';
 import { ExceptionHandlerService } from '../../shared/exception-handler.service';
 import { LoaderService } from '../../_services/loader.service';
+import { ValidationService } from '../../shared/validation.service';
 
 declare var jQuery;
 declare var localForage;
@@ -34,6 +35,7 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
     eventSrvc: Object;
     appName: string;
     previewWindow: any;
+    ValidationErrorsObj: Object;
     @ViewChild('stepTextContainer') stepTextContainer;
     @ViewChild('previewModalDialog') previewModalDialog;
 
@@ -43,6 +45,7 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
         this.selectedView = 1;
         this.builderModelSrvc = BuilderModelObj;
         this.eventSrvc = EventService;
+        this.ValidationErrorsObj = ValidationService.getValidationErrorsObj("stepBuilder");
     }
 
     ngOnInit() {
@@ -74,8 +77,47 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
                 this.checkForStepTextOverflow();
             });
             this.fetchSkillData();
-        })        
+        });
+
+        ValidationService.updateStatus.subscribe(()=>{
+            this.setStatus(this.selectedView);
+        })
     }
+    /**
+     * TODO : Move the below function (set the status of views) to a new service, 
+     * use different and smaller model for decoupling (not the validation object model) and
+     * bind this new model in 'view-navigator-area'. 
+     */
+    setStatus(currentViewNumber) {
+    var viewsArray = Object.keys(this.ValidationErrorsObj);
+    var currentViewIndex = null;
+
+    viewsArray.forEach((viewNumber, idx) => {
+      if (viewNumber === "view"+currentViewNumber) {
+        currentViewIndex = idx;
+        this.ValidationErrorsObj[viewNumber]["status"] = "active";
+      }
+      else if (currentViewIndex !== null) {
+        if (this.ValidationErrorsObj["view"+(currentViewIndex+1)]["isViewValid"]) {
+          if (this.ValidationErrorsObj[viewsArray[idx - 1]]["status"] === "enable" || this.ValidationErrorsObj[viewsArray[idx - 1]]["status"] === "active") {
+            if (this.ValidationErrorsObj[viewNumber]["isViewValid"])
+              this.ValidationErrorsObj[viewNumber]["status"] = "enable";
+            else
+              this.ValidationErrorsObj[viewNumber]["status"] = "incomplete";
+          }
+          else {
+            this.ValidationErrorsObj[viewNumber]["status"] = "disable";
+          }
+        }
+        else {
+          this.ValidationErrorsObj[viewNumber]["status"] = "disable";
+        }
+      }
+      else {
+        this.ValidationErrorsObj[viewNumber]["status"] = "enable";
+      }
+    });
+  }
 
     bindModelChecker($event) {
         //bind only when ui has been rendered for all the views. An event is emitted from view input area component.
@@ -227,7 +269,8 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
     // }
 
     setSelectedView(viewNumber) {
-        this.selectedView = viewNumber;
+        if(!ValidationService.validateViewAndShowErrors(this.ValidationErrorsObj["view"+this.selectedView], this.ValidationErrorsObj["view"+viewNumber]))
+            this.selectedView = viewNumber;
     }
     closeStepbuilder() {
         this.checkForModelChange()
@@ -245,11 +288,13 @@ export class StepBuilderComponent implements OnInit, OnDestroy {
     }
 
     onFinish() {
-        this.closeStepbuilder();
+        if(!ValidationService.validateViewAndShowErrors(this.ValidationErrorsObj["view"+this.selectedView]))        
+            this.closeStepbuilder();
     }
 
     ngOnDestroy() {
         this.eventSrvc["dispose"]();
+        ValidationService.clearValidationErrorsObj("stepBuilder")
     }
 
 }

@@ -8,4 +8,9 @@
 		<p class="dz-message">{{compConfig.rendererProperties.placeholder}}</p>
 	</div>
 	<app-label [compConfig]="descriptionConfig"></app-label>
+	<div *ngIf="validationParams.showValidationErrors && validationErrors && validationErrors.errorsCount !==0" class="alert alert-danger input-max-width">
+		<div [hidden]="!validationErrors.errors.mandatory">
+			Please upload a file.
+		</div>
+	</div>
 </div>

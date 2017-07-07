@@ -17,6 +17,11 @@ export class TextBoxComponent extends BaseComponent {
     this.modelRef = this.getData();
     this.placeholder = (this.compConfig.rendererProperties && this.compConfig.rendererProperties.placeholder) ? this.compConfig.rendererProperties.placeholder : "";  
     this.UpdateView();
+    this.validateComp(this.modelRef["value"]);
+  }
+
+  ngOnDestroy() {
+    super.ngOnDestroy();
   }
 
   UpdateView() {

@@ -4,6 +4,7 @@ import { BuilderModelObj } from '../step-builder/shared/builder-model.service';
 import { skillManager } from '../step-builder/shared/skill-manager.service';
 import { EventService } from '../step-builder/shared/event.service';
 import { LabelTypes } from './enums';
+import { ValidationService } from './validation.service';
 
 export class BaseComponent implements OnInit, OnDestroy {
     @Input() compConfig: itemSchema;
@@ -13,22 +14,31 @@ export class BaseComponent implements OnInit, OnDestroy {
     descriptionConfig: itemSchema = new itemSchema();
     eventSrvc: Object;
     subscriptions: Array<Object>;
+    validationErrors: Object;
+    parentViewValidationRef: Object;
+    validationParams: Object;
+    validationService;
+
     constructor() {
         this.compConfig = new itemSchema();
         this.builderModelSrvc = BuilderModelObj;
+        this.validationService = ValidationService;
         this.eventSrvc = EventService;
         this.subscriptions = [];
+
+        //Used to show errors on change of view
+        this.validationParams = ValidationService.getValidationParams();
     }
     ngOnInit() {
         this.registerEvents();
         this.subscribeEvents();
         this.updateModel();
+        this.addValidations();
     }
 
     //function to call a skill specific function to update model from an external file while it is being painted.
-    updateModel() {      
-        if(this.compConfig.rendererProperties && this.compConfig.rendererProperties.updateModel)
-        {
+    updateModel() {
+        if (this.compConfig.rendererProperties && this.compConfig.rendererProperties.updateModel) {
             let updateModels = this.compConfig.rendererProperties.updateModel || [];
             for (let i = 0; i < updateModels.length; i++) {
                 let dependantModelReference = updateModels[i]['modelReference'];
@@ -41,10 +51,12 @@ export class BaseComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.unsubscribeEvents();
+        this.deleteValidationErroObj();
     }
 
-    setData(inputConfig, modelRef?) {
+    setData(inputConfig, validationErrors, modelRef?) {
         this.compConfig = inputConfig;
+        this.parentViewValidationRef = validationErrors;
         if (modelRef) {
             this.modelRef = modelRef;
         }
@@ -104,7 +116,7 @@ export class BaseComponent implements OnInit, OnDestroy {
         }
     }
 
-    eventCallback({eventId, payload: callbackData}) {
+    eventCallback({ eventId, payload: callbackData }) {
         this.updateDependencies(eventId, callbackData);
         this.emitEvents(this.getEventPayload());
     }
@@ -144,9 +156,48 @@ export class BaseComponent implements OnInit, OnDestroy {
         this.eventSrvc["emitEvent"](eventId, data);
     }
     isDisabled() {
-        if (this.compConfig.rendererProperties && this.compConfig.rendererProperties.disabled === true) {
+        //TODO - Optimize it so that error checking is not done on every life cycle detection
+        if ((this.compConfig.rendererProperties && this.compConfig.rendererProperties.disabled === true) || (this.modelRef["disabled"] !== undefined && this.modelRef["disabled"].toString().toLowerCase() === "true")) {
+            this.validationErrors && this.validationService.disableValidation(this.validationErrors, this.parentViewValidationRef);
             return true;
         }
-        return this.modelRef["disabled"];
+        this.validationErrors && this.validationService.enableValidation(this.validationErrors, this.parentViewValidationRef);
+        return false;
+    }
+
+    addValidations() {
+        // parentViewValidationRef is set for the Components that are created dynamically,
+        // unlike label component. Validations are required only for such components.
+        if (this.parentViewValidationRef) {
+            let tempErrorObj = this.validationService.setValidationErrorsUsingUIConfig(this.compConfig);
+            if (Object.keys(tempErrorObj).length !== 0) {
+                this.validationErrors = (this.parentViewValidationRef[this.uniqueId() + "_" + this.compConfig.itemRenderer] = { "errors": tempErrorObj, "errorsCount": -1 });
+            }
+        }
+    }
+
+    validateComp(ComponentValue) {
+        // validationErrors: The error object of corresponding Component
+        // parentViewValidationRef: The error object of corresponding group (view)
+        if (this.validationErrors)
+            this.validationService.validateComponent(this.validationErrors, this.parentViewValidationRef, ComponentValue);
+    }
+
+    deleteValidationErroObj() {
+        if (this.validationErrors)
+            this.validationService.deleteValidationErroObj(this.validationErrors, this.parentViewValidationRef);
+    }
+
+    uniqueId() {
+        // desired length of Id
+        var idStrLen = 25;
+        // add a timestamp in milliseconds (base 36 again) as the base
+        var idStr = (new Date()).getTime().toString();
+        // similar to above, complete the Id using random, alphanumeric characters
+        do {
+            idStr += (Math.floor((Math.random() * 35))).toString(36);
+        } while (idStr.length < idStrLen);
+
+        return (idStr);
     }
 }

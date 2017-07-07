@@ -21,6 +21,11 @@ export class SelectComponent extends BaseComponent {
     super();
     this.itemList = {};
   }
+
+  ngOnDestroy() {
+    super.ngOnDestroy();
+  }
+  
   UpdateView() {
     this.labelConfig.rendererProperties.text = this.compConfig.label;
     this.labelConfig.rendererProperties.type = LabelTypes.ELEMENT_HEADING;
@@ -32,6 +37,7 @@ export class SelectComponent extends BaseComponent {
     }
     this.modelRef = this.builderModelSrvc.getStateRef(this.compConfig.val);
     this.setSelectedOption();
+    this.validateComp(this.modelRef["value"]["data"]);
   }
 
   setSelectedOption() {
@@ -48,11 +54,13 @@ export class SelectComponent extends BaseComponent {
     super.updateDependencies(eventId, componentInput);
     if(this.itemList["value"].length == 0){
       this.modelRef["value"] = {};
+      this.validateComp(this.modelRef["value"]["data"]);
     }
   }
 
   selectedItemChange() {
     this.emitEvents(this.modelRef["value"]);
+    this.validateComp(this.modelRef["value"]["data"]);
   }
 
   getEventPayload() {

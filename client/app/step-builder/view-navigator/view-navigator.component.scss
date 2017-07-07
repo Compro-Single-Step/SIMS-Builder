@@ -38,6 +38,18 @@
             left: 53%;
             z-index: -1;
         }
+        span.disabled {
+          background-color: rgb(233,233,233);
+          cursor: default;
+        }
+        span.enabled {
+          background-color: rgb(0, 181, 81);
+          border-color: rgb(0, 181, 81);
+          color: white;
+        }
+        span.incomplete {
+          background-color: white;
+        }
         &.active {
             span.stepNumber {
               border-color: $theme-blue;
