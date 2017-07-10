@@ -1,6 +1,6 @@
 <div id="stepList" class="widget-body" (click)="navigateToStepBuilder()">
     <div class="row">
-        <div class="col-md-10 removeRightPadding">
+        <div class="col-md-9 removeRightPadding">
             <div class="text-color row col-md-12 removeRightPadding">
                 <span class="step_number">Step {{step.Index}}: <span class="stepText" [innerHTML]="step.Text"></span></span>
             </div>
@@ -12,7 +12,7 @@
                 <span class="template_label">Template: {{step.TemplateName}}</span>
             </div>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-3">
             <div class="row rightArrowDiv">
                 <div class="col-md-8 test-status-items">
                     <span (click)="getStepReport(step.Index, $event)" class="position-right">
