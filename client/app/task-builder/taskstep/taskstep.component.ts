@@ -18,6 +18,7 @@ export class TaskstepComponent implements OnInit {
     message;
     status: string;
     processing: boolean;
+    iconClass: string;
     constructor(private route: ActivatedRoute, private router: Router, private taskDataService: TaskDataService) {
         this.processing = true;
     }
@@ -34,12 +35,14 @@ export class TaskstepComponent implements OnInit {
         this.stepNavigationEvent.emit(this.step.TemplateId);
     }
     getStepReport(step, event) {
-        this.taskDataService.getReport(this.taskID, step)
-            .subscribe((testReport) => {
-                this.taskDataService.testReportEmitEvent(testReport);
-            }, (error) => {
-                this.processing = false;
-            });
+        if (this.status) {
+            this.taskDataService.getReport(this.taskID, step)
+                .subscribe((testReport) => {
+                    this.taskDataService.testReportEmitEvent(testReport);
+                }, (error) => {
+                    this.processing = false;
+                });
+        }
 
         if (event) {
             event.stopPropagation();
@@ -47,10 +50,16 @@ export class TaskstepComponent implements OnInit {
     }
     updateStepStatus(step, event) {
         this.processing = true;
+        if (this.status) {
+            this.iconClass = 'enabled';
+        } else {
+            this.iconClass = 'disabled';
+        }
         this.taskDataService.getTaskStatus(this.taskID, step)
             .subscribe((statusObj) => {
                 this.processing = false;
                 this.status = statusObj.status;
+                this.iconClass = 'enabled';
             }, (error) => {
                 this.processing = false;
             });
