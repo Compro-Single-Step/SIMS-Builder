@@ -15,7 +15,7 @@
         <div class="col-md-2">
             <div class="row rightArrowDiv">
                 <div class="col-md-8 test-status-items">
-                    <span (click)="getStepReport(step.Index, $event)" class="">
+                    <span (click)="getStepReport(step.Index, $event)" class="position-right">
                         <i class="fa fa-file-text-o" title="Click to view test status"></i>
                         <span *ngIf="!processing" class="test-status" title="Test status">{{status}}</span>
                         <i *ngIf="processing" class="fa fa-spinner fa-spin"></i>
