@@ -51,7 +51,7 @@ export class TaskstepComponent implements OnInit {
     updateStepStatus(step, event) {
         this.processing = true;
         if (this.status) {
-            this.iconClass = 'enabled';
+            this.addClass();
         } else {
             this.iconClass = 'disabled';
         }
@@ -59,13 +59,26 @@ export class TaskstepComponent implements OnInit {
             .subscribe((statusObj) => {
                 this.processing = false;
                 this.status = statusObj.status;
-                this.iconClass = 'enabled';
+                if (this.status) {
+                    this.addClass();
+                }
             }, (error) => {
                 this.processing = false;
             });
 
         if (event) {
             event.stopPropagation();
+        }
+    }
+    addClass() {
+        if (this.status.toLocaleLowerCase() === 'pass') {
+            this.iconClass = 'enabled text-success';
+        } else if (this.status.toLocaleLowerCase() === 'fail') {
+            this.iconClass = 'enabled text-fail';
+        } else if (this.status.toLocaleLowerCase() === 'pending') {
+            this.iconClass = 'enabled text-pending';
+        } else {
+            this.iconClass = 'enabled text-warning';
         }
     }
 }

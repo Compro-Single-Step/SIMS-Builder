@@ -143,9 +143,15 @@ export class PreviewModalComponent implements OnInit {
                     this.previewService.startAutomationTest(this.finalTestConfig)
                         .subscribe((response) => {
                             if (response.status === 'success') {
-                                window.open('http://loadrunner1:9001/', '_blank', 'location=yes,scrollbars=yes,status=yes')
+                                let data = { 'status': 'pending' };
+                                this.previewService.updateTestStatus(this.taskInfo['taskID'], this.taskInfo['stepIndex'], data)
+                                    .subscribe((res) => {
+                                        console.log(res);
+                                    }, (error) => {
+                                        this.displayErrorMessage('Error occurred in updating the task status.');
+                                    });
+                                window.open('http://loadrunner1:9001/', '_blank', 'location=yes,scrollbars=yes,status=yes');
                             }
-                            // console.log(response);
                         },
                         (error) => {
                             this.displayErrorMessage('Error occurred in Automation Test, please check your test config.');

@@ -13,7 +13,7 @@ testStatusSchema.statics = {
         return this.getStepData(taskId, step)
             .then((stepData) => {
                 if (stepData) {
-                    return Promise.resolve({status: stepData.status});
+                    return Promise.resolve({ status: stepData.status });
                 } else {
                     return Promise.reject(new Error(`Step to corresponding task #{taskId} doesn't exist.`));
                 }
@@ -26,7 +26,7 @@ testStatusSchema.statics = {
         return this.getTaskData(taskId)
             .then((taskData) => {
                 if (taskData) {
-                    return Promise.resolve({status: taskData.status});
+                    return Promise.resolve({ status: taskData.status });
                 } else {
                     return Promise.reject(new Error(`Task #{taskId} doesn't exist in database.`));
                 }
@@ -45,11 +45,17 @@ testStatusSchema.statics = {
 
                 if (dbData) {
                     dbPathways = dbData;
-                    Object.keys(dbPathways).forEach((key) => {
-                        if (!testReportToBeSaved['pathways'][key]) {
-                            testReportToBeSaved['pathways'][key] = dbPathways[key];
-                        }
-                    });
+                    if (pathwaysData['pathways'] === undefined || pathwaysData['pathways'] === null) {
+                        testReportToBeSaved['pathways'] = dbPathways;
+                    } else {
+                        Object.keys(dbPathways).forEach((key) => {
+                            if (!testReportToBeSaved['pathways'][key]) {
+                                testReportToBeSaved['pathways'][key] = dbPathways[key];
+                            }
+                        });
+                    }
+                } else {
+                    testReportToBeSaved = pathwaysData;
                 }
 
                 // After updating taskData object.
@@ -72,13 +78,19 @@ testStatusSchema.statics = {
                 delete pathwaysData.taskid;
                 let testReportToBeSaved = pathwaysData;
 
-                if (dbData) {
+               if (dbData) {
                     dbPathways = dbData;
-                    Object.keys(dbPathways).forEach((key) => {
-                        if (!testReportToBeSaved['pathways'][key]) {
-                            testReportToBeSaved['pathways'][key] = dbPathways[key];
-                        }
-                    });
+                    if (pathwaysData['pathways'] === undefined || pathwaysData['pathways'] === null) {
+                        testReportToBeSaved['pathways'] = dbPathways;
+                    } else {
+                        Object.keys(dbPathways).forEach((key) => {
+                            if (!testReportToBeSaved['pathways'][key]) {
+                                testReportToBeSaved['pathways'][key] = dbPathways[key];
+                            }
+                        });
+                    }
+                } else {
+                    testReportToBeSaved = pathwaysData;
                 }
 
                 let condition = { "task_id": taskId };
