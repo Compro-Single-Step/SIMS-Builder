@@ -19,6 +19,7 @@ export class TaskstepComponent implements OnInit {
     status: string;
     processing: boolean;
     iconClass: string;
+    textColor: string;
     constructor(private route: ActivatedRoute, private router: Router, private taskDataService: TaskDataService) {
         this.processing = true;
     }
@@ -71,14 +72,15 @@ export class TaskstepComponent implements OnInit {
         }
     }
     addClass() {
+        this.iconClass = 'enabled';
         if (this.status.toLocaleLowerCase() === 'pass') {
-            this.iconClass = 'enabled text-success';
+            this.textColor = 'text-success';
         } else if (this.status.toLocaleLowerCase() === 'fail') {
-            this.iconClass = 'enabled text-fail';
+            this.textColor = 'text-fail';
         } else if (this.status.toLocaleLowerCase() === 'pending') {
-            this.iconClass = 'enabled text-pending';
+            this.textColor = 'text-pending';
         } else {
-            this.iconClass = 'enabled text-warning';
+            this.textColor = 'text-warning';
         }
     }
 }
