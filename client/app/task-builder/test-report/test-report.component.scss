@@ -1,0 +1,92 @@
+@import "../../scss/_variables.scss";
+
+.status-label {
+    padding-left: 7px;
+    font-weight: 600;
+}
+
+.text-css {
+    text-transform: capitalize;
+    font-weight: 400; 
+}
+
+div#step-fields {
+    height: 160px;
+    overflow-y: auto;
+}
+
+.table-body-text {
+    text-transform: capitalize;
+    font-weight: 400;
+}
+
+.p-0 {
+    padding: 0;
+}
+
+.pt-15 {
+    padding-top: 15px;
+}
+
+.pl-30 {
+    padding-left: 30px;
+}
+
+.pr-30 {
+    padding-right: 30px;
+}
+
+.m-0 {
+    margin: 0;
+}
+
+.mt-0 {
+    margin-top: 0;
+}
+
+.modal-header {
+    background-color: $theme-blue;
+    color: $white;;
+}
+
+.modal-footer {
+    background-color: $lightgray;
+    padding: 30px;
+}
+
+.close {
+    font-size: 2.5rem;
+    opacity: 1;
+    color: $white;
+}
+
+.display-flex{
+    display: flex;
+}
+
+.mb-5 {
+    margin-bottom: 5px;
+}
+
+.th-width {
+    width: 38px;
+}
+
+.icon-style {
+    top: 1px;
+    color: #cc0000;
+    position: relative;
+    border: 0;
+    background-color: #ffffff;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.icon-style:hover {
+    color: #ff9494;
+}
+
+.icon-style:focus {
+    border: 0;
+    outline: 0;
+}

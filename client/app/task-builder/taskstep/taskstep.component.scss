@@ -84,3 +84,40 @@
 :host-context(.taskstep-number-10) #stepList{
   border-left-color:#ac3100;
 }
+
+.sync-button {
+  border-left: 1px solid gray;
+  padding-left: 10px;
+}
+
+.test-status-items {
+  top: 1px;
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.test-status {
+  text-transform: capitalize;
+}
+
+.position-right {
+  position: absolute;
+  right: 50px;
+}
+
+.enabled {
+  color: #000;
+}
+
+.disabled {
+  color: lightgray;
+  cursor: not-allowed;
+}
+
+.text-fail {
+  color: #cc0000;
+}
+
+.text-pending {
+  color: #329acf;
+}

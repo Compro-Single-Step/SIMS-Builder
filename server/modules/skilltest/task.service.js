@@ -61,6 +61,14 @@ class TaskService {
             return teskStatusModel.getStepTestStatus(taskId, step);
         }
     }
+
+    getTestDetails(taskId, step) {
+        if (step === undefined || step === "" || step === null) {
+            return teskStatusModel.getTaskData(taskId);
+        } else {
+            return teskStatusModel.getStepData(taskId, step);
+        }
+    }
 };
 
 module.exports = new TaskService();

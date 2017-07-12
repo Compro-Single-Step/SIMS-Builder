@@ -1,0 +1,56 @@
+<div bsModal #testReportModalDialog="bs-modal" id="testReportModalDialog" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button (click)="TestReportModalDialog.hide()" aria-label="Close" class="close" type="button">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title text-xs-center fw-bold" id="myModalLabel18">Step-{{reportData.step}} Test Report</h4>
+            </div>
+            <div class="modal-body pl-30 pr-30">
+                <div class="form-group mb-5">
+                    <div class="display-flex">
+                        <label class="col-sm-2 status-label">Status :</label>
+                        <div class="col-sm-6 text-css">{{reportData.status}}</div>
+                    </div>
+                </div>
+                <hr class="mt-0" />
+                <div class="pt-15">
+                    <div id="step-fields">
+                        <div class="col-md-12 p-0">
+                            <section class="widget p-0 m-0">
+                                <div class="widget-body">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th class="th-width" *ngFor="let columnName of reportHeader">
+                                                    <span>{{columnName}}</span>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="table-body-text">
+                                            <tr *ngFor="let rowData of reportData.pathways">
+                                                <td>{{rowData.pathwayName}}</td>
+                                                <td>{{rowData.method}}</td>
+                                                <td>
+                                                    <span *ngIf="rowData.status === 'fail'" class="fa fa-times-circle icon-style" [popover]="rowData.message" [popoverTitle]="'Error'" placement="right" data-
+                                                    triggers="focus" container="body" tabindex="-1" title="Click to view error message"></span>
+                                                    <i *ngIf="rowData.status === 'pass'" class="fa fa-check-circle text-success" aria-hidden="true"></i>
+                                                    <i *ngIf="rowData.status === 'incomplete'" class="fa fa-circle text-warning" aria-hidden="true"></i>
+                                                    {{rowData.status}}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>

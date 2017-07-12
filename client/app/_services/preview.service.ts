@@ -55,6 +55,13 @@ export class PreviewService {
             });
     }
 
+    updateTestStatus(taskId, step, data) {
+        return this.http.post(`api/skilltest/tasks/${taskId}/test-status?step=${step}`, data, null, true)
+            .map((response) => {
+                return response.json();
+            });
+    }
+
     previewSimulation(url: string) {
         window.open(url, '_blank', 'location=yes,scrollbars=yes,status=yes')
     }

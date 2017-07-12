@@ -243,11 +243,15 @@ class SkillTest {
     }
 
     updateTestStatus(taskId, step, pathwaysData) {
-        taskService.updateTestStatus(taskId, step, pathwaysData);
+        return taskService.updateTestStatus(taskId, step, pathwaysData);
     }
 
     getTestStatus(taskId, step) {
-        taskService.getTestStatus(taskId, step);
+        return taskService.getTestStatus(taskId, step);
+    }
+
+    getTestDetails(taskId, step) {
+        return taskService.getTestDetails(taskId, step);
     }
 }
 

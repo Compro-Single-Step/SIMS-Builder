@@ -52,6 +52,19 @@ router.get('/:taskId/test-status', (req, res) => {
     let taskId = req.params.taskId;
     let step = req.query.step;
     
+    skillTestController.getTestDetails(taskId, step)
+        .then((success) => {
+            res.send(success);
+        })
+        .catch((error) => {
+            res.status(500).send(ErrorUtil.attachErroInfo(error));
+        })
+});
+
+router.get('/:taskId/test-status/status', (req, res) => {
+    let taskId = req.params.taskId;
+    let step = req.query.step;
+    
     skillTestController.getTestStatus(taskId, step)
         .then((success) => {
             res.send(success);
