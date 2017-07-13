@@ -1,21 +1,18 @@
 import { Injectable } from '@angular/core';
+import { Subject }    from 'rxjs/Subject';
 
 @Injectable()
 
 export class LoaderService {
   
-  private loader = {
-    Visible : false
-  };
+  loaderVisible: boolean = false;
+  visibilityChange: Subject<boolean> = new Subject<boolean>();
 
   constructor( ) { }
 
   setLoaderVisibility(isvisible: boolean){
-    this.loader.Visible = isvisible;
-  }
-
-  getLoaderVisibility() {
-    return this.loader;
+    this.loaderVisible = isvisible;
+    this.visibilityChange.next(this.loaderVisible);
   }
   
 }
