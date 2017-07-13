@@ -69,6 +69,8 @@ exports.jsonToDistXml = function(scriptData) {
 
 exports.jsonToDistJava = function(scriptData) {
 
+  // note: expects no duplicate pathways, todo:add check for same
+
   if(scriptData.task_json[0] !== undefined){
     var taskData = scriptData.task_json[0];
     var pathwayListData = scriptData.task_json[1];
@@ -97,14 +99,24 @@ exports.jsonToDistJava = function(scriptData) {
 
           var runJ = '';
 
+          var _pathwaySuffix = '';
+
+          arrayItem.forEach(function (arrayItem2) {
+            _pathwaySuffix = _pathwaySuffix +
+            'S' + parseInt((arrayItem2.split(',')[0]).replace(/"/g, "")) +
+            'M' + parseInt((arrayItem2.split(',')[1]).replace(/"/g, "")) + '_'
+          });
+
+          _pathwaySuffix = _pathwaySuffix.slice(0,-1);
+
           var preJin = '\n    ' +
             '@Test (groups = {' + pathwayListData[q+1] + '})' +
             'public void ' +
-            ((taskData.id).replace(/\./gi, "_")).trim()
-            +
+            ((taskData.id).replace(/\./gi, "_")).trim() +
             '_' +
-            (taskData.scenario.toUpperCase()).trim() + '_' + (++testCount).toString()
-            +
+            //(taskData.scenario.toUpperCase()).trim() + '_' + (++testCount).toString()
+
+            (taskData.scenario.toUpperCase()).trim() + '_' + _pathwaySuffix +
             '() throws Exception {            System.out.println("START..");            ';
 
           var postJ = 'Thread.sleep(3000);            ' +
