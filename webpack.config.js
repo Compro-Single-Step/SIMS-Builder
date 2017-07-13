@@ -42,7 +42,8 @@ module.exports = {
       "./client\\polyfills.ts"
     ],
     "scripts": [
-      "script-loader!./client\\libs\\papaparse.min.js"
+      "script-loader!./client\\libs\\papaparse.min.js",
+      "script-loader!./client\\libs\\marked.js"
     ],
     "styles": [
       "./client\\styles.css",
