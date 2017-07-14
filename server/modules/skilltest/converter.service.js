@@ -2,7 +2,8 @@
 
 exports.jsonToDistXml = function(scriptData) {
 
-  if(scriptData.task_json[0] !== undefined){
+  try {
+        if(scriptData.task_json[0] !== undefined){
 
     var taskData = scriptData.task_json[0];
 
@@ -14,6 +15,9 @@ exports.jsonToDistXml = function(scriptData) {
 
     for (i in taskData.items) {
 
+      if (taskData.items[i]) {
+
+        
       var suffix='';
       var selectedType = '';
       var methodCount = 0;
@@ -28,7 +32,7 @@ exports.jsonToDistXml = function(scriptData) {
         "Right - Click" : 0
       };
 
-      taskDataPre = taskDataPre + '<Item sno="'+(i+1)+'">';
+      taskDataPre = taskDataPre + '<Item sno="'+(parseInt(i)+1)+'">';
 
       for(var j=0;j<taskData.items[i].methods.length;j++){
         suffix = '';
@@ -60,9 +64,15 @@ exports.jsonToDistXml = function(scriptData) {
       }
       taskDataPre = taskDataPre + '</Item>';
 
+      }
+
+
     }
 
     return xmlPre + taskDataPre + taskDataPost + xmlPost;
+  }
+  } catch (er) {
+      console.log(er);
   }
 
 };
