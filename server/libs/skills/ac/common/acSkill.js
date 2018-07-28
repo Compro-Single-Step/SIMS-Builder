@@ -30,8 +30,13 @@ module.exports = class AccessBaseSkill extends BaseSkill {
    */
    getSelectedDBObjectName(skillParams){
     var paramValueObj = skillParams.paramsObj;
-    var resolveParams = { "attrValue": paramValueObj.selectedObj.data.objectName};
-    return Promise.resolve(resolveParams);
+    try{
+      var resolveParams = { "attrValue": paramValueObj.selectedObj.data.objectName};
+    }
+    catch(err){
+      var resolveParams = { "attrValue": "null"};
+    }
+     return Promise.resolve(resolveParams);
   }
   /**
    * 
@@ -40,6 +45,7 @@ module.exports = class AccessBaseSkill extends BaseSkill {
    */
   getSelectedDBObjectType(skillParams){
     var paramValueObj = skillParams.paramsObj;
+    let selectedType = "";
     let objectMap = {
       "Table":"Tables",
       "Query":"Queries",
@@ -48,8 +54,14 @@ module.exports = class AccessBaseSkill extends BaseSkill {
       "Macro":"Macros",
       "Module":"Modules"
     }
-    var resolveParams = { "attrValue": objectMap[paramValueObj.selectedObj.data.objectType]};
-    return Promise.resolve(resolveParams);
+    try{
+      selectedType = objectMap[paramValueObj.selectedObj.data.objectType];    
+      var resolveParams = { "attrValue": selectedType};
+    }
+    catch(err){
+      var resolveParams = { "attrValue": "null"};
+    }
+     return Promise.resolve(resolveParams);
   }
   // Front End Function use to populate the dropdown list items from project json.
   addDatabaseObjectToDropdown(navigationPaneJSON, navaigationPaneDatabaseObjectArray) {
