@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { LoaderService } from '../_services/loader.service';
+import { Subscription }   from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-loader',
@@ -7,11 +8,18 @@ import { LoaderService } from '../_services/loader.service';
   styleUrls: ['./loader.component.scss']
 })
 
-export class LoaderComponent {
+export class LoaderComponent implements OnDestroy {
   
   loader;
+  subscription: Subscription;
 
   constructor (private loaderService: LoaderService) {
-    this.loader = loaderService.getLoaderVisibility();
+    this.subscription = loaderService.visibilityChange.subscribe((value) => { 
+      this.loader = value; 
+    });
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }
